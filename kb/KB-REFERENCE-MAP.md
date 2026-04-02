@@ -26,6 +26,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-03 | Data Dictionary | RC-FD-03_Data-Dictionary.md |
 | RC-FD-04 | Instrument Library & Zip Files | RC-FD-04_Instrument-Library-and-Zip-Files.md |
 | RC-FD-05 | Codebook | RC-FD-05_Codebook.md |
+| RC-FD-06 | Online Designer – Instrument and Field Management | RC-FD-06_Online-Designer-Instrument-and-Field-Management.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-NAV-REC-01 | Record Navigation Overview | RC-NAV-REC-01_Record-Navigation-Overview.md |
 | RC-NAV-REC-02 | Longitudinal Mode & Arms | RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md |
@@ -61,6 +62,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-02 (prerequisite)
 - RC-BL-03
 - RC-BL-04
+- RC-FD-06
 
 ---
 
@@ -79,6 +81,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-03 (prerequisite)
 - RC-BL-04 (prerequisite)
+- RC-FD-06
 
 ---
 
@@ -296,6 +299,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-03 (prerequisite)
 - RC-FD-04 (prerequisite)
 - RC-FD-05 (prerequisite)
+- RC-FD-06 (prerequisite)
 
 ---
 
@@ -316,6 +320,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-03
 - RC-FD-04
 - RC-FD-05
+- RC-FD-06 (prerequisite)
 
 ---
 
@@ -335,6 +340,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01
 - RC-FD-02
 - RC-FD-04
+- RC-FD-06
 
 ---
 
@@ -350,6 +356,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-FD-01
 - RC-FD-02
+- RC-FD-06
 - RC-IMP-01
 
 ---
@@ -369,6 +376,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01
 - RC-FD-02
 - RC-FD-03
+- RC-FD-06
+
+---
+
+### RC-FD-06 — Online Designer – Instrument and Field Management
+
+**Prerequisites:** RC-NAV-UI-01 — Project Navigation UI; RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer
+
+**Outbound links:**
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-FD-04 — Instrument Library & Zip Files
+- RC-FD-05 — Codebook
+- RC-BL-01 — Branching Logic Overview & Scope
+- RC-BL-02 — Branching Logic Syntax & Atomic Statements
+
+**Inbound links (referenced by):**
+*(none yet)*
 
 ---
 
@@ -471,6 +497,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01 (prerequisite)
+- RC-FD-06 (prerequisite)
 - RC-NAV-UI-02 (prerequisite)
 
 ---
@@ -573,4 +600,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-IMP-01.*
+*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-IMP-01, RC-FD-06.*
