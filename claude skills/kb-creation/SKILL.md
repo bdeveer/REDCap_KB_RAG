@@ -9,14 +9,14 @@ This skill converts a raw REDCap training outline (Word document) into a single,
 
 ## What you're producing
 
-A `.docx` KB article that:
+A `.md` KB article that:
 - Covers exactly one concept or workflow (one retrieval query pattern)
 - Follows the 8-section template (see below)
 - Is optimized for LLM retrieval — explicit Q&A pairs, consistent terminology, surfaced edge cases
 - Is institution-agnostic in its core content
 - Is ready for RAG ingestion into Yale's local LLM
 
-Always use the docx skill to produce the output file. Read `/mnt/skills/public/docx/SKILL.md` before writing any code.
+Write the output directly as a markdown file using the Write tool — no docx skill needed.
 
 ---
 
@@ -41,16 +41,25 @@ When in doubt, ask rather than decide unilaterally.
 
 ## Step 2: Read the Reference Map & Determine the Article ID
 
-Before assigning an ID, read the current reference map:
+Before assigning an ID, read both files:
 
 ```
 kb/KB-REFERENCE-MAP.md
+kb/KB-Naming-Conventions.md
 ```
 
-Use it to:
+Use the Reference Map to:
 - Confirm the next available number in the relevant domain
 - Check whether any articles the new article will reference are already written (vs. marked ⚠️ as missing)
 - Identify articles that should gain an inbound link to the new article once it's added
+
+### Domain slug double-check (run every time)
+
+After reading `KB-Naming-Conventions.md`, cross-check the proposed domain slug against the Domain Slugs table in that file. This is the canonical source — it takes precedence over the list at the bottom of this skill, which may lag behind.
+
+- **Slug exists in the table** → use it as-is.
+- **Slug is not in the table** → stop. Tell the user: the proposed slug (e.g. `IMP`) is not yet in the naming conventions, show them what you'd add, and ask for confirmation before proceeding. Once confirmed, add the new slug row to the Domain Slugs table in `KB-Naming-Conventions.md` and also to the domain slugs list at the bottom of this skill file.
+- **Slug exceeds 5 characters** → flag it immediately; propose a shorter alternative and confirm with the user.
 
 Article IDs follow this format:
 ```
@@ -66,11 +75,9 @@ Rules:
 - Subdomain numbers restart at 01 under each parent
 - **IDs are permanent once assigned** — confirm with the user before finalizing
 
-If the domain is new, flag it and confirm the slug with the user before proceeding.
-
 Filename format:
 ```
-RC-[DOMAIN]-[NN]_[Descriptive-Title-In-Title-Case].docx
+RC-[DOMAIN]-[NN]_[Descriptive-Title-In-Title-Case].md
 ```
 
 ---
@@ -122,7 +129,7 @@ Bullet list of related KB articles with ID and title. Include prerequisites, nat
 - **Terminology**: Use REDCap's canonical terms. "Instrument" not "form" or "survey" unless distinguishing. "Variable" not "field" unless quoting the UI.
 - **Voice**: Direct, instructional. No filler phrases ("It's important to note that...").
 - **Tables**: Use for reference content with 3+ rows. Don't use tables for 2-item comparisons — prose is cleaner.
-- **Notes and warnings**: Use bordered table cells for Important/Critical/Note callouts, consistent with the BL series style.
+- **Notes and warnings**: Use blockquotes (`> **Note:**`, `> **Important:**`, `> **Critical:**`) for callouts.
 - **Cross-references**: Always include both the article ID and title: `RC-BL-02 — Syntax & Atomic Statements`
 - **One concept per article**: If you find yourself writing "this article also covers...", that's a signal to split.
 
@@ -146,8 +153,8 @@ Before finalizing, verify:
 If the article touches on behavior that varies by institution (e.g., Production mode approval workflows, administrator intervention policies, local support contacts), add a clearly marked callout box at the relevant point:
 
 ```
-| Yale-specific: [Describe what varies and what Yale's policy is — 
-| leave blank until confirmed with Yale REDCap support team] |
+> **Yale-specific:** [Describe what varies and what Yale's policy is —
+> leave blank until confirmed with Yale REDCap support team]
 ```
 
 This placeholder signals to future editors where local policy needs to be inserted without contaminating the institution-agnostic core content.
@@ -156,11 +163,19 @@ This placeholder signals to future editors where local policy needs to be insert
 
 ## Output
 
-1. Generate the `.docx` file using the docx skill
-2. Save to `/mnt/user-data/outputs/`
-3. Use `present_files` to share it
-4. Update the Reference Map (see below)
-5. Summarize in 2–3 sentences: article ID, title, section count, and any scope decisions made
+### Repo access
+
+The KB repo lives at `~/REDCap_KB_RAG`. Before writing any files, check whether it is already mounted:
+
+- If `/sessions/.../mnt/REDCap_KB_RAG/kb/` is accessible, proceed.
+- If not, call `mcp__cowork__request_cowork_directory` with path `/Users/bas/REDCap_KB_RAG` to mount it, then proceed.
+
+### Steps
+
+1. Write the `.md` file directly to `kb/` in the repo: `/sessions/.../mnt/REDCap_KB_RAG/kb/RC-[DOMAIN]-[NN]_[Title].md`
+2. Use `present_files` to share it with the user
+3. Update the Reference Map (see below)
+4. Summarize in 2–3 sentences: article ID, title, section count, and any scope decisions made
 
 Do not explain the entire article back to the user — they can read the document.
 
@@ -222,5 +237,6 @@ For every article the new article references, find its Per-Article Reference Det
 | SURV | Surveys | — |
 | API | API | — |
 | MOB | Mobile | — |
+| IMP | Data Import | — |
 
 Slugs `RIGHTS` and `ALERT` appear in existing cross-references but exceed the 5-character limit — flag for review before creating articles in those domains.
