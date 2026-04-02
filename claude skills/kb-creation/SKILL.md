@@ -39,7 +39,18 @@ When in doubt, ask rather than decide unilaterally.
 
 ---
 
-## Step 2: Determine the Article ID
+## Step 2: Read the Reference Map & Determine the Article ID
+
+Before assigning an ID, read the current reference map:
+
+```
+kb/KB-REFERENCE-MAP.md
+```
+
+Use it to:
+- Confirm the next available number in the relevant domain
+- Check whether any articles the new article will reference are already written (vs. marked ⚠️ as missing)
+- Identify articles that should gain an inbound link to the new article once it's added
 
 Article IDs follow this format:
 ```
@@ -55,7 +66,7 @@ Rules:
 - Subdomain numbers restart at 01 under each parent
 - **IDs are permanent once assigned** — confirm with the user before finalizing
 
-Check the existing corpus (project files) to determine the next available number in the relevant domain. If the domain is new, flag it and confirm the slug with the user before proceeding.
+If the domain is new, flag it and confirm the slug with the user before proceeding.
 
 Filename format:
 ```
@@ -148,9 +159,49 @@ This placeholder signals to future editors where local policy needs to be insert
 1. Generate the `.docx` file using the docx skill
 2. Save to `/mnt/user-data/outputs/`
 3. Use `present_files` to share it
-4. Summarize in 2–3 sentences: article ID, title, section count, and any scope decisions made
+4. Update the Reference Map (see below)
+5. Summarize in 2–3 sentences: article ID, title, section count, and any scope decisions made
 
 Do not explain the entire article back to the user — they can read the document.
+
+---
+
+## Updating KB-REFERENCE-MAP.md
+
+After the article is written and saved, update `kb/KB-REFERENCE-MAP.md` in place. Make all three changes in a single edit:
+
+### 1. Add to the Article Index table
+
+Insert a new row in alphabetical/numerical order by Article ID:
+
+```
+| RC-[DOMAIN]-[NN] | [Title] | RC-[DOMAIN]-[NN]_[Title-In-Title-Case].md |
+```
+
+Note: the filename in the index uses `.md` (the RAG corpus version), not `.docx`.
+
+### 2. Add a Per-Article Reference Details section
+
+Insert a new `###` section in document order (matching the Article Index order). Use this structure:
+
+```markdown
+### RC-[DOMAIN]-[NN] — [Title]
+
+**Prerequisites:** [RC-XX-NN — Title, or "None"]
+
+**Outbound links:**
+- RC-XX-NN — [Title]
+- ...
+
+**Inbound links (referenced by):**
+- [Leave blank or list any articles already in the corpus that reference this new article]
+```
+
+Mark any outbound link target that doesn't exist yet in the corpus with ⚠️.
+
+### 3. Update inbound links of referenced articles
+
+For every article the new article references, find its Per-Article Reference Details section and add the new article to its **Inbound links** list. If the new article is a prerequisite of another existing article, note that too.
 
 ---
 
