@@ -20,6 +20,21 @@ Write the output directly as a markdown file using the Write tool — no docx sk
 
 ---
 
+## Step 0: Verify repo access (run before anything else)
+
+Check whether the KB repo is mounted by testing whether the `kb/` directory is accessible:
+
+```
+/sessions/.../mnt/REDCap_KB_RAG/kb/
+```
+
+- **If accessible** → proceed to Step 1.
+- **If not accessible** → call `mcp__cowork__request_cowork_directory` with path `/Users/bas/REDCap_KB_RAG` to mount it. Do not proceed until access is confirmed.
+
+Do this every time the skill runs, even if the repo was accessible in a previous session — mounts do not persist between sessions.
+
+---
+
 ## Step 1: Read and analyze the outline
 
 When the user uploads a Word document:
@@ -162,13 +177,6 @@ This placeholder signals to future editors where local policy needs to be insert
 ---
 
 ## Output
-
-### Repo access
-
-The KB repo lives at `~/REDCap_KB_RAG`. Before writing any files, check whether it is already mounted:
-
-- If `/sessions/.../mnt/REDCap_KB_RAG/kb/` is accessible, proceed.
-- If not, call `mcp__cowork__request_cowork_directory` with path `/Users/bas/REDCap_KB_RAG` to mount it, then proceed.
 
 ### Steps
 
