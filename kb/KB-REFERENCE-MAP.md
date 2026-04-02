@@ -37,6 +37,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-RAND-01 | Randomization Concepts & Terminology | RC-RAND-01_Randomization-Concepts.md |
 | RC-RAND-02 | Randomization Setup Guide | RC-RAND-02_Randomization-Setup.md |
 | RC-RAND-03 | Working with & Managing Randomization | RC-RAND-03_Working-with-Randomization.md |
+| RC-SURV-01 | Surveys – Basics | RC-SURV-01_Surveys-Basics.md |
 
 ---
 
@@ -321,6 +322,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-04
 - RC-FD-05
 - RC-FD-06 (prerequisite)
+- RC-SURV-01 (prerequisite)
 
 ---
 
@@ -491,7 +493,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-DE-02 — Basic Data Entry
-- ⚠️ RC-SURV-01 — Survey Setup
+- RC-SURV-01 — Surveys – Basics
 - ⚠️ RC-RIGHTS-01 — User Rights
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 
@@ -499,6 +501,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-01 (prerequisite)
 - RC-FD-06 (prerequisite)
 - RC-NAV-UI-02 (prerequisite)
+- RC-SURV-01 (prerequisite)
 
 ---
 
@@ -510,7 +513,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-DE-02 — Basic Data Entry
 - ⚠️ RC-RIGHTS-01 — User Rights
-- ⚠️ RC-SURV-01 — Survey Setup
+- RC-SURV-01 — Surveys – Basics
 - ⚠️ RC-ALERT-01 — Alerts & Notifications
 - ⚠️ RC-API-01 — REDCap API
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
@@ -571,6 +574,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-SURV-01 — Surveys – Basics
+
+**Prerequisites:** RC-NAV-UI-01 — Project Navigation UI; RC-FD-02 — Online Designer
+
+**Outbound links:**
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- ⚠️ RC-RIGHTS-01 — User Rights
+- ⚠️ RC-ALERT-01 — Automated Survey Invitations
+- ⚠️ RC-SURV-02 — Survey Customizations (advanced settings)
+- ⚠️ RC-SURV-03 — Survey Queue
+
+**Inbound links (referenced by):**
+- RC-NAV-UI-01
+- RC-NAV-UI-02
+
+---
+
 ## Referenced Articles Not Yet in the KB
 
 The following article IDs are referenced by existing KB articles but have no corresponding file in the `/kb/` directory. These represent gaps in coverage.
@@ -578,11 +600,12 @@ The following article IDs are referenced by existing KB articles but have no cor
 | Article ID | Title | Referenced By |
 |---|---|---|
 | ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
-| ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-RAND-03 |
+| ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-LONG-01 | Longitudinal Projects (dedicated article) | RC-RAND-01, RC-RAND-02 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
-| ⚠️ RC-RIGHTS-01 | User Rights & DAGs | RC-NAV-UI-01, RC-NAV-UI-02, RC-RAND-01, RC-RAND-02, RC-RAND-03 |
-| ⚠️ RC-SURV-01 | Survey Setup | RC-NAV-UI-01, RC-NAV-UI-02 |
+| ⚠️ RC-RIGHTS-01 | User Rights & DAGs | RC-NAV-UI-01, RC-NAV-UI-02, RC-RAND-01, RC-RAND-02, RC-RAND-03, RC-SURV-01 |
+| ⚠️ RC-SURV-02 | Survey Customizations (advanced settings) | RC-SURV-01 |
+| ⚠️ RC-SURV-03 | Survey Queue | RC-SURV-01 |
 | ⚠️ RC-USER-01 | User Rights (alternate ID) | RC-EXPRT-03 *(note: may be the same article as RC-RIGHTS-01)* |
 
 ---
@@ -600,4 +623,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-IMP-01, RC-FD-06.*
+*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-IMP-01, RC-FD-06, RC-SURV-01.*
