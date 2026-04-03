@@ -28,12 +28,18 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-05 | Codebook | RC-FD-05_Codebook.md |
 | RC-FD-06 | Online Designer – Instrument and Field Management | RC-FD-06_Online-Designer-Instrument-and-Field-Management.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
+| RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
+| RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
 | RC-NAV-REC-01 | Record Navigation Overview | RC-NAV-REC-01_Record-Navigation-Overview.md |
 | RC-NAV-REC-02 | Longitudinal Mode & Arms | RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md |
 | RC-NAV-REC-03 | Repeated Instruments & Repeated Events | RC-NAV-REC-03_Repeated-Instruments-and-Events.md |
 | RC-NAV-REC-04 | Record Status Dashboard & Other Record Links | RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md |
 | RC-NAV-UI-01 | Project Navigation UI | RC-NAV-UI-01_Project-Navigation-UI.md |
 | RC-NAV-UI-02 | Project Menu Reference | RC-NAV-UI-02_Project-Menu-Reference.md |
+| RC-PIPE-01 | Piping: Basics, Syntax & Field Types | RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md |
+| RC-PIPE-02 | Piping: Longitudinal, Repeated Instruments & Modifiers | RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md |
+| RC-PIPE-03 | Smart Variables Overview | RC-PIPE-03_Smart-Variables-Overview.md |
+| RC-PIPE-04 | Piping: Emails, Notifications & Logic Features | RC-PIPE-04_Piping-in-Emails-and-Notifications.md |
 | RC-RAND-01 | Randomization Concepts & Terminology | RC-RAND-01_Randomization-Concepts.md |
 | RC-RAND-02 | Randomization Setup Guide | RC-RAND-02_Randomization-Setup.md |
 | RC-RAND-03 | Working with & Managing Randomization | RC-RAND-03_Working-with-Randomization.md |
@@ -64,6 +70,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-03
 - RC-BL-04
 - RC-FD-06
+- RC-LONG-01
+- RC-LONG-02
+- RC-PIPE-01
+- RC-PIPE-03
+- RC-PIPE-04
 
 ---
 
@@ -172,6 +183,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-01
 - RC-DE-02
 - RC-DE-04
+- RC-LONG-01
+- RC-LONG-02
 
 ---
 
@@ -303,6 +316,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 (prerequisite)
 - RC-FD-06 (prerequisite)
 - RC-IMP-01 (prerequisite)
+- RC-LONG-01 (prerequisite)
+- RC-LONG-02 (prerequisite)
 
 ---
 
@@ -324,6 +339,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-04
 - RC-FD-05
 - RC-FD-06 (prerequisite)
+- RC-LONG-01
+- RC-LONG-02
+- RC-PIPE-01 (prerequisite)
 - RC-SURV-01 (prerequisite)
 
 ---
@@ -381,6 +399,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-02
 - RC-FD-03
 - RC-FD-06
+- RC-PIPE-01
 
 ---
 
@@ -418,6 +437,47 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-LONG-01 — Longitudinal Project Setup
+
+**Prerequisites:** RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI
+
+**Outbound links:**
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-BL-01 — Branching Logic Overview & Scope
+- RC-DE-03 — Longitudinal Projects & DAGs
+- RC-NAV-UI-01 — Project Navigation UI
+
+**Inbound links (referenced by):**
+- RC-LONG-02 (prerequisite for longitudinal projects)
+- RC-PIPE-02
+- RC-RAND-01 (referenced as ⚠️ RC-LONG-01)
+- RC-RAND-02 (referenced as ⚠️ RC-LONG-01)
+
+---
+
+### RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Prerequisites:** RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects)
+
+**Outbound links:**
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-BL-01 — Branching Logic Overview & Scope
+- RC-DE-03 — Longitudinal Projects & DAGs
+
+**Inbound links (referenced by):**
+- RC-LONG-01
+- RC-PIPE-02
+
+---
+
 ### RC-NAV-REC-01 — Record Navigation Overview
 
 **Prerequisites:** *(none listed)*
@@ -447,9 +507,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-03 (listed as RC-NAV-02)
+- RC-LONG-01
+- RC-LONG-02
 - RC-NAV-REC-01
 - RC-NAV-REC-03
 - RC-NAV-REC-04
+- RC-PIPE-02
 
 ---
 
@@ -463,9 +526,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
+- RC-LONG-01
+- RC-LONG-02
 - RC-NAV-REC-01
 - RC-NAV-REC-02
 - RC-NAV-REC-04
+- RC-PIPE-02
 
 ---
 
@@ -503,6 +569,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-01 (prerequisite)
 - RC-FD-06 (prerequisite)
 - RC-IMP-01 (prerequisite)
+- RC-LONG-01 (prerequisite)
 - RC-NAV-UI-02 (prerequisite)
 - RC-SURV-01 (prerequisite)
 
@@ -528,6 +595,78 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Prerequisites:** RC-FD-02 — Online Designer
+
+**Outbound links:**
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-FD-02 — Online Designer
+- RC-FD-05 — Codebook
+- RC-BL-01 — Branching Logic Overview & Scope
+
+**Inbound links (referenced by):**
+- RC-PIPE-02 (prerequisite)
+- RC-PIPE-03 (prerequisite)
+- RC-PIPE-04 (prerequisite)
+
+---
+
+### RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+
+**Prerequisites:** RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Outbound links:**
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+
+**Inbound links (referenced by):**
+- RC-PIPE-01
+- RC-PIPE-03
+
+---
+
+### RC-PIPE-03 — Smart Variables Overview
+
+**Prerequisites:** RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Outbound links:**
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-BL-01 — Branching Logic Overview & Scope
+
+**Inbound links (referenced by):**
+- RC-PIPE-01
+- RC-PIPE-02
+- RC-PIPE-04
+
+---
+
+### RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+
+**Prerequisites:** RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Outbound links:**
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+- RC-BL-01 — Branching Logic Overview & Scope
+- RC-SURV-01 — Surveys – Basics
+- ⚠️ RC-ALERT-01 — Alerts & Notifications
+
+**Inbound links (referenced by):**
+- RC-PIPE-01
+- RC-PIPE-03
+
+---
+
 ### RC-RAND-01 — Randomization Concepts & Terminology
 
 **Prerequisites:** *(none listed — recommended before RC-RAND-02)*
@@ -536,7 +675,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
 - ⚠️ RC-RIGHTS-01 — User Rights & DAGs
-- ⚠️ RC-LONG-01 — Longitudinal Projects
+- RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-RAND-02 (prerequisite)
@@ -546,13 +685,13 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ### RC-RAND-02 — Randomization Setup Guide
 
-**Prerequisites:** RC-RAND-01; ⚠️ RC-LONG-01 (if using longitudinal features); ⚠️ RC-RIGHTS-01 (if using DAGs)
+**Prerequisites:** RC-RAND-01; RC-LONG-01 (if using longitudinal features); ⚠️ RC-RIGHTS-01 (if using DAGs)
 
 **Outbound links:**
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
 - ⚠️ RC-RIGHTS-01 — User Rights & DAGs
-- ⚠️ RC-LONG-01 — Longitudinal Projects
+- RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-RAND-01
@@ -593,6 +732,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-NAV-UI-01
 - RC-NAV-UI-02
+- RC-PIPE-04
 
 ---
 
@@ -603,8 +743,7 @@ The following article IDs are referenced by existing KB articles but have no cor
 | Article ID | Title | Referenced By |
 |---|---|---|
 | ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
-| ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-RAND-03, RC-SURV-01 |
-| ⚠️ RC-LONG-01 | Longitudinal Projects (dedicated article) | RC-RAND-01, RC-RAND-02 |
+| ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
 | ⚠️ RC-RIGHTS-01 | User Rights & DAGs | RC-NAV-UI-01, RC-NAV-UI-02, RC-RAND-01, RC-RAND-02, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-SURV-02 | Survey Customizations (advanced settings) | RC-SURV-01 |
@@ -626,4 +765,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-IMP-01, RC-FD-06, RC-SURV-01.*
+*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-PIPE-01 through RC-PIPE-04 (Piping series). Added PIPE domain slug to skill file.*

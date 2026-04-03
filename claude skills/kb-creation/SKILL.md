@@ -246,5 +246,7 @@ For every article the new article references, find its Per-Article Reference Det
 | API | API | — |
 | MOB | Mobile | — |
 | IMP | Data Import | — |
+| LONG | Longitudinal & Repeated Setup | Covers longitudinal mode, arms/events, repeated instruments & events |
+| PIPE | Piping | Covers piping basics, longitudinal/repeated piping, modifiers, smart variables, emails & notifications |
 
 Slugs `RIGHTS` and `ALERT` appear in existing cross-references but exceed the 5-character limit — flag for review before creating articles in those domains.
