@@ -27,6 +27,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-04 | Instrument Library & Zip Files | RC-FD-04_Instrument-Library-and-Zip-Files.md |
 | RC-FD-05 | Codebook | RC-FD-05_Codebook.md |
 | RC-FD-06 | Online Designer – Instrument and Field Management | RC-FD-06_Online-Designer-Instrument-and-Field-Management.md |
+| RC-FD-07 | Field Embedding | RC-FD-07_Field-Embedding.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
@@ -70,6 +71,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-03
 - RC-BL-04
 - RC-FD-06
+- RC-FD-07
 - RC-LONG-01
 - RC-LONG-02
 - RC-PIPE-01
@@ -339,6 +341,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-04
 - RC-FD-05
 - RC-FD-06 (prerequisite)
+- RC-FD-07 (prerequisite)
 - RC-LONG-01
 - RC-LONG-02
 - RC-PIPE-01 (prerequisite)
@@ -417,7 +420,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements
 
 **Inbound links (referenced by):**
-*(none yet)*
+- RC-FD-07
+
+---
+
+### RC-FD-07 — Field Embedding
+
+**Prerequisites:** RC-FD-02 — Online Designer
+
+**Outbound links:**
+- RC-FD-02 — Online Designer
+- RC-FD-06 — Online Designer Instrument and Field Management
+- RC-BL-01 — Branching Logic Overview & Scope
+- RC-BL-02 — Branching Logic Syntax & Atomic Statements
+- ⚠️ RC-AT-01 — Action Tags
+
+**Inbound links (referenced by):**
+- RC-BL-01 (out-of-scope reference updated to point here)
 
 ---
 
@@ -743,6 +762,7 @@ The following article IDs are referenced by existing KB articles but have no cor
 | Article ID | Title | Referenced By |
 |---|---|---|
 | ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
+| ⚠️ RC-AT-01 | Action Tags | RC-FD-07 |
 | ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
 | ⚠️ RC-RIGHTS-01 | User Rights & DAGs | RC-NAV-UI-01, RC-NAV-UI-02, RC-RAND-01, RC-RAND-02, RC-RAND-03, RC-SURV-01 |
@@ -765,4 +785,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-PIPE-01 through RC-PIPE-04 (Piping series). Added PIPE domain slug to skill file.*
+*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-FD-07 — Field Embedding. Added ⚠️ RC-AT-01 to the missing articles table.*

@@ -56,11 +56,10 @@ When in doubt, ask rather than decide unilaterally.
 
 ## Step 2: Read the Reference Map & Determine the Article ID
 
-Before assigning an ID, read both files:
+Before assigning an ID, read:
 
 ```
 kb/KB-REFERENCE-MAP.md
-kb/KB-Naming-Conventions.md
 ```
 
 Use the Reference Map to:
@@ -70,10 +69,10 @@ Use the Reference Map to:
 
 ### Domain slug double-check (run every time)
 
-After reading `KB-Naming-Conventions.md`, cross-check the proposed domain slug against the Domain Slugs table in that file. This is the canonical source — it takes precedence over the list at the bottom of this skill, which may lag behind.
+Cross-check the proposed domain slug against the **Reference: Established domain slugs** table at the bottom of this skill file. This table is the canonical source.
 
 - **Slug exists in the table** → use it as-is.
-- **Slug is not in the table** → stop. Tell the user: the proposed slug (e.g. `IMP`) is not yet in the naming conventions, show them what you'd add, and ask for confirmation before proceeding. Once confirmed, add the new slug row to the Domain Slugs table in `KB-Naming-Conventions.md` and also to the domain slugs list at the bottom of this skill file.
+- **Slug is not in the table** → stop. Tell the user: the proposed slug (e.g. `IMP`) is not yet established, show them what you'd add, and ask for confirmation before proceeding. Once confirmed, add the new slug row to the table at the bottom of this skill file.
 - **Slug exceeds 5 characters** → flag it immediately; propose a shorter alternative and confirm with the user.
 
 Article IDs follow this format:

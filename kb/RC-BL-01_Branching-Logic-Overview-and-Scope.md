@@ -106,7 +106,7 @@ The following topics are explicitly out of scope for this series and are covered
 - Calculated fields and calculation syntax
 - Action tags that use logic syntax
 - Smart variables
-- Field embedding (curly bracket syntax)
+- Field embedding (curly bracket syntax) — see RC-FD-07 — Field Embedding
 - Event-based logic in longitudinal projects
 - REDCap functions (e.g., datediff, rounddown)
 
