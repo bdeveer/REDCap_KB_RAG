@@ -12,6 +12,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
 | RC-BL-04 | Branching Logic: Structured Fields & Checkboxes | RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md |
+| RC-DAG-01 | Data Access Groups | RC-DAG-01_Data-Access-Groups.md |
 | RC-DE-01 | Record Creation & the Record Home Page | RC-DE-01_Record-Creation-and-Record-Home-Page.md |
 | RC-DE-02 | Basic Data Entry | RC-DE-02_Basic-Data-Entry.md |
 | RC-DE-03 | Longitudinal Projects & DAGs | RC-DE-03_Longitudinal-Projects-and-DAGs.md |
@@ -45,6 +46,10 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-RAND-02 | Randomization Setup Guide | RC-RAND-02_Randomization-Setup.md |
 | RC-RAND-03 | Working with & Managing Randomization | RC-RAND-03_Working-with-Randomization.md |
 | RC-SURV-01 | Surveys – Basics | RC-SURV-01_Surveys-Basics.md |
+| RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
+| RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
+| RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
+| RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
 
 ---
 
@@ -128,6 +133,29 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-03
+
+---
+
+### RC-DAG-01 — Data Access Groups
+
+**Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Outbound links:**
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-USER-04 — User Rights: User Management
+- RC-EXPRT-03 — Data Export: User Rights & Export Access
+- RC-RAND-01 — Randomization Concepts & Terminology
+
+**Inbound links (referenced by):**
+- RC-USER-01
+- RC-USER-02
+- RC-USER-03
+- RC-USER-04
+- RC-RAND-01 (previously ⚠️ RC-RIGHTS-01 — now resolved)
+- RC-RAND-02 (previously ⚠️ RC-RIGHTS-01 — now resolved)
+- RC-RAND-03 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 
 ---
 
@@ -222,6 +250,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-03 (prerequisite)
 - RC-EXPRT-04 (prerequisite)
 - RC-EXPRT-05 (prerequisite)
+- RC-USER-03
 
 ---
 
@@ -254,13 +283,15 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-04 — De-identification & Formatting Options
 - RC-EXPRT-05 — Report Types
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
-- ⚠️ RC-USER-01 — User Rights *(listed as "when available")*
+- RC-USER-03 — User Rights: Configuring User Privileges *(previously ⚠️ RC-USER-01 — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01
 - RC-EXPRT-02
 - RC-EXPRT-04 (prerequisite)
 - RC-EXPRT-05
+- RC-USER-03
+- RC-DAG-01
 
 ---
 
@@ -581,7 +612,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-DE-02 — Basic Data Entry
 - RC-SURV-01 — Surveys – Basics
-- ⚠️ RC-RIGHTS-01 — User Rights
+- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 
 **Inbound links (referenced by):**
@@ -601,7 +632,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-DE-02 — Basic Data Entry
-- ⚠️ RC-RIGHTS-01 — User Rights
+- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-SURV-01 — Surveys – Basics
 - ⚠️ RC-ALERT-01 — Alerts & Notifications
 - ⚠️ RC-API-01 — REDCap API
@@ -693,23 +724,24 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
-- ⚠️ RC-RIGHTS-01 — User Rights & DAGs
+- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-RAND-02 (prerequisite)
 - RC-RAND-03 (prerequisite)
+- RC-DAG-01
 
 ---
 
 ### RC-RAND-02 — Randomization Setup Guide
 
-**Prerequisites:** RC-RAND-01; RC-LONG-01 (if using longitudinal features); ⚠️ RC-RIGHTS-01 (if using DAGs)
+**Prerequisites:** RC-RAND-01; RC-LONG-01 (if using longitudinal features); RC-DAG-01 (if using DAGs)
 
 **Outbound links:**
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
-- ⚠️ RC-RIGHTS-01 — User Rights & DAGs
+- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
 
 **Inbound links (referenced by):**
@@ -725,7 +757,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
-- ⚠️ RC-RIGHTS-01 — User Rights & DAGs
+- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-EXPRT-01 — Data Export *(listed as RC-EXPORT-01 — see naming note below)*
 - ⚠️ RC-ALERT-01 — Alerts & Notifications
 
@@ -743,7 +775,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-- ⚠️ RC-RIGHTS-01 — User Rights
+- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - ⚠️ RC-ALERT-01 — Automated Survey Invitations
 - ⚠️ RC-SURV-02 — Survey Customizations (advanced settings)
 - ⚠️ RC-SURV-03 — Survey Queue
@@ -752,6 +784,84 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 - RC-PIPE-04
+
+---
+
+### RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-USER-04 — User Rights: User Management
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-NAV-UI-01 (previously ⚠️ RC-RIGHTS-01)
+- RC-NAV-UI-02 (previously ⚠️ RC-RIGHTS-01)
+- RC-SURV-01 (previously ⚠️ RC-RIGHTS-01)
+- RC-USER-02 (prerequisite)
+- RC-USER-03 (prerequisite)
+- RC-USER-04 (prerequisite)
+- RC-DAG-01 (prerequisite)
+
+---
+
+### RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Outbound links:**
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-USER-04 — User Rights: User Management
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-USER-01
+- RC-USER-03
+- RC-USER-04
+- RC-DAG-01
+
+---
+
+### RC-USER-03 — User Rights: Configuring User Privileges
+
+**Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Outbound links:**
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-04 — User Rights: User Management
+- RC-DAG-01 — Data Access Groups
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-EXPRT-03 — Data Export: User Rights & Export Access
+
+**Inbound links (referenced by):**
+- RC-USER-01
+- RC-USER-02
+- RC-USER-04
+- RC-DAG-01
+- RC-EXPRT-03 (previously ⚠️ RC-USER-01)
+
+---
+
+### RC-USER-04 — User Rights: User Management
+
+**Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Outbound links:**
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-USER-01
+- RC-USER-02
+- RC-USER-03
+- RC-DAG-01
 
 ---
 
@@ -765,10 +875,10 @@ The following article IDs are referenced by existing KB articles but have no cor
 | ⚠️ RC-AT-01 | Action Tags | RC-FD-07 |
 | ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
-| ⚠️ RC-RIGHTS-01 | User Rights & DAGs | RC-NAV-UI-01, RC-NAV-UI-02, RC-RAND-01, RC-RAND-02, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-SURV-02 | Survey Customizations (advanced settings) | RC-SURV-01 |
 | ⚠️ RC-SURV-03 | Survey Queue | RC-SURV-01 |
-| ⚠️ RC-USER-01 | User Rights (alternate ID) | RC-EXPRT-03 *(note: may be the same article as RC-RIGHTS-01)* |
+
+*Note: ⚠️ RC-RIGHTS-01 and ⚠️ RC-USER-01 have been resolved. RC-USER-01 through RC-USER-04 and RC-DAG-01 now cover the User Rights and DAGs topic area. The RIGHTS slug exceeded the 5-character limit; the canonical slug is USER.*
 
 ---
 
@@ -785,4 +895,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-02 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-FD-07 — Field Embedding. Added ⚠️ RC-AT-01 to the missing articles table.*
+*Last updated 2026-04-03 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-USER-01 through RC-USER-04 (User Rights series) and RC-DAG-01 (Data Access Groups). Resolved ⚠️ RC-RIGHTS-01 and ⚠️ RC-USER-01 references across RAND, NAV-UI, SURV, and EXPRT series.*
