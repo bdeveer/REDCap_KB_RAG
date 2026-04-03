@@ -8,6 +8,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
+| RC-ALERT-01 | Alerts & Notifications: Setup | RC-ALERT-01_Alerts-and-Notifications-Setup.md |
+| RC-ALERT-02 | Alert Management & Notification Log | RC-ALERT-02_Alert-Management-and-Notification-Log.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
@@ -66,6 +68,40 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-ALERT-01 — Alerts & Notifications: Setup
+
+**Prerequisites:** RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Outbound links:**
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-SURV-01 — Surveys – Basics
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-ALERT-02 — Alert Management & Notification Log
+
+**Inbound links (referenced by):**
+- RC-ALERT-02 (prerequisite)
+
+---
+
+### RC-ALERT-02 — Alert Management & Notification Log
+
+**Prerequisites:** RC-ALERT-01 — Alerts & Notifications: Setup
+
+**Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-PIPE-03 — Smart Variables Overview
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-ALERT-01
+
+---
+
 ### RC-BL-01 — Branching Logic: Overview & Scope
 
 **Prerequisites:** RC-FD-02 — Online Designer
@@ -79,6 +115,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 — Basic Data Entry
 
 **Inbound links (referenced by):**
+- RC-ALERT-01
 - RC-BL-02 (prerequisite)
 - RC-BL-03
 - RC-BL-04
@@ -657,6 +694,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-03 — Longitudinal Projects & DAGs
 
 **Inbound links (referenced by):**
+- RC-ALERT-01
+- RC-ALERT-02
 - RC-DE-10
 - RC-LONG-01
 - RC-PIPE-02
@@ -795,6 +834,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-01 — Branching Logic Overview & Scope
 
 **Inbound links (referenced by):**
+- RC-ALERT-01 (prerequisite)
 - RC-PIPE-02 (prerequisite)
 - RC-PIPE-03 (prerequisite)
 - RC-PIPE-04 (prerequisite)
@@ -831,6 +871,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-01 — Branching Logic Overview & Scope
 
 **Inbound links (referenced by):**
+- RC-ALERT-01
+- RC-ALERT-02
 - RC-PIPE-01
 - RC-PIPE-02
 - RC-PIPE-04
@@ -846,9 +888,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 - RC-BL-01 — Branching Logic Overview & Scope
 - RC-SURV-01 — Surveys – Basics
-- ⚠️ RC-ALERT-01 — Alerts & Notifications
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-ALERT-02 — Alert Management & Notification Log
 
 **Inbound links (referenced by):**
+- RC-ALERT-01
+- RC-ALERT-02
 - RC-PIPE-01
 - RC-PIPE-03
 
@@ -913,11 +958,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
-- ⚠️ RC-ALERT-01 — Automated Survey Invitations
+- RC-ALERT-01 — Alerts & Notifications: Setup
 - ⚠️ RC-SURV-02 — Survey Customizations (advanced settings)
 - ⚠️ RC-SURV-03 — Survey Queue
 
 **Inbound links (referenced by):**
+- RC-ALERT-01
 - RC-DE-07
 - RC-DE-11
 - RC-NAV-UI-01
