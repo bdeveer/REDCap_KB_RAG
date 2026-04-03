@@ -1,23 +1,26 @@
 RC-BL-01
 
-**Branching Logic -- Overview & Scope**
+**Branching Logic — Overview & Scope**
 
-  -------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-BL-01
-  **Domain**           Branching Logic
-  **Applies To**       All REDCap project types; requires Project Design and Setup rights
-  **Prerequisite**     RC-FD-02 --- Online Designer
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-BL-02 --- Syntax & Atomic Statements; RC-BL-03 --- Combining Statements; RC-BL-04 --- Structured Fields & Checkboxes; RC-FD-02 --- Online Designer
-  -------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+| **Article ID** | RC-BL-01 |
+|---|---|
+| **Domain** | Branching Logic |
+| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Prerequisite** | RC-FD-02 — Online Designer |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields & Checkboxes; RC-FD-02 — Online Designer |
 
-**1. Overview**
+---
 
-This article introduces REDCap\'s branching logic feature --- what it does, where it is used across the platform, how to access the branching logic editor, and what is out of scope for the basic series. It is the entry point for the Branching Logic knowledge base series.
+# 1. Overview
 
-**2. Key Concepts & Definitions**
+This article introduces REDCap's branching logic feature — what it does, where it is used across the platform, how to access the branching logic editor, and what is out of scope for the basic series. It is the entry point for the Branching Logic knowledge base series.
+
+---
+
+# 2. Key Concepts & Definitions
 
 **Branching Logic**
 
@@ -25,103 +28,91 @@ A feature that conditionally shows or hides a specific field in a REDCap instrum
 
 **Logic Statement**
 
-A conditional expression written in REDCap\'s logic syntax that evaluates to either true or false. Logic statements compare field values using operators (e.g., \[age\]\>=18). The same syntax is shared across multiple REDCap features beyond branching logic.
+A conditional expression written in REDCap's logic syntax that evaluates to either true or false. Logic statements compare field values using operators (e.g., `[age]>=18`). The same syntax is shared across multiple REDCap features beyond branching logic.
 
 **Logic Syntax**
 
-The language REDCap uses for all logic statements --- branching logic, calculated fields, survey invitations, alerts, reports, and more. Though commonly called \'branching logic syntax\', the syntax is more accurately a shared logic language used across the platform. This series uses the terms interchangeably.
+The language REDCap uses for all logic statements — branching logic, calculated fields, survey invitations, alerts, reports, and more. Though commonly called "branching logic syntax," the syntax is more accurately a shared logic language used across the platform. This series uses the terms interchangeably.
 
 **True / False Outcome**
 
 Every logic statement in REDCap resolves to either true or false. In branching logic specifically, true = show the field and false = hide the field. Other features use the same true/false outcome to trigger different actions (e.g., send or suppress a survey invitation).
 
-**3. What Branching Logic Does**
+---
+
+# 3. What Branching Logic Does
 
 The branching logic feature has one job: show or hide a specific field based on whether a logic statement is true or false.
 
--   If the statement is true: the field is visible to the user.
+- If the statement is true: the field is visible to the user.
+- If the statement is false: the field is hidden and its stored value is cleared automatically.
+- Branching logic is evaluated dynamically as data is entered — fields appear and disappear without a page reload.
+- The user cannot override or bypass branching logic during data entry.
 
--   If the statement is false: the field is hidden and its stored value is cleared automatically.
+> **Important:** When branching logic hides a field, any value previously stored in that field is automatically deleted. This is intentional behavior — it prevents orphaned data from remaining in hidden fields. Design your logic carefully to avoid inadvertently clearing data.
 
--   Branching logic is evaluated dynamically as data is entered --- fields appear and disappear without a page reload.
+---
 
--   The user cannot override or bypass branching logic during data entry.
-
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** When branching logic hides a field, any value previously stored in that field is automatically deleted. This is intentional behavior --- it prevents orphaned data from remaining in hidden fields. Design your logic carefully to avoid inadvertently clearing data.
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-**4. Where the Logic Syntax Is Used Across REDCap**
+# 4. Where the Logic Syntax Is Used Across REDCap
 
 The same logic syntax that powers branching logic is also used in several other REDCap features. Understanding this shared foundation makes it easier to learn each feature.
 
-  ----------------------------------- --------------------------------------------------------------------------- ------------------------------------------
-  **Feature**                         **How Logic Is Used**                                                       **Outcome Type**
-  Branching Logic (Online Designer)   Show or hide a specific field in an instrument                              True = show field; False = hide field
-  Survey Invitations                  Determine whether to send a survey invitation to a participant              True = send invitation; False = suppress
-  Survey Queue                        Determine whether a participant can proceed to the next survey in a queue   True = allow; False = skip
-  Reports                             Filter which records appear in a saved report                               True = include record; False = exclude
-  Project Dashboards                  Filter which records appear in a dashboard                                  True = include; False = exclude
-  Alerts & Notifications              Determine whether to trigger an automated alert                             True = send alert; False = suppress
-  Calculated Fields                   Perform arithmetic operations on field values                               Numerical result (not true/false)
-  Action Tags (selected)              Drive dynamic behavior such as default values or date comparisons           Varies by action tag
-  ----------------------------------- --------------------------------------------------------------------------- ------------------------------------------
+| **Feature** | **How Logic Is Used** | **Outcome Type** |
+|---|---|---|
+| Branching Logic (Online Designer) | Show or hide a specific field in an instrument | True = show field; False = hide field |
+| Survey Invitations | Determine whether to send a survey invitation to a participant | True = send invitation; False = suppress |
+| Survey Queue | Determine whether a participant can proceed to the next survey in a queue | True = allow; False = skip |
+| Reports | Filter which records appear in a saved report | True = include record; False = exclude |
+| Project Dashboards | Filter which records appear in a dashboard | True = include; False = exclude |
+| Alerts & Notifications | Determine whether to trigger an automated alert | True = send alert; False = suppress |
+| Calculated Fields | Perform arithmetic operations on field values | Numerical result (not true/false) |
+| Action Tags (selected) | Drive dynamic behavior such as default values or date comparisons | Varies by action tag |
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Both topics are out of scope for this series --- see dedicated training courses.
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Both topics are out of scope for this series — see dedicated training courses.
 
-**5. Accessing the Branching Logic Editor**
+---
+
+# 5. Accessing the Branching Logic Editor
 
 Branching logic for a specific field is configured in the Online Designer. There are two paths:
 
-**5.1 From the Instrument Field List**
+## 5.1 From the Instrument Field List
 
--   In the Online Designer, open the instrument that contains the field you want to add logic to.
+- In the Online Designer, open the instrument that contains the field you want to add logic to.
+- Locate the field in the instrument's field list.
+- Click the branching logic icon (a fork/branch symbol) next to the field. This opens the branching logic editor for that field.
 
--   Locate the field in the instrument\'s field list.
+## 5.2 From the Field Edit Dialog
 
--   Click the branching logic icon (a fork/branch symbol) next to the field. This opens the branching logic editor for that field.
+- In the Online Designer, open the field edit dialog for any field (click the pencil/edit icon).
+- Scroll to the Branching Logic section within the dialog.
+- Click **Open Branching Logic Editor** to open the dedicated editor, or type logic directly into the text field.
 
-**5.2 From the Field Edit Dialog**
+> **Tip:** The branching logic editor provides a drag-and-drop interface for building basic statements without typing syntax. For more complex or compound logic, typing directly into the syntax field is faster. Both methods produce identical results.
 
--   In the Online Designer, open the field edit dialog for any field (click the pencil/edit icon).
+---
 
--   Scroll to the Branching Logic section within the dialog.
+# 6. Scope of This Series
 
--   Click Open Branching Logic Editor to open the dedicated editor, or type logic directly into the text field.
+This knowledge base series covers the foundations of REDCap's logic syntax. The following topics are covered:
 
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Tip:** The branching logic editor provides a drag-and-drop interface for building basic statements without typing syntax. For more complex or compound logic, typing directly into the syntax field is faster. Both methods produce identical results.
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-**6. Scope of This Series**
-
-This knowledge base series covers the foundations of REDCap\'s logic syntax. The following topics are covered:
-
--   Logic syntax elements: operators, brackets, quotes, boolean operators (RC-BL-02)
-
--   Writing atomic (single-condition) logic statements (RC-BL-02)
-
--   Combining statements with AND, OR, and parentheses (RC-BL-03)
-
--   Writing logic for structured field types including checkboxes (RC-BL-04)
+- Logic syntax elements: operators, brackets, quotes, boolean operators (RC-BL-02)
+- Writing atomic (single-condition) logic statements (RC-BL-02)
+- Combining statements with AND, OR, and parentheses (RC-BL-03)
+- Writing logic for structured field types including checkboxes (RC-BL-04)
 
 The following topics are explicitly out of scope for this series and are covered in separate training:
 
--   Calculated fields and calculation syntax
+- Calculated fields and calculation syntax
+- Action tags that use logic syntax
+- Smart variables
+- Field embedding (curly bracket syntax)
+- Event-based logic in longitudinal projects
+- REDCap functions (e.g., datediff, rounddown)
 
--   Action tags that use logic syntax
+---
 
--   Smart variables
-
--   Field embedding (curly bracket syntax)
-
--   Event-based logic in longitudinal projects
-
--   REDCap functions (e.g., datediff, rounddown)
-
-**7. Common Questions**
+# 7. Common Questions
 
 **Q: Does branching logic affect every feature in REDCap that uses a logic statement?**
 
@@ -129,7 +120,7 @@ The following topics are explicitly out of scope for this series and are covered
 
 **Q: Can I use branching logic to show or hide an entire instrument (not just a field)?**
 
-**A:** Not directly through branching logic. Branching logic operates at the field level. Showing or hiding an entire instrument based on conditions is handled through other features --- for example, the Survey Queue (for surveys) or instrument-level access rights. See those dedicated articles.
+**A:** Not directly through branching logic. Branching logic operates at the field level. Showing or hiding an entire instrument based on conditions is handled through other features — for example, the Survey Queue (for surveys) or instrument-level access rights. See those dedicated articles.
 
 **Q: What happens to data in a field when branching logic hides it?**
 
@@ -141,28 +132,27 @@ The following topics are explicitly out of scope for this series and are covered
 
 **Q: Is branching logic case-sensitive?**
 
-**A:** It depends on what you are comparing. Hard-coded text values (strings) in logic statements are case-sensitive. For example, \[fav\_color\]=\"green\" will not match if the user typed \"Green\" with a capital G. Variable names and boolean operators (AND, OR) are not case-sensitive.
+**A:** It depends on what you are comparing. Hard-coded text values (strings) in logic statements are case-sensitive. For example, `[fav_color]="green"` will not match if the user typed "Green" with a capital G. Variable names and boolean operators (AND, OR) are not case-sensitive.
 
-**8. Common Mistakes & Gotchas**
+---
 
--   Assuming hidden fields retain their data: when branching logic hides a field, its stored value is deleted. If a user triggers the hide condition after entering data, that data is gone. Test all logic thoroughly in Development mode before collecting real data.
+# 8. Common Mistakes & Gotchas
 
--   Applying branching logic in Production without testing: the Online Designer\'s syntax checker validates that logic is syntactically correct, but it does not verify that it behaves as intended. Always test in a Development project or with test records before deploying.
+**Assuming hidden fields retain their data.** When branching logic hides a field, its stored value is deleted. If a user triggers the hide condition after entering data, that data is gone. Test all logic thoroughly in Development mode before collecting real data.
 
--   Confusing branching logic scope with instrument scope: branching logic only shows or hides individual fields. It cannot be used to show or hide an entire instrument.
+**Applying branching logic in Production without testing.** The Online Designer's syntax checker validates that logic is syntactically correct, but it does not verify that it behaves as intended. Always test in a Development project or with test records before deploying.
 
--   Expecting logic behavior to be the same in calculated fields: calculated fields use the same syntax but do not evaluate to true or false --- they always return a number. The semantics are different even though the syntax looks similar.
+**Confusing branching logic scope with instrument scope.** Branching logic only shows or hides individual fields. It cannot be used to show or hide an entire instrument.
 
-**9. Related Articles**
+**Expecting logic behavior to be the same in calculated fields.** Calculated fields use the same syntax but do not evaluate to true or false — they always return a number. The semantics are different even though the syntax looks similar.
 
--   RC-BL-02 --- Branching Logic Syntax & Atomic Statements (the logic language and writing your first statement)
+---
 
--   RC-BL-03 --- Combining Logic Statements (AND, OR, parentheses)
+# 9. Related Articles
 
--   RC-BL-04 --- Branching Logic for Structured Fields & Checkboxes
-
--   RC-FD-02 --- Online Designer (where branching logic is configured)
-
--   RC-FD-03 --- Data Dictionary (alternative location for writing logic in bulk)
-
--   RC-DE-02 --- Basic Data Entry (explains how branching logic appears from the data entry user\'s perspective)
+- RC-BL-02 — Branching Logic Syntax & Atomic Statements (the logic language and writing your first statement)
+- RC-BL-03 — Combining Logic Statements (AND, OR, parentheses)
+- RC-BL-04 — Branching Logic for Structured Fields & Checkboxes
+- RC-FD-02 — Online Designer (where branching logic is configured)
+- RC-FD-03 — Data Dictionary (alternative location for writing logic in bulk)
+- RC-DE-02 — Basic Data Entry (explains how branching logic appears from the data entry user's perspective)

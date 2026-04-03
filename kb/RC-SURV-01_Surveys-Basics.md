@@ -55,7 +55,7 @@ After completing this module, the user will be able to:
 - Distribute a survey using the Public Survey Link and the Participant List.
 - Identify the correct user rights required for survey-related tasks.
 - Review submitted survey responses and enter edit mode to modify a response.
-- Identify the survey status icons (grey dot, orange checkmark, green checkmark) and what each means.
+- Identify the survey status icons (grey dot, orange dot with white checkmark, green dot with white checkmark) and what each means.
 
 ---
 

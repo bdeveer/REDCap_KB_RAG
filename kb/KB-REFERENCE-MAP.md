@@ -132,6 +132,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 (prerequisite)
 - RC-DE-03 (prerequisite)
 - RC-DE-04
+- RC-IMP-01
 
 ---
 
@@ -301,6 +302,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-04 (prerequisite)
 - RC-FD-05 (prerequisite)
 - RC-FD-06 (prerequisite)
+- RC-IMP-01 (prerequisite)
 
 ---
 
@@ -500,6 +502,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-EXPRT-01 (prerequisite)
 - RC-FD-06 (prerequisite)
+- RC-IMP-01 (prerequisite)
 - RC-NAV-UI-02 (prerequisite)
 - RC-SURV-01 (prerequisite)
 

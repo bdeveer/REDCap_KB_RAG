@@ -10,7 +10,7 @@ RC-FD-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026-04-02 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-BL-01 — Branching Logic Overview |
+| **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-BL-01 — Branching Logic Overview and Scope |
 
 ---
 
