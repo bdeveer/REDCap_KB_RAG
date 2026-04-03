@@ -22,6 +22,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-07 | Computer Adaptive Tests (CAT) | RC-DE-07_Computer-Adaptive-Tests.md |
 | RC-DE-08 | Field Comment Log | RC-DE-08_Field-Comment-Log.md |
 | RC-DE-09 | Data Entry with Data Access Groups | RC-DE-09_Data-Entry-with-DAGs.md |
+| RC-DE-10 | Longitudinal & Repeated Data Entry | RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md |
+| RC-DE-11 | Instrument Save Options | RC-DE-11_Instrument-Save-Options.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |
@@ -180,6 +182,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-03 (prerequisite)
 - RC-DE-04
 - RC-DE-09
+- RC-DE-10 (prerequisite)
+- RC-DE-11
 - RC-IMP-01
 
 ---
@@ -205,6 +209,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-07 (prerequisite)
 - RC-DE-08 (prerequisite)
 - RC-DE-09 (prerequisite)
+- RC-DE-10 (prerequisite)
+- RC-DE-11 (prerequisite)
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 
@@ -225,6 +231,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-01
 - RC-DE-02
 - RC-DE-04
+- RC-DE-10
 - RC-LONG-01
 - RC-LONG-02
 
@@ -320,6 +327,40 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 *(none yet)*
+
+---
+
+### RC-DE-10 — Longitudinal & Repeated Data Entry
+
+**Prerequisites:** RC-DE-01 — Record Creation & the Record Home Page; RC-DE-02 — Basic Data Entry; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Events
+
+**Outbound links:**
+- RC-DE-01 — Record Creation & the Record Home Page
+- RC-DE-02 — Basic Data Entry
+- RC-DE-03 — Longitudinal Projects & DAGs
+- RC-DE-11 — Instrument Save Options
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Events
+- RC-LONG-01 — Longitudinal Project Setup ⚠️
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-DE-11
+
+---
+
+### RC-DE-11 — Instrument Save Options
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DE-01 — Record Creation & the Record Home Page
+- RC-DE-02 — Basic Data Entry
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-SURV-01 — Surveys: Basics ⚠️
+
+**Inbound links (referenced by):**
+- RC-DE-10
 
 ---
 
@@ -594,6 +635,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 
 **Inbound links (referenced by):**
+- RC-DE-10
 - RC-LONG-02 (prerequisite for longitudinal projects)
 - RC-PIPE-02
 - RC-RAND-01 (referenced as ⚠️ RC-LONG-01)
@@ -615,6 +657,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-03 — Longitudinal Projects & DAGs
 
 **Inbound links (referenced by):**
+- RC-DE-10
 - RC-LONG-01
 - RC-PIPE-02
 
@@ -649,6 +692,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-03 (listed as RC-NAV-02)
+- RC-DE-10 (prerequisite)
 - RC-LONG-01
 - RC-LONG-02
 - RC-NAV-REC-01
@@ -668,6 +712,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
+- RC-DE-10 (prerequisite)
 - RC-LONG-01
 - RC-LONG-02
 - RC-NAV-REC-01
@@ -874,6 +919,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-07
+- RC-DE-11
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 - RC-PIPE-04
