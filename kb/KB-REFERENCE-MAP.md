@@ -31,6 +31,9 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |
 | RC-EXPRT-04 | Data Export: De-identification & Formatting Options | RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md |
 | RC-EXPRT-05 | Data Export: Report Types & Other Export Options | RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md |
+| RC-EXPRT-06 | Custom Reports: Setup & Field Selection | RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md |
+| RC-EXPRT-07 | Custom Reports: Filtering & Ordering | RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md |
+| RC-EXPRT-08 | Custom Reports: Management & Organization | RC-EXPRT-08_Custom-Reports-Management-and-Organization.md |
 | RC-FD-01 | Form Design Overview | RC-FD-01_Form-Design-Overview.md |
 | RC-FD-02 | Online Designer | RC-FD-02_Online-Designer.md |
 | RC-FD-03 | Data Dictionary | RC-FD-03_Data-Dictionary.md |
@@ -119,6 +122,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-02 (prerequisite)
 - RC-BL-03
 - RC-BL-04
+- RC-EXPRT-07
 - RC-FD-06
 - RC-FD-07
 - RC-LONG-01
@@ -144,6 +148,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-03 (prerequisite)
 - RC-BL-04 (prerequisite)
+- RC-EXPRT-07
 - RC-FD-06
 
 ---
@@ -193,6 +198,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-01 — Randomization Concepts & Terminology
 
 **Inbound links (referenced by):**
+- RC-EXPRT-06
+- RC-EXPRT-07
+- RC-EXPRT-08
 - RC-USER-01
 - RC-USER-02
 - RC-USER-03
@@ -496,6 +504,56 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-01
 - RC-EXPRT-02
 - RC-EXPRT-03
+- RC-EXPRT-06 (prerequisite)
+
+---
+
+### RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+
+**Prerequisites:** RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+
+**Outbound links:**
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+- RC-EXPRT-08 — Custom Reports: Management & Organization
+- RC-DAG-01 — Data Access Groups
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-EXPRT-07 (prerequisite)
+- RC-EXPRT-08 (prerequisite)
+
+---
+
+### RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+
+**Prerequisites:** RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+
+**Outbound links:**
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-EXPRT-08 — Custom Reports: Management & Organization
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-EXPRT-06
+
+---
+
+### RC-EXPRT-08 — Custom Reports: Management & Organization
+
+**Prerequisites:** RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+
+**Outbound links:**
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-EXPRT-06
 
 ---
 
@@ -673,6 +731,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-10
+- RC-EXPRT-07
 - RC-LONG-02 (prerequisite for longitudinal projects)
 - RC-PIPE-02
 - RC-RAND-01 (referenced as ⚠️ RC-LONG-01)
@@ -1025,6 +1084,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-09
+- RC-EXPRT-06
+- RC-EXPRT-08
 - RC-USER-01
 - RC-USER-02
 - RC-USER-04
