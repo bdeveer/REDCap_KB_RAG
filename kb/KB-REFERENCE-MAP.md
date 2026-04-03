@@ -17,6 +17,11 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-02 | Basic Data Entry | RC-DE-02_Basic-Data-Entry.md |
 | RC-DE-03 | Longitudinal Projects & DAGs | RC-DE-03_Longitudinal-Projects-and-DAGs.md |
 | RC-DE-04 | Editing Data & Audit Trail | RC-DE-04_Editing-Data-and-Audit-Trail.md |
+| RC-DE-05 | Field Validations | RC-DE-05_Field-Validations.md |
+| RC-DE-06 | Bio-Medical Ontologies | RC-DE-06_Bio-Medical-Ontologies.md |
+| RC-DE-07 | Computer Adaptive Tests (CAT) | RC-DE-07_Computer-Adaptive-Tests.md |
+| RC-DE-08 | Field Comment Log | RC-DE-08_Field-Comment-Log.md |
+| RC-DE-09 | Data Entry with Data Access Groups | RC-DE-09_Data-Entry-with-DAGs.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |
@@ -156,6 +161,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-01 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 - RC-RAND-02 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 - RC-RAND-03 (previously ⚠️ RC-RIGHTS-01 — now resolved)
+- RC-DE-09
 
 ---
 
@@ -173,6 +179,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 (prerequisite)
 - RC-DE-03 (prerequisite)
 - RC-DE-04
+- RC-DE-09
 - RC-IMP-01
 
 ---
@@ -193,6 +200,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-01
 - RC-DE-03 (prerequisite)
 - RC-DE-04 (prerequisite)
+- RC-DE-05 (prerequisite)
+- RC-DE-06
+- RC-DE-07 (prerequisite)
+- RC-DE-08 (prerequisite)
+- RC-DE-09 (prerequisite)
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 
@@ -230,6 +242,84 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-DE-02
 - RC-DE-03
+- RC-DE-08
+
+---
+
+### RC-DE-05 — Field Validations
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-DE-06 — Bio-Medical Ontologies
+- RC-DE-08 — Field Comment Log
+- RC-FD-01 — Form Design Overview
+
+**Inbound links (referenced by):**
+- RC-DE-06 (prerequisite)
+- RC-DE-08
+
+---
+
+### RC-DE-06 — Bio-Medical Ontologies
+
+**Prerequisites:** RC-DE-05 — Field Validations
+
+**Outbound links:**
+- RC-DE-05 — Field Validations
+- RC-DE-02 — Basic Data Entry
+- RC-DE-08 — Field Comment Log
+
+**Inbound links (referenced by):**
+- RC-DE-05
+
+---
+
+### RC-DE-07 — Computer Adaptive Tests (CAT)
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-DE-08 — Field Comment Log
+- RC-SURV-01 — Surveys: Basics
+
+**Inbound links (referenced by):**
+*(none yet)*
+
+---
+
+### RC-DE-08 — Field Comment Log
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-DE-04 — Editing Data & Audit Trail
+- RC-DE-05 — Field Validations
+- RC-FD-07 — Field Embedding
+
+**Inbound links (referenced by):**
+- RC-DE-05
+- RC-DE-06
+- RC-DE-07
+- RC-DE-09
+
+---
+
+### RC-DE-09 — Data Entry with Data Access Groups
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DAG-01 — Data Access Groups
+- RC-DE-01 — Record Creation & the Record Home Page
+- RC-DE-02 — Basic Data Entry
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+*(none yet)*
 
 ---
 
@@ -342,6 +432,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 
 **Inbound links (referenced by):**
+- RC-DE-05
 - RC-EXPRT-04
 - RC-FD-02 (prerequisite)
 - RC-FD-03 (prerequisite)
@@ -468,6 +559,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-BL-01 (out-of-scope reference updated to point here)
+- RC-DE-08
 
 ---
 
@@ -781,6 +873,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - ⚠️ RC-SURV-03 — Survey Queue
 
 **Inbound links (referenced by):**
+- RC-DE-07
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 - RC-PIPE-04
@@ -839,6 +932,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 
 **Inbound links (referenced by):**
+- RC-DE-09
 - RC-USER-01
 - RC-USER-02
 - RC-USER-04
