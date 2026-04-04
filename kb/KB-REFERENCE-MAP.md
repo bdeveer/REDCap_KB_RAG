@@ -41,6 +41,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-05 | Codebook | RC-FD-05_Codebook.md |
 | RC-FD-06 | Online Designer – Instrument and Field Management | RC-FD-06_Online-Designer-Instrument-and-Field-Management.md |
 | RC-FD-07 | Field Embedding | RC-FD-07_Field-Embedding.md |
+| RC-FD-08 | Data Dictionary: Column Reference & Advanced Techniques | RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
@@ -708,6 +709,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-01 (out-of-scope reference updated to point here)
 - RC-DE-08
+
+---
+
+### RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+
+**Prerequisites:** RC-FD-03 — Data Dictionary
+
+**Outbound links:**
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-FD-05 — Codebook
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-LONG-01 — Longitudinal Project Setup
+- ⚠️ RC-AT-01 — Action Tags
+
+**Inbound links (referenced by):**
+- (none yet)
 
 ---
 
