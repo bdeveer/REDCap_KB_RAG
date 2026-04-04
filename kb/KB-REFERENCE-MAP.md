@@ -8,6 +8,10 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
+| RC-AI-01 | REDCap AI Tools: Overview & Security | RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md |
+| RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
+| RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |
+| RC-AI-04 | AI Summarization | RC-AI-04_AI-Summarization.md |
 | RC-ALERT-01 | Alerts & Notifications: Setup | RC-ALERT-01_Alerts-and-Notifications-Setup.md |
 | RC-ALERT-02 | Alert Management & Notification Log | RC-ALERT-02_Alert-Management-and-Notification-Log.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
@@ -75,6 +79,70 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 ## Per-Article Reference Details
 
 Each entry lists: **Prerequisites** (must be read first), **Outbound links** (articles this one references), and **Inbound links** (articles that reference this one). ⚠️ marks articles not yet in the KB.
+
+---
+
+### RC-AI-01 — REDCap AI Tools: Overview & Security
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-AI-02 — AI Writing Tools
+- RC-AI-03 — AI Translations
+- RC-AI-04 — AI Summarization
+- RC-NAV-UI-01 — Project Navigation UI
+
+**Inbound links (referenced by):**
+- RC-AI-02 — AI Writing Tools
+- RC-AI-03 — AI Translations
+- RC-AI-04 — AI Summarization
+
+---
+
+### RC-AI-02 — AI Writing Tools
+
+**Prerequisites:** RC-AI-01 — REDCap AI Tools: Overview & Security
+
+**Outbound links:**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-AI-03 — AI Translations
+- RC-AI-04 — AI Summarization
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+
+---
+
+### RC-AI-03 — AI Translations
+
+**Prerequisites:** RC-AI-01 — REDCap AI Tools: Overview & Security
+
+**Outbound links:**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-AI-02 — AI Writing Tools
+- RC-AI-04 — AI Summarization
+- ⚠️ RC-MLM-01 — Multi-Language Management Overview
+
+**Inbound links (referenced by):**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+
+---
+
+### RC-AI-04 — AI Summarization
+
+**Prerequisites:** RC-AI-01 — REDCap AI Tools: Overview & Security
+
+**Outbound links:**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-AI-02 — AI Writing Tools
+- RC-AI-03 — AI Translations
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+
+**Inbound links (referenced by):**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
 
 ---
 
@@ -433,6 +501,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-02 — Project Menu Reference
 
 **Inbound links (referenced by):**
+- RC-AI-04 — AI Summarization
 - RC-EXPRT-02 (prerequisite)
 - RC-EXPRT-03 (prerequisite)
 - RC-EXPRT-04 (prerequisite)
@@ -531,6 +600,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
+- RC-AI-04 — AI Summarization
 - RC-EXPRT-07 (prerequisite)
 - RC-EXPRT-08 (prerequisite)
 
@@ -549,6 +619,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
+- RC-AI-04 — AI Summarization
 - RC-EXPRT-06
 
 ---
@@ -603,6 +674,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 
 **Inbound links (referenced by):**
+- RC-AI-02 — AI Writing Tools
 - RC-BL-01 (prerequisite)
 - RC-BL-02
 - RC-FD-01
@@ -887,6 +959,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 
 **Inbound links (referenced by):**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-EXPRT-01 (prerequisite)
 - RC-FD-06 (prerequisite)
 - RC-IMP-01 (prerequisite)

@@ -248,5 +248,6 @@ For every article the new article references, find its Per-Article Reference Det
 | LONG | Longitudinal & Repeated Setup | Covers longitudinal mode, arms/events, repeated instruments & events |
 | PIPE | Piping | Covers piping basics, longitudinal/repeated piping, modifiers, smart variables, emails & notifications |
 | ALERT | Alerts & Notifications | — |
+| AI | AI Tools | Covers writing tools, AI translations, and AI summarization |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.
