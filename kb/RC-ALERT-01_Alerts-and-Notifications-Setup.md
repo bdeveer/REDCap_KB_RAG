@@ -8,7 +8,7 @@ RC-ALERT-01
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-01 — Surveys – Basics; RC-ALERT-02 — Alert Management & Notification Log |
@@ -294,6 +294,10 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 **Q: How do I include a survey link in an alert?**
 
 **A:** Use the `[survey-link:instrument_name]` smart variable, where `instrument_name` is the REDCap variable name of the instrument (not its display label). Unlike ASIs, alerts are not pre-associated with a specific survey, so you must specify the instrument name explicitly.
+
+**Q: Will alerts fire when a project is in draft/development mode?**
+
+**A:** No. Alerts only fire once a project has been moved to **Production status**. Projects in draft mode can have fully configured alerts, but they remain inactive and will not trigger or send until the project status is changed to production. This prevents unwanted alert sends during the design and testing phases of project development. To move a project to production, a user with Project Design and Setup rights must access the Project Home page and change the project status.
 
 ---
 
