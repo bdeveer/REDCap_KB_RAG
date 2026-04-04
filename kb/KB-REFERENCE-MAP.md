@@ -60,6 +60,10 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-SURV-01 | Surveys – Basics | RC-SURV-01_Surveys-Basics.md |
 | RC-SURV-02 | Survey Settings: Basic Options & Design | RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md |
 | RC-SURV-03 | Survey Settings: Behavior, Access & Termination | RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md |
+| RC-SURV-04 | Survey Link Types & Access Methods | RC-SURV-04_Survey-Link-Types-and-Access-Methods.md |
+| RC-SURV-05 | Participant List & Manual Survey Invitations | RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md |
+| RC-SURV-06 | Automated Survey Invitations (ASI) | RC-SURV-06_Automated-Survey-Invitations.md |
+| RC-SURV-07 | Survey Queue | RC-SURV-07_Survey-Queue.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
@@ -89,6 +93,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-ALERT-02 (prerequisite)
+- RC-SURV-06
 
 ---
 
@@ -104,6 +109,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-ALERT-01
+- RC-SURV-05
 
 ---
 
@@ -132,6 +138,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-01
 - RC-PIPE-03
 - RC-PIPE-04
+- RC-SURV-06
+- RC-SURV-07
 
 ---
 
@@ -662,6 +670,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-02
 - RC-FD-03
 - RC-FD-06
+- RC-SURV-04
+- RC-SURV-07
 - RC-PIPE-01
 
 ---
@@ -738,6 +748,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-02
 - RC-RAND-01 (referenced as ⚠️ RC-LONG-01)
 - RC-RAND-02 (referenced as ⚠️ RC-LONG-01)
+- RC-SURV-04
+- RC-SURV-06
+- RC-SURV-07
 
 ---
 
@@ -760,6 +773,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-10
 - RC-LONG-01
 - RC-PIPE-02
+- RC-SURV-07
 
 ---
 
@@ -898,6 +912,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-01 (prerequisite)
 - RC-PIPE-02 (prerequisite)
 - RC-PIPE-03 (prerequisite)
+- RC-SURV-05
+- RC-SURV-06
 - RC-PIPE-04 (prerequisite)
 
 ---
@@ -937,6 +953,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-01
 - RC-PIPE-02
 - RC-PIPE-04
+- RC-SURV-04
+- RC-SURV-05
+- RC-SURV-06
+- RC-SURV-07
 
 ---
 
@@ -1014,6 +1034,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Prerequisites:** RC-NAV-UI-01 — Project Navigation UI; RC-FD-02 — Online Designer
 
+
 **Outbound links:**
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
@@ -1032,6 +1053,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-04
 - RC-SURV-02 (prerequisite)
 - RC-SURV-03 (prerequisite)
+- RC-SURV-04
 
 ---
 
@@ -1068,6 +1090,82 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-SURV-01 (previously ⚠️ RC-SURV-03 — now resolved)
 - RC-SURV-02 (outbound link)
+- RC-SURV-04
+- RC-SURV-07
+
+---
+
+### RC-SURV-04 — Survey Link Types & Access Methods
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-PIPE-03 — Smart Variables Overview
+- RC-FD-05 — Codebook
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-SURV-05 (prerequisite)
+
+---
+
+### RC-SURV-05 — Participant List & Manual Survey Invitations
+
+**Prerequisites:** RC-SURV-04 — Survey Link Types & Access Methods
+
+**Outbound links:**
+- RC-SURV-04 — Survey Link Types & Access Methods
+- RC-SURV-06 — Automated Survey Invitations
+- RC-SURV-07 — Survey Queue
+- RC-ALERT-02 — Alert Management & Notification Log
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+
+**Inbound links (referenced by):**
+- RC-SURV-06 (prerequisite)
+
+---
+
+### RC-SURV-06 — Automated Survey Invitations (ASI)
+
+**Prerequisites:** RC-SURV-05 — Participant List & Manual Survey Invitations
+
+**Outbound links:**
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-07 — Survey Queue
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-SURV-07 (prerequisite)
+
+---
+
+### RC-SURV-07 — Survey Queue
+
+**Prerequisites:** RC-SURV-06 — Automated Survey Invitations
+
+**Outbound links:**
+- RC-SURV-06 — Automated Survey Invitations
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-PIPE-03 — Smart Variables Overview
+- RC-FD-05 — Codebook
+
+**Inbound links (referenced by):**
+*(none yet)*
 
 ---
 
