@@ -8,8 +8,13 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
-| RC-AT-01 | Action Tags: Basics | RC-AT-01_Action-Tags-Basics.md |
-| RC-AT-02 | Action Tags: Intermediate | RC-AT-02_Action-Tags-Intermediate.md |
+| RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
+| RC-AT-02 | Action Tags: @HIDDEN & @READONLY | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
+| RC-AT-03 | Action Tags: Radio Button & Dropdown | RC-AT-03_Action-Tags-Radio-Dropdown.md |
+| RC-AT-04 | Action Tags: Checkboxes | RC-AT-04_Action-Tags-Checkboxes.md |
+| RC-AT-05 | Action Tags: Free Text | RC-AT-05_Action-Tags-Free-Text.md |
+| RC-AT-06 | Action Tags: Autofill | RC-AT-06_Action-Tags-Autofill.md |
+| RC-AT-07 | Action Tags: Cosmetic | RC-AT-07_Action-Tags-Cosmetic.md |
 | RC-AI-01 | REDCap AI Tools: Overview & Security | RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md |
 | RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
 | RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |
