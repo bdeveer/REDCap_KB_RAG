@@ -77,6 +77,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-SURV-05 | Participant List & Manual Survey Invitations | RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md |
 | RC-SURV-06 | Automated Survey Invitations (ASI) | RC-SURV-06_Automated-Survey-Invitations.md |
 | RC-SURV-07 | Survey Queue | RC-SURV-07_Survey-Queue.md |
+| RC-SURV-08 | e-Consent Framework: Setup & Management | RC-SURV-08_e-Consent-Framework-Setup-and-Management.md |
+| RC-SURV-09 | PDF Snapshots of Records | RC-SURV-09_PDF-Snapshots-of-Records.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
@@ -171,6 +173,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-ALERT-02 (prerequisite)
 - RC-SURV-06
+- RC-SURV-08
+- RC-SURV-09
 
 ---
 
@@ -206,6 +210,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-01
 - RC-BL-02 (prerequisite)
 - RC-BL-03
+- RC-SURV-09
 - RC-BL-04
 - RC-EXPRT-07
 - RC-FD-06
@@ -296,6 +301,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-02 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 - RC-RAND-03 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 - RC-DE-09
+- RC-SURV-08
 
 ---
 
@@ -1174,6 +1180,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-02 (prerequisite)
 - RC-SURV-03 (prerequisite)
 - RC-SURV-04
+- RC-SURV-08 (prerequisite)
+- RC-SURV-09 (prerequisite)
 
 ---
 
@@ -1191,6 +1199,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-SURV-01 (previously ⚠️ RC-SURV-02 — now resolved)
 - RC-SURV-03 (prerequisite)
+- RC-SURV-08 (prerequisite)
 
 ---
 
@@ -1266,6 +1275,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-SURV-07 (prerequisite)
+- RC-SURV-09
 
 ---
 
@@ -1286,6 +1296,46 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 *(none yet)*
+
+---
+
+### RC-SURV-08 — e-Consent Framework: Setup & Management
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design
+
+**Outbound links:**
+- RC-SURV-09 — PDF Snapshots of Records
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-04 — Survey Link Types & Access Methods
+- RC-DAG-01 — Data Access Groups
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-FD-02 — Online Designer
+- RC-AT-01 — Action Tags: Overview
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-ALERT-01 — Alerts & Notifications: Setup
+
+**Inbound links (referenced by):**
+- RC-SURV-09 — PDF Snapshots of Records
+
+---
+
+### RC-SURV-09 — PDF Snapshots of Records
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics
+
+**Outbound links:**
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-06 — Automated Survey Invitations (ASI)
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-SURV-08 — e-Consent Framework: Setup & Management
 
 ---
 
