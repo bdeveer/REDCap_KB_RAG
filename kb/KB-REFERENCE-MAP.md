@@ -8,6 +8,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
+| RC-AT-01 | Action Tags: Basics | RC-AT-01_Action-Tags-Basics.md |
+| RC-AT-02 | Action Tags: Intermediate | RC-AT-02_Action-Tags-Intermediate.md |
 | RC-AI-01 | REDCap AI Tools: Overview & Security | RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md |
 | RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
 | RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |
@@ -30,6 +32,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-09 | Data Entry with Data Access Groups | RC-DE-09_Data-Entry-with-DAGs.md |
 | RC-DE-10 | Longitudinal & Repeated Data Entry | RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md |
 | RC-DE-11 | Instrument Save Options | RC-DE-11_Instrument-Save-Options.md |
+| RC-DE-12 | Data Resolution Workflow | RC-DE-12_Data-Resolution-Workflow.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |
@@ -429,6 +432,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 — Basic Data Entry
 - RC-DE-04 — Editing Data & Audit Trail
 - RC-DE-05 — Field Validations
+- RC-DE-12 — Data Resolution Workflow
 - RC-FD-07 — Field Embedding
 
 **Inbound links (referenced by):**
@@ -436,6 +440,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-06
 - RC-DE-07
 - RC-DE-09
+- RC-DE-12
 
 ---
 
@@ -485,6 +490,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-10
+
+---
+
+### RC-DE-12 — Data Resolution Workflow
+
+**Prerequisites:** RC-DE-08 — Field Comment Log
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-DE-04 — Editing Data & Audit Trail
+- RC-DE-05 — Field Validations
+- RC-DE-08 — Field Comment Log
+- RC-DAG-01 — Data Access Groups
+- RC-USER-03 — User Rights: Configuring User Privileges ⚠️
+
+**Inbound links (referenced by):**
+- RC-DE-08
 
 ---
 

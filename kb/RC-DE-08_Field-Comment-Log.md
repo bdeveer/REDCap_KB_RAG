@@ -7,10 +7,10 @@ RC-DE-08
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types; data entry users with appropriate access |
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow |
 
 ---
 
@@ -95,23 +95,64 @@ You can return to any instrument in any record at any time to review comments on
 
 For a cross-record, cross-instrument overview of all comments, use the **Field Comment Log** application in the project menu. This is the most efficient way to conduct a data quality review across the entire dataset.
 
-The application allows you to:
-
-- Filter comments by instrument, record, variable, or user
-- Search the text of comments for specific keywords
-- View a list of all matching comment entries
-
 Each row in the results list displays the record, the instrument, the variable, the comment text, the author, and the timestamp.
 
-### 6.3 Navigating from the Log to a Record
+### 6.3 Filtering Comments
 
-From the field comment log application, each result row includes a clickable record ID under the "Record" column. Clicking the record ID navigates directly to the corresponding instrument within that record, where you can review the variable in context, add a new comment, or correct the data entry.
+The Field Comment Log application supports multiple filters that can be combined to narrow results. Filters do not apply automatically — click **Apply filters** after making your selections. Use the **Reset** link to return all filters to their defaults.
 
-Clicking the **X comment** button (where X is the number of comments on that variable) opens the comment popup for that variable, allowing you to read existing comments or add a new one without navigating away from the log.
+| Filter | Description |
+|---|---|
+| Records | Filter to a single record. The list is populated from all existing records in the project, even those without comments. |
+| Events | Filter to a specific event (longitudinal projects only; one event at a time). |
+| Fields | Filter to a specific variable — for example, to see all comments attached to the Date of Birth variable across all records. |
+| Users | Filter to comments made by a specific user. |
+| Data Access Group | Filter to comments from a specific DAG. Useful for site-by-site data quality review in multi-site projects. |
+| Keyword | Search the text of comments for one or more words. Multiple keywords can be entered, separated by a space — REDCap will return comments containing any of the entered terms. Supports partial-word matches. |
+
+### 6.4 Replying Directly from the Log
+
+Each row in the comment log includes a **Comment** button. Clicking it opens the comment popup for that variable directly within the log, without navigating to the record. This allows you to respond to comments across multiple records efficiently without opening each record individually.
+
+### 6.5 Navigating from the Log to a Record
+
+Each result row includes a clickable link in the record column. Clicking it opens a new browser tab, navigates directly to the relevant instrument within that record, and jumps to the variable with the comment. This is useful when you need to review or correct the data entry in context.
+
+### 6.6 Exporting the Comment Log
+
+Click **Export the entire log** from the Field Comment Log application to download a CSV file of all comments accessible to your user account. The export includes the comment author, timestamp, and variable identification. For longitudinal and repeated-instruments projects, the export also includes event and instance information.
 
 ---
 
-# 7. Common Questions
+# 7. Enabling and Configuring the Field Comment Log
+
+### 7.1 Enabling the Feature
+
+The Field Comment Log is enabled by default for most REDCap projects. To confirm or change the active mode:
+
+1. Navigate to the **Project Setup** page.
+2. Scroll down to **Enable optional modules and customizations**.
+3. Click **Additional customizations**.
+4. Scroll to the section labeled **Enable the Field Comment Log or Data Resolution Workflow (Data Queries)?**
+5. Confirm **Field Comment Log** is selected, or select it if another mode is active.
+6. Click **Save**.
+
+REDCap projects support three modes: Field Comment Log, Data Resolution Workflow, and None. Only one mode can be active at a time. For more on the differences between modes and guidance on when to use DRW instead of the Field Comment Log, see RC-DE-12 — Data Resolution Workflow.
+
+### 7.2 Enabling Comment Editing and Deletion
+
+By default, comments cannot be edited or deleted after they are saved. To allow users to modify comments:
+
+1. Follow steps 1–4 above to open the Additional customizations panel.
+2. Locate the **Field Comment Log** settings section.
+3. Check the box to enable editing and deletion.
+4. Click **Save**.
+
+When enabled, a pencil (edit) icon and a red X (delete) icon appear next to each comment in the popup. These actions are auditable — both edits and deletions are recorded in the project log.
+
+---
+
+# 8. Common Questions
 
 **Q: Does adding a comment change the value stored in the dataset?**
 
@@ -119,7 +160,7 @@ Clicking the **X comment** button (where X is the number of comments on that var
 
 **Q: Can I delete or edit a comment after saving it?**
 
-**A:** Standard user accounts cannot edit or delete existing comments — they are permanent once saved. Project administrators may have additional options. Comments are timestamped and attributed, making them part of the audit record for the project.
+**A:** This depends on a project-level setting. By default, comments are permanent once saved. A project administrator can enable the ability to edit and delete comments in **Project Setup → Additional customizations**. When enabled, an edit (pencil) icon and a delete (red X) icon appear next to each comment in the popup. Note that editing or deleting a comment is recorded in the overall project log — these actions are auditable even when permitted.
 
 **Q: I cannot see any comment balloons in my instrument. Why?**
 
@@ -139,7 +180,7 @@ Clicking the **X comment** button (where X is the number of comments on that var
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Assuming comments affect the dataset.** Comments are entirely separate from data values. A comment documenting a missing value does not count as an entry — the field is still blank in the dataset and exports. Take care that downstream data cleaning processes account for the distinction between "blank with a comment" and "blank without a comment."
 
@@ -147,13 +188,14 @@ Clicking the **X comment** button (where X is the number of comments on that var
 
 **Not establishing team commenting standards before data collection.** If some team members use comments extensively and others never do, the field comment log becomes an unreliable data quality signal. Agree on when and how comments should be used at the project kickoff.
 
-**Forgetting that comments are permanent.** Comments cannot be deleted by standard users. Avoid including sensitive information, speculation, or preliminary conclusions in comments — they form part of the permanent project record.
+**Assuming comments are always permanent — or always editable.** By default, comments cannot be edited or deleted by any user. A project-level setting can enable this ability. Regardless of whether editing is enabled, always treat comments as part of the project's audit record: avoid including sensitive information, speculation, or preliminary conclusions. If your project does allow editing, be aware that edits and deletions are logged in the project log and are not truly erased from the audit trail.
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-DE-02 — Basic Data Entry (foundational data entry skills)
 - RC-DE-04 — Editing Data & Audit Trail (related audit and annotation features)
 - RC-DE-05 — Field Validations (the field comment log is often used in conjunction with validation errors to document data issues)
+- RC-DE-12 — Data Resolution Workflow (the structured alternative to the Field Comment Log, with query tracking, assignment, and resolution metrics)
 - RC-FD-07 — Field Embedding (explains why embedded variables may lack a comment balloon)
