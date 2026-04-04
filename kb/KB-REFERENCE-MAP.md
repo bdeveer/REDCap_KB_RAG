@@ -58,6 +58,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-RAND-02 | Randomization Setup Guide | RC-RAND-02_Randomization-Setup.md |
 | RC-RAND-03 | Working with & Managing Randomization | RC-RAND-03_Working-with-Randomization.md |
 | RC-SURV-01 | Surveys – Basics | RC-SURV-01_Surveys-Basics.md |
+| RC-SURV-02 | Survey Settings: Basic Options & Design | RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md |
+| RC-SURV-03 | Survey Settings: Behavior, Access & Termination | RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
@@ -1018,8 +1020,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-02 — Online Designer
 - RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-ALERT-01 — Alerts & Notifications: Setup
-- ⚠️ RC-SURV-02 — Survey Customizations (advanced settings)
-- ⚠️ RC-SURV-03 — Survey Queue
+- RC-SURV-02 — Survey Settings: Basic Options & Design *(previously ⚠️ RC-SURV-02 — now resolved)*
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination *(previously ⚠️ RC-SURV-03 — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-ALERT-01
@@ -1028,6 +1030,44 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01
 - RC-NAV-UI-02
 - RC-PIPE-04
+- RC-SURV-02 (prerequisite)
+- RC-SURV-03 (prerequisite)
+
+---
+
+### RC-SURV-02 — Survey Settings: Basic Options & Design
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-FD-02 — Online Designer
+- RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+
+**Inbound links (referenced by):**
+- RC-SURV-01 (previously ⚠️ RC-SURV-02 — now resolved)
+- RC-SURV-03 (prerequisite)
+
+---
+
+### RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-PIPE-03 — Smart Variables Overview
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-SURV-01 (previously ⚠️ RC-SURV-03 — now resolved)
+- RC-SURV-02 (outbound link)
 
 ---
 
@@ -1122,8 +1162,8 @@ The following article IDs are referenced by existing KB articles but have no cor
 | ⚠️ RC-AT-01 | Action Tags | RC-FD-07 |
 | ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
-| ⚠️ RC-SURV-02 | Survey Customizations (advanced settings) | RC-SURV-01 |
-| ⚠️ RC-SURV-03 | Survey Queue | RC-SURV-01 |
+| ~~⚠️ RC-SURV-02~~ | ~~Survey Customizations (advanced settings)~~ | *Resolved — see RC-SURV-02 — Survey Settings: Basic Options & Design* |
+| ~~⚠️ RC-SURV-03~~ | ~~Survey Queue~~ | *Resolved — see RC-SURV-03 — Survey Settings: Behavior, Access & Termination* |
 
 *Note: ⚠️ RC-RIGHTS-01 and ⚠️ RC-USER-01 have been resolved. RC-USER-01 through RC-USER-04 and RC-DAG-01 now cover the User Rights and DAGs topic area. The RIGHTS slug exceeded the 5-character limit; the canonical slug is USER.*
 
