@@ -7,7 +7,7 @@ RC-PIPE-02
 | **Domain** | Piping |
 | **Applies To** | Longitudinal projects; projects with repeated instruments or repeated events; all projects using piping modifiers |
 | **Prerequisite** | RC-PIPE-01 — Piping Basics, Syntax & Field Types |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-PIPE-01 — Piping Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup |
@@ -92,23 +92,91 @@ If the source variable comes from a regular (non-repeated) instrument or event, 
 
 ## 4.2 Piping Out of a Repeated Instrument or Event
 
-It is currently not possible to pipe a value out of a repeated instrument or repeated event in a consistent way. REDCap has no mechanism to determine which specific instance should serve as the source. Attempting to pipe from a repeated instrument to a non-repeated destination produces unpredictable or blank results.
+It is possible to pipe a value out of a repeated instrument or repeated event using two methods. Both methods allow you to specify which instance to reference when piping to a non-repeated destination.
+
+### Method 1: Direct Targeting by Instance Number
+
+If you know the specific instance number, you can reference any variable in that instance using the following syntax:
+
+```
+[variable_name][instance_number]
+```
+
+**Example:** To pipe a medication name from the first instance:
+
+```
+[med_name][1]
+```
+
+This retrieves the value of `med_name` specifically from instance 1 of the repeated series.
+
+**Longitudinal projects:** If you are piping from a repeated instrument or event in a longitudinal project, you must prepend the event name:
+
+```
+[event_name][variable_name][instance_number]
+```
+
+**Example:**
+
+```
+[event_1_arm_1][med_name][1]
+```
+
+### Method 2: Smart Variable Targeting
+
+You can use the `[first-instance]` and `[last-instance]` smart variables to dynamically reference the first or last instance in a repeated series without knowing the exact instance number:
+
+```
+[variable_name][smart_variable]
+```
+
+**Example:** To pipe a medication name from the first instance:
+
+```
+[med_name][first-instance]
+```
+
+**Longitudinal projects:** If you are piping from a repeated instrument or event in a longitudinal project, prepend the event name:
+
+```
+[event_name][variable_name][smart_variable]
+```
+
+**Example:**
+
+```
+[event_1_arm_1][med_name][first-instance]
+```
+
+The available smart variables for this purpose are `[first-instance]` and `[last-instance]`. Note that `[last-instance]` always points to the most recently created instance and will change if new instances are added later.
 
 ## 4.3 Piping Between Instances (Within the Same Repeated Series)
 
-To pipe a value from one instance to another within the same series of repeated instruments or events, use an instance smart variable as a qualifier — in the same position as an event name in cross-event piping:
+Piping within a repeated instance series works the same way as piping out of a repeated series (section 4.2), but with additional smart variables available that allow you to dynamically target different instances relative to the current one.
+
+### Direct Targeting by Instance Number
+
+Within a repeated series, you can reference any instance by its number:
 
 ```
-[instance_smart_variable][variable_name]
+[variable_name][instance_number]
 ```
 
-**Example:** To pipe `visit_date` from the very first instance in the series:
+**Example:** To pipe a value from the first instance within the same repeated series:
 
 ```
-[first-instance][visit_date]
+[med_name][1]
 ```
 
-The relevant instance smart variables are:
+### Smart Variable Targeting
+
+You can use instance smart variables to dynamically target different instances without knowing exact instance numbers:
+
+```
+[variable_name][smart_variable]
+```
+
+**Available instance smart variables:**
 
 | **Smart Variable** | **Target** |
 |---|---|
@@ -117,9 +185,27 @@ The relevant instance smart variables are:
 | `[first-instance]` | The first instance in the series |
 | `[last-instance]` | The most recently created instance in the series — note this changes as more instances are added |
 
-> **Note:** These smart variables are instance qualifiers, not standalone values. They must be combined with a variable name bracket to form a valid pipe reference.
+**Example:** To pipe a medication name from the first instance:
 
-For a broader overview of smart variables, see RC-PIPE-03 — Smart Variables Overview.
+```
+[med_name][first-instance]
+```
+
+To pipe a visit date from the previous instance:
+
+```
+[visit_date][previous-instance]
+```
+
+> **Note:** Instance smart variables are instance qualifiers, not standalone values. They must be combined with a variable name bracket to form a valid pipe reference — e.g., `[visit_date][first-instance]`, not just `[first-instance]`.
+
+**Longitudinal projects with repeated instruments/events:** When combining event and instance qualifiers, place the event name first, then the variable name, then the instance qualifier:
+
+```
+[event_name][variable_name][instance_number_or_smart_variable]
+```
+
+For a broader overview of all smart variables, see RC-PIPE-03 — Smart Variables Overview.
 
 ---
 
@@ -229,6 +315,14 @@ These modifiers apply to text box fields with date or time validation:
 
 **A:** Append `:hideunderscore` to the variable name — e.g., `[first_name:hideunderscore]`. This causes the blank to appear as truly empty rather than as `______`. This modifier works on both field variables and Smart Variables.
 
+**Q: Can I pipe a value out of a repeated instrument or event to a non-repeated location?**
+
+**A:** Yes — use one of two methods. **Method 1 (Direct targeting):** If you know the instance number, use `[variable_name][instance_number]` — e.g., `[med_name][1]` to reference the first instance. **Method 2 (Smart variables):** Use `[variable_name][first-instance]` or `[variable_name][last-instance]` to dynamically target the first or last instance without knowing the exact number. For longitudinal projects, prepend the event name: `[event_name][variable_name][instance_number_or_smart_variable]`.
+
+**Q: What's the difference between piping out of a repeated instrument and piping between instances in the same repeated series?**
+
+**A:** Piping out targets a non-repeated location (e.g., a field on a regular instrument); piping between instances targets another field within the same repeated series. Both use the same syntax, but within a repeated series you have access to additional smart variables like `[previous-instance]` and `[next-instance]` that are context-aware relative to the current instance.
+
 ---
 
 # 7. Common Mistakes & Gotchas
@@ -237,7 +331,7 @@ These modifiers apply to text box fields with date or time validation:
 
 **Using a human-readable event label instead of the system event name.** The event name in piping syntax (e.g., `event_1_arm_1`) is not the same as the label shown to users (e.g., "Baseline Visit"). Look up the system name on the Define My Events page.
 
-**Attempting to pipe out of a repeated instrument.** This is a common expectation that REDCap does not currently support. If you need a value from a specific instance downstream, restructure the project so the value exists in a non-repeated location, or use smart variable instance qualifiers to stay within the repeated series.
+**Forgetting that instance numbers must be explicitly specified when piping out of a repeated instrument.** When you pipe a variable out of a repeated instrument to a non-repeated location, REDCap needs to know which instance to reference. Use either Method 1 (explicit instance number like `[med_name][1]`) or Method 2 (smart variable like `[med_name][first-instance]`). Omitting the instance qualifier produces a blank.
 
 **Expecting `[last-instance]` to be stable.** The `[last-instance]` qualifier always points to the most recently created instance. If new instances are added later, what `[last-instance]` returns will change. Do not use it where a fixed reference is needed.
 
