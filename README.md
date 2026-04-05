@@ -10,14 +10,17 @@ This repo supports an LLM-powered REDCap assistant at Yale. Rather than feeding 
 
 ```
 REDCap_KB_RAG/
-├── kb/                        # Markdown KB articles (RAG-ready)
-│   ├── KB-REFERENCE-MAP.md    # Cross-reference index of all articles
-│   └── RC-[DOMAIN]-[NN]_...   # Individual KB articles
+├── kb/                          # Markdown KB articles (RAG-ready) — 94 articles
+│   ├── KB-REFERENCE-MAP.md      # Cross-reference index of all articles
+│   └── RC-[DOMAIN]-[NN]_...     # Individual KB articles
 ├── claude skills/
-│   └── kb-creation/           # Claude skill for building new KB articles
-│       └── SKILL.md
-├── original docx files/       # Source Word training outlines
-└── sync.sh                    # Helper script to commit and push changes
+│   ├── kb-creation/             # Skill: build new KB articles from .docx outlines
+│   ├── kb-update/               # Skill: update or correct existing KB articles
+│   ├── kb-update-workspace/     # Skill: update articles using workspace-mounted files
+│   ├── kb-search/               # Skill: search and retrieve KB articles by topic
+│   └── redcap-data-dictionary/  # Skill: analyze REDCap Data Dictionary CSV files
+├── original docx files/         # Source Word training outlines
+└── sync.sh                      # Helper script to commit and push changes
 ```
 
 ## Article Naming Convention
@@ -30,11 +33,15 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 
 | Domain prefix | Topic area |
 |---|---|
+| `RC-AI` | AI Tools (writing, translation, summarization) |
 | `RC-ALERT` | Alerts & Notifications |
+| `RC-AT` | Action Tags |
+| `RC-AT-EM` | Action Tags — External Module extensions |
 | `RC-BL` | Branching Logic |
+| `RC-CALC` | Calculations & Special Functions |
 | `RC-DAG` | Data Access Groups |
 | `RC-DE` | Data Entry |
-| `RC-EXPRT` | Data Export |
+| `RC-EXPRT` | Data Export & Custom Reports |
 | `RC-FD` | Form Design |
 | `RC-IMP` | Data Import |
 | `RC-LONG` | Longitudinal Project Setup |
@@ -62,6 +69,18 @@ Each article is written for RAG retrieval using an 8-section template:
 
 Articles are institution-agnostic in their core content so they can be reused across REDCap environments, though they are primarily maintained for Yale's deployment.
 
+## Claude Skills
+
+The `claude skills/` directory contains Cowork skills that Claude uses to maintain the KB:
+
+| Skill | Purpose |
+|---|---|
+| `kb-creation` | Convert a `.docx` training outline into a new KB article |
+| `kb-update` | Update or correct an existing article based on new information |
+| `kb-update-workspace` | Same as kb-update, but works with files already in the mounted workspace folder |
+| `kb-search` | Search the KB by topic to find and read relevant articles before writing |
+| `redcap-data-dictionary` | Analyze a REDCap Data Dictionary CSV (field types, instruments, structure) |
+
 ## Adding New Articles
 
 New articles are built from source training outline documents (Word `.docx` files) using a Claude skill. The workflow is:
@@ -70,6 +89,10 @@ New articles are built from source training outline documents (Word `.docx` file
 2. Open a Cowork session and upload the `.docx`
 3. Claude uses the `kb-creation` skill to convert it into a properly formatted KB article
 4. The article is saved to `kb/` and `KB-REFERENCE-MAP.md` is updated
+
+## Updating Existing Articles
+
+To revise or correct an article, open a Cowork session and either upload the updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `KB-REFERENCE-MAP.md` in sync.
 
 ## Syncing Changes
 
