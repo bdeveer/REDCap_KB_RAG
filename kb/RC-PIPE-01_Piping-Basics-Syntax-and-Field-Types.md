@@ -7,7 +7,7 @@ RC-PIPE-01
 | **Domain** | Piping |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping in Emails & Notifications; RC-BL-01 — Branching Logic Overview & Scope |
@@ -36,7 +36,7 @@ A variable name wrapped in square brackets — for example, `[first_name]` — p
 
 **Blank Substitution**
 
-When a pipe reference resolves to a variable that has not yet been filled in, REDCap displays a blank space in place of the missing value. This is expected behavior, not an error.
+When a pipe reference resolves to a variable that has not yet been filled in, REDCap displays six underscore characters (`______`) as a placeholder to visually indicate that no value exists. This is expected behavior, not an error. The `:hideunderscore` modifier (see RC-PIPE-02) can suppress this placeholder if needed.
 
 **Smart Variables**
 
@@ -79,21 +79,39 @@ Consistent, readable variable names make piping references easier to write, revi
 
 # 4. Where Piping Can Be Used
 
-Piping works anywhere REDCap displays text. The most common locations are:
+Piping works anywhere REDCap displays text. The complete list of supported locations is:
 
 **Field labels.** The question text shown to data entry users or survey respondents. This is the most common piping location.
 
+**Field notes.** The helper text displayed below a field during data entry. For example, a field note on an email address field could read "`[first_name]`'s primary email".
+
+**Section headers.** The heading text that separates groups of fields on an instrument.
+
+**Matrix field column headers.** The column labels displayed above each column in a matrix field.
+
 **Choice option labels.** The visible labels for radio buttons, dropdowns, or checkbox options. For example, a radio button question "Where was `[first_name]`'s injury?" can have options labeled "`[first_name]`'s leg", "`[first_name]`'s arm", and "`[first_name]`'s head".
 
-**Field notes.** The helper text displayed below a field during data entry. For example, a field note on an email address field could read "`[first_name]`'s primary email".
+**Slider field labels.** The descriptive text displayed above a slider bar.
+
+**Custom record locking text.** If a custom record locking message is defined, piping can be used within it.
 
 **Descriptive text fields.** A field type that displays text without capturing any data. Piping into descriptive text fields is useful for building summary displays — for example, showing a participant's entered values back to them mid-instrument.
 
+**Survey instructions.** The introductory text shown at the top of a survey before the first question.
+
 **Survey completion text.** The message shown after a participant submits a survey. Piping participant information (such as their name) into the completion message personalizes the experience.
 
-**Emails and notifications.** Survey confirmation emails, survey invitations, and alerts can all contain piped values. See RC-PIPE-04 — Piping in Emails & Notifications.
+**Survey invitation emails.** Both the subject line and message body of invitations sent via the Participant List or Automated Survey Invitations can contain piped values.
 
-For a comprehensive reference of all supported locations, use REDCap's embedded help text, accessible via the purple help button in the field edit menu, the floating top-right menu in the Online Designer, or the "Design your data collection instruments" link on the Project Setup page.
+**Survey Queue custom text.** The text displayed at the top of a Survey Queue page.
+
+**Survey redirect URL.** The URL entered in a survey's "Redirect to a URL" completion setting can contain piped values.
+
+**The @DEFAULT action tag.** A piped value can serve as the pre-filled default for a field. Note: when piping the value (not label) of a multiple choice field into @DEFAULT, the `:value` modifier must be used.
+
+**Emails and notifications.** Alert & Notification messages can contain piped values. See RC-PIPE-04 — Piping in Emails & Notifications.
+
+> **Security note:** User data viewing privileges are **not** enforced during piping. If a field on instrument A is piped into a label on instrument B, any user who can view instrument B will see that piped value — even if they have "No Access" rights to instrument A. Keep this in mind when designing projects that use piping across instruments with different access controls.
 
 ---
 
@@ -130,9 +148,9 @@ Different field types produce different output when piped. The table below shows
 
 ## 6.1 When Values Are Blank
 
-When REDCap evaluates a pipe reference and the referenced variable has no stored value, it substitutes a blank — the field label renders with an empty space where the value would appear. For example: "What is \_\_\_\_\_'s date of birth?"
+When REDCap evaluates a pipe reference and the referenced variable has no stored value, it substitutes six underscore characters (`______`) as a visual placeholder. For example: "What is `______`'s date of birth?"
 
-This is not an error. It is expected behavior whenever the source variable is empty.
+This is not an error. It is expected behavior whenever the source variable is empty. If you do not want the underscore placeholder to appear, use the `:hideunderscore` modifier — covered in RC-PIPE-02 — which causes the blank value to be piped as truly empty/invisible instead.
 
 ## 6.2 Same-Instrument Timing
 

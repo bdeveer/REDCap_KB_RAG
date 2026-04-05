@@ -7,7 +7,7 @@ RC-PIPE-02
 | **Domain** | Piping |
 | **Applies To** | Longitudinal projects; projects with repeated instruments or repeated events; all projects using piping modifiers |
 | **Prerequisite** | RC-PIPE-01 — Piping Basics, Syntax & Field Types |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-PIPE-01 — Piping Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup |
@@ -146,9 +146,13 @@ Both field types share the same modifiers:
 |---|---|
 | `:label` | Displays the uploaded file's filename |
 | `:inline` | Renders the file contents inline, if the format is JPG, JPEG, GIF, PNG, TIF, or BMP |
-| `:link` | Generates a direct download link for the file |
+| `:link` | Generates a direct download link for the file, displayed as a clickable filename |
 
 Without a modifier, piping a file upload or signature field returns an internal reference value (a number), which is rarely useful for display purposes.
+
+> **Note:** The `:inline` modifier also works inside email bodies (survey invitations and Alerts & Notifications), allowing inline images to appear directly in the email. If the piped file is not an image type, REDCap will attach the file to the email and display the filename as a text alternative. The `:link` modifier similarly works inside email bodies, producing a clickable download hyperlink.
+
+> **Note:** Inline images cannot be displayed inside a downloaded PDF of a survey or instrument.
 
 ## 5.3 Checkbox Modifiers
 
@@ -165,7 +169,24 @@ Checkbox fields allow multiple selections, so their piping behavior has addition
 - `[my_checkbox:checked:value]` — Returns the raw codes of checked options instead of labels. Example: "1, 3, 5" instead of "Vanilla, Strawberry, Chocolate".
 - `[my_checkbox(2):value]` — Returns 1 if option 2 is checked, 0 if unchecked.
 
-## 5.4 Date & Time Modifiers
+## 5.4 The `:hideunderscore` Modifier
+
+When a piped variable has no stored value, REDCap normally displays six underscore characters (`______`) as a placeholder. Appending `:hideunderscore` causes the blank to be piped as truly empty — invisible to the user — rather than as the underscore placeholder.
+
+**Example:**
+
+- `[first_name]` → displays `______` when empty
+- `[first_name:hideunderscore]` → displays nothing when empty
+
+This modifier works on both field variable references and Smart Variables.
+
+## 5.5 The `:field-label` Modifier
+
+Appending `:field-label` pipes the **label text** of the field rather than its data value. This is useful when you want to reference a question's wording dynamically.
+
+**Example:** `[visit_date:field-label]` pipes the text "Date of Visit" (or whatever the field's label is), not the date value entered in that field.
+
+## 5.7 Date & Time Modifiers
 
 These modifiers apply to text box fields with date or time validation:
 
@@ -203,6 +224,10 @@ These modifiers apply to text box fields with date or time validation:
 **Q: Can I pipe a value from the previous instance of a repeated instrument?**
 
 **A:** Yes — use `[previous-instance][variable_name]`. This targets the instance immediately before the current one in the repeated series. If the current instance is the first, `[previous-instance]` returns blank.
+
+**Q: How do I stop REDCap from showing six underscores when a piped value is empty?**
+
+**A:** Append `:hideunderscore` to the variable name — e.g., `[first_name:hideunderscore]`. This causes the blank to appear as truly empty rather than as `______`. This modifier works on both field variables and Smart Variables.
 
 ---
 
