@@ -7,7 +7,7 @@ RC-PIPE-03
 | **Domain** | Piping |
 | **Applies To** | All REDCap project types |
 | **Prerequisite** | RC-PIPE-01 — Piping Basics, Syntax & Field Types |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-PIPE-01 — Piping Basics, Syntax & Field Types; RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers; RC-PIPE-04 — Piping in Emails & Notifications; RC-BL-01 — Branching Logic Overview & Scope |
@@ -35,6 +35,10 @@ Smart variables return different values depending on who is viewing the form, wh
 **Instance Qualifier**
 
 A smart variable used as a prefix to a variable name bracket, directing REDCap to retrieve that variable's value from a specific instance within a repeated instrument or event series. Covered in detail in RC-PIPE-02.
+
+**:hideunderscore Modifier**
+
+By default, if a piped value is blank or null, REDCap displays six underscore characters (`______`) as a visual placeholder. Appending `:hideunderscore` inside the brackets suppresses this behavior and renders the blank as invisible instead — for example, `[record-name:hideunderscore]`. This modifier works with both field variables and smart variables.
 
 ---
 
@@ -86,11 +90,27 @@ This category is more advanced and is primarily used by administrators and power
 
 These smart variables act as modifiers or extensions to the aggregate function category above. They refine how aggregate smart variables behave — for example, filtering which records are included in a count or which event's data is aggregated.
 
-## 3.9 MyCap
+## 3.9 Randomization
+
+These smart variables expose information about a record's randomization assignment. They are only relevant to projects with REDCap's Randomization module enabled.
+
+Examples: the randomization number assigned to the record (`[rand-number]`), the server date/time at which the record was randomized (`[rand-time]`), and the equivalent UTC timestamp (`[rand-utc-time]`). Each variable also supports a `:value` suffix to return a raw `YYYY-MM-DD HH:MM:SS` formatted value suitable for use in logic or calculated fields rather than display contexts. Projects with more than one randomization can use `:n` (e.g., `[rand-number:2]`) to reference a specific one.
+
+## 3.10 Project Dashboards
+
+If a project uses public Project Dashboards, these smart variables provide access codes and URLs for those dashboards. They require the unique dashboard name (e.g., `D-XXXXXXXXXX`) found on the dashboard configuration page.
+
+Examples: `[dashboard-url:D-9264XJ8HE7]` returns the dashboard's web address; `[dashboard-link:D-9264XJ8HE7:View Dashboard]` generates a clickable HTML link with custom text.
+
+## 3.11 Public Reports
+
+If a project has published public reports with access codes, this category provides the access code for a specified report. It requires the unique report name (e.g., `R-XXXXXXXXXX`) found on the My Reports & Exports page.
+
+## 3.12 MyCap
 
 If a project uses REDCap's MyCap mobile application for participant data collection, this category provides smart variables specific to the MyCap context — such as participant-facing links and MyCap-specific metadata.
 
-## 3.10 Miscellaneous
+## 3.13 Miscellaneous
 
 The Miscellaneous category is primarily relevant for REDCap administrators rather than project designers. These smart variables expose information about the REDCap installation and the project itself.
 
@@ -159,6 +179,8 @@ The embedded help text lists every available smart variable, its syntax, its cat
 **Relying on smart variables in a version-specific way without checking the embedded help.** REDCap adds new smart variables frequently. Documentation from external sources (including this KB) may lag behind the actual REDCap version in use at your institution. Always verify against the built-in help text.
 
 **Confusing event smart variables with hard-coded event references.** Hard-coding an event name like `[event_1_arm_1]` requires you to know the specific event name at design time. Event smart variables (e.g., referencing the "previous event" dynamically) allow more flexible references that adapt to the record's current event context. Use whichever approach matches your design intent.
+
+**Using smart variables in Data Quality rules.** Smart variables are supported in DQ rule logic, but they significantly increase the time required for rules to complete. Avoid using them in DQ rules unless necessary, and be prepared for longer run times when they are present.
 
 **Using MyCap smart variables in non-MyCap projects.** MyCap smart variables only resolve correctly if the project has MyCap enabled and the participant is accessing data through the MyCap app. Using them in a standard web survey produces blank or unexpected output.
 

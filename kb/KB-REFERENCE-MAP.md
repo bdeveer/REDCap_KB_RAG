@@ -9,12 +9,12 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | Article ID | Title | File |
 |---|---|---|
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
-| RC-AT-02 | Action Tags: @HIDDEN & @READONLY | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
-| RC-AT-03 | Action Tags: Radio Button & Dropdown | RC-AT-03_Action-Tags-Radio-Dropdown.md |
-| RC-AT-04 | Action Tags: Checkboxes | RC-AT-04_Action-Tags-Checkboxes.md |
-| RC-AT-05 | Action Tags: Free Text | RC-AT-05_Action-Tags-Free-Text.md |
-| RC-AT-06 | Action Tags: Autofill | RC-AT-06_Action-Tags-Autofill.md |
-| RC-AT-07 | Action Tags: Cosmetic & Utility | RC-AT-07_Action-Tags-Cosmetic.md |
+| RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
+| RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |
+| RC-AT-04 | Checkbox Action Tags | RC-AT-04_Action-Tags-Checkbox.md |
+| RC-AT-05 | Free Text Action Tags | RC-AT-05_Action-Tags-Free-Text.md |
+| RC-AT-06 | Autofill Action Tags | RC-AT-06_Action-Tags-Autofill.md |
+| RC-AT-07 | Cosmetic Action Tags | RC-AT-07_Action-Tags-Cosmetic.md |
 | RC-AT-08 | Action Tags: @IF — Conditional Logic | RC-AT-08_Action-Tags-Conditional-IF.md |
 | RC-AT-09 | Action Tags: @CALCTEXT & @CALCDATE — Calculations | RC-AT-09_Action-Tags-Calculations.md |
 | RC-AT-10 | Action Tags: Language Action Tags | RC-AT-10_Action-Tags-Language.md |
@@ -73,6 +73,19 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-PIPE-02 | Piping: Longitudinal, Repeated Instruments & Modifiers | RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md |
 | RC-PIPE-03 | Smart Variables Overview | RC-PIPE-03_Smart-Variables-Overview.md |
 | RC-PIPE-04 | Piping: Emails, Notifications & Logic Features | RC-PIPE-04_Piping-in-Emails-and-Notifications.md |
+| RC-PIPE-05 | Smart Variables: User | RC-PIPE-05_Smart-Variables-User.md |
+| RC-PIPE-06 | Smart Variables: Record | RC-PIPE-06_Smart-Variables-Record.md |
+| RC-PIPE-07 | Smart Variables: Form | RC-PIPE-07_Smart-Variables-Form.md |
+| RC-PIPE-08 | Smart Variables: Survey | RC-PIPE-08_Smart-Variables-Survey.md |
+| RC-PIPE-09 | Smart Variables: Event & Arm | RC-PIPE-09_Smart-Variables-Event-and-Arm.md |
+| RC-PIPE-10 | Smart Variables: Repeating Instruments and Events | RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md |
+| RC-PIPE-11 | Smart Variables: Aggregate Functions, Charts, and Tables | RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md |
+| RC-PIPE-12 | Smart Variables: Optional Parameters for Aggregate Functions | RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md |
+| RC-PIPE-13 | Smart Variables: Randomization | RC-PIPE-13_Smart-Variables-Randomization.md |
+| RC-PIPE-14 | Smart Variables: Project Dashboards | RC-PIPE-14_Smart-Variables-Project-Dashboards.md |
+| RC-PIPE-15 | Smart Variables: Public Reports | RC-PIPE-15_Smart-Variables-Public-Reports.md |
+| RC-PIPE-16 | Smart Variables: MyCap | RC-PIPE-16_Smart-Variables-MyCap.md |
+| RC-PIPE-17 | Smart Variables: Miscellaneous | RC-PIPE-17_Smart-Variables-Miscellaneous.md |
 | RC-RAND-01 | Randomization Concepts & Terminology | RC-RAND-01_Randomization-Concepts.md |
 | RC-RAND-02 | Randomization Setup Guide | RC-RAND-02_Randomization-Setup.md |
 | RC-RAND-03 | Working with & Managing Randomization | RC-RAND-03_Working-with-Randomization.md |
@@ -1328,6 +1341,19 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-01
 - RC-PIPE-02
 - RC-PIPE-04
+- RC-PIPE-05 (prerequisite)
+- RC-PIPE-06 (prerequisite)
+- RC-PIPE-07 (prerequisite)
+- RC-PIPE-08 (prerequisite)
+- RC-PIPE-09 (prerequisite)
+- RC-PIPE-10 (prerequisite)
+- RC-PIPE-11 (prerequisite)
+- RC-PIPE-12 (prerequisite)
+- RC-PIPE-13 (prerequisite)
+- RC-PIPE-14 (prerequisite)
+- RC-PIPE-15 (prerequisite)
+- RC-PIPE-16 (prerequisite)
+- RC-PIPE-17 (prerequisite)
 - RC-SURV-04
 - RC-SURV-05
 - RC-SURV-06
@@ -1352,6 +1378,191 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-02
 - RC-PIPE-01
 - RC-PIPE-03
+
+---
+
+### RC-PIPE-05 — Smart Variables: User
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-AT-06 — Action Tags: Autofill
+- RC-ALERT-01 — Alerts and Notifications Setup
+
+**Inbound links (referenced by):**
+- *(Referenced by other smart variable articles if they mention user context)*
+
+---
+
+### RC-PIPE-06 — Smart Variables: Record
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-05 — Smart Variables: User
+- RC-ALERT-01 — Alerts and Notifications Setup
+
+**Inbound links (referenced by):**
+- *(Referenced by other smart variable articles if they mention record context)*
+
+---
+
+### RC-PIPE-07 — Smart Variables: Form
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-08 — Smart Variables: Survey
+- RC-PIPE-09 — Smart Variables: Event & Arm
+
+**Inbound links (referenced by):**
+- *(Referenced by other smart variable articles if they mention form context)*
+
+---
+
+### RC-PIPE-08 — Smart Variables: Survey
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-07 — Smart Variables: Form
+- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
+- RC-PIPE-04 — Piping in Emails and Notifications
+
+**Inbound links (referenced by):**
+- *(Referenced by alert and survey-related articles)*
+
+---
+
+### RC-PIPE-09 — Smart Variables: Event & Arm
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
+- RC-PIPE-07 — Smart Variables: Form
+- RC-PIPE-08 — Smart Variables: Survey
+
+**Inbound links (referenced by):**
+- *(Referenced by longitudinal project and smart variable articles)*
+
+---
+
+### RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-09 — Smart Variables: Event & Arm
+- RC-PIPE-07 — Smart Variables: Form
+- RC-PIPE-08 — Smart Variables: Survey
+
+**Inbound links (referenced by):**
+- *(Referenced by repeating instruments and survey articles)*
+
+---
+
+### RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
+
+**Inbound links (referenced by):**
+- RC-PIPE-12 (prerequisite)
+
+---
+
+### RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
+
+**Inbound links (referenced by):**
+- RC-PIPE-11
+
+---
+
+### RC-PIPE-13 — Smart Variables: Randomization
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers
+- RC-AT-08 — Action Tags: Conditional Logic
+
+**Inbound links (referenced by):**
+- *(Referenced by randomization articles if applicable)*
+
+---
+
+### RC-PIPE-14 — Smart Variables: Project Dashboards
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
+- RC-PIPE-04 — Piping in Emails and Notifications
+
+**Inbound links (referenced by):**
+- *(Referenced by dashboard and alert articles)*
+
+---
+
+### RC-PIPE-15 — Smart Variables: Public Reports
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+- RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
+- RC-ALERT-01 — Alerts and Notifications Setup
+
+**Inbound links (referenced by):**
+- *(Referenced by report and alert articles)*
+
+---
+
+### RC-PIPE-16 — Smart Variables: MyCap
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+
+**Inbound links (referenced by):**
+- *(Referenced by survey and MyCap articles if applicable)*
+
+---
+
+### RC-PIPE-17 — Smart Variables: Miscellaneous
+
+**Prerequisites:** RC-PIPE-03 — Smart Variables Overview
+
+**Outbound links:**
+- RC-PIPE-03 — Smart Variables Overview
+
+**Inbound links (referenced by):**
+- *(Referenced by admin and system integration articles)*
 
 ---
 
