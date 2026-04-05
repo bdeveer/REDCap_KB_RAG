@@ -741,7 +741,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-11 — Instrument Save Options
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
 - RC-NAV-REC-03 — Repeated Instruments & Events
-- RC-LONG-01 — Longitudinal Project Setup ⚠️
+- RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Inbound links (referenced by):**
@@ -757,7 +757,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-DE-02 — Basic Data Entry
 - RC-DE-10 — Longitudinal & Repeated Data Entry
-- RC-SURV-01 — Surveys: Basics ⚠️
+- RC-SURV-01 — Surveys: Basics
 
 **Inbound links (referenced by):**
 - RC-DE-10
@@ -774,7 +774,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-05 — Field Validations
 - RC-DE-08 — Field Comment Log
 - RC-DAG-01 — Data Access Groups
-- RC-USER-03 — User Rights: Configuring User Privileges ⚠️
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
 - RC-DE-08
@@ -1132,8 +1132,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-07
 - RC-LONG-02 (prerequisite for longitudinal projects)
 - RC-PIPE-02
-- RC-RAND-01 (referenced as ⚠️ RC-LONG-01)
-- RC-RAND-02 (referenced as ⚠️ RC-LONG-01)
+- RC-RAND-01 (previously referenced as ⚠️ RC-LONG-01 — now resolved)
+- RC-RAND-02 (previously referenced as ⚠️ RC-LONG-01 — now resolved)
 - RC-SURV-04
 - RC-SURV-06
 - RC-SURV-07
@@ -1272,7 +1272,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 — Basic Data Entry
 - RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-SURV-01 — Surveys – Basics
-- ⚠️ RC-ALERT-01 — Alerts & Notifications
+- RC-ALERT-01 — Alerts & Notifications: Setup
 - ⚠️ RC-API-01 — REDCap API
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 - RC-EXPRT-01 — Data Export Overview *(listed as RC-EXPORT-01 — see naming note below)*
@@ -1608,7 +1608,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-02 — Randomization Setup Guide
 - RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-EXPRT-01 — Data Export *(listed as RC-EXPORT-01 — see naming note below)*
-- ⚠️ RC-ALERT-01 — Alerts & Notifications
+- RC-ALERT-01 — Alerts & Notifications: Setup *(previously ⚠️ — now resolved)*
 
 **Inbound links (referenced by):**
 - RC-RAND-01
@@ -1887,9 +1887,10 @@ The following article IDs are referenced by existing KB articles but have no cor
 | Article ID | Title | Referenced By |
 |---|---|---|
 | ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
-| ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-12 (Action Tags series)* |
-| ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
+| ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-11 + RC-AT-EM-01 (Action Tags series)* |
+| ~~⚠️ RC-ALERT-01~~ | ~~Alerts & Notifications~~ | *Resolved — see RC-ALERT-01 and RC-ALERT-02 (Alerts & Notifications series)* |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
+| ~~⚠️ RC-SURV-01~~ | ~~Surveys: Basics~~ | *Resolved — see RC-SURV-01 through RC-SURV-09 (Surveys series)* |
 | ~~⚠️ RC-SURV-02~~ | ~~Survey Customizations (advanced settings)~~ | *Resolved — see RC-SURV-02 — Survey Settings: Basic Options & Design* |
 | ~~⚠️ RC-SURV-03~~ | ~~Survey Queue~~ | *Resolved — see RC-SURV-03 — Survey Settings: Behavior, Access & Termination* |
 
@@ -1910,4 +1911,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-03 from the `/kb/` directory of the REDCap LLM Knowledge Base. Added RC-USER-01 through RC-USER-04 (User Rights series) and RC-DAG-01 (Data Access Groups). Resolved ⚠️ RC-RIGHTS-01 and ⚠️ RC-USER-01 references across RAND, NAV-UI, SURV, and EXPRT series.*
+*Last updated 2026-04-04. Cleaned up stale ⚠️ markers for RC-ALERT-01, RC-ALERT-02, RC-LONG-01, RC-SURV-01 (full series), and RC-USER-03, all of which now exist in the KB. Gaps table updated accordingly. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*

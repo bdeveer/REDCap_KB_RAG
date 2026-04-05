@@ -1,93 +1,61 @@
-# KB Gaps — Articles Needed for redcap-data-dictionary Skill
+# KB Gaps — Articles Still Needed
 
-These articles are referenced by the skill or surfaced by the parser but do not yet exist in the KB.
-Each one would improve the skill's ability to explain REDCap concepts accurately and in full.
-
----
-
-## Priority 1 — Directly referenced by the skill
-
-### ⚠️ RC-AT-01 — Action Tags
-
-**Why needed:** The skill's parser inventories all action tags found in a data dictionary and provides brief inline descriptions. However, the skill notes explicitly that no full KB article exists yet. A complete RC-AT-01 would let the skill cross-reference a proper article rather than relying solely on parser descriptions.
-
-**What to cover:**
-- What action tags are and how they differ from branching logic and required-field flags
-- Syntax: `@TAG`, `@TAG='value'`, `@TAG(expression)`, multiple tags space-separated
-- Excel Column R formatting requirement (must set cell format to Text before typing `@`)
-- Complete reference table of all supported tags with syntax, effect, and common use cases
-- Tags that interact: `@IF` with other tags, `@HIDDEN` vs. `@HIDDEN-SURVEY` vs. `@HIDDEN-FORM`
-- Tags that have data implications vs. purely cosmetic tags (e.g., `@CALCTEXT` stores nothing; `@PASSWORDMASK` stores in plain text)
-- Action tags not supported in the REDCap Mobile App
-- Common mistakes: `@NOMISSING` vs. Required Field; `@READONLY` in production vs. development mode; `@DEFAULT` only fires on first load
-
-**Tags to document at minimum (all observed across example projects):**
-`@NOMISSING`, `@HIDDEN`, `@HIDDEN-SURVEY`, `@HIDDEN-FORM`, `@HIDDEN-PDF`, `@READONLY`, `@READONLY-SURVEY`, `@IF`, `@CALCTEXT`, `@CALCDATE`, `@DEFAULT`, `@SETVALUE`, `@NOW`, `@TODAY`, `@PASSWORDMASK`, `@NONEOFTHEABOVE`, `@HIDEBUTTON`, `@HIDESUBMIT-SURVEY`, `@FORCE-MINMAX`, `@HIDECHOICE`, `@SHOWCHOICE`, `@CHARLIMIT`, `@PLACEHOLDER`, `@BARCODE-APP`, `@LATITUDE`, `@LONGITUDE`, `@MAXCHECKED`, `@MAXCHOICE`, `@LANGUAGE-CURRENT-SURVEY`
-
-**Domain slug:** AT (established)
-**Prerequisite:** RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
-**Related:** RC-BL-01 (branching logic), RC-FD-02 (Online Designer), RC-LONG-01 (longitudinal)
+These articles are referenced by existing KB articles or skills but do not yet exist in the KB.
 
 ---
 
-## Priority 2 — Referenced by instrument patterns detected by the parser
-
-### ⚠️ RC-SURV-01 — Surveys: Basics
-
-**Why needed:** The parser detects survey instruments (via question numbers in Column O) and notes them. Without a survey article, the skill can identify survey instruments but cannot explain survey-specific concepts like survey queue, completion actions, or survey vs. data entry mode differences.
-
-**Domain slug:** SURV (established)
-**What to cover:** Survey mode vs. data entry mode, enabling surveys on an instrument, survey settings page, completion actions, survey queue basics, @HIDDEN-SURVEY vs. @HIDDEN-FORM behavior
-
----
+## Priority 2 — Surfaced by instrument patterns / multilingual projects
 
 ### ⚠️ RC-MLM-01 — Multi-Language Management Overview
 
-**Why needed:** The parser encounters non-English field labels and multilingual projects (e.g., Dutch Oranjeschool registration, bilingual eConsent). The skill can note non-ASCII content but cannot explain REDCap's Multi-Language Management (MLM) module.
+**Why needed:** The parser encounters non-English field labels and multilingual projects (e.g., Dutch Oranjeschool registration, bilingual eConsent). The skill can note non-ASCII content but cannot explain REDCap's Multi-Language Management (MLM) module. Also referenced by RC-AT-10 (Action Tags: Language).
 
 **Domain slug:** MLM (established)
-**What to cover:** How MLM works, translating field labels vs. choices vs. survey text, the `@LANGUAGE-CURRENT-SURVEY` action tag, the language selector in survey mode
+**What to cover:** How MLM works, translating field labels vs. choices vs. survey text, the `@LANGUAGE-CURRENT-SURVEY` action tag, the language selector in survey mode, enabling MLM on a project, importing/exporting translations
 
 ---
 
-## Priority 3 — Referenced in cross-instrument BL dependencies
-
-### ⚠️ RC-AT-01 (same as Priority 1) covers `@IF` which is the main tool for conditional action tags cross-instrument
-
-No additional articles needed at this tier beyond RC-AT-01.
-
----
-
-## Priority 4 — Useful context for large clinical trial projects
+## Priority 4 — Useful context for integrations and field data collection
 
 ### ⚠️ RC-API-01 — REDCap API
 
-**Why needed:** Clinical trial projects like REHAB HFpEF often integrate with external systems via the API. The skill currently cannot explain API-related design decisions (e.g., why certain fields are hidden or read-only may be because they're populated via API).
+**Why needed:** Clinical trial projects like REHAB HFpEF often integrate with external systems via the API. The skill currently cannot explain API-related design decisions (e.g., why certain fields are hidden or read-only may be because they're populated via API). Referenced by RC-EXPRT-02 and RC-NAV-UI-02.
 
 **Domain slug:** API (established)
+**What to cover:** API basics, API token management, common endpoints (import/export records, import/export data dictionary, file upload/download), API Playground, rate limits and best practices, use cases for automation
 
 ---
 
 ### ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 
-**Why needed:** The skill notes mobile considerations (matrix size, instrument size, @BARCODE-APP) but has no KB article to back this up. Useful for projects with field-based data collection.
+**Why needed:** The skill notes mobile considerations (matrix size, instrument size, `@BARCODE-APP`) but has no KB article to back this up. Useful for projects with field-based data collection. Referenced by RC-NAV-UI-01 and RC-NAV-UI-02.
 
 **Domain slug:** MOB (established)
+**What to cover:** REDCap Mobile App (offline data collection, setup, supported field types, action tag limitations), MyCap (participant-facing app, difference from surveys, MyCap tasks and schedules), when to use Mobile App vs. MyCap vs. surveys
 
 ---
 
 ## Already Exists — No Action Needed
 
 These were previously marked ⚠️ but have since been resolved:
+
+- RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅ *(was Priority 1)*
+- RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅ *(was Priority 2)*
 - RC-LONG-01 — Longitudinal Project Setup ✅
 - RC-LONG-02 — Repeated Instruments & Events Setup ✅
-- RC-FD-08 — Data Dictionary Column Reference ✅ (key reference for the skill)
+- RC-FD-08 — Data Dictionary Column Reference ✅
 - RC-BL-01 through RC-BL-04 — Branching Logic series ✅
 - RC-RAND-01 through RC-RAND-03 — Randomization series ✅
 - RC-ALERT-01, RC-ALERT-02 — Alerts & Notifications ✅
+- RC-USER-01 through RC-USER-04 — User Rights series ✅
+- RC-DAG-01 — Data Access Groups ✅
 
 ---
 
-## Notes for Article Writers
+## Notes
 
-When writing RC-AT-01, the REHAB HFpEF data dictionary (`REHABHFpEF_DataDictionary_2026-04-04.csv`) is an excellent real-world source of action tag examples — it uses 14 distinct tags across 1,306 fields. The parser output (run with `--json`) shows each tag's frequency and annotated fields, which could inform the "common use cases" section.
+- The **KB-REFERENCE-MAP.md** still shows ⚠️ for RC-ALERT-01, RC-LONG-01, RC-SURV-01, and RC-USER-03 in some outbound-link sections — these are stale and should be cleaned up in a future reference map update.
+- When writing RC-MLM-01, RC-AT-10 (Action Tags: Language) is a useful companion article that already covers `@LANGUAGE-CURRENT-SURVEY` in depth.
+- When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
+
+*Last updated: 2026-04-04*
