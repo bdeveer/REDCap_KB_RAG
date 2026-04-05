@@ -7,7 +7,7 @@ RC-FD-07
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; works on both instruments and surveys; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-06 — Online Designer Instrument and Field Management; RC-BL-01 — Branching Logic Overview & Scope |
@@ -57,7 +57,7 @@ The embedding mechanism is straightforward: any field that will be embedded must
 **Basic rules:**
 
 - The embedded field must exist before it can be referenced. You cannot reference a variable that has not yet been created.
-- The curly-brace reference and the embedded field must be on the same instrument. You cannot embed a field from a different instrument.
+- The curly-brace reference and the embedded field must be on the same instrument. You cannot embed a field from a different instrument. On multi-page surveys, both the host field and the embedded field must also be on the same survey page — being on the same instrument but a different page is not sufficient.
 - A field can only be embedded in one location per instrument. If you place `{variable_name}` in multiple labels on the same instrument, the behavior is unpredictable.
 - Embedding only affects the visual position of the field on screen — data is still stored under the field's original variable name.
 - The embedded field retains all its normal properties: validation, required status, branching logic, and action tags continue to apply.
@@ -71,6 +71,32 @@ The embedding mechanism is straightforward: any field that will be embedded must
 Place this token exactly where you want the field to appear — in the middle of a sentence, next to a choice label, or inside a table cell.
 
 > **Important:** Use curly braces `{ }` for field embedding. Do not confuse this with square brackets `[ ]`, which are used in branching logic and piping syntax.
+
+**Icons modifier:**
+
+To display the standard field icons (Data History, Field Comments, and Missing Data Codes) next to an embedded field, append `:icons` to the variable name inside the braces:
+
+```
+{variable_name:icons}
+```
+
+Icons are not shown by default — they only appear when the `:icons` suffix is explicitly included. The `:icons` modifier works only on data entry forms; icons do not appear when the instrument is viewed as a survey.
+
+**Valid embedding locations:**
+
+Fields can be embedded only in the Field Label, Field Note, Section Header, or Choice Label of another field on the same instrument. The following locations do not support field embedding:
+
+- Drop-down choice labels
+- Survey instructions, acknowledgment text, and queue text
+- Outgoing emails, invitations, and alerts
+
+**Embedding a descriptive field:**
+
+It is possible to embed a descriptive field inside another field. Because descriptive fields have no data-entry element, embedding one simply relocates its label text to the new position. This is primarily useful when the descriptive field has branching logic — it allows a block of label text to appear conditionally at a specific location on the page.
+
+**Testing embedded fields:**
+
+The Preview Instrument button in the Online Designer provides a limited preview of how field embedding will look, but it is less accurate than viewing the actual instrument for a real or test record. Always test in a real record before finalizing the layout.
 
 ---
 
@@ -171,6 +197,14 @@ Large demographics sections are often split across two or more descriptive field
 
 **A:** Curly braces `{variable_name}` are the field embedding syntax — they control visual position on screen. Square brackets `[variable_name]` are the logic and piping syntax — they are used in branching logic, calculated fields, and piping to reference a field's value. The two syntaxes serve entirely different purposes and are not interchangeable.
 
+**Q: Does field embedding work in the REDCap Mobile App?**
+
+**A:** No. Field embedding is not supported in the REDCap Mobile App. If a project with embedded fields is downloaded to the Mobile App, the fields will not display in their embedded positions — the instrument will look different from how it appears in the web browser.
+
+**Q: Can a field that is itself embedded serve as a host for other embedded fields?**
+
+**A:** Partially. A field cannot be embedded inside its own Field Label, and a field cannot be embedded in another field's Field Label or Field Note if that second field is also embedded elsewhere — doing so produces an error when the instrument is viewed. However, a field *can* be embedded into a Choice Label of a multiple-choice field (radio or checkbox, but not a drop-down) that is itself embedded elsewhere. REDCap refers to this as compound embedding.
+
 ---
 
 # 7. Common Mistakes & Gotchas
@@ -179,11 +213,17 @@ Large demographics sections are often split across two or more descriptive field
 
 **Embedding a field that does not yet exist.** REDCap will not flag an unrecognised variable name in a curly-brace reference at save time. If the variable name is misspelled or the field has not been created yet, the curly-brace token will simply not render — the embedded field will be absent from the form with no error message. Always create the target field first, then add the embedding reference.
 
-**Expecting the field's label to display alongside the embedded field.** When a field is embedded, its own label text does not render at the embedding location. Only the field input element (text box, radio buttons, etc.) appears. If you need a visible label, include it in the container field's label text, adjacent to the curly-brace reference, or use `@PLACEHOLDER` to add inline hint text.
+**Expecting the field's label to display alongside the embedded field.** When a field is embedded, its own label text does not render at the embedding location. Only the field input element (text box, radio buttons, etc.) appears. If you need a visible label, include it in the container field's label text, adjacent to the curly-brace reference, or use `@PLACEHOLDER` to add inline hint text. Note that the field's label is still used when viewing reports and exported data, even though it is suppressed on the instrument — always give embedded fields a meaningful Field Label so that reports remain interpretable.
 
 **Placing the embedding reference and the embedded field on different instruments.** If you add `{variable_name}` to a field on Instrument A, but `variable_name` belongs to Instrument B, the reference will silently fail. Both fields must be on the same instrument.
 
 **Forgetting to add branching logic in the "Other, please specify" pattern.** If branching logic is omitted, the embedded text box renders for every respondent — not just those who selected "Other." Always pair the embedding reference with appropriate branching logic when the field should be conditional.
+
+**The host field's branching logic hides all fields embedded within it.** If the host field (the one containing the curly-brace references) has its own branching logic and that logic evaluates to FALSE, all fields embedded inside it will also be hidden — they are treated as part of the host field. On data entry forms (not surveys), if any embedded field has a saved value when the host field is being hidden, REDCap will prompt "Erase current value of the field?" for each affected embedded field. If the user clicks Cancel for any of these prompts, the host field will remain visible rather than being hidden.
+
+**The Record ID field cannot be embedded.** The first field in a REDCap project (the record identifier) is a special system field and cannot be repositioned via field embedding.
+
+**Field embedding does not work in the REDCap Mobile App.** If a project with embedded fields is loaded into the Mobile App, the fields will not render in their embedded positions — the layout will look different from what is configured on the web instrument.
 
 ---
 
