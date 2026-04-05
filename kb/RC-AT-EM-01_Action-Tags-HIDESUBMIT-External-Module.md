@@ -1,8 +1,8 @@
-RC-AT-12
+RC-AT-EM-01
 
 **Action Tags — HIDESUBMIT Action Tags (External Module)**
 
-| **Article ID** | RC-AT-12 |
+| **Article ID** | RC-AT-EM-01 |
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | Projects on REDCap instances where the HIDESUBMIT Action Tags External Module is installed and enabled |

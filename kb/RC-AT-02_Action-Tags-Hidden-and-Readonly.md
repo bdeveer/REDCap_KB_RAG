@@ -1,6 +1,6 @@
 RC-AT-02
 
-**Action Tags — @HIDDEN & @READONLY**
+**@HIDDEN & @READONLY — Visibility Control**
 
 | **Article ID** | RC-AT-02 |
 |---|---|
@@ -10,57 +10,41 @@ RC-AT-02
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-03 — Radio/Dropdown Action Tags; RC-BL-01 — Branching Logic Overview; RC-FD-02 — Online Designer |
+| **Related Topics** | RC-AT-01 — Overview; RC-AT-03 — Radio/Dropdown Tags; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic Overview |
 
 ---
 
 # 1. Overview
 
-This article covers the two most widely used action tags in REDCap: `@HIDDEN`, which hides a field from view, and `@READONLY`, which displays a field but prevents edits. Both tags have a family of situational variants that restrict their effect to specific contexts (survey mode, form mode, mobile app, PDF). Understanding how to combine these variants — and how they interact with each other — allows fine-grained control over what users see and can edit across different access modes.
+This article covers the most commonly used action tags: `@HIDDEN` and `@READONLY`, along with their situational variants. These tags control field visibility and editability across different REDCap contexts.
 
 ---
 
-# 2. Key Concepts & Definitions
+# 2. @HIDDEN — Hiding Fields
 
-**Variant**
+`@HIDDEN` hides a field from view. The field and its data still exist in the project; users simply cannot see or interact with it.
 
-A version of an action tag that applies its effect only in a specific context. For example, `@HIDDEN-SURVEY` hides a field only when the instrument is opened as a survey, while the base `@HIDDEN` tag hides it everywhere.
-
-**Combining Action Tags**
-
-Multiple action tags can be placed in the same *Action Tags / Field Annotation* box, separated by spaces. The effects of all listed tags apply simultaneously.
-
----
-
-# 3. @HIDDEN
-
-`@HIDDEN` hides the target field across the entire REDCap interface — data entry forms, surveys, and the mobile app. The field continues to exist and any stored data is retained, but users cannot see or interact with it directly.
-
-> **Important:** `@HIDDEN` overrides any branching logic attached to the same field. A field tagged with `@HIDDEN` is always hidden, regardless of branching logic conditions.
+> **Important:** `@HIDDEN` overrides branching logic. A field tagged with `@HIDDEN` is always hidden, regardless of any branching logic conditions.
 
 **Common uses:**
 
-- **Preserving deprecated fields.** When a field is no longer needed but its historical data should be retained, `@HIDDEN` removes it from view without deleting it or its data.
-- **Hiding calculated fields.** Score calculations can be hidden so that users cannot see intermediate values during data entry.
-- **Honeypot fields.** A hidden field can detect automated survey bots. Real participants cannot interact with the field; bots typically do, filling it in and flagging themselves.
+- Preserving deprecated fields without deleting historical data
+- Hiding calculated fields so users cannot see intermediate values
+- Creating honeypot fields in surveys to detect automated bot submissions
 
-## 3.1 @HIDDEN Variants
+## 2.1 Situational Variants
 
-The base `@HIDDEN` tag hides a field everywhere. The following variants restrict hiding to a specific context:
-
-| Tag | Where it hides the field |
+| Tag | Where it hides |
 |---|---|
-| `@HIDDEN` | Everywhere (data entry forms, surveys, mobile app) |
-| `@HIDDEN-SURVEY` | Only when the instrument is opened as a survey |
-| `@HIDDEN-FORM` | Only when the instrument is opened by a user in REDCap (not survey mode) |
+| `@HIDDEN` | Everywhere (form, survey, Mobile App, PDFs) |
+| `@HIDDEN-SURVEY` | Only when accessed as a survey |
+| `@HIDDEN-FORM` | Only when accessed as a data entry form |
 | `@HIDDEN-APP` | Only in the REDCap Mobile App |
-| `@HIDDEN-PDF` | Only in PDF exports generated from the instrument |
+| `@HIDDEN-PDF` | Only in PDF exports (the only way to exclude from PDFs) |
 
-> **Note:** `@HIDDEN-PDF` is the only way to exclude a field from generated PDFs. The base `@HIDDEN` tag does not affect PDF output.
+## 2.2 Combining Variants
 
-## 3.2 Combining @HIDDEN Variants
-
-Multiple `@HIDDEN` variants can be placed on the same field, separated by spaces. For example, to hide a field in surveys and in the mobile app but leave it visible during normal form-based data entry:
+Multiple variants can be combined. For example, to hide a field in surveys and in the Mobile App:
 
 ```
 @HIDDEN-SURVEY @HIDDEN-APP
@@ -68,88 +52,72 @@ Multiple `@HIDDEN` variants can be placed on the same field, separated by spaces
 
 ---
 
-# 4. @READONLY
+# 3. @READONLY — Making Fields Non-Editable
 
-`@READONLY` displays a field normally but prevents users from modifying its value. Read-only fields appear slightly greyed out to signal that they cannot be edited. This is useful when a value needs to be visible for reference but should not be changed by the person entering data.
+`@READONLY` displays a field normally but prevents any changes to its value. Read-only fields appear slightly greyed out.
 
 **Common uses:**
 
-- **Protecting pre-loaded data.** Records pre-populated via data import (e.g., contact information) can be locked so users cannot accidentally alter values that drive survey invitations or other automations.
-- **Displaying auto-filled values.** A field populated by an autofill action tag can be shown for reference without allowing manual edits.
+- Displaying pre-loaded contact information that staff can review but not edit
+- Showing calculated or piped values for reference without allowing modification
 
-## 4.1 @READONLY Variants
+## 3.1 Situational Variants
 
-Like `@HIDDEN`, `@READONLY` has context-specific variants:
-
-| Tag | Where the field becomes read-only |
+| Tag | Where it's read-only |
 |---|---|
-| `@READONLY` | Everywhere |
-| `@READONLY-SURVEY` | Only when the instrument is opened as a survey |
-| `@READONLY-FORM` | Only when the instrument is opened by a user in REDCap |
+| `@READONLY` | Everywhere (form, survey, Mobile App) |
+| `@READONLY-SURVEY` | Only in surveys |
+| `@READONLY-FORM` | Only in data entry forms |
 | `@READONLY-APP` | Only in the REDCap Mobile App |
 
-## 4.2 Combining @READONLY Variants
+## 3.2 Combining Variants
 
-Multiple `@READONLY` variants can be combined on the same field. For example, to make a field read-only in survey mode and in the mobile app, but editable when a staff member opens the form in REDCap:
+Multiple read-only variants can be combined:
 
 ```
-@READONLY-SURVEY @READONLY-APP
+@READONLY-FORM @READONLY-APP
 ```
 
 ---
 
-# 5. Combining @HIDDEN and @READONLY Variants
+# 4. Combining @HIDDEN and @READONLY
 
-The two tag families can be mixed freely on the same field. This enables nuanced configurations that behave differently depending on who is accessing the instrument and how.
-
-**Example — Contact information visible to staff, hidden from survey respondents and PDFs:**
-
-A record is pre-loaded with a participant's email address. Study staff should be able to see it (but not edit it). Survey respondents should not see it at all. It should not appear in printed PDFs.
+These two tag families can be mixed to achieve fine-grained control. For example, to show a field as read-only to staff but hide it from surveys and exclude it from PDFs:
 
 ```
 @READONLY-FORM @HIDDEN-SURVEY @HIDDEN-PDF
 ```
 
-> **Caution:** Using the base `@HIDDEN` tag alongside `@READONLY-FORM` will override the read-only behavior entirely — the field will be hidden for everyone, not just survey respondents. Use the situational variants to achieve fine-grained control.
+> **Caution:** Using a bare `@HIDDEN` tag alongside `@READONLY-FORM` will override the read-only behavior — the field will be hidden from staff entirely. Always use specific variants to achieve your intended effect.
 
 ---
 
-# 6. Common Questions
+# 5. Common Questions
 
-**Q: Does @HIDDEN prevent a field's data from appearing in reports or exports?**
+**Q: Does @HIDDEN prevent the field's data from appearing in reports or exports?**
 
-**A:** No. `@HIDDEN` only hides the field in the data entry and survey interface. The field's value still appears in reports, the Codebook, and data exports. Use user rights and export settings to restrict data access.
+**A:** No. `@HIDDEN` only hides the field in the data entry and survey interface. Data still appears in reports, the Codebook, and data exports. Use user rights and export settings to restrict data access.
 
-**Q: Can @READONLY be bypassed via API or data import?**
+**Q: What happens if I use @HIDDEN on a field that also has branching logic?**
 
-**A:** Yes. `@READONLY` and `@READONLY-FORM` affect only the browser-based data entry interface. They do not block writes from the API or the Data Import Tool. This can be intentional — for example, allowing automated processes to update a field that staff should not be able to edit manually.
+**A:** The `@HIDDEN` tag always wins. The field will be hidden regardless of the branching logic conditions. This is by design — `@HIDDEN` provides absolute hiding.
 
-**Q: Does @HIDDEN-PDF affect the Compact PDF (survey PDF) as well as the standard instrument PDF?**
+**Q: Can I temporarily disable @HIDDEN without removing it?**
 
-**A:** Yes. `@HIDDEN-PDF` applies to all PDF exports generated from the instrument, regardless of format.
-
-**Q: What is the difference between @HIDDEN and branching logic for hiding a field?**
-
-**A:** Branching logic hides a field conditionally — based on values entered in other fields — and clears the hidden field's value when it is hidden. `@HIDDEN` hides a field unconditionally and does not clear the stored value. Use branching logic when visibility should change dynamically during data entry. Use `@HIDDEN` when a field should always be hidden (or hidden only in a specific context).
+**A:** Yes. Use the *Quick-Modify Field(s)* bulk editor to **Deactivate** the tag, then **Reactivate** it later. This is useful during instrument testing.
 
 ---
 
-# 7. Common Mistakes & Gotchas
+# 6. Common Mistakes
 
-**Using `@HIDDEN` to hide a field from PDFs.** The base `@HIDDEN` tag does not affect PDF output. Use `@HIDDEN-PDF` explicitly.
+**Using `@HIDDEN` when you meant `@HIDDEN-PDF`.** The bare `@HIDDEN` tag does not exclude a field from PDFs. You must use `@HIDDEN-PDF` specifically.
 
-**Mixing `@HIDDEN` with `@READONLY-FORM`.** If you want staff to see a field as read-only while hiding it from survey respondents, use `@READONLY-FORM @HIDDEN-SURVEY`, not `@HIDDEN`. A bare `@HIDDEN` overrides everything and hides the field from staff as well.
-
-**Assuming `@READONLY` prevents all writes.** `@READONLY` blocks manual edits in the browser. It does not block API writes or data imports. Design accordingly if you need a true data integrity lock.
-
-**Expecting `@HIDDEN` to interact with branching logic.** `@HIDDEN` overrides branching logic on the same field. If a field has both `@HIDDEN` and branching logic, it will always be hidden — the branching logic condition is never evaluated.
+**Mixing bare `@HIDDEN` with `@READONLY` variants.** A bare `@HIDDEN` overrides all read-only variants on the same field. Use specific variants (`@HIDDEN-FORM`, etc.) instead.
 
 ---
 
-# 8. Related Articles
+# 7. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-03 — Radio/Dropdown Action Tags: `@HIDECHOICE`, `@SHOWCHOICE`, and related tags
-- RC-AT-06 — Autofill Action Tags: `@READONLY` is commonly combined with autofill tags
-- RC-BL-01 — Branching Logic Overview: how `@HIDDEN` interacts with branching logic
-- RC-DE-02 — Basic Data Entry: how hidden and read-only fields appear during data entry
+- RC-AT-01 — Action Tags Overview
+- RC-FD-02 — Online Designer (where these tags are applied)
+- RC-BL-01 — Branching Logic Overview (understand how @HIDDEN overrides logic)

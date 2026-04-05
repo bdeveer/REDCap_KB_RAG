@@ -20,7 +20,8 @@ Files follow the pattern `RC-{DOMAIN}-{NN}_{Title}.md`. Current domains:
 |------|-------|
 | AI | AI tools |
 | ALERT | Alerts & notifications |
-| AT | Action tags |
+| AT | Action tags (standard: RC-AT-01 through RC-AT-11) |
+| AT-EM | Action tags (external modules: RC-AT-EM-01, RC-AT-EM-02, etc.) |
 | BL | Branching logic |
 | DAG | Data Access Groups |
 | DE | Data entry |
@@ -35,6 +36,13 @@ Files follow the pattern `RC-{DOMAIN}-{NN}_{Title}.md`. Current domains:
 | USER | User rights |
 
 Lower `NN` numbers are foundational (e.g., `RC-BL-01` is the overview; `RC-BL-03` is advanced syntax). Start with low numbers unless the question is clearly about something specific.
+
+**Special case — External Modules:** For content from External Modules (third-party plugins), use the subdomain convention `{DOMAIN}-EM` instead of continuing the sequential numbering within that domain. For example:
+   - `RC-AT-EM-01` covers the HIDESUBMIT action tag module
+   - `RC-BL-EM-01` would cover a branching logic external module
+   - `RC-SURV-EM-01` would cover a survey-related external module
+
+This convention reserves the standard sequential numbering (e.g., `RC-AT-01` through `RC-AT-11`, `RC-BL-01` through `RC-BL-04`) for core/standard REDCap features and creates a clear organizational boundary for module-specific content. When searching for articles in any domain, check both the standard `RC-{DOMAIN}-*` series and the `RC-{DOMAIN}-EM-*` subdomain for external module content.
 
 ## Search process
 

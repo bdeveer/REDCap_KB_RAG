@@ -1,6 +1,6 @@
 RC-AT-05
 
-**Action Tags — Free Text**
+**Free Text Action Tags**
 
 | **Article ID** | RC-AT-05 |
 |---|---|
@@ -10,70 +10,53 @@ RC-AT-05
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **REDCap Version** | 15.9.1 |
-| **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-06 — Autofill Action Tags; RC-FD-02 — Online Designer; RC-DE-05 — Field Validations |
+| **Related Topics** | RC-AT-01 — Overview; RC-AT-06 — Autofill Tags; RC-FD-02 — Online Designer |
 
 ---
 
 # 1. Overview
 
-This article covers action tags that modify the behavior of text boxes and notes boxes — REDCap's two free-text field types. These tags control input visibility, enforce length constraints, enable rich text formatting, and display placeholder hints. None of the tags in this article alter the stored data itself; they only affect how the field accepts or presents input.
+This article covers action tags that constrain, enhance, or modify the behavior of text boxes and notes boxes: `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, and `@PLACEHOLDER`.
 
 ---
 
-# 2. Key Concepts & Definitions
+# 2. @PASSWORDMASK
 
-**Text Box**
+Obscures text entry by replacing displayed characters with dots, similar to a password field. The underlying data is stored normally and is fully visible in reports, exports, and the Codebook — only the on-screen display is masked.
 
-A single-line free-text field. Supports optional validation types (number, date, email, etc.) and optional minimum/maximum bounds. Most action tags in this article apply specifically to text boxes.
+**Applies to:** Text box only.
 
-**Notes Box**
-
-A multi-line free-text field intended for longer responses. Some action tags in this article work on notes boxes; others are text box only.
-
-**Validation**
-
-A type constraint applied to a text box that limits what values are considered valid (e.g., integer, date_mdy, email). Certain action tags in this article only function when a relevant validation is present.
-
----
-
-# 3. @PASSWORDMASK
-
-Obscures text entered into a text box by replacing visible characters with dots, similar to a password field. The data is stored normally and is fully visible in reports and data exports — only the on-screen display during data entry is masked.
-
-**Applies to:** Text box only. Has no effect on notes boxes.
-
-**Common uses:** Social Security numbers, dates of birth, passcodes, and other values where shoulder-surfing is a concern.
-
-**Syntax** (no parameters):
+**Syntax:**
 ```
 @PASSWORDMASK
 ```
 
-> **Important:** `@PASSWORDMASK` is a display feature, not a security or encryption feature. The data is stored in plain text and is accessible in reports, the Codebook, and exports.
+**Use case:** Social Security numbers, dates of birth, passcodes — any sensitive value where you want to prevent shoulder-surfing during data entry.
 
 ---
 
-# 4. @FORCE-MINMAX
+# 3. @FORCE-MINMAX
 
-Text boxes with a numeric or date validation can define minimum and/or maximum bounds. By default, REDCap shows a warning when a user enters an out-of-range value but allows them to dismiss it and continue. `@FORCE-MINMAX` converts that warning into a hard block — users cannot save or advance until the entered value falls within the defined range.
+Text boxes with numeric or date validation can define minimum and/or maximum bounds. By default, REDCap warns users about out-of-range values but allows them to proceed. `@FORCE-MINMAX` makes that warning a hard block — users cannot save or advance until an in-range value is entered.
 
-**Applies to:** Text box with a validation that includes a minimum, a maximum, or both. Has no effect on fields without min/max bounds or on notes boxes.
+**Applies to:** Text box with a validation that defines a minimum, maximum, or both.
 
-**Common uses:** Age ranges, medication dosages, lab result ranges, or any numeric field with a known allowable window.
-
-**Syntax** (no parameters):
+**Syntax:**
 ```
 @FORCE-MINMAX
 ```
 
-> **Setup note:** Min/max bounds are defined in the *Edit Field* menu for the text box, in the validation section. Both the validation type and the bounds must be set before `@FORCE-MINMAX` has any effect.
+**Use case:** Age ranges in pediatric studies, medication dosages with strict limits, or any measurement with a known allowable range.
 
 ---
 
-# 5. @WORDLIMIT
+# 4. @WORDLIMIT
 
-Sets a maximum number of words that can be entered in a text or notes box. REDCap counts words by the spaces between them: "garage door" counts as two words; "garage-door" or "garagedoor" counts as one. The remaining word count is displayed below the field as the user types.
+Limits the maximum number of words in a text or notes box. REDCap counts words by spaces between them ("garage door" = 2 words; "garage-door" = 1 word). The remaining word count is displayed below the field.
+
+> **Note:** `@WORDLIMIT` and `@CHARLIMIT` are mutually exclusive. Use one or the other.
+
+> **Note:** Enforced only during data entry and surveys, not during API or Data Import Tool uploads.
 
 **Applies to:** Text box and notes box.
 
@@ -81,20 +64,16 @@ Sets a maximum number of words that can be entered in a text or notes box. REDCa
 ```
 @WORDLIMIT=10
 ```
-or equivalently:
-```
-@WORDLIMIT="10"
-```
-
-> **Note:** `@WORDLIMIT` and `@CHARLIMIT` cannot be used on the same field. Use one or the other.
-
-> **Note:** This limit is enforced only during browser-based data entry and survey submission. It does not apply to values written via the API or the Data Import Tool.
 
 ---
 
-# 6. @CHARLIMIT
+# 5. @CHARLIMIT
 
-Sets a maximum number of characters that can be entered in a text or notes box. All characters count toward the limit, including spaces and special characters. The remaining character count is displayed below the field.
+Limits the maximum number of characters in a text or notes box. All characters count (letters, spaces, punctuation). The remaining character count is displayed below the field.
+
+> **Note:** Mutually exclusive with `@WORDLIMIT`.
+
+> **Note:** Not enforced during data import.
 
 **Applies to:** Text box and notes box.
 
@@ -102,92 +81,57 @@ Sets a maximum number of characters that can be entered in a text or notes box. 
 ```
 @CHARLIMIT=30
 ```
-or equivalently:
-```
-@CHARLIMIT="30"
-```
-
-> **Note:** `@CHARLIMIT` and `@WORDLIMIT` cannot be used on the same field.
-
-> **Note:** Enforced only during browser-based data entry and surveys; not enforced during data import.
 
 ---
 
-# 7. @RICHTEXT
+# 6. @RICHTEXT
 
-Adds a rich text editing toolbar to a notes box, enabling common formatting options such as bold, italic, underline, and bulleted lists — similar to a basic word processor. Without this tag, notes boxes accept only plain text.
+Adds a rich text toolbar to a notes box, enabling bold, italic, bullets, and other formatting options. Without this tag, notes boxes accept only plain text.
 
-**Applies to:** Notes box only. Has no effect on plain text boxes.
+**Applies to:** Notes box only.
 
-**Common uses:** Open-ended feedback fields, comment boxes, or any question where respondents may benefit from structured formatting in their response.
-
-**Syntax** (no parameters):
+**Syntax:**
 ```
 @RICHTEXT
 ```
 
-> **Best practice:** Use left alignment for the notes box (set via *Custom Alignment* in the Edit Field menu). Left-aligned notes boxes display the full rich text toolbar. Right-aligned notes boxes display a more compact toolbar variant. Left alignment also gives respondents more horizontal space.
+**Best practice:** Use left alignment for notes boxes (set via *Custom Alignment* in the Edit Field menu). Left-aligned notes boxes display the full toolbar; right-aligned boxes show a compact version. Left alignment also provides more horizontal space.
 
 ---
 
-# 8. @PLACEHOLDER
+# 7. @PLACEHOLDER
 
-Displays hint text inside an empty text or notes box. The hint appears in grey and disappears the moment the user starts typing. The placeholder text is never stored — if the field is submitted empty, no value is saved.
+Displays hint text inside an empty field. The hint appears in grey and disappears when the user starts typing. The placeholder text is never saved — it is purely a UI hint.
 
 **Applies to:** Text box and notes box.
-
-**Common uses:** Date format reminders (e.g., "D-M-Y"), examples of expected input (e.g., "e.g. Pig, Goat, Cow"), or brief inline instructions.
 
 **Syntax:**
 ```
 @PLACEHOLDER='Please be brief'
 ```
 
-> **Note:** Single and double quotes cannot be used within the placeholder text, as REDCap uses these characters to delimit the value.
+> **Note:** Single and double quotes cannot be used within the placeholder text.
 
-> **Note:** `@PLACEHOLDER` only displays hint text. It does not set a default value. To pre-fill a value that is saved when the field is submitted, use `@DEFAULT` (see RC-AT-06).
+> **Note:** To pre-fill a value that is saved when the field is submitted, use `@DEFAULT` or `@SETVALUE` instead (see RC-AT-06).
 
----
-
-# 9. Common Questions
-
-**Q: Does @PASSWORDMASK encrypt the data?**
-
-**A:** No. The data is stored in plain text. `@PASSWORDMASK` only masks the display during data entry in the browser. The value is fully readable in reports, exports, and the Codebook.
-
-**Q: Can @WORDLIMIT and @CHARLIMIT be used together on the same field?**
-
-**A:** No. These two tags are mutually exclusive. Choose the constraint type that best fits your use case.
-
-**Q: Does @FORCE-MINMAX work if no validation is set?**
-
-**A:** No. `@FORCE-MINMAX` requires a validation type with a defined minimum or maximum. If the field has no validation or no bounds, the tag has no effect.
-
-**Q: Will the rich text formatting from @RICHTEXT be preserved in exports?**
-
-**A:** It depends on the export format. Rich text content is stored as HTML in the database. Some export formats (e.g., CSV) will include the raw HTML markup. Consider whether downstream analysis tools can handle HTML content before enabling `@RICHTEXT`.
-
-**Q: If I use @PLACEHOLDER and the respondent leaves the field blank, will the placeholder text be saved?**
-
-**A:** No. `@PLACEHOLDER` is purely cosmetic — it never saves. A blank field submission results in no stored value.
+**Use case:** Date format reminders, suggested answer formats, or brief instructions visible within the field.
 
 ---
 
-# 10. Common Mistakes & Gotchas
+# 8. Common Mistakes
 
-**Treating @PASSWORDMASK as a security control.** The tag masks the display but does not encrypt or protect the stored data. Use REDCap's user rights and export restrictions for actual data security.
+**Using `@WORDLIMIT` and `@CHARLIMIT` on the same field.** These are mutually exclusive; only one can be active.
 
-**Using @WORDLIMIT and @CHARLIMIT together.** These tags conflict. Only one can be active on a field at a time; REDCap will not generate an error, but the behavior will be unpredictable.
+**Expecting `@PASSWORDMASK` to encrypt data.** It only masks the display — data is stored and exported in plain text.
 
-**Expecting @FORCE-MINMAX to work without a validation.** The tag requires a validation type with min/max bounds defined. Without it, the warning behavior is unchanged.
+**Confusing `@PLACEHOLDER` with `@DEFAULT`.** `@PLACEHOLDER` is a hint that is never saved; `@DEFAULT` pre-fills with a value that will be saved.
 
-**Confusing @PLACEHOLDER with @DEFAULT.** `@PLACEHOLDER` shows hint text but never saves. `@DEFAULT` pre-fills a real value that is saved on submission. Use `@PLACEHOLDER` for display hints; use `@DEFAULT` when you need a saved default.
+**Expecting limits to apply to imported data.** `@WORDLIMIT` and `@CHARLIMIT` are enforced only during browser-based data entry and surveys, not during API or import uploads.
 
 ---
 
-# 11. Related Articles
+# 9. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-06 — Autofill Action Tags: `@DEFAULT` and `@SETVALUE` for pre-filling saved values
-- RC-DE-05 — Field Validations: configuring validation types and min/max bounds required by `@FORCE-MINMAX`
-- RC-FD-02 — Online Designer: where action tags and field settings are configured
+- RC-AT-01 — Action Tags Overview
+- RC-AT-06 — Autofill Action Tags
+- RC-FD-02 — Online Designer

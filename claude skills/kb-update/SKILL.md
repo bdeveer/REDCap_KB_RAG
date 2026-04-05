@@ -48,6 +48,14 @@ Then read the 1–3 most likely candidates in full. Look for:
 
 Use the domain slug reference at the bottom of the kb-builder skill if you need to think about which domain this content falls under.
 
+**Special case — External Module Content:** If the content is about functionality from an External Module (third-party plugin), propose an article ID in the `RC-{DOMAIN}-EM-*` subdomain instead of continuing the sequential numbering within that domain. For example:
+   - `RC-AT-EM-01` for action tag modules (e.g., HIDESUBMIT)
+   - `RC-BL-EM-01` for branching logic modules
+   - `RC-SURV-EM-01` for survey-related modules
+   - `RC-FD-EM-01` for form design modules
+
+This preserves the standard sequential numbering for core/standard REDCap features and creates a clear subdomain for module-specific content across all domains. This is important because external modules can impact many different feature areas.
+
 Present your assessment to the user:
 - Which article(s) are likely affected, and why
 - Whether you think this is an update, an addition to an existing article, or something new

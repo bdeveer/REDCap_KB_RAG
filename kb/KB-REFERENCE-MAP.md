@@ -19,7 +19,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-AT-09 | Action Tags: @CALCTEXT & @CALCDATE — Calculations | RC-AT-09_Action-Tags-Calculations.md |
 | RC-AT-10 | Action Tags: Language Action Tags | RC-AT-10_Action-Tags-Language.md |
 | RC-AT-11 | Action Tags: Mobile App Action Tags | RC-AT-11_Action-Tags-Mobile-App.md |
-| RC-AT-12 | Action Tags: HIDESUBMIT External Module | RC-AT-12_Action-Tags-HIDESUBMIT-External-Module.md |
+| RC-AT-EM-01 | External Module Action Tags: HIDESUBMIT | RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md |
 | RC-AI-01 | REDCap AI Tools: Overview & Security | RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md |
 | RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
 | RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |

@@ -1,242 +1,178 @@
 RC-AT-06
 
-**Action Tags — Autofill**
+**Autofill Action Tags**
 
 | **Article ID** | RC-AT-06 |
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-AT-01 — Action Tags Overview |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **REDCap Version** | 15.9.1 |
-| **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-02 — @HIDDEN & @READONLY; RC-LONG-01 — Longitudinal Project Setup; RC-FD-02 — Online Designer |
+| **Related Topics** | RC-AT-01 — Overview; RC-AT-05 — Free Text Tags; RC-LONG-01 — Longitudinal Project Setup; RC-FD-02 — Online Designer |
 
 ---
 
 # 1. Overview
 
-This article covers autofill action tags — tags that automatically populate a field value when a form or survey is loaded in a browser. Autofill tags do not require any user input; they insert values such as the current date and time, the user's login name, or a value pulled from elsewhere in the project.
+This article covers action tags that automatically populate field values when a form or survey is first loaded: the `@NOW` and `@TODAY` families, device-based tags, user-based tags, and the flexible `@DEFAULT` and `@SETVALUE` tags.
 
-All autofill tags share one behavior: they only activate when a form is loaded in a browser. They do not run during API writes, data imports, or background processes.
-
----
-
-# 2. Key Concepts & Definitions
-
-**Autofill**
-
-The automatic population of a field value on page load. Autofill action tags insert a pre-determined value without any user action.
-
-**Piping**
-
-Inserting the value of one field into another by referencing it as `[variable_name]`. Piped values can be used as parameters in `@DEFAULT` and `@SETVALUE`.
-
-**Smart Variable**
-
-A predefined reference to project or session metadata — for example, `[user-fullname]` returns the logged-in user's full name; `[previous-event-name]` returns the name of the most recently completed event in a longitudinal project. Smart variables can be used in `@DEFAULT` and `@SETVALUE` parameters. Use the green *Smart Variables* button in REDCap for the full list.
+Autofill tags only populate values on page load if the field is currently empty. Existing values are never overwritten (except by `@SETVALUE`, which always overwrites).
 
 ---
 
-# 3. Text-Specific Autofill Tags
+# 2. Date & Time Autofill Tags
 
-The following tags pre-fill a specific dynamic value into a text or notes box when the form loads. None of them have parameters. If the field already contains a value, these tags do not overwrite it.
+These tags fill text boxes with date and/or time values. All have no parameters.
 
-**Applies to:** Text box and notes box. Best practice is to apply the relevant date, date-time, or other validation to the target field.
-
-| Tag | What it pre-fills | Notes |
+| Tag | Fills with | Notes |
 |---|---|---|
-| `@NOW` | Current date and time from the user's device/browser | Matches the field's date-time validation if set |
-| `@NOW-SERVER` | Current date and time from the REDCap server | Useful when respondents span multiple time zones |
-| `@NOW-UTC` | Current date and time in UTC/GMT | Consistent reference regardless of device or server location |
-| `@TODAY` | Current date from the user's device/browser | Does not fill a time component |
-| `@TODAY-SERVER` | Current date from the REDCap server | Same as `@NOW-SERVER` but date only |
-| `@TODAY-UTC` | Current date in UTC/GMT | Same as `@NOW-UTC` but date only |
-| `@LONGITUDE` | Longitude of the user's device | Subject to device privacy settings; may be blank or inaccurate |
-| `@LATITUDE` | Latitude of the user's device | Subject to device privacy settings; may be blank or inaccurate |
-| `@USERNAME` | REDCap username of the current user | Fills with `survey-participant` when accessed via survey link |
-| `@CONSENT-VERSION` | Version number of the active e-consent framework | Only works in surveys with the e-consent framework enabled |
+| `@NOW` | Current date/time from user's device | Use for date-time fields |
+| `@NOW-SERVER` | Current date/time from REDCap server | Better for multi-timezone scenarios |
+| `@NOW-UTC` | Current date/time in UTC | Consistent reference |
+| `@TODAY` | Current date from user's device | Use for date-only fields |
+| `@TODAY-SERVER` | Current date from REDCap server | For multi-timezone scenarios |
+| `@TODAY-UTC` | Current date in UTC | Consistent reference |
 
-> **Location accuracy note:** `@LONGITUDE` and `@LATITUDE` rely on device-level permissions. Many devices allow users to disable or reduce location accuracy. VPNs and similar tools can return incorrect coordinates. Treat these values as approximate.
+**Applies to:** Text box and notes box with corresponding date/time validation.
 
-> **Survey access note:** `@USERNAME` fills with `survey-participant` when a respondent accesses the instrument via a public survey link (i.e., without logging in to REDCap).
-
-## 3.1 Combining Autofill Tags with @HIDDEN and @READONLY
-
-Autofill tags are frequently combined with visibility and read-only tags to create fields that populate automatically but are not visible or editable by the user. Common examples:
-
-**Hidden timestamp:**
-```
-@NOW @HIDDEN
-```
-Records the time the form was first loaded without displaying the field to the user. REDCap tracks survey completion time automatically but not start time — this combination provides a start timestamp.
-
-**Locked username:**
-```
-@USERNAME @READONLY
-```
-Pre-populates the field with the current user's username and prevents them from editing it, creating a reliable record of who first opened the form.
+**Use case:** Timestamp fields, survey completion dates, or any field where the current date/time is the expected value.
 
 ---
 
-# 4. @DEFAULT and @SETVALUE
+# 3. Device & User Autofill Tags
 
-These are the most flexible autofill action tags. Unlike the text-specific tags above, they work across multiple field types and accept static values, raw values, piped variables, and smart variables as parameters.
+| Tag | Fills with | Notes |
+|---|---|---|
+| `@LONGITUDE` | Device longitude | Subject to privacy settings; may be blank or inaccurate |
+| `@LATITUDE` | Device latitude | Subject to privacy settings; may be blank or inaccurate |
+| `@USERNAME` | Current REDCap username | Fills with "survey-participant" when accessed via survey |
+| `@CONSENT-VERSION` | E-consent version number | Only applies to surveys with e-consent framework enabled |
 
-**Key difference:**
+**Applies to:** Text box (varies by tag).
 
-- `@DEFAULT` only fills a field if the form status is "grey" (no data entered yet). It will not overwrite existing data.
-- `@SETVALUE` fills the field every time the form is loaded, regardless of whether data is already present. It overwrites existing values.
+> **Note on location accuracy:** Device location depends on privacy settings. Many devices allow users to disable location services or reduce accuracy. VPNs can also return incorrect values. Treat location data as approximate.
 
-Use `@DEFAULT` when a field should be pre-filled once and then potentially updated by the respondent. Use `@SETVALUE` when the field should always reflect the most current value on load.
+---
 
-> **Backward compatibility note:** In older REDCap versions, `@PREFILL` was the equivalent of `@SETVALUE`. Both names still work, but `@SETVALUE` is preferred for new projects.
+# 4. @DEFAULT — Pre-fill on First Load
 
-**Applies to:** Text boxes, notes boxes, radio buttons, dropdowns, checkboxes, and slider fields.
+Pre-fills a field only when the form has never had data entered (status is "grey/incomplete"). Once the respondent saves data, `@DEFAULT` no longer applies.
 
-## 4.1 Static Text Values (Text Boxes and Notes Boxes)
+**Applies to:** Text box, notes box, radio button, dropdown, checkbox, slider fields.
 
-Place the desired text between quotes after an equals sign:
+**Use case:** Setting expected default values that respondents may override.
+
+## 4.1 Static Values in Text/Notes Boxes
 
 ```
 @DEFAULT='Green'
 ```
 
-Most characters are valid. Single and double quotes cannot appear within the value, as they are used to delimit it.
+## 4.2 Raw Values in Radio/Dropdown/Checkbox
 
-## 4.2 Raw Values (Radio Buttons, Dropdowns, and Checkboxes)
-
-Use the raw value of the option to pre-select — not the label:
-
-**Single selection (radio button or dropdown):**
 ```
 @DEFAULT='2'
 ```
 
-**Multiple selections (checkbox):**
+For multiple selections in checkboxes:
+
 ```
 @DEFAULT='1,2'
 ```
 
-Alphabetic raw values (e.g., country codes) are also valid:
-```
-@DEFAULT='USA'
-```
+## 4.3 Dynamic Values — Piping
 
-## 4.3 Piped Values
-
-Reference a field stored elsewhere in the same record using its variable name in brackets:
+Pre-fill with a value from another field in the same record:
 
 ```
 @DEFAULT='[email]'
 ```
 
-This pre-fills the field with the value stored in the `email` field for the same record. In a non-longitudinal project, this references the same event; in a longitudinal project, it references the current event.
+## 4.4 Dynamic Values — Smart Variables
 
-> **Multiple choice piping tip:** When piping the value of a radio button, dropdown, or checkbox into `@DEFAULT` or `@SETVALUE`, append `:value` to the variable to retrieve the stored raw value rather than the option label — e.g., `@DEFAULT='[my_dropdown:value]'`. Without `:value`, the pipe returns the label text, which will not match the raw value expected by the target field.
-
-## 4.4 Smart Variables
-
-Reference project or session metadata using smart variable syntax:
+Pre-fill with a system value:
 
 ```
 @DEFAULT='[user-fullname]'
 ```
 
-Pre-fills the field with the full name of the currently logged-in user, as stored in their REDCap profile.
+## 4.5 Longitudinal Projects
 
-## 4.5 Combining Piping and Smart Variables — Longitudinal Example
-
-In a longitudinal project, `@DEFAULT` can carry forward a value from the previous event using the `[previous-event-name]` smart variable:
+Carry forward a value from the previous event:
 
 ```
 @DEFAULT='[previous-event-name][rx1]'
 ```
 
-This tells REDCap to look up the value of `rx1` from the most recently completed prior event and pre-fill it in the current event. This is useful for medication lists or other data that changes minimally between time points — respondents can review and update rather than re-entering from scratch.
-
-> **Prerequisites:** This pattern requires familiarity with longitudinal project structure, piping, and smart variables. See RC-LONG-01, the piping training course, and the smart variables reference in REDCap.
+Pre-fills the field with the value of `rx1` from the most recent prior event. Requires understanding of longitudinal projects (see RC-LONG-01).
 
 ---
 
-# 5. @SAVE-PROMPT-EXEMPT and @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
+# 5. @SETVALUE — Pre-fill on Every Load
 
-When a user navigates away from a data entry form or survey page without clicking Save, REDCap normally shows a **"Save your changes?"** warning prompt if any field values have changed. These two action tags allow specific fields to be excluded from triggering that warning.
+Like `@DEFAULT`, but fills the field every time the form is loaded, overwriting any existing value. Use when the field should always reflect the most current value on load.
 
-> **Warning:** Both tags should be used carefully. If a user navigates away without saving, the exempted field's value will be lost without any prompt. Use only on fields where unsaved changes are genuinely unimportant.
+**Syntax:** Identical to `@DEFAULT`.
 
-## 5.1 @SAVE-PROMPT-EXEMPT
+**Use case:** Tracking the last user to touch a form, or always pulling the most recent data from another field.
 
-Adding `@SAVE-PROMPT-EXEMPT` to a field means that changes to *that field alone* will not trigger the "Save your changes?" prompt. If *any other field* on the same page has also been modified, the prompt will still appear as normal — this tag only suppresses the prompt when the tagged field is the sole change detected.
-
-**Common use:** Fields that capture metadata automatically — such as a "Last modified by" field using `@SETVALUE="[user-name]"` combined with `@READONLY`. These fields are updated on every page load and would otherwise always trigger the save warning even when the user made no intentional edits.
-
-**Syntax** (no parameters):
-```
-@SAVE-PROMPT-EXEMPT
-```
-
-**Example — tracking who last opened a form without nuisance warnings:**
-```
-@READONLY @SETVALUE='[user-name]' @SAVE-PROMPT-EXEMPT
-```
-
-## 5.2 @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
-
-A narrower version of `@SAVE-PROMPT-EXEMPT`. It suppresses the save warning only during the **initial auto-setting of a blank field** — specifically when the field receives its first value from an autofill tag (`@DEFAULT`, `@SETVALUE`, `@TODAY`, `@NOW`, etc.) on page load. Once the field has a value and the user subsequently modifies it, the normal warning behavior resumes.
-
-**Common use:** Timestamp or date fields that are auto-populated when the form first opens (e.g., `@TODAY @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET`). Without this tag, opening a form that auto-fills a blank field would immediately flag the session as having unsaved changes.
-
-**Syntax** (no parameters):
-```
-@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
-```
+**Backward compatibility note:** Older REDCap versions used `@PREFILL` (which still works but is deprecated).
 
 ---
 
-# 6. Common Questions
+# 6. Combining Autofill Tags with Visibility Tags
 
-**Q: What is the difference between @NOW and @TODAY?**
+Autofill tags are often combined with `@HIDDEN` or `@READONLY` variants:
 
-**A:** `@NOW` fills both the date and the time. `@TODAY` fills the date only. Match the tag to the field's validation type: use `@TODAY` for date-validated fields and `@NOW` for date-time-validated fields.
+```
+@NOW @HIDDEN
+```
+
+Creates a hidden timestamp recording when a form was first loaded.
+
+```
+@USERNAME @READONLY
+```
+
+Pre-populates with the current user's username and locks it to prevent manual edits.
+
+---
+
+# 7. Common Questions
 
 **Q: When should I use @DEFAULT versus @SETVALUE?**
 
-**A:** Use `@DEFAULT` when the field should be pre-filled once on first open and then potentially changed by the respondent. Use `@SETVALUE` when the field should always reflect a freshly computed or looked-up value, such as always tracking the most recent user to open the form.
+**A:** Use `@DEFAULT` when you expect the field to be filled once and then potentially updated by the respondent. Use `@SETVALUE` when the field should always reflect a freshly computed or looked-up value on every load.
 
-**Q: Do autofill tags run during data import or API writes?**
+**Q: Can I use piped variables and smart variables in @DEFAULT/@SETVALUE?**
 
-**A:** No. Autofill tags only execute when a form is loaded in a browser. They have no effect during API writes, the Data Import Tool, or any background process.
+**A:** Yes. Any valid piped field reference (e.g., `[email]`) or smart variable (e.g., `[user-fullname]`) can be used as the parameter.
 
-**Q: Can @DEFAULT or @SETVALUE pre-fill an entire record at once?**
+**Q: What is the difference between @NOW and @TODAY?**
 
-**A:** No. These tags only activate when the specific form containing the tagged field is loaded in a browser. To pre-fill an entire record, every instrument must be opened and saved individually — or values must be written directly via import or API.
+**A:** `@NOW` fills both date and time. `@TODAY` fills date only. If your field has a date-only validation, use `@TODAY`.
 
-**Q: What happens if @USERNAME is used in a survey accessed via a public link?**
+**Q: Do autofill tags work during data import?**
 
-**A:** The field is pre-filled with the literal text `survey-participant`. REDCap has no way to identify the individual respondent through an anonymous survey link.
-
----
-
-# 7. Common Mistakes & Gotchas
-
-**Using @SETVALUE when @DEFAULT was intended.** `@SETVALUE` overwrites existing data every time the form loads. If a respondent has updated a field and the form is reopened, their edit will be overwritten. Use `@DEFAULT` unless overwriting is intentional.
-
-**Using @NOW on a date-only field.** The time component is discarded, which can be confusing. Use `@TODAY` for date-only fields.
-
-**Relying on @LATITUDE / @LONGITUDE for accurate location data.** Device privacy settings, VPNs, and GPS accuracy limitations all affect these values. Treat them as supplementary information rather than precise coordinates.
-
-**Expecting autofill tags to fire during import.** They do not. If pre-populating records at scale, use the Data Import Tool or API directly — autofill tags will not fire until the form is opened in a browser.
-
-**Piping a multiple choice field without `:value`.** When using `@DEFAULT='[my_dropdown]'` to pre-fill a radio or dropdown field, the pipe returns the option label (e.g., "Yes"), not the raw value (e.g., `1`). The target field expects a raw value and the pre-fill will silently fail. Always use `@DEFAULT='[my_dropdown:value]'` when piping between multiple choice fields.
+**A:** No. These tags only execute when a form is loaded in a browser. They do not run during API uploads or Data Import Tool uploads.
 
 ---
 
-# 8. Related Articles
+# 8. Common Mistakes
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-02 — @HIDDEN & @READONLY: commonly combined with autofill tags to create hidden or locked auto-populated fields
-- RC-AT-08 — @IF: combining autofill tags with conditional logic
-- RC-LONG-01 — Longitudinal Project Setup: required background for the `[previous-event-name]` carry-forward example
-- RC-FD-02 — Online Designer: where action tags and field settings are configured
+**Using `@SETVALUE` on fields where respondents expect data to persist.** Unlike `@DEFAULT`, `@SETVALUE` replaces the value every time the form loads. Avoid on fields where users expect their previous entries to remain.
+
+**Using `@NOW` on a date-only field.** If the field has a date-only validation, use `@TODAY` instead. `@NOW` on a date-only field will still populate the date, but the time component is discarded.
+
+**Expecting autofill tags to populate during data import.** These tags run only when a form is loaded in the browser.
+
+---
+
+# 9. Related Articles
+
+- RC-AT-01 — Action Tags Overview
+- RC-AT-05 — Free Text Action Tags
+- RC-LONG-01 — Longitudinal Project Setup (for the [previous-event-name] example)
+- RC-FD-02 — Online Designer
