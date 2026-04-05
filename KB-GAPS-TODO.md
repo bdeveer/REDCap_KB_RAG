@@ -15,6 +15,44 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
+## Priority 3 — Out-of-scope references without a covering article
+
+### ⚠️ RC-CALC-02 — Calculated Fields (Field Type)
+
+**Why needed:** RC-BL-01 explicitly lists "calculated fields and calculation syntax" as out of scope and defers to a dedicated training course. RC-CALC-01 covers Special Functions (used inside formulas), and RC-AT-09 covers @CALCTEXT/@CALCDATE, but no article explains the **Calculated Field field type** itself. Multiple articles reference it without explaining it.
+
+**Domain slug:** CALC (established, RC-CALC-01 already exists)
+**What to cover:** What a calculated field is and how it differs from a text field, creating a calculated field in the Online Designer and Data Dictionary, formula syntax basics, numeric-only output limitation, when to use @CALCTEXT/@CALCDATE instead, how values are updated (real-time, data import, Data Quality rule H), display behavior and read-only enforcement
+
+---
+
+### ⚠️ RC-BL-05 — Branching Logic in Longitudinal Projects
+
+**Why needed:** RC-BL-01 explicitly lists "event-based logic in longitudinal projects" as out of scope for the basic BL series. No existing article covers this topic.
+
+**Domain slug:** BL (established)
+**What to cover:** Referencing fields from other events using `[event-name][field_name]` syntax, cross-event logic patterns (e.g., show field only if a prior-event field has a value), arm-specific logic, interactions between branching logic and repeated instruments/events, common gotchas (e.g., fields not yet saved in another event returning blank)
+
+---
+
+### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
+
+**Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
+
+**Domain slug:** DE (established)
+**What to cover:** Accessing 'Choose action for record' from the Record Home Page, available actions (move record to different DAG, rename/renumber record, delete record, lock/unlock record), who can perform each action (user rights required), consequences and irreversibility of deletion, audit trail behavior after admin actions
+
+---
+
+### ⚠️ RC-FDL-01 — Form Display Logic
+
+**Why needed:** RC-SURV-07 explicitly marks Form Display Logic as out of scope and notes it is a separate Online Designer feature adjacent to the survey queue. No existing article covers it.
+
+**Domain slug:** FDL (new)
+**What to cover:** What Form Display Logic is (staff/user access to forms based on conditional logic, distinct from branching logic and survey queue), where to find it in the Online Designer, how to configure logic rules, interaction with the auto-continue feature in the survey queue, differences from branching logic and user rights
+
+---
+
 ## Priority 4 — Useful context for integrations and field data collection
 
 ### ⚠️ RC-API-01 — REDCap API
@@ -23,6 +61,26 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 **Domain slug:** API (established)
 **What to cover:** API basics, API token management, common endpoints (import/export records, import/export data dictionary, file upload/download), API Playground, rate limits and best practices, use cases for automation
+
+---
+
+### ⚠️ RC-ALERT-03 — Alternative Alert Delivery Types (SMS, Voice, SendGrid)
+
+**Why needed:** RC-ALERT-01 explicitly states it covers email only and marks SMS, Voice Call, and SendGrid as out of scope. No other article covers these delivery methods.
+
+**Domain slug:** ALERT (established)
+**What to cover:** Enabling SMS and voice delivery (institution-level configuration requirement), composing SMS vs. email alerts (character limits, no HTML), SendGrid integration and when it applies, comparing delivery reliability and use cases across types
+**Note:** Relevance depends on whether the institution has SMS/voice enabled. Confirm with REDCap admin before prioritizing.
+
+---
+
+### ⚠️ RC-IMP-02 — Clinical Data Mart Integration
+
+**Why needed:** RC-IMP-01 lists Clinical Data Mart as an advanced import method and marks it out of scope. No existing article covers it.
+
+**Domain slug:** IMP (established)
+**What to cover:** What Clinical Data Mart is, how the integration works in REDCap (automated data pulls from an EHR/CDW), configuration requirements, typical use cases (clinical trial pre-population), limitations and data governance considerations
+**Note:** Highly institution-specific — only relevant if the local REDCap instance has CDM integration configured.
 
 ---
 
@@ -58,4 +116,4 @@ These were previously marked ⚠️ but have since been resolved:
 - When writing RC-MLM-01, RC-AT-10 (Action Tags: Language) is a useful companion article that already covers `@LANGUAGE-CURRENT-SURVEY` in depth.
 - When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
 
-*Last updated: 2026-04-04*
+*Last updated: 2026-04-05*

@@ -161,8 +161,8 @@ The Data Import Tool allows you to import participant record data in bulk. REDCa
 
 - **CSV import** (most common)
 - **XML import**
-- **API** (advanced — out of scope for this article)
-- **Clinical Data Mart** (advanced — out of scope for this article)
+- **API** (advanced — see RC-API-01 — REDCap API *(coming soon)*)
+- **Clinical Data Mart** (advanced — see RC-IMP-02 — Clinical Data Mart Integration *(coming soon)*)
 
 The XML import option is available but requires a properly formatted CDISC ODM XML file, which most users do not have on hand. **CSV import is the recommended method** for most users because any REDCap data export in CSV format can be used directly as an import file in the same project, and CSV files are easy to modify in a spreadsheet editor.
 

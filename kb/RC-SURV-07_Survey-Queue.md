@@ -40,7 +40,7 @@ A survey that has been turned on in the survey queue interface. Deactivated surv
 
 **Form Display Logic**
 
-A separate Online Designer feature, adjacent to the survey queue, that restricts user (staff) access to forms based on conditional logic. It does not interact with the survey queue but can optionally influence the auto-continue feature. It is out of scope for this article.
+A separate Online Designer feature, adjacent to the survey queue, that restricts user (staff) access to forms based on conditional logic. It does not interact with the survey queue but can optionally influence the auto-continue feature. It is covered in RC-FDL-01 — Form Display Logic *(coming soon)*.
 
 ---
 

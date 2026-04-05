@@ -195,7 +195,7 @@ Select the message delivery method. The available options depend on your REDCap 
 - Voice Call (if enabled)
 - SendGrid (if configured)
 
-This article covers email only. All other types are out of scope.
+This article covers email only. SMS, Voice Call, and SendGrid delivery are covered in RC-ALERT-03 — Alternative Alert Delivery Types *(coming soon)*.
 
 ### 5.2 From Email
 

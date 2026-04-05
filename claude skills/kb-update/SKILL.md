@@ -96,7 +96,18 @@ After editing, use `present_files` to share the updated article with the user.
 
 ---
 
-## Step 3b: Create a new article
+## Step 3b: Handle out-of-scope references encountered during editing
+
+While reading or editing a KB article, if you encounter language like "out of scope for this article" or "covered in separate training" **without a pointer to a specific article or a *(coming soon)* flag**:
+
+1. Check `kb/KB-GAPS-TODO.md` to see whether the topic is already listed as a planned article.
+2. **If it is listed** — replace the "out of scope" language with a *(coming soon)* pointer using the planned article ID and title. Example: `see RC-API-01 — REDCap API *(coming soon)*`.
+3. **If it is not listed** — add a new entry to `KB-GAPS-TODO.md` following the existing format (article ID, why needed, domain slug, what to cover), then apply the *(coming soon)* pointer in the article.
+4. Do not leave bare "out of scope" language in articles. Every deferred topic should either link to an existing article or carry a *(coming soon)* flag with a planned ID.
+
+---
+
+## Step 3c: Create a new article
 
 If the input covers a topic not adequately addressed by any existing article, do not write the article here. Instead:
 

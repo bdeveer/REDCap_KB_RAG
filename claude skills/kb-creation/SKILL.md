@@ -138,6 +138,18 @@ Bullet list of related KB articles with ID and title. Include prerequisites, nat
 
 ---
 
+## Handling out-of-scope topics within a new article
+
+When writing a new article, you will often need to mention topics that fall outside its scope. **Never use bare "out of scope" language.** Instead, always provide a pointer:
+
+- **If an article already exists** — link by ID and title: `see RC-FD-07 — Field Embedding`
+- **If an article is planned** — use the *(coming soon)* flag: `see RC-BL-05 — Branching Logic in Longitudinal Projects *(coming soon)*`
+- **If no article exists and none is planned** — add an entry to `kb/KB-GAPS-TODO.md` first, then use the *(coming soon)* flag with the new planned ID.
+
+To check whether a topic is already planned, read `kb/KB-GAPS-TODO.md` before writing the scope sections of the article. Do not leave scope callouts without a pointer.
+
+---
+
 ## Style rules (derived from BL series)
 
 - **Terminology**: Use REDCap's canonical terms. "Instrument" not "form" or "survey" unless distinguishing. "Variable" not "field" unless quoting the UI.

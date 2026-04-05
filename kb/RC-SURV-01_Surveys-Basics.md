@@ -82,7 +82,7 @@ The Online Designer now shows additional survey-related columns and buttons:
 
 | Element | Description |
 | --- | --- |
-| **Survey Options** header | Contains advanced survey features. Out of scope for this training — covered in separate courses. |
+| **Survey Options** header | Contains advanced survey features. Covered in RC-SURV-02 — Survey Settings: Basic Options & Design. |
 | **Enabled as Survey** column | The primary column for enabling instruments as surveys. |
 | **Enable** button | Appears behind each instrument that is not yet a survey. Clicking it takes you directly to that instrument's Survey Settings. |
 | **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Clicking it has no action — it is informational only. |
@@ -334,8 +334,8 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 - RC-FD-02 — Online Designer (navigating to the Online Designer, the instrument list, and the instrument editor — required context for Section 4.2)
 - RC-FD-01 — Form Design Overview (understanding instruments and fields before adding survey functionality)
 - RC-RIGHTS-01 — User Rights (full reference for all REDCap user rights, including the three survey-related rights described in Section 7)
-- RC-ALERT-01 — Automated Survey Invitations (advanced feature for triggering survey invitations based on data conditions — referenced in Section 4.2 as out of scope)
-- RC-SURV-02 — Survey Customizations (covers the advanced settings in Survey Customizations, Survey Access, and Survey Termination Options left out of scope in this article)
+- RC-ALERT-01 — Automated Survey Invitations (advanced feature for triggering survey invitations based on data conditions — referenced in Section 4.2)
+- RC-SURV-02 — Survey Customizations (covers the advanced settings in Survey Customizations, Survey Access, and Survey Termination Options introduced but not detailed in this article)
 - RC-SURV-03 — Survey Queue (managing sequential multi-survey workflows)
 
 ---
@@ -345,4 +345,4 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 | REDCap Version | Note |
 | --- | --- |
 | General | This article covers the baseline survey setup with longitudinal mode and DAGs disabled. Projects with those features enabled will see additional options in the Online Designer and Survey Distribution Tools. |
-| General | The "Automated Invitations" button visible in the Online Designer's Survey Related Options column is covered separately in RC-ALERT-01 and is intentionally out of scope here. |
+| General | The "Automated Invitations" button visible in the Online Designer's Survey Related Options column is covered in RC-ALERT-01 — Alerts & Notifications Setup. |

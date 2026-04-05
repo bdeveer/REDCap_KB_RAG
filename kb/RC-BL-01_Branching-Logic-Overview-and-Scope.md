@@ -68,7 +68,7 @@ The same logic syntax that powers branching logic is also used in several other 
 | Calculated Fields | Perform arithmetic operations on field values | Numerical result (not true/false) |
 | Action Tags (selected) | Drive dynamic behavior such as default values or date comparisons | Varies by action tag |
 
-> **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Both topics are out of scope for this series — see dedicated training courses.
+> **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Calculated fields are covered in RC-CALC-02 — Calculated Fields *(coming soon)*. Action tags that use logic syntax are covered in the RC-AT series — start with RC-AT-01 — Action Tags Overview.
 
 ---
 
@@ -101,14 +101,14 @@ This knowledge base series covers the foundations of REDCap's logic syntax. The 
 - Combining statements with AND, OR, and parentheses (RC-BL-03)
 - Writing logic for structured field types including checkboxes (RC-BL-04)
 
-The following topics are explicitly out of scope for this series and are covered in separate training:
+The following topics are outside the scope of this series. Each has its own dedicated article:
 
-- Calculated fields and calculation syntax
-- Action tags that use logic syntax
-- Smart variables
-- Field embedding (curly bracket syntax) — see RC-FD-07 — Field Embedding
-- Event-based logic in longitudinal projects
-- REDCap functions (e.g., datediff, rounddown)
+- Calculated fields and calculation syntax — RC-CALC-02 — Calculated Fields *(coming soon)*
+- Action tags that use logic syntax — RC-AT-01 — Action Tags Overview (start here for the full series)
+- Smart variables — RC-PIPE-03 — Smart Variables Overview
+- Field embedding (curly bracket syntax) — RC-FD-07 — Field Embedding
+- Event-based logic in longitudinal projects — RC-BL-05 — Branching Logic in Longitudinal Projects *(coming soon)*
+- REDCap functions (e.g., datediff, rounddown) — RC-CALC-01 — Special Functions Reference
 
 ---
 
