@@ -57,7 +57,7 @@ REDCap provides four distinct ways to restrict or remove a user's access. They o
 
 Project-level actions (suspension and removal) are the tools available to project users. Global actions require administrator intervention.
 
-> **Yale-specific:** [Describe Yale's policy on automatic global suspension (e.g., inactivity-based), and who to contact for global suspension issues — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** For this installation's policy on automatic global suspension (e.g., inactivity-based) and the process to request reactivation, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 6: Global User Suspension Policy**.
 
 ---
 

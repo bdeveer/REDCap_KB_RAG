@@ -8,6 +8,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
+| RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
 | RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |
@@ -108,6 +109,35 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 ## Per-Article Reference Details
 
 Each entry lists: **Prerequisites** (must be read first), **Outbound links** (articles this one references), and **Inbound links** (articles that reference this one). ⚠️ marks articles not yet in the KB.
+
+---
+
+### RC-INST-01 — Institution-Specific Settings & Policies
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-USER-04 — User Rights: User Management
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-FD-02 — Online Designer
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-PIPE-16 — Smart Variables: MyCap
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-06 — Automated Survey Invitations
+- RC-DE-12 — Data Resolution Workflow
+
+**Inbound links (referenced by):**
+- RC-USER-04 — User Rights: User Management
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-FD-02 — Online Designer
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-PIPE-16 — Smart Variables: MyCap
 
 ---
 
@@ -976,6 +1006,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05
 - RC-FD-06 (prerequisite)
 - RC-FD-07 (prerequisite)
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-LONG-01
 - RC-LONG-02
 - RC-PIPE-01 (prerequisite)
@@ -1246,6 +1277,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** *(none listed)*
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-DE-02 — Basic Data Entry
 - RC-SURV-01 — Surveys – Basics
@@ -1257,6 +1289,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-01 (prerequisite)
 - RC-FD-06 (prerequisite)
 - RC-IMP-01 (prerequisite)
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-LONG-01 (prerequisite)
 - RC-NAV-UI-02 (prerequisite)
 - RC-SURV-01 (prerequisite)
@@ -1268,6 +1301,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-UI-01 — Project Navigation UI
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-DE-02 — Basic Data Entry
 - RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
@@ -1279,6 +1313,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-01
 
 ---
@@ -1547,10 +1582,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-PIPE-03 — Smart Variables Overview
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-PIPE-03 — Smart Variables Overview
 
 **Inbound links (referenced by):**
-- *(Referenced by survey and MyCap articles if applicable)*
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 
@@ -1668,6 +1704,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-02 — Survey Settings: Basic Options & Design
 - RC-ALERT-01 — Alerts & Notifications: Setup
@@ -1677,6 +1714,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-02 — Online Designer
 
 **Inbound links (referenced by):**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-SURV-01 (previously ⚠️ RC-SURV-03 — now resolved)
 - RC-SURV-02 (outbound link)
 - RC-SURV-04
@@ -1825,12 +1863,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01
 - RC-USER-03
 - RC-USER-04
@@ -1867,12 +1907,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01
 - RC-USER-02
 - RC-USER-03

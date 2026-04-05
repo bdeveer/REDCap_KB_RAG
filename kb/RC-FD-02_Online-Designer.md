@@ -125,7 +125,7 @@ to the research team.
   --------------------- ---------------------------------------------- -----------------------------------------------------------------
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** The level of automatic approvals in Production mode is set centrally by your institution\'s REDCap support team. Some institutions allow minor changes (adding a new field) to be auto-approved, while others require administrator review for any change. Check with your local REDCap support team to understand the policy at your institution.
+  **Important:** The level of automatic approvals in Production mode is set centrally by your institution\'s REDCap support team. Some institutions allow minor changes (adding a new field) to be auto-approved, while others require administrator review for any change. For this installation\'s specific policy, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 4: Draft Mode Approval Policy**.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **6. When to Use the Online Designer**

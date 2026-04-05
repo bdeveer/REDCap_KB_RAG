@@ -161,7 +161,7 @@ A **Language Selector** lets you choose the voice and language. This setting con
 
 > **Important:** Text vocalized by this feature is sent to a third-party text-to-speech service. This may raise privacy concerns for surveys collecting sensitive information. Consult your local IRB and REDCap support team before using this feature.
 
-> **Note:** Your institution's REDCap administrator can disable this feature system-wide. If you do not see this option, contact your REDCap support team.
+> **Note:** Your institution's REDCap administrator can disable this feature system-wide. If you do not see this option, or if you are unsure whether it is permitted at this installation, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.3: Text-to-Speech in Surveys**.
 
 ## 3.10 Hiding Submit Buttons
 
@@ -205,7 +205,7 @@ Takes the survey offline at a specific date and time — regardless of how many 
 
 Example: You want registration for an event to close at midnight on the day before the event.
 
-> **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly.
+> **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly. For this installation's server time zone, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 3**.
 
 ## 4.4 Save and Return
 
@@ -288,7 +288,7 @@ To use the e-Consent Framework, you must collect the participant's name and sign
 - First and last name collected as two separate text variables (best practice).
 - Signature collected in a variable using the **Signature** field type.
 
-> **Important:** Before using the e-Consent Framework for a study, confirm with your local Institutional Review Board that electronic consent collected via REDCap is acceptable at your institution.
+> **Important:** Before using the e-Consent Framework for a study, confirm with your local Institutional Review Board that electronic consent collected via REDCap is acceptable at your institution. For this installation's IRB guidance on e-consent, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.5: e-Consent Framework**.
 
 ## 5.6 Confirmation Emails
 
@@ -336,7 +336,7 @@ No — confirmation emails always fire on completion. For conditional emails, us
 
 # 7. Common Mistakes & Gotchas
 
-**Setting Survey Expiration in the wrong time zone.** REDCap uses the server's time zone for survey expiration, not the participant's local time. If your server is set to UTC and your participants are in Eastern Time, a midnight expiration in your intent becomes 5:00 AM UTC. Always verify the server time zone with your REDCap support team and adjust your expiration time accordingly.
+**Setting Survey Expiration in the wrong time zone.** REDCap uses the server's time zone for survey expiration, not the participant's local time. Always check the server time zone (see RC-INST-01, Section 3) and calculate the correct offset before entering an expiration time. For example, if the server is set to UTC and your participants are in Central European Time (UTC+1/+2), a midnight local expiration becomes 23:00 or 22:00 UTC.
 
 **Designating a file upload variable in the wrong event for PDF Save.** In longitudinal projects, if the file upload variable you designate for Survey Response PDF Save does not exist in the event where the survey runs, REDCap will throw an error when participants submit. Verify the variable exists in the correct event before enabling this feature.
 

@@ -149,7 +149,7 @@ This is useful for large projects or when migrating user configurations from ano
 
 **Q: I entered a user's name but they didn't appear in the search results — what's wrong?**
 
-**A:** The user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added to any project. Contact the local REDCap support team about account creation.
+**A:** The user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added to any project. See **RC-INST-01 — Institution-Specific Settings & Policies, Section 5: User Account Creation** for the process at this installation.
 
 **Q: Can I add someone to multiple projects at once?**
 

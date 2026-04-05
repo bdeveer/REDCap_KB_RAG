@@ -60,7 +60,7 @@ An HTML link (usually embedded in an email or field note) that directs participa
 
 **MyCap Module Required**
 
-All MyCap smart variables only function if your project has the REDCap MyCap module enabled. Projects without MyCap enabled will return blank values when attempting to use these variables. Contact your REDCap administrator if you need to enable MyCap for your project.
+All MyCap smart variables only function if your project has the REDCap MyCap module enabled. Projects without MyCap enabled will return blank values when attempting to use these variables. For the availability of MyCap at this installation and how to request enablement, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.1: MyCap Mobile App**.
 
 **Participant-Facing vs. Administrator Context**
 
@@ -142,7 +142,7 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 **Q: What if my project doesn't have MyCap enabled?**
 
-**A:** MyCap smart variables return blank if the MyCap module is not enabled. Contact your REDCap administrator to request MyCap enablement if you need these variables.
+**A:** MyCap smart variables return blank if the MyCap module is not enabled. See **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.1** for whether MyCap is available at this installation and how to request it.
 
 **Q: How do participants use the MyCap link?**
 

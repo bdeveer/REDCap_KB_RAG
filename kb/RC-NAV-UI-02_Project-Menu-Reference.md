@@ -74,7 +74,7 @@ project.
   **My Projects**                           Always           Returns to the My Projects page. Same destination as clicking the logo.
   **Logged in as \[username\] / Log out**   Always           Displays the current username. The Log Out link ends the session completely.
   **REDCap Messenger**                      Always\*         A HIPAA-compliant in-project messaging tool for user-to-user communication. Cannot send external email, texts, or messages to other REDCap installations. (\*Availability depends on whether your institution has enabled this feature.)
-  **Contact REDCap Administrator**          Always           Links to your institution\'s REDCap support channel (email, website, or survey). Configured by your local admin team.
+  **Contact REDCap Administrator**          Always           Links to your institution\'s REDCap support channel (email, website, or survey). Configured by your local admin team. See RC-INST-01 for what this link opens at this installation.
   ----------------------------------------- ---------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **4.2 Project Home and Design**
@@ -163,7 +163,7 @@ Each application is self-contained.
   **API**                                         Conditional      Generate or request an API token to allow external programs to interact with the project programmatically. Advanced feature requiring programming skills.
   **API Playground**                              Conditional      Explore and test available API methods with built-in documentation and code examples in multiple languages (PHP, Python, R, Java, etc.).
   **REDCap Mobile App**                           Conditional      Manage device connections for the REDCap Mobile App. Used for offline data collection by study staff in the field. See note below on Mobile App vs. MyCap.
-  **Custom Links**                                Conditional      Links added by your local REDCap admin team pointing to institution-specific support resources (ticketing systems, training calendars, LMS portals, etc.).
+  **Custom Links**                                Conditional      Links added by your local REDCap admin team pointing to institution-specific support resources (ticketing systems, training calendars, LMS portals, etc.). See RC-INST-01 for the specific links available at this installation.
   ----------------------------------------------- ---------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 > **Note:** *REDCap Mobile App vs. MyCap: These are two separate apps
@@ -192,7 +192,9 @@ or dashboard has been created and the user has access to it.
 External modules are community-developed add-ons that extend REDCap\'s
 functionality. They must be downloaded and enabled by your local REDCap
 admin team. This menu section only appears if at least one module is
-active in the project and has a dedicated page.
+active in the project and has a dedicated page. For the list of modules
+available at this installation and the local policy on enabling them, see
+**RC-INST-01 — Institution-Specific Settings & Policies, Section 8**.
 
 -   Click Manage in the External Modules section header to see available
     modules and enable/disable them (depending on your permissions and

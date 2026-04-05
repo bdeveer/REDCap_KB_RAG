@@ -75,7 +75,7 @@ After completing this module, the user will be able to:
 
   ------------------------------------------ ---------------------------------------------------------------------------------------------------------------------
   **Step**                                   **Action & Detail**
-  **1 --- Log in**                           Open your institution\'s REDCap URL and log in with your credentials. You will land on the My Projects page.
+  **1 --- Log in**                           Open your institution\'s REDCap URL (see RC-INST-01 for this installation\'s URL) and log in with your credentials. You will land on the My Projects page.
   **2 --- Find your project**                Locate your project in the list. Projects can be searched or filtered. Click the project name to open it.
   **3 --- Confirm you are in the project**   The left menu will appear with project-specific sections. The workspace will show the Project Home page by default.
   ------------------------------------------ ---------------------------------------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ always present:
   *Can I use REDCap on a mobile phone?*                                        Yes, REDCap is mobile-responsive. The interface will display in hamburger mode. For offline mobile data collection by study staff, see the REDCap Mobile App. For participant-facing data collection, see MyCap --- these are two separate apps with different purposes.
   *What happens to my data when a project moves to Analysis/Cleanup status?*   All collected data remains intact. However, most project functionality is disabled. The project can be returned to Production status at any time.
   *Can I reverse a project status change?*                                     Moving forward through statuses (Development → Production → Analysis/Cleanup → Completed) can be done by users with sufficient rights. Reverting to an earlier status (e.g., Production back to Development) requires a REDCap administrator.
-  *What does Production status protect against?*                               In Production, you cannot edit project fields in real time. Changes must be made in Draft Mode and are either auto-approved or require administrator approval. This prevents accidental data loss from structural changes.
+  *What does Production status protect against?*                               In Production, you cannot edit project fields in real time. Changes must be made in Draft Mode and are either auto-approved or require administrator approval (see RC-INST-01 for the policy at this installation). This prevents accidental data loss from structural changes.
   *I submitted a feature suggestion --- when will I hear back?*                The Vanderbilt REDCap team does not respond directly to individual feature suggestions. Suggestions are reviewed periodically and may influence the development roadmap.
   ---------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
