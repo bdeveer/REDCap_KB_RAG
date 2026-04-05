@@ -7,7 +7,7 @@ RC-AT-03
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-AT-01 — Action Tags Overview |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-04 — Checkbox Action Tags; RC-FD-02 — Online Designer |
@@ -74,6 +74,8 @@ Hides one or more specific options in a structured field while preserving those 
 
 Use the raw value of the option, not the label. Separate multiple raw values with commas inside a single set of quotes.
 
+> **Piping supported:** The argument of `@HIDECHOICE` supports piping — you can reference another field's value to determine which choice to hide dynamically. Combine with `@IF` for conditional hiding.
+
 ---
 
 # 5. @SHOWCHOICE
@@ -90,7 +92,9 @@ Use `@SHOWCHOICE` when the list of options to hide is longer than the list to sh
 @SHOWCHOICE='3, 4'
 ```
 
-> **Note:** If `@HIDECHOICE` and `@SHOWCHOICE` both target the same option on the same field, `@SHOWCHOICE` wins — that option will be shown.
+> **Note:** If `@HIDECHOICE` and `@SHOWCHOICE` both target the same option on the same field, `@SHOWCHOICE` wins — that option will be shown. If a choice not listed in `@SHOWCHOICE` was already selected for a record, it continues to display for that record.
+
+> **Piping supported:** The argument of `@SHOWCHOICE` supports piping — you can reference another field's value to determine which choices to show dynamically. Combine with `@IF` for conditional display.
 
 ---
 
@@ -116,7 +120,28 @@ Each entry maps a raw value to a maximum count: `raw_value=limit`. Separate entr
 @MAXCHOICE(1=25)
 ```
 
-## 6.1 Combining @MAXCHOICE with Other Tags
+## 6.1 @MAXCHOICE-SURVEY-COMPLETE
+
+A variant of `@MAXCHOICE` that counts only **completed survey responses** toward the limit — partial survey responses and data entered via a data entry form (not a survey page) are excluded from the count.
+
+This is useful for registrations or slot allocations where only confirmed survey completions should count against a cap.
+
+**Syntax** (identical to `@MAXCHOICE`):
+```
+@MAXCHOICE-SURVEY-COMPLETE(1=25,2=30,3=30)
+```
+
+**Key distinction from `@MAXCHOICE`:**
+
+| Scenario | @MAXCHOICE | @MAXCHOICE-SURVEY-COMPLETE |
+|---|---|---|
+| Data entered on a data entry form | Counted | Not counted |
+| Partial survey response (not submitted) | Counted | Not counted |
+| Completed survey response | Counted | Counted |
+
+> **Longitudinal note:** In longitudinal projects, both `@MAXCHOICE` and `@MAXCHOICE-SURVEY-COMPLETE` treat each event independently — the limit applies per event, not across all events.
+
+## 6.2 Combining @MAXCHOICE with Other Tags
 
 - **@MAXCHOICE + @HIDECHOICE:** Hides an option entirely once its limit is reached, rather than greying it out. Requires manual monitoring — when the limit is hit, `@HIDECHOICE` must be added manually for that option.
 - **@MAXCHOICE + @RANDOMORDER:** Randomizes the display order of options while still enforcing per-option limits, reducing the tendency for respondents to select the first available item.
@@ -141,6 +166,10 @@ Each entry maps a raw value to a maximum count: `raw_value=limit`. Separate entr
 
 **A:** No. The count is checked on page load based on saved records. Two users simultaneously submitting the last available slot can both succeed. Design your project with this in mind for high-traffic registration scenarios.
 
+**Q: When should I use @MAXCHOICE versus @MAXCHOICE-SURVEY-COMPLETE?**
+
+**A:** Use `@MAXCHOICE` when any saved record (form or survey) should count toward the limit. Use `@MAXCHOICE-SURVEY-COMPLETE` when only finalized survey submissions should count — for example, a slot should not be reserved for a respondent who started but never submitted the survey.
+
 ---
 
 # 8. Common Mistakes & Gotchas
@@ -157,4 +186,5 @@ Each entry maps a raw value to a maximum count: `raw_value=limit`. Separate entr
 
 - RC-AT-01 — Action Tags Overview: what action tags are and how to add them
 - RC-AT-04 — Checkbox Action Tags: `@NONEOFTHEABOVE` and `@MAXCHECKED`, which are specific to checkboxes
+- RC-AT-08 — @IF: combining `@HIDECHOICE` and `@SHOWCHOICE` with conditional logic
 - RC-FD-02 — Online Designer: where action tags and field options are configured

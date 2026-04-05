@@ -7,7 +7,7 @@ RC-AT-06
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-AT-01 — Action Tags Overview |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **REDCap Version** | 15.9.1 |
@@ -134,6 +134,8 @@ Reference a field stored elsewhere in the same record using its variable name in
 
 This pre-fills the field with the value stored in the `email` field for the same record. In a non-longitudinal project, this references the same event; in a longitudinal project, it references the current event.
 
+> **Multiple choice piping tip:** When piping the value of a radio button, dropdown, or checkbox into `@DEFAULT` or `@SETVALUE`, append `:value` to the variable to retrieve the stored raw value rather than the option label — e.g., `@DEFAULT='[my_dropdown:value]'`. Without `:value`, the pipe returns the label text, which will not match the raw value expected by the target field.
+
 ## 4.4 Smart Variables
 
 Reference project or session metadata using smart variable syntax:
@@ -158,7 +160,42 @@ This tells REDCap to look up the value of `rx1` from the most recently completed
 
 ---
 
-# 5. Common Questions
+# 5. @SAVE-PROMPT-EXEMPT and @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
+
+When a user navigates away from a data entry form or survey page without clicking Save, REDCap normally shows a **"Save your changes?"** warning prompt if any field values have changed. These two action tags allow specific fields to be excluded from triggering that warning.
+
+> **Warning:** Both tags should be used carefully. If a user navigates away without saving, the exempted field's value will be lost without any prompt. Use only on fields where unsaved changes are genuinely unimportant.
+
+## 5.1 @SAVE-PROMPT-EXEMPT
+
+Adding `@SAVE-PROMPT-EXEMPT` to a field means that changes to *that field alone* will not trigger the "Save your changes?" prompt. If *any other field* on the same page has also been modified, the prompt will still appear as normal — this tag only suppresses the prompt when the tagged field is the sole change detected.
+
+**Common use:** Fields that capture metadata automatically — such as a "Last modified by" field using `@SETVALUE="[user-name]"` combined with `@READONLY`. These fields are updated on every page load and would otherwise always trigger the save warning even when the user made no intentional edits.
+
+**Syntax** (no parameters):
+```
+@SAVE-PROMPT-EXEMPT
+```
+
+**Example — tracking who last opened a form without nuisance warnings:**
+```
+@READONLY @SETVALUE='[user-name]' @SAVE-PROMPT-EXEMPT
+```
+
+## 5.2 @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
+
+A narrower version of `@SAVE-PROMPT-EXEMPT`. It suppresses the save warning only during the **initial auto-setting of a blank field** — specifically when the field receives its first value from an autofill tag (`@DEFAULT`, `@SETVALUE`, `@TODAY`, `@NOW`, etc.) on page load. Once the field has a value and the user subsequently modifies it, the normal warning behavior resumes.
+
+**Common use:** Timestamp or date fields that are auto-populated when the form first opens (e.g., `@TODAY @SAVE-PROMPT-EXEMPT-WHEN-AUTOSET`). Without this tag, opening a form that auto-fills a blank field would immediately flag the session as having unsaved changes.
+
+**Syntax** (no parameters):
+```
+@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET
+```
+
+---
+
+# 6. Common Questions
 
 **Q: What is the difference between @NOW and @TODAY?**
 
@@ -182,7 +219,7 @@ This tells REDCap to look up the value of `rx1` from the most recently completed
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Using @SETVALUE when @DEFAULT was intended.** `@SETVALUE` overwrites existing data every time the form loads. If a respondent has updated a field and the form is reopened, their edit will be overwritten. Use `@DEFAULT` unless overwriting is intentional.
 
@@ -192,11 +229,14 @@ This tells REDCap to look up the value of `rx1` from the most recently completed
 
 **Expecting autofill tags to fire during import.** They do not. If pre-populating records at scale, use the Data Import Tool or API directly — autofill tags will not fire until the form is opened in a browser.
 
+**Piping a multiple choice field without `:value`.** When using `@DEFAULT='[my_dropdown]'` to pre-fill a radio or dropdown field, the pipe returns the option label (e.g., "Yes"), not the raw value (e.g., `1`). The target field expects a raw value and the pre-fill will silently fail. Always use `@DEFAULT='[my_dropdown:value]'` when piping between multiple choice fields.
+
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-AT-01 — Action Tags Overview: what action tags are and how to add them
 - RC-AT-02 — @HIDDEN & @READONLY: commonly combined with autofill tags to create hidden or locked auto-populated fields
+- RC-AT-08 — @IF: combining autofill tags with conditional logic
 - RC-LONG-01 — Longitudinal Project Setup: required background for the `[previous-event-name]` carry-forward example
 - RC-FD-02 — Online Designer: where action tags and field settings are configured

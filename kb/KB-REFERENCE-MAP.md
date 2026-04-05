@@ -14,7 +14,12 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-AT-04 | Action Tags: Checkboxes | RC-AT-04_Action-Tags-Checkboxes.md |
 | RC-AT-05 | Action Tags: Free Text | RC-AT-05_Action-Tags-Free-Text.md |
 | RC-AT-06 | Action Tags: Autofill | RC-AT-06_Action-Tags-Autofill.md |
-| RC-AT-07 | Action Tags: Cosmetic | RC-AT-07_Action-Tags-Cosmetic.md |
+| RC-AT-07 | Action Tags: Cosmetic & Utility | RC-AT-07_Action-Tags-Cosmetic.md |
+| RC-AT-08 | Action Tags: @IF — Conditional Logic | RC-AT-08_Action-Tags-Conditional-IF.md |
+| RC-AT-09 | Action Tags: @CALCTEXT & @CALCDATE — Calculations | RC-AT-09_Action-Tags-Calculations.md |
+| RC-AT-10 | Action Tags: Language Action Tags | RC-AT-10_Action-Tags-Language.md |
+| RC-AT-11 | Action Tags: Mobile App Action Tags | RC-AT-11_Action-Tags-Mobile-App.md |
+| RC-AT-12 | Action Tags: HIDESUBMIT External Module | RC-AT-12_Action-Tags-HIDESUBMIT-External-Module.md |
 | RC-AI-01 | REDCap AI Tools: Overview & Security | RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md |
 | RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
 | RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |
@@ -194,6 +199,220 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-AT-01 — Action Tags: Overview
+
+**Prerequisites:** RC-FD-02 — Online Designer
+
+**Outbound links:**
+- RC-AT-02 — @HIDDEN & @READONLY
+- RC-AT-03 — Radio Button & Dropdown Action Tags
+- RC-AT-04 — Checkbox Action Tags
+- RC-AT-05 — Free Text Action Tags
+- RC-AT-06 — Autofill Action Tags
+- RC-AT-07 — Cosmetic & Utility Action Tags
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-AT-09 — Calculation Action Tags
+- RC-AT-10 — Language Action Tags
+- RC-AT-11 — Mobile App Action Tags
+- RC-AT-12 — HIDESUBMIT External Module Action Tags
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+
+**Inbound links (referenced by):**
+- RC-AT-02 (prerequisite)
+- RC-AT-03 (prerequisite)
+- RC-AT-04 (prerequisite)
+- RC-AT-05 (prerequisite)
+- RC-AT-06 (prerequisite)
+- RC-AT-07 (prerequisite)
+- RC-AT-08 (prerequisite)
+- RC-AT-09 (prerequisite)
+- RC-AT-10 (prerequisite)
+- RC-AT-11 (prerequisite)
+- RC-AT-12 (prerequisite)
+- RC-FD-07 (previously ⚠️)
+- RC-FD-08 (previously ⚠️)
+- RC-SURV-08
+
+---
+
+### RC-AT-02 — Action Tags: @HIDDEN & @READONLY
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-03 — Radio Button & Dropdown Action Tags
+- RC-AT-06 — Autofill Action Tags
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-DE-02 — Basic Data Entry
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-03 (referenced re: @HIDECHOICE/@SHOWCHOICE)
+- RC-AT-06
+- RC-AT-08
+- RC-AT-11
+
+---
+
+### RC-AT-03 — Action Tags: Radio Button & Dropdown
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-04 — Checkbox Action Tags
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-04
+
+---
+
+### RC-AT-04 — Action Tags: Checkboxes
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-03 — Radio Button & Dropdown Action Tags
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-03
+
+---
+
+### RC-AT-05 — Action Tags: Free Text
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+
+---
+
+### RC-AT-06 — Action Tags: Autofill
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-02 — @HIDDEN & @READONLY
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-02
+- RC-AT-08
+- RC-AT-09
+
+---
+
+### RC-AT-07 — Action Tags: Cosmetic & Utility
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-DE-05 — Field Validations
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-AT-01
+
+---
+
+### RC-AT-08 — Action Tags: @IF — Conditional Logic
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview; familiarity with branching logic syntax (RC-BL-01)
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-02 — @HIDDEN & @READONLY
+- RC-AT-03 — Radio Button & Dropdown Action Tags
+- RC-AT-06 — Autofill Action Tags
+- RC-AT-09 — Calculation Action Tags
+- RC-BL-01 — Branching Logic: Overview & Scope
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-03
+- RC-AT-06
+- RC-AT-09
+- RC-AT-10
+- RC-AT-12
+
+---
+
+### RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview; familiarity with REDCap calculated fields
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-06 — Autofill Action Tags
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-DE-05 — Field Validations
+
+**Inbound links (referenced by):**
+- RC-AT-01
+- RC-AT-08
+
+---
+
+### RC-AT-10 — Action Tags: Language
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview; Multi-Language Management must be configured
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+
+**Inbound links (referenced by):**
+- RC-AT-01
+
+---
+
+### RC-AT-11 — Action Tags: Mobile App
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview; REDCap Mobile App must be configured
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-02 — @HIDDEN & @READONLY
+- RC-AT-06 — Autofill Action Tags
+
+**Inbound links (referenced by):**
+- RC-AT-01
+
+---
+
+### RC-AT-12 — Action Tags: HIDESUBMIT External Module
+
+**Prerequisites:** RC-AT-01 — Action Tags: Overview; HIDESUBMIT Action Tags External Module must be installed and enabled
+
+**Outbound links:**
+- RC-AT-01 — Action Tags: Overview
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-BL-01 — Branching Logic: Overview & Scope
+
+**Inbound links (referenced by):**
+- RC-AT-01
+
+---
+
 ### RC-BL-01 — Branching Logic: Overview & Scope
 
 **Prerequisites:** RC-FD-02 — Online Designer
@@ -208,6 +427,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-ALERT-01
+- RC-AT-02 — @HIDDEN & @READONLY
+- RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-AT-12 — HIDESUBMIT External Module
 - RC-BL-02 (prerequisite)
 - RC-BL-03
 - RC-SURV-09
@@ -402,6 +624,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01 — Form Design Overview
 
 **Inbound links (referenced by):**
+- RC-AT-07 — Cosmetic & Utility Action Tags
+- RC-AT-09 — Calculation Action Tags
 - RC-DE-06 (prerequisite)
 - RC-DE-08
 
@@ -809,7 +1033,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-06 — Online Designer Instrument and Field Management
 - RC-BL-01 — Branching Logic Overview & Scope
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements
-- ⚠️ RC-AT-01 — Action Tags
+- RC-AT-01 — Action Tags: Overview
 
 **Inbound links (referenced by):**
 - RC-BL-01 (out-of-scope reference updated to point here)
@@ -829,7 +1053,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 - RC-LONG-01 — Longitudinal Project Setup
-- ⚠️ RC-AT-01 — Action Tags
+- RC-AT-01 — Action Tags: Overview
 
 **Inbound links (referenced by):**
 - (none yet)
@@ -867,6 +1091,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 
 **Inbound links (referenced by):**
+- RC-AT-06 — Autofill Action Tags
 - RC-DE-10
 - RC-EXPRT-07
 - RC-LONG-02 (prerequisite for longitudinal projects)
@@ -1427,7 +1652,7 @@ The following article IDs are referenced by existing KB articles but have no cor
 | Article ID | Title | Referenced By |
 |---|---|---|
 | ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
-| ⚠️ RC-AT-01 | Action Tags | RC-FD-07 |
+| ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-12 (Action Tags series)* |
 | ⚠️ RC-ALERT-01 | Alerts & Notifications | RC-NAV-UI-02, RC-PIPE-04, RC-RAND-03, RC-SURV-01 |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
 | ~~⚠️ RC-SURV-02~~ | ~~Survey Customizations (advanced settings)~~ | *Resolved — see RC-SURV-02 — Survey Settings: Basic Options & Design* |

@@ -7,10 +7,10 @@ RC-AT-01
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer; foundational Project Build & Management knowledge |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-AT-02 — @HIDDEN & @READONLY; RC-AT-03 — Radio/Dropdown Action Tags; RC-AT-04 — Checkbox Action Tags; RC-AT-05 — Free Text Action Tags; RC-AT-06 — Autofill Action Tags; RC-AT-07 — Cosmetic Action Tags; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary |
+| **Related Topics** | RC-AT-02 — @HIDDEN & @READONLY; RC-AT-03 — Radio/Dropdown Action Tags; RC-AT-04 — Checkbox Action Tags; RC-AT-05 — Free Text Action Tags; RC-AT-06 — Autofill Action Tags; RC-AT-07 — Cosmetic Action Tags; RC-AT-08 — @IF; RC-AT-09 — Calculation Action Tags; RC-AT-10 — Language Action Tags; RC-AT-11 — Mobile App Action Tags; RC-AT-12 — HIDESUBMIT External Module; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary |
 
 ---
 
@@ -105,7 +105,9 @@ The *Action Tags / Field Annotation* column (column R in Excel) in the Data Dict
 
 # 6. Action Tag Quick Reference
 
-The table below lists every action tag covered in this series, the field types it applies to, and the article where it is documented. Use this table to quickly locate the right article for any tag. New action tags should be added to this table as additional articles are written.
+The table below lists every action tag covered in this series, the field types it applies to, and the article where it is documented. Use this table to quickly locate the right article for any tag.
+
+**Native REDCap Action Tags**
 
 | Action Tag | Applies To | Parameters | Article |
 |---|---|---|---|
@@ -119,9 +121,10 @@ The table below lists every action tag covered in this series, the field types i
 | `@READONLY-FORM` | All field types | None | RC-AT-02 |
 | `@READONLY-APP` | All field types | None | RC-AT-02 |
 | `@RANDOMORDER` | Radio, Dropdown, Checkbox | None | RC-AT-03 |
-| `@HIDECHOICE` | Radio, Dropdown, Checkbox | Raw value(s) to hide | RC-AT-03 |
-| `@SHOWCHOICE` | Radio, Dropdown, Checkbox | Raw value(s) to show | RC-AT-03 |
+| `@HIDECHOICE` | Radio, Dropdown, Checkbox | Raw value(s) to hide; piping supported | RC-AT-03 |
+| `@SHOWCHOICE` | Radio, Dropdown, Checkbox | Raw value(s) to show; piping supported | RC-AT-03 |
 | `@MAXCHOICE` | Radio, Dropdown, Checkbox, Matrix | Per-option limits | RC-AT-03 |
+| `@MAXCHOICE-SURVEY-COMPLETE` | Radio, Dropdown, Checkbox | Per-option limits (completed surveys only) | RC-AT-03 |
 | `@NONEOFTHEABOVE` | Checkbox only | Raw value(s) of "none" option | RC-AT-04 |
 | `@MAXCHECKED` | Checkbox only | Maximum number of selections | RC-AT-04 |
 | `@PASSWORDMASK` | Text box | None | RC-AT-05 |
@@ -130,21 +133,57 @@ The table below lists every action tag covered in this series, the field types i
 | `@CHARLIMIT` | Text box, Notes box | Maximum character count | RC-AT-05 |
 | `@RICHTEXT` | Notes box | None | RC-AT-05 |
 | `@PLACEHOLDER` | Text box, Notes box | Display text | RC-AT-05 |
-| `@NOW` | Text box, Notes box | None | RC-AT-06 |
-| `@NOW-SERVER` | Text box, Notes box | None | RC-AT-06 |
-| `@NOW-UTC` | Text box, Notes box | None | RC-AT-06 |
-| `@TODAY` | Text box, Notes box | None | RC-AT-06 |
-| `@TODAY-SERVER` | Text box, Notes box | None | RC-AT-06 |
-| `@TODAY-UTC` | Text box, Notes box | None | RC-AT-06 |
-| `@LONGITUDE` | Text box, Notes box | None | RC-AT-06 |
-| `@LATITUDE` | Text box, Notes box | None | RC-AT-06 |
-| `@USERNAME` | Text box, Notes box | None | RC-AT-06 |
-| `@CONSENT-VERSION` | Text box, Notes box | None | RC-AT-06 |
+| `@NOW` | Text box | None | RC-AT-06 |
+| `@NOW-SERVER` | Text box | None | RC-AT-06 |
+| `@NOW-UTC` | Text box | None | RC-AT-06 |
+| `@TODAY` | Text box | None | RC-AT-06 |
+| `@TODAY-SERVER` | Text box | None | RC-AT-06 |
+| `@TODAY-UTC` | Text box | None | RC-AT-06 |
+| `@LONGITUDE` | Text box | None | RC-AT-06 |
+| `@LATITUDE` | Text box | None | RC-AT-06 |
+| `@USERNAME` | Text box | None | RC-AT-06 |
+| `@CONSENT-VERSION` | Text box | None | RC-AT-06 |
 | `@DEFAULT` | Text, Notes, Radio, Dropdown, Checkbox, Slider | Value, raw value, pipe, or smart variable | RC-AT-06 |
 | `@SETVALUE` | Text, Notes, Radio, Dropdown, Checkbox, Slider | Value, raw value, pipe, or smart variable | RC-AT-06 |
+| `@PREFILL` | Text, Notes, Radio, Dropdown, Checkbox, Slider | Legacy alias for `@SETVALUE` | RC-AT-06 |
+| `@SAVE-PROMPT-EXEMPT` | Any | None | RC-AT-06 |
+| `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` | Any | None | RC-AT-06 |
 | `@HIDEBUTTON` | Text box (with date/datetime validation) | None | RC-AT-07 |
 | `@INLINE` | File upload | None, width, or width+height | RC-AT-07 |
 | `@INLINE-PREVIEW` | File upload, Descriptive | None | RC-AT-07 |
+| `@DOWNLOAD-COUNT` | Text box, Notes box (counter field) | Variable name of File Upload or Descriptive field | RC-AT-07 |
+| `@NOMISSING` | Any | None | RC-AT-07 |
+| `@IF` | Any | Condition, true-branch tags, false-branch tags | RC-AT-08 |
+| `@CALCTEXT` | Text box | Formula expression | RC-AT-09 |
+| `@CALCDATE` | Text box (date/datetime validation) | Source, offset, unit | RC-AT-09 |
+| `@LANGUAGE-CURRENT-FORM` | Text box, Radio, Dropdown | None | RC-AT-10 |
+| `@LANGUAGE-CURRENT-SURVEY` | Text box, Radio, Dropdown | None | RC-AT-10 |
+| `@LANGUAGE-SET` | Radio, Dropdown | None | RC-AT-10 |
+| `@LANGUAGE-SET-FORM` | Radio, Dropdown | None | RC-AT-10 |
+| `@LANGUAGE-SET-SURVEY` | Radio, Dropdown | None | RC-AT-10 |
+| `@LANGUAGE-FORCE` | Any | Language ID (quoted) | RC-AT-10 |
+| `@LANGUAGE-FORCE-FORM` | Any | Language ID (quoted) | RC-AT-10 |
+| `@LANGUAGE-FORCE-SURVEY` | Any | Language ID (quoted) | RC-AT-10 |
+| `@LANGUAGE-MENU-STATIC` | Any (survey pages) | None | RC-AT-10 |
+| `@APPUSERNAME-APP` | Text box | None | RC-AT-11 |
+| `@BARCODE-APP` | Text box | None | RC-AT-11 |
+| `@SYNC-APP` | File upload, Signature | None | RC-AT-11 |
+
+**External Module Action Tags**
+
+> ⚠️ The following tags require an External Module to be installed and enabled. They are not available in vanilla REDCap.
+
+| Action Tag | Module | Parameters | Article |
+|---|---|---|---|
+| `@HIDESUBMIT` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDESUBMIT-FORM` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDESUBMIT-SURVEY` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDESUBMITONLY` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDESUBMITONLY-FORM` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDESUBMITONLY-SURVEY` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDEREPEAT` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDEREPEAT-FORM` | HIDESUBMIT Action Tags | None | RC-AT-12 |
+| `@HIDEREPEAT-SURVEY` | HIDESUBMIT Action Tags | None | RC-AT-12 |
 
 ## 6.1 Scope of This Series
 
@@ -153,13 +192,18 @@ The Action Tags knowledge base series is organized by tag category:
 | Article | Category | Tags Covered |
 |---|---|---|
 | RC-AT-02 | Hiding & Read-Only | `@HIDDEN`, `@READONLY`, and all situational variants |
-| RC-AT-03 | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE` |
+| RC-AT-03 | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE`, `@MAXCHOICE-SURVEY-COMPLETE` |
 | RC-AT-04 | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
 | RC-AT-05 | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
-| RC-AT-06 | Autofill | `@NOW`/`@TODAY` families, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
-| RC-AT-07 | Cosmetic | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW` |
+| RC-AT-06 | Autofill | `@NOW`/`@TODAY` families, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE`, `@PREFILL`, `@SAVE-PROMPT-EXEMPT`, `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` |
+| RC-AT-07 | Cosmetic & Utility | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW`, `@DOWNLOAD-COUNT`, `@NOMISSING` |
+| RC-AT-08 | Conditional Logic | `@IF` |
+| RC-AT-09 | Calculations | `@CALCTEXT`, `@CALCDATE` |
+| RC-AT-10 | Language | `@LANGUAGE-CURRENT-*`, `@LANGUAGE-SET-*`, `@LANGUAGE-FORCE-*`, `@LANGUAGE-MENU-STATIC` |
+| RC-AT-11 | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP`, `@SYNC-APP` |
+| RC-AT-12 | External Module: HIDESUBMIT | `@HIDESUBMIT`, `@HIDESUBMITONLY`, `@HIDEREPEAT`, and all variants |
 
-The following are explicitly out of scope for this series: `@IF`, `@CALCTEXT`, `@CALCDATE`, mobile app tags, MyCap tags, language tags, and any action tags introduced by External Modules.
+> **Note on External Module tags:** Action tags provided by External Modules are not part of vanilla REDCap and only appear and function when the relevant module is installed on your instance and enabled for your project. RC-AT-12 documents the HIDESUBMIT Action Tags module. If you see action tags in your project's reference popup that are not listed in this series, they are likely provided by another External Module installed at your institution.
 
 ---
 
@@ -186,6 +230,11 @@ The following are explicitly out of scope for this series: `@IF`, `@CALCTEXT`, `
 - RC-AT-04 — Checkbox Action Tags: enforcing checkbox selection rules
 - RC-AT-05 — Free Text Action Tags: constraining and enhancing text and notes boxes
 - RC-AT-06 — Autofill Action Tags: pre-populating field values automatically
-- RC-AT-07 — Cosmetic Action Tags: adjusting display of date fields and file uploads
+- RC-AT-07 — Cosmetic & Utility Action Tags: adjusting display of date fields, file uploads, and download tracking
+- RC-AT-08 — @IF: applying action tags conditionally based on field values or user context
+- RC-AT-09 — Calculation Action Tags: @CALCTEXT and @CALCDATE for computed text and date values
+- RC-AT-10 — Language Action Tags: capturing, setting, and forcing the display language in MLM projects
+- RC-AT-11 — Mobile App Action Tags: barcode scanning, app username capture, and image syncing
+- RC-AT-12 — HIDESUBMIT External Module Action Tags: conditionally hiding save and submit buttons
 - RC-FD-02 — Online Designer: where action tags are configured
 - RC-FD-03 — Data Dictionary: alternative method for adding action tags in bulk
