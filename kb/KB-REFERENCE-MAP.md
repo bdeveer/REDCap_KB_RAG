@@ -27,6 +27,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-ALERT-01 | Alerts & Notifications: Setup | RC-ALERT-01_Alerts-and-Notifications-Setup.md |
 | RC-ALERT-02 | Alert Management & Notification Log | RC-ALERT-02_Alert-Management-and-Notification-Log.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
+| RC-CALC-01 | Special Functions Reference | RC-CALC-01_Special-Functions-Reference.md |
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
 | RC-BL-04 | Branching Logic: Structured Fields & Checkboxes | RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md |
@@ -177,6 +178,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-ALERT-02 (prerequisite)
+- RC-CALC-01
 - RC-SURV-06
 - RC-SURV-08
 - RC-SURV-09
@@ -369,6 +371,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AT-01
 - RC-AT-08
+- RC-CALC-01
 
 ---
 
@@ -434,6 +437,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-03
 - RC-SURV-09
 - RC-BL-04
+- RC-CALC-01 (prerequisite)
 - RC-EXPRT-07
 - RC-FD-06
 - RC-FD-07
@@ -462,6 +466,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-03 (prerequisite)
 - RC-BL-04 (prerequisite)
+- RC-CALC-01
 - RC-EXPRT-07
 - RC-FD-06
 
@@ -479,6 +484,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-04
+- RC-CALC-01
 
 ---
 
@@ -496,6 +502,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-03
+
+---
+
+### RC-CALC-01 — Special Functions Reference
+
+**Prerequisites:** RC-BL-01 — Branching Logic: Overview & Scope
+
+**Outbound links:**
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-BL-03 — Branching Logic: Combining Statements
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE
+- RC-PIPE-03 — Smart Variables Overview
+- RC-ALERT-01 — Alerts & Notifications: Setup
+
+**Inbound links (referenced by):**
+- RC-BL-02 (references "dedicated functions training")
 
 ---
 
@@ -1301,6 +1324,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-ALERT-01
 - RC-ALERT-02
+- RC-CALC-01
 - RC-PIPE-01
 - RC-PIPE-02
 - RC-PIPE-04

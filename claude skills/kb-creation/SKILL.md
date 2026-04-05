@@ -249,5 +249,6 @@ For every article the new article references, find its Per-Article Reference Det
 | PIPE | Piping | Covers piping basics, longitudinal/repeated piping, modifiers, smart variables, emails & notifications |
 | ALERT | Alerts & Notifications | — |
 | AI | AI Tools | Covers writing tools, AI translations, and AI summarization |
+| CALC | Calculations & Special Functions | Covers built-in REDCap functions: date/datetime, numeric, text, conditional |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.
