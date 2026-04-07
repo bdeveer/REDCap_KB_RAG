@@ -99,6 +99,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-SURV-07 | Survey Queue | RC-SURV-07_Survey-Queue.md |
 | RC-SURV-08 | e-Consent Framework: Setup & Management | RC-SURV-08_e-Consent-Framework-Setup-and-Management.md |
 | RC-SURV-09 | PDF Snapshots of Records | RC-SURV-09_PDF-Snapshots-of-Records.md |
+| RC-TXT-01 | Texting in REDCap: Setup and Usage | RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md |
+| RC-TXT-02 | Texting: Administrator Setup | RC-TXT-02_Texting-Administrator-Setup.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
@@ -225,6 +227,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-06
 - RC-SURV-08
 - RC-SURV-09
+- RC-TXT-01
 
 ---
 
@@ -1672,6 +1675,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-11
 - RC-NAV-UI-01
 - RC-NAV-UI-02
+- RC-TXT-01
 - RC-PIPE-04
 - RC-SURV-02 (prerequisite)
 - RC-SURV-03 (prerequisite)
@@ -1754,6 +1758,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-SURV-06 (prerequisite)
+- RC-TXT-01
 
 ---
 
@@ -1774,6 +1779,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-SURV-07 (prerequisite)
 - RC-SURV-09
+- RC-TXT-01
 
 ---
 
@@ -1834,6 +1840,34 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+
+---
+
+### RC-TXT-01 — Texting in REDCap: Setup and Usage
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-06 — Automated Survey Invitations (ASI)
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-TXT-02 — Texting: Administrator Setup
+
+**Inbound links (referenced by):**
+- RC-TXT-02 (prerequisite)
+
+---
+
+### RC-TXT-02 — Texting: Administrator Setup
+
+**Prerequisites:** RC-TXT-01 — Texting in REDCap: Setup and Usage
+
+**Outbound links:**
+- RC-TXT-01 — Texting in REDCap: Setup and Usage
+
+**Inbound links (referenced by):**
+- RC-TXT-01 — Texting in REDCap: Setup and Usage
 
 ---
 
@@ -1953,4 +1987,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-04. Cleaned up stale ⚠️ markers for RC-ALERT-01, RC-ALERT-02, RC-LONG-01, RC-SURV-01 (full series), and RC-USER-03, all of which now exist in the KB. Gaps table updated accordingly. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*
+*Last updated 2026-04-06. Added RC-TXT-01 — Texting in REDCap: Setup and Usage and RC-TXT-02 — Texting: Administrator Setup; added TXT to the established domain slugs table. Updated inbound links for RC-SURV-01, RC-SURV-05, RC-SURV-06, RC-ALERT-01. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*
