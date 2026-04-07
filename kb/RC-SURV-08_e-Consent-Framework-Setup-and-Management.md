@@ -3,7 +3,7 @@
 | **Domain** | Surveys |
 | **Applies To** | Projects with surveys enabled; requires Project Design and Setup, User Rights, and Data Access Groups rights |
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-SURV-09 — PDF Snapshots of Records; RC-DAG-01 — Data Access Groups; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-FD-02 — Online Designer; RC-AT-01 — Action Tags: Overview |
@@ -111,6 +111,12 @@ Create a dedicated instrument in the Online Designer to serve as the e-Consent s
 > **Important:** The descriptive field placeholder does not need any content entered in the Online Designer — it serves purely as a target for the e-Consent Framework's content injection. Without it, you cannot use versioning, DAG-specific content, or language-specific content.
 
 Once the instrument is created, enable it as a survey. Adjust the **Survey Instructions** and **Survey Completion Text** to reflect that participants are completing a consent form, not a generic survey. For detailed survey configuration guidance, see RC-SURV-02.
+
+> **Tip:** Include a note in the Survey Instructions that there will be a second screen after the form. Without this, participants may think they are done after filling in their information and abandon the process before the confirmation step. Example:
+>
+> *Survey Instructions:* "Please complete the e-Consent survey below. Note: There will be a second screen after this page. Thank you!"
+>
+> *Survey Completion Text:* "Thank you for completing our e-Consent."
 
 ## 4.2 Languages (if applicable)
 
