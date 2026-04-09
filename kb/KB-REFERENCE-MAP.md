@@ -66,6 +66,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
+| RC-MLM-01 | Multi-Language Management | RC-MLM-01_Multi-Language-Management.md |
 | RC-NAV-REC-01 | Record Navigation Overview | RC-NAV-REC-01_Record-Navigation-Overview.md |
 | RC-NAV-REC-02 | Longitudinal Mode & Arms | RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md |
 | RC-NAV-REC-03 | Repeated Instruments & Repeated Events | RC-NAV-REC-03_Repeated-Instruments-and-Events.md |
@@ -186,7 +187,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools
 - RC-AI-04 — AI Summarization
-- ⚠️ RC-MLM-01 — Multi-Language Management Overview
+- RC-MLM-01 — Multi-Language Management
 
 **Inbound links (referenced by):**
 - RC-AI-01 — REDCap AI Tools: Overview & Security
@@ -1252,6 +1253,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-MLM-01 — Multi-Language Management
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-06 — Automated Survey Invitations (ASI)
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-AT-09 — Action Tags: Calculations
+- RC-AT-11 — Action Tags: Mobile App
+- RC-AI-03 — AI Translations
+
+**Inbound links (referenced by):**
+- RC-AI-03 — AI Translations
+
+---
+
 ### RC-NAV-REC-01 — Record Navigation Overview
 
 **Prerequisites:** *(none listed)*
@@ -2042,7 +2060,7 @@ The following article IDs are referenced by existing KB articles but have no cor
 | ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-11 + RC-AT-EM-01 (Action Tags series)* |
 | ~~⚠️ RC-ALERT-01~~ | ~~Alerts & Notifications~~ | *Resolved — see RC-ALERT-01 and RC-ALERT-02 (Alerts & Notifications series)* |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 — *see also RC-UNCLASSIFIED-01 §6 for interim MyCap coverage* |
-| ⚠️ RC-MLM-01 | Multi-Language Management (MLM) | RC-AI-03 — *see also RC-UNCLASSIFIED-01 §5 for interim MLM coverage* |
+| ~~⚠️ RC-MLM-01~~ | ~~Multi-Language Management (MLM)~~ | *Resolved — see RC-MLM-01 — Multi-Language Management* |
 | ~~⚠️ RC-SURV-01~~ | ~~Surveys: Basics~~ | *Resolved — see RC-SURV-01 through RC-SURV-09 (Surveys series)* |
 | ~~⚠️ RC-SURV-02~~ | ~~Survey Customizations (advanced settings)~~ | *Resolved — see RC-SURV-02 — Survey Settings: Basic Options & Design* |
 | ~~⚠️ RC-SURV-03~~ | ~~Survey Queue~~ | *Resolved — see RC-SURV-03 — Survey Settings: Behavior, Access & Termination* |
@@ -2064,4 +2082,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-08. Added RC-UNCLASSIFIED-01 — FAQ v16.1.3 Orphaned Topics (holding article covering Project Lifecycle, Production Changes, Data Quality, API/DET, MLM, and MyCap). Updated RC-SURV-06 (v1.1) and RC-USER-03 (v1.1) with FAQ v16.1.3 content. Added RC-MLM-01 to gaps table with interim coverage note. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*
+*Last updated 2026-04-09. Added RC-MLM-01 — Multi-Language Management (new article, replaces RC-UNCLASSIFIED-01 §5 interim coverage; based on v15.5 MLM End User's Guide). Updated RC-AI-03 outbound links and gaps table. Remaining open gaps: RC-API-01, RC-MOB-01.*

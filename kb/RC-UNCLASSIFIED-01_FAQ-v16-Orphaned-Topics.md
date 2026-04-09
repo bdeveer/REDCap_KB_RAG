@@ -7,7 +7,7 @@ RC-UNCLASSIFIED-01
 | **Domain** | Multiple (see sections below) |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support (sourced from FAQ v16.1.3) |
 | **Related Topics** | See per-section references below |
@@ -161,9 +161,11 @@ These can be added to hidden fields and later used in reports to track language 
 ## 5.6 MLM Limitations
 
 - MLM does **not** work with the REDCap Mobile App.
-- MLM does **not** work with MyCap.
+- MLM **is** compatible with MyCap — enable languages for MyCap on the Languages tab and ensure Language IDs match MyCap-supported codes.
 - Downloading instrument PDFs in a specific language is done from the MLM page, not the standard PDF download.
 - Browser cookies store the respondent's last selected language preference for surveys; clearing cookies resets this preference.
+
+> **Note:** The interim MLM content in this section has been superseded by **RC-MLM-01 — Multi-Language Management** (2026). Refer to that article for current, comprehensive coverage.
 
 ---
 
@@ -200,7 +202,7 @@ Use Dynamic Links for fully remote trials. Use QR Codes for in-person setups whe
 - Branching logic within a single instrument is supported; cross-instrument branching is not.
 - Push notifications are sent for new messages but cannot be scheduled for a future time.
 - Task notifications are sent at 8 AM local device time and this time cannot currently be changed.
-- MLM and piping are not supported in MyCap.
+- Piping is not supported in MyCap. MLM is supported — see RC-MLM-01 — Multi-Language Management for MyCap translation setup.
 
 ---
 
