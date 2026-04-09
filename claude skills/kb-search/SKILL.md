@@ -34,8 +34,11 @@ Files follow the pattern `RC-{DOMAIN}-{NN}_{Title}.md`. Current domains:
 | RAND | Randomization |
 | SURV | Surveys |
 | USER | User rights |
+| UNCLASSIFIED | Holding article for orphaned FAQ topics (see note below) |
 
 Lower `NN` numbers are foundational (e.g., `RC-BL-01` is the overview; `RC-BL-03` is advanced syntax). Start with low numbers unless the question is clearly about something specific.
+
+**⚠️ Holding Article Note:** `RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md` contains interim coverage for topics pending dedicated articles. When searching for Project Lifecycle, Production Changes, Data Quality Module, API & Data Entry Trigger, Multi-Language Management (MLM), or MyCap, **check this article** even if a dedicated article exists but is marked ⚠️ (not yet written). The REFERENCE-MAP will flag these gaps with pointers to this holding article.
 
 **Special case — External Modules:** For content from External Modules (third-party plugins), use the subdomain convention `{DOMAIN}-EM` instead of continuing the sequential numbering within that domain. For example:
    - `RC-AT-EM-01` covers the HIDESUBMIT action tag module
@@ -60,6 +63,7 @@ Use this to:
 - Confirm which articles exist for a domain
 - Find related articles you might not think of from the title alone (follow the cross-references)
 - Check if a topic is covered (some articles are ⚠️ marked as not yet written)
+- **If a topic is marked ⚠️ and points to RC-UNCLASSIFIED-01, read that article** — it contains interim coverage for gaps in Project Lifecycle, Production Changes, Data Quality, API, MLM, and MyCap
 
 ### Step 3 — Select articles to read
 

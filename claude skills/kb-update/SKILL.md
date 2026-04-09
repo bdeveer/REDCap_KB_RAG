@@ -111,9 +111,19 @@ While reading or editing a KB article, if you encounter language like "out of sc
 
 If the input covers a topic not adequately addressed by any existing article, do not write the article here. Instead:
 
-1. Tell the user: "This content doesn't fit neatly into any existing article. I'd suggest creating **RC-[DOMAIN]-[NN] — [Proposed Title]**. Want me to proceed with the kb-builder skill?"
-2. Wait for the user to confirm.
-3. If confirmed: read and follow the `redcap-kb-builder` skill (`claude skills/kb-creation/SKILL.md`), passing the current input as the source material.
+1. **First, check `RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md`** — it contains interim coverage (and suggestions) for these topic areas:
+   - Project Lifecycle (§1) — see suggested article RC-PROJ-01
+   - Production Changes / Draft Mode (§2) — see suggested article RC-PROJ-02
+   - Data Quality Module (§3) — see suggested article RC-DQ-01
+   - API & Data Entry Trigger (§4) — see suggested article RC-API-01
+   - Multi-Language Management / MLM (§5) — see suggested article RC-MLM-01
+   - MyCap (§6) — see suggested article RC-MYCAP-01
+
+   If your content maps to one of these areas, check the unclassified article for existing interim content, then confirm with the user whether to write the dedicated article next.
+
+2. Tell the user: "This content doesn't fit neatly into any existing article. I'd suggest creating **RC-[DOMAIN]-[NN] — [Proposed Title]**. Want me to proceed with the kb-builder skill?"
+3. Wait for the user to confirm.
+4. If confirmed: read and follow the `redcap-kb-builder` skill (`claude skills/kb-creation/SKILL.md`), passing the current input as source material. Reference RC-UNCLASSIFIED-01 as a starting point if relevant.
 
 Don't create new articles silently — always confirm first.
 
