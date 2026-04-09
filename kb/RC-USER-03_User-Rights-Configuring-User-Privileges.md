@@ -7,7 +7,7 @@ RC-USER-03
 | **Domain** | User Rights |
 | **Applies To** | All REDCap project types; requires User Rights privilege |
 | **Prerequisite** | RC-USER-01 — User Rights: Overview & Three-Tier Access |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-USER-02 — Adding Users & Managing Roles; RC-USER-04 — User Management; RC-DAG-01 — Data Access Groups; RC-EXPRT-01 — Data Export: Overview & Workflow |
@@ -84,11 +84,15 @@ Several options have additional behavior worth noting:
 
 Grants the ability to create and manage reports and to see all reports in the project. If this option is disabled, the user may still have access to individual reports — each report has its own access controls that can grant visibility to specific users, roles, or DAGs independent of this privilege. See Section 6 for report-level rights.
 
+**Manage MyCap Participants**
+
+Grants access to the MyCap Participant Management page, including the ability to invite or add participants, send and view messages, and manage MyCap-related features. This right only appears if MyCap is enabled on the project, and MyCap may not be available at all institutions. PHI exposure: messages with participants may contain PHI.
+
 **Data Quality**
 
 Split into two separate rights:
 - *Create & edit rules* — allows the user to write custom data quality rules.
-- *Execute rules* — allows the user to run any rule defined in the project, including custom rules created by others.
+- *Execute rules* — allows the user to run any rule defined in the project, including custom rules created by others. Users without form-level access to an instrument referenced in a rule will not see results for that instrument.
 
 **Data Resolution Workflow**
 
@@ -118,7 +122,8 @@ These three settings govern how a user can interact with records globally across
 
 - **Create records** — allows the user to create new records. Most users who do data entry will need this enabled.
 - **Rename records** — allows the user to change the record ID of an existing record. This is rarely needed and carries risk: REDCap relies on the record ID to associate all data. Rename only with a clear purpose and caution.
-- **Delete records** — allows the user to delete entire or partial records. Disabled by default to prevent accidental data loss. If deletion is needed, the recommended approach is to grant the right temporarily, perform the deletion, and remove the right again.
+- **Delete records** — allows the user to delete entire or partial records (all forms, all events, all repeating instances). Deleted records **cannot** be restored. Disabled by default to prevent accidental data loss. If deletion is needed, the recommended approach is to grant the right temporarily, perform the deletion, and remove the right again. Users with Delete Records automatically inherit Form-Level Delete for all instruments.
+- **Form-Level Delete Rights** *(new in REDCap v15.7.0)* — allows deletion of data on specific instruments only, without deleting an entire record. This provides finer-grained control when you want a user to be able to remove data from one form (e.g., to correct a mis-entry) without risking accidental deletion of the entire record. Form-Level Delete rights are configured per instrument in the Data Viewing Rights section. Requirements: the user must have View & Edit access for the instrument; if the instrument is enabled as a survey, the user must also have Edit Survey Responses rights. This right may not appear at all institutions depending on local configuration or REDCap version.
 
 ## 3.5 Record Locking and E-Signatures
 
@@ -182,6 +187,8 @@ There are four export access levels for each instrument:
 See RC-EXPRT-01 — Data Export: Overview & Workflow and RC-EXPRT-03 — Data Export: User Rights & Export Access for how export rights interact with the export workflow.
 
 > **Note for longitudinal projects:** Like data viewing rights, export rights apply per instrument across all events and repeating instances.
+
+> **Important — PHI exposure:** The "De-identified" and "Remove All Tagged Identifier Fields" export levels depend entirely on correct identifier tagging in the project design. If PHI fields have not been tagged as identifiers, they will appear in supposedly de-identified exports. Always mark all PHI fields as identifiers and restrict export access to Full Data Set only for users who genuinely need it. Once data is downloaded, the user is responsible for securing it according to institutional policies (e.g., HIPAA). Data Export Rights are independent of Data Viewing Rights — a user can have Full Data Set export rights even with Read Only viewing rights, or vice versa.
 
 ---
 

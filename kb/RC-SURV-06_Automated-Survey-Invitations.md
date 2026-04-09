@@ -7,7 +7,7 @@ RC-SURV-06
 | **Domain** | Surveys |
 | **Applies To** | All projects with surveys enabled |
 | **Prerequisite** | RC-SURV-05 — Participant List & Manual Survey Invitations |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-SURV-05 — Participant List & Manual Survey Invitations; RC-SURV-07 — Survey Queue; RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview |
@@ -203,6 +203,34 @@ If texting is enabled for a project, the ASI setup screen gains an additional st
 
 **A:** Only if the **"Ensure logic is still true before sending invitation"** checkbox is enabled in the ASI setup. If it is, REDCap re-evaluates the trigger logic at send time — if the logic is no longer true (because the participant's withdrawal status changed a field), the invitation is cancelled. If the checkbox is not enabled, the invitation sends regardless.
 
+**Q: How often does REDCap check whether ASI trigger conditions are true?**
+
+**A:** REDCap checks ASI conditions every time a record is created or modified through the user interface or via a data import. Additionally, for ASIs whose logic uses `datediff` with `'today'` or `'now'` (conditions that can change from day to day without any record edit), a background cron job re-checks those ASIs every 4 hours. Once an invitation is scheduled by these checks, a separate cron job runs every minute to send any pending invitations whose send time has arrived.
+
+**Q: I set up an ASI after data collection had already started. Why didn't it fire for existing records?**
+
+**A:** REDCap does not retroactively evaluate new or modified ASI configurations against records that already exist. After creating or editing an ASI, you must resave each relevant record to cause REDCap to evaluate the new logic for it. The exception is ASIs containing a `datediff` expression — the 4-hour cron job will pick those up automatically without any manual resave.
+
+**Q: Will participants with partially completed surveys continue to receive ASI reminders?**
+
+**A:** Yes. Reminders continue to be sent as long as the survey is not fully completed. REDCap cancels remaining reminders automatically once the survey reaches completed status. Partial responses do not stop the reminder schedule.
+
+**Q: Will an ASI send an invitation for a survey that has already been completed?**
+
+**A:** No. Even if an invitation is already queued in the Survey Invitation Log, REDCap will not deliver it if the target survey is already marked as completed at send time.
+
+**Q: Are piped variables in ASI messages resolved at scheduling time or at send time?**
+
+**A:** At scheduling time. When REDCap determines that an invitation should be scheduled, it resolves any piped variables at that moment and stores the resolved values in the queued invitation. If a piped field value changes between scheduling and the actual send time, the invitation still uses the value that was captured when it was scheduled, not the current value.
+
+**Q: I'm using `datediff` with a datetime field to schedule an ASI. Why is the result unexpected on the same day?**
+
+**A:** REDCap's server-side `datediff` function treats the `'today'` keyword as the very first second of the day (midnight). If a timestamp field has a value of 6:00 PM on a given day, an ASI checking `datediff` on that same day will calculate approximately 0.75 days difference — not 0. On the next day it will return approximately 0.25 days, and on subsequent days 1.25, 2.25, 3.25, and so on. Account for this behavior when writing ASI conditions that compare against datetime fields.
+
+**Q: Can I set up an ASI to send invitations for a survey used in repeating forms?**
+
+**A:** Yes, starting in REDCap version 12.5.0. In the ASI setup for a repeating survey, a Step 4 option appears that lets you configure the ASI to repeat — either infinitely or a limited number of times — with a configurable delay between each repeat (X minutes, X hours, or X days; decimal values accepted from version 13.0.1 onward). In earlier versions (12.4.5 and below), the ASI only fires for the first instance of the repeating form and cannot automatically re-invite for subsequent instances.
+
 ---
 
 # 8. Common Mistakes & Gotchas
@@ -216,6 +244,10 @@ If texting is enabled for a project, the ASI setup screen gains an additional st
 **Setting a time delay using local time but forgetting server time zone.** "At a specific date and time" scheduling uses the server's clock, not the user's local clock. A mismatch can send invitations hours early or late. Check the server time zone before setting absolute timestamps.
 
 **Using Re-evaluate expecting it to update existing queued invitations.** Re-evaluate only looks for records that newly meet trigger conditions and have not yet been scheduled. It does not touch invitations already in the queue.
+
+**Not adding a kill switch field for emergency stops.** Best practice is to include a radio or checkbox field (e.g., `[stop_emails]`) that can be toggled to stop all ASIs for a specific record when a participant drops out or is no longer eligible. Add this field to every ASI's logic condition with something like: `[stop_emails] <> '1'`. Combined with "Ensure logic is still true," toggling this field will automatically cancel any pending invitations at send time.
+
+**Using `'today'` in a calc field instead of an ASI `datediff` condition.** Using `'today'` or `'now'` in calculated fields causes the calculation to update every time the form is opened and saved — for example, an age calculated as of today will become one year older when the form is accessed a year later. Reserve `'today'` and `'now'` for ASI logic or Data Quality rules where this dynamic behavior is intentional. For stored values like age at enrollment, compute from two static date fields instead.
 
 ---
 

@@ -105,6 +105,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
 | RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
+| RC-UNCLASSIFIED-01 | Unclassified: REDCap FAQ v16.1.3 Orphaned Topics | RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md |
 
 ---
 
@@ -1956,16 +1957,37 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-SURV-06 — Automated Survey Invitations (ASI)
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-CALC-01 — Special Functions Reference
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-IMP-01 — Data Import Overview
+
+**Inbound links (referenced by):**
+*(None yet — this is a holding article; content should eventually migrate to dedicated articles)*
+
+**Note:** This article is a temporary holding area for FAQ v16.1.3 content that does not yet map to a dedicated KB article. It contains orphaned content across 6 topic areas (Project Lifecycle, Production Changes, Data Quality, API/DET, MLM, and MyCap) and a table of 7 suggested new articles. See Section 7 of the article for migration targets.
+
+---
+
 ## Referenced Articles Not Yet in the KB
 
 The following article IDs are referenced by existing KB articles but have no corresponding file in the `/kb/` directory. These represent gaps in coverage.
 
 | Article ID | Title | Referenced By |
 |---|---|---|
-| ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 |
+| ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 — *see also RC-UNCLASSIFIED-01 §4 for interim coverage* |
 | ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-11 + RC-AT-EM-01 (Action Tags series)* |
 | ~~⚠️ RC-ALERT-01~~ | ~~Alerts & Notifications~~ | *Resolved — see RC-ALERT-01 and RC-ALERT-02 (Alerts & Notifications series)* |
-| ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 |
+| ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 — *see also RC-UNCLASSIFIED-01 §6 for interim MyCap coverage* |
+| ⚠️ RC-MLM-01 | Multi-Language Management (MLM) | RC-AI-03 — *see also RC-UNCLASSIFIED-01 §5 for interim MLM coverage* |
 | ~~⚠️ RC-SURV-01~~ | ~~Surveys: Basics~~ | *Resolved — see RC-SURV-01 through RC-SURV-09 (Surveys series)* |
 | ~~⚠️ RC-SURV-02~~ | ~~Survey Customizations (advanced settings)~~ | *Resolved — see RC-SURV-02 — Survey Settings: Basic Options & Design* |
 | ~~⚠️ RC-SURV-03~~ | ~~Survey Queue~~ | *Resolved — see RC-SURV-03 — Survey Settings: Behavior, Access & Termination* |
@@ -1987,4 +2009,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-06. Added RC-TXT-01 — Texting in REDCap: Setup and Usage and RC-TXT-02 — Texting: Administrator Setup; added TXT to the established domain slugs table. Updated inbound links for RC-SURV-01, RC-SURV-05, RC-SURV-06, RC-ALERT-01. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*
+*Last updated 2026-04-08. Added RC-UNCLASSIFIED-01 — FAQ v16.1.3 Orphaned Topics (holding article covering Project Lifecycle, Production Changes, Data Quality, API/DET, MLM, and MyCap). Updated RC-SURV-06 (v1.1) and RC-USER-03 (v1.1) with FAQ v16.1.3 content. Added RC-MLM-01 to gaps table with interim coverage note. Remaining open gaps: RC-API-01, RC-MOB-01, RC-MLM-01.*
