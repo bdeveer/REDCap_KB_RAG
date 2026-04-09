@@ -32,6 +32,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
 | RC-BL-04 | Branching Logic: Structured Fields & Checkboxes | RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md |
+| RC-BL-05 | Branching Logic — Longitudinal Projects | RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md |
 | RC-DAG-01 | Data Access Groups | RC-DAG-01_Data-Access-Groups.md |
 | RC-DE-01 | Record Creation & the Record Home Page | RC-DE-01_Record-Creation-and-Record-Home-Page.md |
 | RC-DE-02 | Basic Data Entry | RC-DE-02_Basic-Data-Entry.md |
@@ -471,6 +472,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-02 — Syntax & Atomic Statements
 - RC-BL-03 — Combining Statements
 - RC-BL-04 — Structured Fields & Checkboxes
+- RC-BL-05 — Branching Logic in Longitudinal Projects
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
 - RC-DE-02 — Basic Data Entry
@@ -479,6 +481,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-01
 - RC-AT-02 — @HIDDEN & @READONLY
 - RC-AT-08 — @IF: Conditional Action Tag Logic
+- RC-BL-05 (prerequisite series entry)
 - RC-AT-12 — HIDESUBMIT External Module
 - RC-BL-02 (prerequisite)
 - RC-BL-03
@@ -513,6 +516,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-03 (prerequisite)
 - RC-BL-04 (prerequisite)
+- RC-BL-05 (prerequisite)
 - RC-CALC-01
 - RC-EXPRT-07
 - RC-FD-06
@@ -531,6 +535,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-04
+- RC-BL-05
 - RC-CALC-01
 
 ---
@@ -549,6 +554,26 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-03
+
+---
+
+### RC-BL-05 — Branching Logic — Longitudinal Projects
+
+**Prerequisites:** RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-LONG-01 — Longitudinal Project Setup
+
+**Outbound links:**
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-BL-03 — Branching Logic: Combining Statements
+- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-09 — Smart Variables: Event & Arm
+- RC-FD-03 — Data Dictionary
+
+**Inbound links (referenced by):**
+- RC-BL-01
 
 ---
 
@@ -1029,6 +1054,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-BL-02
+- RC-BL-05
 - RC-EXPRT-02
 - RC-EXPRT-05
 - RC-FD-01
@@ -1163,6 +1189,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-AT-06 — Autofill Action Tags
+- RC-BL-05 (prerequisite)
 - RC-DE-10
 - RC-EXPRT-07
 - RC-LONG-02 (prerequisite for longitudinal projects)
@@ -1191,6 +1218,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-ALERT-01
 - RC-ALERT-02
+- RC-BL-05
 - RC-DE-10
 - RC-LONG-01
 - RC-PIPE-02
@@ -1358,6 +1386,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 
 **Inbound links (referenced by):**
+- RC-BL-05
 - RC-PIPE-01
 - RC-PIPE-03
 
@@ -1493,7 +1522,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-08 — Smart Variables: Survey
 
 **Inbound links (referenced by):**
-- *(Referenced by longitudinal project and smart variable articles)*
+- RC-BL-05
 
 ---
 

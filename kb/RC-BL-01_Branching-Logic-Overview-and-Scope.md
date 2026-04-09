@@ -107,7 +107,7 @@ The following topics are outside the scope of this series. Each has its own dedi
 - Action tags that use logic syntax — RC-AT-01 — Action Tags Overview (start here for the full series)
 - Smart variables — RC-PIPE-03 — Smart Variables Overview
 - Field embedding (curly bracket syntax) — RC-FD-07 — Field Embedding
-- Event-based logic in longitudinal projects — RC-BL-05 — Branching Logic in Longitudinal Projects *(coming soon)*
+- Event-based logic in longitudinal projects — RC-BL-05 — Branching Logic in Longitudinal Projects
 - REDCap functions (e.g., datediff, rounddown) — RC-CALC-01 — Special Functions Reference
 
 ---

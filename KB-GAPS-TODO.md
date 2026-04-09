@@ -26,15 +26,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-BL-05 — Branching Logic in Longitudinal Projects
-
-**Why needed:** RC-BL-01 explicitly lists "event-based logic in longitudinal projects" as out of scope for the basic BL series. No existing article covers this topic.
-
-**Domain slug:** BL (established)
-**What to cover:** Referencing fields from other events using `[event-name][field_name]` syntax, cross-event logic patterns (e.g., show field only if a prior-event field has a value), arm-specific logic, interactions between branching logic and repeated instruments/events, common gotchas (e.g., fields not yet saved in another event returning blank)
-
----
-
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
@@ -97,6 +88,7 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 These were previously marked ⚠️ but have since been resolved:
 
+- RC-BL-05 — Branching Logic in Longitudinal Projects ✅ *(was Priority 3)*
 - RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅ *(was Priority 1)*
 - RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅ *(was Priority 2)*
 - RC-LONG-01 — Longitudinal Project Setup ✅
@@ -116,4 +108,4 @@ These were previously marked ⚠️ but have since been resolved:
 - When writing RC-MLM-01, RC-AT-10 (Action Tags: Language) is a useful companion article that already covers `@LANGUAGE-CURRENT-SURVEY` in depth.
 - When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
 
-*Last updated: 2026-04-05*
+*Last updated: 2026-04-08*
