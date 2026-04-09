@@ -29,6 +29,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-ALERT-02 | Alert Management & Notification Log | RC-ALERT-02_Alert-Management-and-Notification-Log.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
 | RC-CALC-01 | Special Functions Reference | RC-CALC-01_Special-Functions-Reference.md |
+| RC-CALC-02 | Calculated Fields | RC-CALC-02_Calculated-Fields.md |
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
 | RC-BL-04 | Branching Logic: Structured Fields & Checkboxes | RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md |
@@ -419,6 +420,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AT-01
 - RC-AT-08
+- RC-CALC-02
 - RC-CALC-01
 
 ---
@@ -473,6 +475,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-03 — Combining Statements
 - RC-BL-04 — Structured Fields & Checkboxes
 - RC-BL-05 — Branching Logic in Longitudinal Projects
+- RC-CALC-02 — Calculated Fields
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
 - RC-DE-02 — Basic Data Entry
@@ -591,6 +594,26 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-BL-02 (references "dedicated functions training")
+- RC-CALC-02
+
+---
+
+### RC-CALC-02 — Calculated Fields
+
+**Prerequisites:** RC-FD-02 — Online Designer; RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+
+**Outbound links:**
+- RC-CALC-01 — Special Functions Reference
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-DE-02 — Basic Data Entry
+
+**Inbound links (referenced by):**
+- RC-BL-01
+- RC-AT-09 (referenced as the numeric alternative)
 
 ---
 
@@ -656,6 +679,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-01
 - RC-BL-04
+- RC-CALC-02
 - RC-DE-01
 - RC-DE-03 (prerequisite)
 - RC-DE-04 (prerequisite)
@@ -1029,6 +1053,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-02 — AI Writing Tools
 - RC-BL-01 (prerequisite)
 - RC-BL-02
+- RC-CALC-02 (prerequisite)
 - RC-FD-01
 - RC-FD-03
 - RC-FD-04
@@ -1055,6 +1080,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-02
 - RC-BL-05
+- RC-CALC-02
 - RC-EXPRT-02
 - RC-EXPRT-05
 - RC-FD-01
@@ -1153,7 +1179,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AT-01 — Action Tags: Overview
 
 **Inbound links (referenced by):**
-- (none yet)
+- RC-CALC-02
 
 ---
 

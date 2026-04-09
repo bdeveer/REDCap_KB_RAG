@@ -17,15 +17,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 3 — Out-of-scope references without a covering article
 
-### ⚠️ RC-CALC-02 — Calculated Fields (Field Type)
-
-**Why needed:** RC-BL-01 explicitly lists "calculated fields and calculation syntax" as out of scope and defers to a dedicated training course. RC-CALC-01 covers Special Functions (used inside formulas), and RC-AT-09 covers @CALCTEXT/@CALCDATE, but no article explains the **Calculated Field field type** itself. Multiple articles reference it without explaining it.
-
-**Domain slug:** CALC (established, RC-CALC-01 already exists)
-**What to cover:** What a calculated field is and how it differs from a text field, creating a calculated field in the Online Designer and Data Dictionary, formula syntax basics, numeric-only output limitation, when to use @CALCTEXT/@CALCDATE instead, how values are updated (real-time, data import, Data Quality rule H), display behavior and read-only enforcement
-
----
-
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
@@ -89,6 +80,7 @@ These articles are referenced by existing KB articles or skills but do not yet e
 These were previously marked ⚠️ but have since been resolved:
 
 - RC-BL-05 — Branching Logic in Longitudinal Projects ✅ *(was Priority 3)*
+- RC-CALC-02 — Calculated Fields ✅ *(was Priority 3)*
 - RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅ *(was Priority 1)*
 - RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅ *(was Priority 2)*
 - RC-LONG-01 — Longitudinal Project Setup ✅
@@ -108,4 +100,4 @@ These were previously marked ⚠️ but have since been resolved:
 - When writing RC-MLM-01, RC-AT-10 (Action Tags: Language) is a useful companion article that already covers `@LANGUAGE-CURRENT-SURVEY` in depth.
 - When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
 
-*Last updated: 2026-04-08*
+*Last updated: 2026-04-08 (RC-CALC-02 resolved)*
