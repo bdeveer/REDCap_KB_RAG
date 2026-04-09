@@ -1,0 +1,11 @@
+{
+  "eval_id": 4,
+  "eval_name": "missing-arg-and-ref",
+  "prompt": "Please check this calculated field formula. We're in a longitudinal project. The field is on the Screening event. I've pasted the formula and our field list below.\n\nFormula:\nif([enroll_date] <> '', datediff([enroll_date], [fu_date]), '')\n\nFields in the project (all assigned to Screening event only):\n- record_id\n- enroll_date (date_ymd)\n- fu_date (date_ymd)\n- days_to_followup (calc)\n\nEvents: screening_arm_1, followup_arm_1",
+  "assertions": [
+    "Identifies datediff() missing the required third argument (unit) as a syntax error",
+    "Provides a corrected datediff() call with a unit argument (e.g., 'd')",
+    "Notes that '' as the false branch of if() in a calc field will produce blank, not an error",
+    "Does NOT incorrectly flag [enroll_date] or [fu_date] as reference errors (both exist in the field list)"
+  ]
+}

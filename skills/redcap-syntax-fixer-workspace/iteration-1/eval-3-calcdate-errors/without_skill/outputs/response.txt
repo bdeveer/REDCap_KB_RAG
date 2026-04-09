@@ -1,0 +1,80 @@
+REDCap @CALCDATE Diagnostic: Why Your Follow-up Date Field is Blank
+=====================================================================
+
+PROBLEM ANALYSIS
+================
+
+Your expression:
+  @CALCDATE([baseline_arm_1].[visit_date], 90, 'm')
+
+The follow-up date field remains blank because of a unit parameter issue.
+
+
+ROOT CAUSE
+==========
+
+The third parameter 'm' is INVALID for @CALCDATE. This function only accepts:
+  - 'd' for days
+  - 'y' for years
+
+The letter 'm' does not represent months in @CALCDATE. REDCap silently fails (returns blank)
+when given an unrecognized unit parameter.
+
+
+SOLUTION
+========
+
+Change 'm' to 'd' (days):
+
+  @CALCDATE([baseline_arm_1].[visit_date], 90, 'd')
+
+This calculates: baseline visit date + 90 days
+
+
+KEY DETAILS
+===========
+
+1. SOURCE FIELD COMPATIBILITY
+   - date_ymd fields are fully supported by @CALCDATE ✓
+   - Your source field type is correct
+
+2. UNIT PARAMETER RULES
+   Valid values:
+   - 'd' = add days
+   - 'y' = add years
+
+   NOT supported:
+   - 'm' (months) — causes silent failure
+   - Other letters or numbers
+
+3. DATE ARITHMETIC LIMITATION
+   Since REDCap doesn't support month-based arithmetic in @CALCDATE,
+   for exactly 90 days use the corrected 'd' parameter above.
+
+   If you need month-based logic, consider:
+   - Using Python/R in data analysis
+   - Creating a calculated field with custom conditional logic
+   - Using @DATEDIFF to compute days and handle logic separately
+
+4. BLANK FIELD BEHAVIOR
+   When @CALCDATE receives invalid parameters:
+   - Field displays blank (no error message)
+   - No warning in the designer
+   - Only way to detect: check the result at runtime
+
+
+CORRECTED EXPRESSION
+====================
+
+@CALCDATE([baseline_arm_1].[visit_date], 90, 'd')
+
+
+TESTING CHECKLIST
+=================
+
+After applying the fix:
+[ ] Save the form/field with the corrected expression
+[ ] Add a test record with a visit_date value (e.g., 2026-04-09)
+[ ] Verify the follow-up field auto-calculates (e.g., 2026-07-08)
+[ ] Check that the calculation respects leap years and month boundaries
+[ ] Test with edge cases (Dec 31, Feb 28/29)

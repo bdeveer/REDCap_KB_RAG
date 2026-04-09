@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies the exponentiation syntax error (missing parentheses around base)",
+      "passed": false,
+      "evidence": "Incorrectly claims REDCap does NOT support ^ at all. REDCap does support ^ — it just requires parentheses. The actual error diagnosis is wrong."
+    },
+    {
+      "text": "Classifies as a syntax error",
+      "passed": false,
+      "evidence": "Classified it as 'REDCap does not support ^ operator' which is factually incorrect — the error is the missing parentheses, not the operator itself"
+    },
+    {
+      "text": "Provides corrected expression with ([height_cm])^(2)",
+      "passed": false,
+      "evidence": "Suggested pow() which does not exist in REDCap, and [height_cm]*[height_cm] as workarounds. The correct fix ([height_cm])^(2) was never given."
+    },
+    {
+      "text": "Does not flag [weight_kg] or [height_cm] as reference errors (no context was provided to check against)",
+      "passed": true,
+      "evidence": "Did not flag field references as reference errors"
+    }
+  ],
+  "summary": {"passed": 1, "failed": 3, "total": 4, "pass_rate": 0.25}
+}

@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies datediff() missing the required third argument (unit) as a syntax error",
+      "passed": true,
+      "evidence": "Clearly identified datediff() only has 2 arguments, requires 3. Listed as Syntax Error."
+    },
+    {
+      "text": "Provides a corrected datediff() call with a unit argument (e.g., 'd')",
+      "passed": true,
+      "evidence": "Corrected expression includes datediff([enroll_date], [fu_date], 'd') — correct"
+    },
+    {
+      "text": "Notes that '' as the false branch of if() in a calc field will produce blank, not an error",
+      "passed": true,
+      "evidence": "Explicitly stated 'The if() wrapper returns an empty string when enroll_date is blank, which is correct.'"
+    },
+    {
+      "text": "Does NOT incorrectly flag [enroll_date] or [fu_date] as reference errors (both exist in the field list)",
+      "passed": true,
+      "evidence": "Did not flag these as reference errors. Appropriately noted fu_date name suggests it might logically belong to followup event, and asked user to verify — without asserting it IS on the wrong event."
+    }
+  ],
+  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0}
+}

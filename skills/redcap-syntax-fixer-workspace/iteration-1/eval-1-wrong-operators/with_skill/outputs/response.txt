@@ -1,0 +1,18 @@
+Expression type
+Branching Logic — controls field visibility.
+
+Syntax errors
+
+1. && at positions 15–16 and 51–52
+   Problem: REDCap uses boolean keywords (AND, OR), not C-style operators.
+   Fix: Replace && with AND
+
+2. != at position 41–42
+   Problem: REDCap uses <> for not-equal, not !=.
+   Fix: Replace != with <>
+
+Corrected expression
+
+[age] >= 18 AND [consent_status] = 'yes' AND [site] <> 'withdrawn'
+
+Note: The corrected expression will now show the field when the age is 18 or older, consent status is exactly 'yes', and site is not 'withdrawn'.

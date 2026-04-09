@@ -1,0 +1,53 @@
+REDCAP CALCULATED FIELD FORMULA ANALYSIS
+=========================================
+
+ORIGINAL FORMULA:
+if([enroll_date] <> '', datediff([enroll_date], [fu_date]), '')
+
+ISSUES IDENTIFIED:
+==================
+
+1. MISSING REQUIRED ARGUMENT - CRITICAL ERROR
+   The datediff() function requires THREE arguments:
+   - datediff(date1, date2, units)
+
+   Your formula only provides TWO arguments: datediff([enroll_date], [fu_date])
+
+   The third argument (units) must be specified. Common options:
+   - 'd' for days
+   - 'h' for hours
+   - 'm' for minutes
+   - 'y' for years
+   - 'M' for months
+
+2. CROSS-EVENT FIELD REFERENCE - ERROR
+   The fu_date field is in the followup_arm_1 event, but this calculated field
+   is on the screening_arm_1 event. In a longitudinal project, you must use
+   event context syntax to reference fields from other events.
+
+   Current (incorrect): [fu_date]
+   Correct: [followup_arm_1][fu_date]
+
+
+CORRECTED FORMULA:
+==================
+if([enroll_date] <> '', datediff([enroll_date], [followup_arm_1][fu_date], 'd'), '')
+
+
+EXPLANATION:
+============
+- Added 'd' as the third argument to calculate the difference in DAYS
+- Changed [fu_date] to [followup_arm_1][fu_date] to properly reference the
+  field in the followup event from the screening event
+- The formula now correctly:
+  * Checks if enroll_date has a value
+  * If yes: calculates the number of days between enrollment and follow-up dates
+  * If no: returns an empty string
+
+
+ADDITIONAL NOTES:
+=================
+- Ensure both enroll_date and fu_date are properly populated in your data
+- The fu_date field must exist in the followup_arm_1 event
+- The calculated field days_to_followup will only display when viewing the
+  Screening event form
