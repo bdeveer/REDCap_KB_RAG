@@ -1,0 +1,32 @@
+{
+  "eval_id": 0,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "The skill reads the original article before making any changes",
+      "passed": true,
+      "evidence": "Summary references specific sections and line numbers from RC-BL-02"
+    },
+    {
+      "text": "The skill identifies that no correction is needed (article already correct)",
+      "passed": true,
+      "evidence": "Summary states 'the checkbox syntax is ALREADY CORRECT throughout the document'"
+    },
+    {
+      "text": "No unnecessary changes are made to the article",
+      "passed": true,
+      "evidence": "Summary states output is 'identical to the source article'"
+    },
+    {
+      "text": "The skill communicates clearly why no edit was made",
+      "passed": true,
+      "evidence": "Summary gives a clear explanation and even suggests alternative sources for the error (RC-BL-04), which is a richer response"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

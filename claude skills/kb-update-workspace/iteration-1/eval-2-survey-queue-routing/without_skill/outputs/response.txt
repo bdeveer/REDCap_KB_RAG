@@ -1,0 +1,17 @@
+Good news — this content belongs in an existing article, not a new one.
+
+RC-SURV-07 (Survey Queue) already covers all three topics you want to add:
+
+1. **How to set it up** — Section 4 "Survey Queue Setup" (4.1–4.4) covers the Online Designer location, activating surveys, defining trigger conditions (completion, logic, combination), and configuring auto-start.
+
+2. **How auto-continue works** — This is actually about the *auto-start setting in the queue*, which is covered in Section 4.4. The article also clarifies in Section 9 (Q&A) and Section 10 (Common Mistakes) that auto-continue and the survey queue are separate features that should NOT be used together.
+
+3. **Why the queue skips instruments that are already complete** — This is addressed in Section 8.1 "Non-Sequential Queue" and the participant experience sections. The article explains that a survey must be activated in the queue AND its trigger conditions must be met to appear. If a survey is already complete, it won't meet a "completion trigger" again.
+
+**Recommendation:** Add your content as an expansion or clarification within RC-SURV-07. Depending on your focus, this could be:
+
+- A new subsection under Section 8 (Participant Experience) if you want to emphasize the behavioral rules
+- Enhanced details in Section 4.3 (Trigger Conditions) if you're explaining how completion triggers filter already-completed instruments
+- An additional Q&A entry in Section 9 if this is a common point of confusion
+
+The article is already comprehensive, so your content would strengthen an existing section rather than require a new article.

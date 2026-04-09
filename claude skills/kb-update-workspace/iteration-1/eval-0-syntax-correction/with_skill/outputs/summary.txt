@@ -1,0 +1,21 @@
+SUMMARY: Syntax Verification for RC-BL-02
+
+Article: RC-BL-02 — Branching Logic Syntax & Atomic Statements
+Task: Verify checkbox syntax (reported issue: user claimed incorrect syntax [variable___1])
+
+FINDINGS:
+The article already contains the CORRECT checkbox syntax format.
+
+Location: Section 3.4 "Square Brackets [ ] and Their Uses"
+Line 115 Reference Table:
+  Checkbox sub-variable     [variable_name(raw_value)]     [conditions(3)]
+
+The article correctly specifies that checkbox sub-variables use parentheses with the raw value:
+  Format: [variable_name(raw_value)]
+  Example: [conditions(3)]
+
+This is the correct REDCap syntax. The article does NOT contain the incorrect triple-underscore syntax [variable___1] that the user reported.
+
+STATUS: No correction was needed. The article already reflects best practice. The version remains 1.0 and Last Updated remains 2025.
+
+File copied to outputs/ for reference without modifying the original kb/ directory.

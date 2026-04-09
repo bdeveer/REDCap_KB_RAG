@@ -1,0 +1,19 @@
+SKILL TEST: Eval 1 — Alert Q&A Addition
+
+Article Modified: RC-ALERT-01 — Alerts & Notifications: Setup
+
+Change Type: Added a new Q&A pair to the Common Questions section
+
+Details:
+- New Q&A Question: "Do alerts fire when a project is in draft or development status?"
+- New Q&A Answer: "No. Alerts only fire once a project has been moved to production status. While a project remains in development (draft) mode, no alerts will trigger, even if the trigger conditions are met. This prevents unwanted alert sends during project setup and testing."
+- Version bumped: 1.0 → 1.1
+- Last Updated: Remains 2026
+- No cross-reference changes needed (KB-REFERENCE-MAP.md not updated as no new article references were added)
+
+Location: Section 6 — Common Questions (inserted after the Q&A about survey links, before the Mistakes & Gotchas section)
+
+Original file location: /sessions/great-vigilant-ramanujan/mnt/REDCap_KB_RAG/kb/RC-ALERT-01_Alerts-and-Notifications-Setup.md
+Modified file saved to: /sessions/great-vigilant-ramanujan/mnt/REDCap_KB_RAG/claude skills/kb-update-workspace/iteration-1/eval-1-alert-qa-addition/with_skill/outputs/RC-ALERT-01_Alerts-and-Notifications-Setup.md
+
+No changes made to original kb/ directory files per instructions.

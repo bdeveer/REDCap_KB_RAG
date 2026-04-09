@@ -1,0 +1,32 @@
+{
+  "eval_id": 2,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "No new article is created without user confirmation",
+      "passed": true,
+      "evidence": "No new .md article files in outputs/ directory; response.txt only contains assessment and question for user"
+    },
+    {
+      "text": "The skill reads KB-REFERENCE-MAP or existing SURV articles before deciding",
+      "passed": true,
+      "evidence": "Response references RC-SURV-07 section details (Section 3, 4.4, 9, 10) showing the article was read, and identifies RC-SURV-03 as alternative target"
+    },
+    {
+      "text": "The routing decision is specific \u2014 names which article(s) the content belongs in",
+      "passed": true,
+      "evidence": "Routes to RC-SURV-07 Section 10 (gotcha) and RC-SURV-03 (auto-continue), with section-level specificity"
+    },
+    {
+      "text": "The skill asks the user a question before proceeding",
+      "passed": true,
+      "evidence": "Response has a 'QUESTION FOR USER' section with 3 specific clarifying questions before proceeding"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

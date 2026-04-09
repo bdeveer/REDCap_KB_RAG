@@ -1,0 +1,23 @@
+{
+  "skill_name": "redcap-kb-updater",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "In RC-BL-02, the section on checkbox syntax says to use [variable___1] but that's wrong — the correct format in REDCap is [variable(1)] with parentheses, not triple underscores. Please fix it.",
+      "expected_output": "The article RC-BL-02 is updated with the corrected checkbox syntax. The version number is bumped. No new article is created. A brief summary of what was changed is provided.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I want to add a Q&A to the alerts article: people keep asking whether alerts fire when a project is still in development/draft mode. The answer is no — alerts only fire once the project has been moved to production status.",
+      "expected_output": "A new Q&A pair is added to the Common Questions section of RC-ALERT-01 (or RC-ALERT-02 if more appropriate). The question is phrased naturally. Version is bumped. No new article needed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have some content to add to the KB about the Survey Queue feature — specifically how to set it up, how auto-continue works, and why the queue skips instruments that are already complete. Is this something that goes in an existing article or do we need a new one?",
+      "expected_output": "The skill searches existing articles, determines there is no dedicated Survey Queue article, presents a proposed new article ID (likely RC-SURV-XX), asks the user to confirm before creating it. Does NOT create the article without confirmation.",
+      "files": []
+    }
+  ]
+}

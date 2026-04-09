@@ -1,0 +1,303 @@
+{
+  "metadata": {
+    "skill_name": "redcap-kb-updater",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-04-04T23:40:57Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The skill reads the original article before making any changes",
+          "passed": true,
+          "evidence": "Summary references Section 3.4 content from RC-BL-02 ('Square Brackets [ ] and Their Uses', line 115 reference table)"
+        },
+        {
+          "text": "The skill identifies that no correction is needed (article already correct)",
+          "passed": true,
+          "evidence": "Summary states: 'The article already contains the CORRECT checkbox syntax format' and 'STATUS: No correction was needed'"
+        },
+        {
+          "text": "No unnecessary changes are made to the article",
+          "passed": true,
+          "evidence": "Summary states 'File copied to outputs/ for reference without modifying the original kb/ directory' \u2014 output is a clean copy, no edits"
+        },
+        {
+          "text": "The skill communicates clearly why no edit was made",
+          "passed": true,
+          "evidence": "Summary explains the correct format found, where in the article it is, and why no change was needed \u2014 user would understand"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The Q&A is added to RC-ALERT-01 (Setup article, not Management article)",
+          "passed": true,
+          "evidence": "Output file is RC-ALERT-01_Alerts-and-Notifications-Setup.md; summary confirms 'Article Modified: RC-ALERT-01'"
+        },
+        {
+          "text": "The added question is phrased as a real user would ask it (not as a policy statement)",
+          "passed": true,
+          "evidence": "Question reads: 'Do alerts fire when a project is in draft or development status?' \u2014 natural user phrasing"
+        },
+        {
+          "text": "The answer is direct and complete \u2014 explains the behavior and why",
+          "passed": true,
+          "evidence": "Answer explains production status requirement and that draft mode prevents accidental sends during setup/testing"
+        },
+        {
+          "text": "The article metadata version number is incremented",
+          "passed": true,
+          "evidence": "Version field in output file is 1.1 (original was 1.0)"
+        },
+        {
+          "text": "The skill notes whether KB-REFERENCE-MAP needs updating",
+          "passed": true,
+          "evidence": "Summary explicitly states 'No cross-reference changes needed (KB-REFERENCE-MAP.md not updated as no new article references were added)'"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No new article is created without user confirmation",
+          "passed": true,
+          "evidence": "No new .md article files in outputs/ directory; response.txt only contains assessment and question for user"
+        },
+        {
+          "text": "The skill reads KB-REFERENCE-MAP or existing SURV articles before deciding",
+          "passed": true,
+          "evidence": "Response references RC-SURV-07 section details (Section 3, 4.4, 9, 10) showing the article was read, and identifies RC-SURV-03 as alternative target"
+        },
+        {
+          "text": "The routing decision is specific \u2014 names which article(s) the content belongs in",
+          "passed": true,
+          "evidence": "Routes to RC-SURV-07 Section 10 (gotcha) and RC-SURV-03 (auto-continue), with section-level specificity"
+        },
+        {
+          "text": "The skill asks the user a question before proceeding",
+          "passed": true,
+          "evidence": "Response has a 'QUESTION FOR USER' section with 3 specific clarifying questions before proceeding"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The skill reads the original article before making any changes",
+          "passed": true,
+          "evidence": "Summary references specific sections and line numbers from RC-BL-02"
+        },
+        {
+          "text": "The skill identifies that no correction is needed (article already correct)",
+          "passed": true,
+          "evidence": "Summary states 'the checkbox syntax is ALREADY CORRECT throughout the document'"
+        },
+        {
+          "text": "No unnecessary changes are made to the article",
+          "passed": true,
+          "evidence": "Summary states output is 'identical to the source article'"
+        },
+        {
+          "text": "The skill communicates clearly why no edit was made",
+          "passed": true,
+          "evidence": "Summary gives a clear explanation and even suggests alternative sources for the error (RC-BL-04), which is a richer response"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The Q&A is added to RC-ALERT-01 (Setup article, not Management article)",
+          "passed": true,
+          "evidence": "Output file is RC-ALERT-01_Alerts-and-Notifications-Setup.md; summary confirms correct article choice with rationale"
+        },
+        {
+          "text": "The added question is phrased as a real user would ask it (not as a policy statement)",
+          "passed": true,
+          "evidence": "Question reads: 'Will alerts fire when a project is in draft/development mode?' \u2014 natural user phrasing"
+        },
+        {
+          "text": "The answer is direct and complete \u2014 explains the behavior and why",
+          "passed": true,
+          "evidence": "Answer is even richer than with_skill \u2014 includes how to move a project to production"
+        },
+        {
+          "text": "The article metadata version number is incremented",
+          "passed": false,
+          "evidence": "Version field in output file remains 1.0 \u2014 not bumped. The skill instructions explicitly require version increment but without_skill did not do this"
+        },
+        {
+          "text": "The skill notes whether KB-REFERENCE-MAP needs updating",
+          "passed": false,
+          "evidence": "Summary does not mention KB-REFERENCE-MAP at all \u2014 no acknowledgment of cross-reference check"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No new article is created without user confirmation",
+          "passed": true,
+          "evidence": "No new .md article files in outputs/ directory"
+        },
+        {
+          "text": "The skill reads KB-REFERENCE-MAP or existing SURV articles before deciding",
+          "passed": true,
+          "evidence": "Response references RC-SURV-07 sections in detail showing the article was read"
+        },
+        {
+          "text": "The routing decision is specific \u2014 names which article(s) the content belongs in",
+          "passed": true,
+          "evidence": "Routes to RC-SURV-07 with specific section suggestions (Section 8, 4.3, or Section 9 Q&A)"
+        },
+        {
+          "text": "The skill asks the user a question before proceeding",
+          "passed": false,
+          "evidence": "Response gives recommendations and ends with a suggestion but does NOT ask a confirmation question \u2014 proceeds as if authorized to make the changes"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.7833,
+        "stddev": 0.2021,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.22",
+      "time_seconds": "+0.0",
+      "tokens": "+0"
+    }
+  },
+  "notes": []
+}

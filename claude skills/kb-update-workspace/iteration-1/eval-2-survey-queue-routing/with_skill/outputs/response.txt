@@ -1,0 +1,56 @@
+ASSESSMENT: Survey Queue Feature Content Routing
+
+=== TOPIC ANALYSIS ===
+Input covers three specific aspects of the Survey Queue feature:
+1. How to set up the survey queue (procedural)
+2. How auto-continue works (behavioral explanation)
+3. Why the queue skips instruments that are already complete (behavioral explanation/gotcha)
+
+=== EXISTING ARTICLE REVIEW ===
+Existing article: RC-SURV-07 — Survey Queue (currently at version 1.0)
+
+Current scope of RC-SURV-07:
+- Section 4: Comprehensive setup instructions (activation, trigger conditions, auto-start configuration)
+- Section 5: Overall queue options
+- Section 6: Bulk CSV management
+- Section 7: Distribution and smart variables
+- Section 8: Participant experience (including repeatable surveys and Save and Return)
+- Section 9: Common Questions
+- Section 10: Common Mistakes & Gotchas
+
+Note on auto-continue: RC-SURV-07 already mentions auto-continue in several places:
+- Section 3 (comparison table): recommends survey queue vs auto-continue based on use case
+- Section 9 (Q&A): addresses interaction between survey queue and auto-continue
+- Section 10 (Gotchas): warns against using both together due to documented conflicts
+
+=== ROUTING ASSESSMENT ===
+✓ ALL THREE TOPICS BELONG IN RC-SURV-07 (existing article)
+
+Reasoning:
+1. "How to set up" → Already comprehensively covered in Section 4. New content would be an enhancement/update to existing procedures, not new territory.
+
+2. "How auto-continue works" → This should NOT go in RC-SURV-07. The article explicitly mentions (Section 2 Key Concepts & Definitions) that "Form Display Logic... does not interact with the survey queue but can optionally influence the auto-continue feature. It is out of scope for this article." Auto-continue is a separate feature and belongs in RC-SURV-03 (Survey Settings: Behavior, Access & Termination), which is listed in the Related Topics.
+
+3. "Why the queue skips instruments already complete" → This is a behavioral gotcha/edge case. It should go into Section 10 (Common Mistakes & Gotchas) of RC-SURV-07 as a new gotcha entry, as it explains unintuitive queue behavior and how to avoid/understand it.
+
+=== RECOMMENDATION ===
+MIXED ROUTING: This content needs to be split across articles based on topic:
+
+ACTION 1: Add to RC-SURV-07 Section 10 (Gotchas)
+- "Why the queue skips instruments that are already complete" → new gotcha entry explaining the behavior and why it happens
+
+ACTION 2: Defer auto-continue explanation
+- Content about "how auto-continue works" should be added to RC-SURV-03 (Survey Settings: Behavior, Access & Termination), not RC-SURV-07. The KB structure intentionally keeps auto-continue out of scope in the survey queue article to avoid confusion between the two features.
+- However, RC-SURV-07 can reference RC-SURV-03 for auto-continue details (it already does).
+
+ACTION 3: Enhance RC-SURV-07 Section 4 (Setup) if needed
+- If the setup instructions provided are more detailed or correct errors in the current Section 4, integrate them as targeted edits.
+
+=== QUESTION FOR USER ===
+I'd recommend we handle this in two parts:
+
+1. For the "queue skips complete instruments" explanation → add as a new gotcha to RC-SURV-07
+2. For the auto-continue details → should those go into RC-SURV-03 instead, or is this just a reference/clarification for context within SURV-07?
+3. For the setup instructions → are you providing corrections to existing procedures, or supplementary details we should add?
+
+Can you share the actual content and clarify which of these three aspects is most important to add or update?

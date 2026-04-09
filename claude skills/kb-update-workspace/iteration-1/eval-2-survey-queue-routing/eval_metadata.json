@@ -1,0 +1,23 @@
+{
+  "eval_id": 2,
+  "eval_name": "survey-queue-routing",
+  "prompt": "I have some content to add to the KB about the Survey Queue feature — specifically how to set it up, how auto-continue works, and why the queue skips instruments that are already complete. Is this something that goes in an existing article or do we need a new one?",
+  "assertions": [
+    {
+      "text": "No new article is created without user confirmation",
+      "check": "No new .md article files in outputs/ directory"
+    },
+    {
+      "text": "The skill reads KB-REFERENCE-MAP or existing SURV articles before deciding",
+      "check": "response.txt mentions specific existing article IDs (RC-SURV-*) as evidence of research"
+    },
+    {
+      "text": "The routing decision is specific — names which article(s) the content belongs in",
+      "check": "response.txt names at least one specific RC-SURV article ID and section"
+    },
+    {
+      "text": "The skill asks the user a question before proceeding",
+      "check": "response.txt ends with a question to the user or contains a confirmation request"
+    }
+  ]
+}

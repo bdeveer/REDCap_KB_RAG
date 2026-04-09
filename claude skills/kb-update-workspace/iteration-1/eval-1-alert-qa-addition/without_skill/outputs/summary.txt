@@ -1,0 +1,27 @@
+EVAL 1: Alert Q&A Addition - Summary
+====================================
+
+TASK COMPLETED SUCCESSFULLY
+
+Article Modified:
+- RC-ALERT-01_Alerts-and-Notifications-Setup.md
+
+Change Description:
+Added a new Q&A to the "Common Questions" section (Section 6) of the RC-ALERT-01 article.
+
+New Q&A Added:
+Question: "Will alerts fire when a project is in draft/development mode?"
+Answer: "No. Alerts only fire once a project has been moved to Production status. Projects in draft mode can have fully configured alerts, but they remain inactive and will not trigger or send until the project status is changed to production. This prevents unwanted alert sends during the design and testing phases of project development. To move a project to production, a user with Project Design and Setup rights must access the Project Home page and change the project status."
+
+Rationale for Placement:
+The RC-ALERT-01 article (Setup) was selected over RC-ALERT-02 (Management) because:
+- The question addresses a fundamental precondition for alerts to fire (project status requirement)
+- It's a common gotcha during initial project setup, fitting well in the setup guide
+- The answer references moving a project to production, which is part of the initial setup workflow
+- The Common Questions section of RC-ALERT-01 already covers similar foundational questions about when/why alerts fire
+
+Files Saved to Output:
+1. RC-ALERT-01_Alerts-and-Notifications-Setup.md (modified article with new Q&A)
+2. summary.txt (this file)
+
+Original KB files remain untouched in /sessions/great-vigilant-ramanujan/mnt/REDCap_KB_RAG/kb/

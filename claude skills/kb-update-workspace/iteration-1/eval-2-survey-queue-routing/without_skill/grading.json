@@ -1,0 +1,26 @@
+{
+  "eval_id": 2,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "No new article is created without user confirmation",
+      "passed": true,
+      "evidence": "No new .md article files in outputs/ directory"
+    },
+    {
+      "text": "The skill reads KB-REFERENCE-MAP or existing SURV articles before deciding",
+      "passed": true,
+      "evidence": "Response references RC-SURV-07 sections in detail showing the article was read"
+    },
+    {
+      "text": "The routing decision is specific — names which article(s) the content belongs in",
+      "passed": true,
+      "evidence": "Routes to RC-SURV-07 with specific section suggestions (Section 8, 4.3, or Section 9 Q&A)"
+    },
+    {
+      "text": "The skill asks the user a question before proceeding",
+      "passed": false,
+      "evidence": "Response gives recommendations and ends with a suggestion but does NOT ask a confirmation question — proceeds as if authorized to make the changes"
+    }
+  ]
+}

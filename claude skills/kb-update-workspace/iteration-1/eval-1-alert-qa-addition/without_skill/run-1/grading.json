@@ -1,0 +1,37 @@
+{
+  "eval_id": 1,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "The Q&A is added to RC-ALERT-01 (Setup article, not Management article)",
+      "passed": true,
+      "evidence": "Output file is RC-ALERT-01_Alerts-and-Notifications-Setup.md; summary confirms correct article choice with rationale"
+    },
+    {
+      "text": "The added question is phrased as a real user would ask it (not as a policy statement)",
+      "passed": true,
+      "evidence": "Question reads: 'Will alerts fire when a project is in draft/development mode?' \u2014 natural user phrasing"
+    },
+    {
+      "text": "The answer is direct and complete \u2014 explains the behavior and why",
+      "passed": true,
+      "evidence": "Answer is even richer than with_skill \u2014 includes how to move a project to production"
+    },
+    {
+      "text": "The article metadata version number is incremented",
+      "passed": false,
+      "evidence": "Version field in output file remains 1.0 \u2014 not bumped. The skill instructions explicitly require version increment but without_skill did not do this"
+    },
+    {
+      "text": "The skill notes whether KB-REFERENCE-MAP needs updating",
+      "passed": false,
+      "evidence": "Summary does not mention KB-REFERENCE-MAP at all \u2014 no acknowledgment of cross-reference check"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 2,
+    "total": 5,
+    "pass_rate": 0.6
+  }
+}

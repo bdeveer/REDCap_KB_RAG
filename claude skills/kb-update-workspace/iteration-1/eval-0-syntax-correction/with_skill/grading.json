@@ -1,0 +1,26 @@
+{
+  "eval_id": 0,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "The skill reads the original article before making any changes",
+      "passed": true,
+      "evidence": "Summary references Section 3.4 content from RC-BL-02 ('Square Brackets [ ] and Their Uses', line 115 reference table)"
+    },
+    {
+      "text": "The skill identifies that no correction is needed (article already correct)",
+      "passed": true,
+      "evidence": "Summary states: 'The article already contains the CORRECT checkbox syntax format' and 'STATUS: No correction was needed'"
+    },
+    {
+      "text": "No unnecessary changes are made to the article",
+      "passed": true,
+      "evidence": "Summary states 'File copied to outputs/ for reference without modifying the original kb/ directory' — output is a clean copy, no edits"
+    },
+    {
+      "text": "The skill communicates clearly why no edit was made",
+      "passed": true,
+      "evidence": "Summary explains the correct format found, where in the article it is, and why no change was needed — user would understand"
+    }
+  ]
+}

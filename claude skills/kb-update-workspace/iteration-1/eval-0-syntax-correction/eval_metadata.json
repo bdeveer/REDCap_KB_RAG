@@ -1,0 +1,23 @@
+{
+  "eval_id": 0,
+  "eval_name": "syntax-correction",
+  "prompt": "In RC-BL-02, the section on checkbox syntax says to use [variable___1] but that's wrong — the correct format in REDCap is [variable(1)] with parentheses, not triple underscores. Please fix it.",
+  "assertions": [
+    {
+      "text": "The skill reads the original article before making any changes",
+      "check": "summary.txt references RC-BL-02 and its content"
+    },
+    {
+      "text": "The skill identifies that no correction is needed (article already correct)",
+      "check": "summary.txt explains that the article already uses correct syntax with parentheses, not triple underscores"
+    },
+    {
+      "text": "No unnecessary changes are made to the article",
+      "check": "Output article is functionally identical to the original (or only trivially different)"
+    },
+    {
+      "text": "The skill communicates clearly why no edit was made",
+      "check": "summary.txt contains an explanation the user would understand, not just 'no change needed'"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "alert-qa-addition",
+  "prompt": "I want to add a Q&A to the alerts article: people keep asking whether alerts fire when a project is still in development/draft mode. The answer is no — alerts only fire once the project has been moved to production status.",
+  "assertions": [
+    {
+      "text": "The Q&A is added to RC-ALERT-01 (Setup article, not Management article)",
+      "check": "Output file in outputs/ is named RC-ALERT-01*.md and contains the new Q&A"
+    },
+    {
+      "text": "The added question is phrased as a real user would ask it (not as a policy statement)",
+      "check": "The new question in the Common Questions section reads naturally, e.g. 'Will alerts fire...' or 'Do alerts send...' — not 'Alerts do not fire in development mode'"
+    },
+    {
+      "text": "The answer is direct and complete — explains the behavior and why",
+      "check": "The answer mentions production status requirement and optionally explains the rationale"
+    },
+    {
+      "text": "The article metadata version number is incremented",
+      "check": "The Version field in the metadata table changed from 1.0 to 1.1 (or higher)"
+    },
+    {
+      "text": "The skill notes whether KB-REFERENCE-MAP needs updating",
+      "check": "summary.txt mentions the reference map (either that it was updated or that no update was needed)"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "The Q&A is added to RC-ALERT-01 (Setup article, not Management article)",
+      "passed": true,
+      "evidence": "Output file is RC-ALERT-01_Alerts-and-Notifications-Setup.md; summary confirms 'Article Modified: RC-ALERT-01'"
+    },
+    {
+      "text": "The added question is phrased as a real user would ask it (not as a policy statement)",
+      "passed": true,
+      "evidence": "Question reads: 'Do alerts fire when a project is in draft or development status?' — natural user phrasing"
+    },
+    {
+      "text": "The answer is direct and complete — explains the behavior and why",
+      "passed": true,
+      "evidence": "Answer explains production status requirement and that draft mode prevents accidental sends during setup/testing"
+    },
+    {
+      "text": "The article metadata version number is incremented",
+      "passed": true,
+      "evidence": "Version field in output file is 1.1 (original was 1.0)"
+    },
+    {
+      "text": "The skill notes whether KB-REFERENCE-MAP needs updating",
+      "passed": true,
+      "evidence": "Summary explicitly states 'No cross-reference changes needed (KB-REFERENCE-MAP.md not updated as no new article references were added)'"
+    }
+  ]
+}
