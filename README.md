@@ -10,7 +10,7 @@ This repo supports an LLM-powered REDCap assistant at Yale. Rather than feeding 
 
 ```
 REDCap_KB_RAG/
-├── kb/                          # Markdown KB articles (RAG-ready) — 100 articles
+├── kb/                          # Markdown KB articles (RAG-ready) — 94 articles
 │   ├── KB-REFERENCE-MAP.md      # Cross-reference index of all articles
 │   └── RC-[DOMAIN]-[NN]_...     # Individual KB articles
 ├── claude skills/
@@ -50,9 +50,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-PIPE` | Piping & Smart Variables |
 | `RC-RAND` | Randomization |
 | `RC-SURV` | Surveys |
-| `RC-TXT` | Texting (SMS via REDCap) |
 | `RC-USER` | User Rights |
-| `RC-INST` | Institution-Specific Settings & Policies |
 
 The `KB-REFERENCE-MAP.md` file lists all articles, their prerequisites, cross-references, and flags topics that are referenced but not yet written.
 
@@ -82,7 +80,6 @@ The `claude skills/` directory contains Cowork skills that Claude uses to mainta
 | `kb-update-workspace` | Same as kb-update, but works with files already in the mounted workspace folder |
 | `kb-search` | Search the KB by topic to find and read relevant articles before writing |
 | `redcap-data-dictionary` | Analyze a REDCap Data Dictionary CSV (field types, instruments, structure) |
-| `redcap-syntax-reader` | Interpret and explain REDCap expressions (branching logic, calc fields, @CALCTEXT, @CALCDATE) |
 
 ## Adding New Articles
 
