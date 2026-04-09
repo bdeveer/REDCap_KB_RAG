@@ -1,0 +1,46 @@
+REDCap BMI Calculated Field Analysis
+====================================
+
+PROBLEM IDENTIFIED:
+Your BMI formula is returning blank because REDCap does NOT support the caret (^) operator for exponentiation in Calculated Field expressions.
+
+INCORRECT FORMULA:
+([weight_kg] / [height_cm]^2) * 10000
+
+ISSUE:
+The caret (^) character is not a valid operator in REDCap's Calculated Field expression language. REDCap calculated fields use a limited set of mathematical operators:
+- Addition: +
+- Subtraction: -
+- Multiplication: *
+- Division: /
+- Modulo: %
+- Parentheses for grouping: ( )
+
+Exponentiation is NOT available in this expression language.
+
+SOLUTIONS:
+
+Option 1: Use the pow() function (RECOMMENDED)
+([weight_kg] / pow([height_cm], 2)) * 10000
+
+Option 2: Multiply height_cm by itself
+([weight_kg] / ([height_cm] * [height_cm])) * 10000
+
+EXPLANATION:
+The pow() function is the standard way to perform exponentiation in REDCap Calculated Fields. It takes two arguments: the base and the exponent. Both solutions mathematically achieve height_cm squared, but pow() is cleaner and more readable.
+
+WHY YOUR FORMULA WAS BLANK:
+When REDCap encounters invalid syntax in a Calculated Field (like the ^ operator), it evaluates to blank instead of showing an error message. This is why you see no value rather than an error notification.
+
+TESTING RECOMMENDATIONS:
+1. Update the formula to one of the corrected versions above
+2. Save the field configuration
+3. Create a test record with sample values (e.g., weight_kg = 70, height_cm = 180)
+4. Verify the calculated field now displays the BMI result
+
+EXAMPLE CALCULATION:
+For weight_kg = 70 and height_cm = 180:
+- Using corrected formula: (70 / pow(180, 2)) * 10000 = 21.6 BMI
+- Or: (70 / (180 * 180)) * 10000 = 21.6 BMI
+
+Both methods should now produce the expected result instead of a blank field.

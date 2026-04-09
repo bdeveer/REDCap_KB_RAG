@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies dot notation as a syntax error and corrects to adjacent brackets",
+      "passed": true,
+      "evidence": "Explicitly identified [baseline_arm_1].[visit_date] dot separator as invalid, corrected to [baseline_arm_1][visit_date]"
+    },
+    {
+      "text": "Identifies 'm' (minutes) as the wrong unit — should be 'd' for days",
+      "passed": true,
+      "evidence": "Identified 'm' as minutes, noted the user wants days, corrected to 'd'"
+    },
+    {
+      "text": "Explains that 'm' is minutes and 'M' is months (case sensitivity)",
+      "passed": true,
+      "evidence": "Explicitly stated 'm' (lowercase) = minutes, 'M' (capital) = months, and noted unit strings are case-sensitive"
+    },
+    {
+      "text": "Provides corrected expression: @CALCDATE([baseline_arm_1][visit_date], 90, 'd')",
+      "passed": true,
+      "evidence": "Corrected expression matches exactly: @CALCDATE([baseline_arm_1][visit_date], 90, 'd')"
+    },
+    {
+      "text": "Classifies both as syntax errors",
+      "passed": true,
+      "evidence": "Both errors listed under Syntax errors section"
+    }
+  ],
+  "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}
+}

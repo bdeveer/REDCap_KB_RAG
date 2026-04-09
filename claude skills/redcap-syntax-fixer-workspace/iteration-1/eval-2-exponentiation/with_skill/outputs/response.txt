@@ -1,0 +1,12 @@
+Expression type
+Calculated Field (field type = calc).
+
+Syntax errors
+
+Exponentiation syntax — The exponent operator `^` requires both the base and exponent to be individually wrapped in parentheses. The formula currently has `[height_cm]^2`, which is invalid. Both `[height_cm]` (the base) and `2` (the exponent) need their own parentheses.
+
+Corrected expression
+
+([weight_kg] / ([height_cm])^(2)) * 10000
+
+Why this works: The `^` operator always requires the pattern `(base)^(exponent)`. This applies whether the base is a variable, a formula, or a literal. The division and multiplication operations around the exponentiation still evaluate correctly once the exponent is syntactically valid.

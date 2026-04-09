@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "States that no syntax errors are found",
+      "passed": true,
+      "evidence": "'None. This expression has no syntax errors.'"
+    },
+    {
+      "text": "Does not fabricate errors in a correct expression",
+      "passed": true,
+      "evidence": "No errors fabricated. Corrected expression is the same as the original."
+    },
+    {
+      "text": "Identifies this as branching logic",
+      "passed": true,
+      "evidence": "Expression type section states: 'Branching Logic — controls field visibility'"
+    },
+    {
+      "text": "May mention that reference checking was skipped (no field list provided) but does not treat this as an error",
+      "passed": true,
+      "evidence": "Noted 'Reference verification skipped' without treating it as an error, explained why"
+    }
+  ],
+  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0}
+}

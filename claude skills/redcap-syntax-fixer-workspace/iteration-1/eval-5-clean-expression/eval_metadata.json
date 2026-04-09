@@ -1,0 +1,11 @@
+{
+  "eval_id": 5,
+  "eval_name": "clean-expression",
+  "prompt": "Is there anything wrong with this branching logic?\n\n[age] >= 18 AND [consent] = '1'",
+  "assertions": [
+    "States that no syntax errors are found",
+    "Does not fabricate errors in a correct expression",
+    "Identifies this as branching logic",
+    "May mention that reference checking was skipped (no field list provided) but does not treat this as an error"
+  ]
+}
