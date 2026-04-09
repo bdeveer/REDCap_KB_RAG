@@ -7,7 +7,7 @@ RC-BL-05
 | **Domain** | Branching Logic |
 | **Applies To** | Longitudinal REDCap projects; requires Project Design and Setup rights |
 | **Prerequisite** | RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-LONG-01 — Longitudinal Project Setup |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-BL-01 — Overview & Scope; RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers |
@@ -128,13 +128,73 @@ A repeated instrument can reference non-repeated fields from other events using 
 
 This works reliably because the referenced field in the baseline event has exactly one value per record.
 
-## 5.3 Cross-Instance and Cross-Event References to Repeated Fields
+## 5.3 Referencing Specific Instances of a Repeated Instrument
 
-Logic that attempts to reference a value from a specific instance of a repeated instrument (e.g., "instance 2 of the medication instrument at week 4") is not reliably supported in branching logic. Do not design logic that depends on reading a value from a specific prior instance of a repeated instrument.
+When branching logic needs to evaluate a value from a specific instance of a repeated instrument, REDCap supports two methods — the same syntax used for piping (see RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers, Section 4.2).
 
-If cross-instance logic is a design requirement, reconsider the data model. Consult your REDCap administrator before building logic that depends on inter-instance values.
+### Method 1: Direct Instance Number
 
-> **See also:** RC-LONG-02 — Repeated Instruments & Events Setup (Section 8.1) for a broader discussion of how branching logic interacts with repeated instruments.
+Append the instance number in its own brackets immediately after the variable name:
+
+```
+[variable_name][instance_number]
+```
+
+**Example** — show a field only if the medication name in instance 1 is "Aspirin":
+
+```
+[med_name][1]='Aspirin'
+```
+
+In a longitudinal project, prepend the event name:
+
+```
+[event_name][variable_name][instance_number]
+```
+
+**Example:**
+
+```
+[event_1_arm_1][med_name][1]='Aspirin'
+```
+
+### Method 2: Smart Variable Targeting
+
+Use `[first-instance]` or `[last-instance]` to reference the first or last instance without knowing the exact number:
+
+```
+[variable_name][first-instance]
+[variable_name][last-instance]
+```
+
+In a longitudinal project, prepend the event name:
+
+```
+[event_name][variable_name][first-instance]
+```
+
+> **Important:** `[last-instance]` always points to the most recently created instance. Its value changes if new instances are added later. Use it only when dynamic "latest entry" behavior is what you need.
+
+### Within a Repeated Series
+
+When branching logic runs inside a repeated instrument (i.e., the field being shown or hidden is itself in the repeated instrument), additional smart variables are available to reference other instances in the same series:
+
+| **Smart Variable** | **Target** |
+|---|---|
+| `[previous-instance]` | The instance immediately before the current one |
+| `[next-instance]` | The instance immediately after the current one |
+| `[first-instance]` | The first instance in the series |
+| `[last-instance]` | The most recently created instance |
+
+**Example** — inside a repeated instrument, show a field only if the previous instance's visit was marked complete:
+
+```
+[visit_status][previous-instance]='complete'
+```
+
+If the current instance is the first, `[previous-instance]` returns blank.
+
+> **See also:** RC-LONG-02 — Repeated Instruments & Events Setup (Section 8.1) for a broader discussion of how repeated setups affect branching logic; RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers (Section 4.2–4.3) for the parallel piping syntax.
 
 ---
 
@@ -206,6 +266,10 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **A:** Not with a direct arm-check in branching logic syntax alone. The most practical approach is to use a smart variable that surfaces the current arm, then write logic against it. See RC-PIPE-09 — Smart Variables: Event & Arm.
 
+**Q: Can I write branching logic that checks a value from a specific instance of a repeated instrument?**
+
+**A:** Yes. Use the instance qualifier syntax: `[variable_name][instance_number]` for a fixed instance, or `[variable_name][first-instance]` / `[variable_name][last-instance]` to dynamically target the first or last instance. Inside a repeated instrument, you can also use `[variable_name][previous-instance]` or `[variable_name][next-instance]` to reference instances relative to the current one. In a longitudinal project, prepend the event name: `[event_name][variable_name][instance_number]`.
+
 **Q: Does cross-event logic work in the Survey Queue or Alerts?**
 
 **A:** Yes. The same cross-event syntax works in any REDCap feature that uses the logic language — Survey Queue conditions, Automated Survey Invitation logic, alert conditions, and reports. The syntax is identical.
@@ -222,7 +286,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Referencing arm-specific events from instruments shared across arms.** An instrument designated to both arms that contains `[baseline_arm_1][field]` will work for Arm 1 records but return blank for Arm 2 records. This can cause fields to appear or disappear unexpectedly depending on the record's arm assignment. Validate cross-event logic against test records in every arm where the instrument appears.
 
-**Designing logic that reads across repeated instrument instances.** Branching logic cannot reliably read a value from a specific prior instance of a repeated instrument. Logic like "show this field if the previous medication instance has a stop date" is not supported and will behave unpredictably. Restructure the instrument design to avoid this pattern.
+**Using `[last-instance]` where a stable reference is needed.** The `[last-instance]` smart variable always points to the most recently created instance. If users add more instances later, what it returns changes. For logic that must evaluate a fixed instance, use a direct instance number (`[variable_name][1]`) rather than `[last-instance]`.
 
 ---
 
