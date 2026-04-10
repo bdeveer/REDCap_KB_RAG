@@ -15,15 +15,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-FDL-01 — Form Display Logic
-
-**Why needed:** RC-SURV-07 explicitly marks Form Display Logic as out of scope and notes it is a separate Online Designer feature adjacent to the survey queue. No existing article covers it.
-
-**Domain slug:** FDL (new)
-**What to cover:** What Form Display Logic is (staff/user access to forms based on conditional logic, distinct from branching logic and survey queue), where to find it in the Online Designer, how to configure logic rules, interaction with the auto-continue feature in the survey queue, differences from branching logic and user rights
-
----
-
 ## Priority 4 — Surfaced by RC-UNCLASSIFIED-01 (good interim coverage exists)
 
 ### ⚠️ RC-PROJ-01 — Project Lifecycle: Statuses and Transitions
@@ -106,6 +97,7 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅ *(was Priority 2)*
 - RC-LONG-01 — Longitudinal Project Setup ✅
 - RC-LONG-02 — Repeated Instruments & Events Setup ✅
+- RC-FDL-01 — Form Display Logic ✅ *(was Priority 3)*
 - RC-FD-08 — Data Dictionary Column Reference ✅
 - RC-BL-01 through RC-BL-04 — Branching Logic series ✅
 - RC-RAND-01 through RC-RAND-03 — Randomization series ✅
@@ -122,4 +114,4 @@ These were previously marked ⚠️ but have since been resolved:
 - When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
 - RC-UNCLASSIFIED-01 provides interim coverage for RC-PROJ-01 (§1–2), RC-DQ-01 (§3), RC-API-01 (§4), and RC-MOB-01/MyCap (§6). Those sections can serve as drafting source material.
 
-*Last updated: 2026-04-10 (RC-MLM-01 resolved; RC-ALERT-03 covered by RC-TXT-01/RC-TXT-02; RC-PROJ-01, RC-DQ-01, RC-PROJ-02, RC-DDE-01 added from RC-UNCLASSIFIED-01 review; stale ⚠️ references in KB articles cleaned up)*
+*Last updated: 2026-04-10 (RC-MLM-01 resolved; RC-ALERT-03 covered by RC-TXT-01/RC-TXT-02; RC-PROJ-01, RC-DQ-01, RC-PROJ-02, RC-DDE-01 added from RC-UNCLASSIFIED-01 review; stale ⚠️ references in KB articles cleaned up; RC-FDL-01 resolved)*
