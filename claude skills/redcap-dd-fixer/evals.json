@@ -1,0 +1,122 @@
+{
+  "skill_name": "redcap-dd-fixer",
+  "evals": [
+    {
+      "id": 0,
+      "name": "operator-fixes-and-exponent",
+      "prompt": "I have a data dictionary that keeps failing to upload. The branching logic has some wrong operators I think. Can you fix it? The file is at /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_operators.csv",
+      "expected_output": "Should run fix_dd.py, identify == operators in branching logic, convert them to =, convert && to AND, convert != to <>, flag the broken exponentiation in the BMI formula ([weight_kg])/([height_m])^(2) — the base is already wrapped but the weight_kg reference lacks parentheses — and produce a corrected CSV with a change log. Should also flag missing choices on dropdown fields if any, and note the Identifier?=Y normalization.",
+      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_operators.csv"],
+      "assertions": [
+        {
+          "id": "runs_fixer_script",
+          "name": "Ran fix_dd.py script",
+          "description": "The response shows evidence of running the fix_dd.py script (not just manually describing issues)"
+        },
+        {
+          "id": "fixes_double_equals",
+          "name": "Fixed == to =",
+          "description": "The output CSV or change log shows that == was replaced with = in branching logic"
+        },
+        {
+          "id": "fixes_and_operator",
+          "name": "Fixed && to AND",
+          "description": "The output CSV or change log shows && was replaced with AND"
+        },
+        {
+          "id": "fixes_notequal",
+          "name": "Fixed != to <>",
+          "description": "The output CSV or change log shows != was replaced with <>"
+        },
+        {
+          "id": "produces_output_csv",
+          "name": "Produced a corrected CSV file",
+          "description": "A corrected CSV file was written and its path was shared with the user"
+        },
+        {
+          "id": "normalizes_identifier",
+          "name": "Normalized Identifier Y flag",
+          "description": "Reported the normalization of Identifier?=Y to y (or the output CSV reflects this)"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "structural-errors-and-calctext",
+      "prompt": "Please fix this data dictionary — I got errors when trying to upload it. File: /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_structural.csv",
+      "expected_output": "Should parse the DD, run the fixer, identify: (1) the missing choices on 'diagnosis' dropdown and 'adverse_event' radio — flagged not auto-fixed; (2) the double quotes in the @CALCTEXT annotation on pat_name — auto-fixed to single quotes; (3) the validation min/max on ae_description (which is a text field so these are actually valid — but min=100 means minimum 100 characters which is unusual, should be noted); (4) the uppercase 'Dropdown' field type — auto-fixed to lowercase; (5) the duplicate record_id variable — flagged as error; (6) the broken @CALCTEXT with escaped double quotes around 'Unnamed'. Should produce a corrected CSV.",
+      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_structural.csv"],
+      "assertions": [
+        {
+          "id": "flags_missing_choices",
+          "name": "Flagged missing choices",
+          "description": "Correctly flagged that 'diagnosis' (Dropdown) and 'adverse_event' (radio) have no choices defined"
+        },
+        {
+          "id": "fixes_uppercase_field_type",
+          "name": "Fixed uppercase field type",
+          "description": "Lowercased 'Dropdown' to 'dropdown' in the output"
+        },
+        {
+          "id": "flags_duplicate_variable",
+          "name": "Flagged duplicate variable name",
+          "description": "Identified that record_id appears twice and flagged it as an error"
+        },
+        {
+          "id": "fixes_calctext_quotes",
+          "name": "Fixed double quotes in @CALCTEXT",
+          "description": "Converted double quotes to single quotes inside the @CALCTEXT annotation on pat_name"
+        },
+        {
+          "id": "produces_output_csv",
+          "name": "Produced a corrected CSV file",
+          "description": "A corrected CSV file was written and its path was shared with the user"
+        },
+        {
+          "id": "clear_summary",
+          "name": "Provided clear summary of fixes and remaining issues",
+          "description": "The response clearly separates what was auto-fixed from what still requires manual action"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "mixed-whitespace-and-missing-formulas",
+      "prompt": "My data dictionary has a bunch of issues — whitespace in variable names, wrong operators, missing choices, missing formulas. Can you fix what you can and tell me what's left? File is at /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_mixed.csv",
+      "expected_output": "Should parse and run fixer on the mixed issues DD. Should fix: (1) leading/trailing whitespace on ' mrn ' variable name; (2) == operators in fu_date and fu_notes branching logic to =, != to <>; (3) YES in Required Field? normalized to y. Should flag: (4) missing choices on refer_source, smoking, and alcohol fields; (5) missing formula on phq9_total calc field; (6) mrn variable name after stripping whitespace may have issues if the result still has a leading space issue. Should also note the phq9 matrix fields have validation min/max set which is valid since they're text fields. Should deliver corrected CSV.",
+      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_mixed.csv"],
+      "assertions": [
+        {
+          "id": "fixes_whitespace_varname",
+          "name": "Fixed whitespace in variable name",
+          "description": "Stripped leading/trailing whitespace from ' mrn ' variable name"
+        },
+        {
+          "id": "fixes_operators",
+          "name": "Fixed == and != operators in branching logic",
+          "description": "Converted == to = and != to <> in fu_date and fu_notes branching logic"
+        },
+        {
+          "id": "normalizes_yes_flag",
+          "name": "Normalized YES to y in Required Field",
+          "description": "Converted YES → y in the Required Field? column for dob"
+        },
+        {
+          "id": "flags_missing_choices",
+          "name": "Flagged fields with missing choices",
+          "description": "Flagged refer_source, smoking, and alcohol as missing choices"
+        },
+        {
+          "id": "flags_missing_formula",
+          "name": "Flagged calc field with no formula",
+          "description": "Flagged phq9_total as a calc field with no formula"
+        },
+        {
+          "id": "produces_output_csv",
+          "name": "Produced a corrected CSV file",
+          "description": "A corrected CSV file was written and its path was shared with the user"
+        }
+      ]
+    }
+  ]
+}
