@@ -215,7 +215,7 @@ Based on the content above and other FAQ topics not yet covered by dedicated art
 | RC-PROJ-01 | Project Lifecycle: Setup, Status, and Settings | Sections 1–2 above; FAQ "General Project Setup" and "Making Production Changes" sections |
 | RC-DQ-01 | Data Quality Module | Section 3 above; FAQ "Data Quality Module" and "Functions for Logic in Reports" sections |
 | RC-API-01 | API and Data Entry Trigger | Section 4 above; FAQ "API / Data Entry Trigger" section |
-| RC-MLM-01 | Multi-Language Management (MLM) | Section 5 above (resolves ⚠️ gap already noted in KB-REFERENCE-MAP); FAQ "Multi-Language Management" section |
+| ~~RC-MLM-01~~ | ~~Multi-Language Management (MLM)~~ | *Resolved — see RC-MLM-01 — Multi-Language Management* |
 | RC-MYCAP-01 | MyCap: Setup and Management | Section 6 above; FAQ "MyCap" section |
 | RC-DDE-01 | Double Data Entry | FAQ "Double Data Entry" section (merging records, reviewer role, exporting merged records) |
 | RC-PROJ-02 | Project Dashboards | FAQ "What is a project dashboard?" section (smart charts, tables, public dashboards, wizard) |

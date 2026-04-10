@@ -9,7 +9,7 @@
 | Version | 1.0 |
 | Last Updated | 2025 |
 | Author | REDCap Support |
-| Related Topics | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic: Overview & Scope; RC-AT-01 ⚠️ — Action Tags |
+| Related Topics | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic: Overview & Scope; RC-AT-01 — Action Tags: Overview |
 
 ---
 
@@ -414,7 +414,7 @@ The Field Annotation column serves two purposes: it stores designer notes visibl
 
 > **Important:** Format the cell as plain text before typing an action tag in Excel. If the cell is formatted as General and you type `@`, Excel may interpret it as a formula prefix and flag an error.
 
-> **Cross-reference:** See RC-AT-01 ⚠️ — Action Tags for a complete action tag reference.
+> **Cross-reference:** See RC-AT-01 — Action Tags: Overview for a complete action tag reference.
 
 ---
 
@@ -578,4 +578,4 @@ A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` 
 - RC-BL-01 — Branching Logic: Overview & Scope (required for Column L)
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements (Column L syntax reference)
 - RC-LONG-01 — Longitudinal Project Setup (event setup, which the Data Dictionary does not cover)
-- RC-AT-01 ⚠️ — Action Tags (complete reference for Column R action tag codes)
+- RC-AT-01 — Action Tags: Overview (complete reference for Column R action tag codes)

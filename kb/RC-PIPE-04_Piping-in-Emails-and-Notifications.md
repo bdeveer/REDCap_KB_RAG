@@ -104,7 +104,7 @@ The Alerts & Notifications module provides more flexibility than confirmation em
 
 **Alerts vs. ASIs:** Use an ASI when the communication is directly tied to completing a specific survey. Use an Alert when the trigger is a data event (e.g., a value crossing a threshold, a checkbox being checked, a date being reached) or when recipients or conditions are more complex than a single instrument's completion.
 
-> Alerts & Notifications is a large topic covered in its own dedicated training course. This section covers only the piping-specific aspects. ⚠️ RC-ALERT-01 — Alerts & Notifications (forthcoming).
+> Alerts & Notifications is a large topic covered in its own dedicated training course. This section covers only the piping-specific aspects. See RC-ALERT-01 — Alerts & Notifications: Setup for full coverage.
 
 ---
 
@@ -156,7 +156,7 @@ Use case: display a preferred name based on a participant's stated preference.
 
 If `pref` equals 1, the field is pre-filled with the value of `nick_name`; otherwise, it uses `formal_name`.
 
-> **Note:** Action tags as a whole are a separate topic covered in dedicated training. This section covers only the piping-relevant examples. ⚠️ RC-AT-01 — Action Tags (forthcoming).
+> **Note:** Action tags as a whole are a separate topic covered in dedicated training. This section covers only the piping-relevant examples. See RC-AT-01 — Action Tags: Overview for a full reference.
 
 ---
 
@@ -208,4 +208,4 @@ If `pref` equals 1, the field is pre-filled with the value of `nick_name`; other
 - RC-PIPE-03 — Smart Variables Overview (smart variables for links, user info, survey metadata)
 - RC-BL-01 — Branching Logic Overview & Scope (using field references and smart variables in logic conditions)
 - RC-SURV-01 — Surveys – Basics (survey settings, confirmation emails, survey distribution)
-- ⚠️ RC-ALERT-01 — Alerts & Notifications (forthcoming — full coverage of the alerts module)
+- RC-ALERT-01 — Alerts & Notifications: Setup (full coverage of the alerts module)

@@ -4,17 +4,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-## Priority 2 — Surfaced by instrument patterns / multilingual projects
-
-### ⚠️ RC-MLM-01 — Multi-Language Management Overview
-
-**Why needed:** The parser encounters non-English field labels and multilingual projects (e.g., Dutch Oranjeschool registration, bilingual eConsent). The skill can note non-ASCII content but cannot explain REDCap's Multi-Language Management (MLM) module. Also referenced by RC-AT-10 (Action Tags: Language).
-
-**Domain slug:** MLM (established)
-**What to cover:** How MLM works, translating field labels vs. choices vs. survey text, the `@LANGUAGE-CURRENT-SURVEY` action tag, the language selector in survey mode, enabling MLM on a project, importing/exporting translations
-
----
-
 ## Priority 3 — Out-of-scope references without a covering article
 
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
@@ -35,7 +24,49 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-## Priority 4 — Useful context for integrations and field data collection
+## Priority 4 — Surfaced by RC-UNCLASSIFIED-01 (good interim coverage exists)
+
+### ⚠️ RC-PROJ-01 — Project Lifecycle: Statuses and Transitions
+
+**Why needed:** RC-UNCLASSIFIED-01 §1–2 covers project statuses (Development, Production, Analysis/Cleanup, Completed), moving to Production, copying/deleting projects, Draft Mode, and production change risk flags. No dedicated article exists.
+
+**Domain slug:** PROJ (new)
+**What to cover:** All four lifecycle statuses and transitions, the move-to-Production workflow, copying a project (what is/isn't copied), deleting a project (recovery window), Draft Mode and production change review, change risk flags (\*Possible label mismatch, \*Possible data loss, \*Data WILL be lost), rules for safe production changes
+**Interim coverage:** RC-UNCLASSIFIED-01 §1–2
+
+---
+
+### ⚠️ RC-DQ-01 — Data Quality Module
+
+**Why needed:** RC-UNCLASSIFIED-01 §3 covers the Data Quality module including default rules, custom rules, real-time execution, Rule H (correcting calculated fields after design changes or imports). Referenced by RC-CALC-01 (Special Functions). No dedicated article exists.
+
+**Domain slug:** DQ (new)
+**What to cover:** Default rules, custom rule syntax (same as branching logic), real-time execution (forms only, not surveys), running rules manually, Rule H and when to use it, Data Quality vs. branching logic constraints
+**Interim coverage:** RC-UNCLASSIFIED-01 §3
+
+---
+
+### ⚠️ RC-PROJ-02 — Project Dashboards
+
+**Why needed:** RC-UNCLASSIFIED-01 suggests this article. Smart Variables for dashboards are covered in RC-PIPE-14 but the dashboard feature itself (setup, chart/table wizard, public dashboards) has no home.
+
+**Domain slug:** PROJ (established if RC-PROJ-01 is created)
+**What to cover:** What a project dashboard is, the dashboard wizard (smart charts, tables), public dashboards, embedding dashboards in survey confirmation pages or alerts
+**Interim coverage:** RC-UNCLASSIFIED-01 (implicit), RC-PIPE-14
+
+---
+
+### ⚠️ RC-DDE-01 — Double Data Entry
+
+**Why needed:** RC-UNCLASSIFIED-01 identifies Double Data Entry as an unclassified FAQ topic. No existing article covers it.
+
+**Domain slug:** DDE (new)
+**What to cover:** What Double Data Entry is (two independent data entry passes per record), enabling DDE, the reviewer role, merging records, resolving discrepancies, exporting merged records
+**Interim coverage:** RC-UNCLASSIFIED-01 (implicit only — content not yet in unclassified)
+
+---
+
+## Priority 5 — Useful context for integrations and field data collection
 
 ### ⚠️ RC-API-01 — REDCap API
 
@@ -43,16 +74,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 **Domain slug:** API (established)
 **What to cover:** API basics, API token management, common endpoints (import/export records, import/export data dictionary, file upload/download), API Playground, rate limits and best practices, use cases for automation
-
----
-
-### ⚠️ RC-ALERT-03 — Alternative Alert Delivery Types (SMS, Voice, SendGrid)
-
-**Why needed:** RC-ALERT-01 explicitly states it covers email only and marks SMS, Voice Call, and SendGrid as out of scope. No other article covers these delivery methods.
-
-**Domain slug:** ALERT (established)
-**What to cover:** Enabling SMS and voice delivery (institution-level configuration requirement), composing SMS vs. email alerts (character limits, no HTML), SendGrid integration and when it applies, comparing delivery reliability and use cases across types
-**Note:** Relevance depends on whether the institution has SMS/voice enabled. Confirm with REDCap admin before prioritizing.
 
 ---
 
@@ -91,13 +112,14 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-ALERT-01, RC-ALERT-02 — Alerts & Notifications ✅
 - RC-USER-01 through RC-USER-04 — User Rights series ✅
 - RC-DAG-01 — Data Access Groups ✅
+- RC-MLM-01 — Multi-Language Management ✅ *(was Priority 2)*
+- RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
 
 ---
 
 ## Notes
 
-- The **KB-REFERENCE-MAP.md** still shows ⚠️ for RC-ALERT-01, RC-LONG-01, RC-SURV-01, and RC-USER-03 in some outbound-link sections — these are stale and should be cleaned up in a future reference map update.
-- When writing RC-MLM-01, RC-AT-10 (Action Tags: Language) is a useful companion article that already covers `@LANGUAGE-CURRENT-SURVEY` in depth.
 - When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
+- RC-UNCLASSIFIED-01 provides interim coverage for RC-PROJ-01 (§1–2), RC-DQ-01 (§3), RC-API-01 (§4), and RC-MOB-01/MyCap (§6). Those sections can serve as drafting source material.
 
-*Last updated: 2026-04-08 (RC-CALC-02 resolved)*
+*Last updated: 2026-04-10 (RC-MLM-01 resolved; RC-ALERT-03 covered by RC-TXT-01/RC-TXT-02; RC-PROJ-01, RC-DQ-01, RC-PROJ-02, RC-DDE-01 added from RC-UNCLASSIFIED-01 review; stale ⚠️ references in KB articles cleaned up)*

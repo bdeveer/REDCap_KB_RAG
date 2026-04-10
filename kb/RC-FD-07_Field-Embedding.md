@@ -46,7 +46,7 @@ The editor available within a descriptive field's label that allows HTML content
 
 An action tag that displays hint text inside an empty text-box field — similar to the grayed-out placeholder text in a web form. When a field is embedded inline (for example, next to a choice label), @PLACEHOLDER helps users understand what to enter without a separate visible label cluttering the layout.
 
-> **Note:** Action tags are special keywords beginning with `@` that modify field behavior. They are entered in the **Action Tags / Field Annotation** section of the field edit dialog. A dedicated article covering action tags is planned — see ⚠️ RC-AT-01.
+> **Note:** Action tags are special keywords beginning with `@` that modify field behavior. They are entered in the **Action Tags / Field Annotation** section of the field edit dialog. See RC-AT-01 — Action Tags: Overview for a full reference.
 
 ---
 
@@ -233,4 +233,4 @@ Large demographics sections are often split across two or more descriptive field
 - RC-FD-06 — Online Designer Instrument and Field Management (managing field order and instrument structure)
 - RC-BL-01 — Branching Logic Overview & Scope (frequently used alongside field embedding to control field visibility)
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements (writing the logic conditions used with embedded fields)
-- ⚠️ RC-AT-01 — Action Tags (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)
+- RC-AT-01 — Action Tags: Overview (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)

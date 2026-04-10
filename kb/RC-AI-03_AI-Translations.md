@@ -9,7 +9,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-AI-01 — REDCap AI Tools: Overview & Security; ⚠️ RC-MLM-01 — Multi-Language Management Overview |
+| Related Topics | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-MLM-01 — Multi-Language Management |
 
 ---
 
@@ -171,4 +171,4 @@ REDCap passes the Language Display Name to the AI as the target language instruc
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools
 - RC-AI-04 — AI Summarization
-- ⚠️ RC-MLM-01 — Multi-Language Management Overview
+- RC-MLM-01 — Multi-Language Management
