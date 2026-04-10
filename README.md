@@ -10,17 +10,22 @@ This repo supports an LLM-powered REDCap assistant at Yale. Rather than feeding 
 
 ```
 REDCap_KB_RAG/
-├── kb/                          # Markdown KB articles (RAG-ready) — 94 articles
-│   ├── KB-REFERENCE-MAP.md      # Cross-reference index of all articles
-│   └── RC-[DOMAIN]-[NN]_...     # Individual KB articles
+├── kb/                               # Markdown KB articles (RAG-ready) — 101 articles
+│   ├── KB-REFERENCE-MAP.md           # Cross-reference index of all articles
+│   └── RC-[DOMAIN]-[NN]_...          # Individual KB articles
 ├── claude skills/
-│   ├── kb-creation/             # Skill: build new KB articles from .docx outlines
-│   ├── kb-update/               # Skill: update or correct existing KB articles
-│   ├── kb-update-workspace/     # Skill: update articles using workspace-mounted files
-│   ├── kb-search/               # Skill: search and retrieve KB articles by topic
-│   └── redcap-data-dictionary/  # Skill: analyze REDCap Data Dictionary CSV files
-├── original docx files/         # Source Word training outlines
-└── sync.sh                      # Helper script to commit and push changes
+│   ├── kb-creation/                  # Skill: build new KB articles from .docx outlines
+│   ├── kb-update/                    # Skill: update or correct existing KB articles
+│   ├── kb-update-workspace/          # Skill: update articles using workspace-mounted files
+│   ├── kb-search/                    # Skill: search and retrieve KB articles by topic
+│   ├── redcap-data-dictionary/       # Skill: analyze REDCap Data Dictionary CSV files
+│   ├── redcap-dd-builder/            # Skill: build a new Data Dictionary from scratch
+│   ├── redcap-dd-fixer/              # Skill: fix errors in an uploaded Data Dictionary
+│   ├── redcap-syntax-builder/        # Skill: write REDCap expressions from a description
+│   ├── redcap-syntax-fixer/          # Skill: diagnose and fix broken REDCap expressions
+│   └── redcap-syntax-reader/         # Skill: explain and interpret REDCap expressions
+├── original docx files/              # Source Word training outlines
+└── sync.sh                           # Helper script to commit and push changes
 ```
 
 ## Article Naming Convention
@@ -44,12 +49,16 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-EXPRT` | Data Export & Custom Reports |
 | `RC-FD` | Form Design |
 | `RC-IMP` | Data Import |
+| `RC-INST` | Institution-Specific Settings & Policies |
 | `RC-LONG` | Longitudinal Project Setup |
+| `RC-MLM` | Multi-Language Management |
 | `RC-NAV-REC` | Record Navigation |
 | `RC-NAV-UI` | Project Navigation UI |
 | `RC-PIPE` | Piping & Smart Variables |
 | `RC-RAND` | Randomization |
 | `RC-SURV` | Surveys |
+| `RC-TXT` | Texting (SMS) |
+| `RC-UNCLASSIFIED` | Interim holding area for topics not yet in a dedicated article |
 | `RC-USER` | User Rights |
 
 The `KB-REFERENCE-MAP.md` file lists all articles, their prerequisites, cross-references, and flags topics that are referenced but not yet written.
@@ -80,6 +89,11 @@ The `claude skills/` directory contains Cowork skills that Claude uses to mainta
 | `kb-update-workspace` | Same as kb-update, but works with files already in the mounted workspace folder |
 | `kb-search` | Search the KB by topic to find and read relevant articles before writing |
 | `redcap-data-dictionary` | Analyze a REDCap Data Dictionary CSV (field types, instruments, structure) |
+| `redcap-dd-builder` | Build a new REDCap Data Dictionary from scratch based on a project description |
+| `redcap-dd-fixer` | Diagnose and fix errors in an uploaded Data Dictionary CSV |
+| `redcap-syntax-builder` | Write a correct REDCap expression (branching logic, calc field, action tag) from a description |
+| `redcap-syntax-fixer` | Diagnose and fix broken REDCap expressions |
+| `redcap-syntax-reader` | Explain and interpret what an existing REDCap expression does |
 
 ## Adding New Articles
 
