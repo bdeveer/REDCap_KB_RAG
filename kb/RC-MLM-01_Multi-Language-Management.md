@@ -7,7 +7,7 @@ RC-MLM-01
 | **Domain** | Multi-Language Management |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App |
@@ -52,6 +52,11 @@ An optional project field (radio or dropdown type) whose value stores a particip
 
 **Opt-in Model**
 Everything in MLM is opt-in. Adding a language to a project does not automatically translate anything. Each item that should be translated must be explicitly provided with a translation. Items without a translation fall back through the fallback → base language chain.
+
+**REDCap Language Files vs. MLM Languages**
+These are two separate, easily confused systems. REDCap's own UI language files (`.ini` files, e.g., `English.ini`) contain all strings used to render REDCap's interface system-wide — over 14,000 unique strings covering every REDCap page. These files are managed by REDCap administrators via the Language File Creator/Updater and are set in General Configuration (or per-project via Edit Project's Settings). They are installed on the server's file system and apply globally.
+
+MLM languages are distinct. MLM translates only the subset of REDCap UI strings that appear on data entry and survey pages (approximately 570 strings), plus all project-specific content (data dictionary, survey settings, alerts, etc.). MLM languages are configured per project or at the system level via the Control Center, and are selectable by individual users and survey respondents in real-time. Do not confuse a REDCap `.ini` language file with an MLM system language — they serve different purposes and are managed separately.
 
 ---
 
@@ -180,6 +185,19 @@ The **MyCap** tab (only shown when MyCap is active in the project) translates My
 ## 5.8 User Interface Overrides
 
 The **User Interface** tab allows project-level overrides of UI strings (buttons, system messages) for a given language, unless the administrator has restricted this. If a language is subscribed to a system language, UI items cannot be edited and the tab displays a notice.
+
+## 5.9 AI-Assisted Translation
+
+When both REDCap AI Services and the "Auto-translate text on the MLM setup page" feature are enabled by an administrator, all MLM translation screens display an **Auto-translate** widget with a **Translate using AI** button.
+
+Clicking the button sends all not-yet-translated items visible on the current page to the AI service, which fills in translations automatically. To limit the number of strings sent — and improve relevance — use the "Hide translated items" checkbox and the category tabs/filters to show only the items you want translated before clicking the button.
+
+**Limitations to be aware of:**
+- AI prompts cannot be modified — the system controls what instructions are sent to the service.
+- Only the default (source) text for each item is sent; no surrounding context (field type, instrument purpose, etc.) is included.
+- The AI service is instructed to translate into the language specified by the **Language Display Name**. A display name like "de" or "lang1" produces poor results — use a meaningful name such as "Deutsch" or "Español."
+- AI-generated translations are a starting point, not a finished product. Always have a person sufficiently proficient in the target language review and correct any AI-generated translations before going live.
+- For complex or high-volume projects, better results may be obtained by exporting the MLM JSON file and submitting it to an external AI translation service that supports structured JSON output, then importing the result.
 
 ---
 
@@ -317,6 +335,9 @@ MLM provides a set of action tags that control language selection behavior durin
 ---
 
 # 9. Common Questions
+
+**Q: What is the difference between REDCap's language files (.ini files) and MLM languages?**
+REDCap language files (e.g., `English.ini`) are server-side files that control the language of REDCap's entire user interface — every page, every button, every system message — across the whole installation. They are managed by administrators and set in General Configuration or per-project settings. MLM is a separate, project-level feature that translates a subset of REDCap's data entry and survey UI strings (approximately 570 strings) plus all project-specific content (field labels, alerts, survey settings, etc.), and allows individual respondents to choose their preferred language in real-time. You can have a REDCap instance running in English (via the `.ini` file) while an individual project offers English and Spanish via MLM.
 
 **Q: Does MLM auto-translate my content?**
 No. REDCap's MLM feature does not translate anything automatically. All translations must be provided by the project team, either by typing them directly into the MLM translation screens or by importing a translation file prepared by a professional translator.
