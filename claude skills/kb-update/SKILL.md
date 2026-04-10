@@ -123,7 +123,7 @@ If the input covers a topic not adequately addressed by any existing article, do
 
 2. Tell the user: "This content doesn't fit neatly into any existing article. I'd suggest creating **RC-[DOMAIN]-[NN] — [Proposed Title]**. Want me to proceed with the kb-builder skill?"
 3. Wait for the user to confirm.
-4. If confirmed: read and follow the `redcap-kb-builder` skill (`claude skills/kb-creation/SKILL.md`), passing the current input as source material. Reference RC-UNCLASSIFIED-01 as a starting point if relevant.
+4. If confirmed: use Glob with pattern `**/kb-creation/SKILL.md` to locate the kb-creation skill within the REDCap_KB_RAG repo (the same repo verified in Step 0), read it with the Read tool, then follow its instructions, passing the current input as source material. Reference RC-UNCLASSIFIED-01 as a starting point if relevant.
 
 Don't create new articles silently — always confirm first.
 
