@@ -47,6 +47,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-10 | Longitudinal & Repeated Data Entry | RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md |
 | RC-DE-11 | Instrument Save Options | RC-DE-11_Instrument-Save-Options.md |
 | RC-DE-12 | Data Resolution Workflow | RC-DE-12_Data-Resolution-Workflow.md |
+| RC-FDL-01 | Form Display Logic | RC-FDL-01_Form-Display-Logic.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |
@@ -862,6 +863,24 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-DE-08
+
+---
+
+### RC-FDL-01 — Form Display Logic
+
+**Prerequisites:** RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+
+**Outbound links:**
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-BL-05 — Branching Logic in Longitudinal Projects
+- RC-PIPE-05 — Smart Variables: User
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-SURV-07 — Survey Queue
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- *(none yet)*
 
 ---
 
