@@ -7,7 +7,7 @@ RC-LONG-02
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types (repeated instruments); longitudinal projects only (repeated events) |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects only) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
@@ -44,7 +44,7 @@ A single numbered occurrence of a repeated instrument or repeated event. Instanc
 
 **Custom Label (Repeated)**
 
-An optional text field that allows you to attach a descriptive label to each instance. Uses REDCap piping syntax (e.g., `[visit_date]`) to pull a value from a variable within the same instrument or event.
+An optional text field that allows you to attach a descriptive label to each instance. Uses REDCap piping syntax to pull values from variables within the same instrument or event. Multiple variables can be combined with free text (e.g., `[version] - [change_type] - RC[redcap_version]` or `[visit_date], [weight] kg`). The label is populated dynamically from the instance's own data.
 
 ---
 
@@ -94,15 +94,15 @@ Longitudinal projects support both repeated instruments and repeated events. The
 
 1. Navigate to **Project Setup**.
 2. In the **Enable optional modules and customizations** section, locate the **Repeating instruments and events** option. Click **Enable** (or **Modify** if a configuration already exists).
-3. A popup appears listing all defined events. For each event, choose one of three options:
+3. A popup appears listing all defined events. For each event, choose one of three options (shown as radio buttons in the UI, in this order):
 
-| **Option** | **Effect** |
+| **UI Label** | **Effect** |
 |---|---|
-| Not repeating | Default. Neither the event nor its instruments are repeatable. |
-| Repeat instruments | Allows selected instruments within this event to be repeated independently. You must check which instruments in the event are repeatable. |
-| Repeat entire event | The entire event (all designated instruments) repeats as a unit. Instruments cannot be repeated independently within a repeated event. |
+| `-- not repeating --` | Default. Neither the event nor its instruments are repeatable. |
+| `Repeat Entire Event (repeat all instruments together)` | The entire event repeats as a unit. All designated instruments repeat together and stay connected. Instruments cannot be repeated independently within a repeated event. |
+| `Repeat Instruments (repeat independently)` | Selected instruments within this event repeat independently of each other. You must check which instruments in the event are repeatable. |
 
-4. If you selected **Repeat instruments** for an event, check the boxes for the specific instruments within that event that should be repeatable.
+4. If you selected **Repeat Instruments** for an event, check the boxes for the specific instruments within that event that should be repeatable.
 5. Optionally, enter a **custom label** for repeatable instruments in the text field next to the instrument name.
 6. Click **Save**.
 
@@ -120,7 +120,9 @@ Custom labels attach a descriptive tag to each instance, making it easier to ide
 
 **For repeated events:** The custom label field in the repeating instrument/event popup is greyed out for events configured as "Repeat entire event." Instead, define the custom event label in the **Define My Events** page using the **Custom Event Label** column — see RC-LONG-01 — Longitudinal Project Setup, Section 4.2.
 
-Both locations use the same piping syntax. One key constraint applies to both: the variable you pipe in must exist within the repeated instrument or repeated event itself. You cannot pipe a variable from a different instrument or event into a custom label.
+Both locations use the same piping syntax. Custom labels support combining multiple piped variables with free text between them — for example, `[visit_date], [weight] kg` produces a label like "2026-03-15, 72 kg", and `[version] - [change_type] - RC[redcap_version]` produces a label like "2.1.0 - Bug fix - RC16.1". There is no limit on the number of variables or the amount of free text in the label.
+
+One key constraint applies to both: the variables you pipe in must exist within the repeated instrument or repeated event itself. You cannot pipe a variable from a different instrument or event into a custom label.
 
 > **Example:** If you want to display the visit date in a repeated event's label, the variable `[visit_date]` must be in an instrument designated to that same event. Piping in a date of birth from a baseline event into a follow-up event's custom label is not supported.
 
@@ -243,6 +245,8 @@ The button will not appear on the survey until both steps are complete. The "Rep
 **Enabling "Repeat the survey" before designating the instrument as repeating.** The "Repeat the survey" setting in Survey Settings depends on the instrument first being designated as a repeating instrument. Enabling the survey setting without completing that step first will not produce the expected behavior. Always configure the instrument as repeating in Project Setup first, then enable the survey termination option.
 
 **Expecting the "Repeat the survey" button to work with repeating events.** The "Repeat the survey" button is available for repeating instruments only. If your survey instrument lives on a repeating event rather than being designated as a repeating instrument, this option is not available. Use ASIs or Alerts & Notifications to send recurring survey links in that scenario.
+
+**Overlooking inactive events in the repeating setup popup.** The popup lists every event in the project, including events whose names indicate they are no longer in active use (e.g., "WF Int (inactive)", "FISMA (inactive)"). REDCap has no concept of a disabled event — all events appear and can be configured. If you intend inactive events to remain non-repeating, verify that they are set to `-- not repeating --` when saving. Accidentally enabling repeat on a logically inactive event will not cause data loss, but it will expose the repeat UI to data entry users on those events.
 
 ---
 
