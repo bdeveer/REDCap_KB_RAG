@@ -110,6 +110,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
 | RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
 | RC-UNCLASSIFIED-01 | Unclassified: REDCap FAQ v16.1.3 Orphaned Topics | RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md |
+| RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
 
 ---
 
@@ -2101,4 +2102,21 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-09. Added RC-MLM-01 — Multi-Language Management (new article, replaces RC-UNCLASSIFIED-01 §5 interim coverage; based on v15.5 MLM End User's Guide). Updated RC-AI-03 outbound links and gaps table. Remaining open gaps: RC-API-01, RC-MOB-01.*
+---
+
+### RC-INTG-01 — Data Entry Trigger
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-SURV-01 — Surveys: Basics
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+*(none yet)*
+
+---
+
+*Last updated 2026-04-10. Added RC-MLM-01 — Multi-Language Management (new article, replaces RC-UNCLASSIFIED-01 §5 interim coverage; based on v15.5 MLM End User's Guide). Added RC-INTG-01 — Data Entry Trigger (new article, new INTG domain). Updated RC-AI-03 outbound links and gaps table. Remaining open gaps: RC-API-01, RC-MOB-01.*
