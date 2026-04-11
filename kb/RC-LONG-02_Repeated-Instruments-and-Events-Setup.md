@@ -7,7 +7,7 @@ RC-LONG-02
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types (repeated instruments); longitudinal projects only (repeated events) |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects only) |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
@@ -102,6 +102,8 @@ Longitudinal projects support both repeated instruments and repeated events. The
 
 > **Tip:** Your longitudinal setup (arms, events, instrument designations) must be complete before configuring repeating instruments or events. If the event structure is incomplete, the popup will not display correctly.
 
+> **No UI bulk import/export:** Unlike arms, events, and instrument-event designations — which support CSV upload and download from the Define My Events and Designate Instruments pages — the repeatable instrument and event configuration has no UI-based import or export option. To manage repeatable mappings programmatically (e.g., when setting up multiple projects with the same repeated structure), use the REDCap API. The API supports both exporting and importing the repeatable instruments and events configuration.
+
 ---
 
 # 6. Custom Labels for Repeated Instruments & Events
@@ -189,6 +191,10 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **A:** Instance numbering for repeated instruments is independent per instrument per event. Each event's repeated instrument starts fresh at instance 1. For repeated events, each repetition of the event is a new instance of that event, starting from 1.
 
+**Q: Can I bulk upload or export the repeatable instrument/event configuration?**
+
+**A:** Not through the REDCap interface. Arms, events, and instrument-event designations all support CSV upload and download from the UI, but the repeatable mapping configuration does not. The REDCap API does support both exporting and importing the repeatable instruments and events setup, making it the only programmatic path for bulk management of this configuration.
+
 ---
 
 # 10. Common Mistakes & Gotchas
@@ -202,6 +208,8 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 **Forgetting that the mapping upload is non-additive.** If you use the CSV upload for instrument-event mappings after configuring repeated instruments, be aware that the upload replaces all mappings. Instruments previously set as repeatable via the popup are a separate configuration — the mapping upload does not affect the repeatability setting, but it can remove instrument-event designations.
 
 **Expecting custom labels to work with external variables.** The piped variable in a custom label must exist within the same repeated instrument or event. Attempting to pipe in a variable from a different instrument (e.g., from the baseline event) will display a blank label rather than an error.
+
+**Assuming CSV bulk upload covers the repeatable configuration.** The CSV upload options for arms, events, and instrument-event designations do not include the repeatable instrument and event setup. Setting up your entire longitudinal structure via CSV and expecting the repeatable mapping to carry over will leave that configuration blank — you must either set it manually through the UI popup or use the REDCap API.
 
 ---
 
