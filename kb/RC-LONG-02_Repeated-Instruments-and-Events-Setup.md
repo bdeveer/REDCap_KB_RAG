@@ -7,7 +7,7 @@ RC-LONG-02
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types (repeated instruments); longitudinal projects only (repeated events) |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects only) |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
@@ -16,7 +16,7 @@ RC-LONG-02
 
 # 1. Overview
 
-This article explains how to configure repeatable instruments and repeatable events in REDCap. Repeated instruments allow a single instrument to be filled out multiple times per record (or per event, in longitudinal projects), creating numbered instances. Repeated events allow an entire event — with all its designated instruments — to be repeated as a group.
+This article explains how to configure repeatable instruments and repeatable events in REDCap — sometimes called **one-to-many data collection**, because a single record can have any number of repeated instances of an instrument or event. Repeated instruments allow a single instrument to be filled out multiple times per record (or per event, in longitudinal projects), creating numbered instances. Repeated events allow an entire event — with all its designated instruments — to be repeated as a group.
 
 Repeated instruments can be used in both non-longitudinal and longitudinal projects. Repeated events require a longitudinal setup. The two modes cannot be combined within the same event: an event is either configured for repeated instruments or repeated as a whole, not both.
 
@@ -25,6 +25,10 @@ This article covers setup only. For how repeated instruments and events appear d
 ---
 
 # 2. Key Concepts & Definitions
+
+**One-to-Many Data Collection**
+
+The pattern in which a single record can have multiple independent instances of an instrument or event. Unlike traditional longitudinal mode (where all events must be defined in advance), repeating instruments and events allow unlimited instances per record without pre-specifying a maximum. Each record can have a different number of instances — one record might have five medication entries while another has none.
 
 **Repeated Instrument**
 
@@ -52,6 +56,8 @@ An optional text field that allows you to attach a descriptive label to each ins
 | **Instruments can repeat at different rates?** | Yes — Instrument A might have 3 instances while Instrument B has 5 | No — all instruments repeat as a unit |
 | **Available in non-longitudinal projects?** | Yes | No |
 | **Use case example** | A medication list instrument repeated once per medication | A chemotherapy cycle event repeated once per treatment cycle |
+
+> **Non-longitudinal projects:** Repeating instruments are a lightweight alternative to enabling the full longitudinal module for projects that simply need to collect the same data multiple times per record. The key advantage over longitudinal mode is that you do not need to define the number of repetitions in advance — records can have any number of instances. If all you need is one-to-many data collection without distinct time points or arms, a non-longitudinal project with repeating instruments is simpler to set up and maintain.
 
 **Rule:** Within a given event, you choose one mode — you cannot mix repeated instruments with a repeated event. If you need some instruments to repeat independently, use repeated instruments. If all instruments in the event always repeat together, use a repeated event.
 
@@ -159,9 +165,24 @@ In projects combining a longitudinal setup with repeated instruments or events, 
 
 **Best practice:** Use report filters to target specific events, specific instruments, or specific instance ranges when exporting. Avoid exporting all data from a project with both longitudinal and repeated configurations unless you have a clear plan for handling the resulting data structure.
 
-## 8.4 Workflow Features
+## 8.4 Workflow Features — Collecting Repeating Survey Data
 
-Automated Survey Invitations, the Survey Queue, the scheduling module, and Form Display Logic are all affected to a lesser degree by repeated instruments than by a longitudinal setup. Because repeated instruments are completed on an ad hoc basis (not at a fixed scheduled time point), most workflow features interact with repeated instruments at the instance level rather than scheduling repetitions in advance.
+When a repeating instrument is also enabled as a survey, there are three ways to prompt respondents to submit multiple instances. These options are not mutually exclusive and can be combined within the same project.
+
+| | **"Repeat the survey" button** | **Automated Survey Invitations (ASIs)** | **Alerts & Notifications** |
+|---|---|---|---|
+| **How it works** | A button appears at the end of the survey so the respondent can start a new instance immediately | The survey link is sent repeatedly on a configured schedule | An alert sends the survey link repeatedly on a configured schedule |
+| **Works with repeating instruments?** | Yes | Yes | Yes |
+| **Works with instruments on repeating events?** | **No** | Yes | Yes |
+| **Email required?** | No — web interface only | Yes (or SMS/voice calls) | Yes (or SMS/voice calls) |
+| **Typical use** | Back-to-back entry in one session (e.g., entering multiple medications or family members) | Scheduled recurring surveys (e.g., daily or weekly check-ins sent by email) | Scheduled recurring surveys sent by email or SMS |
+
+**Enabling the "Repeat the survey" button is a two-step process:**
+
+1. Enable the instrument as a repeating instrument in the repeating instruments and events popup (Project Setup → Enable optional modules and customizations).
+2. After that is saved, open the instrument's **Survey Settings** page and enable the **"Repeat the survey"** option in the survey termination options section.
+
+The button will not appear on the survey until both steps are complete. The "Repeat the survey" option in Survey Settings is only available after the instrument has been designated as repeating.
 
 ---
 
@@ -195,6 +216,14 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **A:** Not through the REDCap interface. Arms, events, and instrument-event designations all support CSV upload and download from the UI, but the repeatable mapping configuration does not. The REDCap API does support both exporting and importing the repeatable instruments and events setup, making it the only programmatic path for bulk management of this configuration.
 
+**Q: How do I let respondents fill out a survey multiple times in one sitting?**
+
+**A:** Enable the "Repeat the survey" option in the instrument's Survey Settings page (in the survey termination options section). This adds a button at the end of the survey so the respondent can immediately start a new instance. This is a two-step process: you must first designate the instrument as a repeating instrument in the repeating instruments/events popup in Project Setup, then enable the "Repeat the survey" setting in Survey Settings. This option is only available for repeating instruments — it does not work for instruments on repeating events.
+
+**Q: What is the best way to send a repeating survey to participants on a schedule?**
+
+**A:** Use Automated Survey Invitations (ASIs) or Alerts & Notifications — both support sending a survey link repeatedly at a configured interval and work with both repeating instruments and instruments on repeating events. ASIs are configured directly on the instrument in the Online Designer. Alerts are configured on the Alerts & Notifications page. Both support email delivery and, if configured, SMS and voice calls. The "Repeat the survey" button is not suitable for scheduled delivery — it only allows back-to-back entry in a single session.
+
 ---
 
 # 10. Common Mistakes & Gotchas
@@ -210,6 +239,10 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 **Expecting custom labels to work with external variables.** The piped variable in a custom label must exist within the same repeated instrument or event. Attempting to pipe in a variable from a different instrument (e.g., from the baseline event) will display a blank label rather than an error.
 
 **Assuming CSV bulk upload covers the repeatable configuration.** The CSV upload options for arms, events, and instrument-event designations do not include the repeatable instrument and event setup. Setting up your entire longitudinal structure via CSV and expecting the repeatable mapping to carry over will leave that configuration blank — you must either set it manually through the UI popup or use the REDCap API.
+
+**Enabling "Repeat the survey" before designating the instrument as repeating.** The "Repeat the survey" setting in Survey Settings depends on the instrument first being designated as a repeating instrument. Enabling the survey setting without completing that step first will not produce the expected behavior. Always configure the instrument as repeating in Project Setup first, then enable the survey termination option.
+
+**Expecting the "Repeat the survey" button to work with repeating events.** The "Repeat the survey" button is available for repeating instruments only. If your survey instrument lives on a repeating event rather than being designated as a repeating instrument, this option is not available. Use ASIs or Alerts & Notifications to send recurring survey links in that scenario.
 
 ---
 
