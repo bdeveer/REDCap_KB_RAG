@@ -50,13 +50,27 @@ from pathlib import Path
 
 def derive_unique_event_name(event_name: str, arm_num: int) -> str:
     """
-    Replicate REDCap's auto-generation of unique_event_name.
-    Rule: lowercase, strip non-alphanumeric (keep underscores), collapse
-    runs of underscores/spaces into a single underscore, append _arm_N.
+    Replicate REDCap's actual unique_event_name generation algorithm.
+
+    REDCap's rules (verified empirically):
+      1. Lowercase the event name.
+      2. Remove hyphens entirely (they are treated as joiners, not separators).
+         e.g. "Follow-up"  → "followup"   (NOT "follow_up")
+              "Ad Hoc Follow-up" → "ad hoc followup"
+      3. Replace every remaining non-alphanumeric character with an underscore.
+      4. Collapse consecutive underscores into one.
+      5. Strip leading/trailing underscores.
+      6. Append "_arm_N".
+
+    This differs from a naive slugify: hyphens vanish rather than becoming
+    underscores. Getting this wrong causes the generated mapping file to
+    reference event names that don't exist in REDCap after import.
     """
     slug = event_name.lower()
-    slug = re.sub(r"[^a-z0-9]+", "_", slug)
-    slug = slug.strip("_")
+    slug = slug.replace("-", "")               # step 2: hyphens removed, not replaced
+    slug = re.sub(r"[^a-z0-9]+", "_", slug)   # step 3: everything else → underscore
+    slug = re.sub(r"_+", "_", slug)            # step 4: collapse consecutive underscores
+    slug = slug.strip("_")                     # step 5: strip edges
     return f"{slug}_arm_{arm_num}"
 
 
@@ -108,6 +122,32 @@ def validate_spec(spec: dict) -> list[str]:
     empty_forms = [r for r in mapping if not r.get("form", "").strip()]
     if empty_forms:
         warnings.append(f"{len(empty_forms)} mapping row(s) have an empty form name — skipped.")
+
+    # Check for ordering ambiguity: multiple events sharing the same day_offset within an arm.
+    # REDCap sorts ties alphabetically by unique_event_name, which is usually not the
+    # intended clinical order. Warn and show what the alphabetical order will be.
+    from collections import defaultdict
+    arm_day_events: dict = defaultdict(list)
+    for evt in events:
+        key = (evt.get("arm_num", 1), evt.get("day_offset", 0))
+        arm_day_events[key].append(evt.get("event_name", ""))
+
+    for (arm_num, day_offset), names in sorted(arm_day_events.items()):
+        if len(names) > 1:
+            # Compute what alphabetical order REDCap will use
+            sorted_names = sorted(
+                names,
+                key=lambda n: derive_unique_event_name(n, arm_num)
+            )
+            if names != sorted_names:
+                warnings.append(
+                    f"Arm {arm_num}: {len(names)} events share day_offset={day_offset}. "
+                    f"REDCap will display them alphabetically by unique_event_name — "
+                    f"which may not be your intended order. "
+                    f"Alphabetical order will be: {' → '.join(sorted_names)}. "
+                    f"To enforce a specific order, assign sequential day_offsets "
+                    f"(e.g. 0, 1, 2, ...) even for same-day events."
+                )
 
     return warnings
 

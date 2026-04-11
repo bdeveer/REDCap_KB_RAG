@@ -104,6 +104,14 @@ Form", convert them to likely variable names (`demographics`) and confirm.
 **Day 0**: Clarify which visit is Day 0 if the user uses relative days. Usually
 Screening or Baseline is Day 0.
 
+**Same-day events and display order**: If multiple events fall on the same day
+(common in studies where events are sequential steps rather than time-separated
+visits — e.g. Screening → Consent → Baseline → Randomization all on Day 0), ask
+the user what order they want to see them displayed in REDCap. Then assign
+sequential `day_offset` values starting from 0 (0, 1, 2, 3…) to enforce that order.
+Do not leave all events at `day_offset=0` unless alphabetical ordering by event name
+happens to be correct — it usually isn't.
+
 ---
 
 ## Step 3: Build the Specification
@@ -141,10 +149,37 @@ structure to pass to the generator script. The format:
 ```
 
 **Note on `unique_event_name`**: You don't need to set this for events — the generator
-derives it automatically from the event name and arm number using REDCap's convention:
-lowercase, spaces → underscores, `_arm_N` suffix. E.g. "Month 3" in Arm 1 →
-`month_3_arm_1`. If the user references a specific `unique_event_name` (e.g. from an
-existing project), use that exact value in the mapping instead.
+derives it automatically. Leave `unique_event_name` out of the events array and the
+generator will compute the correct value. The same function is used when building
+the mapping, so the two files will always stay in sync.
+
+REDCap's actual slugification algorithm (which the generator replicates exactly):
+1. Lowercase
+2. **Remove hyphens entirely** — they vanish, not become underscores
+   (`"Follow-up"` → `"followup"`, **not** `"follow_up"`)
+3. Replace all other non-alphanumeric characters with underscores
+4. Collapse consecutive underscores; strip leading/trailing
+5. Append `_arm_N`
+
+Examples: `"Follow-up 30 min"` → `followup_30_min_arm_1`,
+`"Ad Hoc Follow-up"` → `ad_hoc_followup_arm_1`, `"Month 3"` → `month_3_arm_1`.
+
+**Do not manually type `unique_event_name` values into the spec** unless copying
+them from an existing REDCap export — hand-typed names frequently diverge from
+what REDCap generates, which breaks the mapping import.
+
+**Event display order — critical for same-day events**: REDCap displays events in
+ascending `day_offset` order. When multiple events share the same `day_offset`,
+REDCap breaks the tie by sorting alphabetically by `unique_event_name`. This is
+almost never the intended clinical order. For example, a project with Screening,
+Consent, Baseline, Randomization all at Day 0 will display as:
+`Baseline → Consent → Randomization → Screening` (alphabetical), not the logical flow.
+
+**To enforce a specific order**: assign sequential `day_offset` values even for
+same-day events (e.g. 0, 1, 2, 3…). REDCap will display events in day_offset order,
+and `day_offset=0` vs `day_offset=1` makes no practical difference to visit scheduling
+while guaranteeing the display order you want. The generator warns you if it detects
+same-day events that would sort alphabetically into an unintended order.
 
 ---
 
