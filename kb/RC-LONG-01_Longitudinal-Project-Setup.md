@@ -7,7 +7,7 @@ RC-LONG-01
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-LONG-02 — Repeated Instruments & Events Setup; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
@@ -42,7 +42,9 @@ The human-readable name you assign to an event (e.g., "Baseline," "3 Month Follo
 
 **Unique Event Name**
 
-A system-generated identifier for each event, derived from the arm number and event label (e.g., `baseline_arm_1`). It is used to reference events in branching logic, piping, and calculated fields. Cannot be manually overridden.
+A system-generated identifier for each event, derived from the event label and arm number (e.g., `baseline_arm_1`). It is used to reference events in branching logic, piping, and calculated fields. Cannot be manually overridden through the UI; may be specified in a CSV upload, but leaving it blank and letting REDCap generate it is strongly preferred.
+
+REDCap generates the unique event name using this algorithm: lowercase the event label, remove hyphens entirely (they do not become underscores), replace all remaining non-alphanumeric characters with underscores, collapse consecutive underscores, and append `_arm_N`. Examples: `"Baseline"` → `baseline_arm_1`; `"Follow-up 30 min"` → `followup_30_min_arm_1` (not `follow_up_30_min_arm_1`); `"Ad Hoc Follow-up"` → `ad_hoc_followup_arm_1`. When building instrument-event mapping CSVs externally, derive unique event names using this exact algorithm — hand-typed approximations frequently diverge from what REDCap generates and will cause mapping imports to fail.
 
 **Custom Event Label**
 
@@ -146,10 +148,12 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 
 | **Option** | **Behavior** |
 |---|---|
-| Upload arms (CSV) | Adds new arms. Does not delete existing arms omitted from the file. |
+| Upload arms (CSV) | **Additive.** Adds new arms. Existing arms not in the file are unaffected. |
 | Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. |
-| Upload events (CSV) | Adds new events. Does not delete existing events omitted from the file. |
+| Upload events (CSV) | **Additive.** Adds new events. Existing events not in the file are unaffected. |
 | Download events (CSV) | Exports current event configuration. |
+
+> **Note:** Arms and event uploads are additive — you can safely upload a file containing only new rows without affecting existing configuration. This is the opposite of instrument-event mapping uploads, which replace the entire mapping (see §6.2). Keep this distinction in mind when planning bulk updates.
 
 **Arms CSV columns:** `arm_num`, `name`
 
@@ -160,7 +164,7 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 
 **Events CSV columns (with scheduling module):** `event_name`, `arm_num`, `day_offset`, `offset_min`, `offset_max`, `unique_event_name`, `custom_event_label`
 
-- `day_offset` is the number of days from a reference date (e.g., enrollment date).
+- `day_offset` is the number of days from a reference date (e.g., enrollment date). REDCap displays events in ascending `day_offset` order. When multiple events share the same `day_offset`, REDCap breaks the tie by sorting alphabetically by unique event name — which is rarely the intended clinical order. To enforce a specific display order among same-day events, assign sequential `day_offset` values (e.g., 0, 1, 2, 3…) even if the events all occur on the same calendar day.
 - `offset_min` and `offset_max` define the allowable scheduling window in days before and after the target date. Note that `offset_min` represents the early window and `offset_max` the late window — both are expressed as positive numbers of days.
 - These columns appear in the downloaded events CSV only when the scheduling module is active for the project. Include them in an upload only when scheduling is in use.
 
@@ -256,6 +260,14 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **A:** The unique event name is a readable identifier (e.g., `baseline_arm_1`) that changes if the event label is renamed. The event ID is a permanent numeric identifier that never changes. For branching logic and piping, you use the unique event name. The event ID is used in certain advanced integrations and is generated and managed by REDCap.
 
+**Q: How does REDCap determine the display order of events?**
+
+**A:** REDCap displays events in ascending `day_offset` order. When two or more events share the same `day_offset`, REDCap sorts them alphabetically by unique event name — not by the order they were created or entered. This catches many users off guard when all events are at Day 0 (common in projects where events represent sequential steps rather than time-separated visits). To enforce a specific display order, assign sequential `day_offset` values (0, 1, 2, 3…) to events that would otherwise share the same offset. The difference between Day 0 and Day 1 has no practical scheduling impact but guarantees the correct display sequence.
+
+**Q: If I upload an events CSV with only new events in it, will my existing events be deleted?**
+
+**A:** No. The events upload is additive — REDCap adds any events in the file that do not already exist and leaves existing events untouched. This is different from the instrument-event mapping upload, which replaces the full mapping configuration. You can safely upload a partial events file without affecting events that are already configured.
+
 **Q: Do I need to upload an arms CSV for a single-arm project?**
 
 **A:** No. When longitudinal mode is enabled, REDCap automatically creates one arm ("Arm 1"). For single-arm projects, skip the arms upload entirely and begin with the events CSV upload, followed by the instrument-event mappings upload.
@@ -279,6 +291,10 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 **Uploading events before arms in a multi-arm project.** Events reference arm numbers in the CSV. If you upload an events CSV before the corresponding arms exist, REDCap cannot assign events correctly. For multi-arm projects, always upload in order: arms first, then events, then instrument-event mappings. Single-arm projects can skip the arms upload since Arm 1 is created automatically.
 
 **Assuming exports will be one row per record.** Longitudinal exports produce one row per event per record. Many users attempt to read a longitudinal export expecting a flat structure and are surprised by the volume of rows and empty cells. Plan your analysis workflow before collecting data.
+
+**Expecting same-day events to appear in entry order.** When multiple events share the same `day_offset`, REDCap sorts them alphabetically by unique event name rather than by the order they were entered. For example, events named Screening, Consent, Baseline, and Randomization all at `day_offset=0` will display as Baseline → Consent → Randomization → Screening. To control display order, assign sequential `day_offset` values (0, 1, 2, 3…) to same-day events.
+
+**Manually typing unique event names in CSV mapping files.** The unique event name REDCap generates does not always match a naive word-for-word conversion. Specifically, REDCap removes hyphens rather than replacing them with underscores: `"Follow-up"` becomes `followup`, not `follow_up`. Hand-typed unique event names in instrument-event mapping CSVs frequently diverge from what REDCap actually generated, causing mapping imports to silently fail (the referenced event simply doesn't exist under that name). Always derive unique event names using REDCap's exact algorithm, or download the events CSV from REDCap and copy the names from there.
 
 ---
 
