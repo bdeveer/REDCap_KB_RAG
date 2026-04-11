@@ -249,6 +249,15 @@ A: REDCap will overwrite the existing file in that field with the newly generate
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-15 — Export Instruments PDF API** — programmatically export a blank or completed instrument PDF for any record or event
+
+---
+
+
 # Related Articles
 
 - RC-SURV-08 — e-Consent Framework: Setup & Management

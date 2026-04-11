@@ -163,6 +163,15 @@ A: The Organize link is located in the left-hand project menu under the reports 
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-38 — Export Reports API** — use the numeric report ID (visible in the report URL) to export any report programmatically
+
+---
+
+
 ## 8. Related Articles
 
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection (prerequisite — creating a report and selecting fields)

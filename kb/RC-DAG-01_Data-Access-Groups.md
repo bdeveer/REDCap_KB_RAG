@@ -175,6 +175,20 @@ This is useful for initial project setup with many sites or for migrating a DAG 
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-28 — Export DAGs API** — retrieve all DAG definitions (unique names and labels)
+- **RC-API-29 — Import DAGs API** — create or update DAG definitions programmatically
+- **RC-API-30 — Delete DAGs API** — remove DAG definitions programmatically
+- **RC-API-31 — Export User-DAG Assignments API** — retrieve which users are assigned to which DAGs
+- **RC-API-32 — Import User-DAG Assignments API** — assign users to DAGs programmatically
+- **RC-API-33 — Switch DAG API** — change the active DAG context for the API token user
+
+---
+
+
 # 10. Related Articles
 
 - RC-USER-01 — User Rights: Overview & Three-Tier Access

@@ -250,6 +250,16 @@ The button will not appear on the survey until both steps are complete. The "Rep
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-10 — Export Instrument-Event Mappings API** — retrieve instrument-event assignments, including repeating configuration
+- **RC-API-11 — Import Instrument-Event Mappings API** — update instrument-event assignments including repeating instrument setup
+
+---
+
+
 # 11. Related Articles
 
 - RC-LONG-01 — Longitudinal Project Setup (setting up arms, events, and instrument designations — prerequisite for longitudinal repeated setups)

@@ -203,6 +203,16 @@ Page entirely.
     simple projects show a single dot; longitudinal projects show a
     grid. The layout depends entirely on the project configuration.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-03 — Import Records API** — create new records programmatically by importing data; a new record is created if the record ID does not exist
+-   **RC-API-05 — Rename Record API** — rename an existing record ID to a new value programmatically
+
+---
+
+
 **6. Related Articles**
 
 -   RC-DE-02 --- Basic Data Entry (field types, saving, form status)

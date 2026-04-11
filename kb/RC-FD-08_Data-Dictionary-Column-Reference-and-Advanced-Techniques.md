@@ -592,6 +592,17 @@ A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` 
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-06 — Export Field Names API** — retrieve field variable names, export field names, and choice labels programmatically
+- **RC-API-07 — Export Metadata (Data Dictionary) API** — export the full data dictionary (all columns described in this article) programmatically
+- **RC-API-08 — Import Metadata (Data Dictionary) API** — import a CSV matching the column structure described in this article to update the project design
+
+---
+
+
 ## Section 11: Related Articles
 
 - RC-FD-01 — Form Design Overview (concept overview and tool selection)

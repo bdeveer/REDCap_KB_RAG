@@ -240,6 +240,16 @@ Development mode before doing them in Production.
     field types, malformed logic syntax). It does not assess whether
     your instrument is appropriate for your research goals.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-07 — Export Metadata (Data Dictionary) API** — export the full data dictionary as JSON or CSV programmatically
+-   **RC-API-08 — Import Metadata (Data Dictionary) API** — upload a new or modified data dictionary to the project programmatically
+
+---
+
+
 **9. Related Articles**
 
 -   RC-FD-01 --- Form Design Overview (prerequisite --- tool selection

@@ -192,6 +192,15 @@ A: No. REDCap prevents duplicate variables in a report, regardless of which meth
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-38 — Export Reports API** — export the data from any saved custom report programmatically using its report ID
+
+---
+
+
 ## 9. Related Articles
 
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options (prerequisite — covers the built-in report options this article builds on)

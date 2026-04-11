@@ -1,0 +1,221 @@
+RC-API-32
+
+**Import User-DAG Assignments API**
+
+| **Article ID** | RC-API-32 |
+|---|---|
+| **Domain** | API |
+| **Applies To** | All REDCap projects with Data Access Groups enabled |
+| **Prerequisite** | RC-API-01 — REDCap API |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Source** | REDCap API v16.1.3 official documentation examples |
+| **Related Topics** | RC-API-01 — REDCap API; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
+
+---
+
+# 1. Overview
+
+The Import User-DAG Assignments API method assigns users to Data Access Groups (DAGs) in your project. You provide a JSON or CSV payload containing usernames and the unique group names of the DAGs to which they should be assigned. An empty group name removes a user from all DAG assignments, granting them all-DAG view permissions. Use this method to automate user access provisioning, migrate user assignments between projects, or bulk-assign users to DAGs.
+
+---
+
+# 2. Parameters
+
+| Parameter | Required | Description |
+|---|---|---|
+| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `content` | Required | Always `'userDagMapping'` for this method. |
+| `action` | Required | Always `'import'` for this method. |
+| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
+| `data` | Required | JSON or CSV array of user-DAG assignment records. Each record must contain `username` and `redcap_data_access_group`. |
+
+---
+
+# 3. Request Examples
+
+## 3.1 Python
+```python
+from config import config
+import requests, json
+
+record = {
+    'username': 'testuser',
+    'redcap_data_access_group': 'api_testing_group'
+}
+
+data = json.dumps([record])
+
+fields = {
+    'token': config['api_token'],
+    'content': 'userDagMapping',
+    'action': 'import',
+    'format': 'json',
+    'data': data,
+}
+
+r = requests.post(config['api_url'],data=fields)
+print('HTTP Status: ' + str(r.status_code))
+print(r.text)
+```
+
+## 3.2 R
+```r
+#!/usr/bin/env Rscript
+
+source('config.R')
+library(RCurl)
+library(jsonlite)
+
+record <- c(
+	username='testuser',
+	redcap_data_access_group='api_testing_group'
+)
+
+data <- toJSON(list(as.list(record)), auto_unbox=TRUE)
+
+result <- postForm(
+    api_url,
+    token=api_token,
+    content='userDagMapping',
+	action='import',
+    format='json',
+    data=data
+)
+print(result)
+```
+
+## 3.3 cURL
+```sh
+#!/bin/sh
+
+. ./config
+
+DATA="token=$API_TOKEN&content=userDagMapping&action=import&format=json&data=[{\"username\":\"testuser\",\"redcap_data_access_group\":\"api_testing_group\"}]"
+
+$CURL -H "Content-Type: application/x-www-form-urlencoded" \
+      -H "Accept: application/json" \
+      -X POST \
+      -d $DATA \
+      $API_URL
+```
+
+## 3.4 PHP
+```php
+<?php
+
+include 'config.php';
+
+$data = array(
+	array(
+		'username' => 'testuser1',
+		'redcap_data_access_group'    => 'api_testing_group1'
+	),
+	array(
+		'username' => 'testuser2',
+		'redcap_data_access_group'    => 'api_testing_group2'
+	),
+);
+
+$data = json_encode($data);
+
+$fields = array(
+	'token'    => $GLOBALS['api_token'],
+	'content'  => 'userDagMapping',
+	'action'   => 'import',
+	'format'   => 'json',
+	'data'     => $data,
+);
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $GLOBALS['api_url']);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields, '', '&'));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // Set to TRUE for production use
+curl_setopt($ch, CURLOPT_VERBOSE, 0);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+
+$output = curl_exec($ch);
+print $output;
+```
+
+> **Note:** CURLOPT_SSL_VERIFYPEER should be TRUE in production.
+
+---
+
+# 4. Response
+
+On success, the API returns the count of user-DAG assignments created or updated. For example: `2` means two users were assigned or reassigned to DAGs. If a user already has the same DAG assignment, the operation is still counted as successful.
+
+Example response: `2`
+
+---
+
+# 5. Common Questions
+
+**Q: Can I assign a user to multiple DAGs?**
+
+**A:** No. Each user can be assigned to at most one DAG. If you need a user to see data from multiple groups, assign them an empty `redcap_data_access_group` value (or omit it from the import) to grant them all-DAG view permissions.
+
+**Q: How do I remove a user from a DAG assignment?**
+
+**A:** Set `redcap_data_access_group` to an empty string. This grants the user all-DAG access and removes their DAG restriction.
+
+**Q: What if the user doesn't exist yet?**
+
+**A:** The import will fail if the user account does not exist in the project. Use the Import Users method (RC-API-23) to create the user first, then assign them to a DAG.
+
+**Q: What if the DAG doesn't exist?**
+
+**A:** The import will fail if the DAG does not exist. Use the Import DAGs method (RC-API-29) to create the DAG first, then assign users to it.
+
+**Q: Can I assign multiple users to the same DAG in one call?**
+
+**A:** Yes. Pass multiple user records in the `data` array, with each user assigned to the desired DAG.
+
+**Q: What happens if I assign a user to a DAG they were already assigned to?**
+
+**A:** The API counts this as a successful update. The user's assignment is confirmed or updated, but the outcome is the same.
+
+**Q: What permissions are required?**
+
+**A:** Your API token must have both API Import and User Rights permissions enabled at the project level.
+
+---
+
+# 6. Common Mistakes & Gotchas
+
+**Using the DAG display name instead of the unique group name.** The `redcap_data_access_group` field requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method (RC-API-28) to find the correct unique names.
+
+**Forgetting to check if users exist.** If a user account does not exist in the project, the assignment will fail. Ensure all usernames are valid before attempting assignment.
+
+**Forgetting to check if DAGs exist.** If a DAG does not exist, the assignment will fail. Export DAGs (RC-API-28) first to verify the correct unique group name.
+
+**Not realizing that empty `redcap_data_access_group` grants all-DAG access.** An empty string or null value means the user sees all data across all DAGs. This is common for administrators, but ensure it is intentional.
+
+**Attempting to assign with API Export permission instead of API Import.** This method requires API Import rights, not Export. Check your token permissions at the project level.
+
+**Not URL-encoding the `data` field in cURL.** In shell scripts, ensure special characters in JSON (like `"` and spaces) are properly encoded or escaped.
+
+**Confusing user assignment with role assignment.** DAG assignment controls data access by group, not permissions. If you need to set specific permissions (form access, export rights, etc.), also use the Import User Roles method (RC-API-26) or Import Users method (RC-API-23).
+
+---
+
+# 7. Related Articles
+
+- RC-API-01 — REDCap API (foundational; required reading before using any API method)
+- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
+- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
+- RC-USER-03 — User Rights: Configuring User Privileges (reference for user permission types)
+- RC-API-22 — Export Users (retrieve user account details)
+- RC-API-23 — Import Users (create or update user accounts)
+- RC-API-28 — Export DAGs (retrieve DAG definitions and unique names)
+- RC-API-29 — Import DAGs (create or update DAG definitions)
+- RC-API-31 — Export User-DAG Assignments (retrieve existing assignments)
+- RC-API-33 — Switch DAG (allow users to change their active DAG context)

@@ -222,6 +222,15 @@ rights.
     The Logging application shows all changes across all fields and
     records in the project.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-39 — Export Logging API** — programmatically retrieve the project audit log, including data change events, user actions, and timestamps
+
+---
+
+
 **8. Related Articles**
 
 -   RC-DE-01 --- Record Creation & the Record Home Page

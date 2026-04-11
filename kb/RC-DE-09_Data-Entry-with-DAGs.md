@@ -128,6 +128,20 @@ If your user account is not assigned to any DAG, your behavior is different from
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-28 — Export DAGs API** — retrieve DAG definitions programmatically
+- **RC-API-29 — Import DAGs API** — create or update DAG definitions programmatically
+- **RC-API-30 — Delete DAGs API** — remove DAG definitions programmatically
+- **RC-API-31 — Export User-DAG Assignments API** — retrieve which users are assigned to which DAGs
+- **RC-API-32 — Import User-DAG Assignments API** — assign users to DAGs programmatically
+- **RC-API-33 — Switch DAG API** — change the active DAG context for the token user programmatically
+
+---
+
+
 # 8. Related Articles
 
 - RC-DAG-01 — Data Access Groups (covers DAG creation, configuration, and administrator management)

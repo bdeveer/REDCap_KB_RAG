@@ -166,6 +166,17 @@ Use the **Delete role** option within the role edit popup. REDCap will block del
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-22 — Export Users API** — retrieve a complete list of project users and their permissions
+- **RC-API-23 — Import Users API** — add users or update user permissions programmatically
+- **RC-API-24 — Delete Users API** — remove a user from the project programmatically
+
+---
+
+
 # 10. Related Articles
 
 - RC-USER-01 — User Rights: Overview & Three-Tier Access (troubleshooting access issues)

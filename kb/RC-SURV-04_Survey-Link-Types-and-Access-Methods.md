@@ -193,6 +193,15 @@ By default, the participant list runs in anonymous mode, which makes it difficul
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-40 — Export Survey Link API** — programmatically retrieve a unique survey link for a specific record and instrument
+
+---
+
+
 # 7. Related Articles
 
 - RC-SURV-01 — Surveys – Basics (enabling surveys, Survey Distribution Tools, public link walkthrough)

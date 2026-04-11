@@ -59,12 +59,9 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 5 — Useful context for integrations and field data collection
 
-### ⚠️ RC-API-01 — REDCap API
+### ~~⚠️ RC-API-01 — REDCap API~~
 
-**Why needed:** Clinical trial projects like REHAB HFpEF often integrate with external systems via the API. The skill currently cannot explain API-related design decisions (e.g., why certain fields are hidden or read-only may be because they're populated via API). Referenced by RC-EXPRT-02 and RC-NAV-UI-02.
-
-**Domain slug:** API (established)
-**What to cover:** API basics, API token management, common endpoints (import/export records, import/export data dictionary, file upload/download), API Playground, rate limits and best practices, use cases for automation
+*Resolved — see RC-API-01 — REDCap API (2026). Based on official REDCap API documentation; supersedes RC-UNCLASSIFIED-01 §4 interim coverage.*
 
 ---
 
@@ -106,6 +103,7 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-DAG-01 — Data Access Groups ✅
 - RC-MLM-01 — Multi-Language Management ✅ *(was Priority 2)*
 - RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
+- RC-API-01 — REDCap API ✅
 
 ---
 

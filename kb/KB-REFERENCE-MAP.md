@@ -111,6 +111,50 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
 | RC-UNCLASSIFIED-01 | Unclassified: REDCap FAQ v16.1.3 Orphaned Topics | RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
+| RC-API-01 | REDCap API | RC-API-01_REDCap-API.md |
+| RC-API-02 | Export Records API | RC-API-02_Export-Records.md |
+| RC-API-03 | Import Records API | RC-API-03_Import-Records.md |
+| RC-API-04 | Delete Records API | RC-API-04_Delete-Records.md |
+| RC-API-05 | Rename Record API | RC-API-05_Rename-Record.md |
+| RC-API-06 | Export Field Names API | RC-API-06_Export-Field-Names.md |
+| RC-API-07 | Export Metadata (Data Dictionary) API | RC-API-07_Export-Metadata.md |
+| RC-API-08 | Import Metadata (Data Dictionary) API | RC-API-08_Import-Metadata.md |
+| RC-API-09 | Export Instruments API | RC-API-09_Export-Instruments.md |
+| RC-API-10 | Export Instrument-Event Mappings API | RC-API-10_Export-Instrument-Event-Mappings.md |
+| RC-API-11 | Import Instrument-Event Mappings API | RC-API-11_Import-Instrument-Event-Mappings.md |
+| RC-API-12 | Export File API | RC-API-12_Export-File.md |
+| RC-API-13 | Import File API | RC-API-13_Import-File.md |
+| RC-API-14 | Delete File API | RC-API-14_Delete-File.md |
+| RC-API-15 | Export Instruments PDF API | RC-API-15_Export-Instruments-PDF.md |
+| RC-API-16 | Export Arms API | RC-API-16_Export-Arms.md |
+| RC-API-17 | Import Arms API | RC-API-17_Import-Arms.md |
+| RC-API-18 | Delete Arms API | RC-API-18_Delete-Arms.md |
+| RC-API-19 | Export Events API | RC-API-19_Export-Events.md |
+| RC-API-20 | Import Events API | RC-API-20_Import-Events.md |
+| RC-API-21 | Delete Events API | RC-API-21_Delete-Events.md |
+| RC-API-22 | Export Users API | RC-API-22_Export-Users.md |
+| RC-API-23 | Import Users API | RC-API-23_Import-Users.md |
+| RC-API-24 | Delete Users API | RC-API-24_Delete-Users.md |
+| RC-API-25 | Export User Roles API | RC-API-25_Export-User-Roles.md |
+| RC-API-26 | Import User Roles API | RC-API-26_Import-User-Roles.md |
+| RC-API-27 | Delete User Roles API | RC-API-27_Delete-User-Roles.md |
+| RC-API-28 | Export DAGs API | RC-API-28_Export-DAGs.md |
+| RC-API-29 | Import DAGs API | RC-API-29_Import-DAGs.md |
+| RC-API-30 | Delete DAGs API | RC-API-30_Delete-DAGs.md |
+| RC-API-31 | Export User-DAG Assignments API | RC-API-31_Export-User-DAG-Assignments.md |
+| RC-API-32 | Import User-DAG Assignments API | RC-API-32_Import-User-DAG-Assignments.md |
+| RC-API-33 | Switch DAG API | RC-API-33_Switch-DAG.md |
+| RC-API-34 | Export Project Info API | RC-API-34_Export-Project-Info.md |
+| RC-API-35 | Import Project Info API | RC-API-35_Import-Project-Info.md |
+| RC-API-36 | Export Project XML API | RC-API-36_Export-Project-XML.md |
+| RC-API-37 | Import Project (Create Project) API | RC-API-37_Import-Project-Create-Project.md |
+| RC-API-38 | Export Reports API | RC-API-38_Export-Reports.md |
+| RC-API-39 | Export Logging API | RC-API-39_Export-Logging.md |
+| RC-API-40 | Export Survey Link API | RC-API-40_Export-Survey-Link.md |
+| RC-API-41 | Export Survey Queue Link API | RC-API-41_Export-Survey-Queue-Link.md |
+| RC-API-42 | Export Survey Return Code API | RC-API-42_Export-Survey-Return-Code.md |
+| RC-API-43 | Export Survey Participants API | RC-API-43_Export-Survey-Participants.md |
+| RC-API-44 | Export REDCap Version API | RC-API-44_Export-REDCap-Version.md |
 
 ---
 
@@ -645,6 +689,15 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-03 (previously ⚠️ RC-RIGHTS-01 — now resolved)
 - RC-DE-09
 - RC-SURV-08
+- RC-API-02 — Export Records API
+- RC-API-03 — Import Records API
+- RC-API-04 — Delete Records API
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-33 — Switch DAG API
 
 ---
 
@@ -666,6 +719,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-10 (prerequisite)
 - RC-DE-11
 - RC-IMP-01
+- RC-API-05 — Rename Record API
 
 ---
 
@@ -732,6 +786,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02
 - RC-DE-03
 - RC-DE-08
+- RC-API-39 — Export Logging API
 
 ---
 
@@ -812,7 +867,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
-*(none yet)*
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-33 — Switch DAG API
 
 ---
 
@@ -904,6 +964,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-04 (prerequisite)
 - RC-EXPRT-05 (prerequisite)
 - RC-USER-03
+- RC-API-02 — Export Records API
+- RC-API-38 — Export Reports API
 
 ---
 
@@ -917,13 +979,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-04 — De-identification & Formatting Options
 - RC-EXPRT-05 — Report Types
 - RC-FD-03 — Data Dictionary
-- ⚠️ RC-API-01 — REDCap API
+- RC-API-01 — REDCap API
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01
 - RC-EXPRT-03
 - RC-EXPRT-04
 - RC-EXPRT-05
+- RC-API-02 — Export Records API
 
 ---
 
@@ -1000,6 +1063,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-04 — AI Summarization
 - RC-EXPRT-07 (prerequisite)
 - RC-EXPRT-08 (prerequisite)
+- RC-API-38 — Export Reports API
 
 ---
 
@@ -1018,6 +1082,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AI-04 — AI Summarization
 - RC-EXPRT-06
+- RC-API-38 — Export Reports API
 
 ---
 
@@ -1033,6 +1098,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-EXPRT-06
+- RC-API-38 — Export Reports API
 
 ---
 
@@ -1057,6 +1123,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-IMP-01 (prerequisite)
 - RC-LONG-01 (prerequisite)
 - RC-LONG-02 (prerequisite)
+- RC-API-09 — Export Instruments API
+- RC-API-15 — Export Instruments PDF API
+- RC-API-36 — Export Project XML API
 
 ---
 
@@ -1086,6 +1155,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-LONG-02
 - RC-PIPE-01 (prerequisite)
 - RC-SURV-01 (prerequisite)
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-09 — Export Instruments API
 
 ---
 
@@ -1108,6 +1180,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-02
 - RC-FD-04
 - RC-FD-06
+- RC-API-06 — Export Field Names API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-36 — Export Project XML API
 
 ---
 
@@ -1201,6 +1277,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CALC-02
+- RC-API-06 — Export Field Names API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-08 — Import Metadata (Data Dictionary) API
 
 ---
 
@@ -1216,7 +1295,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-01 — Record Creation & the Record Home Page
 
 **Inbound links (referenced by):**
-*(none yet)*
+- RC-API-03 — Import Records API
 
 ---
 
@@ -1246,6 +1325,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-04
 - RC-SURV-06
 - RC-SURV-07
+- RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-16 — Export Arms API
+- RC-API-17 — Import Arms API
+- RC-API-18 — Delete Arms API
+- RC-API-19 — Export Events API
+- RC-API-20 — Import Events API
+- RC-API-21 — Delete Events API
 
 ---
 
@@ -1270,6 +1357,13 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-LONG-01
 - RC-PIPE-02
 - RC-SURV-07
+- RC-API-02 — Export Records API
+- RC-API-03 — Import Records API
+- RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-19 — Export Events API
+- RC-API-20 — Import Events API
+- RC-API-21 — Delete Events API
 
 ---
 
@@ -1403,7 +1497,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
 - RC-SURV-01 — Surveys – Basics
 - RC-ALERT-01 — Alerts & Notifications: Setup
-- ⚠️ RC-API-01 — REDCap API
+- RC-API-01 — REDCap API
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 - RC-EXPRT-01 — Data Export Overview *(listed as RC-EXPORT-01 — see naming note below)*
 
@@ -1776,6 +1870,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-04
 - RC-SURV-08 (prerequisite)
 - RC-SURV-09 (prerequisite)
+- RC-API-40 — Export Survey Link API
+- RC-API-41 — Export Survey Queue Link API
+- RC-API-42 — Export Survey Return Code API
+- RC-API-43 — Export Survey Participants API
 
 ---
 
@@ -1817,6 +1915,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-02 (outbound link)
 - RC-SURV-04
 - RC-SURV-07
+- RC-API-42 — Export Survey Return Code API
 
 ---
 
@@ -1835,6 +1934,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-SURV-05 (prerequisite)
+- RC-API-40 — Export Survey Link API
 
 ---
 
@@ -1853,6 +1953,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-SURV-06 (prerequisite)
 - RC-TXT-01
+- RC-API-43 — Export Survey Participants API
 
 ---
 
@@ -1893,7 +1994,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 
 **Inbound links (referenced by):**
-*(none yet)*
+- RC-API-41 — Export Survey Queue Link API
 
 ---
 
@@ -1934,6 +2035,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-API-15 — Export Instruments PDF API
 
 ---
 
@@ -1983,6 +2085,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03 (prerequisite)
 - RC-USER-04 (prerequisite)
 - RC-DAG-01 (prerequisite)
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
 
 ---
 
@@ -2003,6 +2111,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03
 - RC-USER-04
 - RC-DAG-01
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
 
 ---
 
@@ -2027,6 +2138,19 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-04
 - RC-DAG-01
 - RC-EXPRT-03 (previously ⚠️ RC-USER-01)
+- RC-API-01 — REDCap API
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-33 — Switch DAG API
 
 ---
 
@@ -2076,7 +2200,7 @@ The following article IDs are referenced by existing KB articles but have no cor
 
 | Article ID | Title | Referenced By |
 |---|---|---|
-| ⚠️ RC-API-01 | REDCap API | RC-EXPRT-02, RC-NAV-UI-02 — *see also RC-UNCLASSIFIED-01 §4 for interim coverage* |
+| ~~⚠️ RC-API-01~~ | ~~REDCap API~~ | *Resolved — see RC-API-01 — REDCap API* |
 | ~~⚠️ RC-AT-01~~ | ~~Action Tags~~ | *Resolved — see RC-AT-01 through RC-AT-11 + RC-AT-EM-01 (Action Tags series)* |
 | ~~⚠️ RC-ALERT-01~~ | ~~Alerts & Notifications~~ | *Resolved — see RC-ALERT-01 and RC-ALERT-02 (Alerts & Notifications series)* |
 | ⚠️ RC-MOB-01 | REDCap Mobile App vs. MyCap | RC-NAV-UI-01, RC-NAV-UI-02 — *see also RC-UNCLASSIFIED-01 §6 for interim MyCap coverage* |
@@ -2115,8 +2239,698 @@ A few article IDs used in cross-references appear to differ from the canonical I
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
-*(none yet)*
+- RC-API-01 — REDCap API
 
 ---
 
-*Last updated 2026-04-10. Added RC-MLM-01 — Multi-Language Management (new article, replaces RC-UNCLASSIFIED-01 §5 interim coverage; based on v15.5 MLM End User's Guide). Added RC-INTG-01 — Data Entry Trigger (new article, new INTG domain). Updated RC-AI-03 outbound links and gaps table. Remaining open gaps: RC-API-01, RC-MOB-01.*
+### RC-API-01 — REDCap API
+
+**Prerequisites:** RC-USER-03 — User Rights: Configuring User Privileges
+
+**Outbound links:**
+- RC-INTG-01 — Data Entry Trigger
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-IMP-01 — Data Import Overview
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-API-02 — Export Records API
+- RC-API-03 — Import Records API
+- RC-API-04 — Delete Records API
+- RC-API-05 — Rename Record API
+- RC-API-06 — Export Field Names API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-09 — Export Instruments API
+- RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-15 — Export Instruments PDF API
+- RC-API-16 — Export Arms API
+- RC-API-17 — Import Arms API
+- RC-API-18 — Delete Arms API
+- RC-API-19 — Export Events API
+- RC-API-20 — Import Events API
+- RC-API-21 — Delete Events API
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-33 — Switch DAG API
+- RC-API-34 — Export Project Info API
+- RC-API-35 — Import Project Info API
+- RC-API-36 — Export Project XML API
+- RC-API-37 — Import Project (Create Project) API
+- RC-API-38 — Export Reports API
+- RC-API-39 — Export Logging API
+- RC-API-40 — Export Survey Link API
+- RC-API-41 — Export Survey Queue Link API
+- RC-API-42 — Export Survey Return Code API
+- RC-API-43 — Export Survey Participants API
+- RC-API-44 — Export REDCap Version API
+
+**Inbound links (referenced by):**
+- RC-EXPRT-02 — Data Export: Export Formats
+- RC-NAV-UI-02 — Project Menu Reference
+
+**Note:** Interim coverage was provided by RC-UNCLASSIFIED-01 §4 (API and Data Entry Trigger). RC-API-01 supersedes the API portion; the DET portion is covered by RC-INTG-01.
+
+---
+
+### RC-API-02 — Export Records API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-03 — Import Records API
+- RC-API-04 — Delete Records API
+- RC-API-38 — Export Reports API
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-03 — Import Records API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-02 — Export Records API
+- RC-API-04 — Delete Records API
+- RC-IMP-01 — Data Import Overview
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-04 — Delete Records API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-02 — Export Records API
+- RC-API-03 — Import Records API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-05 — Rename Record API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-02 — Export Records API
+- RC-API-06 — Export Field Names API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-06 — Export Field Names API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-02 — Export Records API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-07 — Export Metadata (Data Dictionary) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-08 — Import Metadata (Data Dictionary) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-09 — Export Instruments API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-10 — Export Instrument-Event Mappings API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-10 — Export Instrument-Event Mappings API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-09 — Export Instruments API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-11 — Import Instrument-Event Mappings API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-09 — Export Instruments API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-12 — Export File API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-13 — Import File API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-14 — Delete File API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-14 — Delete File API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-15 — Export Instruments PDF API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-09 — Export Instruments API
+- RC-SURV-09 — PDF Snapshots of Records
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-16 — Export Arms API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-17 — Import Arms API
+- RC-API-18 — Delete Arms API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-17 — Import Arms API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-16 — Export Arms API
+- RC-API-18 — Delete Arms API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-18 — Delete Arms API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-16 — Export Arms API
+- RC-API-17 — Import Arms API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-19 — Export Events API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-20 — Import Events API
+- RC-API-21 — Delete Events API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-20 — Import Events API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-19 — Export Events API
+- RC-API-21 — Delete Events API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-21 — Delete Events API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-19 — Export Events API
+- RC-API-20 — Import Events API
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-22 — Export Users API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-23 — Import Users API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-22 — Export Users API
+- RC-API-24 — Delete Users API
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-24 — Delete Users API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-25 — Export User Roles API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-26 — Import User Roles API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-25 — Export User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-27 — Delete User Roles API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-28 — Export DAGs API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-29 — Import DAGs API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-28 — Export DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-30 — Delete DAGs API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-31 — Export User-DAG Assignments API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-28 — Export DAGs API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-32 — Import User-DAG Assignments API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-28 — Export DAGs API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-33 — Switch DAG API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-28 — Export DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-DAG-01 — Data Access Groups
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-34 — Export Project Info API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-35 — Import Project Info API
+- RC-API-36 — Export Project XML API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-35 — Import Project Info API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-34 — Export Project Info API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-36 — Export Project XML API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-34 — Export Project Info API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-37 — Import Project (Create Project) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-34 — Export Project Info API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-38 — Export Reports API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-02 — Export Records API
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-39 — Export Logging API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-DE-04 — Editing Data & Audit Trail
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-40 — Export Survey Link API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-43 — Export Survey Participants API
+- RC-SURV-04 — Survey Link Types & Access Methods
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-41 — Export Survey Queue Link API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-SURV-07 — Survey Queue
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-42 — Export Survey Return Code API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-43 — Export Survey Participants API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-40 — Export Survey Link API
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-44 — Export REDCap Version API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+*Last updated 2026-04-11. Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Remaining open gaps: RC-MOB-01.*

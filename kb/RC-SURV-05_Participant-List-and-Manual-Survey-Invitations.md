@@ -231,6 +231,16 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-43 — Export Survey Participants API** — retrieve the participant list for a survey instrument, including invitation and response status
+- **RC-API-40 — Export Survey Link API** — retrieve a unique survey link for a specific record without accessing the Participant List UI
+
+---
+
+
 # 8. Related Articles
 
 - RC-SURV-04 — Survey Link Types & Access Methods (public vs. individual links, smart variables, Survey Options menu)

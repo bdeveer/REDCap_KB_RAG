@@ -178,6 +178,15 @@ A: The Logic Builder can only represent a subset of possible logic expressions �
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-38 — Export Reports API** — the same filtering and ordering defined in the report are applied when exporting via API
+
+---
+
+
 ## 8. Related Articles
 
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection (prerequisite — report creation and field selection)

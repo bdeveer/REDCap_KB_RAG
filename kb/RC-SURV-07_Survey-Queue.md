@@ -249,6 +249,15 @@ This behavior also applies to completed instances of repeatable instruments.
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-41 — Export Survey Queue Link API** — programmatically retrieve the Survey Queue link for a specific record
+
+---
+
+
 # 11. Related Articles
 
 - RC-SURV-06 — Automated Survey Invitations (email-based automated invitation scheduling; use with survey queue for time-point studies)

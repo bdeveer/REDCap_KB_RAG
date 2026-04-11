@@ -239,6 +239,17 @@ through those buttons directly.
     \@Action Tags, etc.) are configured within the Online Designer or
     Data Dictionary.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-07 — Export Metadata (Data Dictionary) API** — retrieve the full project data dictionary programmatically
+-   **RC-API-08 — Import Metadata (Data Dictionary) API** — push a new or updated data dictionary to a project programmatically
+-   **RC-API-09 — Export Instruments API** — retrieve the list of instruments (forms) in a project programmatically
+
+---
+
+
 **9. Related Articles**
 
 -   RC-FD-02 --- Online Designer

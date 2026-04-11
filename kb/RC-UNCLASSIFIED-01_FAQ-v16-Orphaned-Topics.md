@@ -118,6 +118,8 @@ A Data Quality custom rule must always evaluate to TRUE or FALSE. A calculated f
 
 # 4. API and Data Entry Trigger
 
+> **Note:** The interim API and DET content in this section has been superseded. Refer to **RC-API-01 — REDCap API** (2026) for current, comprehensive API coverage, and **RC-INTG-01 — Data Entry Trigger** (2026) for DET coverage.
+
 ## 4.1 The REDCap API
 
 The REDCap API (Application Programming Interface) allows external systems to connect to REDCap programmatically for data import and export. An API token is required — requested per project via Project Setup → Other Functionality. Each user needs a separate token per project. Tokens are scoped to the user's existing rights: an API export token only provides the same data access the user has manually.

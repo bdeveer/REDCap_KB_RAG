@@ -171,6 +171,15 @@ The REDCap XML export captures the full project including data. Use the
 XML export for complete backups; use the Data Dictionary for instrument
 structure management.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-38 — Export Reports API** — export a saved report programmatically by its numeric report ID
+
+---
+
+
 **8. Related Articles**
 
 -   RC-EXPRT-01 --- Data Export: Overview & Workflow (prerequisite ---

@@ -129,6 +129,15 @@ the export.
 exports represent the same underlying data differently. Mixing files
 from both formats in an analysis will produce mismatched values.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-02 — Export Records API** — supports the same format options (CSV, JSON, XML, SPSS labels) via the `type` and `rawOrLabel` parameters
+
+---
+
+
 **7. Related Articles**
 
 -   RC-EXPRT-01 --- Data Export: Overview & Workflow (prerequisite ---

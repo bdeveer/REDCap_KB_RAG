@@ -298,6 +298,22 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-16 — Export Arms API** — retrieve the list of arms defined in the project
+- **RC-API-17 — Import Arms API** — create or update arm definitions programmatically
+- **RC-API-18 — Delete Arms API** — remove one or more arms from a project programmatically
+- **RC-API-19 — Export Events API** — retrieve the list of events across all arms
+- **RC-API-20 — Import Events API** — create or update event definitions programmatically
+- **RC-API-21 — Delete Events API** — remove events from a project programmatically
+- **RC-API-10 — Export Instrument-Event Mappings API** — retrieve which instruments are assigned to which events
+- **RC-API-11 — Import Instrument-Event Mappings API** — update instrument-to-event assignments programmatically
+
+---
+
+
 # 11. Related Articles
 
 - RC-LONG-02 — Repeated Instruments & Events Setup (layering repeated instruments or events onto a longitudinal project)

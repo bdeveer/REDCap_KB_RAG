@@ -137,6 +137,16 @@ times out or may be dismissed before all files are downloaded. If this
 happens, the files are still accessible in the File Repository ---
 navigate there to complete the download.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-02 — Export Records API** — programmatically retrieve project records in CSV, JSON, or XML
+-   **RC-API-38 — Export Reports API** — programmatically export data from a saved custom report by report ID
+
+---
+
+
 **7. Related Articles**
 
 -   RC-EXPRT-02 --- Data Export: Export Formats (the seven available

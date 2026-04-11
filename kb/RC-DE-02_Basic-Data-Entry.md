@@ -270,6 +270,18 @@ back), it starts empty.
     branching logic before reporting a problem. It may be intentionally
     hidden based on another field\'s value.
 
+**API Access**
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+-   **RC-API-03 — Import Records API** — import or update field values programmatically without using the data entry UI
+-   **RC-API-12 — Export File API** — download a file stored in a File Upload field programmatically
+-   **RC-API-13 — Import File API** — upload a file to a File Upload field programmatically
+-   **RC-API-14 — Delete File API** — delete a file stored in a File Upload field programmatically
+
+---
+
+
 **10. Related Articles**
 
 -   RC-DE-01 --- Record Creation & the Record Home Page (prerequisite)

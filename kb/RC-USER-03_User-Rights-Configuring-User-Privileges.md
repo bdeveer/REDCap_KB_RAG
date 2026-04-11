@@ -281,6 +281,16 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-22 — Export Users API** — retrieve a full list of users with their current privilege settings
+- **RC-API-23 — Import Users API** — set or update user privileges programmatically using the same field names documented in this article
+
+---
+
+
 # 9. Related Articles
 
 - RC-USER-01 — User Rights: Overview & Three-Tier Access

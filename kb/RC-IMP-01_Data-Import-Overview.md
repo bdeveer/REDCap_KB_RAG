@@ -374,6 +374,15 @@ REDCap is actively developed; Vanderbilt adds new functionality regularly, inclu
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-03 — Import Records API** — import records programmatically without using the Data Import Tool; supports all field types
+
+---
+
+
 # 13. Related Articles
 
 - RC-FD-01 — Form Design Overview (prerequisite)

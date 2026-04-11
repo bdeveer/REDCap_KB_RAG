@@ -150,6 +150,20 @@ When a user reports they cannot access a project or perform an expected action, 
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-22 — Export Users API** — retrieve user permissions and settings for all users in a project
+- **RC-API-23 — Import Users API** — add or update user access and permissions programmatically
+- **RC-API-24 — Delete Users API** — remove a user from a project programmatically
+- **RC-API-25 — Export User Roles API** — retrieve custom role definitions and their permission sets
+- **RC-API-26 — Import User Roles API** — create or update custom user roles programmatically
+- **RC-API-27 — Delete User Roles API** — remove a custom role from the project programmatically
+
+---
+
+
 # 7. Related Articles
 
 - RC-USER-02 — User Rights: Adding Users & Managing Roles

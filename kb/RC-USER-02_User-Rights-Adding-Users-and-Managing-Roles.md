@@ -185,6 +185,18 @@ This is useful for large projects or when migrating user configurations from ano
 
 ---
 
+## API Access
+
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+
+- **RC-API-23 — Import Users API** — add users or update user permissions programmatically
+- **RC-API-25 — Export User Roles API** — retrieve all custom role definitions
+- **RC-API-26 — Import User Roles API** — create or modify custom user roles programmatically
+- **RC-API-27 — Delete User Roles API** — remove a role from the project programmatically
+
+---
+
+
 # 10. Related Articles
 
 - RC-USER-01 — User Rights: Overview & Three-Tier Access (prerequisites and the three-tier model)
