@@ -1,17 +1,18 @@
-**Data Export -- Overview & Workflow**
+RC-EXPRT-01
 
-  -------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-EXPRT-01
-  **Domain**           Exports, Reports & Stats
-  **Applies To**       All REDCap project types; requires Data Export user rights
-  **Prerequisite**     RC-NAV-UI-01 --- Project Navigation UI
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-EXPRT-02 --- Export Formats; RC-EXPRT-03 --- User Rights & Export Access; RC-EXPRT-04 --- De-identification & Formatting Options; RC-EXPRT-05 --- Report Types
-  -------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Data Export — Overview & Workflow**
 
-**1. Overview**
+| **Article ID** | RC-EXPRT-01 |
+| --- | --- |
+| **Domain** | Exports, Reports & Stats |
+| **Applies To** | All REDCap project types; requires Data Export user rights |
+| **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-EXPRT-02 — Export Formats; RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-04 — De-identification & Formatting Options; RC-EXPRT-05 — Report Types |
+
+# 1. Overview
 
 This article explains how to export data from a REDCap project. It
 covers how to navigate to the Data Exports, Reports, and Stats
@@ -19,13 +20,13 @@ application and walks through the standard export workflow from start to
 finish. It is the entry point for the Exports, Reports & Stats knowledge
 base series.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Data Exports, Reports, and Stats**
 
 The REDCap application that provides all data export and reporting
 functionality. Accessible from the left-hand menu under Applications.
-Visibility depends on user rights --- if a user has any export access or
+Visibility depends on user rights — if a user has any export access or
 the Add/Edit/Organize Reports right, this application appears in their
 menu.
 
@@ -64,13 +65,13 @@ Optional settings applied during export that remove or transform
 potentially identifying information. Available options vary based on the
 user\'s Data Export Rights level. See RC-EXPRT-04 for full details.
 
-**3. Navigating to the Data Exports, Reports, and Stats Application**
+# 3. Navigating to the Data Exports, Reports, and Stats Application
 
 The Data Exports, Reports, and Stats application is accessed from within
 a REDCap project. It does not appear if a user has no export rights and
 the Add/Edit/Organize Reports right is not granted.
 
-**3.1 From the Left-Hand Menu**
+## 3.1 From the Left-Hand Menu
 
   ------- -----------------------------------------------------------------------------------
   **1**   Log in and open your project from the My Projects page.
@@ -82,19 +83,19 @@ the Add/Edit/Organize Reports right is not granted.
   **Note:** If Data Exports, Reports, and Stats does not appear in your menu, your account has no Data Export rights and the Add/Edit/Organize Reports right is not enabled. Contact your project administrator to review your user rights.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**4. The Standard Export Workflow**
+# 4. The Standard Export Workflow
 
 Every export in REDCap follows the same sequence of steps, regardless of
 the report type or export format selected.
 
   ------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **1**   Navigate to the Data Exports, Reports, and Stats application (see Section 3).
-  **2**   Locate the report you want to export --- All Data, Selected Instruments/Events, or a custom report. Click Export Data for that report.
+  **2**   Locate the report you want to export — All Data, Selected Instruments/Events, or a custom report. Click Export Data for that report.
   **3**   Choose an export format from the seven available options. See RC-EXPRT-02 for guidance on which format to choose.
   **4**   Set de-identification options if required or desired. Options available depend on your Data Export Rights level. See RC-EXPRT-04 for full details.
   **5**   Review additional export options and data formatting options. The defaults are appropriate for most exports. See RC-EXPRT-04 for details on each option.
   **6**   Click the Export Data button to generate the export files.
-  **7**   Download all generated files. The number of files depends on the export format --- some formats generate multiple files that must all be downloaded. Read the included format-specific instructions carefully.
+  **7**   Download all generated files. The number of files depends on the export format — some formats generate multiple files that must all be downloaded. Read the included format-specific instructions carefully.
   **8**   Click the Close button to finish. REDCap saves a copy of this export in the File Repository automatically.
   ------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -102,7 +103,7 @@ the report type or export format selected.
   **Tip:** If you need to re-download an export you generated previously, navigate to the File Repository application in the left-hand menu. REDCap stores a copy of every export there. You do not need to run the export again.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**5. Common Questions**
+# 5. Common Questions
 
   ---------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   *Where do I find the Data Exports, Reports, and Stats application?*                            In the left-hand project menu under Applications. If it does not appear, you do not have Data Export rights or the Add/Edit/Organize Reports right. Contact your project administrator.
@@ -114,7 +115,7 @@ the report type or export format selected.
   *What happens if I close the export dialog before downloading my files?*                       The files are still saved in the File Repository. Navigate there to download them at any time.
   ---------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**6. Common Mistakes & Gotchas**
+# 6. Common Mistakes & Gotchas
 
 **Not downloading all generated files.** Some export formats (SPSS, SAS,
 R, Stata) generate two or three files that must be used together.
@@ -123,7 +124,7 @@ file will result in an incomplete or unreadable dataset. Always download
 every file listed in the export dialog.
 
 **Re-running an export to get a previous snapshot.** Re-running an
-export generates a new snapshot of the current data --- it does not
+export generates a new snapshot of the current data — it does not
 recover the state of the data at the time of the original export. Use
 the File Repository to retrieve a previous export file.
 
@@ -137,31 +138,31 @@ times out or may be dismissed before all files are downloaded. If this
 happens, the files are still accessible in the File Repository ---
 navigate there to complete the download.
 
-**API Access**
+## API Access
 
 > **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
 
--   **RC-API-02 — Export Records API** — programmatically retrieve project records in CSV, JSON, or XML
--   **RC-API-38 — Export Reports API** — programmatically export data from a saved custom report by report ID
+- **RC-API-02 — Export Records API** — programmatically retrieve project records in CSV, JSON, or XML
+- **RC-API-38 — Export Reports API** — programmatically export data from a saved custom report by report ID
 
 ---
 
 
-**7. Related Articles**
+# 7. Related Articles
 
--   RC-EXPRT-02 --- Data Export: Export Formats (the seven available
+- RC-EXPRT-02 — Data Export: Export Formats (the seven available
     formats and when to use each)
 
--   RC-EXPRT-03 --- Data Export: User Rights & Export Access (how rights
+- RC-EXPRT-03 — Data Export: User Rights & Export Access (how rights
     affect what you can export)
 
--   RC-EXPRT-04 --- Data Export: De-identification & Formatting Options
+- RC-EXPRT-04 — Data Export: De-identification & Formatting Options
 
--   RC-EXPRT-05 --- Data Export: Report Types (All Data, Selected
+- RC-EXPRT-05 — Data Export: Report Types (All Data, Selected
     Instruments, custom reports, other export options)
 
--   RC-NAV-UI-01 --- Project Navigation UI (prerequisite --- left-hand
+- RC-NAV-UI-01 — Project Navigation UI (prerequisite — left-hand
     menu and application access)
 
--   RC-NAV-UI-02 --- Project Menu Reference (Data Exports, Reports, and
+- RC-NAV-UI-02 — Project Menu Reference (Data Exports, Reports, and
     Stats menu item reference)

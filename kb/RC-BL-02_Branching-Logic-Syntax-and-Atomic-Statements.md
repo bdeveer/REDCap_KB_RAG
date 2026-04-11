@@ -1,27 +1,26 @@
 RC-BL-02
 
-**Branching Logic -- Syntax & Atomic Statements**
+**Branching Logic — Syntax & Atomic Statements**
 
-  -------------------- ------------------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-BL-02
-  **Domain**           Branching Logic
-  **Applies To**       All REDCap project types; requires Project Design and Setup rights
-  **Prerequisite**     RC-BL-01 --- Branching Logic Overview & Scope
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-BL-01 --- Overview; RC-BL-03 --- Combining Statements; RC-BL-04 --- Structured Fields; RC-FD-03 --- Data Dictionary
-  -------------------- ------------------------------------------------------------------------------------------------------------------------
+| **Article ID** | RC-BL-02 |
+| --- | --- |
+| **Domain** | Branching Logic |
+| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Prerequisite** | RC-BL-01 — Branching Logic Overview & Scope |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-BL-01 — Overview; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields; RC-FD-03 — Data Dictionary |
 
-**1. Overview**
+# 1. Overview
 
-This article covers the REDCap logic syntax in detail --- the operators,
+This article covers the REDCap logic syntax in detail — the operators,
 brackets, quotes, and boolean keywords that make up valid logic
-expressions --- and explains how to construct an atomic logic statement:
+expressions — and explains how to construct an atomic logic statement:
 the simplest, single-condition statement that forms the building block
 of all branching logic.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Atomic Logic Statement**
 
@@ -50,12 +49,12 @@ variable reference.
 **Raw Value**
 
 For structured field types (radio buttons, dropdowns, checkboxes),
-REDCap stores the coded option value --- not the display label --- in
+REDCap stores the coded option value — not the display label — in
 the dataset. Logic statements must reference raw values, not labels.
 
-**3. Syntax Language Reference**
+# 3. Syntax Language Reference
 
-**3.1 Math Operators**
+## 3.1 Math Operators
 
 REDCap supports standard arithmetic operators for use in calculated
 fields and numeric comparisons. These operate on numbers only.
@@ -70,7 +69,7 @@ fields and numeric comparisons. These operate on numbers only.
   =              Equals           \[status\]=1
   -------------- ---------------- ---------------------------
 
-**3.2 Comparison Operators**
+## 3.2 Comparison Operators
 
 Comparison operators are the most common operators in branching logic.
 They compare a variable to a value and return true or false.
@@ -85,7 +84,7 @@ They compare a variable to a value and return true or false.
   \<=            Less than or equal to      \[bmi\]\<=25
   -------------- -------------------------- ------------------
 
-**3.3 Quotation Marks**
+## 3.3 Quotation Marks
 
 Any comparison value that is not a number must be enclosed in quotation
 marks. Both single and double quotes are accepted.
@@ -93,7 +92,7 @@ marks. Both single and double quotes are accepted.
 +----------------------------------------------------------+
 | \[fav\_color\]=\"green\" // double quotes                |
 |                                                          |
-| \[fav\_color\]=\'green\' // single quotes --- equivalent |
+| \[fav\_color\]=\'green\' // single quotes — equivalent |
 |                                                          |
 | \[email\]\<\>\"\" // empty string check (double quotes)  |
 |                                                          |
@@ -104,7 +103,7 @@ marks. Both single and double quotes are accepted.
   **Best Practice:** If you plan to edit your logic via the Data Dictionary in Excel or another spreadsheet program, use single quotes throughout. Excel interprets double quotes as part of its own formula syntax, which can corrupt logic statements during CSV import/export.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**3.4 Square Brackets \[ \] and Their Uses**
+## 3.4 Square Brackets \[ \] and Their Uses
 
 Square brackets are used to reference three types of identifiers in
 REDCap logic:
@@ -113,7 +112,7 @@ REDCap logic:
   **What Is Referenced**          **Syntax**                       **Example**
   Regular field variable          \[variable\_name\]               \[first\_name\], \[dob\]
   Checkbox sub-variable           \[variable\_name(raw\_value)\]   \[conditions(3)\]
-  Longitudinal event (advanced)   \[event\_name\]                  \[baseline\_arm\_1\] --- covered in advanced series
+  Longitudinal event (advanced)   \[event\_name\]                  \[baseline\_arm\_1\] — covered in advanced series
   Smart variable (advanced)       \[smart\_variable\_name\]        Covered in separate training
   ------------------------------- -------------------------------- -----------------------------------------------------
 
@@ -121,7 +120,7 @@ REDCap logic:
   **Note:** Curly brackets { } are used exclusively by the Field Embedding feature and have no role in branching logic syntax. If you see curly brackets in a logic field, something has gone wrong.
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**3.5 Boolean Operators**
+## 3.5 Boolean Operators
 
 Boolean operators join two or more logic statements together. REDCap
 supports AND, OR, and NOT (expressed as \<\>). Both uppercase and
@@ -137,9 +136,9 @@ lowercase are accepted.
 Combining AND and OR in the same statement requires parentheses to
 control evaluation order. See RC-BL-03 for full details.
 
-**4. The Atomic Logic Statement**
+# 4. The Atomic Logic Statement
 
-Every logic statement --- no matter how complex --- is built from atomic
+Every logic statement — no matter how complex — is built from atomic
 statements. An atomic statement always has exactly three parts:
 
   ---------------------- -------------------------------------------------------------------------- ---------------------------------------------
@@ -159,9 +158,9 @@ The comparison value can be one of the following types:
   Another variable            Variable name in square brackets              \[email1\]=\[email2\]
   --------------------------- --------------------------------------------- -------------------------
 
-**5. Worked Examples**
+# 5. Worked Examples
 
-**Example 1 --- Equality: Show field only if age is exactly 18**
+**Example 1 — Equality: Show field only if age is exactly 18**
 
   ------------
   \[age\]=18
@@ -170,7 +169,7 @@ The comparison value can be one of the following types:
 The field is shown only when the value of \[age\] equals exactly 18. Any
 other value hides the field.
 
-**Example 2 --- Greater Than or Equal: Show field for adults**
+**Example 2 — Greater Than or Equal: Show field for adults**
 
   --------------
   \[age\]\>=18
@@ -179,7 +178,7 @@ other value hides the field.
 The field is shown when \[age\] is 18 or any higher number. The field is
 hidden for values below 18.
 
-**Example 3 --- Not Equal: Show field for any non-zero number of
+**Example 3 — Not Equal: Show field for any non-zero number of
 pregnancies**
 
   --------------------------
@@ -191,7 +190,7 @@ The field is shown when \[nr\_pregnancies\] is any value other than 0
 not the same thing. Zero is a data value; empty means no data has been
 entered at all.
 
-**Example 4 --- Empty Check: Show warning when email field is blank**
+**Example 4 — Empty Check: Show warning when email field is blank**
 
   -------------------
   \[email\]\<\>\'\'
@@ -202,7 +201,7 @@ disappears the moment the user types anything into \[email\]. This
 pattern is commonly used to display warnings or reminders for fields
 that have not yet been filled in.
 
-**Example 5 --- Comparing Two Variables**
+**Example 5 — Comparing Two Variables**
 
   -----------------------------------------
   \[email\_primary\]=\[email\_secondary\]
@@ -216,7 +215,7 @@ have the same entry (e.g., email confirmation).
   **Important:** REDCap validates that your logic syntax is correct (valid operators, properly closed brackets, known variable names), but it does not validate whether the logic makes sense for your study. A statement like \[age\]=999 is syntactically valid but will never match any realistic data. Always test your logic against real or realistic test data.
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**6. Empty vs. Zero --- A Critical Distinction**
+# 6. Empty vs. Zero --- A Critical Distinction
 
 One of the most common logic errors in REDCap is treating an empty field
 as equivalent to a field containing zero. They are not the same.
@@ -231,7 +230,7 @@ as equivalent to a field containing zero. They are not the same.
   **Note:** Using \[nr\_pregnancies\]\<\>0 will evaluate to true for both an empty field AND for values like 1, 2, 3. If you specifically want to test for a field that has been actively filled in with a non-zero number, combine conditions: \[nr\_pregnancies\]\<\>\'\' and \[nr\_pregnancies\]\<\>0.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**7. Common Questions**
+# 7. Common Questions
 
 **Q: Do I need to use quotes around numbers in logic statements?**
 
@@ -257,7 +256,7 @@ record.
 
 **Q: Can I use a function like datediff() as the comparison value?**
 
-**A:** Yes --- REDCap functions can be used in logic statements.
+**A:** Yes — REDCap functions can be used in logic statements.
 However, functions are an advanced topic outside the scope of this basic
 series. See the dedicated functions training for details.
 
@@ -268,42 +267,42 @@ invalid and will not save it. In the Data Dictionary, an invalid
 variable reference will cause an upload error. Always verify variable
 names against the Codebook (RC-FD-05) before writing logic.
 
-**8. Common Mistakes & Gotchas**
+# 8. Common Mistakes & Gotchas
 
--   Comparing text without quotes: \[status\]=enrolled is invalid ---
+- Comparing text without quotes: \[status\]=enrolled is invalid ---
     enrolled must be quoted as \'enrolled\'. Unquoted non-numeric values
     cause syntax errors.
 
--   Using double quotes in Excel-edited Data Dictionary files: Excel
+- Using double quotes in Excel-edited Data Dictionary files: Excel
     corrupts double-quoted strings in CSV files. Use single quotes
     (\'value\') instead of double quotes (\"value\") whenever the Data
     Dictionary will be edited in a spreadsheet program.
 
--   Treating empty as zero: an empty field and a field containing 0 are
+- Treating empty as zero: an empty field and a field containing 0 are
     different states. Test for them separately when both matter to your
     logic.
 
--   Using curly brackets for variable references: curly brackets { } are
+- Using curly brackets for variable references: curly brackets { } are
     for Field Embedding only. Variable references always use square
     brackets \[\]. Writing {variable} in a logic field will not work.
 
--   Not testing logic against realistic data: REDCap validates syntax,
+- Not testing logic against realistic data: REDCap validates syntax,
     not meaning. A statement can be syntactically valid but logically
     impossible (e.g., a range where min \> max). Always run test records
     to confirm the field shows and hides as intended.
 
-**9. Related Articles**
+# 9. Related Articles
 
--   RC-BL-01 --- Branching Logic Overview & Scope (prerequisite)
+- RC-BL-01 — Branching Logic Overview & Scope (prerequisite)
 
--   RC-BL-03 --- Combining Logic Statements (AND, OR, parentheses)
+- RC-BL-03 — Combining Logic Statements (AND, OR, parentheses)
 
--   RC-BL-04 --- Branching Logic for Structured Fields & Checkboxes
+- RC-BL-04 — Branching Logic for Structured Fields & Checkboxes
 
--   RC-FD-02 --- Online Designer (where branching logic is configured
+- RC-FD-02 — Online Designer (where branching logic is configured
     per field)
 
--   RC-FD-03 --- Data Dictionary (bulk logic editing via CSV)
+- RC-FD-03 — Data Dictionary (bulk logic editing via CSV)
 
--   RC-FD-05 --- Codebook (look up variable names and raw values when
+- RC-FD-05 — Codebook (look up variable names and raw values when
     writing logic)

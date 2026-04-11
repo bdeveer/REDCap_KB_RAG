@@ -1,31 +1,32 @@
-# RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+RC-FD-08
 
-| Field | Value |
-|---|---|
-| Article ID | RC-FD-08 |
-| Domain | Form Design |
-| Applies To | All REDCap project types; requires Project Design and Setup rights |
-| Prerequisite | RC-FD-03 — Data Dictionary |
-| Version | 1.0 |
-| Last Updated | 2025 |
-| Author | REDCap Support |
-| Related Topics | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic: Overview & Scope; RC-AT-01 — Action Tags: Overview |
+**Data Dictionary: Column Reference & Advanced Techniques**
+
+| **Article ID** | RC-FD-08 |
+| --- | --- |
+| **Domain** | Form Design |
+| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Prerequisite** | RC-FD-03 — Data Dictionary |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic: Overview & Scope; RC-AT-01 — Action Tags: Overview |
 
 ---
 
-## Section 1: Overview
+# 1. Overview
 
 This article is a 201-level reference for the REDCap Data Dictionary. It assumes familiarity with the Data Dictionary concept and basic workflow covered in RC-FD-03 — Data Dictionary. The article provides a complete column-by-column reference for all 18 Data Dictionary columns, explains which columns are mandatory versus optional, documents the allowed syntax and codes for each column, and covers advanced Excel techniques that make working with large data dictionaries faster and more reliable. It also addresses best practices specific to mobile data collection and longitudinal project designs.
 
 ---
 
-## Section 2: Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
-### Data Dictionary Aspects
+## Data Dictionary Aspects
 
 The term "aspect" refers to a single column in the Data Dictionary. Each column defines one property of a variable — its name, its form assignment, its field type, its display label, and so on. There are 18 aspects (columns A through R) in the Data Dictionary CSV. Not all aspects apply to all field types; some are conditionally mandatory and some are unused for certain field types.
 
-### Mandatory vs. Conditionally Mandatory vs. Non-Mandatory Columns
+## Mandatory vs. Conditionally Mandatory vs. Non-Mandatory Columns
 
 REDCap classifies each column into one of four tiers:
 
@@ -36,27 +37,27 @@ REDCap classifies each column into one of four tiers:
 
 The mandatory columns are A (Variable Name), B (Form Name), D (Field Type), and E (Field Label). Column F (Choices, Calculations, or Slider Labels) is conditionally mandatory depending on field type.
 
-### Field Type
+## Field Type
 
 The field type determines how REDCap renders a variable on the data entry form and what additional columns apply to it. Only REDCap-supported shorthand codes are valid. See Section 3.4 for the full list of accepted field type codes.
 
-### Matrix
+## Matrix
 
 A matrix is a grid of variables that share the same answer choices, displayed as a table in REDCap. Matrix variables must be of type `radio` or `checkbox`, must be sequential in the Data Dictionary, must share the same choices, and must all reference the same Matrix Group Name (Column P).
 
-### Action Tags
+## Action Tags
 
 Action tags are special codes entered in the Field Annotation column (Column R) that modify how a variable behaves in surveys or data entry. They begin with the `@` symbol. Multiple action tags can be applied to a single variable by separating them with spaces.
 
-### Identifier Flag
+## Identifier Flag
 
 Marking a variable as an identifier (Column K) does not change how data is entered or stored within REDCap. It affects the data export: variables flagged as identifiers are excluded by default when users export de-identified data. The flag is a documentation and governance tool, not an access control.
 
 ---
 
-## Section 3: What the Data Dictionary Defines — and What It Does Not
+# 3. What the Data Dictionary Defines — and What It Does Not
 
-### 3.1 What the Data Dictionary Defines
+## 3.1 What the Data Dictionary Defines
 
 The Data Dictionary defines every variable and every instrument in a project. Uploading a Data Dictionary completely replaces the existing instrument configuration. It is the authoritative source for:
 
@@ -68,7 +69,7 @@ The Data Dictionary defines every variable and every instrument in a project. Up
 - Identifier flags, custom alignment, and question numbering
 - Matrix groupings and action tags
 
-### 3.2 What the Data Dictionary Does NOT Define
+## 3.2 What the Data Dictionary Does NOT Define
 
 Despite its name, the Data Dictionary does not define every aspect of a REDCap project. The following elements are configured separately through other REDCap interfaces and are not affected by uploading a Data Dictionary:
 
@@ -85,16 +86,16 @@ Despite its name, the Data Dictionary does not define every aspect of a REDCap p
 
 ---
 
-## Section 4: Data Dictionary Structure
+# 4. Data Dictionary Structure
 
-### 4.1 Row Structure
+## 4.1 Row Structure
 
 Each row in the Data Dictionary defines exactly one variable. Exceptions:
 
 - **Row 1** contains the column headers. Do not edit or delete row 1.
 - **Row 2** defines the REDCap Record ID variable. This row is mandatory in every project. The Record ID variable is always the first variable in the first form and must be of field type `text`.
 
-### 4.2 Column Overview
+## 4.2 Column Overview
 
 The Data Dictionary has exactly 18 columns. The table below lists each column, its letter designation, its category, and its purpose. Detailed syntax and rules for each column are in Section 5.
 
@@ -121,9 +122,9 @@ The Data Dictionary has exactly 18 columns. The table below lists each column, i
 
 ---
 
-## Section 5: Column-by-Column Reference
+# 5. Column-by-Column Reference
 
-### 5.1 Column A — Variable / Field Name (Mandatory)
+## 5.1 Column A — Variable / Field Name (Mandatory)
 
 The Variable Name is the unique internal identifier used throughout REDCap to store and reference the variable. It appears in branching logic expressions, calculation formulas, exports, API calls, piping, and smart variables.
 
@@ -143,7 +144,7 @@ The Variable Name is the unique internal identifier used throughout REDCap to st
 
 ---
 
-### 5.2 Column B — Form Name (Mandatory)
+## 5.2 Column B — Form Name (Mandatory)
 
 The Form Name determines which instrument a variable belongs to. All variables sharing the same Form Name are grouped together as one instrument. The order of instruments in REDCap is determined by the order in which new Form Names first appear in the Data Dictionary.
 
@@ -160,7 +161,7 @@ The Form Name determines which instrument a variable belongs to. All variables s
 
 ---
 
-### 5.3 Column C — Section Header (Non-mandatory)
+## 5.3 Column C — Section Header (Non-mandatory)
 
 A Section Header creates a labeled divider bar above the variable it is assigned to. It is used to visually organize long instruments and can create page breaks in survey mode.
 
@@ -175,7 +176,7 @@ A Section Header creates a labeled divider bar above the variable it is assigned
 
 ---
 
-### 5.4 Column D — Field Type (Mandatory)
+## 5.4 Column D — Field Type (Mandatory)
 
 The Field Type determines how REDCap renders the variable in data entry and survey mode, and which other columns apply to it.
 
@@ -199,7 +200,7 @@ The Field Type determines how REDCap renders the variable in data entry and surv
 
 ---
 
-### 5.5 Column F — Choices, Calculations, or Slider Labels (Conditionally Mandatory)
+## 5.5 Column F — Choices, Calculations, or Slider Labels (Conditionally Mandatory)
 
 This column serves three distinct purposes depending on the field type:
 
@@ -232,7 +233,7 @@ Left label | Middle label | Right label
 
 ---
 
-### 5.6 Column G — Field Note (Non-mandatory)
+## 5.6 Column G — Field Note (Non-mandatory)
 
 The Field Note displays a short instructional text below the variable in both survey and data entry mode. It is commonly used to specify date formats, units of measure, or other brief instructions.
 
@@ -244,7 +245,7 @@ The Field Note displays a short instructional text below the variable in both su
 
 ---
 
-### 5.7 Column H — Text Validation Type or Show Slider Number (Non-mandatory)
+## 5.7 Column H — Text Validation Type or Show Slider Number (Non-mandatory)
 
 For `text` fields, this column sets the validation format. REDCap will only accept values matching the specified format.
 
@@ -269,7 +270,7 @@ For `slider` fields, entering `number` in this column displays the current numer
 
 ---
 
-### 5.8 Columns I & J — Text Validation Min / Text Validation Max (Non-mandatory)
+## 5.8 Columns I & J — Text Validation Min / Text Validation Max (Non-mandatory)
 
 These two columns define acceptable lower and upper bounds for validated `text` fields. Both are optional — you may set a minimum only, a maximum only, or both.
 
@@ -284,7 +285,7 @@ These two columns define acceptable lower and upper bounds for validated `text` 
 
 ---
 
-### 5.9 Column K — Identifier? (Non-mandatory)
+## 5.9 Column K — Identifier? (Non-mandatory)
 
 Flagging a variable as an identifier affects how data is handled during export. Identifier-flagged variables are excluded from de-identified data exports by default.
 
@@ -298,7 +299,7 @@ Flagging a variable as an identifier affects how data is handled during export. 
 
 ---
 
-### 5.10 Column L — Branching Logic (Non-mandatory)
+## 5.10 Column L — Branching Logic (Non-mandatory)
 
 Branching logic controls whether a variable is displayed based on the value of other variables. The syntax is identical to branching logic in the Online Designer.
 
@@ -315,7 +316,7 @@ Branching logic controls whether a variable is displayed based on the value of o
 
 ---
 
-### 5.11 Column M — Required Field? (Non-mandatory)
+## 5.11 Column M — Required Field? (Non-mandatory)
 
 Marking a variable as required prevents the instrument from being saved as Complete until the variable has a value. It does not affect data exports.
 
@@ -329,7 +330,7 @@ Marking a variable as required prevents the instrument from being saved as Compl
 
 ---
 
-### 5.12 Column N — Custom Alignment (Non-mandatory)
+## 5.12 Column N — Custom Alignment (Non-mandatory)
 
 Custom alignment adjusts how REDCap renders a variable's label and input area on the form. The code is a two-letter combination describing horizontal position (Left or Right) and layout direction (Horizontal or Vertical).
 
@@ -369,7 +370,7 @@ The Left/Right designation controls which half of the form the variable occupies
 
 ---
 
-### 5.13 Column O — Question Number (Non-mandatory, surveys only)
+## 5.13 Column O — Question Number (Non-mandatory, surveys only)
 
 Question numbering adds a custom number prefix to a variable when displayed in survey mode. This is purely cosmetic and has no effect on data entry mode.
 
@@ -380,7 +381,7 @@ Question numbering adds a custom number prefix to a variable when displayed in s
 
 ---
 
-### 5.14 Column P — Matrix Group Name (Matrix fields only)
+## 5.14 Column P — Matrix Group Name (Matrix fields only)
 
 The Matrix Group Name groups radio or checkbox variables into a matrix (grid) display. All variables sharing the same Matrix Group Name are rendered as rows in a table, with the answer choices as columns.
 
@@ -398,7 +399,7 @@ The Matrix Group Name groups radio or checkbox variables into a matrix (grid) di
 
 ---
 
-### 5.15 Column Q — Matrix Ranking? (Matrix fields only)
+## 5.15 Column Q — Matrix Ranking? (Matrix fields only)
 
 Flags whether a radio matrix is a ranking matrix, where participants assign each row a unique rank.
 
@@ -411,7 +412,7 @@ Flags whether a radio matrix is a ranking matrix, where participants assign each
 
 ---
 
-### 5.16 Column R — Field Annotation (Non-mandatory)
+## 5.16 Column R — Field Annotation (Non-mandatory)
 
 The Field Annotation column serves two purposes: it stores designer notes visible only in the Data Dictionary (not to participants or data entry users), and it holds action tag codes that modify variable behavior.
 
@@ -441,9 +442,9 @@ The Field Annotation column serves two purposes: it stores designer notes visibl
 
 ---
 
-## Section 6: Uploading and Validating the Data Dictionary
+# 6. Uploading and Validating the Data Dictionary
 
-### 6.1 The Upload Workflow
+## 6.1 The Upload Workflow
 
 The recommended Data Dictionary workflow has four stages:
 
@@ -452,7 +453,7 @@ The recommended Data Dictionary workflow has four stages:
 3. **Upload** — navigate to the Data Dictionary upload interface, select your modified CSV, and click Upload. REDCap validates the file and reports any errors with row-level detail. Correct errors and re-upload as needed.
 4. **Commit** — once no critical errors are reported, review REDCap's change summary and confirm. Changes take effect immediately in Development mode. In Production mode, changes enter the pending approval queue.
 
-### 6.2 Using Snapshots
+## 6.2 Using Snapshots
 
 The Data Dictionary Snapshot feature allows you to save a named copy of the current instrument configuration directly in REDCap, separate from any local files you keep.
 
@@ -467,7 +468,7 @@ All project history revisions are accessible from Project Setup → Project Revi
 
 > **Note:** Snapshots are a convenience feature, not a substitute for downloading and storing local backups. Always maintain at least one local copy of the pre-edit Data Dictionary.
 
-### 6.3 Validation Errors
+## 6.3 Validation Errors
 
 REDCap's upload validator catches technical errors — invalid field type codes, malformed choice syntax, duplicate variable names, and similar issues. It does not assess whether the instrument design is clinically appropriate or logically sound. Common validation errors include:
 
@@ -480,11 +481,11 @@ REDCap's upload validator catches technical errors — invalid field type codes,
 
 ---
 
-## Section 7: Excel Techniques for Efficient Data Dictionary Editing
+# 7. Excel Techniques for Efficient Data Dictionary Editing
 
 Working efficiently in Excel can significantly reduce the time required to build or modify large data dictionaries.
 
-### 7.1 Freeze Panes
+## 7.1 Freeze Panes
 
 Freezing panes keeps the header row and variable name column visible as you scroll through large files.
 
@@ -494,21 +495,21 @@ Freezing panes keeps the header row and variable name column visible as you scro
 
 With B2 selected as the anchor, Row 1 (headers) and Column A (variable names) remain fixed while you scroll right and down.
 
-### 7.2 Sorting and Filtering
+## 7.2 Sorting and Filtering
 
 Sorting on Form Name (Column B) groups all variables by instrument, making bulk changes faster. Sorting on Field Type (Column D) lets you quickly locate and modify all variables of a given type.
 
 > **Warning:** Always save a backup before sorting. If you sort and accidentally delete rows before re-saving, the upload will delete those variables from REDCap. Verify row counts before uploading after any sort operation.
 
-### 7.3 Find and Replace
+## 7.3 Find and Replace
 
 Use Excel's Find & Replace (`Ctrl+H` / `Cmd+H`) to update variable names, branching logic expressions, or choice values across many rows simultaneously. This is particularly useful when renaming a variable that appears in branching logic throughout the file.
 
-### 7.4 Crafting Dynamic Branching Logic with Cell References
+## 7.4 Crafting Dynamic Branching Logic with Cell References
 
 When the same branching logic pattern repeats across many rows with only a variable name changing, you can use cell references to have Excel construct the logic string automatically. For example, if Column A contains the variable name and you want Column L to contain `[variable_name_from_col_a] = '1'`, a formula in Column L referencing Column A can generate this across hundreds of rows at once.
 
-### 7.5 Auto-Fill Variable Names
+## 7.5 Auto-Fill Variable Names
 
 Excel's **Fill Series** feature can automatically increment variable names that end in a number. For a series like `symptom_1`, `symptom_2`, `symptom_3`:
 
@@ -520,9 +521,9 @@ This works only when the variable name ends in a number.
 
 ---
 
-## Section 8: Best Practices
+# 8. Best Practices
 
-### 8.1 Mobile and Small-Screen Considerations
+## 8.1 Mobile and Small-Screen Considerations
 
 REDCap instruments are often accessed on smartphones and tablets, particularly in clinical settings. To optimize for mobile:
 
@@ -534,7 +535,7 @@ REDCap instruments are often accessed on smartphones and tablets, particularly i
 
 > **Note:** The REDCap Mobile App has limited functionality compared to the browser interface due to its offline-first design. Features such as Ontology Lookup (Bioportal) do not function offline.
 
-### 8.2 Longitudinal Project Considerations
+## 8.2 Longitudinal Project Considerations
 
 In longitudinal projects, the Data Dictionary defines the variables and instruments but does not assign instruments to events. Event assignment is managed separately in the longitudinal setup. Keep these points in mind when working with the Data Dictionary in a longitudinal project:
 
@@ -544,7 +545,7 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 
 ---
 
-## Section 9: Common Questions
+# 9. Common Questions
 
 **Q: What exactly does REDCap delete when I upload a Data Dictionary that is missing some rows?**
 
@@ -576,7 +577,7 @@ A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` 
 
 ---
 
-## Section 10: Common Mistakes & Gotchas
+# 10. Common Mistakes & Gotchas
 
 **Formatting Column R before typing an action tag.** Excel interprets cells beginning with `@` as formula errors if the cell is formatted as General. Before entering any action tag, right-click the cell, select Format Cells, and set the format to Text. If you have already encountered the error, delete the cell content, reformat, and retype.
 
@@ -603,7 +604,7 @@ A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` 
 ---
 
 
-## Section 11: Related Articles
+# 11. Related Articles
 
 - RC-FD-01 — Form Design Overview (concept overview and tool selection)
 - RC-FD-02 — Online Designer (guardrailed alternative; use alongside the Data Dictionary)

@@ -1,19 +1,20 @@
-# RC-TXT-01 — Texting in REDCap: Setup and Usage
+RC-TXT-01
 
-| Field | Value |
-|---|---|
-| Article ID | RC-TXT-01 |
-| Domain | Texting (SMS) |
-| Applies To | Projects with surveys enabled; requires Twilio or Mosio configured at the system level |
-| Prerequisite | RC-SURV-01 — Surveys: Basics |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-SURV-05 — Participant List and Manual Survey Invitations; RC-SURV-06 — Automated Survey Invitations; RC-ALERT-01 — Alerts and Notifications Setup; RC-TXT-02 — Texting: Administrator Setup |
+**Texting in REDCap: Setup and Usage**
+
+| **Article ID** | RC-TXT-01 |
+| --- | --- |
+| **Domain** | Texting (SMS) |
+| **Applies To** | Projects with surveys enabled; requires Twilio or Mosio configured at the system level |
+| **Prerequisite** | RC-SURV-01 — Surveys: Basics |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-SURV-05 — Participant List and Manual Survey Invitations; RC-SURV-06 — Automated Survey Invitations; RC-ALERT-01 — Alerts and Notifications Setup; RC-TXT-02 — Texting: Administrator Setup |
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 REDCap can send survey invitations and alert notifications as text messages (SMS) instead of — or in addition to — email. This is done through one of two third-party providers: **Twilio** or **Mosio**. This article covers everything a project designer needs to know: how texting works conceptually, how to enable and configure a provider in a project, and how texting integrates with survey distribution tools, the participant list, Automated Survey Invitations (ASIs), and Alerts & Notifications.
 
@@ -21,53 +22,53 @@ For system-level setup (enabling Twilio or Mosio across the entire REDCap instal
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
-### SMS (Short Message Service)
+## SMS (Short Message Service)
 The standard protocol used by mobile phones to send and receive text messages. SMS messages are transmitted over cellular networks and do not require an internet connection or a separate app. REDCap sends text messages via SMS through its configured provider.
 
-### RCS (Rich Communication Service)
+## RCS (Rich Communication Service)
 A modern successor to SMS supported by most current smartphones. For the purposes of REDCap texting, RCS and SMS behave identically — REDCap sends via the provider, and the phone handles delivery.
 
-### Twilio
+## Twilio
 A commercial SMS and voice communications provider. Twilio requires three credentials: an Account SID, an Auth Token, and a Twilio phone number. Twilio supports SMS worldwide and additionally supports voice call surveys. Configuration is more involved than Mosio.
 
-### Mosio
+## Mosio
 A commercial SMS provider focused on research texting. Mosio requires only a single API key. Mosio is currently available in the US and Canada only. Mosio does not support voice calls.
 
-### Phone variable
+## Phone variable
 A REDCap variable with Phone Number validation (or integer validation) that stores a participant's phone number. REDCap uses this variable to determine which number to text when sending invitations via ASIs or alerts.
 
-### Invitation type
+## Invitation type
 The delivery format for a survey invitation. With texting enabled, invitation types include: email, SMS with a survey link (webpage), SMS conversation, and (Twilio only) voice call.
 
-### SMS conversation
+## SMS conversation
 A mode in which REDCap administers a survey interactively via back-and-forth text messages. The participant texts their answers directly; REDCap interprets them. Because text messages are unencrypted, this mode carries privacy risk and must be explicitly enabled by a REDCap administrator.
 
-### Voice call
+## Voice call
 A Twilio-only feature in which an automated voice reads survey questions aloud and accepts keypress responses. Voice calls are not available with Mosio.
 
-### Project feature setting
+## Project feature setting
 A Twilio/Mosio configuration option that controls which parts of a REDCap project can use texting: surveys and ASIs only, Alerts & Notifications only, or both.
 
-### Overlapping SMS invitations
+## Overlapping SMS invitations
 A condition that occurs when a participant has more than one active survey invitation at the same time. REDCap's behavior in this case is controlled by the "Behavior for overlapping SMS invitations" setting.
 
 ---
 
-## 3. Before You Start
+# 3. Before You Start
 
-### 3.1 Is texting available in your installation?
+## 3.1 Is texting available in your installation?
 
 Texting must be enabled at the system level by a REDCap administrator before any project can use it. Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
 
 > **Yale-specific:** [Contact your local REDCap support team to confirm whether Twilio, Mosio, or both are available and what the enable permission level is — leave blank until confirmed]
 
-### 3.2 Budget and cost
+## 3.2 Budget and cost
 
 Both Twilio and Mosio are commercial services that charge per message. Costs are typically fractions of a cent per message, but large studies with frequent touchpoints can accumulate significant charges. Email and MyCap push notifications do not carry per-message costs. Confirm your study's budget before enabling texting.
 
-### 3.3 Regulatory compliance
+## 3.3 Regulatory compliance
 
 Before using texting for research recruitment or data collection:
 
@@ -75,7 +76,7 @@ Before using texting for research recruitment or data collection:
 - **Follow provider requirements.** Both Twilio and Mosio require users to comply with applicable anti-spam laws (e.g., TCPA in the US). Each provider has its own onboarding documentation describing these requirements.
 - **Inform participants in advance.** Modern smartphones filter texts from unknown numbers. Let participants know what number to expect contact from so they can add it to their contacts or safe-sender list.
 
-### 3.4 Prepare a phone variable (recommended)
+## 3.4 Prepare a phone variable (recommended)
 
 If you plan to send ASI invitations or alerts to participant phone numbers, create a dedicated phone variable in your instrument before enabling texting:
 
@@ -87,9 +88,9 @@ A phone variable is not required for public survey link invitations or hard-code
 
 ---
 
-## 4. Enabling and Configuring Twilio
+# 4. Enabling and Configuring Twilio
 
-### 4.1 Enable Twilio in Project Setup
+## 4.1 Enable Twilio in Project Setup
 
 1. In **Project Setup**, locate "Twilio SMS and Voice Call Services" in the list of optional features.
 2. Click **Enable**. The status text turns green when enabled.
@@ -100,7 +101,7 @@ A phone variable is not required for public survey link invitations or hard-code
 
 > **Note:** You can only have one provider (Twilio or Mosio) active in a project at a time. Enabling one disables the other.
 
-### 4.2 Configure Twilio settings
+## 4.2 Configure Twilio settings
 
 After enabling, a new **"Twilio SMS and Voice Call Services"** item appears in Project Setup. Click **Configure settings**.
 
@@ -151,15 +152,15 @@ Controls what happens when a participant receives a second invitation before com
 | Take surveys in same order as received | Projects where completion order affects calculations or piped fields |
 | Allow participant to choose which survey to take next | Projects where completion order is flexible |
 
-### 4.3 Analyze surveys for SMS & Voice Calls (Twilio)
+## 4.3 Analyze surveys for SMS & Voice Calls (Twilio)
 
 Next to "Configure settings," the **Analyze surveys for SMS & Voice Calls** button checks your enabled surveys for compatibility with SMS conversation or voice call delivery. It flags variable types that cannot be transmitted in those formats (e.g., file upload fields). Fix any flagged issues in the Online Designer before going live.
 
 ---
 
-## 5. Enabling and Configuring Mosio
+# 5. Enabling and Configuring Mosio
 
-### 5.1 Enable Mosio in Project Setup
+## 5.1 Enable Mosio in Project Setup
 
 1. In **Project Setup**, locate "Mosio Two-Way Text Messaging (SMS) Services."
 2. Click **Enable**. A credentials popup appears.
@@ -169,7 +170,7 @@ Next to "Configure settings," the **Analyze surveys for SMS & Voice Calls** butt
 
 > **Note:** Mosio is only available in the US and Canada. If your study contacts participants in other countries, use Twilio instead.
 
-### 5.2 Configure Mosio settings
+## 5.2 Configure Mosio settings
 
 After enabling, click **Configure settings** under "Mosio Two-Way Text Messaging (SMS) Services."
 
@@ -197,17 +198,17 @@ Same as Twilio.
 **Behavior for overlapping SMS invitations**
 Same options as Twilio — most recent, in-order, or participant's choice.
 
-### 5.3 Analyze surveys for SMS (Mosio)
+## 5.3 Analyze surveys for SMS (Mosio)
 
 The **Analyze surveys for SMS** button checks your enabled surveys for compatibility with SMS conversation delivery. Flags file upload fields and other variable types that cannot be used in SMS conversations.
 
 ---
 
-## 6. Using Texting in Your Project
+# 6. Using Texting in Your Project
 
 After configuring Twilio or Mosio, texting capabilities appear in three places: Survey Distribution Tools, Automated Survey Invitations, and Alerts & Notifications.
 
-### 6.1 Survey Distribution Tools — Public Survey Link
+## 6.1 Survey Distribution Tools — Public Survey Link
 
 The public survey link page gains an **"Invite participant via SMS"** button. Clicking it opens a popup where you specify:
 
@@ -217,7 +218,7 @@ The public survey link page gains an **"Invite participant via SMS"** button. Cl
 
 > **Note:** REDCap sends one SMS at a time (not in batches). Large sends take proportionally longer than email sends, which go out in batches of 20.
 
-### 6.2 Survey Distribution Tools — Participant List
+## 6.2 Survey Distribution Tools — Participant List
 
 With texting enabled, the participant list gains phone number and invitation preference columns. When adding participants:
 
@@ -228,7 +229,7 @@ When composing survey invitations from the participant list, you must now specif
 
 > **Note:** REDCap ignores the subject line for text and voice call invitations. For voice call invitations, REDCap also ignores the message body — the survey content itself becomes the voice call script.
 
-### 6.3 Automated Survey Invitations (ASIs)
+## 6.3 Automated Survey Invitations (ASIs)
 
 Texting adds an **invitation type** step to the ASI setup wizard. Before setting up an ASI for texting:
 
@@ -239,7 +240,7 @@ The remaining ASI steps work identically to email ASI setup, with minor variatio
 
 For ASI setup beyond invitation type, see RC-SURV-06 — Automated Survey Invitations.
 
-### 6.4 Alerts & Notifications
+## 6.4 Alerts & Notifications
 
 Texting adds an **Alert Type** selector to Step 3 of the alert setup. The available types depend on your provider and configuration:
 
@@ -266,7 +267,7 @@ For alert setup beyond Step 3, see RC-ALERT-01 — Alerts and Notifications Setu
 
 ---
 
-## 7. Best Practices
+# 7. Best Practices
 
 **Keep messages short.** The standard SMS character limit is 160 characters. Messages longer than 160 characters are split across multiple texts, increasing cost and reducing engagement. Survey links consume a significant portion of this limit — test your messages before sending.
 
@@ -284,7 +285,7 @@ For alert setup beyond Step 3, see RC-ALERT-01 — Alerts and Notifications Setu
 
 ---
 
-## 8. Common Questions
+# 8. Common Questions
 
 **Q: Can I use both Twilio and Mosio in the same project?**
 No. Only one provider can be active per project at a time. If your institution has both available, you must choose one when enabling texting in Project Setup.
@@ -318,7 +319,7 @@ Overlapping invitations occur when a participant receives a second invitation be
 
 ---
 
-## 9. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Forgetting to include a survey link smart variable.** When sending a survey-as-webpage invitation, the message body must contain `[survey-url]` or `[survey-link]`. If omitted, participants receive a text message with no link and cannot access the survey. REDCap does not warn you about this at send time.
 
@@ -334,7 +335,7 @@ Overlapping invitations occur when a participant receives a second invitation be
 
 ---
 
-## 10. Related Articles
+# 10. Related Articles
 
 - RC-SURV-01 — Surveys: Basics
 - RC-SURV-05 — Participant List and Manual Survey Invitations

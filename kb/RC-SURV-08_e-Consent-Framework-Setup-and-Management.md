@@ -1,3 +1,7 @@
+RC-SURV-08
+
+**e-Consent Framework: Setup & Management**
+
 | **Article ID** | RC-SURV-08 |
 |---|---|
 | **Domain** | Surveys |

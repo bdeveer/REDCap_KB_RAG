@@ -2,9 +2,8 @@ RC-ALERT-01
 
 **Alerts & Notifications — Setup**
 
-| Field | Value |
-|---|---|
 | **Article ID** | RC-ALERT-01 |
+| --- | --- |
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
@@ -15,7 +14,7 @@ RC-ALERT-01
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 This article explains how to create and configure an Alert & Notification in REDCap. Alerts are project-level automated emails (or, depending on your installation, SMS messages or voice calls) that trigger based on data events or logic conditions in your project. Unlike Automated Survey Invitations (ASIs), alerts are not tied to a specific survey — they can respond to any form save event, any logic condition, or a combination of both. This flexibility makes them suitable for confirmation emails, staff notifications, study reminders, and survey invitations sent to multiple recipients simultaneously.
 
@@ -23,7 +22,7 @@ Setting up an alert has three sequential steps: defining the **trigger** (what c
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 **Alert & Notification**
 A project feature in REDCap that automatically sends an email (or other message type) when a defined trigger condition is met. Alerts are decoupled from surveys, giving them more recipient and formatting flexibility than Automated Survey Invitations.
@@ -60,13 +59,13 @@ An optional checkbox in the alert trigger setup. When enabled, REDCap re-evaluat
 
 ---
 
-## 3. Alert Triggers
+# 3. Alert Triggers
 
 Navigate to **Alerts & Notifications** in the project Applications menu. Click **+ Add New Alert** to open the alert creation dialog.
 
 Before configuring the trigger, give the alert a clear title. This is optional but strongly recommended for any project with more than a few alerts, as titles are the primary way to identify alerts in the management view and notification log.
 
-### 3.1 Step 1A — How Will the Alert Be Triggered?
+## 3.1 Step 1A — How Will the Alert Be Triggered?
 
 Choose one of three trigger types. This selection determines what Step 1B asks for, so always start here.
 
@@ -78,7 +77,7 @@ Choose one of three trigger types. This selection determines what Step 1B asks f
 
 > **Note:** Completion triggers and combination triggers do not fire when data is written via the Data Import tool or the API. Only direct data entry and survey completion activate them. Logic triggers evaluate across all write methods including imports and API calls.
 
-### 3.2 Step 1B — Trigger Details
+## 3.2 Step 1B — Trigger Details
 
 **For completion triggers and combination triggers:**
 
@@ -103,7 +102,7 @@ This option is most valuable when the alert schedule includes a time delay. Exam
 
 > **Note:** If the alert is set to send immediately (no delay), the "ensure logic" check has no practical effect — the alert fires and sends in the same moment.
 
-### 3.3 Step 1B Sidebar — Date/Time Logic with datediff
+## 3.3 Step 1B Sidebar — Date/Time Logic with datediff
 
 To trigger an alert based on a date or date-time value, use the `datediff` function. This function compares two dates and returns the numeric difference in a specified time unit.
 
@@ -137,7 +136,7 @@ Becomes true when today's date is exactly 14 days before the value in `[visit_da
 
 > **Pro tip:** Build and validate `datediff` logic in a calculated field first. This lets you see the live numeric output for real records before writing the trigger condition.
 
-### 3.4 Step 1C — Trigger Limits (Longitudinal & Repeated Projects Only)
+## 3.4 Step 1C — Trigger Limits (Longitudinal & Repeated Projects Only)
 
 Step 1C appears only when a project uses longitudinal mode or repeated instruments. It controls how many times per record the alert is allowed to fire.
 
@@ -152,11 +151,11 @@ Step 1C appears only when a project uses longitudinal mode or repeated instrumen
 
 ---
 
-## 4. Alert Schedule
+# 4. Alert Schedule
 
 The second step of alert setup defines when the alert is sent after the trigger fires, and how many times it can be sent per trigger.
 
-### 4.1 When to Send the Alert
+## 4.1 When to Send the Alert
 
 | Option | Description |
 |---|---|
@@ -165,7 +164,7 @@ The second step of alert setup defines when the alert is sent after the trigger 
 | Send after time lapse | Sends after a defined delay (days, hours, minutes, or a combination). Use for time-horizon alerts such as a 90-day follow-up. |
 | Send at exact date/time | Sends at a specific future date and time. REDCap uses its server's internal time zone for this option — account for time zone differences when entering the value. |
 
-### 4.2 How Many Times to Send
+## 4.2 How Many Times to Send
 
 **Just once** — the alert sends a single time per trigger event. This is the default and safest choice.
 
@@ -176,17 +175,17 @@ The second step of alert setup defines when the alert is sent after the trigger 
 
 > **Important:** Recurring alerts multiply quickly in projects with repeated instruments. An alert set to send 5 times for a repeated instrument with 5 instances will generate 25 total alert sends. Plan repeat counts carefully before enabling.
 
-### 4.3 Alert Expiration (Optional)
+## 4.3 Alert Expiration (Optional)
 
 Set a hard expiration date and time. After this point, REDCap will not send any further alerts from this configuration and will cancel any queued instances. Useful for studies with a defined end date, ensuring no alerts send after the study closes.
 
 ---
 
-## 5. Message Settings
+# 5. Message Settings
 
 The third step defines what the alert sends and to whom.
 
-### 5.1 Alert Type
+## 5.1 Alert Type
 
 Select the message delivery method. The available options depend on your REDCap installation:
 
@@ -197,7 +196,7 @@ Select the message delivery method. The available options depend on your REDCap 
 
 This article covers email only. SMS, Voice Call, and SendGrid delivery are covered in RC-ALERT-03 — Alternative Alert Delivery Types *(coming soon)*.
 
-### 5.2 From Email
+## 5.2 From Email
 
 Select a "from" address from the dropdown. The dropdown is populated with email addresses associated with all current project users (each user may have up to 3 emails linked to their profile via My Profile).
 
@@ -207,7 +206,7 @@ Best practices:
 
 You may optionally set a **display name** for the from address (e.g., "Heart Congestion Study 2024" for `hs24@institution.edu`). Test display names with a test participant — some spam filters flag unfamiliar display names.
 
-### 5.3 To, CC, and BCC
+## 5.3 To, CC, and BCC
 
 REDCap supports standard To, Carbon Copy (CC), and Blind Carbon Copy (BCC) fields. CC and BCC are hidden by default; click **+ Show more options** to reveal them. All three fields work identically.
 
@@ -221,11 +220,11 @@ There are three ways to specify recipients:
 
 **Email failure notification:** Select a user email to receive a notification if REDCap fails to deliver the alert. Only one address is allowed for this field.
 
-### 5.4 Subject Line
+## 5.4 Subject Line
 
 Type a subject directly, or pipe in variable values. Avoid piping sensitive or identifying information into the subject line — email subjects are visible in many clients before the message is opened and may appear in notification previews. See RC-PIPE-01 for piping syntax.
 
-### 5.5 Message Body
+## 5.5 Message Body
 
 The message body supports:
 
@@ -249,7 +248,7 @@ Unlike Automated Survey Invitations (which pre-fill the message body with stock 
 
 For a complete smart variable reference, see RC-PIPE-03 — Smart Variables Overview.
 
-### 5.6 Attachments
+## 5.6 Attachments
 
 Click the green **Add Attachments** button at the bottom of the message panel.
 
@@ -261,7 +260,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 ---
 
-## 6. Common Questions
+# 6. Common Questions
 
 **Q: What is the difference between an Alert & Notification and an Automated Survey Invitation (ASI)?**
 
@@ -301,7 +300,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 ---
 
-## 7. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Using a completion trigger when data comes in via import or API.** Completion triggers only fire on direct data entry and survey completion events. If your workflow loads data via the Data Import tool or the REDCap API, a completion trigger will never fire. Use a logic trigger instead, since logic triggers evaluate on all write methods.
 
@@ -317,7 +316,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 ---
 
-## 8. Related Articles
+# 8. Related Articles
 
 - RC-ALERT-02 — Alert Management & Notification Log (managing multiple alerts, using the notification log)
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types (piping syntax used in alert subjects and message bodies)

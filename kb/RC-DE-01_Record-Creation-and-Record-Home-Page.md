@@ -2,25 +2,24 @@ RC-DE-01
 
 **Record Creation & the Record Home Page**
 
-  -------------------- ----------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-DE-01
-  **Domain**           Data Entry
-  **Applies To**       All REDCap project types
-  **Prerequisite**     RC-NAV-01 --- Record Navigation Overview
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-DE-02 --- Basic Data Entry; RC-NAV-01 --- Record Navigation Overview; RC-NAV-04 --- Record Status Dashboard
-  -------------------- ----------------------------------------------------------------------------------------------------------------
+| **Article ID** | RC-DE-01 |
+| --- | --- |
+| **Domain** | Data Entry |
+| **Applies To** | All REDCap project types |
+| **Prerequisite** | RC-NAV-01 — Record Navigation Overview |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-NAV-01 — Record Navigation Overview; RC-NAV-04 — Record Status Dashboard |
 
-**1. Overview**
+# 1. Overview
 
 This article explains how to create new records in REDCap and how to
 navigate to existing ones using the Add/Edit Records page. It also
-describes the Record Home Page --- the central hub for any single record
+describes the Record Home Page — the central hub for any single record
 --- and explains how REDCap assigns and uses the Record ID.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Record**
 
@@ -55,87 +54,87 @@ A search feature on the Add/Edit Records page that allows lookup by any
 variable value across all records in a project. Can be scoped to a
 single variable for speed in large projects.
 
-**3. Step-by-Step Procedures**
+# 3. Step-by-Step Procedures
 
-**3.1 Navigating to the Add/Edit Records Page**
+## 3.1 Navigating to the Add/Edit Records Page
 
--   Log in to your REDCap instance and open the project from the My
+- Log in to your REDCap instance and open the project from the My
     Projects page.
 
--   In the left-hand menu, under Data Collection, click Add / Edit
+- In the left-hand menu, under Data Collection, click Add / Edit
     Records.
 
-**3.2 Creating a New Record**
+## 3.2 Creating a New Record
 
--   On the Add/Edit Records page, click the Add new record button.
+- On the Add/Edit Records page, click the Add new record button.
 
--   REDCap automatically assigns the next available Record ID
+- REDCap automatically assigns the next available Record ID
     (incrementing integer).
 
--   If the project contains only a single instrument, REDCap opens that
+- If the project contains only a single instrument, REDCap opens that
     instrument directly.
 
--   If the project contains multiple instruments or events, REDCap opens
+- If the project contains multiple instruments or events, REDCap opens
     the Record Home Page first.
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** The Record ID is permanent once assigned. It cannot be changed through normal data entry. Treat it as an opaque system identifier --- avoid using it as a meaningful clinical or participant identifier.
+  **Important:** The Record ID is permanent once assigned. It cannot be changed through normal data entry. Treat it as an opaque system identifier — avoid using it as a meaningful clinical or participant identifier.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**3.3 Finding an Existing Record by ID**
+## 3.3 Finding an Existing Record by ID
 
--   On the Add/Edit Records page, use the Choose an existing record
+- On the Add/Edit Records page, use the Choose an existing record
     dropdown.
 
--   The dropdown lists all Record IDs in the project. Select the one you
+- The dropdown lists all Record IDs in the project. Select the one you
     want.
 
--   Selecting a Record ID takes you directly to the Record Home Page for
+- Selecting a Record ID takes you directly to the Record Home Page for
     that record.
 
--   In projects with a large number of records, use Data Search (Section
-    3.4) instead --- the dropdown becomes unwieldy at scale.
+- In projects with a large number of records, use Data Search (Section
+    3.4) instead — the dropdown becomes unwieldy at scale.
 
-**3.4 Finding an Existing Record by Value (Data Search)**
+## 3.4 Finding an Existing Record by Value (Data Search)
 
--   On the Add/Edit Records page, locate the Data Search section.
+- On the Add/Edit Records page, locate the Data Search section.
 
--   **Best practice:** type the Record ID directly into the search box
+- **Best practice:** type the Record ID directly into the search box
     and press Enter. This is the fastest path to any record when the ID
     is known.
 
--   To search by a different value (e.g., name, date of birth, email):
+- To search by a different value (e.g., name, date of birth, email):
     enter the value in the search box. REDCap searches across all
     variables in all records by default.
 
--   To narrow the search: select a specific variable from the variable
+- To narrow the search: select a specific variable from the variable
     dropdown before searching. This is significantly faster in large
     projects.
 
--   Matching results appear in a dropdown. Selecting a result takes you
+- Matching results appear in a dropdown. Selecting a result takes you
     directly to the instrument and record where that value was found.
 
-**3.5 The Record Home Page**
+## 3.5 The Record Home Page
 
--   The Record Home Page displays all instruments for a record as
+- The Record Home Page displays all instruments for a record as
     colored status dots.
 
--   In simple projects (single instrument, no events), the page shows
+- In simple projects (single instrument, no events), the page shows
     one dot.
 
--   In complex projects (multiple instruments, longitudinal events), the
-    page shows a grid of dots --- one per instrument-event combination.
+- In complex projects (multiple instruments, longitudinal events), the
+    page shows a grid of dots — one per instrument-event combination.
 
--   Click any dot to open the corresponding instrument for that record.
+- Click any dot to open the corresponding instrument for that record.
 
--   Once inside an instrument, the left-hand menu shows a list of all
+- Once inside an instrument, the left-hand menu shows a list of all
     instruments in the project for quick switching.
 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Note:** The \'Choose action for record\' button on the Record Home Page provides advanced administrative functions (moving records, deleting records, etc.). These are covered in RC-DE-13 — Record Administration *(coming soon)*.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**4. Common Questions**
+# 4. Common Questions
 
 **Q: What is the Record ID and why does REDCap need it?**
 
@@ -183,44 +182,44 @@ A: Yes. You can click any dot in the Record Status Dashboard to go
 directly to that instrument for that record, bypassing the Record Home
 Page entirely.
 
-**5. Common Mistakes & Gotchas**
+# 5. Common Mistakes & Gotchas
 
--   Searching all variables in a large project: searching across all
+- Searching all variables in a large project: searching across all
     variables can be slow in projects with thousands of records and many
     fields. Always scope your search to a specific variable when you
     know which field to search in.
 
--   Confusing the Add/Edit Records dropdown with Data Search: the
+- Confusing the Add/Edit Records dropdown with Data Search: the
     dropdown lists Record IDs only; Data Search can find records by any
     field value. Use Data Search when you know a value but not the
     Record ID.
 
--   Creating duplicate records by accident: if \'Add new record\' is
+- Creating duplicate records by accident: if \'Add new record\' is
     clicked more than once, multiple records are created. Check whether
     a record already exists via Data Search before creating a new one.
 
--   Expecting the Record Home Page to look the same in every project:
+- Expecting the Record Home Page to look the same in every project:
     simple projects show a single dot; longitudinal projects show a
     grid. The layout depends entirely on the project configuration.
 
-**API Access**
+## API Access
 
 > **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
 
--   **RC-API-03 — Import Records API** — create new records programmatically by importing data; a new record is created if the record ID does not exist
--   **RC-API-05 — Rename Record API** — rename an existing record ID to a new value programmatically
+- **RC-API-03 — Import Records API** — create new records programmatically by importing data; a new record is created if the record ID does not exist
+- **RC-API-05 — Rename Record API** — rename an existing record ID to a new value programmatically
 
 ---
 
 
-**6. Related Articles**
+# 6. Related Articles
 
--   RC-DE-02 --- Basic Data Entry (field types, saving, form status)
+- RC-DE-02 — Basic Data Entry (field types, saving, form status)
 
--   RC-DE-03 --- Longitudinal Projects & Data Access Groups (how project
+- RC-DE-03 — Longitudinal Projects & Data Access Groups (how project
     structure affects the Record Home Page)
 
--   RC-NAV-01 --- Record Navigation Overview (dot colors, navigation
+- RC-NAV-01 — Record Navigation Overview (dot colors, navigation
     paths)
 
--   RC-NAV-04 --- Record Status Dashboard & Other Record Links
+- RC-NAV-04 — Record Status Dashboard & Other Record Links

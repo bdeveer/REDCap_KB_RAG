@@ -1,25 +1,26 @@
-# RC-AI-02 — AI Writing Tools
+RC-AI-02
 
-| Field | Value |
-|---|---|
-| Article ID | RC-AI-02 |
-| Domain | AI Tools |
-| Applies To | All project types; requires AI Writing Tools to be enabled by administrator |
-| Prerequisite | RC-AI-01 — REDCap AI Tools: Overview & Security |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-FD-02 — Online Designer |
+**AI Writing Tools**
+
+| **Article ID** | RC-AI-02 |
+| --- | --- |
+| **Domain** | AI Tools |
+| **Applies To** | All project types; requires AI Writing Tools to be enabled by administrator |
+| **Prerequisite** | RC-AI-01 — REDCap AI Tools: Overview & Security |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-FD-02 — Online Designer |
 
 ---
 
-## Section 1: Overview
+# 1. Overview
 
 This article explains how to use REDCap's AI Writing Tools feature. AI Writing Tools allow you to generate, edit, correct, or reformat text in any area of REDCap that uses the rich text editor — for example, field labels in the Online Designer, survey introductory text, or email bodies. The feature is accessed through a purple wizard's wand icon that appears when the rich text editor is active. You select a pre-defined action (such as "Fix Grammar" or "Change Tone"), the AI generates a suggestion, and you decide whether to accept it. This article walks through each action, the interface layout, and important behaviors to know when working with the tool.
 
 ---
 
-## Section 2: Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 ## Rich Text Editor
 
@@ -43,9 +44,9 @@ A literal placeholder string you include in a custom prompt to tell the AI to us
 
 ---
 
-## Section 3: Finding and Opening AI Writing Tools
+# 3. Finding and Opening AI Writing Tools
 
-### Where the feature is available
+## Where the feature is available
 
 AI Writing Tools are available wherever the rich text editor can be used in REDCap. Common locations include:
 
@@ -54,11 +55,11 @@ AI Writing Tools are available wherever the rich text editor can be used in REDC
 - Email bodies in Alerts & Notifications
 - Project notes and instruction text fields
 
-### Enabling the rich text editor (where required)
+## Enabling the rich text editor (where required)
 
 In some locations — particularly field labels in the Online Designer — the rich text editor is not enabled by default. Look for a toggle or button labeled to enable rich text formatting on the field. Once enabled, the toolbar appears including the purple wizard's wand icon.
 
-### Opening the AI Writing Tools menu
+## Opening the AI Writing Tools menu
 
 Click the purple wizard's wand icon in the rich text editor toolbar. The AI Writing Tools popup opens with:
 
@@ -67,27 +68,27 @@ Click the purple wizard's wand icon in the rich text editor toolbar. The AI Writ
 
 ---
 
-## Section 4: Available Actions
+# 4. Available Actions
 
 Each action instructs the AI to perform a specific operation on the text in the Finalized Text box. Only one action can be executed at a time — there is no batch mode within a single session.
 
-### Fix Grammar
+## Fix Grammar
 
 Checks and corrects grammar and spelling in the Finalized Text. Clicking this button sends the text to the AI and returns a corrected version in the Suggestion from AI box.
 
-### Set Length
+## Set Length
 
 Rewrites the Finalized Text to make it shorter or longer. Use the controls to indicate your target length direction before clicking the button.
 
-### Change Tone
+## Change Tone
 
 A dropdown that lets you rewrite the text in a different register. Options include variations such as formal, conversational, professional, and others. Select the desired tone from the dropdown, then trigger the action.
 
-### Reading Level
+## Reading Level
 
 Rewrites the text to match a target complexity level, based on the American school grade system. Select the desired grade level and trigger the action to produce a simpler or more advanced version of the text.
 
-### Custom Prompt
+## Custom Prompt
 
 Allows you to write any instruction to the AI. Use this when none of the pre-defined actions fit your need, or when you want to combine multiple operations in a single prompt.
 
@@ -105,7 +106,7 @@ Type your prompt in the "Custom action text" box and click "Generate Response."
 
 ---
 
-## Section 5: Working with Suggestions
+# 5. Working with Suggestions
 
 Once the AI generates a response, it appears in the Suggestion from AI section. Three buttons above the suggestion let you act on it:
 
@@ -115,27 +116,27 @@ Once the AI generates a response, it appears in the Suggestion from AI section. 
 
 **Clear** — Removes the suggestion from the Suggestion from AI section without affecting the Finalized Text box.
 
-### Full screen mode
+## Full screen mode
 
 If you are working with a long piece of text, use the full screen button to expand the AI Writing Tools popup. This gives you more space for both the Finalized Text and the Suggestion sections.
 
 ---
 
-## Section 6: Finalizing and Saving
+# 6. Finalizing and Saving
 
-### Finalize Text & Close
+## Finalize Text & Close
 
 When you are satisfied with the contents of the Finalized Text box, click "Finalize Text & Close." This copies the text from the Finalized Text box into the rich text editor field in REDCap and closes the popup.
 
 > **Important:** Finalizing the text does not save the field in REDCap. After closing the popup, you must save your work using the standard save mechanism for the page you are on (e.g., clicking "Save" in the Online Designer). Failing to save will discard the finalized text.
 
-### Cancel
+## Cancel
 
 Closes the AI Writing Tools popup without copying anything into the rich text editor. Any suggestions generated during the session are discarded.
 
 ---
 
-## Section 7: Common Questions
+# 7. Common Questions
 
 **Where is the purple wizard's wand? I don't see it.**
 The wizard's wand only appears when the rich text editor is active. In some locations (like field labels in the Online Designer), you must manually enable the rich text editor first. If the rich text editor is active and the icon is still missing, AI Writing Tools may not be enabled for your project — contact your REDCap administrative team.
@@ -160,7 +161,7 @@ Custom prompts support general AI requests, not just text editing. However, prom
 
 ---
 
-## Section 8: Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Not enabling the rich text editor first.** In the Online Designer and some other locations, the rich text editor is not on by default. If you don't see the wizard's wand, look for a "rich text" toggle on the field — you may need to enable it before the AI icon appears.
 

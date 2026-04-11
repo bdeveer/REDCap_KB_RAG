@@ -2,29 +2,28 @@ RC-NAV-REC-03
 
 **Repeated Instruments & Repeated Events**
 
-  ------------------ --------------------------------------------------------------
-  **Article ID**     RC-NAV-REC-03
-  **Domain**         Navigation
-  **Applies To**     REDCap projects with repeated instruments or repeated events
-  **Prerequisite**   RC-NAV-REC-01 --- Record Navigation Overview
-  **Version**        1.0
-  **Last Updated**   2025
-  **Author**         REDCap Support
-  ------------------ --------------------------------------------------------------
+| **Article ID** | RC-NAV-REC-03 |
+| --- | --- |
+| **Domain** | Navigation |
+| **Applies To** | REDCap projects with repeated instruments or repeated events |
+| **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
 
-**1. Overview**
+# 1. Overview
 
 This article explains how REDCap handles instruments and events that can
 be filled out multiple times for the same record. It covers the visual
 indicators for repeated entries and how to navigate between them.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Repeated Instrument**
 
 An instrument configured to allow multiple independent entries per
 record (or per event, in longitudinal projects). The number of entries
-is not fixed --- it grows as data is added. Common use cases include
+is not fixed — it grows as data is added. Common use cases include
 lists of medications, adverse events, family members, or comorbidities.
 
 **Repeated Event**
@@ -51,9 +50,9 @@ Appears when a repeated event has been repeated three or more times.
 Clicking it collapses the repeated-event columns to save horizontal
 space.
 
-**3. Visual Indicators for Repeated Instruments**
+# 3. Visual Indicators for Repeated Instruments
 
-**3.1 Symbols at a Glance**
+## 3.1 Symbols at a Glance
 
   ----------------------- -------------------------------------------------------------------------
   **Symbol**              **Meaning**
@@ -63,7 +62,7 @@ space.
   Down arrow (on table)   Collapse the repeated instrument table on the Record Home Page.
   ----------------------- -------------------------------------------------------------------------
 
-**3.2 Stacked Dot Color Codes**
+## 3.2 Stacked Dot Color Codes
 
 The color of a stacked dot summarizes the statuses of all entries for
 that repeated instrument:
@@ -80,50 +79,50 @@ that repeated instrument:
   **Note:** A completed survey entry counts as Complete when determining stacked dot color.
   -------------------------------------------------------------------------------------------
 
-**4. Step-by-Step: Navigating Repeated Instruments**
+# 4. Step-by-Step: Navigating Repeated Instruments
 
-**4.1 Opening a Specific Repeated Entry**
+## 4.1 Opening a Specific Repeated Entry
 
--   Navigate to the Record Home Page for the record.
+- Navigate to the Record Home Page for the record.
 
--   Locate the repeated instrument. If it has more than one entry, you
+- Locate the repeated instrument. If it has more than one entry, you
     will see a stacked dot.
 
--   Click the stacked dot to open the entry list popup.
+- Click the stacked dot to open the entry list popup.
 
--   In the popup, each entry is shown with its status dot. Click the dot
+- In the popup, each entry is shown with its status dot. Click the dot
     for the entry you want to open.
 
-**4.2 Adding a New Repeated Entry**
+## 4.2 Adding a New Repeated Entry
 
--   On the Record Home Page, find the repeated instrument.
+- On the Record Home Page, find the repeated instrument.
 
--   Click the plus symbol (+) next to it to create a new entry.
+- Click the plus symbol (+) next to it to create a new entry.
 
--   Fill in the instrument and save.
+- Fill in the instrument and save.
 
-**4.3 Using the Repeated Instrument Table**
+## 4.3 Using the Repeated Instrument Table
 
--   On the Record Home Page, repeated instruments with at least one
+- On the Record Home Page, repeated instruments with at least one
     entry also display as a table below the main instrument grid.
 
--   The table lists all entries and provides direct links to each one.
+- The table lists all entries and provides direct links to each one.
 
--   Tables can be collapsed using the down arrow to reduce visual
+- Tables can be collapsed using the down arrow to reduce visual
     clutter when there are many entries.
 
-**4.4 Navigating Repeated Events**
+## 4.4 Navigating Repeated Events
 
--   In a longitudinal project with repeated events, each repetition of
+- In a longitudinal project with repeated events, each repetition of
     the event appears as an additional column on the Record Home Page.
 
--   When there are three or more repetitions, a double back arrow
+- When there are three or more repetitions, a double back arrow
     appears. Click it to collapse those columns.
 
--   Click any dot within a repeated event column to open that instrument
+- Click any dot within a repeated event column to open that instrument
     instance.
 
-**5. Combining Repeated Instruments and Longitudinal Mode**
+# 5. Combining Repeated Instruments and Longitudinal Mode
 
 Repeated instruments and longitudinal mode can be combined in several
 ways:
@@ -137,10 +136,10 @@ ways:
   ----------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** A repeated instrument and a repeated event are mutually exclusive within the same event. You cannot have a repeated instrument inside a repeated event. Either the entire event repeats, or individual instruments within a non-repeated event repeat --- but not both at once.
+  **Important:** A repeated instrument and a repeated event are mutually exclusive within the same event. You cannot have a repeated instrument inside a repeated event. Either the entire event repeats, or individual instruments within a non-repeated event repeat — but not both at once.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**6. Common Questions**
+# 6. Common Questions
 
 **Q: How do I know how many entries a repeated instrument has without
 clicking the stacked dot?**
@@ -173,27 +172,27 @@ A: Use the double back arrow to collapse repeated event columns. Also
 consider asking your project designer to set up a custom Record Status
 Dashboard that filters or groups the view.
 
-**7. Common Mistakes & Gotchas**
+# 7. Common Mistakes & Gotchas
 
--   Confusing the plus symbol and the stacked dot: the plus adds a new
+- Confusing the plus symbol and the stacked dot: the plus adds a new
     entry; the stacked dot opens the list of existing entries. They are
     different controls and are displayed in different positions.
 
--   Missing entries because the repeated instrument table is collapsed:
+- Missing entries because the repeated instrument table is collapsed:
     if someone previously collapsed the table, entries are still there
     but hidden. Click the down arrow (now pointing right) to expand it.
 
--   Expecting repeated instruments inside a repeated event: this
+- Expecting repeated instruments inside a repeated event: this
     configuration is not supported. If you see a stacked dot, the event
     itself is not repeatable.
 
--   Assuming a blue stacked dot means an error: blue only means mixed
+- Assuming a blue stacked dot means an error: blue only means mixed
     statuses. It is not an error indicator.
 
-**8. Related Articles**
+# 8. Related Articles
 
--   RC-NAV-REC-01 --- Record Navigation Overview
+- RC-NAV-REC-01 — Record Navigation Overview
 
--   RC-NAV-REC-02 --- Longitudinal Mode & Arms
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
 
--   RC-NAV-REC-04 --- Record Status Dashboard & Other Record Links
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links

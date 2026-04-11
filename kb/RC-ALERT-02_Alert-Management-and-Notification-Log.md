@@ -2,9 +2,8 @@ RC-ALERT-02
 
 **Alert Management & Notification Log**
 
-| Field | Value |
-|---|---|
 | **Article ID** | RC-ALERT-02 |
+| --- | --- |
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-ALERT-01 — Alerts & Notifications: Setup |
@@ -15,13 +14,13 @@ RC-ALERT-02
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 This article covers how to manage a collection of alerts in an active REDCap project, and how to use the Notification Log to review past and scheduled alert sends. Once a project has multiple alerts, the Alerts & Notifications management page becomes the primary workspace for organizing, editing, copying, deactivating, and re-evaluating alerts. The Notification Log provides a record of every alert instance that has been sent or is scheduled to be sent, and allows you to cancel individual scheduled sends. This article assumes familiarity with alert creation — see RC-ALERT-01 — Alerts & Notifications: Setup for the full setup workflow.
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 **Alerts & Notifications Management Page**
 The main page for the Alerts & Notifications feature, accessible from the project Applications menu. It serves as both the entry point for creating new alerts and the management interface for all existing alerts in the project.
@@ -49,11 +48,11 @@ A feature on the management page that allows you to view what an alert message w
 
 ---
 
-## 3. Alert Management Page
+# 3. Alert Management Page
 
 The Alerts & Notifications management page lists all alerts in the project. Each alert entry displays a summary of its configuration and provides access to editing and management actions.
 
-### 3.1 Alert Overview Card
+## 3.1 Alert Overview Card
 
 Each alert in the list shows:
 
@@ -67,7 +66,7 @@ Each alert in the list shows:
 - **Preview message** — displays the alert with generic placeholder text substituted for any piped variables. Use this when developing an alert before real records exist.
 - **Preview message by record** — select a specific record from a dropdown to display the alert with that record's actual data. Use this to verify what was sent to a specific participant, or to spot-check a fully-configured alert.
 
-### 3.2 Alert Actions Menu
+## 3.2 Alert Actions Menu
 
 Each alert has an **Edit** button and an **Options** menu. The available Options depend on whether the alert is currently active or deactivated.
 
@@ -90,7 +89,7 @@ Each alert has an **Edit** button and an **Options** menu. The available Options
 
 > **Note:** Edits made to an alert's configuration apply only to future trigger events. Alert instances that are already scheduled are not retroactively updated — they will send with the configuration that was in effect when they were queued.
 
-### 3.3 Search and Filter
+## 3.3 Search and Filter
 
 A **search box** at the top of the management page filters the alert list. The search applies to alert titles only — it does not search within alert message bodies or trigger logic.
 
@@ -98,9 +97,9 @@ A **Show deactivated alerts** checkbox toggles the view between active and deact
 
 ---
 
-## 4. Bulk Alert Operations
+# 4. Bulk Alert Operations
 
-### 4.1 Re-evaluate Alerts
+## 4.1 Re-evaluate Alerts
 
 Re-evaluating alerts causes REDCap to check all current records against the trigger conditions of one or more alerts. This is useful when an alert's conditions are modified after data collection has begun — records that were entered before the change may not have triggered the alert under the new conditions.
 
@@ -116,7 +115,7 @@ Re-evaluation does **not** modify any alert instances that have already been sen
 
 **Enable Test Run** — before committing to a full re-evaluation, enable this option to preview the results without actually queuing any sends. The test run shows which records would be affected and what action would be taken, allowing you to verify the outcome before proceeding.
 
-### 4.2 Upload and Download Alerts (CSV)
+## 4.2 Upload and Download Alerts (CSV)
 
 Alert configurations can be exported to a CSV file and imported back into the project. This is useful for:
 - Bulk-editing alert settings in a spreadsheet application.
@@ -136,13 +135,13 @@ Access this feature via the upload/download dropdown on the management page. Cli
 
 ---
 
-## 5. Notification Log
+# 5. Notification Log
 
 The Notification Log is accessible from the Alerts & Notifications management page. It provides a complete record of every alert instance in the project — both those already sent and those scheduled for future delivery.
 
 > **Note:** The Notification Log covers only alerts created through the Alerts & Notifications feature. Emails scheduled by Automated Survey Invitations (ASIs) do not appear in this log.
 
-### 5.1 Filters
+## 5.1 Filters
 
 Use the filter controls at the top of the log to narrow the displayed entries:
 
@@ -157,7 +156,7 @@ Use the filter controls at the top of the log to narrow the displayed entries:
 | Apply filters | Applies all currently selected filter values to the log. |
 | Reset | Returns all filters to their defaults. |
 
-### 5.2 Notification Log Table
+## 5.2 Notification Log Table
 
 | Column | Description |
 |---|---|
@@ -168,7 +167,7 @@ Use the filter controls at the top of the log to narrow the displayed entries:
 | Recipient | The email address(es) to which this alert instance was or will be sent. |
 | Subject | The subject line of the alert. |
 
-### 5.3 Exporting the Notification Log
+## 5.3 Exporting the Notification Log
 
 Two export options are available:
 
@@ -179,7 +178,7 @@ Both exports can be generated multiple times without restriction.
 
 ---
 
-## 6. Common Questions
+# 6. Common Questions
 
 **Q: How do I re-activate all my alerts after copying or migrating a project?**
 
@@ -211,7 +210,7 @@ Both exports can be generated multiple times without restriction.
 
 ---
 
-## 7. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Permanently deleting an alert instead of deactivating it.** Permanent deletion removes the alert and all its configuration entirely. If you think you might need the alert again — even after a study phase ends — deactivate it instead. Deactivated alerts are preserved indefinitely and can be re-enabled at any time. Reserve permanent deletion for alerts that are definitively no longer needed.
 
@@ -225,7 +224,7 @@ Both exports can be generated multiple times without restriction.
 
 ---
 
-## 8. Related Articles
+# 8. Related Articles
 
 - RC-ALERT-01 — Alerts & Notifications: Setup (required prerequisite — trigger types, scheduling, message settings)
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features (piping and smart variable usage in alert messages)

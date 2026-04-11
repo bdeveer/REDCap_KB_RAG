@@ -1,19 +1,20 @@
-# RC-TXT-02 — Texting: Administrator Setup
+RC-TXT-02
 
-| Field | Value |
-|---|---|
-| Article ID | RC-TXT-02 |
-| Domain | Texting (SMS) |
-| Applies To | REDCap administrators with "Modify system configuration pages" permission |
-| Prerequisite | RC-TXT-01 — Texting in REDCap: Setup and Usage |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-TXT-01 — Texting in REDCap: Setup and Usage |
+**Texting: Administrator Setup**
+
+| **Article ID** | RC-TXT-02 |
+| --- | --- |
+| **Domain** | Texting (SMS) |
+| **Applies To** | REDCap administrators with "Modify system configuration pages" permission |
+| **Prerequisite** | RC-TXT-01 — Texting in REDCap: Setup and Usage |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-TXT-01 — Texting in REDCap: Setup and Usage |
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 This article covers the system-level configuration that a REDCap administrator must complete before any project can use texting. It explains how to connect Twilio or Mosio to the REDCap installation, how to control which users can enable texting in their projects, and how to verify that the required phone validation types are present. Project-level setup (enabling and configuring texting within an individual project) is covered in RC-TXT-01 — Texting in REDCap: Setup and Usage.
 
@@ -21,34 +22,34 @@ This article covers the system-level configuration that a REDCap administrator m
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
-### Control Center
+## Control Center
 The administrative interface in REDCap accessible only to users with administrator privileges. System-wide settings — including texting configuration — are managed here.
 
-### Modules/Services Configuration page
+## Modules/Services Configuration page
 The page within the Control Center's **System Configuration** section where Twilio and Mosio are enabled, connected, and permission-leveled for the entire REDCap installation.
 
-### Permission level
+## Permission level
 A per-provider setting that controls who can enable Twilio or Mosio within an individual project: all users with Project Design rights, users who have received administrator approval, or administrators only.
 
-### Field Validation Types page
+## Field Validation Types page
 A Control Center page listing all phone number validation formats available to projects. If a required country format is not listed, it must be added manually before projects can use it for texting.
 
-### Test connection button
+## Test connection button
 A button on the Modules/Services Configuration page that verifies REDCap can reach the texting provider's servers. Must succeed before the provider can be enabled.
 
 ---
 
-## 3. Enabling a Texting Provider System-Wide
+# 3. Enabling a Texting Provider System-Wide
 
-### 3.1 Navigate to the configuration page
+## 3.1 Navigate to the configuration page
 
 1. Open the **Control Center** from the top navigation menu.
 2. Under **System Configuration**, click **Modules/Services Configuration**.
 3. Scroll to approximately the middle of the page to find the **Twilio** and **Mosio** configuration sections.
 
-### 3.2 Test the connection
+## 3.2 Test the connection
 
 Before enabling either service, verify that your REDCap server can reach the provider's API:
 
@@ -56,24 +57,24 @@ Before enabling either service, verify that your REDCap server can reach the pro
 2. If the connection succeeds, a confirmation popup appears. Proceed to enable the service.
 3. If the connection fails, REDCap cannot reach the provider. Check your institution's firewall rules and network configuration before proceeding. The provider cannot be enabled until the test passes.
 
-### 3.3 Enable the provider
+## 3.3 Enable the provider
 
 1. Use the dropdown in the provider's section to set the service to **Enabled**.
 2. Click **Save** at the bottom of the page to lock in the change.
 
 Both Twilio and Mosio can be enabled simultaneously in the same REDCap installation. Individual projects may only activate one provider at a time, but different projects can use different providers.
 
-### 3.4 Configure Twilio system credentials (Twilio only)
+## 3.4 Configure Twilio system credentials (Twilio only)
 
 Unlike Mosio (which is configured per-project), Twilio credentials at the system level provide a default connection that projects build on. In practice, most institutions configure Twilio credentials in the Control Center and then allow project-level configuration to inherit or override them. Refer to Twilio's documentation for account credentials setup.
 
 ---
 
-## 4. Setting the Permission Level
+# 4. Setting the Permission Level
 
 After enabling a provider, you must define who is allowed to activate it in individual projects.
 
-### 4.1 Permission options
+## 4.1 Permission options
 
 | Permission level | Behavior |
 |---|---|
@@ -81,7 +82,7 @@ After enabling a provider, you must define who is allowed to activate it in indi
 | Admin Approval | Users can begin configuration in Project Setup, but the service is not active until the project administrator submits a request and a REDCap administrator approves it. The user sees an "Request admin approval" button instead of an "Enable" button. |
 | Only Administrators | Only REDCap administrators can enable texting in any project. Project users cannot enable or configure it themselves. |
 
-### 4.2 Hiding the feature from non-administrators
+## 4.2 Hiding the feature from non-administrators
 
 When **Only Administrators** is selected, a secondary option controls whether non-administrators can see that texting exists:
 
@@ -90,23 +91,23 @@ When **Only Administrators** is selected, a secondary option controls whether no
 
 > **Note:** Even when texting is hidden from non-administrators, the administrator view of Project Setup shows the Enable button and all configuration options normally.
 
-### 4.3 Save after any permission change
+## 4.3 Save after any permission change
 
 After adjusting permission settings, click **Save** at the bottom of the Modules/Services Configuration page. Permission changes take effect immediately but require a save to persist.
 
 ---
 
-## 5. Verifying Phone Validation Types
+# 5. Verifying Phone Validation Types
 
 REDCap uses field validation types to ensure phone numbers are formatted correctly before they are passed to Twilio or Mosio.
 
-### 5.1 Check existing validation types
+## 5.1 Check existing validation types
 
 1. In the Control Center, navigate to **Field Validation Types**.
 2. Review the list of phone validation entries. At minimum, **Phone (North America)** should be present and enabled — Mosio requires this format, and Twilio uses it for US/Canada numbers.
 3. If you are enabling Twilio for international use, check that the relevant country format is listed (e.g., Phone (Australia), Phone (United Kingdom)).
 
-### 5.2 Add a missing validation type
+## 5.2 Add a missing validation type
 
 If the required country phone format is not listed, you must add it manually. The format of phone validation types varies by country. Consult the REDCap Community for existing custom phone validation definitions before creating one from scratch.
 
@@ -114,7 +115,7 @@ If the required country phone format is not listed, you must add it manually. Th
 
 ---
 
-## 6. Common Questions
+# 6. Common Questions
 
 **Q: Can both Twilio and Mosio be enabled in the same REDCap installation?**
 Yes. Both can be active at the system level simultaneously. Individual projects choose one or the other when enabling texting — they cannot use both at the same time.
@@ -139,7 +140,7 @@ The Test button checks network connectivity to the provider's API only. It does 
 
 ---
 
-## 7. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Enabling the provider before the connection test passes.** If your firewall blocks outbound connections to Twilio's or Mosio's API endpoints, enabling the provider will not work — users will get errors when trying to send. Always confirm the Test button succeeds before enabling.
 
@@ -151,6 +152,6 @@ The Test button checks network connectivity to the provider's API only. It does 
 
 ---
 
-## 8. Related Articles
+# 8. Related Articles
 
 - RC-TXT-01 — Texting in REDCap: Setup and Usage

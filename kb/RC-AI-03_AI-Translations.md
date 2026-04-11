@@ -1,19 +1,20 @@
-# RC-AI-03 — AI Translations
+RC-AI-03
 
-| Field | Value |
-|---|---|
-| Article ID | RC-AI-03 |
-| Domain | AI Tools |
-| Applies To | Projects using the Multi-Language Management module |
-| Prerequisite | RC-AI-01 — REDCap AI Tools: Overview & Security |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-MLM-01 — Multi-Language Management |
+**AI Translations**
+
+| **Article ID** | RC-AI-03 |
+| --- | --- |
+| **Domain** | AI Tools |
+| **Applies To** | Projects using the Multi-Language Management module |
+| **Prerequisite** | RC-AI-01 — REDCap AI Tools: Overview & Security |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-MLM-01 — Multi-Language Management |
 
 ---
 
-## Section 1: Overview
+# 1. Overview
 
 This article explains how to use REDCap's AI Translation feature, which is built into the Multi-Language Management (MLM) module. The feature allows you to translate your instrument content, the REDCap user interface, survey settings, alerts, and miscellaneous text into one or more target languages with a single button click — instead of manually entering translations or copying from an external translation tool. The AI sends content to your institution's AI server and returns translated strings, which you can then review and save. This article covers how to set up a language, translate the interface, translate instruments, and keep translations current when your project changes.
 
@@ -21,7 +22,7 @@ This article explains how to use REDCap's AI Translation feature, which is built
 
 ---
 
-## Section 2: Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 ## Multi-Language Management (MLM)
 
@@ -49,7 +50,7 @@ Red and green dots displayed next to translatable elements in the MLM interface.
 
 ---
 
-## Section 3: Setting Up a Language
+# 3. Setting Up a Language
 
 Before you can translate anything, you must add the target language to your project.
 
@@ -65,7 +66,7 @@ Before you can translate anything, you must add the target language to your proj
 5. Click **+ Add Language**.
 6. Toggle the language to **Active** using the switch next to the language name.
 
-### Base Language and Fallback Language requirements
+## Base Language and Fallback Language requirements
 
 MLM requires at least two languages to be defined and active. You must also designate a **Base Language** and a **Fallback Language** — these are usually the same language (the language your instruments are built in). If your working language (e.g., English) is not yet listed, add it following the steps above, activate it, and select it as both Base Language and Fallback Language using the corresponding radio buttons.
 
@@ -73,7 +74,7 @@ MLM requires at least two languages to be defined and active. You must also desi
 
 ---
 
-## Section 4: Translating the REDCap Interface
+# 4. Translating the REDCap Interface
 
 Translating the user interface (UI) ensures that navigation elements, button labels, and system messages are displayed in the target language — not just your instrument content. This step is recommended before translating instruments.
 
@@ -92,7 +93,7 @@ Translating the user interface (UI) ensures that navigation elements, button lab
 
 ---
 
-## Section 5: Translating Instruments
+# 5. Translating Instruments
 
 1. In the Multi-Language Management menu, navigate to the **Forms/Surveys** tab.
 2. Confirm the correct target language is selected.
@@ -106,19 +107,19 @@ Translating the user interface (UI) ensures that navigation elements, button lab
 9. Click **Save Changes**.
 10. Repeat steps 4–9 for each instrument you want to translate.
 
-### Survey settings translation
+## Survey settings translation
 
 If surveys are enabled on an instrument, a separate **Translate** option appears for survey settings (e.g., survey title, completion text). This is separate from translating the instrument fields. Click the corresponding Translate option and run "Translate using AI" the same way.
 
 ---
 
-## Section 6: Keeping Translations Current
+# 6. Keeping Translations Current
 
-### When you modify an instrument
+## When you modify an instrument
 
 If you add, edit, or remove variables after translating, you must return to the MLM module and run the AI translation again on the affected instruments. REDCap identifies which elements are new or changed (red dots) and only translates those — existing green-dot translations are not re-processed.
 
-### Alerts & Misc tabs
+## Alerts & Misc tabs
 
 Two additional tabs in the MLM module are relevant to translation but only appear when the corresponding features are configured:
 
@@ -127,7 +128,7 @@ Two additional tabs in the MLM module are relevant to translation but only appea
 
 ---
 
-## Section 7: Common Questions
+# 7. Common Questions
 
 **Why don't I see the "Translate using AI" button?**
 The AI translation button only appears when: (1) at least two languages are active in the project, (2) a Base Language has been set, and (3) the AI Translations feature is enabled by your administrator. If all three conditions are met and the button is still missing, contact your REDCap administrative team.
@@ -152,7 +153,7 @@ REDCap passes the Language Display Name to the AI as the target language instruc
 
 ---
 
-## Section 8: Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Setting the Language Display Name in English instead of the target language.** REDCap uses the display name as the AI prompt. If you enter "Spanish" instead of "Español," the translation quality may be affected. Always enter the display name in the language itself.
 

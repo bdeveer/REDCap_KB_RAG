@@ -1,25 +1,26 @@
-# RC-AI-01 — REDCap AI Tools: Overview & Security
+RC-AI-01
 
-| Field | Value |
-|---|---|
-| Article ID | RC-AI-01 |
-| Domain | AI Tools |
-| Applies To | All project types; feature availability depends on administrator configuration |
-| Prerequisite | None |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization |
+**REDCap AI Tools: Overview & Security**
+
+| **Article ID** | RC-AI-01 |
+| --- | --- |
+| **Domain** | AI Tools |
+| **Applies To** | All project types; feature availability depends on administrator configuration |
+| **Prerequisite** | None |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization |
 
 ---
 
-## Section 1: Overview
+# 1. Overview
 
 This article introduces the AI features available in REDCap as of version 15.5.3. REDCap can communicate with an AI server to perform a set of pre-defined actions — text generation and editing, language translation, and data summarization. Unlike general-purpose AI chat tools, REDCap's AI features are purpose-built and integrated directly into specific parts of the application. This article explains what the three features are, how the underlying AI server architecture works, and what data privacy and security considerations apply before using these features with sensitive data.
 
 ---
 
-## Section 2: Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 ## AI Server
 
@@ -47,7 +48,7 @@ A text formatting interface found in several areas of REDCap (instrument field l
 
 ---
 
-## Section 3: The Three AI Features at a Glance
+# 3. The Three AI Features at a Glance
 
 | Feature | Where to find it | What it does |
 |---|---|---|
@@ -59,9 +60,9 @@ REDCap limits its AI functionality to these three features. Additional capabilit
 
 ---
 
-## Section 4: AI Server Architecture & Security
+# 4. AI Server Architecture & Security
 
-### How the AI server works
+## How the AI server works
 
 REDCap's AI features rely on a standalone AI server provisioned and maintained by your institution's REDCap administrative team. This server is:
 
@@ -73,7 +74,7 @@ This architecture means REDCap does not send your data to a third-party service 
 
 > **Important:** The security posture described above reflects the intended design. You should verify with your local REDCap administrative team that the AI server setup at your institution actually meets the relevant compliance and data privacy standards before using AI features with sensitive data such as Protected Health Information (PHI).
 
-### Administrator controls
+## Administrator controls
 
 REDCap administrators can enable or disable each of the three AI features independently. Availability can be set globally (for all projects) or restricted to specific projects. If an AI feature is not visible in your project, it may not be enabled for your installation or your specific project. Contact your REDCap administrative team to confirm the local AI configuration.
 
@@ -81,7 +82,7 @@ REDCap administrators can enable or disable each of the three AI features indepe
 
 ---
 
-## Section 5: Common Questions
+# 5. Common Questions
 
 **What AI features does REDCap have?**
 REDCap has three main AI features: AI Writing Tools (text generation and editing via the rich text editor), AI Translations (language translation integrated into Multi-Language Management), and AI Summarization (summarizing free-text variable data in reports).
@@ -103,7 +104,7 @@ As of version 15.5.3, REDCap provides three main AI features. Additional capabil
 
 ---
 
-## Section 6: Common Mistakes & Gotchas
+# 6. Common Mistakes & Gotchas
 
 **Assuming the AI server is equivalent to a public service.** The REDCap AI server is a dedicated, institution-managed server — not ChatGPT or a similar public API. Behavior, capabilities, and response quality may differ from what you experience with public AI tools.
 

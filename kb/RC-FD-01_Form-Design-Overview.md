@@ -2,18 +2,17 @@ RC-FD-01
 
 **Form Design Overview**
 
-  -------------------- --------------------------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-FD-01
-  **Domain**           Form Design
-  **Applies To**       All REDCap project types; requires Project Design and Setup rights
-  **Prerequisite**     User is logged in and has Project Design and Setup rights
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-FD-02 --- Online Designer; RC-FD-03 --- Data Dictionary; RC-FD-04 --- Instrument Library & Zip Files; RC-FD-05 --- Codebook
-  -------------------- --------------------------------------------------------------------------------------------------------------------------------
+| **Article ID** | RC-FD-01 |
+| --- | --- |
+| **Domain** | Form Design |
+| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Prerequisite** | User is logged in and has Project Design and Setup rights |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-04 — Instrument Library & Zip Files; RC-FD-05 — Codebook |
 
-**1. Overview**
+# 1. Overview
 
 This article orients users to REDCap\'s instrument design area. It
 explains what an instrument is, describes the three primary design
@@ -21,7 +20,7 @@ tools, and covers the supporting features in the Design Your Data
 Collection Instruments section. It is the entry point for the Form
 Design knowledge base series.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Instrument**
 
@@ -51,33 +50,33 @@ menu.
 REDCap projects exist in one of two states. In Development mode, all
 design changes take effect immediately and no approval is required. In
 Production mode, design changes made in the Online Designer are queued
-for review before being applied --- either automatically by REDCap or
+for review before being applied — either automatically by REDCap or
 after administrator approval, depending on local policy.
 
-**3. Navigating to the Instrument Design Area**
+# 3. Navigating to the Instrument Design Area
 
-**3.1 From the Project Setup Page (Development Mode)**
+## 3.1 From the Project Setup Page (Development Mode)
 
--   Log in and open your project from the My Projects page.
+- Log in and open your project from the My Projects page.
 
--   If the project is in Development mode, it opens directly on the
+- If the project is in Development mode, it opens directly on the
     Project Setup page.
 
--   Locate the Design Your Data Collection Instruments section --- it is
+- Locate the Design Your Data Collection Instruments section — it is
     prominently displayed in the setup workflow.
 
-**3.2 From the Project Home Page (Production Mode or Alternate Path)**
+## 3.2 From the Project Home Page (Production Mode or Alternate Path)
 
--   If the project is in Production mode, it opens on the Project Home
+- If the project is in Production mode, it opens on the Project Home
     page.
 
--   In the left-hand menu, click Designer under the Data Collection
+- In the left-hand menu, click Designer under the Data Collection
     section to reach the instrument design area.
 
--   The same Design Your Data Collection Instruments section is
+- The same Design Your Data Collection Instruments section is
     available from both entry points.
 
-**4. The Three Main Instrument Design Tools**
+# 4. The Three Main Instrument Design Tools
 
 The Design Your Data Collection Instruments section surfaces three
 distinct tools for creating and modifying instruments. Each serves
@@ -91,23 +90,23 @@ cover each tool in detail.
   REDCap Instrument Library   Importing validated or community-contributed instruments (e.g., PHQ-9)                    RC-FD-04
   --------------------------- ----------------------------------------------------------------------------------------- -------------
 
-**5. Supporting Features in the Design Area**
+# 5. Supporting Features in the Design Area
 
-**5.1 Download PDF of All Instruments**
+## 5.1 Download PDF of All Instruments
 
 Generates a PDF document containing the definitions of every variable
 across all instruments in the project. Useful for documentation, IRB
 submissions, and offline review of your project\'s structure.
 
-**5.2 Download the Current Data Dictionary**
+## 5.2 Download the Current Data Dictionary
 
 Downloads the project\'s current instrument and variable definitions as
 a CSV file. This is the same format used by the Data Dictionary upload
 tool (RC-FD-03). Downloading the current Data Dictionary before making
-bulk changes is a critical safety practice --- it serves as a snapshot
+bulk changes is a critical safety practice — it serves as a snapshot
 that can be re-uploaded to undo a bad import.
 
-**5.3 Check for Identifiers**
+## 5.3 Check for Identifiers
 
 Opens a page that lets you review all variables in the project and
 designate which ones are identifiers (e.g., name, date of birth, medical
@@ -115,28 +114,28 @@ record number). Identifier flags control how data is handled in exports
 and reports. Individual variables can also be flagged as identifiers
 within the Online Designer.
 
-**5.4 Zip File Upload and Download**
+## 5.4 Zip File Upload and Download
 
 Instruments can be exported as zip files and re-imported into the same
 or a different REDCap project. This feature is accessed from within the
 Online Designer. See RC-FD-04 for full details.
 
-**5.5 Codebook**
+## 5.5 Codebook
 
 A read-only, human-readable summary of all instruments and variables in
 the project. Useful as a reference while designing instruments or
 writing logic. Accessible from the left-hand menu. See RC-FD-05 for full
 details.
 
-**5.6 Project Setup Progress Indicators**
+## 5.6 Project Setup Progress Indicators
 
 The Design Your Data Collection Instruments section includes a \'Not
 Started\' status indicator and an \'I\'m done!\' button. These are
-visual progress trackers for the project setup workflow only --- they
+visual progress trackers for the project setup workflow only — they
 have no functional effect on the project and do not lock or unlock any
 features.
 
-**5.7 Advanced Feature Reference Buttons**
+## 5.7 Advanced Feature Reference Buttons
 
 Five buttons at the bottom of the design section link to REDCap\'s
 built-in reference guides for advanced features: Smart Variables,
@@ -149,7 +148,7 @@ cover them in depth.
   **Note:** The text and layout of the Design Your Data Collection Instruments section may vary slightly depending on which project features are enabled (e.g., Surveys mode). The core tools and links described here are present in all configurations.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**6. Choosing the Right Tool**
+# 6. Choosing the Right Tool
 
 Use this guide to select the appropriate tool for your task. For full
 details on each tool, see the linked articles.
@@ -167,7 +166,7 @@ details on each tool, see the linked articles.
   Generate a PDF of all instruments for documentation or IRB submission   Download PDF of All Instruments (this article, Section 5.1)
   ----------------------------------------------------------------------- -------------------------------------------------------------
 
-**7. Common Questions**
+# 7. Common Questions
 
 **Q: What is the difference between an instrument, a form, and a survey
 in REDCap?**
@@ -189,7 +188,7 @@ team.
 **Q: Can I undo a change I made to an instrument?**
 
 A: Not through an undo button. The safest recovery path is to download
-the Data Dictionary before making significant changes --- this gives you
+the Data Dictionary before making significant changes — this gives you
 a snapshot you can re-upload to restore the previous state. For
 Production projects, pending changes can be cancelled before they are
 approved.
@@ -213,49 +212,49 @@ Tags, etc.) tools or links?**
 
 A: They are links to built-in REDCap reference guides, not tools
 themselves. They open documentation pages within REDCap. The features
-they describe --- piping values into fields, conditional action tags,
-etc. --- are applied within the Online Designer or Data Dictionary, not
+they describe — piping values into fields, conditional action tags,
+etc. — are applied within the Online Designer or Data Dictionary, not
 through those buttons directly.
 
-**8. Common Mistakes & Gotchas**
+# 8. Common Mistakes & Gotchas
 
--   Making changes in Production without expecting a review step: design
+- Making changes in Production without expecting a review step: design
     changes in Production mode are not applied immediately. If your
     changes aren\'t showing up, check whether they are pending review in
     the Online Designer\'s change queue.
 
--   Using \'form\' and \'survey\' and \'instrument\' interchangeably in
+- Using \'form\' and \'survey\' and \'instrument\' interchangeably in
     logic and variable names: REDCap treats these as one object type.
     Using inconsistent terminology in documentation or training creates
     confusion. Standardize on \'instrument\' throughout.
 
--   Skipping the Data Dictionary download before making bulk changes:
+- Skipping the Data Dictionary download before making bulk changes:
     downloading the current Data Dictionary before a major edit is the
     only reliable way to recover from a bad import. Build this habit
     before every bulk change.
 
--   Assuming the advanced feature buttons open tools: they open
+- Assuming the advanced feature buttons open tools: they open
     reference documentation, not editors. The actual features (Piping,
     \@Action Tags, etc.) are configured within the Online Designer or
     Data Dictionary.
 
-**API Access**
+## API Access
 
 > **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
 
--   **RC-API-07 — Export Metadata (Data Dictionary) API** — retrieve the full project data dictionary programmatically
--   **RC-API-08 — Import Metadata (Data Dictionary) API** — push a new or updated data dictionary to a project programmatically
--   **RC-API-09 — Export Instruments API** — retrieve the list of instruments (forms) in a project programmatically
+- **RC-API-07 — Export Metadata (Data Dictionary) API** — retrieve the full project data dictionary programmatically
+- **RC-API-08 — Import Metadata (Data Dictionary) API** — push a new or updated data dictionary to a project programmatically
+- **RC-API-09 — Export Instruments API** — retrieve the list of instruments (forms) in a project programmatically
 
 ---
 
 
-**9. Related Articles**
+# 9. Related Articles
 
--   RC-FD-02 --- Online Designer
+- RC-FD-02 — Online Designer
 
--   RC-FD-03 --- Data Dictionary
+- RC-FD-03 — Data Dictionary
 
--   RC-FD-04 --- Instrument Library & Zip Files
+- RC-FD-04 — Instrument Library & Zip Files
 
--   RC-FD-05 --- Codebook
+- RC-FD-05 — Codebook

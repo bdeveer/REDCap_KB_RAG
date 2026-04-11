@@ -1,21 +1,24 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-EXPRT-08 |
-| Domain | Exports, Reports & Stats |
-| Applies To | All project types; requires Add/Edit/Organize Reports privilege for most actions |
-| Prerequisite | RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-USER-03 — User Rights: Configuring User Privileges |
+RC-EXPRT-08
 
-## 1. Overview
+**Custom Reports: Management & Organization**
+
+| **Article ID** | RC-EXPRT-08 |
+| --- | --- |
+| **Domain** | Exports, Reports & Stats |
+| **Applies To** | All project types; requires Add/Edit/Organize Reports privilege for most actions |
+| **Prerequisite** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-USER-03 — User Rights: Configuring User Privileges |
+
+# 1. Overview
 
 This article covers saving custom reports and working with the My Reports & Exports overview — including the options available after saving, the per-report action buttons, report identifiers, and the tools for organizing reports into folders. It is the third article in the Custom Reports series and assumes you have already created a report using RC-EXPRT-06 and optionally configured filters using RC-EXPRT-07.
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 **My Reports & Exports Overview**
 The main landing page of the Data Exports, Reports & Stats menu. It lists all available report options — built-in options at the top, followed by all custom reports — along with action buttons and management controls for each.
@@ -34,7 +37,7 @@ A URL generated for reports that have been made public. Clicking the public link
 
 ---
 
-## 3. Saving a Report
+# 3. Saving a Report
 
 Once you have configured your report settings, fields, and any filters, click **Save Report** to save the report. If you are editing an existing report, this button updates it in place.
 
@@ -50,11 +53,11 @@ There is no auto-save. Use **Continue Editing Report** to checkpoint your work i
 
 ---
 
-## 4. My Reports & Exports Overview
+# 4. My Reports & Exports Overview
 
 The overview lists all custom reports below the built-in export options. Each custom report row includes a set of action buttons and, after the report is saved, two unique identifiers.
 
-### 4.1 Standard Action Buttons
+## 4.1 Standard Action Buttons
 
 All custom reports share the same three primary action buttons available on built-in reports:
 
@@ -66,7 +69,7 @@ All custom reports share the same three primary action buttons available on buil
 
 > **Note:** Users without sufficient user rights may not see all three buttons. Export Data, in particular, requires the appropriate export privilege.
 
-### 4.2 Management Options (Custom Reports Only)
+## 4.2 Management Options (Custom Reports Only)
 
 Each custom report also has three management buttons in the Management Options column:
 
@@ -78,7 +81,7 @@ Each custom report also has three management buttons in the Management Options c
 
 > **Important:** The Delete button removes the report immediately without a secondary confirmation step in all REDCap versions. Verify you are deleting the correct report before clicking.
 
-### 4.3 Report Identifiers
+## 4.3 Report Identifiers
 
 Each saved custom report displays two identifiers in the overview:
 
@@ -86,27 +89,27 @@ Each saved custom report displays two identifiers in the overview:
 
 **Unique Report Name:** A longer alphanumeric string, also unique installation-wide. Used in the Project Dashboard feature to build charts and graphs sourced from a specific report's data.
 
-### 4.4 Public Link
+## 4.4 Public Link
 
 If a report has been made public (see RC-EXPRT-06, Section 4.2), a blue **Public** link appears in its row in the overview. Clicking this link opens the public report in a new browser tab. This provides a quick way to preview or verify the public report without navigating through the report edit menu.
 
 ---
 
-## 5. Report Folders
+# 5. Report Folders
 
 Projects with many custom reports can become difficult to navigate. Report folders allow you to group related reports under named headings in the My Reports & Exports overview.
 
-### 5.1 Accessing the Folder Manager
+## 5.1 Accessing the Folder Manager
 
 The folder management interface is accessed via the **Organize** link in the report section header in the **left-hand project menu** — not from within the Data Exports, Reports & Stats page itself. This is a common point of confusion.
 
-### 5.2 Creating a Folder
+## 5.2 Creating a Folder
 
 In the folder manager, enter a name in the **New Folder** text box and click **Add**. The folder is created immediately and will appear in the overview for all users who have view access to at least one report assigned to it.
 
 Folder names should be meaningful to all users of the project, not just the creator.
 
-### 5.3 Assigning Reports to a Folder
+## 5.3 Assigning Reports to a Folder
 
 1. Select a folder from the dropdown in the folder manager.
 2. REDCap displays a list of all reports in the project. Check the box next to each report you want to assign to that folder.
@@ -114,7 +117,7 @@ Folder names should be meaningful to all users of the project, not just the crea
 
 A report can be assigned to more than one folder simultaneously. This is useful when a report is relevant to multiple working groups or purposes.
 
-### 5.4 Search and Edit Links
+## 5.4 Search and Edit Links
 
 The report section header also includes two additional navigation links:
 
@@ -124,7 +127,7 @@ The report section header also includes two additional navigation links:
 
 ---
 
-## 6. Common Questions
+# 6. Common Questions
 
 **Q: I deleted a report by accident. Can I recover it?**
 A: No. Deleting a report is permanent and there is no undo. The report definition is gone; you would need to recreate it from scratch. The data the report displayed is not affected — only the report configuration is lost.
@@ -149,7 +152,7 @@ A: The Organize link is located in the left-hand project menu under the reports 
 
 ---
 
-## 7. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Looking for report folders in the Data Exports menu.** The folder manager is accessed via the left-hand project menu (the Organize link), not from within the Data Exports, Reports & Stats page. Users who expect it on the export page will not find it there.
 
@@ -172,7 +175,7 @@ A: The Organize link is located in the left-hand project menu under the reports 
 ---
 
 
-## 8. Related Articles
+# 8. Related Articles
 
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection (prerequisite — creating a report and selecting fields)
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering (configuring filters and result ordering)

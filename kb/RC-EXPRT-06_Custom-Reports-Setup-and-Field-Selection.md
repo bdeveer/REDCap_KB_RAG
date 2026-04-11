@@ -1,21 +1,24 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-EXPRT-06 |
-| Domain | Exports, Reports & Stats |
-| Applies To | All project types; requires Add/Edit/Organize Reports privilege |
-| Prerequisite | RC-EXPRT-05 — Data Export: Report Types & Other Export Options |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
+RC-EXPRT-06
 
-## 1. Overview
+**Custom Reports: Setup & Field Selection**
+
+| **Article ID** | RC-EXPRT-06 |
+| --- | --- |
+| **Domain** | Exports, Reports & Stats |
+| **Applies To** | All project types; requires Add/Edit/Organize Reports privilege |
+| **Prerequisite** | RC-EXPRT-05 — Data Export: Report Types & Other Export Options |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
+
+# 1. Overview
 
 This article explains how to create a custom report in REDCap and select the variables it displays. Custom reports let you define a persistent, reusable view of specific fields across your project's records — unlike the built-in "All Data" or single-instrument options, which are fixed. This is the first article in the Custom Reports series (RC-EXPRT-06 through RC-EXPRT-08); it covers navigation to the report builder, report-level settings (name, public access, description, user access), and all methods for adding and arranging variables. Filtering and result ordering are covered in RC-EXPRT-07; saving and report management in RC-EXPRT-08.
 
 ---
 
-## 2. Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 **Custom Report**
 A named, saved report that you define by selecting specific variables, optional filters, and access rules. Custom reports persist in the project and can be run, exported, or shared repeatedly without reconfiguration.
@@ -37,7 +40,7 @@ The user right that controls who can create, edit, copy, and delete custom repor
 
 ---
 
-## 3. Navigating to the Report Builder
+# 3. Navigating to the Report Builder
 
 Custom reports are accessed through the Data Exports, Reports & Stats menu in the left-hand project navigation.
 
@@ -49,15 +52,15 @@ Alternatively, if you want to base a new custom report on one of the built-in op
 
 ---
 
-## 4. Report-Level Settings
+# 4. Report-Level Settings
 
 Before selecting fields, the report builder presents several report-level settings. These control the report's identity and access rules.
 
-### 4.1 Title
+## 4.1 Title
 
 The report name is required. It appears in the report list and in any export filenames. Best practice is to use a short, descriptive title that is meaningful to any user who will interact with the report. Titles can be changed at any time after saving.
 
-### 4.2 Public Reports
+## 4.2 Public Reports
 
 The public report option, when enabled, generates a shareable URL that allows anyone with the link to view the report — no REDCap login required. This is useful for sharing non-sensitive lists (e.g., a public sign-up sheet) with people outside your project.
 
@@ -77,19 +80,19 @@ Once public, you can optionally create a custom short link to make the URL easie
 
 > **Yale-specific:** [Confirm whether public reports are enabled at this installation and any applicable data governance requirements — leave blank until confirmed with Yale REDCap support team]
 
-### 4.3 Description
+## 4.3 Description
 
 An optional free-text description that accepts basic rich-text formatting. The description is displayed above the report results when the report is viewed. Use this to explain the report's purpose, document any filters applied, or provide context for users who did not create the report.
 
 ---
 
-## 5. Step 1: User Access
+# 5. Step 1: User Access
 
 Step 1 defines who can view and edit the report. By default, all project users can view and edit a new report, subject to their existing user rights.
 
 > **Note:** A user can only edit a report if they also hold the Add/Edit/Organize Reports privilege. The report-level edit access setting does not override that user right.
 
-### 5.1 Access by Individual User, Role, or DAG
+## 5.1 Access by Individual User, Role, or DAG
 
 The access controls offer three selection boxes — individual users, user roles, and Data Access Groups (DAGs) — for both view and edit rights independently.
 
@@ -103,7 +106,7 @@ Selecting a role or DAG is preferred over selecting individual users when the pr
 
 The three selection boxes are not mutually exclusive. You can combine individual users, roles, and DAGs in any combination for either view or edit access.
 
-### 5.2 Verifying Access
+## 5.2 Verifying Access
 
 To check exactly which users will have access based on your current selections, click **View user access list**. REDCap evaluates your selections and displays the resulting list of users, which is helpful when users belong to overlapping roles and DAGs.
 
@@ -111,11 +114,11 @@ To check exactly which users will have access based on your current selections, 
 
 ---
 
-## 6. Step 2: Field Selection
+# 6. Step 2: Field Selection
 
 Step 2 is where you choose which variables the report displays. REDCap provides four methods for adding variables; all four can be used in combination within the same report.
 
-### 6.1 Four Methods for Adding Variables
+## 6.1 Four Methods for Adding Variables
 
 **Choose Instrument method**
 Select an instrument from the dropdown in the top-right of the field section. REDCap adds every variable in that instrument to the report at once. Useful for quickly adding all fields from a known instrument. Note that adding a large instrument may cause a brief slowdown as REDCap loads all variables into the list.
@@ -131,15 +134,15 @@ Click the small icon next to the look-up search box to switch it to a dropdown m
 
 > **Note:** REDCap will not add the same variable to a report twice. All four methods check for duplicates automatically.
 
-### 6.2 Reordering Variables
+## 6.2 Reordering Variables
 
 Variables in the report can be reordered freely regardless of the order in which they were added. Hover over the area to the left of the word "field" for any row — a drag handle (up-down arrow) will appear. Click and drag the row to its desired position.
 
-### 6.3 Removing Variables
+## 6.3 Removing Variables
 
 To remove a variable from the report, click the small red **X** at the far right of its row, or uncheck it in the Quick Add menu. Removing a variable does not delete any data — it only removes that variable from this report's display. The variable can be re-added at any time.
 
-### 6.4 Additional Report Options
+## 6.4 Additional Report Options
 
 These options appear below the field list and apply to the full report. The defaults are appropriate for most use cases.
 
@@ -153,7 +156,7 @@ These options appear below the field list and apply to the full report. The defa
 
 ---
 
-## 7. Common Questions
+# 7. Common Questions
 
 **Q: Do I need a special permission to create custom reports?**
 A: Yes. You must have the **Add/Edit/Organize Reports** privilege in your user rights. Without it, you can view reports you have been granted access to, but cannot create, edit, copy, or delete them.
@@ -178,7 +181,7 @@ A: No. REDCap prevents duplicate variables in a report, regardless of which meth
 
 ---
 
-## 8. Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Confusing report-level access with user rights.** Granting a user edit access to a report does not give them the Add/Edit/Organize Reports privilege — they still need that user right. Conversely, taking away report-level access for a user does not prevent them from seeing the report if they have broad user rights. The two systems operate in parallel.
 
@@ -201,7 +204,7 @@ A: No. REDCap prevents duplicate variables in a report, regardless of which meth
 ---
 
 
-## 9. Related Articles
+# 9. Related Articles
 
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options (prerequisite — covers the built-in report options this article builds on)
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering (next article — filters, logic builder, live filters, and result ordering)

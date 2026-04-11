@@ -1,27 +1,26 @@
 RC-BL-04
 
-**Branching Logic -- Structured Fields & Checkboxes**
+**Branching Logic — Structured Fields & Checkboxes**
 
-  -------------------- ----------------------------------------------------------------------------------------------------------------------------------
-  **Article ID**       RC-BL-04
-  **Domain**           Branching Logic
-  **Applies To**       All REDCap project types; requires Project Design and Setup rights
-  **Prerequisite**     RC-BL-02 --- Syntax & Atomic Statements
-  **Version**          1.0
-  **Last Updated**     2025
-  **Author**           REDCap Support
-  **Related Topics**   RC-BL-02 --- Syntax & Atomic Statements; RC-BL-03 --- Combining Statements; RC-FD-05 --- Codebook; RC-DE-02 --- Basic Data Entry
-  -------------------- ----------------------------------------------------------------------------------------------------------------------------------
+| **Article ID** | RC-BL-04 |
+| --- | --- |
+| **Domain** | Branching Logic |
+| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Prerequisite** | RC-BL-02 — Syntax & Atomic Statements |
+| **Version** | 1.0 |
+| **Last Updated** | 2025 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-FD-05 — Codebook; RC-DE-02 — Basic Data Entry |
 
-**1. Overview**
+# 1. Overview
 
 This article explains how to write branching logic for structured field
-types --- fields with a predefined set of options. It covers the concept
+types — fields with a predefined set of options. It covers the concept
 of raw values, the distinction between single-choice and multiple-choice
 (checkbox) fields, and the special sub-variable syntax required to
 reference individual checkbox options.
 
-**2. Key Concepts & Definitions**
+# 2. Key Concepts & Definitions
 
 **Structured Field**
 
@@ -57,20 +56,20 @@ checkbox with 5 options creates 5 sub-variables. Sub-variables are
 referenced in logic using the format \[variable\_name(raw\_value)\].
 Each sub-variable has a value of 1 (checked) or 0 (unchecked).
 
-**3. Raw Values --- What They Are and How to Find Them**
+# 3. Raw Values --- What They Are and How to Find Them
 
 Every option in a radio button, dropdown, or checkbox field is defined
 using a \'raw value, label\' format. The raw value is what REDCap stores
 in the database and what you must use in logic statements.
 
-**3.1 How REDCap Defines Options**
+## 3.1 How REDCap Defines Options
 
 In the Online Designer, options are entered one per line in the format:
 
 +---------------------------------------------------+
 | raw\_value, Display Label                         |
 |                                                   |
-| // Example --- a radio button with three options: |
+| // Example — a radio button with three options: |
 |                                                   |
 | 1, Strongly Agree                                 |
 |                                                   |
@@ -80,32 +79,32 @@ In the Online Designer, options are entered one per line in the format:
 +---------------------------------------------------+
 
 Raw values are typically integers, but they can be any text string. The
-raw value is **unique within the field** --- no two options in the same
+raw value is **unique within the field** — no two options in the same
 field can share a raw value.
 
-**3.2 Where to Look Up Raw Values**
+## 3.2 Where to Look Up Raw Values
 
--   **Codebook (RC-FD-05):** The Codebook displays all options for every
+- **Codebook (RC-FD-05):** The Codebook displays all options for every
     field in human-readable format, including raw values. This is the
     fastest reference when writing logic.
 
--   **Online Designer:** Open the field\'s edit dialog. The choices
+- **Online Designer:** Open the field\'s edit dialog. The choices
     section shows raw values paired with labels.
 
--   **Data Dictionary:** The Choices, Calculations, OR Slider Labels
+- **Data Dictionary:** The Choices, Calculations, OR Slider Labels
     column contains all option definitions in raw value, label format.
 
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** Always use the raw value in logic statements, never the display label. If the label is \'Strongly Agree\' and the raw value is 1, write \[field\]=\'1\' --- not \[field\]=\'Strongly Agree\'. Labels can be changed by the project designer at any time; raw values are stable.
+  **Important:** Always use the raw value in logic statements, never the display label. If the label is \'Strongly Agree\' and the raw value is 1, write \[field\]=\'1\' — not \[field\]=\'Strongly Agree\'. Labels can be changed by the project designer at any time; raw values are stable.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**4. Single-Choice Fields in Branching Logic**
+# 4. Single-Choice Fields in Branching Logic
 
-Single-choice fields store exactly one value --- the raw value of the
+Single-choice fields store exactly one value — the raw value of the
 selected option. Writing logic for them follows the standard atomic
 statement pattern.
 
-**4.1 Supported Single-Choice Field Types**
+## 4.1 Supported Single-Choice Field Types
 
   ------------------ --------------------------------------- ---------------------
   **Field Type**     **Stored Value**                        **Logic Example**
@@ -117,7 +116,7 @@ statement pattern.
   Calculated field   The numeric result of the calculation   \[bmi\]\>=25
   ------------------ --------------------------------------- ---------------------
 
-**4.2 Bonus: File Upload and Signature Fields**
+## 4.2 Bonus: File Upload and Signature Fields
 
 File Upload and Signature fields do not store a traditional value, but
 you can use them in logic to check whether a file has been attached or a
@@ -131,24 +130,24 @@ signature captured:
 | \[consent\_form\]=\'\' // True when no file has been uploaded yet |
 +-------------------------------------------------------------------+
 
-You cannot compare the file contents --- only the presence or absence of
+You cannot compare the file contents — only the presence or absence of
 the file.
 
-**5. Checkbox Fields in Branching Logic**
+# 5. Checkbox Fields in Branching Logic
 
 Checkbox fields require a different syntax because they store data
 differently from all other field types. Understanding this distinction
 is essential for writing correct checkbox logic.
 
-**5.1 How Checkboxes Store Data**
+## 5.1 How Checkboxes Store Data
 
 A checkbox field with N options creates N separate sub-variables in the
-REDCap dataset --- one per option. Each sub-variable stores only two
+REDCap dataset — one per option. Each sub-variable stores only two
 values:
 
--   1 --- the option is checked (selected)
+- 1 — the option is checked (selected)
 
--   0 --- the option is unchecked (default state)
+- 0 — the option is unchecked (default state)
 
 Example: a checkbox field named \[conditions\] with three options:
 
@@ -163,7 +162,7 @@ Example: a checkbox field named \[conditions\] with three options:
 This creates three sub-variables: \[conditions(1)\], \[conditions(2)\],
 \[conditions(3)\]. Each is independently 0 or 1.
 
-**5.2 Checkbox Sub-Variable Syntax**
+## 5.2 Checkbox Sub-Variable Syntax
 
 To reference a specific checkbox option in logic, place the raw value of
 that option inside parentheses within the variable name:
@@ -180,16 +179,16 @@ that option inside parentheses within the variable name:
 | \[conditions(3)\]=\'0\' // Is the Cancer option NOT checked?   |
 +----------------------------------------------------------------+
 
-**5.3 Comparing Radio vs. Checkbox Syntax**
+## 5.3 Comparing Radio vs. Checkbox Syntax
 
   ------------------------------------------ ------------------ -------------------------------------------------------------------------------
   **Scenario**                               **Radio Button**   **Checkbox**
   Option with raw value 12 is selected       \[radio\]=12       \[checkbox(12)\]=\'1\'
   Option with raw value 12 is NOT selected   \[radio\]\<\>12    \[checkbox(12)\]=\'0\'
-  Field has no selection (empty)             \[radio\]=\'\'     Not directly testable as a single expression --- check each option separately
+  Field has no selection (empty)             \[radio\]=\'\'     Not directly testable as a single expression — check each option separately
   ------------------------------------------ ------------------ -------------------------------------------------------------------------------
 
-**5.4 Practical Checkbox Logic Patterns**
+## 5.4 Practical Checkbox Logic Patterns
 
 Show a follow-up field when at least one of several checkbox options is
 checked:
@@ -222,7 +221,7 @@ Show a field when a specific option is explicitly NOT checked:
   **Warning:** Do not switch a checkbox field to a radio button field (or vice versa) after branching logic has been written that references it. The sub-variable syntax for checkboxes is incompatible with the single-value syntax for radio buttons. Any existing logic referencing that field will break and must be rewritten.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**6. Common Questions**
+# 6. Common Questions
 
 **Q: How do I find the raw values for a field\'s options?**
 
@@ -271,45 +270,45 @@ affected field in the Online Designer, review the branching logic, and
 update the syntax. The Data Dictionary can speed this up if many fields
 are affected.
 
-**7. Common Mistakes & Gotchas**
+# 7. Common Mistakes & Gotchas
 
--   Using the display label instead of the raw value:
+- Using the display label instead of the raw value:
     \[gender\]=\'Male\' will not work if \'Male\' is a label and \'1\'
     is the raw value. Always verify raw values in the Codebook before
     writing logic.
 
--   Forgetting parentheses in checkbox syntax: \[conditions\]=1 is radio
+- Forgetting parentheses in checkbox syntax: \[conditions\]=1 is radio
     button syntax. For checkboxes, it must be \[conditions(1)\]=\'1\'.
     Without the parentheses and raw value, the logic will not reference
     any checkbox sub-variable.
 
--   Switching field type after logic is written: changing a field from
+- Switching field type after logic is written: changing a field from
     radio to checkbox (or vice versa) breaks all existing logic
     referencing that field. The syntax is incompatible. Plan field types
     carefully before data collection begins.
 
--   Treating checkbox \'unchecked\' as empty: an unchecked checkbox
+- Treating checkbox \'unchecked\' as empty: an unchecked checkbox
     option stores 0, not \'\' (empty). Testing \[field(1)\]=\'\' will
     not behave as expected. Use \[field(1)\]=\'0\' to test for
     unchecked.
 
--   Assuming checkbox logic mirrors radio logic: the most common mistake
+- Assuming checkbox logic mirrors radio logic: the most common mistake
     for users familiar with radio buttons is writing checkbox logic
     without the sub-variable syntax. The field name alone does not refer
     to any single value for a checkbox field.
 
-**8. Related Articles**
+# 8. Related Articles
 
--   RC-BL-02 --- Syntax & Atomic Statements (prerequisite --- covers
+- RC-BL-02 — Syntax & Atomic Statements (prerequisite — covers
     operators, quotes, brackets)
 
--   RC-BL-03 --- Combining Logic Statements (AND, OR, parentheses ---
+- RC-BL-03 — Combining Logic Statements (AND, OR, parentheses ---
     often needed with checkbox logic)
 
--   RC-BL-01 --- Branching Logic Overview & Scope
+- RC-BL-01 — Branching Logic Overview & Scope
 
--   RC-FD-05 --- Codebook (the fastest way to look up raw values for any
+- RC-FD-05 — Codebook (the fastest way to look up raw values for any
     field)
 
--   RC-DE-02 --- Basic Data Entry (explains how branching logic appears
+- RC-DE-02 — Basic Data Entry (explains how branching logic appears
     during data entry)

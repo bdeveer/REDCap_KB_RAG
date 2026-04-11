@@ -1,25 +1,26 @@
-# RC-AI-04 — AI Summarization
+RC-AI-04
 
-| Field | Value |
-|---|---|
-| Article ID | RC-AI-04 |
-| Domain | AI Tools |
-| Applies To | All project types; requires AI Summarization to be enabled by administrator |
-| Prerequisite | RC-AI-01 — REDCap AI Tools: Overview & Security |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-EXPRT-01 — Data Export: Overview & Workflow; RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
+**AI Summarization**
+
+| **Article ID** | RC-AI-04 |
+| --- | --- |
+| **Domain** | AI Tools |
+| **Applies To** | All project types; requires AI Summarization to be enabled by administrator |
+| **Prerequisite** | RC-AI-01 — REDCap AI Tools: Overview & Security |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-EXPRT-01 — Data Export: Overview & Workflow; RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
 
 ---
 
-## Section 1: Overview
+# 1. Overview
 
 This article explains how to use REDCap's AI Summarization feature. AI Summarization allows you to send the collected free-text data from a variable — across all records visible in a report — to your institution's AI server and receive a summary in return. This is useful for quickly understanding patterns or themes across open-ended responses without reading every record individually. The feature is accessed from within any report (including custom reports) via a purple wizard's wand icon in the column header of eligible variables. You can summarize a single variable at a time or batch-process multiple variables. This article covers eligible variable types, the single-variable and bulk summarization workflows, prompt customization, and how to save or export results.
 
 ---
 
-## Section 2: Key Concepts & Definitions
+# 2. Key Concepts & Definitions
 
 ## Free-Text Variable
 
@@ -43,7 +44,7 @@ The instruction sent to the AI along with the variable data. The default prompt 
 
 ---
 
-## Section 3: Eligible Variable Types
+# 3. Eligible Variable Types
 
 AI Summarization works only on free-text variables. Use the table below to determine whether a given variable qualifies.
 
@@ -62,7 +63,7 @@ The wand icon appears only on eligible columns in the report header. If a column
 
 ---
 
-## Section 4: Single-Variable Summarization
+# 4. Single-Variable Summarization
 
 Use this workflow to summarize one variable at a time.
 
@@ -76,7 +77,7 @@ Use this workflow to summarize one variable at a time.
 6. Processing time varies based on the amount of data and current AI server load.
 7. When processing is complete, the result appears in the Summarization menu.
 
-### Modifying the prompt
+## Modifying the prompt
 
 To use a custom prompt instead of the default:
 
@@ -89,7 +90,7 @@ To use a custom prompt instead of the default:
 
 ---
 
-## Section 5: Working with Results
+# 5. Working with Results
 
 Once the AI returns a response, several options are available:
 
@@ -103,11 +104,11 @@ Once the AI returns a response, several options are available:
 
 ---
 
-## Section 6: Bulk Summarization
+# 6. Bulk Summarization
 
 Use bulk summarization to process multiple free-text variables from a single report in one session.
 
-### Step 1: Define your variable selections
+## Step 1: Define your variable selections
 
 1. Click the **"Summarize Data"** button at the top of the report page.
 2. In the dropdown that appears, click **"Pre-select fields & compose action text."**
@@ -117,7 +118,7 @@ Use bulk summarization to process multiple free-text variables from a single rep
    - Adjust the action text (prompt) for any variable individually if the default is not appropriate.
 5. Click **Save** to store your selections. You can return and edit these selections at any time by repeating this process.
 
-### Step 2: Generate summaries
+## Step 2: Generate summaries
 
 After saving your selections, REDCap offers to take you directly to the generation step. You can also return to it later:
 
@@ -137,7 +138,7 @@ After saving your selections, REDCap offers to take you directly to the generati
 
 ---
 
-## Section 7: Common Questions
+# 7. Common Questions
 
 **Which variable types can be summarized?**
 Only free-text variables without validation: Notes Boxes (always eligible) and Text Boxes with no validation type applied. Any field with a validation rule — including dates, emails, numbers, and phone numbers — is not eligible. Structured field types (checkboxes, dropdowns, radios, calculated fields) are also not eligible.
@@ -162,7 +163,7 @@ Processing time depends on the amount of text data in the variable (number of re
 
 ---
 
-## Section 8: Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Closing the menu before saving the result.** REDCap does not save AI summaries automatically. If you close the Summarization menu — whether the single-variable or bulk version — without first copying or downloading the output, you must regenerate it. Make it a habit to copy or download results immediately.
 
