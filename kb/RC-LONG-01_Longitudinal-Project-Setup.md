@@ -7,7 +7,7 @@ RC-LONG-01
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-LONG-02 — Repeated Instruments & Events Setup; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
@@ -138,14 +138,31 @@ Both the Define My Events page and the Designate Instruments page support CSV-ba
 
 ## 6.1 Arms & Events (Define My Events page)
 
-Access bulk options from the **Upload or download arms/events** dropdown:
+Access bulk options from the **Upload or download arms/events** dropdown.
+
+> **Upload order:** When setting up a project via CSV, always upload in this sequence: **arms → events → instrument mappings**. Events reference arm numbers, so the arm must exist before events are uploaded. Instrument mappings reference unique event names, so events must exist before mappings are uploaded. Uploading out of order will cause references to fail.
+
+> **Single-arm projects:** If your project has only one arm, you do not need to upload the arms CSV. REDCap creates "Arm 1" automatically when longitudinal mode is enabled. Start with the events upload, then upload instrument mappings.
 
 | **Option** | **Behavior** |
 |---|---|
-| Upload arms (CSV) | Adds new arms. Does not delete existing arms omitted from the file. Requires: arm number, arm name. |
+| Upload arms (CSV) | Adds new arms. Does not delete existing arms omitted from the file. |
 | Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. |
-| Upload events (CSV) | Adds new events. Does not delete existing events omitted from the file. Requires: event name, arm number, unique event name (can be left blank — REDCap auto-generates it). |
+| Upload events (CSV) | Adds new events. Does not delete existing events omitted from the file. |
 | Download events (CSV) | Exports current event configuration. |
+
+**Arms CSV columns:** `arm_num`, `name`
+
+**Events CSV columns (core):** `event_name`, `arm_num`, `unique_event_name`, `custom_event_label`
+
+- `unique_event_name` may be left blank — REDCap auto-generates it from the event name and arm number (e.g., an event named "Baseline" in arm 1 becomes `baseline_arm_1`).
+- `custom_event_label` may be left blank if piped labels are not in use.
+
+**Events CSV columns (with scheduling module):** `event_name`, `arm_num`, `day_offset`, `offset_min`, `offset_max`, `unique_event_name`, `custom_event_label`
+
+- `day_offset` is the number of days from a reference date (e.g., enrollment date).
+- `offset_min` and `offset_max` define the allowable scheduling window in days before and after the target date. Note that `offset_min` represents the early window and `offset_max` the late window — both are expressed as positive numbers of days.
+- These columns appear in the downloaded events CSV only when the scheduling module is active for the project. Include them in an upload only when scheduling is in use.
 
 ## 6.2 Instrument-Event Mappings (Designate Instruments page)
 
@@ -153,8 +170,10 @@ Access bulk options from the **Upload or download instrument mappings** dropdown
 
 | **Option** | **Behavior** |
 |---|---|
-| Upload instrument-event mappings (CSV) | Replaces the full mapping configuration. Any instrument-event combination omitted from the file will be unchecked. Requires: arm number, unique event name, instrument name. |
+| Upload instrument-event mappings (CSV) | Replaces the full mapping configuration. Any instrument-event combination omitted from the file will be unchecked. |
 | Download instrument-event mappings (CSV) | Exports current mappings. Useful for backup or bulk editing. |
+
+**Instrument-event mappings CSV columns:** `arm_num`, `unique_event_name`, `form`
 
 > **Important:** Unlike arm and event uploads, the instrument-event mapping upload is not additive — it replaces the complete mapping configuration. Omitting a mapping will uncheck it, potentially deleting data if the combination contained records.
 
@@ -235,6 +254,14 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **A:** The unique event name is a readable identifier (e.g., `baseline_arm_1`) that changes if the event label is renamed. The event ID is a permanent numeric identifier that never changes. For branching logic and piping, you use the unique event name. The event ID is used in certain advanced integrations and is generated and managed by REDCap.
 
+**Q: Do I need to upload an arms CSV for a single-arm project?**
+
+**A:** No. When longitudinal mode is enabled, REDCap automatically creates one arm ("Arm 1"). For single-arm projects, skip the arms upload entirely and begin with the events CSV upload, followed by the instrument-event mappings upload.
+
+**Q: What columns does the events CSV need, and what is optional?**
+
+**A:** The minimum required columns are `event_name`, `arm_num`, `unique_event_name`, and `custom_event_label`. The `unique_event_name` column can be left blank — REDCap will auto-generate it. The `custom_event_label` column can also be blank. If the scheduling module is active, the CSV will also contain `day_offset`, `offset_min`, and `offset_max` columns; include those only when scheduling is in use. Download the existing events CSV from REDCap and use it as a template to ensure the column order and names are correct.
+
 ---
 
 # 10. Common Mistakes & Gotchas
@@ -246,6 +273,8 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 **Omitting the first instrument from the first event.** Failing to designate the record-ID instrument to the first event causes records to save incorrectly or not at all. This is one of the most common and consequential configuration errors in new longitudinal projects.
 
 **Uploading instrument-event mappings expecting additive behavior.** The instrument-event mapping CSV upload replaces the entire mapping, not just the rows in the file. Uploading a partial mapping will uncheck all omitted combinations. Always download and edit the existing mapping rather than creating a file from scratch.
+
+**Uploading events before arms in a multi-arm project.** Events reference arm numbers in the CSV. If you upload an events CSV before the corresponding arms exist, REDCap cannot assign events correctly. For multi-arm projects, always upload in order: arms first, then events, then instrument-event mappings. Single-arm projects can skip the arms upload since Arm 1 is created automatically.
 
 **Assuming exports will be one row per record.** Longitudinal exports produce one row per event per record. Many users attempt to read a longitudinal export expecting a flat structure and are surprised by the volume of rows and empty cells. Plan your analysis workflow before collecting data.
 
