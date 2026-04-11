@@ -7,7 +7,7 @@ RC-SURV-02
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; assumes surveys have been enabled on at least one instrument |
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-FD-02 — Online Designer |
@@ -112,9 +112,11 @@ You can optionally **hide the survey title** when a logo is present, leaving onl
 
 Standard radio button and checkbox controls are small and designed for precise mouse clicks. On touchscreen devices, small targets are difficult to tap accurately.
 
-Enabling **Enhanced Radios and Checkboxes** replaces the standard controls with large, block-style buttons that fill the survey width — much easier to tap with a finger.
+Enabling **Enhanced Radios and Checkboxes** replaces the standard controls with large, block-style buttons — much easier to tap with a finger.
 
 > **Note:** This setting applies to the entire survey. You cannot enable enhanced buttons for individual questions only.
+
+> **Alignment interaction:** Enhanced buttons still respect the **Custom Alignment** code set on each field (Column N in the Data Dictionary). Fields with a V code (RV, LV) render one button per row (full container width). Fields with an H code (LH, RH) render buttons in a two-column side-by-side grid. The L/R width designation (full-width vs. half-width) is also preserved. See RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques for alignment code details.
 
 Consider enabling this setting if you expect participants to complete the survey on a phone or tablet.
 
@@ -209,4 +211,5 @@ No. Custom themes are linked to the user account that created them. Other projec
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (Column N alignment codes and how they interact with enhanced buttons)
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types

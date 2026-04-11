@@ -7,8 +7,8 @@ RC-FD-08
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-03 — Data Dictionary |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-BL-01 — Branching Logic: Overview & Scope; RC-AT-01 — Action Tags: Overview |
 
@@ -332,41 +332,58 @@ Marking a variable as required prevents the instrument from being saved as Compl
 
 ## 5.12 Column N — Custom Alignment (Non-mandatory)
 
-Custom alignment adjusts how REDCap renders a variable's label and input area on the form. The code is a two-letter combination describing horizontal position (Left or Right) and layout direction (Horizontal or Vertical).
+Custom alignment adjusts how REDCap renders a variable on the form. The code is a two-letter combination: the first letter controls field width (L = full-width, R = half-width); the second controls choice orientation (V = stacked vertically, H = inline horizontally). The second letter only has a visible effect on fields that display selectable choices.
 
 **Allowed codes:**
 
-| Code | Position | Layout | Default? |
-|------|----------|--------|----------|
-| `RV` | Right side of page | Vertical (label above input) | Yes — applied when blank |
-| `LV` | Left side of page | Vertical (label above input) | No |
-| `LH` | Left side of page | Horizontal (label left, input right) | No |
-| `RH` | Right side of page | Horizontal (label left, input right) | No |
+| Code | Width | Choice orientation | Default? |
+|------|-------|--------------------|----------|
+| `RV` | Half-width | Choices stacked vertically | Yes — applied when blank |
+| `LV` | Full-width | Choices stacked vertically | No |
+| `LH` | Full-width | Choices inline horizontally | No |
+| `RH` | Half-width | Choices inline horizontally | No |
 
 **What "Left" and "Right" mean in practice**
 
-The Left/Right designation controls which half of the form the variable occupies. REDCap uses a two-column layout where Left-aligned fields occupy the full width of the form and Right-aligned fields occupy approximately half the form width (right portion). This means:
+The L/R letter controls how much horizontal space the variable occupies. REDCap uses a two-column layout:
 
-- **`LH` and `LV`** — the variable spans the full width of the form.
-- **`RH` and `RV`** — the variable is rendered at approximately half-width, positioned to the right side of the form.
+- **`LH` and `LV`** — the variable spans the full width of the form (both columns merged into one).
+- **`RH` and `RV`** — the variable occupies approximately half the form width, with the label and input each in a separate column.
+
+**What "Vertical" and "Horizontal" mean in practice**
+
+The V/H letter controls how selectable answer choices are arranged. It only has a visible effect on fields that have choices: `radio`, `checkbox`, `yesno`, and `truefalse`.
+
+- **V** — each choice is a block-level element displayed on its own line (stacked vertically).
+- **H** — choices are inline elements displayed side by side in a horizontal row.
+
+For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`, `slider`), V and H produce identical rendering. `LV` and `LH` look the same; `RV` and `RH` look the same.
 
 **Effect on specific field types**
 
-- **`notes` (multi-line text):** With `RH` or `RV`, the text area is rendered at roughly half the page width. With `LH` or `LV`, it spans the full width — almost always preferable for note boxes, since narrow text areas are difficult to use.
-- **`radio` and `checkbox`:** The Left/Right designation controls which side of the page the answer choices appear on. The Horizontal/Vertical component controls whether choices are stacked vertically (one per line) or laid out in a horizontal row.
-- **`text`, `dropdown`, `yesno`, `truefalse`:** Width differences are less dramatic than with `notes`, but Left-aligned fields still display wider.
-- **`descriptive`:** Alignment affects the width of any image or HTML content displayed.
+- **`text`, `notes`, `dropdown`, `calc`, `file`, `slider`:** Only the L/R letter has any visual effect. Width changes are most noticeable on `notes` — a Right-aligned notes box is roughly half the page width, which is narrow and awkward to type in. The V/H letter has no effect on these types; `LV` and `LH` are interchangeable, as are `RV` and `RH`.
+- **`radio`, `checkbox`, `yesno`, `truefalse`:** Both letters affect rendering. L/R controls full vs. half width; V/H controls whether choices stack vertically or run horizontally. Choose H for short lists (2–4 choices) and V for longer lists.
+- **`descriptive`:** Alignment has no visual effect. Descriptive fields always render at full width regardless of which code is entered.
+- **`sql`:** Behaves identically to `dropdown` for alignment purposes.
+
+**Interaction with Enhanced Radio Buttons and Checkboxes**
+
+When the Enhanced Radios and Checkboxes survey setting is active (see RC-SURV-02), standard choice rendering is replaced with large block-style buttons. The alignment code continues to apply in enhanced mode:
+
+- **V codes (RV, LV):** Enhanced buttons each fill the full container width, stacking one per row.
+- **H codes (LH, RH):** Enhanced buttons are rendered in a two-column grid (approximately 50% width each), producing a side-by-side layout on medium and larger screens.
+- The L/R width effect is also preserved — L codes produce a full-width container; R codes produce a half-width container.
 
 **Practical guidance**
 
 - Leave the column blank to accept the REDCap default (`RV`).
 - For `notes` fields, prefer `LH` or `LV` to get full-width text areas.
-- For `radio` and `checkbox`, choose Horizontal vs. Vertical based on the number of choices: short lists (2–4 choices) are readable horizontally; longer lists are cleaner vertically.
+- For `radio` and `checkbox`, choose H vs. V based on the number of choices: short lists (2–4 choices) are readable horizontally; longer lists are cleaner vertically.
 - Consistency across an instrument improves readability. Mixing Left and Right fields in the same instrument can create a visually fragmented layout.
 
 > **Important:** Use only these four codes exactly as written. Any other value will cause the upload to fail.
 
-> **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices.
+> **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices. See RC-SURV-02 — Survey Settings: Basic Options & Design for documentation of the Enhanced Radio Buttons and Checkboxes survey setting.
 
 ---
 
@@ -614,3 +631,4 @@ A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` 
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements (Column L syntax reference)
 - RC-LONG-01 — Longitudinal Project Setup (event setup, which the Data Dictionary does not cover)
 - RC-AT-01 — Action Tags: Overview (complete reference for Column R action tag codes)
+- RC-SURV-02 — Survey Settings: Basic Options & Design (Enhanced Radio Buttons setting and its interaction with Column N alignment codes)

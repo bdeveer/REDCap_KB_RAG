@@ -1274,6 +1274,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-AT-01 — Action Tags: Overview
+- RC-SURV-02 — Survey Settings: Basic Options & Design
 
 **Inbound links (referenced by):**
 - RC-CALC-02
@@ -1886,12 +1887,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 
 **Inbound links (referenced by):**
 - RC-SURV-01 (previously ⚠️ RC-SURV-02 — now resolved)
 - RC-SURV-03 (prerequisite)
 - RC-SURV-08 (prerequisite)
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 
 ---
 
