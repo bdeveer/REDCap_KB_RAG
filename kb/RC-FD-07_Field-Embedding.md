@@ -7,7 +7,7 @@ RC-FD-07
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; works on both instruments and surveys; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-06 — Online Designer Instrument and Field Management; RC-BL-01 — Branching Logic Overview & Scope |
@@ -59,7 +59,8 @@ The embedding mechanism is straightforward: any field that will be embedded must
 - The embedded field must exist before it can be referenced. You cannot reference a variable that has not yet been created.
 - The curly-brace reference and the embedded field must be on the same instrument. You cannot embed a field from a different instrument. On multi-page surveys, both the host field and the embedded field must also be on the same survey page — being on the same instrument but a different page is not sufficient.
 - A field can only be embedded in one location per instrument. If you place `{variable_name}` in multiple labels on the same instrument, the behavior is unpredictable.
-- Embedding only affects the visual position of the field on screen — data is still stored under the field's original variable name.
+- Embedding only affects the visual position of the field on screen — data is still stored under the field's original variable name. The field's original position in the instrument is completely hidden after it is relocated; it will not appear twice.
+- When a field is embedded, only the input element is moved to the new location. The field's Field Label, Field Note, and required-field indicator ("*must provide value" text) are not relocated — they stay behind and are suppressed. The exception is radio button and checkbox fields: their choice labels are relocated along with the input buttons, so that choices and their labels remain together.
 - The embedded field retains all its normal properties: validation, required status, branching logic, and action tags continue to apply.
 
 **Syntax:**
@@ -213,7 +214,7 @@ Large demographics sections are often split across two or more descriptive field
 
 **Embedding a field that does not yet exist.** REDCap will not flag an unrecognised variable name in a curly-brace reference at save time. If the variable name is misspelled or the field has not been created yet, the curly-brace token will simply not render — the embedded field will be absent from the form with no error message. Always create the target field first, then add the embedding reference.
 
-**Expecting the field's label to display alongside the embedded field.** When a field is embedded, its own label text does not render at the embedding location. Only the field input element (text box, radio buttons, etc.) appears. If you need a visible label, include it in the container field's label text, adjacent to the curly-brace reference, or use `@PLACEHOLDER` to add inline hint text. Note that the field's label is still used when viewing reports and exported data, even though it is suppressed on the instrument — always give embedded fields a meaningful Field Label so that reports remain interpretable.
+**Expecting the field's label, field note, or required indicator to display alongside the embedded field.** When a field is embedded, its Field Label, Field Note, and required-field indicator ("*must provide value" text) are all suppressed — none of them move to the embedding location. Only the input element itself (text box, radio buttons, etc.) is relocated. For radio button and checkbox fields, the choice labels are an exception: they do move with the field so that choices remain labeled. If you need a visible label at the embedding location, include it directly in the container field's label text adjacent to the curly-brace reference, or use `@PLACEHOLDER` to add inline hint text. Note that the field's Field Label is still used when viewing reports and exported data, even though it is suppressed on the instrument — always give embedded fields a meaningful Field Label so that reports remain interpretable.
 
 **Placing the embedding reference and the embedded field on different instruments.** If you add `{variable_name}` to a field on Instrument A, but `variable_name` belongs to Instrument B, the reference will silently fail. Both fields must be on the same instrument.
 
