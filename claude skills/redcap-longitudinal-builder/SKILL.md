@@ -203,12 +203,16 @@ python <skill_path>/scripts/generate_longitudinal.py \
   --output-dir /tmp/longitudinal_output/
 ```
 
-The script writes three CSV files:
-- `Arms.csv`
+The script writes up to three CSV files:
+- `Arms.csv` — **only generated and presented for multi-arm projects** (see below)
 - `Events.csv`
 - `InstrumentDesignations.csv`
 
 It also prints a summary of what was generated and any warnings.
+
+> **Single-arm projects: skip Arms.csv entirely.** REDCap creates a default arm
+> automatically, so there is nothing to import. Do not generate or present `Arms.csv`
+> when the project has only one arm — it adds confusion without benefit.
 
 For a quick preview without writing files:
 ```bash
@@ -221,7 +225,7 @@ python <skill_path>/scripts/generate_longitudinal.py \
 
 ## Step 5: Review and Present
 
-After generation, do two things:
+After generation, do three things:
 
 1. **Run the reader script** from the companion `redcap-longitudinal-structure` skill to
    parse the generated files and show the user a formatted summary. This double-checks
@@ -235,18 +239,47 @@ After generation, do two things:
    ```
 
 2. **Copy files to the workspace folder** and present them so the user can download them.
+   For single-arm projects, present only `Events.csv` and `InstrumentDesignations.csv`.
+
+3. **Include repeatable instrument/event instructions.** This is mandatory — do not wait
+   for the user to ask. Based on the project design, identify any instruments or events
+   that need to be configured as repeatable in REDCap and include the following as part
+   of your response:
+
+   - **Which instrument(s) or event(s)** should be repeatable, and why (e.g. "the Ad Hoc
+     Follow-up form can occur multiple times per participant")
+   - **Repeat mode**: "Repeat Instruments" (only specific forms repeat within a fixed
+     event) vs. "Repeat Entire Event" (the whole event, with all its forms, repeats).
+     Use "Repeat Instruments" when only one or a few forms repeat; use "Repeat Entire
+     Event" when all forms at that event are collected multiple times.
+   - **Step-by-step UI instructions:**
+     1. Go to **Project Setup**
+     2. Under "Optional modules and customizations," click **Enable** (or **Modify**)
+        next to "Repeatable instruments and events"
+     3. Find the instrument or event row, set the dropdown to the appropriate repeat mode
+     4. Save
+   - **Suggested repeat instrument label** if applicable — this is the label shown on
+     the "+" button in the data entry interface (e.g. "Add follow-up visit"). Suggest
+     something short and descriptive that will make sense to a data entry user.
 
 Tell the user how to import the files:
 
 > **Uploading through the REDCap UI (no API access needed):**
 > 1. In Project Setup, click **Define My Events**.
-> 2. Open the **"Upload or download arms/events"** dropdown and upload `Arms.csv` first (skip for single-arm projects).
+> 2. *(Multi-arm projects only)* Open the **"Upload or download arms/events"** dropdown
+>    and upload `Arms.csv` first.
 > 3. Upload `Events.csv` using the same dropdown.
-> 4. Navigate to **Designate Instruments for My Events**, open the **"Upload or download instrument mappings"** dropdown, and upload `InstrumentDesignations.csv`.
+> 4. Navigate to **Designate Instruments for My Events**, open the **"Upload or download
+>    instrument mappings"** dropdown, and upload `InstrumentDesignations.csv`.
 >
-> **Important:** The instrument designations upload replaces the entire mapping — any combination not in the file will be unchecked. If the project already has designations, download the current mapping first and merge your new rows into it before uploading.
+> **Important:** The instrument designations upload replaces the entire mapping — any
+> combination not in the file will be unchecked. If the project already has designations,
+> download the current mapping first and merge your new rows into it before uploading.
 >
-> **Alternative — REDCap API:** POST each file with the appropriate `content` parameter (`arm`, `event`, `formEventMapping`) and `action=import`. Arms and events imports are additive; instrument-event mapping import replaces the full configuration (same behavior as the UI upload).
+> **Alternative — REDCap API:** POST each file with the appropriate `content` parameter
+> (`arm`, `event`, `formEventMapping`) and `action=import`. Arms and events imports are
+> additive; instrument-event mapping import replaces the full configuration (same
+> behavior as the UI upload).
 
 ---
 
@@ -269,7 +302,7 @@ Extract the rows (visits) and columns (instruments). Each column with a checkmar
 
 ### Single-arm longitudinal project
 Set `"arms": [{"arm_num": 1, "arm_name": "Arm 1"}]` (or the user's preferred name).
-All events go under `arm_num: 1`.
+All events go under `arm_num: 1`. Do not generate or present `Arms.csv`.
 
 ### Same event schedule across all arms
 Build events for Arm 1, then duplicate them for other arms with incremented `arm_num`.
