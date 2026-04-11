@@ -331,18 +331,41 @@ Marking a variable as required prevents the instrument from being saved as Compl
 
 ### 5.12 Column N — Custom Alignment (Non-mandatory)
 
-Custom alignment adjusts how REDCap displays the variable relative to adjacent variables, particularly useful in surveys to control visual layout.
+Custom alignment adjusts how REDCap renders a variable's label and input area on the form. The code is a two-letter combination describing horizontal position (Left or Right) and layout direction (Horizontal or Vertical).
 
 **Allowed codes:**
 
-| Code | Meaning |
-|------|---------|
-| `RV` | Right Vertical — default if left blank |
-| `LV` | Left Vertical |
-| `LH` | Left Horizontal |
-| `RH` | Right Horizontal |
+| Code | Position | Layout | Default? |
+|------|----------|--------|----------|
+| `RV` | Right side of page | Vertical (label above input) | Yes — applied when blank |
+| `LV` | Left side of page | Vertical (label above input) | No |
+| `LH` | Left side of page | Horizontal (label left, input right) | No |
+| `RH` | Right side of page | Horizontal (label left, input right) | No |
+
+**What "Left" and "Right" mean in practice**
+
+The Left/Right designation controls which half of the form the variable occupies. REDCap uses a two-column layout where Left-aligned fields occupy the full width of the form and Right-aligned fields occupy approximately half the form width (right portion). This means:
+
+- **`LH` and `LV`** — the variable spans the full width of the form.
+- **`RH` and `RV`** — the variable is rendered at approximately half-width, positioned to the right side of the form.
+
+**Effect on specific field types**
+
+- **`notes` (multi-line text):** With `RH` or `RV`, the text area is rendered at roughly half the page width. With `LH` or `LV`, it spans the full width — almost always preferable for note boxes, since narrow text areas are difficult to use.
+- **`radio` and `checkbox`:** The Left/Right designation controls which side of the page the answer choices appear on. The Horizontal/Vertical component controls whether choices are stacked vertically (one per line) or laid out in a horizontal row.
+- **`text`, `dropdown`, `yesno`, `truefalse`:** Width differences are less dramatic than with `notes`, but Left-aligned fields still display wider.
+- **`descriptive`:** Alignment affects the width of any image or HTML content displayed.
+
+**Practical guidance**
+
+- Leave the column blank to accept the REDCap default (`RV`).
+- For `notes` fields, prefer `LH` or `LV` to get full-width text areas.
+- For `radio` and `checkbox`, choose Horizontal vs. Vertical based on the number of choices: short lists (2–4 choices) are readable horizontally; longer lists are cleaner vertically.
+- Consistency across an instrument improves readability. Mixing Left and Right fields in the same instrument can create a visually fragmented layout.
 
 > **Important:** Use only these four codes exactly as written. Any other value will cause the upload to fail.
+
+> **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices.
 
 ---
 
