@@ -7,8 +7,8 @@ RC-IMP-01
 | **Domain** | Data Import |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights for instrument/metadata imports; requires Data Entry rights for record data imports |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-04-02 |
+| **Version** | 1.8 |
+| **Last Updated** | 2026-04-10 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-04 — Instrument Library & Zip Files; RC-FD-03 — Data Dictionary; RC-DE-01 — Record Creation and Record Home Page |
 
@@ -75,9 +75,16 @@ Zip files combine and compress a series of other files into a single archive. In
 
 See **RC-FD-04 — Instrument Library & Zip Files** for full coverage of zip file import and export.
 
-## 3.2 XML Files
+## 3.2 XML Files (CDISC ODM)
 
-XML (Extensible Markup Language) is a versatile, human-readable format used for structured data exchange. XML files in REDCap are primarily used for project backups and for creating new projects from those backups. REDCap uses the CDISC ODM XML standard for this purpose.
+XML (Extensible Markup Language) is a versatile, human-readable format used for structured data exchange. REDCap uses the CDISC ODM (Operational Data Model) XML standard — a vendor-neutral, platform-independent format designed for the interchange and archival of clinical and research data.
+
+REDCap uses CDISC ODM XML in two contexts:
+
+- **Project backups and restores** — exporting and recreating entire projects, including metadata and data (see Section 7).
+- **Record data import** — importing participant data from a REDCap ODM export or from another ODM-compatible system outside of REDCap (see Section 8.4).
+
+**Version requirement:** REDCap only accepts ODM version 1.3.X. Files produced by other ODM versions may not import correctly.
 
 > **Note:** The REDCap API can also use XML files for data transfer, but this is an advanced feature outside the scope of this article.
 
@@ -164,13 +171,13 @@ The Data Import Tool allows you to import participant record data in bulk. REDCa
 - **API** (advanced — see RC-API-01 — REDCap API *(coming soon)*)
 - **Clinical Data Mart** (advanced — see RC-IMP-02 — Clinical Data Mart Integration *(coming soon)*)
 
-The XML import option is available but requires a properly formatted CDISC ODM XML file, which most users do not have on hand. **CSV import is the recommended method** for most users because any REDCap data export in CSV format can be used directly as an import file in the same project, and CSV files are easy to modify in a spreadsheet editor.
+**CSV import is the recommended method** for most users because any REDCap data export in CSV format can be used directly as an import file in the same project, and CSV files are easy to modify in a spreadsheet editor. The XML/ODM import option is useful when transferring data from another ODM-compatible system, or when working with a REDCap ODM export — see Section 8.4 for the ODM import workflow.
 
 ## 8.1 Uploading a CSV Data File
 
 | 1 | Navigate to **Project → Applications menu → Data Import Tool**. If you do not see this option, check your user rights. |
 |---|---|
-| 2 | Review and confirm the four import settings: **Record Format**, **Date Format**, **Blank values overwrite**, and **Delimiter**. In most cases, the standard settings are correct — but verify the delimiter matches your file and confirm the date format before uploading. |
+| 2 | Review and confirm the import settings before uploading. The available settings are described in the table below. In most cases, the standard settings are correct — but always verify the delimiter matches your file and confirm the date format. |
 | 3 | Select your CSV file. (Pro tip: you can drag and drop the file directly onto the "Choose File" button.) |
 | 4 | Click the **"Upload File"** button. |
 | 5 | REDCap processes the file and displays a results preview. |
@@ -178,9 +185,56 @@ The XML import option is available but requires a properly formatted CDISC ODM X
 
 > **Important:** Clicking "Upload File" does not import the data — it only stages a preview. The data is not saved to the project until you click "Import Data" at the bottom of the results screen. This is the most common reason users do not see their records after uploading.
 
-## 8.2 Partial vs. Full Uploads
+### Import Settings Reference
+
+| **Setting** | **Options** | **Notes** |
+|---|---|---|
+| Import mode | Real time / Background process | Real time imports complete immediately in the browser. Background imports run asynchronously — better for large files, but may take longer overall. REDCap emails you when the background import finishes. See Section 8.3 for error handling in background mode. |
+| Display data comparison table | Yes / No | When Yes, REDCap displays a side-by-side comparison of uploaded values vs. existing values before you commit the import. For records that already exist, the table shows the current stored value alongside the new value that will overwrite it — useful for catching unexpected changes before they are committed. The downside is that rendering the table can be slow for large imports. Disable this option when importing a large number of values and you are confident the file is correct. |
+| Overwrite data with blank values | No (default) / Yes | When Yes, empty cells in the import file overwrite and erase existing stored values in the project. Leave at No unless you specifically intend to clear data — with No, blank cells are ignored and existing values are preserved. |
+| CSV delimiter | Comma / Tab / Semicolon | Must match the actual delimiter used in your file. |
+| Date format | MM/DD/YYYY or YYYY-MM-DD / DD/MM/YYYY or YYYY-MM-DD | Must match how dates are formatted in your file. Both US and European date formats are supported. |
+| Records formatted as | Rows (default) / Columns | Controls whether records run across rows or down columns. Rows is the standard format. The Data Import Template can be downloaded in either format. |
+
+## 8.2 Background Import and Error Handling
+
+When the background import option is selected, REDCap processes the file asynchronously rather than in the browser. This is better suited for large data files, though it may take longer to complete overall than a real-time import of the same file. REDCap sends an email notification when the import finishes.
+
+If any rows fail during a background import, REDCap reports the errors and provides the option to re-download only the rows that failed. You can then fix the errors in that subset file and re-import it without reprocessing the rows that already imported successfully.
+
+Background imports in progress or recently completed can be reviewed via the **View background imports** link at the top of the Data Import Tool page. Each background import appears as its own row in the table, with the following columns:
+
+| **Column** | **Description** |
+|---|---|
+| Status | Current state of the import (e.g., in progress, completed, failed) |
+| Upload time | When the file was submitted |
+| Completion time | When the import finished processing |
+| Original filename | The name of the uploaded file |
+| Uploader | The REDCap user who submitted the import |
+| Records provided | Total number of records in the uploaded file |
+| Records imported | Number of records successfully imported |
+| Total import time (minutes) | How long the import took to complete |
+| Errors | Number of records or rows that failed to import |
+
+## 8.3 Partial vs. Full Uploads
 
 The Data Import Tool supports both full and partial uploads. You can import all records in a single file, a single data point for a single record, or anything in between. The structure of your CSV file determines what gets imported. See Section 9 for details on how to build and modify a CSV upload file.
+
+---
+
+## 8.4 CDISC ODM (XML) Import
+
+REDCap can import record data from a CDISC ODM XML file produced by a REDCap export or by another ODM-compatible system. The file must conform to ODM version 1.3.X.
+
+| 1 | Navigate to **Project → Applications menu → Data Import Tool**, then select the **CDISC ODM (XML) import** tab. |
+|---|---|
+| 2 | Click **Browse** or **Choose File** to select the ODM XML file on your computer. |
+| 3 | Set the **Overwrite data with blank values** option as appropriate (see Import Settings Reference in Section 8.1). |
+| 4 | Click **Upload File**. |
+| 5 | REDCap checks the file for errors and displays the data for review — the data is not immediately imported. Review for any errors or warnings. |
+| 6 | If the data looks correct, click **Import Data** to commit. If errors are found, click **Cancel**, correct the file, and upload again. |
+
+> **Note:** Unlike the CSV import, the ODM import does not offer a background processing option. The import runs in real time in the browser.
 
 ---
 
@@ -192,8 +246,9 @@ A valid CSV upload file must always contain the following:
 - **Record ID column** — The first column. This variable may be renamed in your project (e.g., `participant_id`, `patient_id`), but it is always required.
 - **At least one data point** — A row with at least one non-empty value.
 - **Correct data formats** — Each value must match the variable type it maps to (e.g., dates in a date field, numbers in a numeric field). Mismatched formats cause import errors.
+- **Raw coded values for multiple choice fields** — Dropdown, radio, and checkbox fields must contain the raw coded value (e.g., `1`, `2`, `3`), not the choice label (e.g., `"Yes"`, `"No"`, `"Unknown"`). REDCap cannot process choice labels and will reject rows containing them. The coded values for each field are listed in the project's Codebook (accessible from the left-hand menu).
 
-For a basic project, these four elements are sufficient for a working upload file.
+For a basic project, these five elements are sufficient for a working upload file.
 
 ## 9.1 Coordinate Variables
 
@@ -202,10 +257,12 @@ If your project uses features beyond the basic setup, you will need additional c
 | **Coordinate Variable** | **When Required** |
 |---|---|
 | Record ID | Always required |
-| Event ID (unique event name) | Required for longitudinal projects. Find this value in **Project Setup → Define My Events**. |
-| Repeat Instrument | Required when uploading data for a repeated instrument |
-| Repeat Instance | Required when uploading data for a repeated instrument or repeated event; specifies which instance number |
+| Event ID (unique event name) | Required for longitudinal projects. The value follows the format `uniqueeventname_arm_N` — for example, `baseline_arm_1` or `followup_arm_2`. Find all unique event name values for your project in **Project Setup → Define My Events**. The unique event name is shown in the "Unique event name" column of that page. |
+| Repeat Instrument | Required when uploading data for a repeated instrument. Leave this column **empty** when the row contains data for a repeating event (as opposed to a repeating instrument within a non-repeating event). |
+| Repeat Instance | Required when uploading data for a repeated instrument or a repeated event; specifies which instance number. When `redcap_repeat_instrument` is empty but `redcap_repeat_instance` has a value, REDCap interprets the row as belonging to a repeating event. When `redcap_repeat_instrument` is filled, REDCap interprets the row as a specific instance of a repeating instrument within the event. |
 | Data Access Group (DAG) | Optional if the uploading user is not assigned to any DAG; **required** if the uploading user belongs to one or more DAGs |
+
+> **Tip — Auto-numbering repeating instances:** When importing data for a repeating instrument or repeating event, you do not need to determine how many instances already exist before importing. Set the `redcap_repeat_instance` column value to `new` for any row you want REDCap to assign the next available instance number automatically. This avoids overwrite errors caused by instance number conflicts.
 
 Instructions for working with event IDs, repeated instruments, and repeated instances are outside the scope of this article.
 
@@ -213,10 +270,30 @@ Instructions for working with event IDs, repeated instruments, and repeated inst
 
 Two methods are available to determine what coordinate variables and column headers your project requires:
 
-- **Download the Data Import Template** from within the Data Import Tool. The template contains no data but has the correct header row for your project's current setup.
-- **Do a full data export** from the **Data Exports, Reports & Stats** application. This export is formatted as a valid import file and may contain example data if records already exist in the project.
+- **Download the Data Import Template** from within the Data Import Tool. The template contains no data rows — it is a header-only file with the correct column names for your project's current setup, including all required coordinate variables.
+- **Do a full data export** from the **Data Exports, Reports & Stats** application. The export uses the exact same header structure as the Data Import Template and can be used directly as an import file. If records already exist in the project, the export will also contain example data showing how correctly formatted values look.
 
-## 9.3 Best Practice for New Importers
+## 9.3 Multi-Row Structure in Longitudinal and Repeating Projects
+
+In a basic project, each record occupies a single row in the import file. In longitudinal projects and projects with repeating instruments, a single record spans multiple rows — one row per event, and one row per repeating instrument instance. Each row carries only the data for that specific location in the project structure.
+
+The table below shows how rows are structured for a record that has one regular event and two repeating instruments:
+
+| `record_id` | `redcap_event_name` | `redcap_repeat_instrument` | `redcap_repeat_instance` | Notes |
+|---|---|---|---|---|
+| P001 | `baseline_arm_1` | *(empty)* | *(empty)* | Regular event data for this record |
+| P001 | `baseline_arm_1` | `visits` | `1` | First instance of the "visits" repeating instrument |
+| P001 | `baseline_arm_1` | `visits` | `2` | Second instance of the "visits" repeating instrument |
+| P001 | `baseline_arm_1` | `lab_results` | `1` | First instance of "lab_results" repeating instrument |
+
+Key points:
+- Rows where both `redcap_repeat_instrument` and `redcap_repeat_instance` are empty contain regular (non-repeating) event data.
+- Rows where `redcap_repeat_instrument` is filled and `redcap_repeat_instance` has a number contain data for a specific instance of a repeating instrument within a non-repeating event.
+- Rows where `redcap_repeat_instrument` is **empty** but `redcap_repeat_instance` has a number indicate that the **entire event** is repeating — not just a single instrument within it.
+- The `redcap_repeat_instance` value is a sequential integer starting at 1. To add a new instance without pre-counting existing ones, use `new` as the value (see the auto-numbering tip in Section 9.1).
+- It is normal for most cells in a given row to be empty — each row only needs the columns relevant to that event or instrument instance.
+
+## 9.4 Best Practice for New Importers
 
 If you are new to importing data, create a copy of your target project and run your import tests in the copy first. This lets you fine-tune your file without affecting an active project.
 
@@ -269,6 +346,10 @@ REDCap is actively developed; Vanderbilt adds new functionality regularly, inclu
 
 **A:** Metadata only exports the project's structure — instruments, variables, survey settings, reports — with no participant data. Metadata & data exports everything, including all collected records. Use Metadata only to clone a project's design; use Metadata & data to migrate or archive an entire project with its records.
 
+**Q: My import file has dropdown and radio values as text labels (like "Yes" or "Male") — will that work?**
+
+**A:** No. REDCap requires raw coded values (e.g., `1`, `0`, `2`) for all multiple choice fields — dropdowns, radios, and checkboxes. Choice labels are not accepted and will cause the import to fail for those rows. To find the correct coded values for each field, open the project Codebook from the left-hand menu. Alternatively, export existing data from the project — the export file uses raw codes and is formatted as a valid import file.
+
 **Q: How do I import an instrument from another REDCap project?**
 
 **A:** Export the instrument as a zip file from the source project (Online Designer → Instrument Actions → Download instrument zip), then import it into the target project via the Online Designer's Upload button. See RC-FD-04 — Instrument Library & Zip Files for the full workflow.
@@ -286,6 +367,8 @@ REDCap is actively developed; Vanderbilt adds new functionality regularly, inclu
 **Missing coordinate variables for longitudinal or repeated projects.** Importing into a longitudinal project without the event name column, or into a project with repeated instruments without the repeat instrument and repeat instance columns, will cause import errors or map data to the wrong event or instance. Download the Data Import Template from the tool to confirm which coordinate variables your project requires.
 
 **Using the wrong date format.** If the date format selected in the import settings does not match how dates are formatted in your CSV file, REDCap will either reject the rows with date errors or import the dates incorrectly. For example, selecting MM-DD-YYYY when your file uses YYYY-MM-DD will cause mismatches. Confirm the date format in your file before uploading.
+
+**Using choice labels instead of raw coded values for dropdown, radio, or checkbox fields.** REDCap only accepts the numeric or text code assigned to each choice — not the human-readable label. For example, if a Yes/No field is coded as `1=Yes | 0=No`, the import file must contain `1` or `0`, not `Yes` or `No`. Using labels causes those rows to fail. Look up the correct codes in the project Codebook before building your import file.
 
 **Importing a zip file from a non-REDCap source.** REDCap only accepts zip files for instrument import if they were generated by another REDCap project. Zip files created manually, from other software, or from other sources will be rejected. If you need to import an instrument from outside REDCap, use the Data Dictionary CSV method instead.
 
