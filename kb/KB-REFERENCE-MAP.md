@@ -328,6 +328,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AT-10 (prerequisite)
 - RC-AT-11 (prerequisite)
 - RC-AT-12 (prerequisite)
+- RC-FD-05 — Codebook
 - RC-FD-07 (previously ⚠️)
 - RC-FD-08 (previously ⚠️)
 - RC-SURV-08
@@ -1212,6 +1213,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-AT-01 — Action Tags: Overview
+- RC-SURV-01 — Surveys – Basics
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 
 **Inbound links (referenced by):**
 - RC-BL-02
@@ -1315,6 +1324,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 
 **Inbound links (referenced by):**
+- RC-FD-05 — Codebook
 - RC-AT-06 — Autofill Action Tags
 - RC-BL-05 (prerequisite)
 - RC-DE-10
@@ -1351,6 +1361,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-03 — Longitudinal Projects & DAGs
 
 **Inbound links (referenced by):**
+- RC-FD-05 — Codebook
 - RC-ALERT-01
 - RC-ALERT-02
 - RC-BL-05
@@ -1522,6 +1533,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-01 — Branching Logic Overview & Scope
 
 **Inbound links (referenced by):**
+- RC-FD-05 — Codebook
 - RC-ALERT-01 (prerequisite)
 - RC-PIPE-02 (prerequisite)
 - RC-PIPE-03 (prerequisite)
@@ -1859,6 +1871,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination *(previously ⚠️ RC-SURV-03 — now resolved)*
 
 **Inbound links (referenced by):**
+- RC-FD-05 — Codebook
 - RC-ALERT-01
 - RC-DE-07
 - RC-DE-11
