@@ -36,7 +36,9 @@ The internal code assigned to each option in a radio button, dropdown, or checkb
 
 **Field Annotation**
 
-Free-form notes that can be placed in the same *Action Tags / Field Annotation* box alongside any action tag. Annotations are only visible in the Online Designer and have no effect on field behavior.
+Free-form notes that can be placed in the same *Action Tags / Field Annotation* box alongside any action tag. Annotations are only visible in the Online Designer and the Data Dictionary — they are never shown to data entry users or survey participants, and they have no effect on field behavior. Use annotations for designer-facing notes: design rationale, outstanding questions, variable mapping notes, or reminders about protocol decisions.
+
+> **Do not confuse with the Field Note.** The Field Note (a separate field attribute) is visible to everyone completing the instrument. The Field Annotation is visible to designers only. If you need to communicate something to the person filling in the form — such as units of measure or format instructions — use the Field Note, not the Field Annotation. See RC-FD-06 Section 7.8–7.9 and the project STYLE-GUIDE.md for guidance on which to use when.
 
 **External Module Action Tags**
 

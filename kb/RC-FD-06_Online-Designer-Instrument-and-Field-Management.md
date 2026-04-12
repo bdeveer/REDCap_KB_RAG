@@ -249,18 +249,38 @@ Marks the field as containing personally identifiable information (PII). The def
 
 ## 7.7 Custom Alignment
 
-Controls how the field (particularly its answer choices) is displayed on screen. Different field types respond differently to alignment options. The available choices are typically Left Horizontal, Right Horizontal, Left Vertical, and Right Vertical. This is primarily a cosmetic preference — experiment to find what works best for your instrument. **Best practice:** Apply alignment choices consistently across all instruments in the project.
+Controls how the field is displayed on screen — specifically whether it occupies the full width of the form or approximately half the page width, and whether answer choices are stacked vertically or laid out in a horizontal row. The available codes are `LH` (Left Horizontal), `LV` (Left Vertical), `RH` (Right Horizontal), and `RV` (Right Vertical). Left-aligned fields are full-width; Right-aligned fields are half-width. The default when left blank is `RV`.
+
+This setting has meaningful display consequences for some field types. For `notes` fields in particular, the default `RV` produces a cramped half-width text area — `LH` or `LV` is almost always preferable. For `radio` and `checkbox` fields, the Horizontal/Vertical component controls whether choices are displayed side by side or stacked.
+
+**Best practice:** Apply alignment consistently across all fields in an instrument to avoid a visually fragmented layout. See the project STYLE-GUIDE.md for team conventions. See RC-FD-08 Section 5.12 for a full explanation of how each code behaves.
 
 ## 7.8 Field Note
 
-An optional short note displayed below the field in the data entry form. Use this to provide context or instructions that are too specific to include in the field label. Common examples:
-- "Check all that apply" (for checkbox fields)
-- "Enter in millimeters" (for a numeric text box)
-- "Leave blank if not applicable"
+An optional short note displayed below the field during data entry. It is visible to anyone completing the instrument — data entry staff and survey participants alike. Use it for brief, user-facing clarifications about how to fill in the field. Common examples:
+
+- Units of measure: `mg/L`, `mmol/mol`, `kg`
+- Date format reminders: `YYYY-MM-DD`
+- Scope clarifications: `Include prescribed medications only`
+- Range expectations: `Normal range: 4.0–11.0`
+
+> **Important:** The Field Note is for the person filling in the form — not for other designers. If you need to leave a note for yourself or a colleague (e.g., a design rationale or an outstanding question), use the Field Annotation box instead (see Section 7.9). Anything written in the Field Note will be visible to data entry users and survey participants.
 
 ## 7.9 Action Tags / Field Annotation
 
-Action tags are special codes entered in the annotation box that modify field behavior in specific, pre-defined ways (e.g., hiding a field from the instrument header, auto-populating values, restricting who can edit a field). Action tags are an advanced topic outside the scope of this article. See the RC-AT series for details.
+The annotation box serves two separate purposes:
+
+**Action tags** are special codes beginning with `@` that modify field behavior in pre-defined ways (e.g., `@HIDDEN` hides the field, `@TODAY` pre-fills with today's date). Multiple action tags can be combined in the same box by separating them with spaces. Action tags are an advanced topic — see the RC-AT series for a full reference.
+
+**Field annotations** are free-text designer notes that can be added to the same box alongside action tags. Annotations are only visible in the Online Designer and the Data Dictionary — they are never shown during data entry or in surveys. Use annotations for anything a designer needs to know but that should not appear to the person filling in the form: design rationale, outstanding questions, variable mapping notes, or reminders about data collection decisions.
+
+When combining both in the same box, write the plain-text annotation first, then the action tags:
+
+```
+Confirm unit with PI before go-live. @HIDDEN-SURVEY @READONLY
+```
+
+> **Key distinction:** Field Note (Section 7.8) is for the data entry user. Field Annotation is for the designer. Never put user instructions in the annotation box — they will not be seen.
 
 ## 7.10 Rich Text Editor
 
