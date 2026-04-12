@@ -225,7 +225,8 @@ def parse_csv(path: str) -> dict:
 
             f["variable"] = r.get("Variable / Field Name", "").strip()
             raw_label = r.get("Field Label", "").strip()
-            f["label"] = strip_html(raw_label)
+            # Normalize: strip HTML tags, then collapse whitespace runs (incl. \n → space)
+            f["label"] = re.sub(r"\s+", " ", strip_html(raw_label)).strip()
             all_labels.append(f["label"])
 
             f["type"] = r.get("Field Type", "").strip()
@@ -276,6 +277,28 @@ def parse_csv(path: str) -> dict:
 
 # ── PDF parser ────────────────────────────────────────────────────────────────
 
+def _normalize_fi_ligature(text: str) -> str:
+    """
+    Fix ligature encoding issues common in REDCap codebook PDFs:
+      - fi ligature → '!'  (e.g., "!eld" = "field", "Con!rm" = "Confirm")
+      - ff ligature → '#'  (e.g., "O#ce" = "Office")
+      - ffi ligature → '"' (e.g., "su"cient" = "sufficient")
+
+    Strategy: replace '!' with 'fi' whenever it is adjacent to a letter
+    (either preceded or followed by one). This is safe in codebook context
+    because legitimate '!' characters don't appear next to word characters.
+    Same logic for '#' → 'ff' and '"' → 'ffi' adjacent to letters.
+    """
+    # fi ligature: ! adjacent to a letter → fi
+    text = re.sub(r"(?<=[A-Za-z])!|!(?=[A-Za-z])", "fi", text)
+    # ff ligature: # after a letter → ff  (handles word-final "off" = "o#" and mid-word)
+    # Left-only lookbehind: won't match "# items" (space before #) or "#3" (digit before #)
+    text = re.sub(r"(?<=[A-Za-z])#", "ff", text)
+    # ffi ligature: " between letters → ffi
+    text = re.sub(r'(?<=[A-Za-z])"(?=[A-Za-z])', "ffi", text)
+    return text
+
+
 def parse_pdf(path: str) -> dict:
     """
     Parse a REDCap Codebook PDF (the "Download PDF of All Instruments" export).
@@ -284,6 +307,15 @@ def parse_pdf(path: str) -> dict:
 
     Requires pdfplumber:
         pip install pdfplumber --break-system-packages
+
+    PDF table column layout (confirmed from REDCap codebook PDFs):
+      Col 0: empty/blank
+      Col 1: instrument banner text OR empty
+      Col 2: field number OR empty
+      Col 3: [variable_name] (+ optional BL after newline) OR empty
+      Col 4: field label (+ optional section header prefix)
+      Col 5: field attributes (type, choices, action tags, etc.)
+      Col 6+: empty/overflow columns
     """
     try:
         import pdfplumber
@@ -299,53 +331,42 @@ def parse_pdf(path: str) -> dict:
     project["source_format"] = "pdf"
 
     with pdfplumber.open(path) as pdf:
-        # ── Collect all page text ─────────────────────────────────────────────
-        all_text_pages: list = []
-        for page in pdf.pages:
-            t = page.extract_text(x_tolerance=3, y_tolerance=3) or ""
-            all_text_pages.append(t)
-
-        full_text = "\n".join(all_text_pages)
-
-        # ── Parse header from first page ──────────────────────────────────────
-        first_text = all_text_pages[0] if all_text_pages else ""
+        # ── First page text for header ────────────────────────────────────────
+        first_text = pdf.pages[0].extract_text(x_tolerance=3, y_tolerance=3) or "" if pdf.pages else ""
         project["project_title"] = _pdf_title(first_text)
         project["project_pid"]   = _pdf_pid(first_text)
         project["snapshot_date"] = _pdf_date(first_text)
 
-        # ── Collect tables from all pages ─────────────────────────────────────
+        # ── Collect all tables from all pages ─────────────────────────────────
         all_tables: list = []
         for page in pdf.pages:
             tables = page.extract_tables() or []
             all_tables.extend(tables)
 
-        # ── Parse summary table (instruments) and events table ────────────────
+        # ── Parse the instruments/events summary and events tables ─────────────
         _pdf_parse_summary_tables(project, all_tables)
 
-        # ── Parse the main field table ─────────────────────────────────────────
-        _pdf_parse_fields(project, all_tables, full_text)
+        # ── Parse the main field-by-field table ────────────────────────────────
+        _pdf_parse_field_tables(project, all_tables)
 
     # Classify project
-    form_names = [i["form_name"] for i in project["instruments"]]
-    all_labels = [f["label"] for i in project["instruments"] for f in i["fields"]]
+    form_names  = [i["form_name"] for i in project["instruments"]]
+    all_labels  = [f["label"] for i in project["instruments"] for f in i["fields"]]
     project["project_type"] = classify_project_type(form_names, all_labels)
 
     return project
 
 
 def _pdf_title(text: str) -> str:
-    """Extract project title from codebook PDF first-page text."""
-    # Header pattern: "Data Dictionary Codebook\nProject Name (PID: 1234)"
     m = re.search(r"Data Dictionary Codebook\s*\n(.+?)(?:\s*\(PID:|$)", text)
     if m:
         return m.group(1).strip()
-    # Fallback: first non-empty line after "Codebook"
     lines = [l.strip() for l in text.splitlines() if l.strip()]
     for i, line in enumerate(lines):
         if "Codebook" in line and i + 1 < len(lines):
-            candidate = lines[i + 1]
-            if "Data Dictionary" not in candidate:
-                return candidate
+            cand = lines[i + 1]
+            if "Data Dictionary" not in cand:
+                return cand
     return "Unknown Project"
 
 
@@ -355,232 +376,362 @@ def _pdf_pid(text: str) -> str | None:
 
 
 def _pdf_date(text: str) -> str | None:
-    # REDCap date format in codebook header: "MM-DD-YYYY H:MMam/pm"
     m = re.search(r"(\d{2}-\d{2}-\d{4}\s+\d+:\d+(?:am|pm))", text, re.IGNORECASE)
     return m.group(1).strip() if m else None
 
 
 def _pdf_parse_summary_tables(project: dict, all_tables: list) -> None:
     """
-    Identify and parse the Instruments and Events summary tables from all tables.
-    Instruments table header: Instrument | Form Name | [Events]
-    Events table header: Event Name | Unique event name | Event ID
+    Parse the Instruments summary table and the Events table (longitudinal projects).
+
+    Instruments table: 2-column, header row "Instrument | Form Name"
+    Events table: 3+ column, header row contains "Unique event name" or "Event ID"
     """
     for table in all_tables:
         if not table or len(table) < 2:
             continue
-        header = [str(c or "").strip().lower() for c in table[0]]
 
-        # Events table
-        if any("unique event" in h for h in header) or any("event id" in h for h in header):
+        # Look at second row (first is often a merged mega-cell or title row)
+        header_row = next(
+            (r for r in table[:3] if r and any(str(c or "").strip() for c in r)),
+            None
+        )
+        if not header_row:
+            continue
+        header = [str(c or "").strip().lower() for c in header_row]
+
+        # Events table: contains "unique event" in a column header
+        if any("unique event" in h for h in header):
             project["is_longitudinal"] = True
-            for row in table[1:]:
-                if not row or all(c is None or str(c).strip() == "" for c in row):
-                    continue
+            for row in table:
                 cells = [str(c or "").strip() for c in row]
+                if not any(cells):
+                    continue
+                if "unique event" in " ".join(cells).lower():
+                    continue  # skip header row
                 ev = {
-                    "display_name":       cells[0] if len(cells) > 0 else "",
-                    "unique_event_name":  cells[1] if len(cells) > 1 else "",
-                    "event_id":           cells[2] if len(cells) > 2 else None,
-                    "is_repeating":       any("repeat" in str(c).lower() for c in cells),
+                    "display_name":      cells[0] if len(cells) > 0 else "",
+                    "unique_event_name": cells[1] if len(cells) > 1 else "",
+                    "event_id":          cells[2] if len(cells) > 2 else None,
+                    "is_repeating":      any("repeat" in str(c).lower() for c in cells),
                 }
-                if ev["unique_event_name"]:
+                if ev["unique_event_name"] and ev["unique_event_name"] != "Unique event name":
                     project["events"].append(ev)
 
-        # Instruments summary table
-        elif ("instrument" in header or "form name" in header) and len(header) >= 2:
-            # Only process if we don't already have instruments from field parsing
-            for row in table[1:]:
-                if not row or all(c is None or str(c).strip() == "" for c in row):
-                    continue
-                cells = [str(c or "").strip() for c in row]
-                display  = cells[0] if len(cells) > 0 else ""
-                form_nm  = cells[1] if len(cells) > 1 else ""
-                events_s = cells[2] if len(cells) > 2 else ""
-                if display or form_nm:
-                    # Store event assignment info; reconcile later with field table
-                    pass  # Event assignments are captured per-instrument during field parsing
+        # Instruments summary table: 2-column with "Instrument" header
+        elif len(header) == 2 and ("instrument" in header[0] or "form name" in header[1]):
+            # We don't need to pre-populate instruments here — field parsing handles it.
+            # But we capture event assignments if col 2 exists.
+            pass
 
 
-def _pdf_parse_fields(project: dict, all_tables: list, full_text: str) -> None:
+def _pdf_parse_field_tables(project: dict, all_tables: list) -> None:
     """
-    Parse the main field-by-field table from the codebook PDF.
-    Expected columns: # | Variable/Field Name [+BL] | Field Label | Field Attributes
+    Parse the main field-by-field table from codebook PDF tables.
 
-    Falls back to text-based parsing if table extraction fails.
+    Confirmed column layout:
+      [0]: empty  [1]: instrument banner or ''  [2]: field #  [3]: [variable]+BL
+      [4]: label  [5]: attributes  [6+]: empty
+
+    Skips: mega-cell first rows, column header rows, continuation rows.
+
+    Handles cross-table continuations: when a page break splits a field row
+    across two tables (e.g., "ONLY" split as "ONL" in table T and "Y if:\n..."
+    in the next table), the pending field is completed when the continuation
+    row is detected.
     """
-    # Try to find the main field table(s)
-    # Field tables have a numeric first column and 4 columns total
-    field_tables = []
-    for table in all_tables:
-        if not table or len(table) < 2:
-            continue
-        # Identify field tables: first data cell is a number, and 4 columns
-        first_data_row = next((r for r in table[1:] if r and any(str(c or "").strip() for c in r)), None)
-        if first_data_row is None:
-            continue
-        first_cell = str(first_data_row[0] or "").strip()
-        if len(table[0]) >= 3 and re.match(r"^\d+$", first_cell):
-            field_tables.append(table)
-
-    if field_tables:
-        _parse_field_tables(project, field_tables)
-    else:
-        # Fallback: text-based parsing
-        _parse_fields_from_text(project, full_text)
-
-
-def _parse_field_tables(project: dict, field_tables: list) -> None:
-    """Parse instruments and fields from structured field tables."""
     current_instr: dict | None = None
+    pending_field: dict | None = None   # field with BL truncated at "ONL" — waiting for "Y if:..." continuation
+    last_field: dict | None = None      # most recently completed field (for full-BL standalone rows)
 
-    for table in field_tables:
-        for row in table:
+    for table in all_tables:
+        if not table:
+            continue
+
+        for row_idx, row in enumerate(table):
             if not row:
                 continue
-            cells = [str(c or "").strip() for c in row]
 
-            # Skip pure header rows
-            if cells and cells[0].lower() in ("#", "variable / field name", ""):
-                # Check if this might be an instrument banner (full-width row)
-                non_empty = [c for c in cells if c]
-                if len(non_empty) == 1 and current_instr is not None:
-                    # Single text in row = likely instrument banner in some PDF layouts
-                    pass
+            # Normalize ALL cells: apply fi/ff/ffi-ligature fix and pad to 6 cells
+            cells = [_normalize_fi_ligature(str(c or "").strip()) for c in row]
+            while len(cells) < 6:
+                cells.append("")
+
+            # ── Skip mega-cell first row (contains all page text as one blob) ─
+            if row_idx == 0 and len(cells[0]) > 100:
                 continue
 
-            # Instrument banner: row where field # is empty and text describes instrument
-            if not cells[0] and cells[1] if len(cells) > 1 else False:
-                banner_text = " ".join(c for c in cells if c)
-                # Try to detect "Display Name\nform_name" pattern
-                m = re.search(r"([^\n]+)\n([a-z][a-z0-9_]*)", banner_text)
+            # ── Skip column header row ─────────────────────────────────────────
+            if cells[2].strip() == "#" or "variable / field" in cells[3].lower():
+                continue
+
+            # ── Instrument banner ──────────────────────────────────────────────
+            # Must be checked BEFORE the continuation-row skip below.
+            # Pattern: col 1 has "Instrument: Name (form_name) ..."
+            #          col 2 is empty (not a field number)
+            if "Instrument:" in cells[1] and not re.match(r"^\d+$", cells[2].strip()):
+                banner = cells[1]
+                m = re.search(
+                    r"Instrument:\s+(.+?)\s*\(([a-z][a-z0-9_]*)\)",
+                    banner
+                )
                 if m:
                     display_nm = m.group(1).strip()
                     form_nm    = m.group(2).strip()
                 else:
-                    display_nm = banner_text.strip()
-                    form_nm    = banner_text.strip().lower().replace(" ", "_")
+                    # Fallback: strip "Instrument:" prefix and rendering artifacts
+                    display_nm = re.sub(r"Instrument:\s*", "", banner)
+                    display_nm = re.sub(r"\(cid:\d+\).*", "", display_nm).strip()
+                    form_nm    = display_nm.lower().replace(" ", "_")
 
-                is_surv = "survey" in banner_text.lower() or "enabled as survey" in banner_text.lower()
+                is_surv = "Enabled as survey" in banner or "(cid:0)" in banner
                 current_instr = new_instrument(display_nm, form_nm)
                 current_instr["is_survey"] = is_surv
                 project["instruments"].append(current_instr)
+                pending_field = None  # clear pending on instrument change
                 continue
 
-            # Field row: first cell is a field number
-            if re.match(r"^\d+$", cells[0]):
+            # ── Cross-table BL continuation — two forms ────────────────────────
+            # Page breaks can split a field row's BL across tables. Two forms:
+            #
+            # Form 1 ("Y if:…"): field row ends at "ONL", next row starts "Y if:\n[expr]"
+            #   → pending_field holds the incomplete field
+            #
+            # Form 2 ("Show the field ONLY if:…"): entire BL appears as a standalone
+            #   row (no field number) after choice-overflow tables separated the two
+            #   → last_field receives the BL
+            #
+            # Both forms have empty col[2]. Check BEFORE the generic continuation skip.
+            if not cells[2]:
+                c3_norm = re.sub(r"([A-Za-z])\n([A-Za-z])", r"\1\2", cells[3])
+
+                # Form 1: tail starting with "Y if:"
+                if pending_field is not None and re.match(r"^Y if:\s*", c3_norm, re.IGNORECASE):
+                    bl_tail = re.sub(r"^Y if:\s*\n?", "", c3_norm, flags=re.IGNORECASE).strip()
+                    pending_field["branching_logic"] = bl_tail or None
+                    if cells[4]:
+                        tail = cells[4].replace("\n", " ").strip()
+                        pending_field["label"] = (pending_field["label"] + " " + tail).strip()
+                    pending_field = None
+                    continue
+
+                # Form 2: full BL text in a standalone row (e.g., after choice tables)
+                bl_full_m = re.search(
+                    r"Show the (?:field) ONLY if:\n(.+)",
+                    c3_norm,
+                    re.DOTALL | re.IGNORECASE,
+                )
+                if bl_full_m and last_field is not None and last_field["branching_logic"] is None:
+                    last_field["branching_logic"] = bl_full_m.group(1).strip() or None
+                    continue
+
+            # Reset pending_field only when we hit a new proper field row (digit in col 2).
+            # Do NOT reset on choice/summary tables whose col[2] contains non-digit text.
+            if pending_field is not None and re.match(r"^\d+$", cells[2].strip()):
+                pending_field = None
+
+            # ── Skip continuation rows (empty col 2 AND no bracket in col 3) ──
+            # These are choice overflow rows like ['', '', '', '', '', '0', 'Incomplete', ...]
+            # Choices are already embedded in col 5 of their own field row — skip duplicates.
+            if not cells[2] and not re.match(r"^\[", cells[3]):
+                continue
+
+            # ── Field row ──────────────────────────────────────────────────────
+            # Col 2 is a digit, col 3 starts with [variable_name].
+            # PDF line-wrapping can embed \n inside variable names (e.g., [email_pre\nview_complete]).
+            # Normalize mid-word breaks in col 3 FIRST, then match the variable name.
+            num_match  = re.match(r"^\d+$", cells[2].strip())
+            var_cell_raw  = cells[3]
+            var_cell_norm = re.sub(r"([A-Za-z])\n([A-Za-z])", r"\1\2", var_cell_raw)
+            var_m = re.match(r"^\[([a-z][a-z0-9_]*)\]", var_cell_norm.strip())
+
+            if num_match and var_m:
                 if current_instr is None:
-                    current_instr = new_instrument("Unknown", "unknown")
+                    current_instr = new_instrument("Unknown Instrument", "unknown")
                     project["instruments"].append(current_instr)
 
                 f = new_field()
-                f["number"] = int(cells[0])
+                f["number"] = int(cells[2].strip())
+                f["variable"] = var_m.group(1)
 
-                # Column 2: variable name + optional branching logic
-                var_cell = cells[1] if len(cells) > 1 else ""
-                bl_match = re.split(r"\nShow the field ONLY if:|Show the field ONLY if:", var_cell, maxsplit=1)
-                f["variable"] = bl_match[0].strip()
-                if len(bl_match) > 1:
-                    f["branching_logic"] = bl_match[1].strip() or None
+                # Skip auto-generated instrument completion status fields
+                # (_complete fields are uniform across all projects, not user-designed)
+                if f["variable"].endswith("_complete"):
+                    continue
 
-                # Column 3: field label (+ section header above + field note below)
-                label_cell = cells[2] if len(cells) > 2 else ""
-                label_lines = label_cell.splitlines()
-                # Heuristic: if first line looks like a section header (short, title-like)
-                # and there are multiple lines, the first is the section header
-                f["label"] = label_cell.strip()
+                # Extract branching logic from col 3 if present after the variable name.
+                bl_split = re.split(
+                    r"\nShow the (?:field|!eld) ONLY if:\n",
+                    var_cell_norm,
+                    maxsplit=1,
+                    flags=re.IGNORECASE,
+                )
+                if len(bl_split) > 1:
+                    f["branching_logic"] = bl_split[1].strip() or None
+                elif re.search(r"Show the (?:field|!eld) ONL$", var_cell_norm, re.IGNORECASE):
+                    # BL was truncated at the table/page boundary — mark as pending
+                    pending_field = f
 
-                # Column 4: field attributes
-                attr_cell = cells[3] if len(cells) > 3 else ""
-                _parse_field_attributes(f, attr_cell)
+                # ── Parse label from col 4 ─────────────────────────────────────
+                label_cell = cells[4]
+                if label_cell.startswith("Section Header:"):
+                    parts = label_cell.split("\n", 1)
+                    f["section_header"] = parts[0].replace("Section Header:", "").strip()
+                    raw_label = parts[1].strip() if len(parts) > 1 else ""
+                else:
+                    raw_label = label_cell
+                # Normalize PDF line-wrapping artifacts in labels
+                f["label"] = raw_label.replace("\n", " ").strip()
+
+                # ── Parse attributes from col 5 ────────────────────────────────
+                _parse_pdf_attributes(f, cells[5])
 
                 current_instr["fields"].append(f)
+                last_field = f
 
 
-def _parse_field_attributes(f: dict, attr_text: str) -> None:
-    """Parse the Field Attributes column content into a field dict."""
-    text = attr_text.strip()
-    if not text:
+def _parse_pdf_attributes(f: dict, attr_text: str) -> None:
+    """
+    Parse the Field Attributes column from the codebook PDF.
+
+    Format of attr_text (col 5):
+      Line 0: type info — "text", "text (email), Required", "dropdown, Required", etc.
+      Line 1+: choices ("1 Label\n2 Label"), annotation, custom alignment, slider labels, etc.
+
+    Choices embedded as "N Label" lines after a dropdown/radio/checkbox type line.
+    Annotation line: "Field Annotation: @TAG..." (may be multiline for long expressions).
+    """
+    if not attr_text:
         return
 
-    # Required / Identifier flags
-    f["required"]   = "Required" in text
-    f["identifier"] = "Identifier" in text
+    lines = attr_text.splitlines()
+    if not lines:
+        return
 
-    # Field type — first token before comma or newline
-    type_match = re.match(r"^([a-z]+(?:\s*\(Matrix\))?)", text.lower())
-    if type_match:
-        raw_type = type_match.group(1).strip()
-        if "matrix" in raw_type:
-            f["type"] = "radio"  # matrix groups use radio
-        else:
-            f["type"] = raw_type.split("(")[0].strip()
+    # ── Line 0: type, optional validation, Required/Identifier flags ───────────
+    type_line = lines[0].strip()
 
-    # Validation: "text (date_mdy)" or "text (email)"
-    val_match = re.search(r"text\s*\(([^)]+)\)", text, re.IGNORECASE)
-    if val_match:
-        f["validation"] = val_match.group(1).strip()
+    # Field type — match known types at the start of the line
+    type_m = re.match(
+        r"^(text|notes|dropdown|radio|checkbox|calc|file|descriptive|slider|yesno|truefalse|sql)",
+        type_line.lower()
+    )
+    if type_m:
+        f["type"] = type_m.group(1)
 
-    # Choices: look for "Choices:" block or coded value lines like "0, Label"
-    choices_block = re.search(r"Choices?:\s*(.+?)(?=Calculation:|Annotation:|Required|Identifier|$)", text, re.DOTALL | re.IGNORECASE)
-    if choices_block:
-        choices_text = choices_block.group(1).strip()
-        # Parse lines like "0, Label\n1, Another"
-        choices = []
-        for line in choices_text.splitlines():
-            line = line.strip()
-            m = re.match(r"^(\S+),\s*(.+)$", line)
-            if m:
-                choices.append({"value": m.group(1).strip(), "label": m.group(2).strip()})
-        if choices:
-            f["choices"] = choices
+    # Validation: "text (date_mdy)", "text (email)", etc. (not for slider parenthetical)
+    if f["type"] == "text":
+        val_m = re.search(r"\(([a-z_]+(?:_[a-z]+)*)\)", type_line)
+        if val_m:
+            f["validation"] = val_m.group(1).strip()
 
-    # Calculation formula
-    calc_match = re.search(r"Calculation:\s*(.+?)(?=Annotation:|Required|Identifier|$)", text, re.DOTALL | re.IGNORECASE)
-    if calc_match:
-        f["formula"] = calc_match.group(1).strip()
+    # Required / Identifier from type line
+    f["required"]   = "Required" in type_line
+    f["identifier"] = "Identifier" in type_line
 
-    # Action tags from annotation line
-    ann_match = re.search(r"Annotation:\s*(.+?)(?=Required|Identifier|$)", text, re.DOTALL | re.IGNORECASE)
-    if ann_match:
-        f["action_tags"] = extract_action_tags(ann_match.group(1))
-    else:
-        # Also check raw text for @tags
-        f["action_tags"] = extract_action_tags(text)
+    # ── Remaining lines: choices, annotation, alignment, BL ───────────────────
+    in_annotation = False
+    annotation_parts: list = []
+    last_choice_idx = -1  # index of the last appended choice (for multiline labels)
 
-
-def _parse_fields_from_text(project: dict, full_text: str) -> None:
-    """
-    Fallback text-based field parser when table extraction fails.
-    Uses line patterns to detect instrument banners and field entries.
-    """
-    current_instr: dict | None = None
-    field_number = 0
-
-    for line in full_text.splitlines():
-        line = line.strip()
-        if not line:
+    for line in lines[1:]:
+        line_s = line.strip()
+        if not line_s:
+            in_annotation = False
             continue
 
-        # Instrument banner: lines that look like form headers
-        # Pattern: all-caps or title-case line not starting with a number
-        if re.match(r"^[A-Z][A-Za-z\s&-]+$", line) and len(line) > 5 and not re.match(r"^\d", line):
-            # Could be an instrument name
-            if not any(kw in line for kw in ["Field", "Variable", "Label", "Attributes", "Data Dictionary"]):
-                form_nm = line.lower().replace(" ", "_")
-                current_instr = new_instrument(line, form_nm)
-                project["instruments"].append(current_instr)
-                continue
+        # Required / Identifier as standalone lines
+        if line_s in ("Required", "Identifier"):
+            if line_s == "Required":   f["required"]   = True
+            if line_s == "Identifier": f["identifier"] = True
+            in_annotation = False
+            last_choice_idx = -1
+            continue
 
-        # Field entry: line starting with a number
-        m = re.match(r"^(\d+)\s+([a-z][a-z0-9_]*)\s+(.*)", line)
-        if m and current_instr is not None:
-            field_number = int(m.group(1))
-            f = new_field()
-            f["number"] = field_number
-            f["variable"] = m.group(2).strip()
-            f["label"] = m.group(3).strip()
-            current_instr["fields"].append(f)
+        # Field Annotation trigger line
+        if line_s.startswith("Field Annotation:"):
+            in_annotation = True
+            last_choice_idx = -1
+            ann_text = line_s.replace("Field Annotation:", "").strip()
+            annotation_parts.append(ann_text)
+            continue
+
+        # Annotation continuation lines: @ tag start, quoted strings, or anything
+        # that isn't a new choice/custom alignment/slider (covers split tags like
+        # "@HIDESUBMIT-\nSURVEY" where "SURVEY" appears alone on the next line).
+        if in_annotation and (
+            line_s.startswith("@")
+            or line_s.startswith('"')
+            or line_s.startswith("'")
+            or (
+                not re.match(r"^\d+\s", line_s)
+                and not line_s.startswith("Custom")
+                and not line_s.startswith("Slider")
+                and line_s not in ("Required", "Identifier")
+            )
+        ):
+            annotation_parts.append(line_s)
+            continue
+
+        in_annotation = False
+
+        # Custom alignment — skip
+        if line_s.startswith("Custom alignment:"):
+            last_choice_idx = -1
+            continue
+
+        # Slider labels — skip
+        if line_s.startswith("Slider labels:"):
+            last_choice_idx = -1
+            continue
+
+        # Branching logic within attributes (rare — usually in col 3, but occasionally here)
+        if "Show the field ONLY if:" in line_s or "Show the !eld ONLY if:" in line_s:
+            last_choice_idx = -1
+            continue  # BL from col 3 takes precedence; skip if somehow duplicated here
+
+        # Choice line: "N Label text" where N is a digit
+        choice_m = re.match(r"^(\d+)\s+(.+)$", line_s)
+        if choice_m and f["type"] in CHOICE_TYPES:
+            val = choice_m.group(1)
+            lbl = choice_m.group(2).strip()
+            # Skip _complete field choices (Incomplete/Unverified/Complete)
+            if not (val in ("0", "1", "2") and lbl in ("Incomplete", "Unverified", "Complete")):
+                # REDCap codebook PDF shows checkbox choices prefixed with
+                # the subvariable name: "fieldname___code Actual Label".
+                # Strip that prefix so only the human-readable label is kept.
+                if f["type"] == "checkbox":
+                    subvar_prefix = re.match(
+                        r"^[a-z][a-z0-9_]*___\d+\s+(.+)$",
+                        lbl,
+                        re.IGNORECASE
+                    )
+                    if subvar_prefix:
+                        lbl = subvar_prefix.group(1).strip()
+                f["choices"].append({"value": val, "label": lbl})
+                last_choice_idx = len(f["choices"]) - 1
+            continue
+
+        # Multiline choice label continuation: PDF sometimes wraps long choice labels
+        # across lines (e.g., "Keyboard/Mouse\nWireless Combo" for one choice).
+        # If we're in a choice field and this line doesn't match anything else,
+        # append it to the most recent choice's label.
+        if last_choice_idx >= 0 and f["type"] in CHOICE_TYPES:
+            f["choices"][last_choice_idx]["label"] += " " + line_s
+            continue
+
+        last_choice_idx = -1
+
+        # Calculation formula line (calc fields sometimes have the formula here)
+        if f["type"] == "calc" and not f["formula"]:
+            f["formula"] = line_s
+
+    # Commit collected action tags.
+    # Repair hyphenated tags split across lines (e.g., "@HIDESUBMIT- SURVEY" → "@HIDESUBMIT-SURVEY")
+    if annotation_parts:
+        full_ann = " ".join(annotation_parts)
+        full_ann = re.sub(r"(@[A-Z][A-Z0-9_-]*-)\s+([A-Z])", r"\1\2", full_ann)
+        f["action_tags"] = extract_action_tags(full_ann)
 
 
 # ── Summary stats ─────────────────────────────────────────────────────────────
