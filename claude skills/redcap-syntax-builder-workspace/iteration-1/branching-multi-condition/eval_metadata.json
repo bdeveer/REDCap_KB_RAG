@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "eval_name": "branching-multi-condition",
+  "prompt": "I need branching logic to show a field called `pregnancy_complications` only when the participant is female AND currently pregnant. Sex is stored in a radio field called `sex` (coded 1=Male, 2=Female) and pregnancy status in a radio called `pregnant` (coded 1=Yes, 0=No). Not a longitudinal project, no repeating instruments.",
+  "assertions": [
+    {
+      "text": "Expression is exactly [sex]='2' AND [pregnant]='1' (or equivalent with parentheses)",
+      "passed": true,
+      "evidence": "Response contains: [sex]='2' AND [pregnant]='1'"
+    },
+    {
+      "text": "Identifies the expression type as Branching Logic and states where to place it (not a calc field or action tag)",
+      "passed": true,
+      "evidence": "Response states: 'Branching Logic — goes in the Branching Logic field of the pregnancy_complications field in the Online Designer'"
+    },
+    {
+      "text": "Uses single quotes around coded values (not double quotes)",
+      "passed": true,
+      "evidence": "Expression uses [sex]='2' and [pregnant]='1' with single quotes"
+    },
+    {
+      "text": "Mentions or addresses blank field behavior (unanswered field evaluates to false/hidden)",
+      "passed": true,
+      "evidence": "Watch out for section states: 'If either field is unanswered (blank), the expression evaluates to false and the field stays hidden'"
+    },
+    {
+      "text": "Does NOT add unnecessary longitudinal or repeating clauses (user said neither applies)",
+      "passed": true,
+      "evidence": "Expression is plain [sex]='2' AND [pregnant]='1' — no event prefix or instance qualifier"
+    }
+  ]
+}

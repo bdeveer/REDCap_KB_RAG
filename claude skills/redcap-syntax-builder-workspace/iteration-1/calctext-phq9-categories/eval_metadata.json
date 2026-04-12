@@ -1,0 +1,32 @@
+{
+  "eval_id": 2,
+  "eval_name": "calctext-phq9-categories",
+  "prompt": "I need a @CALCTEXT expression that categorizes PHQ-9 scores into severity labels. The total score field is called `phq9_total`. The categories are: 0-4 = Minimal, 5-9 = Mild, 10-14 = Moderate, 15-19 = Moderately Severe, 20 and above = Severe. Not a longitudinal project, no repeating instruments.",
+  "assertions": [
+    {
+      "text": "Expression starts with @CALCTEXT( and closes correctly",
+      "passed": true,
+      "evidence": "@CALCTEXT(if([phq9_total]>=20,'Severe',if([phq9_total]>=15,'Moderately Severe',if([phq9_total]>=10,'Moderate',if([phq9_total]>=5,'Mild','Minimal')))))"
+    },
+    {
+      "text": "Uses nested if() with thresholds evaluated highest-first (>=20 before >=15 etc.) — avoids logic gap or overlap",
+      "passed": true,
+      "evidence": "Outer if checks >=20, then >=15, then >=10, then >=5, with Minimal as the final fallback"
+    },
+    {
+      "text": "All five category labels are present: Minimal, Mild, Moderate, Moderately Severe, Severe",
+      "passed": true,
+      "evidence": "All five labels appear in the expression and in the How It Works explanation"
+    },
+    {
+      "text": "Identifies field type as Text Box and mentions where to put the action tag (Action Tags field in Online Designer)",
+      "passed": true,
+      "evidence": "Response states field type should be Text Box and action tag goes in the Action Tags field"
+    },
+    {
+      "text": "Warns about blank phq9_total evaluating as 0 (would return 'Minimal' when unanswered) and optionally provides a fix",
+      "passed": true,
+      "evidence": "Watch out for section explicitly addresses this with a modified expression wrapping a blank check"
+    }
+  ]
+}

@@ -265,5 +265,7 @@ For every article the new article references, find its Per-Article Reference Det
 | AI | AI Tools | Covers writing tools, AI translations, and AI summarization |
 | CALC | Calculations & Special Functions | Covers built-in REDCap functions: date/datetime, numeric, text, conditional |
 | TXT | Texting (SMS) | Covers Twilio/Mosio setup, SMS invitations, voice calls, and admin configuration |
+| MYCAP | MyCap Mobile App | Participant-facing mobile app; separate from MOB (REDCap Mobile App for study teams) |
+| FDL | Form Display Logic | — |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.

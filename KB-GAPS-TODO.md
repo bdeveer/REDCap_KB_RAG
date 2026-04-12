@@ -17,16 +17,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 4 — Surfaced by RC-UNCLASSIFIED-01 (good interim coverage exists)
 
-### ⚠️ RC-PROJ-01 — Project Lifecycle: Statuses and Transitions
-
-**Why needed:** RC-UNCLASSIFIED-01 §1–2 covers project statuses (Development, Production, Analysis/Cleanup, Completed), moving to Production, copying/deleting projects, Draft Mode, and production change risk flags. No dedicated article exists.
-
-**Domain slug:** PROJ (new)
-**What to cover:** All four lifecycle statuses and transitions, the move-to-Production workflow, copying a project (what is/isn't copied), deleting a project (recovery window), Draft Mode and production change review, change risk flags (\*Possible label mismatch, \*Possible data loss, \*Data WILL be lost), rules for safe production changes
-**Interim coverage:** RC-UNCLASSIFIED-01 §1–2
-
----
-
 ### ⚠️ RC-DQ-01 — Data Quality Module
 
 **Why needed:** RC-UNCLASSIFIED-01 §3 covers the Data Quality module including default rules, custom rules, real-time execution, Rule H (correcting calculated fields after design changes or imports). Referenced by RC-CALC-01 (Special Functions). No dedicated article exists.
@@ -98,11 +88,13 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-MLM-01 — Multi-Language Management ✅ *(was Priority 2)*
 - RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
 - RC-API-01 — REDCap API ✅ *(was Priority 5; based on official REDCap API documentation; supersedes RC-UNCLASSIFIED-01 §4 interim coverage)*
+- RC-PROJ-01 — Project Lifecycle: Status and Settings ✅ *(was Priority 4; supersedes RC-UNCLASSIFIED-01 §1–2)*
+- RC-MYCAP-01 through RC-MYCAP-08 — Full MyCap series ✅ *(supersedes RC-UNCLASSIFIED-01 §6)*
 
 ---
 
 ## Notes
 
-- RC-UNCLASSIFIED-01 provides interim coverage for RC-PROJ-01 (§1–2), RC-DQ-01 (§3), and RC-MOB-01/MyCap (§6). Those sections can serve as drafting source material.
+- RC-UNCLASSIFIED-01 §3 provides interim coverage for RC-DQ-01. That section can serve as drafting source material. (Sections §1–2 and §6 have been removed from RC-UNCLASSIFIED-01 and are now covered by dedicated articles.)
 
-*Last updated: 2026-04-10 (RC-MLM-01 resolved; RC-ALERT-03 covered by RC-TXT-01/RC-TXT-02; RC-PROJ-01, RC-DQ-01, RC-PROJ-02, RC-DDE-01 added from RC-UNCLASSIFIED-01 review; stale ⚠️ references in KB articles cleaned up; RC-FDL-01 resolved)*
+*Last updated: 2026-04-11 (RC-PROJ-01 resolved — supersedes RC-UNCLASSIFIED-01 §1–2; RC-MYCAP-01 through RC-MYCAP-08 resolved — supersedes RC-UNCLASSIFIED-01 §6; Notes updated to reflect sections removed from RC-UNCLASSIFIED-01)*

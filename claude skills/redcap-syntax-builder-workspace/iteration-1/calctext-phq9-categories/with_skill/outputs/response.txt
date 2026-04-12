@@ -1,0 +1,36 @@
+EXPRESSION TYPE
+===============
+@CALCTEXT action tag on a Text Box field
+
+The field type in the Data Dictionary should be "Text Box" (with no validation required, since we're storing text labels). Add the action tag @CALCTEXT(...) to the "Action Tags" field in the Online Designer.
+
+
+EXPRESSION
+==========
+@CALCTEXT(if([phq9_total]>=20,'Severe',if([phq9_total]>=15,'Moderately Severe',if([phq9_total]>=10,'Moderate',if([phq9_total]>=5,'Mild','Minimal')))))
+
+
+HOW IT WORKS
+============
+The expression uses nested if() statements to evaluate the PHQ-9 total score against each category threshold, from highest to lowest:
+
+1. If phq9_total >= 20, return "Severe"
+2. Else if phq9_total >= 15, return "Moderately Severe"
+3. Else if phq9_total >= 10, return "Moderate"
+4. Else if phq9_total >= 5, return "Mild"
+5. Else (score is 0-4), return "Minimal"
+
+The logic evaluates in order, so once a threshold is met, the corresponding label is returned and the remaining conditions are skipped.
+
+The expression automatically updates whenever the phq9_total field changes, so the severity label will always stay in sync with the current score.
+
+
+WATCH OUT FOR
+=============
+• Blank phq9_total: If the phq9_total field is empty (not answered), the expression will evaluate to "Minimal" because an empty field is treated as 0 in numeric comparisons. If you want blank to display as blank (or a different placeholder like "Not assessed"), wrap the entire expression:
+
+  @CALCTEXT(if([phq9_total]='','Not assessed',if([phq9_total]>=20,'Severe',if([phq9_total]>=15,'Moderately Severe',if([phq9_total]>=10,'Moderate',if([phq9_total]>=5,'Mild','Minimal'))))))
+
+• Field must be named exactly: The expression references [phq9_total] by variable name, not label. Verify the Data Dictionary uses this exact field name.
+
+• Text output: The result field will display text labels, not numbers. This is expected and correct.

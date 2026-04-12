@@ -1,0 +1,26 @@
+{
+  "skill_name": "redcap-syntax-builder",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "branching-multi-condition",
+      "prompt": "I need branching logic to show a field called `pregnancy_complications` only when the participant is female AND currently pregnant. Sex is stored in a radio field called `sex` (coded 1=Male, 2=Female) and pregnancy status in a radio called `pregnant` (coded 1=Yes, 0=No). Not a longitudinal project, no repeating instruments.",
+      "expected_output": "A correct branching logic expression using [sex]='2' AND [pregnant]='1', with a brief explanation and any relevant gotchas (e.g., case sensitivity, single quotes).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "eval_name": "calctext-phq9-categories",
+      "prompt": "I need a @CALCTEXT expression that categorizes PHQ-9 scores into severity labels. The total score field is called `phq9_total`. The categories are: 0-4 = Minimal, 5-9 = Mild, 10-14 = Moderate, 15-19 = Moderately Severe, 20 and above = Severe. Not a longitudinal project, no repeating instruments.",
+      "expected_output": "A correct @CALCTEXT using nested if() functions covering all 5 categories, placed on a Text Box field. Expression should handle the score ranges correctly with no gaps or overlaps.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "eval_name": "calcdate-cross-event-longitudinal",
+      "prompt": "We have a longitudinal study with a Baseline event (unique event name: baseline_arm_1) and a Month 6 event (unique event name: month_6_arm_1). The enrollment date is stored in a field called `enroll_date` on the Baseline event. I need a @CALCDATE expression for a field on the Month 6 event that calculates exactly 6 months after the enrollment date. Both fields use date_ymd validation.",
+      "expected_output": "A correct @CALCDATE using a cross-event reference to [baseline_arm_1][enroll_date] with offset 6 and unit 'M'. Should include the note about format matching, server time, and the approximation of 'M' vs using days.",
+      "files": []
+    }
+  ]
+}

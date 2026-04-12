@@ -1,0 +1,17 @@
+EXPRESSION TYPE
+Branching Logic — goes in the "Branching Logic" field of the pregnancy_complications field in the Online Designer.
+
+EXPRESSION
+[sex]='2' AND [pregnant]='1'
+
+HOW IT WORKS
+This expression evaluates to true (pregnancy_complications is shown) only when both conditions are met:
+1. [sex]='2' — the participant's sex field is coded as 2 (Female)
+2. [pregnant]='1' — the pregnant field is coded as 1 (Yes)
+
+If either condition is false (sex is Male, or pregnant is No), the field remains hidden. The AND operator ensures both must be true simultaneously.
+
+WATCH OUT FOR
+- Coded values are case-sensitive and numeric: the codes are 2 and 1 (not "2" or "1" in the expression — single quotes wrap the code value, not the number itself).
+- If either field is unanswered (blank), the expression evaluates to false and the field stays hidden. This is the desired behavior for a conditional visibility rule.
+- No parentheses are needed here because there's only one AND operator and no mixed AND/OR logic. If you later add OR conditions, use parentheses to clarify precedence.

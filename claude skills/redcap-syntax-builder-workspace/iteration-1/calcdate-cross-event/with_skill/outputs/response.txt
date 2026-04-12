@@ -1,0 +1,39 @@
+Expression Type
+===============
+@CALCDATE action tag on a Text Box field
+
+The result field (on the Month 6 event) must have date_ymd validation.
+
+Expression
+==========
+@CALCDATE([baseline_arm_1][enroll_date],6,'M')
+
+
+How It Works
+============
+This expression takes the enrollment date from the Baseline event (via the cross-event
+reference [baseline_arm_1][enroll_date]) and adds exactly 6 months to it using the 'M'
+(months) unit. The result is written into the Text Box field on the Month 6 event.
+
+The expression automatically handles the month-to-month calculation — it doesn't simply
+add 180 days, which would be imprecise. For example:
+  - January 15 → July 15
+  - March 31 → September 30 (REDCap adjusts for month-end)
+  - February 28 (non-leap year) → August 28
+
+
+Watch Out For
+=============
+1. Case sensitivity on the unit: Use capital 'M' for months, not lowercase 'm'
+   (lowercase 'm' means minutes and will produce an incorrect result).
+
+2. Month boundaries: REDCap uses a 30.44-day average for months. If the source date
+   lands on the 31st of a month with only 30 days in the target month, the result
+   will be adjusted to the last day of that month.
+
+3. Cross-event reference format: The two bracket pairs must be adjacent with no space
+   or separator: [baseline_arm_1][enroll_date], not [baseline_arm_1] [enroll_date]
+   or [baseline_arm_1.enroll_date].
+
+4. If the baseline event is not populated for a record (or enroll_date is blank),
+   the Month 6 field will display blank.

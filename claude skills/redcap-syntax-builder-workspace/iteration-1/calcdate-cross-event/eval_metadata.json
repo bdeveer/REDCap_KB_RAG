@@ -1,0 +1,32 @@
+{
+  "eval_id": 3,
+  "eval_name": "calcdate-cross-event-longitudinal",
+  "prompt": "We have a longitudinal study with a Baseline event (unique event name: baseline_arm_1) and a Month 6 event (unique event name: month_6_arm_1). The enrollment date is stored in a field called `enroll_date` on the Baseline event. I need a @CALCDATE expression for a field on the Month 6 event that calculates exactly 6 months after the enrollment date. Both fields use date_ymd validation.",
+  "assertions": [
+    {
+      "text": "Expression is @CALCDATE([baseline_arm_1][enroll_date],6,'M') — correct syntax with no dot or space between the two bracket pairs",
+      "passed": true,
+      "evidence": "Response contains: @CALCDATE([baseline_arm_1][enroll_date],6,'M')"
+    },
+    {
+      "text": "Uses capital 'M' for months (not lowercase 'm' which means minutes)",
+      "passed": true,
+      "evidence": "Expression uses 'M' and the Watch Out For section explicitly calls out the M vs m distinction"
+    },
+    {
+      "text": "States that the result field must have date validation (date_ymd or similar)",
+      "passed": true,
+      "evidence": "Response states: 'The result field (on the Month 6 event) must have date_ymd validation'"
+    },
+    {
+      "text": "Notes that blank enroll_date or unpopulated baseline event will result in a blank output",
+      "passed": true,
+      "evidence": "Watch Out For item 4: 'If the baseline event is not populated for a record (or enroll_date is blank), the Month 6 field will display blank'"
+    },
+    {
+      "text": "Correctly uses the cross-event reference [baseline_arm_1][enroll_date] — not [baseline_arm_1.enroll_date] or [baseline_arm_1 enroll_date]",
+      "passed": true,
+      "evidence": "Expression uses adjacent bracket pairs with no separator, and Watch Out For item 3 explicitly warns about dot and space separators"
+    }
+  ]
+}
