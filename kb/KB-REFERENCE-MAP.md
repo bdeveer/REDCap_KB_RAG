@@ -1049,8 +1049,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AT-11 (prerequisite)
 - RC-AT-EM-01 (prerequisite)
 - RC-FD-05 — Codebook
-- RC-FD-07 (previously ⚠️)
-- RC-FD-08 (previously ⚠️)
+- RC-FD-07
+- RC-FD-08
 - RC-SURV-08
 
 ---
@@ -1406,9 +1406,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-02
 - RC-USER-03
 - RC-USER-04
-- RC-RAND-01 (previously ⚠️ RC-RIGHTS-01 — now resolved)
-- RC-RAND-02 (previously ⚠️ RC-RIGHTS-01 — now resolved)
-- RC-RAND-03 (previously ⚠️ RC-RIGHTS-01 — now resolved)
+- RC-RAND-01
+- RC-RAND-02
+- RC-RAND-03
 - RC-DE-09
 - RC-SURV-08
 - RC-API-02 — Export Records API
@@ -1722,7 +1722,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-04 — De-identification & Formatting Options
 - RC-EXPRT-05 — Report Types
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
-- RC-USER-03 — User Rights: Configuring User Privileges *(previously ⚠️ RC-USER-01 — now resolved)*
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01
@@ -2110,8 +2110,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-07
 - RC-LONG-02 (prerequisite for longitudinal projects)
 - RC-PIPE-02
-- RC-RAND-01 (previously referenced as ⚠️ RC-LONG-01 — now resolved)
-- RC-RAND-02 (previously referenced as ⚠️ RC-LONG-01 — now resolved)
+- RC-RAND-01
+- RC-RAND-02
 - RC-SURV-04
 - RC-SURV-06
 - RC-SURV-07
@@ -2430,7 +2430,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-DE-02 — Basic Data Entry
 - RC-SURV-01 — Surveys – Basics
-- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
 - ⚠️ RC-MOB-01 — REDCap Mobile App vs. MyCap
 
 **Inbound links (referenced by):**
@@ -2453,7 +2453,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-DE-02 — Basic Data Entry
-- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-SURV-01 — Surveys – Basics
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-API-01 — REDCap API
@@ -2763,8 +2763,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
-- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
-- RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
 - RC-RAND-02 (prerequisite)
@@ -2780,8 +2780,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
-- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
-- RC-LONG-01 — Longitudinal Project Setup *(previously ⚠️ — now resolved)*
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
 - RC-RAND-01
@@ -2796,9 +2796,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
-- RC-DAG-01 — Data Access Groups *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
+- RC-DAG-01 — Data Access Groups
 - RC-EXPRT-01 — Data Export *(listed as RC-EXPORT-01 — see naming note below)*
-- RC-ALERT-01 — Alerts & Notifications: Setup *(previously ⚠️ — now resolved)*
+- RC-ALERT-01 — Alerts & Notifications: Setup
 
 **Inbound links (referenced by):**
 - RC-RAND-01
@@ -2815,10 +2815,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-- RC-USER-01 — User Rights: Overview & Three-Tier Access *(previously ⚠️ RC-RIGHTS-01 — now resolved)*
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-SURV-02 — Survey Settings: Basic Options & Design *(previously ⚠️ RC-SURV-02 — now resolved)*
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination *(previously ⚠️ RC-SURV-03 — now resolved)*
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 
 **Inbound links (referenced by):**
 - RC-FD-05 — Codebook
@@ -2854,7 +2854,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 
 **Inbound links (referenced by):**
-- RC-SURV-01 (previously ⚠️ RC-SURV-02 — now resolved)
+- RC-SURV-01
 - RC-SURV-03 (prerequisite)
 - RC-SURV-08 (prerequisite)
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
@@ -2877,7 +2877,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-INST-01 — Institution-Specific Settings & Policies
-- RC-SURV-01 (previously ⚠️ RC-SURV-03 — now resolved)
+- RC-SURV-01
 - RC-SURV-02 (outbound link)
 - RC-SURV-04
 - RC-SURV-07
@@ -3044,9 +3044,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
-- RC-NAV-UI-01 (previously ⚠️ RC-RIGHTS-01)
-- RC-NAV-UI-02 (previously ⚠️ RC-RIGHTS-01)
-- RC-SURV-01 (previously ⚠️ RC-RIGHTS-01)
+- RC-NAV-UI-01
+- RC-NAV-UI-02
+- RC-SURV-01
 - RC-USER-02 (prerequisite)
 - RC-USER-03 (prerequisite)
 - RC-USER-04 (prerequisite)
@@ -3103,7 +3103,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-02
 - RC-USER-04
 - RC-DAG-01
-- RC-EXPRT-03 (previously ⚠️ RC-USER-01)
+- RC-EXPRT-03
 - RC-API-01 — REDCap API
 - RC-API-22 — Export Users API
 - RC-API-23 — Import Users API
