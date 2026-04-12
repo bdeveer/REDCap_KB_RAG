@@ -312,6 +312,7 @@ A common confusion is reaching for `[square]` in a descriptive field and expecti
 # 9. Related Articles
 
 - RC-FD-07 — Field Embedding (mechanics of curly-brace embedding, rules, common mistakes)
+- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (extends these patterns with @DEFAULT carry-forward, @CALCTEXT lookup, [file:inline]/[file:link], parallel reviewer instruments, checkbox-gated previews, and [form-link:])
 - RC-PIPE-01 — Piping Basics, Syntax & Field Types (square-bracket piping syntax and field type behavior)
 - RC-PIPE-04 — Piping in Emails and Notifications (piping in alerts, confirmation emails, and ASIs)
 - RC-PIPE-08 — Smart Variables: Survey (full reference for [survey-link:], [survey-url:], and related survey smart variables)

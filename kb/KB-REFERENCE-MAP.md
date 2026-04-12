@@ -65,6 +65,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-07 | Field Embedding | RC-FD-07_Field-Embedding.md |
 | RC-FD-08 | Data Dictionary: Column Reference & Advanced Techniques | RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md |
 | RC-FD-09 | Field Embedding: Advanced Layout Patterns & Workflow Design | RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md |
+| RC-FD-10 | Advanced Workflow Patterns: Multi-Stage Review and Operational Processing | RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
@@ -1283,6 +1284,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-FD-07 — Field Embedding
+- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-PIPE-01 — Piping Basics, Syntax & Field Types
 - RC-PIPE-04 — Piping in Emails and Notifications
 - RC-PIPE-08 — Smart Variables: Survey
@@ -1292,6 +1294,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-FD-07 — Field Embedding
+- RC-FD-10 — (prerequisite)
+
+---
+
+### RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
+
+**Prerequisites:** RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
+
+**Outbound links:**
+- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
+- RC-AT-06 — Autofill Action Tags
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE
+- RC-PIPE-04 — Piping in Emails and Notifications
+- RC-PIPE-08 — Smart Variables: Survey
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-CALC-01 — Special Functions Reference
+
+**Inbound links (referenced by):**
+- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
 
 ---
 
