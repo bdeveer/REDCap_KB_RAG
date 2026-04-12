@@ -6,11 +6,11 @@ RC-DE-01
 | --- | --- |
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types |
-| **Prerequisite** | RC-NAV-01 — Record Navigation Overview |
+| **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-NAV-01 — Record Navigation Overview; RC-NAV-04 — Record Status Dashboard |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-NAV-REC-01 — Record Navigation Overview; RC-NAV-REC-04 — Record Status Dashboard |
 
 # 1. Overview
 
@@ -219,7 +219,7 @@ Page entirely.
 - RC-DE-03 — Longitudinal Projects & Data Access Groups (how project
     structure affects the Record Home Page)
 
-- RC-NAV-01 — Record Navigation Overview (dot colors, navigation
+- RC-NAV-REC-01 — Record Navigation Overview (dot colors, navigation
     paths)
 
-- RC-NAV-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links

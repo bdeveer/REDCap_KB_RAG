@@ -288,7 +288,7 @@ reason properly**
 - **RC-RIGHTS-01:** User Rights & DAGs — managing Randomize, Setup,
     and Dashboard rights
 
-- **RC-EXPORT-01:** Data Exports, Reports, and Stats — building
+- **RC-EXPRT-01:** Data Exports, Reports, and Stats — building
     reports that include randomization variable data
 
 - **RC-ALERT-01:** Alerts & Notifications — setting up alerts based

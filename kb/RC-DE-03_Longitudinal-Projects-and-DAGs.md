@@ -10,7 +10,7 @@ RC-DE-03
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-NAV-02 — Longitudinal Mode & Arms; RC-NAV-04 — Record Status Dashboard; RC-DE-01; RC-DE-02 |
+| **Related Topics** | RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-04 — Record Status Dashboard; RC-DE-01; RC-DE-02 |
 
 # 1. Overview
 
@@ -168,7 +168,7 @@ longitudinal and non-longitudinal projects.
 
 - Confusing events with arms: events are individual timepoints; arms
     are collections of events for different cohorts. A record belongs to
-    one arm, which contains multiple events. See RC-NAV-02 for a full
+    one arm, which contains multiple events. See RC-NAV-REC-02 for a full
     explanation.
 
 # 6. Related Articles
@@ -179,7 +179,7 @@ longitudinal and non-longitudinal projects.
 
 - RC-DE-04 — Editing Data & Audit Trail
 
-- RC-NAV-02 — Longitudinal Mode & Arms (deeper navigation detail for
+- RC-NAV-REC-02 — Longitudinal Mode & Arms (deeper navigation detail for
     longitudinal projects)
 
-- RC-NAV-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links

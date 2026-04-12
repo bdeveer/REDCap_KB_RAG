@@ -285,7 +285,7 @@ Support and documentation resources. Always visible to all users.
 - **RC-ALERT-01:** Alerts & Notifications — detailed configuration
     guide
 
-- **RC-EXPORT-01:** Data Exports, Reports, and Stats — detailed
+- **RC-EXPRT-01:** Data Exports, Reports, and Stats — detailed
     guide to exporting and custom reports
 
 - **RC-API-01:** API — introduction to the REDCap API for technical

@@ -10,7 +10,7 @@ RC-DE-02
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-01 — Record Creation; RC-DE-04 — Editing Data & Audit Trail; RC-NAV-01 — Record Navigation Overview |
+| **Related Topics** | RC-DE-01 — Record Creation; RC-DE-04 — Editing Data & Audit Trail; RC-NAV-REC-01 — Record Navigation Overview |
 
 # 1. Overview
 
@@ -291,4 +291,4 @@ back), it starts empty.
 - RC-DE-04 — Editing Data & Audit Trail (editing saved data, history
     log)
 
-- RC-NAV-01 — Record Navigation Overview (dot color reference)
+- RC-NAV-REC-01 — Record Navigation Overview (dot color reference)
