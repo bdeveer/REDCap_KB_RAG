@@ -7,8 +7,8 @@ RC-FD-06
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup user rights |
 | **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI; RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-04-02 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-04-11 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-BL-01 — Branching Logic Overview and Scope |
 
@@ -42,7 +42,8 @@ This article assumes:
 - **Branching Logic**: A conditional rule that hides or shows a field depending on values entered in other fields.
 - **Matrix**: A group of fields displayed in a grid with shared column headers (answer choices) and individual row labels (field labels).
 - **Record ID**: The mandatory first field in the first instrument of every REDCap project. It uniquely identifies each data record.
-- **Field Bank**: A curated library of pre-defined fields available for import into instruments.
+- **CDE (Common Data Element)**: A standardized, precisely defined field used to collect and share data consistently across studies, systems, or organizations. CDEs ensure that everyone uses the same definitions, formats, and coding for a given piece of information. Using CDEs is particularly important for multi-site studies and grant-funded research that require data harmonization.
+- **CDE Library** (formerly **Field Bank**): REDCap's built-in catalog browser for searching and importing CDEs from external repositories (e.g., the NIH CDE Repository). Accessible directly from the instrument editor.
 
 ---
 
@@ -144,13 +145,15 @@ You may edit limited aspects of the Record ID field (such as its label), but:
 
 ## 6.2 Field Creation Buttons
 
-Throughout the instrument editor, you will see a cluster of three buttons between fields. These allow you to insert new content at that position:
+Throughout the instrument editor, you will see a cluster of buttons between fields. These allow you to insert new content at that position:
 
 | Button | Description |
 | --- | --- |
-| **Add Field** | Opens the field editor for creating a new standard field at this position. |
-| **Add Matrix of Fields** | Opens the matrix editor to create a group of fields in a grid layout. See Section 8. |
-| **Import from Field Bank** | Opens the Field Bank — a curated library of pre-built field definitions from validated instruments and compliance-oriented databases (e.g., NIH common data elements). Use this to adopt standardized variable definitions or explore how others have structured common variables. |
+| **Add Field** | Opens the field editor for creating a new standard field from scratch at this position. |
+| **Add Matrix of Fields** | Opens the matrix editor to create a group of fields in a grid layout. See Section 10. |
+| **Add CDE Field** | Opens the CDE Library — a searchable catalog of Common Data Elements from external repositories. Select a catalog (the default is the NIH CDE Repository), enter a keyword, review the results, and click **Add Field** next to any result to import that standardized field into your instrument. See Section 6.4 for details. |
+
+> **Naming note:** The CDE Library button was previously labeled **Import from Field Bank**. You may see "Field Bank" referenced in older documentation or training materials — it refers to the same feature.
 
 ## 6.3 Field-Level Actions
 
@@ -165,11 +168,32 @@ Each field in the instrument editor has the following controls:
 | **Delete** (trash icon) | Permanently deletes the field and all data collected in records for that field. Use with caution when real data exists. |
 | **Branching Logic** (fork icon) | Opens the branching logic editor for this field. See Section 9. |
 
-## 6.4 Field Preview
+## 6.4 Using the CDE Library
+
+The CDE Library lets you search external repositories of Common Data Elements and import standardized field definitions directly into your instrument.
+
+**To add a CDE field:**
+
+| 1 | Click the **Add CDE Field** button at the position in the instrument where you want to insert the field. |
+| --- | --- |
+| 2 | Select a **catalog** from the dropdown. The default catalog is the **NIH CDE Repository**. Other catalogs may be available depending on your institution's REDCap configuration. |
+| 3 | Enter a keyword in the search box (e.g., "pain intensity", "race", "smoking status") and run the search. |
+| 4 | Review the results. Each result shows the CDE's name, source, and field type. |
+| 5 | Click **Add Field** next to the CDE you want to import. The field is inserted into your instrument with its standardized label, variable name, choices, and validation pre-configured. |
+
+**Why use CDEs?**
+- Ensures your data uses the same definitions and coding as other studies, enabling data sharing and comparison.
+- Required or recommended by many NIH funding programs and regulatory frameworks.
+- Saves time — the field definition is already built and validated.
+
+**What happens after import?**
+The imported field appears in your instrument like any other field. You can edit the field label, add branching logic, or adjust other settings after import. However, changing the coding (raw values) of an imported CDE defeats the purpose of standardization — avoid changing codes unless absolutely necessary and document any deviations.
+
+## 6.5 Field Preview
 
 After creating or editing a field, REDCap displays a preview of it within the instrument editor. The preview shows the field label, variable name, answer choices (if applicable), whether the field is required, and any branching logic attached to it.
 
-## 6.5 Preview Instrument
+## 6.6 Preview Instrument
 
 The **Preview Instrument** button (available in the instrument editor toolbar) collapses the exploded design view into a rendering that more closely resembles the final data entry form. Note that branching logic is not active in this preview — it only reflects the form layout. To test branching logic in context, create a test record and complete data entry.
 
@@ -259,13 +283,13 @@ A single-line text input. At its most basic, it accepts free text. It supports t
 
 **Validation:** REDCap can validate the entered value against a selected format — for example, date formats (MM-DD-YYYY, YYYY-MM-DD, etc.), time, phone number, email address, integer, number, and more. Available validation types depend on your institution's REDCap configuration.
 
-**Min / Max values:** For numeric and date validations, you can set a minimum value, maximum value, or both. REDCap will display a soft warning if the entered value falls outside the defined range. Example: set a minimum of 0 for a field asking about number of pregnancies to prevent negative values.
+**Min / Max values:** For numeric and date validations, you can set a minimum value, maximum value, or both. By default, these constraints are soft — REDCap displays a warning if the entered value falls outside the range, but the value can still be saved (to accommodate legitimate outliers). To enforce a hard limit that REDCap will not accept, add the action tag **@FORCE-MINMAX** to the field. Example: set a minimum of 0 for a field asking about number of pregnancies to prevent negative values.
 
 **Ontology lookup (if enabled):** If your institution has configured biomedical ontology services, you can attach an ontology (e.g., ICD-10, RxNorm, SNOMED CT) to the text box. The field becomes a search box that looks up valid terms from that ontology. Contact your REDCap administrator to determine whether this feature is available at your institution.
 
 ## 8.2 Notes Box
 
-A multi-line text area — essentially the text box's larger counterpart. Does not support validation, min/max, or ontology. Use for free-text fields where respondents may need to write longer narratives, comments, or descriptions.
+A multi-line text area — essentially the text box's larger counterpart. Does not support validation, min/max, or ontology. Use for free-text fields where respondents may need to write longer narratives, comments, or descriptions. Both text boxes and notes boxes can store up to 65,535 characters.
 
 ## 8.3 Dropdown List
 
@@ -281,17 +305,21 @@ Choices are defined in the `raw_value, Label` format, one per line.
 
 ## 8.5 Checkboxes
 
-Displays all choices directly on screen. The data entry person may select **multiple options**. REDCap stores each checkbox option as a separate binary variable in the database (e.g., `symptoms___1`, `symptoms___2`).
+Displays all choices directly on screen. The data entry person may select **multiple options**. REDCap stores each checkbox option as a separate binary variable in the database (e.g., `symptoms___1`, `symptoms___2`), with 1 meaning checked and 0 meaning unchecked. Because of this storage structure, checkbox data looks different in exports than single-select fields — it is good practice to enter test data and review the export file before collecting real data, to confirm you understand how your data will be structured.
 
 Choices are defined in the `raw_value, Label` format, one per line.
 
+Two action tags are commonly used with checkbox fields:
+- **@NONEOFTHEABOVE** — when applied to a specific answer choice, selecting that choice automatically unchecks all other selections. Use this for "None of the above" or "Not applicable" options.
+- **@MAXCHECKED** — limits the number of choices a respondent can select. For example, `@MAXCHECKED='3'` prevents more than three boxes from being checked at once.
+
 ## 8.6 Yes – No
 
-A radio button field with two pre-defined choices: **Yes** (coded as 1) and **No** (coded as 0). No choices need to be defined — REDCap supplies them automatically.
+A radio button field with two pre-defined choices: **Yes** (coded as 1) and **No** (coded as 0). No choices need to be defined — REDCap supplies them automatically. The codes cannot be changed. If you need to add a third option (e.g., "Not Applicable"), change the field type to **Radio Buttons** and manually define Yes (1), No (0), and any additional choices with appropriate coding.
 
 ## 8.7 True – False
 
-A radio button field with two pre-defined choices: **True** (coded as 1) and **False** (coded as 0). Functionally identical to Yes – No but with different labels.
+A radio button field with two pre-defined choices: **True** (coded as 1) and **False** (coded as 0). Functionally identical to Yes – No but with different labels. The same workaround applies if additional options are needed: convert to Radio Buttons and manually define the choices.
 
 ## 8.8 Signature
 
@@ -310,13 +338,23 @@ Displays a horizontal slider ranging from 0 to 100 by default. Options include:
 
 ## 8.11 Descriptive Text
 
-Does not collect any data. Used to display information to the person entering data — including plain text, images, audio files, downloadable files, or videos hosted on external platforms (YouTube, Vimeo, etc.). Useful for instructions, section introductions, or visual aids within a form.
+Does not collect any data. Used to display information to the person entering data. Supports several content modes:
+
+- **Plain or rich text** — enter text directly; use the Rich Text Editor for formatting.
+- **External media** — embed a video or website by providing a URL; choose to display the media inline or as a popup link.
+- **Uploaded files** — upload a PDF, image, or audio file from your computer; these can be displayed inline or as downloadable links. Audio files are rendered in an embedded audio player.
+
+Useful for instructions, section introductions, consent language, or visual aids within a form.
 
 ## 8.12 Begin New Section
 
-A formatting field that renders as a horizontal divider line across the instrument. Does not collect data. Used to visually separate sections of a long form. In surveys, multiple sections can optionally be rendered as separate pages.
+A formatting field that renders as a horizontal divider line across the instrument. Does not collect data. Used to visually separate sections of a long form. In surveys, section breaks take on additional functionality: you can configure the **Survey Settings** to advance to a new page each time a section break is encountered, turning a single survey into a multi-page experience without creating separate instruments.
 
-## 8.13 Dynamic Query (SQL)
+## 8.13 Calculated Field
+
+Performs a calculation using values from other fields in the record and displays the result. The equation is defined using variable names (e.g., `[weight] / ([height] * [height])`). REDCap executes the calculation once the referenced fields have data and displays the result on the form. The result is saved when the form is saved. Use the **Special Functions** button in the field editor for help building calculations. Test calculated fields thoroughly in Development mode before beginning real data collection. See **RC-CALC-02 — Calculated Fields** for full coverage.
+
+## 8.14 Dynamic Query (SQL)
 
 An advanced, administrator-only field type. Accepts an SQL query that retrieves a list of options directly from the REDCap backend database. Requires knowledge of REDCap's database schema and SQL. Typically configured by REDCap administrators only and is not editable by standard project users.
 
@@ -439,14 +477,30 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 | Can I move a field from one instrument to another? | Yes — use the **Move button** on the field (not drag-and-drop). The Move button opens a dialog that allows you to select a target instrument. Drag-and-drop only repositions a field within the same instrument. |
 | What happens if I delete a field that has data in it? | The data is permanently lost. In Development mode, deletion is allowed without warning. In Production mode, fields with data cannot be deleted. Always verify whether a field contains real data before deleting. |
 | Can I edit the Record ID field? | You can edit some aspects of the Record ID field (such as its label), but you should not restructure or rename it after real data collection has begun, as this can create orphaned records in the backend database. |
-| What is the difference between "Add Field" and "Import from Field Bank"? | Add Field creates a new field from scratch via the field editor. Import from Field Bank lets you select a pre-built field definition from a curated library of standardized variables — useful for compliance requirements or adopting validated instrument items. |
+| What is the difference between "Add Field" and "Add CDE Field"? | **Add Field** creates a new field from scratch via the field editor — you define the label, type, choices, and all other settings yourself. **Add CDE Field** (formerly "Import from Field Bank") opens the CDE Library, where you search a catalog of standardized Common Data Elements and import a pre-built field definition. CDE fields are useful when your study requires data harmonization, when your funder mandates specific CDEs, or when you want to adopt a validated field definition without building it from scratch. |
 | What is Bio-Medical Ontology and is it a field type? | No. Biomedical ontology lookup is an optional enhancement to the **Text Box** field type — not a standalone field type. It converts a text box into an ontology search input. It must be enabled by your REDCap administrator. |
+| Is the CDE Library the same as the Field Bank? | Yes — the CDE Library was formerly called the Field Bank. The feature is the same; the name was updated to better reflect its purpose as a catalog of Common Data Elements. Older documentation or training materials may still use "Field Bank." |
+| What catalogs are available in the CDE Library? | The default catalog is the NIH CDE Repository. Additional catalogs may be available depending on your institution's REDCap configuration. Contact your REDCap administrator to find out which catalogs are enabled at your site. |
 | My first instrument had 20 fields. I moved it to the fifth position and now it only has 19. Why? | REDCap requires the Record ID field to be the first field in the first instrument. When you moved the instrument out of the first position, REDCap automatically relocated the Record ID field to comply with this rule — reducing the original instrument's field count by one. |
 | What are the available matrix types? | Checkbox matrix (unranked), Radio button matrix (unranked), and Radio button matrix (ranked). There is no ranked checkbox matrix or slider matrix. |
+| Can I copy answer choices from one field to another? | Yes. In the Online Designer, the answer choice editor for dropdown, radio, and checkbox fields includes a copy option that lets you pull in the choices from any existing field in the project. This is the best way to maintain consistent coding and ordering across fields that share the same response set. |
+| Do raw values (codes) in choice fields need to be in numeric order? | No. REDCap accepts raw values in any order, and gaps between numbers are fine. This means you can safely add a new answer choice with a new code at any time without renumbering existing choices. If you use a scored instrument, using the score value as the code is a valid strategy — gaps in the sequence are expected and do not affect REDCap's behavior. |
 
 ---
 
 # 12. Common Mistakes & Gotchas
+
+## Changing an answer choice label after data collection has started
+- The user edits the label (display text) of an answer choice after real records have already been collected.
+- The data already stored retains the original raw code — but the label that code maps to has now changed, silently altering the meaning of existing data. For example, renaming "Strawberry" to "Mint" for code 3 means all records previously coded as 3 now read as "Mint" even though "Strawberry" was selected.
+- **Prevention:** Treat answer choice labels as permanent once data collection begins. If a label is genuinely wrong, consult your REDCap administrator before changing it. Adding a new choice (with a new code) is safe at any time; changing an existing label is not.
+- **Recovery:** No automated recovery through the interface — a record-level data audit is required to assess impact.
+
+## Deleting an answer choice instead of retiring it
+- The user deletes an answer choice from a dropdown, radio, or checkbox field after data has been collected using that choice.
+- All records that selected the deleted choice lose the associated data — it is permanently removed from the field.
+- **Prevention:** Use the action tag **@HIDECHOICE** to retire an answer choice without deleting it. @HIDECHOICE hides the choice from new data entry but preserves it in records where it was already selected.
+- **Recovery:** None through the interface. Contact your REDCap administrator — data may be recoverable from a database backup.
 
 ## Using duplicate variable names
 - The user creates two fields with the same variable name in different instruments.
@@ -476,6 +530,11 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 - Validation can behave unexpectedly — for example, REDCap may require that at least one checkbox option be selected, but the enforcement logic varies.
 - **Prevention:** Thoroughly test any required checkbox or ranking matrix in Development mode before collecting real data.
 
+## Changing the raw values of an imported CDE field
+- The user imports a CDE and then changes the choice codes to match their existing project coding.
+- The raw values are the entire point of standardization — they ensure the field's data can be compared and merged with other studies using the same CDE. Changing them makes your data non-interoperable.
+- **Prevention:** If your project needs different coding, use a regular **Add Field** instead of importing the CDE, and document the deviation. If you have already changed the codes, note this prominently in your data documentation.
+
 ## Inconsistent alignment choices across instruments
 - The user applies different Custom Alignment settings to similar fields across instruments.
 - The data entry interface looks inconsistent, which can confuse users.
@@ -497,6 +556,8 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 - RC-FD-05 — Codebook (read-only reference for the variable definitions created in the Online Designer)
 - RC-BL-01 — Branching Logic Overview and Scope (prerequisite for understanding branching logic concepts used in Section 9)
 - RC-BL-02 — Branching Logic Syntax and Atomic Statements (next step after mastering the Drag-N-Drop Logic Builder)
+- RC-CALC-02 — Calculated Fields (full coverage of calculated field syntax and configuration)
+- RC-DE-05 — Field Validations (how min/max and @FORCE-MINMAX constraints work from the data entry side)
 
 ---
 

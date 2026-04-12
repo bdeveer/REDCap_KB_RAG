@@ -662,6 +662,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-01
 - RC-AT-09 (referenced as the numeric alternative)
+- RC-FD-06 — Online Designer – Instrument and Field Management
 
 ---
 
@@ -806,6 +807,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AT-09 — Calculation Action Tags
 - RC-DE-06 (prerequisite)
 - RC-DE-08
+- RC-FD-06 — Online Designer – Instrument and Field Management
 
 ---
 
@@ -1247,6 +1249,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 - RC-BL-01 — Branching Logic Overview & Scope
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements
+- RC-CALC-02 — Calculated Fields
+- RC-DE-05 — Field Validations
 
 **Inbound links (referenced by):**
 - RC-FD-07

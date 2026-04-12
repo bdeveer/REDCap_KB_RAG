@@ -7,7 +7,7 @@ RC-DE-05
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types; data entry users |
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-DE-06 — Bio-Medical Ontologies; RC-DE-02 — Basic Data Entry; RC-FD-01 — Form Design Overview |
@@ -40,7 +40,7 @@ Text displayed inside a text box before any value has been entered. Placeholders
 
 **Minimum / Maximum**
 
-An optional constraint that can be added to date/time and number validations. If configured, REDCap will reject entries that fall outside the defined lower or upper bound. Minimums and maximums can be set as hard values (fixed numbers or dates) or dynamic values (derived from another field's answer).
+An optional constraint that can be added to date/time and number validations. By default, min/max constraints are **soft**: REDCap displays a warning popup if the entered value falls outside the defined range, but the user can acknowledge it and save the value anyway (to allow for legitimate outliers). The instrument designer can override this by adding the action tag **@FORCE-MINMAX** to the field, which makes the constraint **hard** — REDCap will not accept any value outside the defined range. Minimums and maximums can be set as hard values (fixed numbers or dates) or dynamic values (derived from another field's answer).
 
 **Prefilled Value**
 
@@ -149,6 +149,10 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **A:** A placeholder is display text only — it disappears the moment you click into the field and begin typing, and it is never saved. A prefilled value is an actual value inserted into the field by REDCap (via action tags, piping, or a calculated field). Prefilled values persist and may or may not be editable depending on the instrument design.
 
+**Q: I entered a value outside the min/max range and REDCap still let me save it. Is that a bug?**
+
+**A:** No — this is the default, intended behavior. Min/max range constraints are soft validations. REDCap shows a warning popup to prompt you to double-check the value, but it allows you to proceed if you confirm the value is correct. This is by design, to accommodate legitimate outliers. If the instrument was configured with @FORCE-MINMAX, REDCap will instead hard-reject any value outside the range. If you're unsure whether a borderline value is acceptable, contact the instrument designer or study coordinator.
+
 ---
 
 # 6. Common Mistakes & Gotchas
@@ -160,6 +164,8 @@ When a field note or placeholder is present, read it before entering data. It wi
 **Trying to type text into a number or date field to explain an unusual value.** Validations cannot be bypassed by entering free text. If you need to explain or flag an unusual data point, leave the validated field with a valid value (or blank) and use the field comment log (RC-DE-08).
 
 **Missing a dynamic minimum or maximum because the referenced field is blank.** If a validation's minimum or maximum is derived from another field and that field has not yet been filled in, the constraint may not apply — which means an otherwise invalid value could be accepted temporarily. Always fill prerequisite fields before dependent fields.
+
+**Assuming a value outside the min/max range was accepted in error.** Min/max constraints are soft by default — REDCap warns you but allows the value if you confirm it. If a field has been configured with @FORCE-MINMAX, the behavior changes: REDCap will not accept values outside the range at all. If you are unsure whether an out-of-range value you entered was appropriate, add a field comment explaining the data point (see RC-DE-08).
 
 ---
 
