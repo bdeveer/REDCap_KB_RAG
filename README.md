@@ -10,7 +10,7 @@ This repo supports an LLM-powered REDCap assistant at Yale. Rather than feeding 
 
 ```
 REDCap_KB_RAG/
-├── kb/                               # Markdown KB articles (RAG-ready) — 101 articles
+├── kb/                               # Markdown KB articles (RAG-ready) — 158 articles
 │   ├── KB-REFERENCE-MAP.md           # Cross-reference index of all articles
 │   └── RC-[DOMAIN]-[NN]_...          # Individual KB articles
 ├── claude skills/
@@ -18,14 +18,19 @@ REDCap_KB_RAG/
 │   ├── kb-update/                    # Skill: update or correct existing KB articles
 │   ├── kb-update-workspace/          # Skill: update articles using workspace-mounted files
 │   ├── kb-search/                    # Skill: search and retrieve KB articles by topic
+│   ├── redcap-codebook-reader/       # Skill: summarize a project from a Codebook PDF or DD CSV
 │   ├── redcap-data-dictionary/       # Skill: analyze REDCap Data Dictionary CSV files
 │   ├── redcap-dd-builder/            # Skill: build a new Data Dictionary from scratch
 │   ├── redcap-dd-fixer/              # Skill: fix errors in an uploaded Data Dictionary
+│   ├── redcap-longitudinal-builder/  # Skill: build longitudinal project CSVs (Arms, Events, Designations)
+│   ├── redcap-longitudinal-structure/ # Skill: parse longitudinal structure from exported CSVs
 │   ├── redcap-syntax-builder/        # Skill: write REDCap expressions from a description
 │   ├── redcap-syntax-fixer/          # Skill: diagnose and fix broken REDCap expressions
 │   └── redcap-syntax-reader/         # Skill: explain and interpret REDCap expressions
-├── original docx files/              # Source Word training outlines
-└── sync.sh                           # Helper script to commit and push changes
+├── KB-GAPS-TODO.md                   # Tracked knowledge gaps and planned articles
+├── KB-SOURCE-ATTESTATION.md          # Source document provenance for KB articles
+├── STYLE-GUIDE.md                    # Writing standards for KB articles
+└── README.md
 ```
 
 ## Article Naming Convention
@@ -40,6 +45,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 |---|---|
 | `RC-AI` | AI Tools (writing, translation, summarization) |
 | `RC-ALERT` | Alerts & Notifications |
+| `RC-API` | REDCap API (export, import, delete operations) |
 | `RC-AT` | Action Tags |
 | `RC-AT-EM` | Action Tags — External Module extensions |
 | `RC-BL` | Branching Logic |
@@ -48,13 +54,17 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-DE` | Data Entry |
 | `RC-EXPRT` | Data Export & Custom Reports |
 | `RC-FD` | Form Design |
+| `RC-FDL` | Form Display Logic |
 | `RC-IMP` | Data Import |
 | `RC-INST` | Institution-Specific Settings & Policies |
+| `RC-INTG` | Integrations (Data Entry Trigger, etc.) |
 | `RC-LONG` | Longitudinal Project Setup |
 | `RC-MLM` | Multi-Language Management |
+| `RC-MYCAP` | MyCap (mobile data collection) |
 | `RC-NAV-REC` | Record Navigation |
 | `RC-NAV-UI` | Project Navigation UI |
 | `RC-PIPE` | Piping & Smart Variables |
+| `RC-PROJ` | Project Lifecycle & Status |
 | `RC-RAND` | Randomization |
 | `RC-SURV` | Surveys |
 | `RC-TXT` | Texting (SMS) |
@@ -80,7 +90,7 @@ Articles are institution-agnostic in their core content so they can be reused ac
 
 ## Claude Skills
 
-The `claude skills/` directory contains Cowork skills that Claude uses to maintain the KB:
+The `claude skills/` directory contains Cowork skills that Claude uses to maintain the KB and assist with REDCap work:
 
 | Skill | Purpose |
 |---|---|
@@ -88,32 +98,34 @@ The `claude skills/` directory contains Cowork skills that Claude uses to mainta
 | `kb-update` | Update or correct an existing article based on new information |
 | `kb-update-workspace` | Same as kb-update, but works with files already in the mounted workspace folder |
 | `kb-search` | Search the KB by topic to find and read relevant articles before writing |
+| `redcap-codebook-reader` | Read a Codebook PDF or Data Dictionary CSV and produce a structured project overview |
 | `redcap-data-dictionary` | Analyze a REDCap Data Dictionary CSV (field types, instruments, structure) |
 | `redcap-dd-builder` | Build a new REDCap Data Dictionary from scratch based on a project description |
 | `redcap-dd-fixer` | Diagnose and fix errors in an uploaded Data Dictionary CSV |
+| `redcap-longitudinal-builder` | Build Arms, Events, and Instrument Designations CSVs for a longitudinal project |
+| `redcap-longitudinal-structure` | Parse and interpret longitudinal project structure from exported Arms/Events/Designations CSVs |
 | `redcap-syntax-builder` | Write a correct REDCap expression (branching logic, calc field, action tag) from a description |
 | `redcap-syntax-fixer` | Diagnose and fix broken REDCap expressions |
 | `redcap-syntax-reader` | Explain and interpret what an existing REDCap expression does |
 
 ## Adding New Articles
 
-New articles are built from source training outline documents (Word `.docx` files) using a Claude skill. The workflow is:
+New articles are built from source training outline documents or written from scratch using a Claude skill. The workflow is:
 
-1. Place the source outline in `original docx files/`
-2. Open a Cowork session and upload the `.docx`
-3. Claude uses the `kb-creation` skill to convert it into a properly formatted KB article
-4. The article is saved to `kb/` and `KB-REFERENCE-MAP.md` is updated
+1. Open a Cowork session and upload the source `.docx` (or describe the topic)
+2. Claude uses the `kb-creation` skill to produce a properly formatted KB article
+3. The article is saved to `kb/` and `KB-REFERENCE-MAP.md` is updated
 
 ## Updating Existing Articles
 
-To revise or correct an article, open a Cowork session and either upload the updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `KB-REFERENCE-MAP.md` in sync.
+To revise or correct an article, open a Cowork session and either upload updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `KB-REFERENCE-MAP.md` in sync.
 
 ## Syncing Changes
 
-The `sync.sh` script commits all pending changes and pushes them to GitHub:
+Changes are committed locally by Claude and pushed to GitHub manually:
 
 ```bash
-./sync.sh "optional commit message"
+git add -A
+git commit -m "your message"
+git push
 ```
-
-If no message is provided, it defaults to `Claude: update repo`.
