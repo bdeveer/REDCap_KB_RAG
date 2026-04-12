@@ -59,12 +59,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 5 — Useful context for integrations and field data collection
 
-### ~~⚠️ RC-API-01 — REDCap API~~
-
-*Resolved — see RC-API-01 — REDCap API (2026). Based on official REDCap API documentation; supersedes RC-UNCLASSIFIED-01 §4 interim coverage.*
-
----
-
 ### ⚠️ RC-IMP-02 — Clinical Data Mart Integration
 
 **Why needed:** RC-IMP-01 lists Clinical Data Mart as an advanced import method and marks it out of scope. No existing article covers it.
@@ -103,13 +97,12 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-DAG-01 — Data Access Groups ✅
 - RC-MLM-01 — Multi-Language Management ✅ *(was Priority 2)*
 - RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
-- RC-API-01 — REDCap API ✅
+- RC-API-01 — REDCap API ✅ *(was Priority 5; based on official REDCap API documentation; supersedes RC-UNCLASSIFIED-01 §4 interim coverage)*
 
 ---
 
 ## Notes
 
-- When writing RC-API-01, the REHAB HFpEF project is a good real-world example of API-populated fields (hidden/read-only fields set via external systems).
-- RC-UNCLASSIFIED-01 provides interim coverage for RC-PROJ-01 (§1–2), RC-DQ-01 (§3), RC-API-01 (§4), and RC-MOB-01/MyCap (§6). Those sections can serve as drafting source material.
+- RC-UNCLASSIFIED-01 provides interim coverage for RC-PROJ-01 (§1–2), RC-DQ-01 (§3), and RC-MOB-01/MyCap (§6). Those sections can serve as drafting source material.
 
 *Last updated: 2026-04-10 (RC-MLM-01 resolved; RC-ALERT-03 covered by RC-TXT-01/RC-TXT-02; RC-PROJ-01, RC-DQ-01, RC-PROJ-02, RC-DDE-01 added from RC-UNCLASSIFIED-01 review; stale ⚠️ references in KB articles cleaned up; RC-FDL-01 resolved)*

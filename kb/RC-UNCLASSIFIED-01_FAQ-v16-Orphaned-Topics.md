@@ -18,6 +18,8 @@ RC-UNCLASSIFIED-01
 
 # 1. Project Lifecycle: Statuses and Transitions
 
+> **Note:** This section has been superseded by **RC-PROJ-01 — Project Lifecycle: Status and Settings** (2026). Refer to that article for current, comprehensive coverage.
+
 ## 1.1 Project Statuses
 
 Every REDCap project exists in one of four lifecycle statuses:
@@ -49,6 +51,8 @@ Development projects can be deleted by project users via Other Functionality →
 ---
 
 # 2. Making Production Changes
+
+> **Note:** This section has been superseded by **RC-PROJ-01 — Project Lifecycle: Status and Settings** (2026). Refer to that article for current, comprehensive coverage.
 
 ## 2.1 Process Overview
 
@@ -214,7 +218,7 @@ Based on the content above and other FAQ topics not yet covered by dedicated art
 
 | Suggested Article ID | Proposed Title | Source Content |
 |---|---|---|
-| RC-PROJ-01 | Project Lifecycle: Setup, Status, and Settings | Sections 1–2 above; FAQ "General Project Setup" and "Making Production Changes" sections |
+| ~~RC-PROJ-01~~ | ~~Project Lifecycle: Setup, Status, and Settings~~ | *Resolved — see RC-PROJ-01 — Project Lifecycle: Status and Settings* |
 | RC-DQ-01 | Data Quality Module | Section 3 above; FAQ "Data Quality Module" and "Functions for Logic in Reports" sections |
 | RC-API-01 | API and Data Entry Trigger | Section 4 above; FAQ "API / Data Entry Trigger" section |
 | ~~RC-MLM-01~~ | ~~Multi-Language Management (MLM)~~ | *Resolved — see RC-MLM-01 — Multi-Language Management* |

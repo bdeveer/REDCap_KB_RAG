@@ -9,6 +9,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | Article ID | Title | File |
 |---|---|---|
 | RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
+| RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
 | RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |
@@ -163,6 +164,25 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 ## Per-Article Reference Details
 
 Each entry lists: **Prerequisites** (must be read first), **Outbound links** (articles this one references), and **Inbound links** (articles that reference this one). ⚠️ marks articles not yet in the KB.
+
+---
+
+### RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-CALC-01 — Special Functions Reference
+- RC-LONG-01 — Longitudinal Project Setup
+
+**Inbound links (referenced by):**
+*(None yet)*
+
+**Note:** Covers all four project lifecycle statuses (Development, Production, Analysis/Cleanup, Completed), status transitions, project copying and deletion, and the Draft Mode process for making safe production changes. Supersedes RC-UNCLASSIFIED-01 §1 (Project Lifecycle) and §2 (Making Production Changes).
 
 ---
 
@@ -2252,7 +2272,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 *(None yet — this is a holding article; content should eventually migrate to dedicated articles)*
 
-**Note:** This article is a temporary holding area for FAQ v16.1.3 content that does not yet map to a dedicated KB article. It contains orphaned content across 6 topic areas (Project Lifecycle, Production Changes, Data Quality, API/DET, MLM, and MyCap) and a table of 7 suggested new articles. See Section 7 of the article for migration targets.
+**Note:** This article is a temporary holding area for FAQ v16.1.3 content that does not yet map to a dedicated KB article. It originally contained orphaned content across 6 topic areas; migration status: §1 (Project Lifecycle) → resolved by RC-PROJ-01; §2 (Making Production Changes) → resolved by RC-PROJ-01; §3 (Data Quality) → pending RC-DQ-01; §4 (API/DET) → resolved by RC-API-01 and RC-INTG-01; §5 (MLM) → resolved by RC-MLM-01; §6 (MyCap) → pending RC-MYCAP-01. See Section 7 of the article for remaining migration targets.
 
 ---
 
@@ -2995,4 +3015,4 @@ A few article IDs used in cross-references appear to differ from the canonical I
 
 ---
 
-*Last updated 2026-04-11. Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Remaining open gaps: RC-MOB-01.*
+*Last updated 2026-04-11. Added RC-PROJ-01 — Project Lifecycle: Status and Settings (supersedes RC-UNCLASSIFIED-01 §1–2). Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Remaining open gaps: RC-MOB-01, RC-DQ-01, RC-MYCAP-01.*
