@@ -80,7 +80,43 @@ Using longitudinal mode for a single-arm, single-instance-per-form project adds 
 
 ---
 
-## 3. [Future principles — add here]
+## 3. Field Notes vs. Field Annotations
+
+### 3.1 Field Note (Column G) — for data entry users only
+
+**Convention: use the Field Note for short, user-facing clarifications about how to fill in the field**
+
+The Field Note appears below the variable on the form and is visible to anyone completing the instrument — data entry staff and survey participants alike. Use it to answer the question the user is likely to ask at the moment they see the field.
+
+Common uses:
+- Units of measure (e.g., `mg/L`, `mmol/mol`, `kg`)
+- Date format reminders (e.g., `YYYY-MM-DD`)
+- Scope clarifications (e.g., `Include prescribed medications only`)
+- Range expectations (e.g., `Normal range: 4.0–11.0`)
+
+Keep it brief. A Field Note that runs to multiple sentences will be ignored. If the field needs more explanation than a line or two, consider whether the instrument design or the field label should be doing more of that work.
+
+### 3.2 Field Annotation (Column R) — for designers only
+
+**Convention: use the Field Annotation box for notes intended for other project designers, not for data entry users**
+
+Field Annotation content is visible only in the Data Dictionary and the Online Designer — it is never shown on the form. This makes it the right place for:
+- Design rationale (e.g., `Mapped to variable X in the source dataset`)
+- Outstanding questions or to-dos (e.g., `Confirm unit with PI before go-live`)
+- Coding notes (e.g., `Raw value 99 = missing per protocol`)
+
+Field Annotations can be combined with action tags in the same cell. When doing so, put the plain-text note first and the action tags after, separated by a space or line break. Action tags always begin with `@` and are not affected by surrounding text.
+
+Example annotation cell containing both a note and action tags:
+```
+Confirm unit with PI. @HIDDEN-SURVEY @READONLY
+```
+
+> **Important:** Never put user-facing instructions in the Field Annotation — they will not be seen by the person filling in the form. Use the Field Note (Column G) for anything the data entry user needs to read.
+
+---
+
+## 4. [Future principles — add here]
 
 As new conventions are agreed upon, add them as numbered sections following the same structure:
 
