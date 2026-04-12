@@ -175,6 +175,7 @@ Per RC-FD-05, the Codebook includes:
 - **[PDF only]** Unique event names for each event in longitudinal projects
 - **[PDF only]** Which instruments are assigned to which events
 - **[PDF only]** Which instruments/events are configured as repeating
+- **Auto-generated `_complete` fields** (see below)
 
 The Codebook does NOT include (configure separately in REDCap):
 - Survey settings (queue, auto-continue, theme)
@@ -183,6 +184,53 @@ The Codebook does NOT include (configure separately in REDCap):
 - Alerts and notifications
 - Data Quality rules
 - Reports
+
+---
+
+## Auto-Generated `_complete` Fields
+
+Every REDCap instrument automatically has a system-generated completion
+status field. Its variable name follows the pattern `{form_name}_complete`
+(e.g., `application_complete`, `review_1_complete`). This field is a
+dropdown with three fixed choices:
+
+| Code | Label |
+|------|-------|
+| `0` | Incomplete |
+| `1` | Unverified |
+| `2` | Complete |
+
+**Where it appears:**
+
+| Location | Present? |
+|----------|----------|
+| Codebook PDF | ✓ Yes — appears as the final field in each instrument section |
+| Data exports (CSV, R, SPSS, etc.) | ✓ Yes |
+| Codebook web view | ✓ Yes |
+| Data Dictionary CSV | ✗ No — auto-generated fields are excluded |
+| Data Dictionary upload | ✗ No — cannot be added, modified, or removed |
+
+**Implication for field counts:** The Codebook PDF will always have
+exactly one more field per instrument than the Data Dictionary CSV.
+For a project with N instruments, the Codebook PDF has N extra fields.
+This is expected — not a discrepancy.
+
+**The script skips `_complete` fields** by default when parsing a
+Codebook PDF, so that PDF and CSV field counts align and the output
+focuses on user-designed fields. If you need completion status
+information in downstream work, reference the field by its variable
+name `{form_name}_complete` — it is always present in data exports
+and can be used in branching logic and calculated fields.
+
+**Using `_complete` in expressions:**
+
+```
+# Show a field only if a prior form is marked Complete
+[intake_complete] = '2'
+
+# Calc that counts how many forms are complete
+if([form_a_complete]='2', 1, 0) + if([form_b_complete]='2', 1, 0)
+```
 
 ---
 
