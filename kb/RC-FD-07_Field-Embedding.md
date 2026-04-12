@@ -7,7 +7,7 @@ RC-FD-07
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; works on both instruments and surveys; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-06 — Online Designer Instrument and Field Management; RC-BL-01 — Branching Logic Overview & Scope |
@@ -166,6 +166,10 @@ In this pattern, a **descriptive field** acts as a visual container. Its label i
 
 > **Tip:** Add `@PLACEHOLDER` action tags to each embedded field with a brief hint (e.g., `@PLACEHOLDER="First"`, `@PLACEHOLDER="Last"`). Because the embedded fields' own labels are suppressed, placeholders help users understand each cell's purpose without adding extra label text to the table.
 
+**Embedding calculated fields in tables:**
+
+Calculated fields can be embedded in a table just like text or other data-entry fields — place `{variable_name}` in the target table cell and the computed value will render there. Because calculated fields update in real time as dependent fields are filled in, embedding a calculated field directly in the same table as its input fields creates a live computation panel: the user sees the result update as they type. For example, a table with inputs for salary and FTE percentage could include a third row embedding a calculated "prorated salary" cell — the calculation is visible and updates immediately without the user navigating away.
+
 ## 5.3 Multiple Descriptive Fields
 
 Large demographics sections are often split across two or more descriptive fields, each containing a separate table. This keeps each table manageable in size and allows section breaks or instructional text to appear between them. Each descriptive field operates independently — fields embedded in the first table do not interfere with fields embedded in the second.
@@ -226,12 +230,15 @@ Large demographics sections are often split across two or more descriptive field
 
 **Field embedding does not work in the REDCap Mobile App.** If a project with embedded fields is loaded into the Mobile App, the fields will not render in their embedded positions — the layout will look different from what is configured on the web instrument.
 
+**The Codebook does not show the HTML structure of embedded tables.** When a descriptive field contains an HTML table with field embedding references, the Codebook strips all HTML markup from the field label and displays only the text content. The curly-brace tokens (e.g., `{fname}`) remain visible in the Codebook output, so you can identify that field embedding is in use — but the table layout, cell structure, column widths, and any other HTML formatting are not shown. If you need to inspect the actual HTML behind an embedded table, use the **Data Dictionary CSV export** (the Field Label column preserves the raw HTML in full) or open the descriptive field in the **Online Designer's Rich Text Editor**. Relying solely on the Codebook to understand an embedded table layout will give you an incomplete picture.
+
 ---
 
 # 8. Related Articles
 
 - RC-FD-02 — Online Designer (the tool used to create fields and configure embedding)
 - RC-FD-06 — Online Designer Instrument and Field Management (managing field order and instrument structure)
+- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design (real-world patterns including approval workflows and email preview instruments)
 - RC-BL-01 — Branching Logic Overview & Scope (frequently used alongside field embedding to control field visibility)
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements (writing the logic conditions used with embedded fields)
 - RC-AT-01 — Action Tags: Overview (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)

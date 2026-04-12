@@ -64,6 +64,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-06 | Online Designer – Instrument and Field Management | RC-FD-06_Online-Designer-Instrument-and-Field-Management.md |
 | RC-FD-07 | Field Embedding | RC-FD-07_Field-Embedding.md |
 | RC-FD-08 | Data Dictionary: Column Reference & Advanced Techniques | RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md |
+| RC-FD-09 | Field Embedding: Advanced Layout Patterns & Workflow Design | RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
@@ -1264,6 +1265,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer Instrument and Field Management
+- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
 - RC-BL-01 — Branching Logic Overview & Scope
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements
 - RC-AT-01 — Action Tags: Overview
@@ -1271,6 +1273,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-01 (out-of-scope reference updated to point here)
 - RC-DE-08
+- RC-FD-09 (prerequisite)
+
+---
+
+### RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
+
+**Prerequisites:** RC-FD-07 — Field Embedding; RC-PIPE-01 — Piping Basics, Syntax & Field Types
+
+**Outbound links:**
+- RC-FD-07 — Field Embedding
+- RC-PIPE-01 — Piping Basics, Syntax & Field Types
+- RC-PIPE-04 — Piping in Emails and Notifications
+- RC-PIPE-08 — Smart Variables: Survey
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-AT-EM-01 — Action Tags: HIDESUBMIT
+- RC-CALC-02 — Calculated Fields
+
+**Inbound links (referenced by):**
+- RC-FD-07 — Field Embedding
 
 ---
 
