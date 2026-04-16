@@ -7,7 +7,7 @@ RC-API-33
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -17,9 +17,9 @@ RC-API-33
 
 # 1. Overview
 
-The Switch DAG API method allows a user with DAG-switching rights to programmatically change their active Data Access Group (DAG) context. By switching to a specific DAG, the user limits their data view and entry to that group only. An empty DAG value switches the user to an all-DAGs view, allowing them to see data across all groups. Use this method to automate DAG context switching in workflows, support multi-site data entry scenarios, or programmatically change a user's data isolation scope.
+The Switch DAG API method allows the current API user to switch (assign, reassign, or unassign) their active Data Access Group context — but only if they have been assigned to multiple DAGs via the DAG Switcher page in the project. By switching to a specific DAG, the user limits their data view and entry to that group only. Passing an empty string for `dag` unassigns the user, switching them to an all-DAGs view. Use this method to automate DAG context switching in workflows or support multi-site data entry scenarios.
 
-Caution: Only users with DAG-switching rights can use this method. By default, restricted users cannot switch DAGs; administrators must explicitly grant this permission.
+Caution: This method only works for users who have been set up with multiple DAG assignments via the DAG Switcher page. Users with a single fixed DAG assignment cannot use this method to change their context.
 
 ---
 
@@ -27,11 +27,10 @@ Caution: Only users with DAG-switching rights can use this method. By default, r
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your API token (from your user account). |
+| `token` | Required | Your project API token. Requires API Import/Update privileges at the project level. |
 | `content` | Required | Always `'dag'` for this method. |
 | `action` | Required | Always `'switch'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
-| `dag` | Required | The unique group name of the DAG to switch to (e.g., `'group_1'`, `'boston_site'`). Pass an empty string to switch to all-DAGs view. |
+| `dag` | Required | The unique group name of the DAG to switch to (e.g., `'group_1'`, `'boston_site'`). Pass an empty string to unassign (switch to all-DAGs view). |
 
 ---
 
@@ -124,18 +123,11 @@ print $output;
 
 # 4. Response
 
-On success, the API returns a success message or confirmation. The exact response format depends on the REDCap version, but typically includes a status indicating the switch was successful.
+On success, the API returns `"1"`. If the switch fails for any reason (wrong DAG name, insufficient permissions, user not set up for DAG switching), an error message is returned instead.
 
 Example response:
 ```
 1
-```
-
-Or in some versions:
-```json
-{
-  "status": "success"
-}
 ```
 
 ---
@@ -160,11 +152,11 @@ Or in some versions:
 
 **Q: Do I need special permissions to use this method?**
 
-**A:** You must be a user with DAG-switching rights in the project. Administrators must explicitly grant this right to users who need it. By default, most users cannot switch DAGs.
+**A:** Your API token must have API Import/Update privileges at the project level. Additionally, you must have been assigned to multiple DAGs via the DAG Switcher page in the project — users with a single fixed DAG assignment cannot use this method.
 
-**Q: How do I know if I have DAG-switching rights?**
+**Q: How do I know if I'm set up for DAG switching?**
 
-**A:** Check your user rights in the project's User Rights configuration. Look for a permission or setting related to "switch DAG" or "change DAG context". Alternatively, try the API call; if you lack the right, it will fail with a permission error.
+**A:** Check whether you appear on the DAG Switcher page in the project (accessible via the left-hand menu under Data Access Groups). If you have only one DAG assignment or haven't been added to the Switcher, this method will fail. Your project administrator sets this up.
 
 **Q: Is DAG switching persistent?**
 

@@ -7,7 +7,7 @@ RC-API-30
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -27,11 +27,10 @@ Caution: Deleting a DAG is a significant operation. Users in deleted DAGs may lo
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. |
 | `content` | Required | Always `'dag'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
-| `dags[0]`, `dags[1]`, ... | Required | Array of DAG unique group names to delete. Pass as `dags[0]=group_1&dags[1]=group_2`, etc. |
+| `dags[0]`, `dags[1]`, ... | Required | Array of unique group names to delete. Pass as `dags[0]=group_1&dags[1]=group_2`, etc. |
 
 ---
 
@@ -154,7 +153,7 @@ Example response: `1`
 
 **Q: What permissions do I need?**
 
-**A:** Your API token must have both API Import and User Rights permissions enabled at the project level.
+**A:** Your API token must have both API Import/Update **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
 
 ---
 
@@ -166,7 +165,7 @@ Example response: `1`
 
 **Expecting an error when deleting a non-existent DAG.** The API does not return an error if a DAG is not found; it simply returns 0. Check the response count to verify the expected number of DAGs were deleted.
 
-**Forgetting the User Rights permission.** This method requires both API Import and User Rights rights. If your token lacks User Rights, the deletion will fail.
+**Forgetting the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only one is not sufficient — the deletion will fail if either is missing.
 
 **Inadvertently deleting the wrong DAG.** DAG names are easy to mistype. Always verify the correct unique group name by exporting existing DAGs before deletion.
 

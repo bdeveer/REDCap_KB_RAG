@@ -7,7 +7,7 @@ RC-API-06
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -17,9 +17,13 @@ RC-API-06
 
 # 1. Overview
 
-The Export Field Names API method retrieves the internal field names (variable names) for a project. This is the most lightweight way to discover which field names exist in your project without downloading the entire data dictionary. Field names are the unique identifiers used to reference fields in API calls, exports, and analyses.
+The Export Field Names API method returns the export/import-specific version of field names for all fields (or a single field) in a project. Its primary purpose is to handle **checkbox fields**, which use a different variable name during exports and imports than the one defined in the Online Designer or Data Dictionary. Each checkbox option is represented as its own export field name in this format: `field_name___coded_value` (field name + triple underscore + the coded value for that choice).
 
-When to use this method: When you need to query which fields exist in a project, validate field names before making API calls, or generate a list of available variables for documentation or code generation.
+For non-checkbox fields, the export field name is identical to the original field name.
+
+**Note:** The following field types are automatically excluded from the returned list because they cannot be used during data import: `calc`, `file`, and `descriptive`.
+
+When to use this method: When you need to construct correct field name references for checkbox fields during data exports or imports, or when you want a lightweight list of importable field names without pulling the full data dictionary.
 
 ---
 
@@ -29,9 +33,9 @@ When to use this method: When you need to query which fields exist in a project,
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'exportFieldNames'` for this method. |
-| `format` | Required | Response format: `'json'` (default), `'csv'`, or `'xml'`. |
-| `field` | Optional | A single field name to query. If provided, returns information about only that field. If omitted, returns all fields. |
-| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'`, `'csv'`, or `'xml'`. |
+| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` [default]. |
+| `field` | Optional | A single field's variable name. If provided, returns export field name(s) for that field only. If the field name is invalid, an error is returned. If omitted, all fields are returned. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is set. |
 
 ---
 
@@ -129,36 +133,47 @@ print $output;
 
 # 4. Response
 
-The method returns a list of field names. When querying a single field (using the `field` parameter), the response includes information about that field. When querying all fields, it returns a JSON array or CSV with all variable names.
+The method returns a list ordered by field order. Each entry contains three attributes:
 
-**JSON format (all fields):**
+| Attribute | Description |
+|---|---|
+| `original_field_name` | The variable name as defined in the Online Designer / Data Dictionary. |
+| `choice_value` | For checkbox fields: the raw coded value for that specific choice. For all other field types: always blank. |
+| `export_field_name` | The export/import-specific field name. For checkboxes: `field_name___coded_value`. For all other types: same as `original_field_name`. |
+
+**JSON format — checkbox field example** (`symptoms` field with choices `1`, `2`, `3`):
 ```json
 [
   {
-    "export_field_name": "first_name"
+    "original_field_name": "symptoms",
+    "choice_value": "1",
+    "export_field_name": "symptoms___1"
   },
   {
-    "export_field_name": "last_name"
+    "original_field_name": "symptoms",
+    "choice_value": "2",
+    "export_field_name": "symptoms___2"
   },
   {
-    "export_field_name": "age"
-  },
-  {
-    "export_field_name": "record_id"
+    "original_field_name": "symptoms",
+    "choice_value": "3",
+    "export_field_name": "symptoms___3"
   }
 ]
 ```
 
-**JSON format (single field):**
+**JSON format — non-checkbox field example:**
 ```json
 [
   {
+    "original_field_name": "first_name",
+    "choice_value": "",
     "export_field_name": "first_name"
   }
 ]
 ```
 
-**CSV format:** A simple list with a header row and one field name per row.
+**CSV format:** Returns the same three columns (`original_field_name`, `choice_value`, `export_field_name`) with a header row, one row per field/choice combination.
 
 ---
 
@@ -178,21 +193,23 @@ The method returns a list of field names. When querying a single field (using th
 
 **Q: Does the field parameter perform validation?**
 
-**A:** No, if you query a field name that doesn't exist, the API returns an empty result, not an error. You need to check for empty results in your code.
+**A:** Yes. If you provide a field name that doesn't exist in the project, the API returns an error (not an empty result). Always ensure the field name is valid before calling this method with the `field` parameter.
 
 **Q: Are calculated fields included in the field list?**
 
-**A:** Yes, calculated fields are included in the field list. They appear with their variable names just like regular fields.
+**A:** No. The method automatically excludes `calc`, `file`, and `descriptive` field types from the returned list because these fields cannot be used during data import. If you need to see those field names, use Export Metadata (RC-API-07) instead.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Querying non-existent fields silently returns empty results.** Unlike other API methods that return an error, querying a field that doesn't exist returns an empty array or empty CSV. Always validate that your results are not empty.
+**Querying a non-existent field returns an error, not empty results.** If you pass an invalid field name via the `field` parameter, the API returns an error response. Validate field names against the project's data dictionary before calling this method with a specific field.
 
 **Assuming field parameters are case-insensitive.** Field names are case-sensitive in the API. If you query `'First_Name'` but the field is actually `'first_name'`, the query returns empty results.
 
 **Forgetting to specify format.** The `format` parameter controls the output format. Always explicitly set it to `'json'`, `'csv'`, or `'xml'` based on your needs.
+
+**Expecting calc, file, or descriptive fields in the response.** These three field types are automatically excluded from the returned list. If your code relies on finding a calculated field's name here, it won't appear — use Export Metadata (RC-API-07) if you need those field names.
 
 **Using the response for data export.** This method returns only field names, not field data. To export actual record data, use RC-API-02 (Export Records).
 

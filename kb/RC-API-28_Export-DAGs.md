@@ -7,7 +7,7 @@ RC-API-28
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -27,9 +27,10 @@ Data Access Groups enable role-based data segregation within a single project. T
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export or User Rights rights. |
+| `token` | Required | Your project API token. Requires API Export **and** Data Access Groups privileges at the project level. |
 | `content` | Required | Always `'dag'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
+| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value passed in `format`. Not applicable when using a background process. |
 
 ---
 
@@ -152,7 +153,7 @@ If the project has no DAGs defined, an empty array `[]` is returned.
 
 **Q: What permissions do I need to export DAGs?**
 
-**A:** Your API token must have API Export or User Rights permissions enabled at the project level.
+**A:** Your API token must have both API Export **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
 
 **Q: Can I filter DAGs by name in the export?**
 
@@ -174,7 +175,7 @@ If the project has no DAGs defined, an empty array `[]` is returned.
 
 **Confusing DAG exports with user-DAG mapping exports.** This method exports the DAG definitions themselves. To export user-DAG assignments, use the Export User-DAG Assignments method (RC-API-31).
 
-**Forgetting to check API permissions.** If your token lacks API Export or User Rights permissions, the export will fail. Ensure the token is configured correctly at the project level.
+**Forgetting to check API permissions.** If your token lacks either API Export or Data Access Groups privileges, the export will fail. Both permissions are required — ensure both are enabled for the token at the project level.
 
 ---
 

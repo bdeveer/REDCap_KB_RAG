@@ -7,7 +7,7 @@ RC-API-31
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -25,9 +25,10 @@ The Export User-DAG Assignments API method retrieves the mapping of users to Dat
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export or User Rights rights. |
+| `token` | Required | Your project API token. Requires API Export **and** Data Access Groups privileges at the project level. |
 | `content` | Required | Always `'userDagMapping'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
+| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value passed in `format`. Not applicable when using a background process. |
 
 ---
 
@@ -162,7 +163,7 @@ If the project has no users, an empty array `[]` is returned. Users with an empt
 
 **Q: What permissions do I need?**
 
-**A:** Your API token must have API Export or User Rights permissions enabled at the project level.
+**A:** Your API token must have both API Export **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
 
 **Q: What if DAGs are not enabled in the project?**
 

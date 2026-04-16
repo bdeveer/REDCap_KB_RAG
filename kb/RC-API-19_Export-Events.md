@@ -7,7 +7,7 @@ RC-API-19
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -31,8 +31,9 @@ This method is useful for discovering the event structure of a project or valida
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'event'` for this method. |
-| `format` | Optional | Set to `'json'` or `'csv'`. Default is JSON. |
-| `arms` | Optional | Comma-separated list of arm numbers to filter events. If omitted, returns events for all arms. |
+| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'`. Default is `'xml'`. |
+| `arms` | Optional | An array of arm numbers to filter events. If omitted, returns events for all arms. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to whatever `format` is set to. If neither is provided, defaults to `'xml'`. Not applicable when using background processing. |
 
 ---
 
@@ -158,7 +159,7 @@ Example JSON response:
 
 **Q: How do I filter events by arm?**
 
-**A:** Set the `arms` parameter to a comma-separated list of arm numbers (e.g., `arms='1,2'`). If you omit the `arms` parameter or set it to an empty string, all events from all arms are returned.
+**A:** Set the `arms` parameter to an array of arm numbers (e.g., `[1, 2]` in Python/JSON). If you omit the parameter, all events from all arms are returned.
 
 **Q: What is the difference between `event_name` and `unique_event_name`?**
 

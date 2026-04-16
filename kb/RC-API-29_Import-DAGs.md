@@ -7,7 +7,7 @@ RC-API-29
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -25,11 +25,12 @@ The Import DAGs API method creates new Data Access Groups or updates existing on
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. |
 | `content` | Required | Always `'dag'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
-| `data` | Required | JSON or CSV array of DAG records. Each record must contain `data_access_group_name` and may contain `unique_group_name`. |
+| `format` | Required | Format of the `data` payload and response: `'csv'`, `'json'`, or `'xml'` (default). |
+| `data` | Required | Array of DAG records in the specified format. Each record must contain `data_access_group_name` and `unique_group_name`. Set `unique_group_name` to blank to create a new DAG; provide an existing value to update it. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value passed in `format`. Not applicable when using a background process. |
 
 ---
 
@@ -177,7 +178,7 @@ Example response: `2`
 
 **Q: What permissions are required?**
 
-**A:** Your API token must have both API Import and User Rights permissions enabled at the project level.
+**A:** Your API token must have both API Import/Update **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
 
 ---
 
@@ -187,11 +188,11 @@ Example response: `2`
 
 **Forgetting to provide `data_access_group_name`.** This field is required and must be a non-empty string. Each DAG must have a human-readable display name.
 
-**Attempting to import with API Export permission instead of API Import.** This method requires API Import rights, not Export. Check your token permissions at the project level.
+**Attempting to import without the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only API Import is not sufficient — the token must also have Data Access Groups access enabled at the project level.
 
 **Not URL-encoding the `data` field in cURL.** In shell scripts, ensure special characters in JSON (like `"` and spaces) are properly encoded or escaped.
 
-**Confusing the response format with the payload.** The `format` parameter controls the response, not the data format. You always submit data as JSON in the `data` field.
+**Misunderstanding what `format` controls.** The `format` parameter governs both the format of the `data` payload you send **and** the response format. You can submit `data` as JSON, CSV, or XML — just ensure the `format` parameter matches the format of your payload.
 
 **Trying to update a DAG by display name alone.** You must use the `unique_group_name` to target an existing DAG for updates. If you omit it, a new DAG is created instead.
 

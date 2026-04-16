@@ -7,7 +7,7 @@ RC-API-32
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -25,11 +25,12 @@ The Import User-DAG Assignments API method assigns users to Data Access Groups (
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. |
 | `content` | Required | Always `'userDagMapping'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
-| `data` | Required | JSON or CSV array of user-DAG assignment records. Each record must contain `username` and `redcap_data_access_group`. |
+| `format` | Required | Format of the `data` payload and response: `'csv'`, `'json'`, or `'xml'` (default). |
+| `data` | Required | Array of user-DAG assignment records in the specified format. Each record must contain `username` and `redcap_data_access_group`. There must be only one record per username. To modify an existing assignment, you must provide both the username and the current group name. If `redcap_data_access_group` is omitted or empty, the user is unassigned from all DAGs. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value passed in `format`. Not applicable when using a background process. |
 
 ---
 
@@ -185,7 +186,7 @@ Example response: `2`
 
 **Q: What permissions are required?**
 
-**A:** Your API token must have both API Import and User Rights permissions enabled at the project level.
+**A:** Your API token must have both API Import/Update **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
 
 ---
 
@@ -199,9 +200,11 @@ Example response: `2`
 
 **Not realizing that empty `redcap_data_access_group` grants all-DAG access.** An empty string or null value means the user sees all data across all DAGs. This is common for administrators, but ensure it is intentional.
 
-**Attempting to assign with API Export permission instead of API Import.** This method requires API Import rights, not Export. Check your token permissions at the project level.
+**Missing the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only one is not sufficient — the import will fail if either is missing at the project level.
 
 **Not URL-encoding the `data` field in cURL.** In shell scripts, ensure special characters in JSON (like `"` and spaces) are properly encoded or escaped.
+
+**Including more than one record per username.** The API requires exactly one record per username in the `data` payload. Submitting duplicate username entries in a single import call will cause an error. If you need to update a user's assignment, include a single record with their new group name.
 
 **Confusing user assignment with role assignment.** DAG assignment controls data access by group, not permissions. If you need to set specific permissions (form access, export rights, etc.), also use the Import User Roles method (RC-API-26) or Import Users method (RC-API-23).
 
