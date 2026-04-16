@@ -7,7 +7,7 @@ RC-API-35
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -17,9 +17,9 @@ RC-API-35
 
 # 1. Overview
 
-The Import Project Info API allows you to update project-level settings programmatically, such as project title, longitudinal configuration, and survey enablement. This method is useful for bulk modifications across multiple projects or automated project setup workflows.
+The Import Project Info API allows you to update project-level settings programmatically, such as project title, longitudinal configuration, survey enablement, PI information, and more. This method is useful for bulk modifications across multiple projects or automated project setup workflows.
 
-**Important:** This method is **PHP-only**. Python, R, and cURL implementations are not available for this API endpoint.
+**Permissions required:** You must have both **API Import/Update** privileges **and** **Project Setup/Design** privileges in the project to use this method.
 
 ---
 
@@ -29,16 +29,34 @@ The Import Project Info API allows you to update project-level settings programm
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'project_settings'` |
-| `format` | Optional | Response format: `'json'` (default) or `'xml'` |
-| `data` | Required | JSON-encoded array of project settings to update |
+| `format` | Required | Data format: `'csv'`, `'json'`, or `'xml'` |
+| `data` | Required | Project settings to update, in the format specified |
 
-**Data Field Options:**
+**Updatable fields:**
 
 | Field | Type | Description |
 |---|---|---|
-| `project_title` | String | Project name (up to 255 characters) |
+| `project_title` | String | Project name |
+| `project_language` | String | Language used in the project interface |
+| `purpose` | Integer | Project purpose code |
+| `purpose_other` | String | Free-text description when purpose is "Other" |
+| `project_notes` | String | Notes about the project |
+| `custom_record_label` | String | Custom label for the record ID field |
+| `secondary_unique_field` | String | Field name designated as a secondary unique field |
 | `is_longitudinal` | Integer | `0` (classic) or `1` (longitudinal) |
 | `surveys_enabled` | Integer | `0` (disabled) or `1` (enabled) |
+| `scheduling_enabled` | Integer | `0` (disabled) or `1` (enabled) |
+| `record_autonumbering_enabled` | Integer | `0` (disabled) or `1` (enabled) |
+| `randomization_enabled` | Integer | `0` (disabled) or `1` (enabled) |
+| `project_irb_number` | String | IRB approval number |
+| `project_grant_number` | String | Grant number associated with the project |
+| `project_pi_firstname` | String | Principal investigator first name |
+| `project_pi_lastname` | String | Principal investigator last name |
+| `project_pi_email` | String | Principal investigator email address |
+| `display_today_now_button` | Integer | `0` (hidden) or `1` (shown) |
+| `bypass_branching_erase_field_prompt` | Integer | `0` (show prompt) or `1` (bypass prompt) |
+
+Boolean-type fields use `0` (false/no) or `1` (true/yes).
 
 ---
 
@@ -80,44 +98,26 @@ print $output;
 
 > **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `false` for compatibility. Set to `true` in production. See RC-API-01 Section 3.5.
 
-**Python, R, and cURL implementations are not available for this endpoint.**
-
 ---
 
 # 4. Response
 
-On success, the API returns a JSON message confirming the update:
+On success, the API returns the **number of values accepted for update** (including fields whose values did not change). For example, if you submitted 3 fields, you will receive `3`.
 
-```json
-{
-  "success": true,
-  "message": "Project settings updated successfully"
-}
-```
-
-On error, you receive an error object with details:
-
-```json
-{
-  "error": "Invalid project_title: exceeds 255 characters"
-}
-```
+On error, you receive an error message with details about what failed.
 
 ---
 
 # 5. Common Questions
 
-**Q: Why is this API method PHP-only?**
-A: This endpoint has historically had limited implementation across language libraries. PHP remains the most widely supported and tested implementation for updating project settings.
+**Q: Can I update only some project settings, or do I need to include all fields?**
+A: You only need to include the fields you want to change. Fields omitted from the data payload are left untouched.
 
-**Q: Can I enable longitudinal mode on an existing project?**
-A: Only if the project has no data yet. Longitudinal must be set during project creation or before any records are added. Use RC-API-37 (Import Project / Create Project) to create new longitudinal projects.
+**Q: What does the return value mean?**
+A: The API returns a count of how many field values were accepted — including fields that already had the submitted value. A return of `3` means 3 fields were processed, not necessarily that 3 things changed.
 
-**Q: What happens if I leave a field blank in the data array?**
-A: Fields omitted from the data array are not modified. Only include fields you intend to change.
-
-**Q: Do I need Project Setup rights to use this method?**
-A: Yes. You must have Project Setup / Design rights to modify project settings via the API.
+**Q: Do I need special permissions to use this method?**
+A: Yes. You need both **API Import/Update** privileges and **Project Setup/Design** privileges. Having only one of these is not sufficient.
 
 **Q: Can I update surveys_enabled after the project is in production?**
 A: Yes. You can enable or disable surveys on a project at any time, even after data collection has begun.
@@ -126,11 +126,13 @@ A: Yes. You can enable or disable surveys on a project at any time, even after d
 
 # 6. Common Mistakes & Gotchas
 
-**PHP-only limitation:** Attempting to use this endpoint with Python, R, or cURL will fail. Always use PHP or implement a PHP wrapper service if you need to call this from other languages.
+**Incomplete field list:** The API supports 19 updatable fields, including PI information, IRB/grant numbers, scheduling, randomization, and record autonumbering. Don't assume only title, longitudinal mode, and surveys are available.
 
-**JSON encoding requirement:** The `data` parameter must be properly JSON-encoded. Test your JSON serialization carefully, especially for special characters in project titles.
+**Misreading the response:** The return value is an integer count, not a success/error JSON object. A numeric response indicates success; an error message string indicates failure.
 
-**Project title length:** Project titles are limited to 255 characters. Longer titles will trigger an error and the update will fail.
+**Missing permissions:** Both API Import/Update privileges and Project Setup/Design privileges are required. If you receive a permissions error, check that both are granted — not just one.
+
+**JSON encoding requirement:** The `data` parameter must be properly encoded in the format you specified. Test your serialization carefully, especially for special characters in free-text fields like `project_title` or `project_notes`.
 
 ---
 
