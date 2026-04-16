@@ -7,7 +7,7 @@ RC-API-18
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -17,9 +17,11 @@ RC-API-18
 
 # 1. Overview
 
-The Delete Arms API method removes one or more arms from a longitudinal REDCap project. You specify the arm numbers to delete, and REDCap will remove them along with all their associated events.
+The Delete Arms API method removes one or more arms from a longitudinal REDCap project. You specify the arm numbers to delete, and REDCap will remove them along with all their associated events and all data collected under those events.
 
-> **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project. Additionally, deleting arms will delete all events associated with those arms, and any data stored in those events will be removed.
+> **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status.
+
+> **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project. Deleting an arm permanently deletes all events in that arm and all data collected under those events — this cannot be undone.
 
 ---
 
@@ -27,7 +29,7 @@ The Delete Arms API method removes one or more arms from a longitudinal REDCap p
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import right. |
+| `token` | Required | Your project API token. Requires API Import/Update right **and** Project Design/Setup right. |
 | `content` | Required | Always `'arm'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
 | `format` | Optional | Set to `'json'` or `'csv'`. Default is JSON. |
@@ -124,14 +126,11 @@ print $output;
 
 # 4. Response
 
-On success, the method returns a message indicating how many arms were deleted. The HTTP status code will be 200. All data stored in those arms' events will be permanently removed.
+On success, the method returns the number of arms deleted as a plain integer. All data stored in those arms' events will be permanently removed.
 
 Example response:
-```json
-{
-  "success": true,
-  "message": "1 arm(s) deleted"
-}
+```
+1
 ```
 
 ---
@@ -141,6 +140,10 @@ Example response:
 **Q: Can I delete an arm on a classic project?**
 
 **A:** No. Arms are a longitudinal-only feature. This method will fail on classic projects.
+
+**Q: Can I delete arms on a project that is in Production status?**
+
+**A:** No. Delete Arms is restricted to projects in Development status. If your project is in Production, you cannot use this API method. To delete arms you would need to move the project back to Development status first — but be aware that doing so on a live project carries significant risk.
 
 **Q: What happens to the data when I delete an arm?**
 
@@ -157,6 +160,10 @@ Example response:
 ---
 
 # 6. Common Mistakes & Gotchas
+
+**Calling Delete Arms on a project that is not in Development status.** This method only works on projects in Development status. Calling it on a Production or Analysis/Cleanup project will fail. Check your project's status before calling this method.
+
+**Not having Project Design/Setup privileges.** API Import/Update rights alone are not sufficient. Your API token's user account must also have Project Design/Setup privileges. If you receive a permissions error, check both rights.
 
 **Not backing up data before deletion.** Deleting an arm deletes all events and data in that arm. There is no undo. Always export your project data before deleting arms if you may need it later.
 

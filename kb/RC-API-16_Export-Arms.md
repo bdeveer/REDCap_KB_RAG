@@ -7,7 +7,7 @@ RC-API-16
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -31,7 +31,9 @@ This method returns metadata about arms: their arm numbers, names, and any other
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'arm'` for this method. |
-| `format` | Optional | Set to `'json'` or `'csv'`. Default is JSON. |
+| `format` | Optional | Output format: `csv`, `json`, or `xml`. Default is `xml`. |
+| `arms` | Optional | Array of specific arm numbers to export. If omitted, all arms are returned. |
+| `returnFormat` | Optional | Format for error messages: `csv`, `json`, or `xml`. Defaults to the value of `format` if not specified, or `xml` if neither is set. Does not apply when using a background process. |
 
 ---
 
@@ -119,7 +121,7 @@ print $output;
 
 # 4. Response
 
-The method returns a JSON array (or CSV, depending on the `format` parameter) containing all arms in the project.
+The method returns the arms for the project in the format specified. The default format is `xml`; pass `format=json` or `format=csv` to change it.
 
 Example JSON response:
 ```json
@@ -153,7 +155,11 @@ Example JSON response:
 
 **Q: Can I get the format as CSV instead of JSON?**
 
-**A:** Yes. Set `format='csv'` to receive the response as comma-separated values instead of JSON.
+**A:** Yes. Set `format='csv'` to receive the response as comma-separated values. You can also use `format='xml'`, which is the API default if no format is specified.
+
+**Q: Can I export only certain arms instead of all of them?**
+
+**A:** Yes. Pass an array of arm numbers in the `arms` parameter to limit the response to only those arms. If you omit the parameter, all arms in the project are returned.
 
 ---
 
@@ -164,6 +170,8 @@ Example JSON response:
 **Not checking if the project is longitudinal.** If your code is designed to work with multiple projects, check whether each project is longitudinal before calling Export Arms. Use the Project Metadata API or check the project setup.
 
 **Assuming arm numbers are sequential starting from 1.** Although arm numbers are typically sequential (1, 2, 3), do not assume this. Always parse the response and use the actual `arm_num` values returned.
+
+**Expecting JSON when no format is specified.** The API default for this method is `xml`, not JSON. If your code parses the response as JSON without explicitly setting `format=json`, it will fail. Always set the `format` parameter explicitly.
 
 ---
 
