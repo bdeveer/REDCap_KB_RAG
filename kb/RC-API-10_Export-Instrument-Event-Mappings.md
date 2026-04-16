@@ -7,7 +7,7 @@ RC-API-10
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -38,9 +38,8 @@ When to use this method: When you need to understand the instrument-event struct
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'formEventMapping'` for this method. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` [default: `xml`]. |
-| `arms` | Optional | An array of arm numbers to filter results to specific arms. By default, mappings for all arms are returned. |
-| `returnFormat` | Optional | Specifies the format of error messages: `'csv'`, `'json'`, or `'xml'`. If omitted, defaults to the `format` value (or `xml` if `format` was also omitted). Does not apply when using a background process (`backgroundProcess=true`) — in that case, `success:true` or `success:false` is returned in the appropriate format. |
+| `format` | Required | Response format: `'json'` (default), `'csv'`, or `'xml'`. |
+| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'`, `'csv'`, or `'xml'`. |
 
 ---
 
@@ -189,15 +188,9 @@ The method returns the mapping of instruments to events, organized by arm and ev
 
 **A:** Yes. Export the mappings from the source project, export events (RC-API-20), export instruments (RC-API-09), and export metadata (RC-API-07). Use these to recreate the structure in a new project.
 
-**Q: Can I retrieve mappings for just one arm instead of all arms?**
-
-**A:** Yes. Pass the `arms` parameter with an array of arm numbers (e.g., `arms[0]=1`). Only mappings for the specified arm(s) will be returned. If you omit `arms`, all arms are included.
-
 ---
 
 # 7. Common Mistakes & Gotchas
-
-**Not specifying `format` and getting XML back unexpectedly.** The default format for this method is `xml`, not `json`. If you omit the `format` parameter, you will receive an XML response. Always pass `format=json` (or `format=csv`) explicitly if you want non-XML output.
 
 **Using on a classic (non-longitudinal) project.** This method does not work on classic projects. If you call it on a non-longitudinal project, you get an error or empty result. Always verify the project is longitudinal first.
 

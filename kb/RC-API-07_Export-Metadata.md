@@ -7,7 +7,7 @@ RC-API-07
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,10 +29,8 @@ When to use this method: When you need to understand the complete structure of a
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'metadata'` for this method. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
-| `fields` | Optional | Array of field names to pull. By default, all fields are returned. |
-| `forms` | Optional | Array of form names (unique instrument names from Column B of the data dictionary — not the display labels) to pull. By default, all forms are returned. |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to match `format` if omitted; defaults to `'xml'` if neither is passed. Does not apply when using a background process. |
+| `format` | Required | Response format: `'json'` (default), `'csv'`, or `'xml'`. |
+| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'`, `'csv'`, or `'xml'`. |
 
 ---
 
@@ -185,9 +183,9 @@ The method returns the complete data dictionary in the requested format. Each ro
 
 **A:** The response includes all columns from the Data Dictionary: field_name, form_name, section_header, field_type, field_label, select_choices_or_calculations, field_note, text_validation rules, identifier, branching_logic, required_field, custom_alignment, question_number, matrix settings, and field_annotation.
 
-**Q: Can I export metadata for only certain instruments or fields?**
+**Q: Can I export metadata for only certain instruments?**
 
-**A:** Yes. Use the optional `forms` parameter to pass an array of instrument names, and/or the `fields` parameter to pass an array of field names. Only the matching metadata will be returned. Note that `forms` takes the unique instrument name (Column B of the data dictionary), not the display label you see in the UI.
+**A:** No, this method exports the entire data dictionary. If you only need specific instruments, you can filter the response in your code after receiving it.
 
 **Q: What format is best for metadata export?**
 
@@ -208,8 +206,6 @@ The method returns the complete data dictionary in the requested format. Each ro
 ---
 
 # 6. Common Mistakes & Gotchas
-
-**Passing the form display label instead of the form name in the `forms` parameter.** The `forms` parameter takes the unique instrument name as it appears in Column B of the data dictionary (e.g., `baseline_survey`), not the human-readable label shown in the UI (e.g., `Baseline Survey`). Passing the label will return no results without an error.
 
 **Assuming metadata is lightweight.** For large projects with hundreds of fields and instruments, the metadata response can be large (megabytes). Plan accordingly in your code, especially for network-constrained environments.
 

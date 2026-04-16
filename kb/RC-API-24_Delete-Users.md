@@ -7,7 +7,7 @@ RC-API-24
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -23,26 +23,21 @@ Use this method to offboard team members, automate user lifecycle management, or
 
 ---
 
-# 2. Permissions Required
-
-To call this method, your API token must have **API Import/Update** privileges *and* **User Rights** privileges in the project.
-
----
-
-# 3. Parameters
+# 2. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. |
+| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
 | `content` | Required | Always `'user'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
+| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
 | `users[0]`, `users[1]`, ... | Required | Array of usernames to delete. Pass as `users[0]=username1&users[1]=username2`, etc. |
 
 ---
 
-# 4. Request Examples
+# 3. Request Examples
 
-## 4.1 Python
+## 3.1 Python
 ```python
 from config import config
 import requests, json
@@ -60,7 +55,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 4.2 R
+## 3.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -77,7 +72,7 @@ result <- postForm(
 print(result)
 ```
 
-## 4.3 cURL
+## 3.3 cURL
 ```sh
 #!/bin/sh
 
@@ -92,7 +87,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 4.4 PHP
+## 3.4 PHP
 ```php
 <?php
 
@@ -127,13 +122,13 @@ print $output;
 
 ---
 
-# 5. Response
+# 4. Response
 
 On success, the API returns a count of users deleted. For example: `1` means one user was removed from the project. If a username does not exist in the project, it is ignored and does not affect the response.
 
 ---
 
-# 6. Common Questions
+# 5. Common Questions
 
 **Q: Does this delete the user from the entire REDCap system?**
 
@@ -157,7 +152,7 @@ On success, the API returns a count of users deleted. For example: `1` means one
 
 ---
 
-# 7. Common Mistakes & Gotchas
+# 6. Common Mistakes & Gotchas
 
 **Expecting an error when deleting a non-existent user.** The API does not return an error if a username is not found in the project; it simply returns 0. Check the response count to verify that the expected number of users were deleted.
 
@@ -169,7 +164,7 @@ On success, the API returns a count of users deleted. For example: `1` means one
 
 ---
 
-# 8. Related Articles
+# 7. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-USER-01 — User Rights: Overview & Three-Tier Access (explains the three access tiers)

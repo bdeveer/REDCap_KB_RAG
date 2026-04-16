@@ -7,7 +7,7 @@ RC-API-38
 | **Domain** | API |
 | **Applies To** | REDCap projects with custom reports configured |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,10 +21,6 @@ The Export Reports API retrieves data from a custom report created in the REDCap
 
 This is particularly useful for recurring report generation, integration with downstream analytics systems, and scheduled data extracts.
 
-> **Data export rights apply to API report exports.** If your account has *No Access* export rights, the request will fail with an error. If you have *De-Identified* or *Remove All Identifier Fields* rights, some fields may be filtered out of the response. To ensure no data is excluded, the API token's user should have *Full Data Set* export rights in the project.
-
-> **The `type` parameter is not supported.** Unlike the Export Records method, Export Reports does not accept a `type` (flat/eav) parameter. All data is always returned in flat format. If you pass `type` in your request, it will be silently ignored.
-
 ---
 
 # 2. Parameters
@@ -33,14 +29,13 @@ This is particularly useful for recurring report generation, integration with do
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'report'` |
+| `format` | Optional | Response format: `'json'` (default), `'xml'`, or `'csv'` |
 | `report_id` | Required | Numeric ID of the report (visible in URL or report list) |
-| `format` | Required | Response format: `'csv'`, `'json'`, `'xml'` (default), or `'odm'` (CDISC ODM XML v1.3.1) |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to match `format` if not specified. Not used when importing as a background process. |
-| `rawOrLabel` | Optional | `'raw'` (default) for raw coded values, `'label'` for display labels |
-| `rawOrLabelHeaders` | Optional | For CSV flat format only: `'raw'` (default) for field variable names, `'label'` for field labels in headers |
-| `exportCheckboxLabel` | Optional | `'true'` to export checkbox option labels when checked (blank if unchecked); `'false'` (default) exports `'Checked'`/`'Unchecked'`. Only applies when `rawOrLabel=label`. |
-| `csvDelimiter` | Optional | CSV delimiter: `','` (default), `'tab'`, `';'`, `'\|'`, or `'^'` |
-| `decimalCharacter` | Optional | Force decimal format: `'.'` or `','`. If blank, uses each field's native format. Applies to calc fields and number-validated text fields. |
+| `rawOrLabel` | Optional | `'raw'` for raw coded values, `'label'` for display labels (default: `'raw'`) |
+| `rawOrLabelHeaders` | Optional | `'raw'` for field variable names, `'label'` for field labels (default: `'raw'`) |
+| `exportCheckboxLabel` | Optional | `'true'` to export checkbox labels, `'false'` (default) for coded values |
+| `csvDelimiter` | Optional | CSV delimiter character: `','` (default), `';'`, `'\t'` for tab |
+| `decimalCharacter` | Optional | Decimal separator: `'.'` (default) or `','` for European format |
 
 ---
 
@@ -133,7 +128,7 @@ print $output;
 
 # 4. Response
 
-The API returns data rows as configured in the report, ordered first by record (the project's primary key) and then by event ID. Results are always in flat format regardless of project structure.
+The API returns data rows as configured in the report, typically as an array of record objects:
 
 ```json
 [
@@ -186,12 +181,6 @@ A: `rawOrLabel` controls field values (e.g., coded values vs. display text). `ra
 **Ignoring report permissions:** Reports respect user-level restrictions, DAG assignments, and role-based access control. Verify your API token user has permission to the report before automating exports.
 
 **Missing parameter defaults:** If you don't specify `rawOrLabel`, the API defaults to `'raw'` (coded values). If you need human-readable labels, explicitly set `rawOrLabel='label'`.
-
-**Assuming `type=flat` is required:** Export Reports always returns flat format. There is no `type` parameter — unlike Export Records, passing `type` here does nothing. Don't copy it from an Export Records call and expect it to have any effect.
-
-**Data export rights silently filter results:** If the API token's user has De-Identified or Remove All Identifier Fields export rights, identifier fields will be stripped from the response without any error or warning. If your export is missing expected fields, check the user's data export rights in User Rights, not the report definition.
-
-**Wrong `format` default assumption:** The default format for Export Reports is `xml`, not `json`. Always pass `format='json'` or `format='csv'` explicitly in your requests if you don't want XML.
 
 ---
 

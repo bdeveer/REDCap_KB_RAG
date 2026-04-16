@@ -7,12 +7,12 @@ RC-API-08
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-07 — Export Metadata |
-| **Important** | **Development status only** — This method only works on projects in Development status. It cannot be used on projects in Production or Analysis/Cleanup status. |
+| **Important** | **PHP only** — This method is available for PHP projects. Other languages may have limited or no support. Check your REDCap version and API documentation for language-specific availability. |
 
 ---
 
@@ -26,10 +26,10 @@ When to use this method: When you need to programmatically create or modify the 
 
 # 2. Important Notes
 
-- **Development status only:** This method is restricted to projects in Development status. Attempting to use it on a Production or Analysis/Cleanup project will fail. This restriction exists because of the method's destructive potential.
-- **Dual permission requirement:** You must have both API Import/Update privileges and Project Design/Setup privileges. Either one alone is not sufficient.
+- **Language Support:** This method is primarily available for PHP. Python, R, and other languages may have limited support depending on your REDCap version and API implementation.
+- **Requires API Design Right:** You must have API Design (or Import Metadata) permission to use this method.
 - **Metadata Validation:** REDCap validates the metadata before import. Invalid field definitions will be rejected with error messages.
-- **Destructive Operation:** This method can overwrite or remove existing field definitions. Always test on a development project, and export a backup of the current metadata (RC-API-07) before importing.
+- **Destructive Operation:** This method can modify or delete existing fields. Always test on a development project first.
 
 ---
 
@@ -37,11 +37,11 @@ When to use this method: When you need to programmatically create or modify the 
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update and Project Design/Setup rights. |
+| `token` | Required | Your project API token. Requires API Design right. |
 | `content` | Required | Always `'metadata'` for this method. |
-| `format` | Required | Format of the `data` being imported: `'csv'`, `'json'`, or `'xml'` (default). |
-| `data` | Required | The formatted metadata to import. |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to match `format` if omitted; defaults to `'xml'` if neither is passed. Does not apply when using a background process. |
+| `format` | Required | Response format: `'json'` or `'xml'`. |
+| `data` | Required | The metadata to import, as a JSON or XML string containing field definitions. |
+| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'` or `'xml'`. |
 
 ---
 
@@ -163,7 +163,7 @@ The method returns a count of fields that were successfully created or modified,
 
 **Q: What permissions do I need to use this method?**
 
-**A:** You need two separate rights: API Import/Update privileges and Project Design/Setup privileges. Both are required — having only one is not sufficient.
+**A:** You must have API Design permission (or equivalent Import Metadata permission) on the project. Regular API Export or API Edit permissions are not sufficient.
 
 **Q: Can I import a data dictionary from one project to another?**
 
@@ -188,8 +188,6 @@ The method returns a count of fields that were successfully created or modified,
 ---
 
 # 8. Common Mistakes & Gotchas
-
-**Attempting to import on a Production or Analysis/Cleanup project.** This method is restricted to Development status only. If your project has already moved to Production, the API call will fail. You must either use the GUI to make changes in Production (which requires a move-to-production request) or move the project back to Development if your institution allows it.
 
 **Not formatting data as JSON array.** The data must be a JSON-encoded array, even if you're only importing one field. Single objects must be wrapped in an array: `json_encode([field_object])`.
 

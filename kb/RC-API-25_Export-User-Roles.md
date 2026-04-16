@@ -7,7 +7,7 @@ RC-API-25
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,8 +29,7 @@ Use this method to audit role configurations, generate reports of role-based acc
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export and User Rights rights. |
 | `content` | Required | Always `'userRole'` for this method. |
-| `format` | Optional | Return format: `'csv'`, `'json'`, or `'xml'` (default). |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
+| `format` | Optional | Return format: `'json'` (default) or `'csv'`. |
 
 ---
 
@@ -118,20 +117,11 @@ print $output;
 
 # 4. Response
 
-On success, the method returns an array (or CSV table) of role objects in the requested format. Each object contains the following attributes:
+On success, the method returns a JSON array (or CSV table) of role objects. Each object contains:
 
-`unique_role_name`, `role_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
-
-The `forms` attribute is the only one with sub-elements — it contains one entry per data collection instrument, each with its own Form Rights value.
-
-**Value KEY:**
-
-| Attribute | Value meanings |
-|---|---|
-| `data_export` | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
-| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses |
-| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only); add 8 to also grant Edit Survey Responses; add 16 to also grant Delete rights |
-| All other attributes | 0 = No Access, 1 = Access |
+- `unique_role_name` — The system-generated unique ID for the role (e.g., `U-527D39JXAC`). Used to reference the role in imports and deletes.
+- `role_label` — The human-readable name of the role (e.g., `'Project Manager'`, `'Data Coordinator'`).
+- Permission flags — A complete set of permission fields (e.g., `data_export`, `api_import`, `record_create`, etc.), each with a value of 0 or 1.
 
 ---
 
@@ -179,4 +169,3 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 - RC-API-22 — Export Users (export individual user permissions)
 - RC-API-26 — Import User Roles (create or update custom roles)
 - RC-API-27 — Delete User Roles (remove roles from the project)
-- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)

@@ -7,7 +7,7 @@ RC-API-36
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -17,13 +17,9 @@ RC-API-36
 
 # 1. Overview
 
-The Export Project XML API exports the entire project — all records, events, arms, instruments, fields, and project attributes — as a single XML file in **CDISC ODM format (ODM version 1.3.1)**. This XML can be used to clone the project on the same REDCap server or another REDCap server (by uploading it on the Create New Project page), or to import it into any other ODM-compatible system.
+The Export Project XML API returns the complete project structure as XML, including all instruments, fields, calculated fields, data access group assignments, event definitions, and branching logic. This comprehensive export captures the entire project design and can be used to recreate or clone the project via the Import Project API (RC-API-37).
 
-By default, the export includes both metadata and data. Setting `returnMetadataOnly=true` returns only the project structure without any records.
-
-**Important — data export rights apply:** When `returnMetadataOnly` is `false` (the default), your Data Export user rights are enforced. If you have De-Identified or Remove All Identifier Fields export rights, some fields may be stripped from the returned data. Use Full Data Set export rights to ensure no data is filtered out.
-
-This method requires only the API Export right.
+This method is essential for project backups, migrations between REDCap instances, version control of project designs, and programmatic project cloning workflows.
 
 ---
 
@@ -33,17 +29,12 @@ This method requires only the API Export right.
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'project_xml'` |
-| `returnMetadataOnly` | Optional | `'true'` returns only metadata (all fields, forms, events, arms); `'false'` (default) returns metadata and data |
-| `records` | Optional | Array of record names to pull; by default all records are returned |
-| `fields` | Optional | Array of field names to pull; by default all fields are returned |
-| `events` | Optional | Array of unique event names to pull records for (longitudinal projects only) |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'` (default: `'xml'`). The response itself is always CDISC ODM XML. |
-| `exportSurveyFields` | Optional | `'true'` to include survey identifier and timestamp fields; `'false'` (default) to omit. Note: if imported via API, these pseudo-fields are ignored. |
-| `exportDataAccessGroups` | Optional | `'true'` to include the `redcap_data_access_group` field; `'false'` (default) to omit. Only applies when the API user is **not** in a data access group — if the user is in a DAG, this flag is ignored and reverts to `'false'`. |
-| `filterLogic` | Optional | Logic string (e.g., `[age] > 30`) to filter which records are returned. Only records where the logic evaluates as TRUE are included. Invalid syntax returns an error. |
-| `exportFiles` | Optional | `'true'` to embed uploaded File Upload and Signature field files in the XML; `'false'` (default) to omit. Setting to `'true'` can produce very large exports that may fail to complete on file-heavy projects. |
-
-> **Note:** All optional filtering parameters (`records`, `fields`, `events`, `filterLogic`, `exportSurveyFields`, `exportDataAccessGroups`, `exportFiles`) only apply to data. All metadata is always exported regardless.
+| `returnFormat` | Optional | Response format: `'json'` (default), `'xml'`, or `'csv'` |
+| `returnMetadataOnly` | Optional | `'true'` to return only metadata (field definitions); `'false'` (default) for complete structure |
+| `exportSurveyFields` | Optional | `'true'` to include survey-specific fields; `'false'` (default) to omit |
+| `exportDataAccessGroups` | Optional | `'true'` to include DAG assignments; `'false'` (default) to omit |
+| `filterLogic` | Optional | Branching logic filter to export only matching fields |
+| `exportFiles` | Optional | `'true'` to include file attachments; `'false'` (default) to omit |
 
 ---
 
@@ -142,9 +133,28 @@ print $output;
 
 # 4. Response
 
-The API always returns a single XML string in **CDISC ODM format (ODM version 1.3.1)**, regardless of any format parameters. The `returnFormat` parameter controls only error message formatting, not the response itself.
+The API returns the full project definition in your chosen format (JSON, XML, or CSV). A typical JSON response contains a data structure with metadata, events, instruments, and field definitions:
 
-The ODM XML includes all metadata (fields, forms, events, arms) and, unless `returnMetadataOnly=true`, all records filtered according to any optional parameters supplied. This XML can be uploaded directly on the REDCap Create New Project page to clone the project.
+```json
+{
+  "project_id": 123,
+  "project_title": "My Research Project",
+  "creation_time": "2024-01-15 10:30:45",
+  "production_time": "2024-02-01 14:22:18",
+  "is_longitudinal": 0,
+  "surveys_enabled": 1,
+  "metadata": [
+    {
+      "field_name": "record_id",
+      "form_name": "demographics",
+      "field_type": "text",
+      "field_label": "Record ID",
+      ...
+    },
+    ...
+  ]
+}
+```
 
 ---
 
@@ -154,35 +164,26 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 A: Yes. Use the Export Project XML API to download your project design, then use RC-API-37 (Import Project / Create Project) with that XML to clone the project.
 
 **Q: What is the difference between `returnMetadataOnly` true and false?**
-A: `'true'` returns only the project structure — all fields, forms, events, and arms — with no data records. `'false'` (the default) returns both metadata and data, optionally filtered by `records`, `fields`, `events`, or `filterLogic`.
+A: `'true'` returns only field definitions (metadata). `'false'` returns the complete project structure including all instruments, events, and configuration. For cloning, use `'false'`.
 
-**Q: Will the exported XML include data records?**
-A: Yes, by default. `returnMetadataOnly` defaults to `'false'`, so data is included unless you explicitly set it to `'true'`.
-
-**Q: Can I export only specific records or fields?**
-A: Yes. Use the `records` parameter to specify an array of record names, the `fields` parameter for specific field names, or `filterLogic` to return only records matching a logic expression. These filters apply only to data — all metadata is always exported.
+**Q: Will my exported XML include data records?**
+A: No. Export Project XML returns only the project design structure, not the data. Use RC-API-02 (Export Records) to export data separately.
 
 **Q: How large can the exported XML be?**
-A: Export size depends on project complexity and the amount of data. Setting `exportFiles=true` can make the export extremely large if the project contains many or large file uploads. REDCap has default request limits; use `returnMetadataOnly=true` or filter parameters to reduce export size if you hit errors.
+A: Export size depends on project complexity (number of instruments, fields, branching logic). REDCap has default upload/download limits; consult your instance settings if you encounter size errors.
 
-**Q: Can I use this export to clone a project?**
-A: Yes. The ODM XML can be uploaded on the REDCap Create New Project page to recreate the project on the same instance or another REDCap server.
+**Q: Can I export only specific instruments?**
+A: Not directly. Use `filterLogic` to filter fields by branching logic conditions, but to export specific instruments you would need to manually construct the XML or export the entire project and parse it.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Data included by default:** `returnMetadataOnly` defaults to `'false'`, meaning data is exported unless you explicitly opt out. If you only want the project structure, always pass `returnMetadataOnly='true'`.
+**Large exports timing out:** Projects with hundreds of instruments and thousands of fields may exceed request timeout limits. Consider exporting metadata only first with `returnMetadataOnly='true'`.
 
-**Data export rights apply to returned data:** If your account has De-Identified or Remove All Identifier Fields export rights, those restrictions are enforced on any data returned by this method. Use Full Data Set rights to avoid unexpected field omissions.
+**Format parameter mismatches:** The parameter is `returnFormat`, not `format`. Using `format` alone will not control the output format and may default unexpectedly.
 
-**`returnFormat` controls errors, not the response:** The response is always CDISC ODM XML. `returnFormat` only affects the format of any error messages returned. Don't confuse it with a general format selector.
-
-**DAG flag ignored for DAG members:** `exportDataAccessGroups=true` only works if the API token belongs to a user who is not in a data access group. If the user is in a DAG, the flag silently reverts to `'false'`.
-
-**`exportFiles=true` can break large exports:** Including file attachments significantly increases export size and may cause the request to fail or time out on projects with many or large files.
-
-**Incomplete exports without all flags:** If you need data access groups, survey fields, or file attachments in your cloned project, explicitly set the relevant optional parameters to `'true'` before exporting.
+**Incomplete exports without all flags:** If you need data access groups, survey fields, or other settings included in your cloned project, explicitly set those optional parameters to `'true'` before exporting.
 
 ---
 

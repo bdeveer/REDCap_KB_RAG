@@ -7,7 +7,7 @@ RC-API-05
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -27,12 +27,12 @@ When to use this method: When you need to rename a record ID to a new value, and
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires **Rename Record** user privilege in the project. |
+| `token` | Required | Your project API token. Requires API Edit right. |
 | `content` | Required | Always `'record'` for this method. |
 | `action` | Required | Always `'rename'` for this method. |
 | `record` | Required | The current record ID (the one to be renamed). |
 | `new_record_name` | Required | The new record ID to assign. |
-| `arm` | Optional | The arm number (for multi-arm projects). If omitted, all records with the same name across all arms are renamed to the new record name. If specified, only the record in that arm is renamed. |
+| `arm` | Optional | The arm number (for multi-arm projects). If omitted, the first arm is assumed. |
 | `returnFormat` | Optional | Response format: `'json'` (default) or `'xml'`. |
 
 ---
@@ -133,7 +133,16 @@ print $output;
 
 # 4. Response
 
-On success, the API returns `"1"`. On failure, it returns an error message string. Common errors include:
+The API returns a success message in the requested format. On success, the response typically contains a message confirming the rename operation:
+
+```json
+{
+  "success": true,
+  "message": "Record renamed successfully"
+}
+```
+
+If an error occurs, the response includes an error message. Common errors include:
 - The record ID does not exist
 - The new record name already exists
 - You lack API Edit permission
@@ -152,7 +161,7 @@ On success, the API returns `"1"`. On failure, it returns an error message strin
 
 **Q: In a multi-arm project, does the arm parameter matter?**
 
-**A:** Yes. If you specify an arm number, only the record in that arm is renamed. If you omit the `arm` parameter, REDCap renames all records with the matching name across every arm the record exists in.
+**A:** Yes, the `arm` parameter specifies which arm's record is being renamed. If you omit it, the API assumes arm 1. You can only rename a record within a single arm.
 
 **Q: Can I rename a record that has already been locked?**
 

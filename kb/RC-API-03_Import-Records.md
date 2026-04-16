@@ -7,7 +7,7 @@ RC-API-03
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,18 +29,16 @@ When to use this method: When you need to load data from an external system into
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update right. |
+| `token` | Required | Your project API token. Requires API Import right. |
 | `content` | Required | Always `'record'` for this method. |
-| `format` | Required | Data format: `'json'`, `'csv'`, `'xml'` (default), or `'odm'` (CDISC ODM XML v1.3.1). Must match the structure of the `data` parameter. |
-| `type` | Required | Data structure: `'flat'` (default; one row per record) or `'eav'` (entity-attribute-value; one row per data point). Non-longitudinal EAV has columns `record`, `field_name`, `value`; longitudinal adds `redcap_event_name`. |
-| `overwriteBehavior` | Required | `'normal'` (default; blank/empty values are ignored) or `'overwrite'` (blank/empty values are valid and will overwrite existing data). |
-| `forceAutoNumber` | Required | `false` (default; record names in the request are used as-is) or `true` (REDCap ignores the provided record names and assigns new auto-numbers). When `true`, set `returnContent` to `'auto_ids'` to see how provided names map to new names (e.g., `323,10` means new ID 323 was assigned to provided ID 10). |
-| `backgroundProcess` | Required | `0`/`false` (default; synchronous import) or `1`/`true` (run as background process). When background, the response is `success:true` or `success:false` regardless of `returnContent` or `returnFormat`. |
-| `data` | Required | The record data to import as a JSON, CSV, or XML string. For repeating instruments or events, you can auto-number new instances by setting `redcap_repeat_instance` to `'new'` (flat type only — does not work for EAV). For EAV imports, checkbox fields must use `variable___optionCode` as the `field_name` and `'0'` or `'1'` as the value (e.g., `field_name='icecream___4'`, `value='1'` to check the option coded as `4`). |
-| `dateFormat` | Optional | Format for date and datetime field values: `'YMD'` (default; YYYY-MM-DD with dashes), `'MDY'` (MM/DD/YYYY with slashes), or `'DMY'` (DD/MM/YYYY with slashes). |
-| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. |
-| `returnContent` | Optional | What to return on success: `'count'` (default; number of records imported), `'ids'` (list of all imported record IDs), or `'auto_ids'` (only when `forceAutoNumber=true`; pairs of new ID and provided ID, e.g., `323,10`). Not applicable when `backgroundProcess=true`. |
-| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified. Not applicable when `backgroundProcess=true`. |
+| `format` | Required | Data format: `'json'`, `'csv'`, or `'xml'`. Must match the structure of the `data` parameter. |
+| `type` | Optional | Data structure: `'flat'` (default) or `'eav'` (entity-attribute-value). |
+| `data` | Required | The record data to import, formatted as JSON, CSV, or XML string. |
+| `overwriteBehavior` | Optional | How to handle existing records: `'normal'` (default; blank fields are ignored) or `'overwrite'` (blank fields overwrite existing values). |
+| `dateFormat` | Optional | Date format: `'MDY'` (default; MM/DD/YYYY), `'DMY'` (DD/MM/YYYY), or `'YMD'` (YYYY-MM-DD). |
+| `returnContent` | Optional | What to return: `'count'` (default; returns count of imported records), `'ids'` (returns array of record IDs), or `'auto_ids'` (auto-generated record IDs). |
+| `forceAutoNumber` | Optional | `true` or `false` (default). If `true`, auto-numbers the record ID field even if a record ID is provided in the data. |
+| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'`, `'csv'`, or `'xml'`. |
 
 ---
 
@@ -213,38 +211,13 @@ print $output;
 
 # 4. Response
 
-On success, the API returns content based on the `returnContent` parameter (not applicable for background process imports):
+On success, the API returns one of the following based on the `returnContent` parameter:
 
-- **`returnContent='count'` (default):** The number of records imported (e.g., `1`).
-- **`returnContent='ids'`:** A list of all record IDs that were imported.
-- **`returnContent='auto_ids'`:** (Only when `forceAutoNumber=true`) A list of pairs showing new auto-assigned ID and the original provided ID, comma-delimited (e.g., `323,10`).
-
-When `backgroundProcess=true`, the response is always `success:true` (on success) or `success:false` (on failure) in the requested format, regardless of `returnContent` or `returnFormat`.
+- **`returnContent='count'` (default):** Returns the number of records imported (e.g., `1`).
+- **`returnContent='ids'`:** Returns a JSON array of record IDs that were imported.
+- **`returnContent='auto_ids'`:** Returns a JSON array of auto-numbered record IDs if `forceAutoNumber` is `true`.
 
 On error, the API returns an error message describing what went wrong (e.g., missing required fields, invalid field names, validation errors).
-
-**EAV XML input format:**
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<records>
-   <item>
-      <record></record>
-      <field_name></field_name>
-      <value></value>
-      <redcap_event_name></redcap_event_name>
-   </item>
-</records>
-```
-
-**Flat XML input format:**
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<records>
-   <item>
-      <!-- each data point as an element -->
-   </item>
-</records>
-```
 
 ---
 
@@ -272,15 +245,7 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 **Q: How many records can I import in a single request?**
 
-**A:** The API has no hard limit, but very large imports (thousands of records) may timeout. If your import is large, consider splitting it into batches or using `backgroundProcess=true`.
-
-**Q: How do I add new repeating instrument instances without knowing how many already exist?**
-
-**A:** Set `redcap_repeat_instance` to `'new'` in your flat-type import data. REDCap will automatically assign the next available instance number. This only works with `type=flat`; EAV imports require explicit instance numbers.
-
-**Q: How do I import checkbox fields in EAV format?**
-
-**A:** Use `variable___optionCode` as the `field_name` and `'0'` (unchecked) or `'1'` (checked) as the value. For example, to check option `4` on a checkbox field named `icecream`, send `field_name='icecream___4'` with `value='1'`.
+**A:** The API has no hard limit, but very large imports (thousands of records) may timeout. If your import is large, consider splitting it into batches.
 
 ---
 
@@ -295,12 +260,6 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 **Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API will return an error and the import will fail. Validate your data before importing.
 
 **Mixing up record_id and redcap_event_name.** In a longitudinal project, the record ID and event name are separate. `record_id` identifies the participant; `redcap_event_name` identifies the visit or time point. Both are usually required in longitudinal imports.
-
-**Wrong date format default.** The default `dateFormat` is `'YMD'` (YYYY-MM-DD with dashes), not MDY. If your source data uses MM/DD/YYYY, you must explicitly pass `dateFormat='MDY'`; otherwise dates will be misread or rejected.
-
-**`backgroundProcess=true` ignores returnContent and returnFormat.** When running as a background process, the response is always `success:true` or `success:false`. Do not expect a record count or ID list back — check the response success flag and implement separate verification if needed.
-
-**Auto-numbering instances only works with flat type.** Setting `redcap_repeat_instance` to `'new'` for auto-numbering only applies to `type=flat`. In EAV imports, `'new'` is not recognized and the import will fail or behave unexpectedly.
 
 ---
 
