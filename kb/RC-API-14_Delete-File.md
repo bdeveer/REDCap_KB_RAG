@@ -7,7 +7,7 @@ RC-API-14
 | **Domain** | API |
 | **Applies To** | REDCap projects with file upload fields |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -19,6 +19,8 @@ RC-API-14
 
 The Delete File API method removes a file from a file-upload field in REDCap. This method is useful for automating file removal when records are updated or when files are no longer needed.
 
+This method also works for **Signature fields** (i.e. file-upload fields with the `signature` validation type).
+
 To use this method, you must specify the record, the file-upload field variable name, and (for longitudinal projects) the event. After deletion, the field will be empty.
 
 ---
@@ -27,13 +29,14 @@ To use this method, you must specify the record, the file-upload field variable 
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import right. |
+| `token` | Required | Your project API token. Requires API Import/Update right. |
 | `content` | Required | Always `'file'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
 | `record` | Required | The value of the primary key (record ID) for the record from which the file will be deleted. |
 | `field` | Required | The variable name of the file-upload field from which to delete the file. |
 | `event` | Conditional | The unique event name (longitudinal projects only). Required only if the file-upload field is associated with a specific event. |
-| `returnFormat` | Optional | Set to `'json'` to return a JSON response. Default returns text. |
+| `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. Defaults to `xml` if omitted. Note: does not apply when using a background process. |
 
 ---
 

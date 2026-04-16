@@ -7,7 +7,7 @@ RC-API-12
 | **Domain** | API |
 | **Applies To** | REDCap projects with file upload fields |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -18,6 +18,8 @@ RC-API-12
 # 1. Overview
 
 The Export File API method retrieves a file that has been uploaded to a file-upload field in REDCap. This method returns the raw file content as a binary file, not JSON or CSV data. The method is useful when you need to download files attached to specific records programmatically from an external system.
+
+This method also works for **Signature fields** (i.e. file-upload fields with the `signature` validation type).
 
 To use this method, you must specify the record, the file-upload field variable name, and (for longitudinal projects) the event. The API returns the actual file bytes, which must be written to a file on disk rather than displayed as text.
 
@@ -33,13 +35,31 @@ To use this method, you must specify the record, the file-upload field variable 
 | `record` | Required | The value of the primary key (record ID) for the record from which to export the file. |
 | `field` | Required | The variable name of the file-upload field containing the file to export. |
 | `event` | Conditional | The unique event name (longitudinal projects only). Required only if the file-upload field is associated with a specific event. |
-| `returnFormat` | Optional | Set to `'json'` to return a JSON response with file metadata instead of raw file bytes. Default returns raw binary file. |
+| `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the returned file content. Defaults to `xml` if omitted. Note: does not apply when using a background process. |
 
 ---
 
-# 3. Request Examples
+# 3. Data Export Rights
 
-## 3.1 Python
+Data Export user rights apply to this API request. The following table summarises what happens for each rights level:
+
+| Export Rights Level | File Upload field tagged as Identifier? | Result |
+|---|---|---|
+| Full Data Set | Either | ✅ Export succeeds |
+| De-Identified | No | ✅ Export succeeds |
+| De-Identified | Yes | ❌ Export fails with error |
+| Remove All Identifier Fields | No | ✅ Export succeeds |
+| Remove All Identifier Fields | Yes | ❌ Export fails with error |
+| No Access | Either | ❌ Export always fails with error |
+
+To guarantee that the export will not return an error regardless of field tagging, the API token owner must have **Full Data Set** export rights in the project.
+
+---
+
+# 4. Request Examples
+
+## 4.1 Python
 
 ```python
 from config import config
@@ -62,7 +82,7 @@ f.write(r.content)
 f.close()
 ```
 
-## 3.2 R
+## 4.2 R
 
 ```r
 source('config.R')
@@ -80,7 +100,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 
 ```sh
 . ./config
@@ -95,7 +115,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 
 ```php
 <?php
@@ -132,15 +152,21 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The method returns the raw binary file content (e.g., a PDF, image, Word document) directly. The file should be written to disk using a binary write operation. The HTTP status code will be 200 on success.
 
-If you set `returnFormat='json'`, the response will be JSON containing file metadata instead of the raw file bytes.
+**Getting the filename from the response header.** The filename, file extension, and MIME type are not embedded in the response body — they are in the response header. To determine these attributes, parse the `content-type` header of the response. Example:
+
+```
+content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
+```
+
+The `returnFormat` parameter controls the format of error messages only and does not affect the returned file content.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: My export returns a file, but when I try to open it, it says the file is corrupted. What went wrong?**
 
@@ -156,11 +182,11 @@ If you set `returnFormat='json'`, the response will be JSON containing file meta
 
 **Q: Can I export a file that was uploaded to a repeating instrument?**
 
-**A:** Yes. For repeating instruments, include the `field` parameter as the instrument name (not the repeat instance), and the API will retrieve the file from the specified record and event.
+**A:** Yes. Include the `repeat_instance` parameter with the instance number you want to retrieve. The `field` parameter should still be the variable name of the file-upload field. If you omit `repeat_instance`, the API defaults to instance 1.
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Writing to a file in text mode instead of binary mode.** The most common mistake is opening the file for writing in text mode (`'w'` or `'wt'`). This corrupts binary files. Always use binary mode: `'wb'` in Python, `writeBin()` in R, or `fopen($filename, 'wb')` in PHP.
 
@@ -170,7 +196,7 @@ If you set `returnFormat='json'`, the response will be JSON containing file meta
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-13 — Import File (upload files to file-upload fields)

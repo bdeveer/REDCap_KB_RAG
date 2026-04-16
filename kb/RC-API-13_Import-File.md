@@ -7,7 +7,7 @@ RC-API-13
 | **Domain** | API |
 | **Applies To** | REDCap projects with file upload fields |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -19,6 +19,8 @@ RC-API-13
 
 The Import File API method uploads a file to a file-upload field in REDCap. This method accepts a file from your local system and attaches it to a specific record in a file-upload field. This is useful for automating file uploads from external systems or workflows.
 
+This method **cannot** be used for **Signature fields** (i.e. file-upload fields with the `signature` validation type). Signatures can only be captured and stored through the web interface.
+
 To use this method, you must specify the record, the file-upload field variable name, the actual file to upload, and (for longitudinal projects) the event. The file is sent as multipart form data, not as a JSON string.
 
 ---
@@ -27,14 +29,15 @@ To use this method, you must specify the record, the file-upload field variable 
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import right. |
+| `token` | Required | Your project API token. Requires API Import/Update right. |
 | `content` | Required | Always `'file'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
 | `record` | Required | The value of the primary key (record ID) for the record to which the file will be uploaded. |
 | `field` | Required | The variable name of the file-upload field where the file will be stored. |
 | `event` | Conditional | The unique event name (longitudinal projects only). Required only if the file-upload field is associated with a specific event. |
+| `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. If the repeating instance does not yet exist, it will be created. |
 | `file` | Required | The actual file to upload. Sent as a file upload (multipart form data), not as a string. |
-| `returnFormat` | Optional | Set to `'json'` to return a JSON response. Default returns text. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. Defaults to `xml` if omitted. Note: does not apply when using a background process. |
 
 ---
 
