@@ -72,6 +72,11 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-API-42 | Export Survey Return Code API | RC-API-42_Export-Survey-Return-Code.md |
 | RC-API-43 | Export Survey Participants API | RC-API-43_Export-Survey-Participants.md |
 | RC-API-44 | Export REDCap Version API | RC-API-44_Export-REDCap-Version.md |
+| RC-API-45 | Create Folder (File Repository) API | RC-API-45_Create-Folder-File-Repository.md |
+| RC-API-46 | List Files and Folders (File Repository) API | RC-API-46_List-Files-Folders-File-Repository.md |
+| RC-API-47 | Export a File (File Repository) API | RC-API-47_Export-File-File-Repository.md |
+| RC-API-48 | Import a File (File Repository) API | RC-API-48_Import-File-File-Repository.md |
+| RC-API-49 | Delete a File (File Repository) API | RC-API-49_Delete-File-File-Repository.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
@@ -395,6 +400,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-42 — Export Survey Return Code API
 - RC-API-43 — Export Survey Participants API
 - RC-API-44 — Export REDCap Version API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-IMP-01 — Data Import Overview
@@ -446,6 +456,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-42 — Export Survey Return Code API
 - RC-API-43 — Export Survey Participants API
 - RC-API-44 — Export REDCap Version API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DAG-01 — Data Access Groups
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-DE-02 — Basic Data Entry
@@ -722,6 +737,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-13 — Import File API
 - RC-API-14 — Delete File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DE-02 — Basic Data Entry
 
 ---
@@ -739,6 +759,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-12 — Export File API
 - RC-API-14 — Delete File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DE-02 — Basic Data Entry
 
 ---
@@ -756,6 +781,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-12 — Export File API
 - RC-API-13 — Import File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DE-02 — Basic Data Entry
 
 ---
@@ -981,6 +1011,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-26 — Import User Roles API
 - RC-API-27 — Delete User Roles API
 - RC-API-31 — Export User-DAG Assignments API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 
@@ -1051,6 +1083,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-32 — Import User-DAG Assignments API
 - RC-API-33 — Switch DAG API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
 - RC-DAG-01 — Data Access Groups
 - RC-DE-09 — Data Entry with Data Access Groups
 
@@ -1381,6 +1415,112 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-API-01 — REDCap API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-45 — Create Folder (File Repository) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-25 — Export User Roles API
+- RC-API-28 — Export DAGs API
+- RC-DAG-01 — Data Access Groups
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
+
+---
+
+### RC-API-46 — List Files and Folders (File Repository) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-25 — Export User Roles API
+- RC-API-28 — Export DAGs API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-DAG-01 — Data Access Groups
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
+
+---
+
+### RC-API-47 — Export a File (File Repository) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
+
+---
+
+### RC-API-48 — Import a File (File Repository) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-49 — Delete a File (File Repository) API
+
+---
+
+### RC-API-49 — Delete a File (File Repository) API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-12 — Export File API
+- RC-API-13 — Import File API
+- RC-API-14 — Delete File API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
 - RC-API-01 — REDCap API
@@ -1823,6 +1963,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-32 — Import User-DAG Assignments API
 - RC-API-33 — Switch DAG API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
 - RC-DE-09 — Data Entry with Data Access Groups
 - RC-DE-12 — Data Resolution Workflow
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection
@@ -3664,6 +3806,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-32 — Import User-DAG Assignments API
 - RC-API-33 — Switch DAG API
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-DAG-01 — Data Access Groups
 - RC-DE-09 — Data Entry with Data Access Groups
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection
@@ -3737,5 +3884,15 @@ All previously identified naming inconsistencies have been resolved as of 2026-0
 ---
 
 *Last updated 2026-04-11. Full reference sync: corrected old IDs (RC-NAV-01/02/04→RC-NAV-REC, RC-EXPORT-01→RC-EXPRT-01) in article texts; regenerated all per-article outbound and inbound link entries from article text. Added RC-MYCAP-01 through RC-MYCAP-08 — 8-article MyCap series covering overview, instrument design, scheduling, participant onboarding, app settings & participant management, active tasks & mobile toolbox, advanced features (FDL/MLM/survey links), and testing. Supersedes RC-UNCLASSIFIED-01 §6 interim MyCap coverage. Domain slug MYCAP added to kb-builder SKILL.md. Remaining open gaps: RC-MOB-01, RC-DQ-01.*
+
+*Updated 2026-04-16. Added RC-API-45 — Create Folder (File Repository) API. First article in the File Repository API family (covers the `content=fileRepository`, `action=createFolder` endpoint). Distinct from RC-API-12/13/14, which operate on record-level file-upload fields rather than the project-wide File Repository. Additional File Repository API methods (list, export, import, delete folders) remain open gaps.*
+
+*Updated 2026-04-16. Added RC-API-46 — List Files and Folders (File Repository) API (`content=fileRepository`, `action=list`). Second article in the File Repository API family. Returns immediate children of a given folder (sub-folders by `folder_id`, files by `doc_id`) and surfaces `role`/`dag` restriction metadata when present. Paired bidirectionally with RC-API-45. Remaining File Repository API gaps: export file, import file, delete file, delete folder.*
+
+*Updated 2026-04-16. Added RC-API-47 — Export a File (File Repository) API (`content=fileRepository`, `action=export`). Third article in the File Repository API family. Downloads a single file by `doc_id` as raw binary content (no `format` parameter; `returnFormat` only shapes error messages). Counterpart to RC-API-12 for File Repository storage. Remaining File Repository API gaps: import file, delete file, delete folder.*
+
+*Updated 2026-04-16. Added RC-API-48 — Import a File (File Repository) API (`content=fileRepository`, `action=import`). Fourth article in the File Repository API family. Uploads a single file as multipart form data, optionally into a specific `folder_id`. Distinguishing characteristic: **no structured response body** — success is indicated by HTTP 200 alone (no `doc_id` returned). Response behavior confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Callers that need the new `doc_id` must call RC-API-46 (List) afterward. Remaining File Repository API gaps: delete file, delete folder.*
+
+*Updated 2026-04-16. Added RC-API-49 — Delete a File (File Repository) API (`content=fileRepository`, `action=delete`). Fifth article in the File Repository API family, completing the file-level CRUD set (createFolder, list, export, import, delete). Soft-deletes a single file by `doc_id` into the project's File Repository Recycle Bin, where it remains restorable for 30 days before permanent purge. No `format` parameter; `returnFormat` only shapes error messages. Response behavior matches RC-API-48: empty HTTP 200 body on success — confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Counterpart to RC-API-14 (which deletes files from record-level file-upload fields). Remaining File Repository API gap: delete folder.*
 
 *Previously: Added RC-PROJ-01 — Project Lifecycle: Status and Settings (supersedes RC-UNCLASSIFIED-01 §1–2). Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Updated 2026-04-11: RC-UNCLASSIFIED-01 sections 1–2, 4, 5, 6 removed — content migrated to dedicated articles; only §3 (Data Quality) remains.*
