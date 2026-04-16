@@ -77,6 +77,13 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-API-47 | Export a File (File Repository) API | RC-API-47_Export-File-File-Repository.md |
 | RC-API-48 | Import a File (File Repository) API | RC-API-48_Import-File-File-Repository.md |
 | RC-API-49 | Delete a File (File Repository) API | RC-API-49_Delete-File-File-Repository.md |
+| RC-API-50 | Generate Next Record Name API | RC-API-50_Generate-Next-Record-Name.md |
+| RC-API-51 | Export Repeating Instruments and Events API | RC-API-51_Export-Repeating-Instruments-and-Events.md |
+| RC-API-53 | Import Repeating Instruments and Events API | RC-API-53_Import-Repeating-Instruments-and-Events.md |
+| RC-API-52 | Randomize Record API | RC-API-52_Randomize-Record.md |
+| RC-API-54 | Export Survey Access Code API | RC-API-54_Export-Survey-Access-Code.md |
+| RC-API-55 | Export User-Role Assignments API | RC-API-55_Export-User-Role-Assignments.md |
+| RC-API-56 | Import User-Role Assignments API | RC-API-56_Import-User-Role-Assignments.md |
 | RC-BL-01 | Branching Logic: Overview & Scope | RC-BL-01_Branching-Logic-Overview-and-Scope.md |
 | RC-BL-02 | Branching Logic: Syntax & Atomic Statements | RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md |
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
@@ -118,6 +125,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-FD-09 | Field Embedding: Advanced Layout Patterns & Workflow Design | RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md |
 | RC-FD-10 | Advanced Workflow Patterns: Multi-Stage Review and Operational Processing | RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
+| RC-IMP-03 | CSV Upload Reference: All Bulk Upload Options in REDCap | RC-IMP-03_CSV-Upload-Reference.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
@@ -405,6 +413,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-47 — Export a File (File Repository) API
 - RC-API-48 — Import a File (File Repository) API
 - RC-API-49 — Delete a File (File Repository) API
+- RC-API-50 — Generate Next Record Name API
+- RC-API-51 — Export Repeating Instruments and Events API
+- RC-API-53 — Import Repeating Instruments and Events API
+- RC-API-52 — Randomize Record API
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-IMP-01 — Data Import Overview
@@ -1002,6 +1014,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-22 — Export Users API
 - RC-API-26 — Import User Roles API
 - RC-API-27 — Delete User Roles API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 
@@ -1013,6 +1026,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-45 — Create Folder (File Repository) API
 - RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 
@@ -1027,6 +1041,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-23 — Import Users API
 - RC-API-25 — Export User Roles API
 - RC-API-27 — Delete User Roles API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 
@@ -1036,6 +1051,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-25 — Export User Roles API
 - RC-API-27 — Delete User Roles API
 - RC-API-32 — Import User-DAG Assignments API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 
@@ -1050,6 +1066,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-22 — Export Users API
 - RC-API-25 — Export User Roles API
 - RC-API-26 — Import User Roles API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 
@@ -1057,8 +1074,47 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-25 — Export User Roles API
 - RC-API-26 — Import User Roles API
+- RC-API-55 — Export User-Role Assignments API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+---
+
+### RC-API-55 — Export User-Role Assignments API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-22 — Export Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-56 — Import User-Role Assignments API
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-API-56 — Import User-Role Assignments API
+
+---
+
+### RC-API-56 — Import User-Role Assignments API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-23 — Import Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-55 — Export User-Role Assignments API
+- RC-DAG-01 — Data Access Groups
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+- RC-API-55 — Export User-Role Assignments API
 
 ---
 
@@ -1521,6 +1577,87 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-47 — Export a File (File Repository) API
 - RC-API-48 — Import a File (File Repository) API
 - RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-50 — Generate Next Record Name API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-03 — Import Records API
+- RC-API-05 — Rename Record API
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-51 — Export Repeating Instruments and Events API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-09 — Export Instruments
+- RC-API-10 — Export Instrument-Event Mappings
+- RC-API-19 — Export Events
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-53 — Import Repeating Instruments and Events API
+
+---
+
+### RC-API-53 — Import Repeating Instruments and Events API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-51 — Export Repeating Instruments and Events API
+- RC-API-09 — Export Instruments
+- RC-API-10 — Export Instrument-Event Mappings
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-API-51 — Export Repeating Instruments and Events API
+
+---
+
+### RC-API-52 — Randomize Record API
+
+**Prerequisites:** RC-API-01 — REDCap API; RC-RAND-01 — Randomization Concepts & Terminology
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-03 — Import Records API
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-02 — Randomization Setup Guide
+- RC-RAND-03 — Working with & Managing Randomization
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+
+---
+
+### RC-API-54 — Export Survey Access Code API
+
+**Prerequisites:** RC-API-01 — REDCap API
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-API-40 — Export Survey Link API
+- RC-API-41 — Export Survey Queue Link API
+- RC-API-42 — Export Survey Return Code API
+- RC-API-43 — Export Survey Participants API
+- RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
 - RC-API-01 — REDCap API
@@ -2718,11 +2855,68 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-01 — Form Design Overview
 - RC-FD-03 — Data Dictionary
 - RC-FD-04 — Instrument Library & Zip Files
+- RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 
 **Inbound links (referenced by):**
 - RC-API-01 — REDCap API
 - RC-API-03 — Import Records API
+- RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-MYCAP-04 — MyCap: Participant Onboarding
+
+---
+
+### RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
+
+**Prerequisites:** RC-IMP-01 — Data Import Overview
+
+**Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-API-01 — REDCap API
+- RC-API-02 — Export Records API
+- RC-API-03 — Import Records API
+- RC-API-04 — Delete Records API
+- RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-16 — Export Arms API
+- RC-API-17 — Import Arms API
+- RC-API-18 — Delete Arms API
+- RC-API-19 — Export Events API
+- RC-API-20 — Import Events API
+- RC-API-21 — Delete Events API
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
+- RC-API-25 — Export User Roles API
+- RC-API-26 — Import User Roles API
+- RC-API-27 — Delete User Roles API
+- RC-API-28 — Export DAGs API
+- RC-API-29 — Import DAGs API
+- RC-API-30 — Delete DAGs API
+- RC-API-31 — Export User-DAG Assignments API
+- RC-API-32 — Import User-DAG Assignments API
+- RC-API-43 — Export Survey Participants API
+- RC-API-51 — Export Repeating Instruments and Events API
+- RC-API-53 — Import Repeating Instruments and Events API
+- RC-API-55 — Export User-Role Assignments API
+- RC-API-56 — Import User-Role Assignments API
+- RC-DAG-01 — Data Access Groups
+- RC-DQ-01 — Data Quality Module
+- RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-FDL-01 — Form Display Logic
+- RC-IMP-01 — Data Import Overview
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-MLM-01 — Multi-Language Management
+- RC-RAND-02 — Randomization Setup Guide
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-06 — Automated Survey Invitations (ASI)
+- RC-SURV-07 — Survey Queue
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Inbound links (referenced by):**
+- RC-IMP-01 — Data Import Overview
 
 ---
 
@@ -3433,6 +3627,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-03 — Working with & Managing Randomization
 
 **Inbound links (referenced by):**
+- RC-API-52 — Randomize Record API
 - RC-DAG-01 — Data Access Groups
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
@@ -3449,6 +3644,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-03 — Working with & Managing Randomization
 
 **Inbound links (referenced by):**
+- RC-API-52 — Randomize Record API
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
 
@@ -3465,6 +3661,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-RAND-02 — Randomization Setup Guide
 
 **Inbound links (referenced by):**
+- RC-API-52 — Randomize Record API
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
 

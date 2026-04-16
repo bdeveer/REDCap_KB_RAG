@@ -318,6 +318,8 @@ Several other areas of REDCap support file-based import and export of metadata a
 
 REDCap is actively developed; Vanderbilt adds new functionality regularly, including new import/export file types. If a feature is not listed here, check the relevant module for import/export options.
 
+For a detailed, field-by-field reference of every CSV upload option listed above — including column formats, upload behavior, and navigation paths — see **RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap**.
+
 ---
 
 # 11. Common Questions
@@ -390,3 +392,4 @@ REDCap is actively developed; Vanderbilt adds new functionality regularly, inclu
 - RC-FD-03 — Data Dictionary (bulk instrument management via CSV)
 - RC-NAV-UI-01 — Project Navigation UI (navigating to import features)
 - RC-DE-01 — Record Creation and Record Home Page (manual data entry as an alternative to bulk import)
+- RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap (detailed reference for every CSV upload in REDCap)
