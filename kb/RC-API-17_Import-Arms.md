@@ -7,7 +7,7 @@ RC-API-17
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,7 +21,11 @@ The Import Arms API method creates or modifies arms in a longitudinal REDCap pro
 
 The `override` parameter controls behavior: when set to `0`, the method adds or modifies arms without deleting others; when set to `1`, all existing arms are deleted and replaced with the arms you provide.
 
+> **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status.
+
 > **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project.
+
+**Permissions required:** The API token used must have both **API Import/Update** privileges *and* **Project Design/Setup** privileges in the project.
 
 ---
 
@@ -29,12 +33,13 @@ The `override` parameter controls behavior: when set to `0`, the method adds or 
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import right. |
+| `token` | Required | Your project API token. Requires API Import/Update *and* Project Design/Setup privileges. |
 | `content` | Required | Always `'arm'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
-| `format` | Optional | Set to `'json'` or `'csv'`. Default is JSON. |
-| `override` | Optional | `0` = add/modify arms without deleting others (default); `1` = delete all existing arms and replace with provided arms. |
-| `data` | Required | A JSON array of arm objects. Each object must have `arm_num` (integer) and `name` (string). |
+| `format` | Required | `'csv'`, `'json'`, or `'xml'`. Default is `'xml'` if omitted. |
+| `override` | Required | `0` = add/modify arms without deleting others (default); `1` = delete all existing arms and replace with provided arms. |
+| `data` | Required | Arms to import, in the format specified by `format`. Each arm must have `arm_num` and `name`. |
+| `returnFormat` | Optional | `'csv'`, `'json'`, or `'xml'` — specifies the format of error messages. Defaults to the value of `format` if not specified. Not applicable when using a background process (`backgroundProcess=true`), which always returns `success:true` or `success:false`. |
 
 ---
 
@@ -159,15 +164,14 @@ print $output;
 
 # 4. Response
 
-On success, the method returns a message indicating how many arms were added or modified. The HTTP status code will be 200.
+On success, the method returns the **number of arms imported** as a plain integer. The HTTP status code will be 200.
 
 Example response:
-```json
-{
-  "success": true,
-  "message": "1 arm(s) added or modified"
-}
 ```
+1
+```
+
+This number reflects how many arms were created or renamed, not the total number of arms in the project.
 
 ---
 
@@ -189,6 +193,14 @@ Example response:
 
 **A:** Technically yes, but this is not recommended. REDCap expects arm numbers to be sequential integers starting from 1. Using non-sequential numbers may cause unexpected behavior in the UI and in other API methods.
 
+**Q: What does `returnFormat` control?**
+
+**A:** `returnFormat` controls the format of any *error* messages returned by the API. It is independent of the `format` parameter (which controls how you send your data). If you omit `returnFormat`, error messages will come back in whatever format you specified with `format`. This is useful when, for example, you are sending CSV data but want JSON-formatted errors for easier parsing.
+
+**Q: Does this method work on a project that is in Production status?**
+
+**A:** No. Import Arms is only available for projects in **Development status**. If your project has been moved to Production, you will need to request a temporary return to Development (if your institution allows it) before you can modify arms via the API.
+
 ---
 
 # 6. Common Mistakes & Gotchas
@@ -200,6 +212,10 @@ Example response:
 **Using `override=1` when you only want to add a new arm.** The `override=1` flag deletes all existing arms and replaces them. If you only want to add a single arm, use `override=0` instead.
 
 **Assuming arm numbers start from 0.** ARM numbers in REDCap are 1-indexed: the first arm is arm 1, not arm 0. If you submit `arm_num: 0`, it may be interpreted as invalid.
+
+**Calling Import Arms on a Production project.** This method only works when the project is in Development status. Calling it on a Production project will fail. Move the project back to Development before using this method.
+
+**Missing Project Design/Setup privileges.** API Import/Update rights alone are not sufficient. The user whose token you are using must also have Project Design/Setup privileges. If you receive a permissions error despite having an API Import token, check that the Design/Setup privilege is also granted.
 
 ---
 
