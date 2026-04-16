@@ -7,7 +7,7 @@ RC-API-39
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,6 +21,8 @@ The Export Logging API retrieves audit trail entries from your project's activit
 
 Logging is essential for HIPAA compliance, data governance, and understanding what happened in your project at a specific time.
 
+> **Permissions required:** The API token user must have both **API Export** privileges *and* **Logging** privileges in the project. Having only one of the two will result in an error.
+
 ---
 
 # 2. Parameters
@@ -29,12 +31,14 @@ Logging is essential for HIPAA compliance, data governance, and understanding wh
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'log'` |
-| `format` | Optional | Response format: `'json'` (default), `'xml'`, or `'csv'` |
-| `logtype` | Optional | Filter by action type: `'export'`, `'manage'`, `'user'`, `'record'`, `'record_add'`, `'record_edit'`, `'record_delete'`, `'lock_record'`, `'page_view'` (empty string = all types) |
-| `user` | Optional | Filter by username (exact match; empty string = all users) |
-| `record` | Optional | Filter by record ID (exact match; empty string = all records) |
-| `beginTime` | Optional | Start date/time filter (format: `M/D/YYYY HH:MM`) |
-| `endTime` | Optional | End date/time filter (format: `M/D/YYYY HH:MM`) |
+| `format` | Optional | Response format: `'csv'`, `'json'`, `'xml'` (default: `'xml'`) |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to match `format` if omitted. Not applicable when using a background process. |
+| `logtype` | Optional | Filter by event type: `'export'`, `'manage'`, `'user'`, `'record'`, `'record_add'`, `'record_edit'`, `'record_delete'`, `'lock_record'`, `'page_view'` (empty string = all types) |
+| `user` | Optional | Filter by username (exact match). If not specified, returns events for all users. |
+| `record` | Optional | Filter by record name (exact match). Only applicable for record-related events. If not specified, returns events for all records. |
+| `dag` | Optional | Filter by DAG `group_id`. If not specified, returns events for all DAGs. |
+| `beginTime` | Optional | Return only events logged *after* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, no begin cutoff is applied. |
+| `endTime` | Optional | Return only events logged *before* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, uses current server time. |
 
 ---
 
@@ -54,7 +58,7 @@ fields = {
     'logtype': '',
     'user': '',
     'record': '',
-    'beginTime': '10/06/2020 17:37',
+    'beginTime': '2020-10-06 17:37',
     'endTime': '',
 }
 
@@ -78,7 +82,7 @@ result <- postForm(
     logtype='',
     user='',
     record='',
-    beginTime='10/06/2020 17:37',
+    beginTime='2020-10-06 17:37',
     endTime=''
 )
 print(result)
@@ -90,7 +94,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=log&format=json&logtype=&user=&record=&beginTime=10/06/2020 17:37&endTime="
+DATA="token=$API_TOKEN&content=log&format=json&logtype=&user=&record=&beginTime=2020-10-06 17:37&endTime="
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -112,7 +116,7 @@ $fields = array(
     'logtype' => '',
     'user' => '',
     'record' => '',
-    'beginTime' => '10/06/2020 17:37',
+    'beginTime' => '2020-10-06 17:37',
     'endTime' => ''
 );
 
@@ -171,7 +175,7 @@ The API returns an array of log entries with action details:
 # 5. Common Questions
 
 **Q: What is the time format for beginTime and endTime?**
-A: Use M/D/YYYY HH:MM format (e.g., `10/06/2020 17:37`). Omit endTime to include all entries from beginTime onward.
+A: Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time.
 
 **Q: Can I export logs for a specific date range?**
 A: Yes. Set both `beginTime` and `endTime` to define the range. Timestamp is inclusive on both boundaries.
@@ -189,7 +193,7 @@ A: Yes. Filtering reduces the result set significantly. Always filter on known c
 
 # 6. Common Mistakes & Gotchas
 
-**Timestamp format errors:** Using `YYYY-MM-DD` or other formats instead of M/D/YYYY HH:MM will cause the filter to fail silently and return unfiltered results.
+**Timestamp format errors:** The correct format for `beginTime` and `endTime` is `YYYY-MM-DD HH:MM` (e.g., `2020-10-06 17:37`). Using other formats such as `M/D/YYYY HH:MM` will cause the filter to fail silently and return unfiltered results.
 
 **Empty filter strings vs. omitted parameters:** An empty string (`''`) for logtype, user, or record means "no filter on that field." Omitting the parameter entirely has the same effect, but always be explicit.
 

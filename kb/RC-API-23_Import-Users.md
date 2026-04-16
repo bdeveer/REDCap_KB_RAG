@@ -7,7 +7,7 @@ RC-API-23
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -23,20 +23,158 @@ Use this method to programmatically onboard team members to a project, update us
 
 ---
 
-# 2. Parameters
+# 2. Permissions Required
 
-| Parameter | Required | Description |
-|---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
-| `content` | Required | Always `'user'` for this method. |
-| `format` | Optional | Data format: `'json'` (default) or `'csv'`. |
-| `data` | Required | JSON or CSV array of user objects. Each object must include `username` and permission flags. |
+To call this method, your API token must have **API Import/Update** privileges *and* **User Rights** privileges in the project.
 
 ---
 
-# 3. Request Examples
+# 3. Parameters
 
-## 3.1 Python
+| Parameter | Required | Description |
+|---|---|---|
+| `token` | Required | Your project API token. |
+| `content` | Required | Always `'user'` for this method. |
+| `format` | Optional | Data format: `'csv'`, `'json'`, `'xml'` (default). |
+| `data` | Required | Array of user objects in the specified format. See Section 3.1 for full attribute reference and Section 4 for format examples. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to the value of `format`, or `'xml'` if `format` is not provided. Not applicable when using background processing. |
+
+## 3.1 The `data` attribute
+
+Each user object may include the following attributes:
+
+`username`, `expiration`, `data_access_group`, `design`, `alerts`, `user_rights`, `data_access_groups`, `data_export`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+Note the distinction between `data_access_group` (contains the unique DAG name to assign the user to a DAG) and `data_access_groups` (boolean flag for whether the user has access to the Data Access Groups page).
+
+**Behavior for missing attributes:**
+
+- **New user being added** — any attribute not provided will automatically receive the minimum privilege (typically `0` = No Access).
+- **Existing user being updated** — only the attributes provided in the request will be modified. Attributes not included in the request are left unchanged.
+
+**Attribute value key:**
+
+| Attribute | Values |
+|---|---|
+| `data_export` | `0` = No Access, `1` = Full Data Set, `2` = De-Identified, `3` = Remove Identifier Fields |
+| Form-level rights (REDCap < 15.6) | `0` = No Access, `1` = View & edit records (survey responses read-only), `2` = Read Only, `3` = Edit Survey Responses |
+| Form-level rights (REDCap ≥ 15.6) | `128` = No Access, `129` = Read Only, `130` = View & edit records (survey responses read-only); add `8` to also grant Edit Survey Responses; add `16` to also grant Delete |
+| All other permission attributes | `0` = No Access, `1` = Access |
+
+---
+
+# 4. Data Format Examples
+
+These examples show the structure of the `data` payload for each format.
+
+## 4.1 JSON
+
+```json
+[
+  {
+    "username": "harrispa",
+    "expiration": "",
+    "data_access_group": "",
+    "design": "1",
+    "user_rights": "1",
+    "data_access_groups": "1",
+    "data_export": "1",
+    "reports": "1",
+    "stats_and_charts": "1",
+    "manage_survey_participants": "1",
+    "calendar": "1",
+    "data_import_tool": "1",
+    "data_comparison_tool": "1",
+    "logging": "1",
+    "file_repository": "1",
+    "data_quality_create": "1",
+    "data_quality_execute": "1",
+    "api_export": "1",
+    "api_import": "1",
+    "api_modules": "1",
+    "mobile_app": "1",
+    "mobile_app_download_data": "0",
+    "record_create": "1",
+    "record_rename": "0",
+    "record_delete": "0",
+    "lock_records_all_forms": "0",
+    "lock_records": "0",
+    "lock_records_customization": "0",
+    "forms": {"demographics": "1", "day_3": "1", "other": "1"},
+    "forms_export": {"demographics": "1", "day_3": "0", "other": "2"}
+  },
+  {
+    "username": "taylorr4",
+    "expiration": "2015-12-07",
+    "data_access_group": "",
+    "design": "0",
+    "user_rights": "0",
+    "data_access_groups": "0",
+    "data_export": "2",
+    "reports": "1",
+    "stats_and_charts": "1",
+    "manage_survey_participants": "1",
+    "calendar": "1",
+    "data_import_tool": "0",
+    "data_comparison_tool": "0",
+    "logging": "0",
+    "file_repository": "1",
+    "data_quality_create": "0",
+    "data_quality_execute": "0",
+    "api_export": "0",
+    "api_import": "0",
+    "api_modules": "0",
+    "mobile_app": "0",
+    "mobile_app_download_data": "0",
+    "record_create": "1",
+    "record_rename": "0",
+    "record_delete": "0",
+    "lock_records_all_forms": "0",
+    "lock_records": "0",
+    "lock_records_customization": "0",
+    "forms": {"demographics": "1", "day_3": "2", "other": "0"},
+    "forms_export": {"demographics": "1", "day_3": "0", "other": "2"}
+  }
+]
+```
+
+## 4.2 CSV
+
+```
+username,design,user_rights,forms,forms_export
+harrispa,1,1,"demographics:1,day_3:1,other:1","demographics:1,day_3:0,other:2"
+taylorr4,0,0,"demographics:1,day_3:2,other:0","demographics:1,day_3:2,other:0"
+```
+
+## 4.3 XML
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<users>
+  <item>
+    <username>harrispa</username>
+    <expiration>2015-12-07</expiration>
+    <user_rights>1</user_rights>
+    <design>0</design>
+    <forms>
+      <demographics>1</demographics>
+      <day_3>2</day_3>
+      <other>0</other>
+    </forms>
+    <forms_export>
+      <demographics>1</demographics>
+      <day_3>0</day_3>
+      <other>2</other>
+    </forms_export>
+  </item>
+</users>
+```
+
+---
+
+# 5. Request Examples
+
+## 5.1 Python
 ```python
 from config import config
 import requests, json
@@ -84,7 +222,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 5.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -133,7 +271,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 5.3 cURL
 ```sh
 #!/bin/sh
 
@@ -148,7 +286,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 5.4 PHP
 ```php
 <?php
 
@@ -213,13 +351,13 @@ print $output;
 
 ---
 
-# 4. Response
+# 6. Response
 
 On success, the API returns a count of users added or modified. For example: `2` means two users were imported (or their existing permissions were updated).
 
 ---
 
-# 5. Common Questions
+# 7. Common Questions
 
 **Q: What if the username doesn't exist in the REDCap system?**
 
@@ -239,11 +377,11 @@ On success, the API returns a count of users added or modified. For example: `2`
 
 **Q: Do I need to include all permission fields?**
 
-**A:** No. Include only the fields you want to set. Omitted fields default to 0 (permission not granted). However, `username` is always required.
+**A:** It depends on whether the user is new or already in the project. For a **new user**, any attribute you omit will be set to the minimum privilege (typically `0` = No Access). For an **existing user**, omitted attributes are left exactly as they are — only the attributes you include will be changed. In both cases, `username` is always required.
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Assuming this method creates REDCap accounts.** It does not. The username must already exist in the REDCap system. Only project-level access is granted by this method. Coordinate with your REDCap administrator to ensure user accounts exist before importing.
 
@@ -255,7 +393,7 @@ On success, the API returns a count of users added or modified. For example: `2`
 
 ---
 
-# 7. Related Articles
+# 9. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-USER-01 — User Rights: Overview & Three-Tier Access (explains the three access tiers and role-based access)

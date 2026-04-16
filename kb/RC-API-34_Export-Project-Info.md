@@ -7,7 +7,7 @@ RC-API-34
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,7 +29,8 @@ This method requires only the API Export right and returns a JSON object contain
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'project'` |
-| `format` | Optional | Response format: `'json'` (default) or `'xml'` |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'` (default: `'xml'`) |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified. Does not apply when using background processing. |
 
 ---
 
@@ -119,26 +120,39 @@ print $output;
 
 # 4. Response
 
-The API returns a JSON object containing project metadata fields, such as:
+The API returns project metadata in the format specified. Boolean values are represented as `'0'` (false) or `'1'` (true). All date/time values are returned in `Y-M-D H:M:S` format.
 
-```json
-{
-  "project_id": 123,
-  "project_title": "My Research Project",
-  "is_longitudinal": "0",
-  "in_production": "1",
-  "surveys_enabled": "1",
-  "record_autonumbering_enabled": "1",
-  "randomization_enabled": "0",
-  "ddp_enabled": "0",
-  "project_irb_number": "",
-  "project_grant_number": "",
-  "project_pi_firstname": "John",
-  "project_pi_lastname": "Doe",
-  "display_today_now_button": "1",
-  "footer_contents": "My footer text"
-}
-```
+**Returned fields:**
+
+| Field | Type | Description |
+|---|---|---|
+| `project_id` | Integer | Internal REDCap project ID |
+| `project_title` | String | Project name |
+| `creation_time` | DateTime | When the project was created |
+| `production_time` | DateTime | When the project was moved to production |
+| `in_production` | Boolean | Whether the project is currently in production |
+| `project_language` | String | Language used in the project interface |
+| `purpose` | Integer | Project purpose code |
+| `purpose_other` | String | Free-text description when purpose is "Other" |
+| `project_notes` | String | Notes about the project |
+| `custom_record_label` | String | Custom label for the record ID field |
+| `secondary_unique_field` | String | Field name designated as a secondary unique field |
+| `is_longitudinal` | Boolean | Whether the project is longitudinal |
+| `has_repeating_instruments_or_events` | Boolean | Whether repeating instruments or events are enabled |
+| `surveys_enabled` | Boolean | Whether surveys are enabled |
+| `scheduling_enabled` | Boolean | Whether scheduling is enabled |
+| `record_autonumbering_enabled` | Boolean | Whether record autonumbering is enabled |
+| `randomization_enabled` | Boolean | Whether randomization is enabled |
+| `ddp_enabled` | Boolean | Whether dynamic data pull is enabled |
+| `project_irb_number` | String | IRB approval number |
+| `project_grant_number` | String | Grant number associated with the project |
+| `project_pi_firstname` | String | Principal investigator first name |
+| `project_pi_lastname` | String | Principal investigator last name |
+| `project_pi_email` | String | Principal investigator email address |
+| `display_today_now_button` | Boolean | Whether the Today/Now button is shown |
+| `missing_data_codes` | String | Configured missing data codes |
+| `external_modules` | String | Enabled external modules |
+| `bypass_branching_erase_field_prompt` | Boolean | Whether the branching logic erase prompt is bypassed |
 
 ---
 
@@ -157,13 +171,13 @@ A: You need the API Export right at the user level within the project.
 A: Not with this method. Use RC-API-35 (Import Project Info) to update project settings. Export Project Info is read-only.
 
 **Q: What format options are available?**
-A: You can request `'json'` (default) or `'xml'` format. JSON is more commonly used in modern integrations.
+A: You can request `'csv'`, `'json'`, or `'xml'`. The default is `'xml'` if no format is specified. JSON is more commonly used in modern integrations, so it's worth specifying explicitly.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Missing format parameter:** While format is optional, always explicitly specify `'json'` or `'xml'` to avoid ambiguity and ensure consistent parsing.
+**Missing format parameter:** While format is optional, always explicitly specify `'csv'`, `'json'`, or `'xml'` to avoid ambiguity. The default is `'xml'`, which may catch you off guard if you're expecting JSON without specifying it.
 
 **Assuming read/write permission:** This API method uses only the Export right. You do not need (and should not have) Project Setup or Data Import/Manipulation rights to run this method.
 

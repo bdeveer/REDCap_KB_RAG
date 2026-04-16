@@ -7,19 +7,21 @@ RC-API-42
 | **Domain** | API |
 | **Applies To** | REDCap projects with surveys enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Source** | REDCap API v16.1.3 official documentation examples |
+| **Source** | REDCap API official documentation (Export a Survey Return Code for a Participant) |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-40 — Export Survey Link; RC-API-41 — Export Survey Queue Link |
 
 ---
 
 # 1. Overview
 
-The Export Survey Return Code API generates a unique code that allows a respondent to resume an incomplete survey from where they left off. When a respondent saves progress and closes the survey, you can use this API to generate a return code that re-opens the survey at their saved point. This is essential for multi-session surveys and respecting respondent workflow interruptions.
+The Export Survey Return Code API returns a unique code in plain text that allows a respondent to resume an incomplete survey. When a respondent saves progress and closes the survey, the return code re-opens it at their saved point. This is useful for multi-session surveys and for building custom resumption workflows outside REDCap's built-in invitation system.
 
-Surveys must be enabled on the project, and the instrument must be configured as a survey.
+Two conditions must be true for this method to work: (1) the instrument must be enabled as a survey, and (2) the **Save & Return Later** feature must be enabled on that survey. If either condition is not met, the API returns an error.
+
+**Permissions required:** API Export privileges. Note: the method description also states that users without Survey Distribution Tools privileges will receive an error, so both privileges may be needed depending on your REDCap version.
 
 ---
 
@@ -29,11 +31,11 @@ Surveys must be enabled on the project, and the instrument must be configured as
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'surveyReturnCode'` |
-| `format` | Optional | Response format: `'json'` (default) or `'xml'` |
-| `record` | Required | Record ID (must exist in the project) |
-| `instrument` | Required | Instrument name (must be configured as a survey) |
-| `event` | Required | Event name (for longitudinal projects); optional for classic projects |
-| `repeat_instance` | Optional | Repeat instance number (for repeating instruments) |
+| `record` | Required | The record ID as it exists in the project |
+| `instrument` | Required | The unique instrument name from the Data Dictionary (must be enabled as a survey with Save & Return Later enabled) |
+| `event` | Required (longitudinal) | The unique event name; required for longitudinal projects, omit for classic projects |
+| `repeat_instance` | Conditional | The repeat instance number for repeating instruments or repeating events. Only applies to projects using repeating instruments/events. Default: `'1'` |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'` (default: `'xml'`). Has no effect on the response itself, which is always plain text |
 
 ---
 
@@ -49,10 +51,9 @@ import requests
 fields = {
     'token': config['api_token'],
     'content': 'surveyReturnCode',
-    'record': 'f21a3ffd37fc0b3c',
+    'record': '1',
     'instrument': 'test_instrument',
-    'event': 'event_1_arm_1',
-    'format': 'json'
+    'event': 'event_1_arm_1'
 }
 
 r = requests.post(config['api_url'],data=fields)
@@ -71,10 +72,9 @@ result <- postForm(
     api_url,
     token=api_token,
     content='surveyReturnCode',
-    record='f21a3ffd37fc0b3c',
+    record='1',
     instrument='test_instrument',
-    event='event_1_arm_1',
-    format='json'
+    event='event_1_arm_1'
 )
 print(result)
 ```
@@ -85,7 +85,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=surveyReturnCode&record=f21a3ffd37fc0b3c&instrument=test_instrument&event=event_1_arm_1&format=json"
+DATA="token=$API_TOKEN&content=surveyReturnCode&record=1&instrument=test_instrument&event=event_1_arm_1"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -103,10 +103,9 @@ include 'config.php';
 $fields = array(
 	'token'      => $GLOBALS['api_token'],
 	'content'    => 'surveyReturnCode',
-	'record'     => 'f21a3ffd37fc0b3c',
+	'record'     => '1',
 	'instrument' => 'test_instrument',
-	'event'      => 'event_1_arm_1',
-	'format'     => 'json'
+	'event'      => 'event_1_arm_1'
 );
 
 $ch = curl_init();
@@ -132,47 +131,55 @@ print $output;
 
 # 4. Response
 
-The API returns a return code that can be appended to a survey link to resume progress:
+The API returns the return code as a plain text string (not wrapped in JSON or XML):
 
-```json
-{
-  "survey_return_code": "B3K2M5L1N7P9R4T8X2Y1Z3C5D6E8F1G2"
-}
+```
+B3K2M5L1N7P9R4T8X2Y1Z3C5D6E8F1G2
 ```
 
-The respondent accesses the survey by visiting a URL like:
+To let a respondent resume their survey, append the code to the survey link using the `&rc=` parameter:
+
 ```
-https://myredcap.edu/surveys/?s=<survey_link>&rc=B3K2M5L1N7P9R4T8X2Y1Z3C5D6E8F1G2
+https://redcap.example.edu/surveys/?s=<survey_link_code>&rc=B3K2M5L1N7P9R4T8X2Y1Z3C5D6E8F1G2
 ```
+
+Retrieve the base survey link separately using the Export Survey Link method (RC-API-40).
 
 ---
 
 # 5. Common Questions
 
 **Q: How do I use a return code with a survey link?**
-A: First, request the survey link using RC-API-40. Then request the return code using this method. Combine them in the URL: `<survey_link>&rc=<return_code>`.
+A: Get the base survey link from RC-API-40, then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
 
-**Q: Can I generate a return code for a survey that hasn't been started?**
-A: Yes. Return codes can be generated at any time. They resume from the beginning if the survey hasn't been accessed yet.
+**Q: What does the response look like?**
+A: It is a plain text string (just the code itself), not a JSON object or XML document. Don't try to parse it; use the string directly.
+
+**Q: Does Save & Return Later need to be enabled?**
+A: Yes. If the survey does not have Save & Return Later enabled in its survey settings, this method returns an error. Enable it under Survey Settings → Termination Instruments.
+
+**Q: Can I get a return code for a survey that hasn't been started yet?**
+A: Yes. Return codes can be retrieved at any time regardless of response status. If the respondent hasn't started yet, using the code opens the survey from the beginning.
 
 **Q: Does a return code expire?**
-A: Return codes do not have a built-in expiration. They remain valid until you delete the record or close the survey instrument.
+A: Return codes do not have a built-in expiration. They remain valid unless the record is deleted or the survey is closed.
 
 **Q: What is the difference between a return code and the survey link itself?**
-A: A survey link takes the respondent to the beginning of the survey. A return code resumes from their last saved point, preserving their progress.
-
-**Q: Can I track whether a respondent has used a return code?**
-A: Use the audit log (RC-API-39) to see when survey links and return codes are accessed.
+A: A survey link takes the respondent to the start of the survey. A return code, appended to that link, resumes from their last saved point.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Forgetting the `&rc=` parameter:** To use the return code, append it to the survey link with `&rc=` (not `?rc=`). The ampersand is required because the survey link already contains query parameters.
+**Save & Return Later not enabled:** If the survey doesn't have Save & Return Later enabled, this API returns an error. This is easy to overlook — verify the survey setting before debugging API calls.
 
-**Assuming return codes prevent re-answering:** Return codes allow respondents to resume, but they can still change previous answers. There is no read-only mode.
+**Forgetting the `&rc=` parameter:** To use the return code, append it to the survey link with `&rc=` (not `?rc=`). The ampersand is required because the survey URL already contains query parameters.
 
-**Generating return codes without corresponding survey links:** Always generate the survey link first, then add the return code when you want to enable resuming from a saved point.
+**Trying to parse the response as JSON:** The response is plain text — just the code string. Passing it through a JSON parser will fail.
+
+**Assuming return codes prevent re-answering:** Return codes allow respondents to resume, but they can still change previous answers. There is no read-only mode enforced by return codes.
+
+**Using `format` as a parameter:** This method does not accept a `format` parameter. The response is always plain text regardless. Only `returnFormat` is accepted, and it affects error messages only.
 
 ---
 

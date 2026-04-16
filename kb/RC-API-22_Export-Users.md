@@ -7,7 +7,7 @@ RC-API-22
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,21 +21,30 @@ The Export Users API method retrieves a list of all users in a project and their
 
 Use this method to audit user access, generate reports of project team members, or integrate with external user management systems. The method returns all users currently assigned to the project, regardless of their assigned role.
 
+> **Note:** If a user has been assigned to a user role, the method returns that user with the role's defined privileges — not any individually configured privileges.
+
 ---
 
-# 2. Parameters
+# 2. Permissions Required
+
+To call this method, your API token must have **API Export** privileges *and* **User Rights** privileges (Full Access or Read Only) in the project.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export right. |
+| `token` | Required | Your project API token. |
 | `content` | Required | Always `'user'` for this method. |
-| `format` | Optional | Return format: `'json'` (default) or `'csv'`. |
+| `format` | Optional | Return format: `'csv'`, `'json'`, `'xml'` (default). |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to the value of `format`, or `'xml'` if `format` is not provided. Not applicable when using background processing. |
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 from config import config
 import requests
@@ -51,7 +60,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -67,7 +76,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -82,7 +91,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -115,24 +124,28 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
-On success, the method returns a JSON array (or CSV table) of user objects. Each object contains the user's username, email, expiration date (if set), and all permission flags. Permission flags are integers (0 or 1) indicating whether each right is granted. Common permission fields include:
+On success, the method returns an array (JSON, CSV, or XML) of user objects. Each object includes the user's profile fields and a complete set of permission flags. The `forms` attribute is the only attribute with sub-elements — one entry per data collection instrument, each with its own Form Rights value.
 
-- `data_export` — Export data via data export tool
-- `api_export` — Export via REDCap API
-- `api_import` — Import via REDCap API
-- `record_create` — Create new records
-- `record_delete` — Delete records
-- `record_rename` — Rename records
-- `user_rights` — Modify user access (requires admin role)
-- `design` — Design project (requires admin role)
+## 5.1 Returned attributes
 
-See RC-USER-03 for a complete list of permission names.
+`username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `design`, `alerts`, `user_rights`, `data_access_groups`, `data_export`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+## 5.2 Attribute value key
+
+| Attribute | Values |
+|---|---|
+| `data_export` | `0` = No Access, `1` = Full Data Set, `2` = De-Identified, `3` = Remove Identifier Fields |
+| Form-level rights (REDCap < 15.6) | `0` = No Access, `1` = View & edit records (survey responses read-only), `2` = Read Only, `3` = Edit Survey Responses |
+| Form-level rights (REDCap ≥ 15.6) | `128` = No Access, `129` = Read Only, `130` = View & edit records (survey responses read-only); add `8` to also grant Edit Survey Responses; add `16` to also grant Delete |
+| All other permission attributes | `0` = No Access, `1` = Access |
+
+See RC-USER-03 for a full explanation of each permission name.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: How can I export just one user instead of all users?**
 
@@ -152,7 +165,9 @@ See RC-USER-03 for a complete list of permission names.
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
+
+**Forgetting that two privileges are required, not one.** This method requires both API Export *and* User Rights privileges. Having API Export alone is not enough — the call will fail with an authentication error if User Rights access (Full or Read Only) is absent.
 
 **Assuming the export returns only active users.** Users with expired accounts remain in the export. Your code must check the `expiration` field to identify and filter out expired users if needed.
 
@@ -164,7 +179,7 @@ See RC-USER-03 for a complete list of permission names.
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-USER-01 — User Rights: Overview & Three-Tier Access (explains the three access tiers and role-based access)

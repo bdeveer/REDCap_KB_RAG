@@ -7,7 +7,7 @@ RC-API-44
 | **Domain** | API |
 | **Applies To** | All REDCap instances |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,6 +21,8 @@ The Export REDCap Version API returns the version number of your REDCap instance
 
 The method is read-only and works across all REDCap instances regardless of project configuration or user permissions.
 
+> **Super API Tokens are accepted.** In addition to a standard project-level API token, a Super API Token can be used for this method. Super tokens are granted by a REDCap administrator via the API Tokens page in the Control Center.
+
 ---
 
 # 2. Parameters
@@ -29,8 +31,7 @@ The method is read-only and works across all REDCap instances regardless of proj
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'version'` |
-
-**Note:** Unlike most other API methods, this endpoint does not support a `format` parameter. The response is returned as plain text.
+| `format` | Required | Response format: `'csv'`, `'json'`, `'xml'` (default) |
 
 ---
 
@@ -144,18 +145,16 @@ A: REDCap typically releases major and minor versions annually. Patch versions a
 **Q: Can I use this API to detect feature availability?**
 A: Partially. Version number indicates when features were introduced, but not all features are available in every instance. Consult the REDCap documentation for version-specific features.
 
-**Q: Why doesn't this method accept a format parameter?**
-A: The version endpoint is intentionally simple and returns only plain text for compatibility and performance reasons.
+**Q: What format does the response come in?**
+A: The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with `xml` as the default. That said, since the response is a single string value, the format distinction matters very little in practice — most callers just read the raw response text regardless of format.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Assuming format parameter works:** Unlike most API endpoints, the version method does not accept a `format` parameter. Passing `format='json'` has no effect; the response is always plain text.
-
 **Incorrect content value:** Use exactly `'version'` (lowercase). Using `'Version'` or other variations will fail.
 
-**Expecting JSON response:** Do not attempt to parse the response as JSON. It is plain text: a single version string like `"16.1.3"`.
+**Defaulting to XML without realizing it:** Like several other API methods, the default `format` is `xml`, not `json`. If you omit the `format` parameter and try to parse the response as JSON, it will fail. Pass `format='json'` explicitly if that's what your code expects.
 
 ---
 

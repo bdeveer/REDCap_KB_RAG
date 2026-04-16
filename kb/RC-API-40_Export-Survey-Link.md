@@ -7,7 +7,7 @@ RC-API-40
 | **Domain** | API |
 | **Applies To** | REDCap projects with surveys enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -21,6 +21,8 @@ The Export Survey Link API generates a unique, clickable survey URL for a specif
 
 Surveys must be enabled on the project, and the instrument must be marked as a survey in the project design.
 
+> **Permissions required:** API Export privileges AND **Survey Distribution Tools** privileges. If the user lacks Survey Distribution Tools access, the API will return an error.
+
 ---
 
 # 2. Parameters
@@ -29,11 +31,11 @@ Surveys must be enabled on the project, and the instrument must be marked as a s
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'surveyLink'` |
-| `format` | Optional | Response format: `'json'` (default) or `'xml'` |
 | `record` | Required | Record ID (must exist in the project) |
 | `instrument` | Required | Instrument name (must be configured as a survey) |
-| `event` | Required | Event name (for longitudinal projects); optional for classic projects |
-| `repeat_instance` | Optional | Repeat instance number (for repeating instruments) |
+| `event` | Required (longitudinal) | Event name (for longitudinal projects); omit for classic projects |
+| `repeat_instance` | Optional | Repeat instance number for repeating instruments/events. Default: `'1'` |
+| `returnFormat` | Optional | Format for **error messages only**: `csv`, `json`, or `xml` (default). Does not affect the response — the survey link is always returned as plain text. |
 
 ---
 
@@ -132,12 +134,10 @@ print $output;
 
 # 4. Response
 
-The API returns a unique survey URL that can be shared with respondents:
+The API returns a unique survey URL as **plain text** (not JSON):
 
-```json
-{
-  "survey_url": "https://myredcap.edu/surveys/?s=H3K4M2L1N5P8R9T7X2Y6Z0C1D3E4F5G6"
-}
+```
+https://your-redcap-instance.edu/surveys/?s=XXXXXXXXXXXXXXXXXX
 ```
 
 The URL is valid immediately and can be distributed via email, text message, or embedded in web pages.
@@ -165,11 +165,15 @@ A: Specify the event in which you want the respondent to complete the survey. Th
 
 # 6. Common Mistakes & Gotchas
 
+**Missing Survey Distribution Tools privilege:** API Export alone is not sufficient. The user account associated with the token must also have Survey Distribution Tools access in the project. Without it, the call returns an error even if the token itself is valid.
+
 **Missing event parameter for longitudinal projects:** For longitudinal studies, the `event` parameter is required. Omitting it results in an error.
 
 **Using instrument label instead of variable name:** The `instrument` parameter must be the instrument's variable name (e.g., `demographics`), not its display label (e.g., "Demographics Form").
 
 **Requesting survey link for non-survey instrument:** The instrument must be enabled as a survey in the project design. Regular instruments cannot be accessed via survey link.
+
+**Parsing the response as JSON:** The response is plain text — just the URL string. Do not attempt to parse it as JSON or look for a `survey_url` key; treat the entire response body as the link.
 
 ---
 

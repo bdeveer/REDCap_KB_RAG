@@ -7,19 +7,21 @@ RC-API-41
 | **Domain** | API |
 | **Applies To** | REDCap projects with Survey Queue enabled |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Source** | REDCap API v16.1.3 official documentation examples |
+| **Source** | REDCap API official documentation (Export a Survey Queue Link for a Participant) |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-40 — Export Survey Link; RC-API-42 — Export Survey Return Code |
 
 ---
 
 # 1. Overview
 
-The Export Survey Queue Link API generates a unique URL that allows a respondent to access their personalized survey queue. The Survey Queue is a feature that presents multiple surveys to a respondent in a guided workflow. This API is essential for sending queue links via email, SMS, or other communication channels in automated workflows.
+The Export Survey Queue Link API returns a unique URL in plain text for the specified record. The Survey Queue presents multiple surveys to a respondent in a guided workflow. This API is useful for sending queue links programmatically via email, SMS, or other channels in automated workflows.
 
-Survey Queue must be enabled on the project for this method to work.
+Survey Queue must be enabled in the project for this method to work. If it is not enabled, an error is returned.
+
+**Permissions required:** API Export privileges. Note: the method description also states that users without Survey Distribution Tools privileges will receive an error, so both privileges may be needed depending on your REDCap version.
 
 ---
 
@@ -29,9 +31,8 @@ Survey Queue must be enabled on the project for this method to work.
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'surveyQueueLink'` |
-| `format` | Optional | Response format: `'json'` (default) or `'xml'` |
-| `record` | Required | Record ID (must exist in the project) |
-| `event` | Optional | Event name (for longitudinal projects) |
+| `record` | Required | The record ID as it exists in the project |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'` (default: `'xml'`). Has no effect on the response itself, which is always plain text |
 
 ---
 
@@ -47,10 +48,7 @@ import requests
 fields = {
     'token': config['api_token'],
     'content': 'surveyQueueLink',
-    'record': 'f21a3ffd37fc0b3c',
-    'instrument': 'demographics',
-    'event': 'event_1_arm_1',
-    'format': 'json'
+    'record': '1'
 }
 
 r = requests.post(config['api_url'],data=fields)
@@ -69,10 +67,7 @@ result <- postForm(
     api_url,
     token=api_token,
     content='surveyQueueLink',
-    record='f21a3ffd37fc0b3c',
-    instrument='demographics',
-    event='event_1_arm_1',
-    format='json'
+    record='1'
 )
 print(result)
 ```
@@ -83,7 +78,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=surveyQueueLink&record=f21a3ffd37fc0b3c&instrument=test_instrument&event=event_1_arm_1&format=json"
+DATA="token=$API_TOKEN&content=surveyQueueLink&record=1"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -99,12 +94,9 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
 include 'config.php';
 
 $fields = array(
-	'token'      => $GLOBALS['api_token'],
-	'content'    => 'surveyQueueLink',
-	'record'     => 'f21a3ffd37fc0b3c',
-	'instrument' => 'demographics',
-	'event'      => 'event_1_arm_1',
-	'format'     => 'json'
+	'token'   => $GLOBALS['api_token'],
+	'content' => 'surveyQueueLink',
+	'record'  => '1'
 );
 
 $ch = curl_init();
@@ -130,15 +122,13 @@ print $output;
 
 # 4. Response
 
-The API returns a unique survey queue URL:
+The API returns a unique survey queue URL as a plain text string (not wrapped in JSON or XML):
 
-```json
-{
-  "survey_queue_url": "https://myredcap.edu/surveys/?s=Q7K2L1M5N3P8R4T9X1Y0Z6C2D5E3F4G1"
-}
+```
+https://redcap.example.edu/surveys/?sq=Q7K2L1M5N3P8R4T9X1Y0Z6C2D5E3F4G1
 ```
 
-This URL presents the respondent with all surveys in their queue for the specified record and event.
+This URL presents the respondent with all surveys in their queue for the specified record. It can be sent directly to participants or embedded in communications.
 
 ---
 
@@ -148,26 +138,31 @@ This URL presents the respondent with all surveys in their queue for the specifi
 A: A survey link (RC-API-40) is specific to one instrument. A survey queue link (RC-API-41) presents multiple surveys in a guided workflow on a single page.
 
 **Q: Which surveys appear in the queue?**
-A: The queue displays all surveys assigned to the record and event. The order and visibility depend on the survey queue configuration in your project settings.
+A: The queue displays all surveys assigned to the record based on your project's Survey Queue configuration. The order and visibility are set in the project design, not via API.
 
 **Q: Can I customize which surveys appear in the queue via API?**
 A: No. Survey queue membership is configured in the project design. Use the REDCap interface to specify which instruments are part of the queue.
 
-**Q: For classic (non-longitudinal) projects, should I include the event parameter?**
-A: For classic projects, you may omit the event parameter. It is required only for longitudinal projects.
+**Q: Does this method accept an event parameter for longitudinal projects?**
+A: No. Unlike some other survey API methods, this one takes only `token`, `content`, and `record`. The queue link is record-scoped, not event-scoped.
+
+**Q: What does the response look like?**
+A: It is a plain text URL string — not a JSON object or XML document. Don't try to parse it as JSON; just use the string directly.
 
 **Q: What happens if the record has no surveys in its queue?**
-A: The API still returns a valid URL, but accessing it shows a message that no surveys are available.
+A: The API still returns a valid URL, but accessing it will show a message that no surveys are available.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Confusing surveyLink and surveyQueueLink:** These are distinct content types. Use `'surveyLink'` for single instrument surveys and `'surveyQueueLink'` for multi-survey workflows.
+**Confusing surveyLink and surveyQueueLink:** These are distinct content types. Use `'surveyLink'` (RC-API-40) for a link to a single instrument; use `'surveyQueueLink'` for the full multi-survey queue workflow.
 
-**Missing event for longitudinal projects:** Always specify the event for longitudinal studies. Omitting it may return an error or an incomplete queue.
+**Including event or instrument parameters:** This method does not accept `event` or `instrument`. Passing them won't necessarily cause an error — REDCap may simply ignore them — but they serve no purpose and can cause confusion.
 
-**Assuming Survey Queue is enabled:** Verify Survey Queue is enabled in your project settings. If it's disabled, this API method will not work.
+**Trying to parse the response as JSON:** The response is plain text (a URL string). Passing it through a JSON parser will fail. Treat the response body directly as the URL.
+
+**Survey Queue not enabled:** If Survey Queue hasn't been turned on in project settings, this method returns an error. Verify it's enabled before troubleshooting API calls.
 
 ---
 

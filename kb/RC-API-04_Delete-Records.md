@@ -7,7 +7,7 @@ RC-API-04
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -27,14 +27,16 @@ When to use this method: When you need to remove records from the project, clean
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import right. |
-| `action` | Required | Always `'delete'` for this method. |
+| `token` | Required | Your project API token. Requires Delete Record user privilege in the project. |
 | `content` | Required | Always `'record'` for this method. |
-| `records` | Required | Array of record IDs to delete. |
-| `arm` | Optional | ARM number to delete records from (multi-arm projects only). If specified, only records in that arm are deleted. |
-| `event` | Optional | Event name to delete (longitudinal projects only). If specified, only data for that event is deleted, not the entire record. |
-| `instrument` | Optional | Instrument (form) variable name to delete. If specified, only that instrument's data is deleted for the record, not the entire record. |
-| `returnFormat` | Optional | Response format: `'json'` (default), `'csv'`, or `'xml'`. |
+| `action` | Required | Always `'delete'` for this method. |
+| `records` | Required | Array of record names specifying the records to delete. |
+| `arm` | Optional | The arm number to delete records from. Only applicable in longitudinal projects with more than one arm. If omitted, specified records are deleted from all arms in which they exist. If provided, records are deleted from that arm only. |
+| `instrument` | Optional | The unique instrument name (column B in the Data Dictionary) to delete data for. If specified, only that instrument's data is deleted for the specified records — the record itself is not removed. For longitudinal projects, `event` is mandatory when `instrument` is provided. |
+| `event` | Optional | The unique event name — longitudinal projects only. If provided, only data for that event is deleted. If `instrument` is also provided, only that instrument's data for that event is deleted. |
+| `repeat_instance` | Optional | The repeating instance number for a repeating instrument or repeating event. If provided, only the data for that specific instance is removed. |
+| `delete_logging` | Optional | `'0'` (keep logging) or `'1'` (delete logging). Only available in projects where an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings. When that setting is enabled, the default is `'1'` (logging deleted with the record); pass `'0'` to preserve the log. If the setting is not enabled in the project, this parameter has no effect and defaults to `'0'`. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. |
 
 ---
 
@@ -137,7 +139,12 @@ print $output;
 
 # 4. Response
 
-On success, the API returns an empty string or the number of records deleted, depending on the REDCap version and what was deleted. On error, the API returns an error message describing the problem (e.g., invalid record ID, missing required parameter, insufficient permissions).
+On success, the API returns:
+
+- The **number of records deleted** — when no `instrument`, `event`, or `repeat_instance` is specified.
+- The **number of items deleted over the total records specified** — when `instrument`, `event`, and/or `repeat_instance` is provided (e.g., partial record deletion).
+
+On error, the API returns an error message describing the problem (e.g., invalid record ID, missing required parameter, insufficient permissions).
 
 ---
 
@@ -159,6 +166,14 @@ On success, the API returns an empty string or the number of records deleted, de
 
 **A:** The API will skip it and continue with other records. No error is returned for non-existent records.
 
+**Q: Can I delete only a specific repeating instance without removing the whole instrument?**
+
+**A:** Yes. Provide the `instrument`, `event` (if longitudinal), and `repeat_instance` parameters together. Only that one instance will be removed; other instances and the record itself remain intact.
+
+**Q: Will the audit log be deleted when I delete a record?**
+
+**A:** By default, no — logging is preserved. However, if an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings, then logging is deleted with the record by default. Pass `delete_logging='0'` to override and keep the log even when that setting is enabled.
+
 **Q: Can I undo a deletion?**
 
 **A:** No. Deletion is permanent. If you need to recover deleted data, you must restore from a backup or re-import the data from another source.
@@ -173,7 +188,11 @@ On success, the API returns an empty string or the number of records deleted, de
 
 **Assuming deletion respects event filters in longitudinal projects.** If you specify an `event` parameter, deletion is limited to that event. But if you also specify an `instrument`, the instrument data is deleted for that event only. Always be clear about the scope of your deletion.
 
-**Not having the right permissions.** Deleting records requires the API Import right, not API Export. Even if you have export access, you cannot delete without import rights.
+**Not having the right permissions.** Deleting records requires the **Delete Record** user privilege in the project — this is a separate permission from API Import or API Export. A user can have full API import/export rights but still be blocked from deletions if Delete Record is not granted.
+
+**Event is mandatory when instrument is specified in a longitudinal project.** If you provide `instrument` in a longitudinal project, you must also provide `event`. Omitting `event` in that scenario will result in an API error.
+
+**`delete_logging` behavior depends on an admin-level project setting.** The parameter only has effect when an administrator has enabled the logging deletion setting for the project. If that setting is off, `delete_logging='1'` does nothing — it won't delete logging regardless of what you pass.
 
 ---
 

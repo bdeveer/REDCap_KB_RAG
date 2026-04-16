@@ -7,7 +7,7 @@ RC-API-26
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,8 +29,75 @@ Use this method to automate role management, create role templates programmatica
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Import and User Rights rights. |
 | `content` | Required | Always `'userRole'` for this method. |
-| `format` | Optional | Data format: `'json'` (default) or `'csv'`. |
-| `data` | Required | JSON or CSV array of role objects. Each must include `role_label` and permission flags. Optionally include `unique_role_name` to update an existing role. |
+| `format` | Optional | Data format: `'csv'`, `'json'`, or `'xml'` (default). |
+| `data` | Required | Array of role objects in the specified format. Each object must include `role_label` and permission flags. Optionally include `unique_role_name` to update an existing role. See Section 2.1 for the full attribute list, value KEY, and format examples. |
+| `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
+
+## 2.1 Data Attribute Reference
+
+All available attributes for the `data` payload:
+
+`unique_role_name`, `role_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+The `forms` attribute is the only one with sub-elements — it contains one entry per data collection instrument, each with its own Form Rights value.
+
+**Value KEY:**
+
+| Attribute | Value meanings |
+|---|---|
+| `data_export_tool` | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
+| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses |
+| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only); add 8 to also grant Edit Survey Responses; add 16 to also grant Delete rights |
+| All other attributes | 0 = No Access, 1 = Access |
+
+**Missing attribute behavior:**
+
+- **New role**: any attribute not provided defaults to minimum privileges (typically 0 = No Access).
+- **Existing role update**: any attribute not provided is left unchanged — only the attributes you include will be modified.
+
+**JSON example:**
+
+```json
+[{"unique_role_name":"U-2119C4Y87T","role_label":"Project Manager",
+"design":"0","user_rights":"1","data_access_groups":"1","data_export_tool":"0","reports":"1","stats_and_charts":"1",
+"manage_survey_participants":"1","calendar":"1","data_import_tool":"0","data_comparison_tool":"0","logging":"0",
+"file_repository":"1","data_quality_create":"0","data_quality_execute":"0","api_export":"0","api_import":"0","api_modules":"0",
+"mobile_app":"0","mobile_app_download_data":"0","record_create":"1","record_rename":"0","record_delete":"0",
+"lock_records_customization":"0","lock_records":"0","lock_records_all_forms":"0",
+"forms":{"demographics":"1","day_3":"2","other":"0"},"forms_export":{"demographics":"1","day_3":"2","other":"1"}}]
+```
+
+**CSV example:**
+
+```
+unique_role_name,role_label,design,user_rights,forms,forms_export
+U-527D39JXAC,Data Entry Person,1,1,"demographics:1,day_3:1,other:1","demographics:1,day_3:2,other:0"
+U-2119C4Y87T,Project Manager,0,0,"demographics:1,day_3:2,other:0","demographics:1,day_3:2,other:0"
+```
+
+**XML example:**
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<users>
+   <item>
+      <unique_role_name>U-527D39JXAC</unique_role_name>
+      <role_label>Data Entry Person</role_label>
+      <user_rights>1</user_rights>
+      <design>0</design>
+      <forms>
+         <demographics>1</demographics>
+         <day_3>2</day_3>
+         <other>0</other>
+      </forms>
+      <forms_export>
+         <demographics>1</demographics>
+         <day_3>0</day_3>
+         <other>2</other>
+      </forms_export>
+   </item>
+</users>
+```
 
 ---
 
@@ -231,7 +298,7 @@ On success, the API returns a count of roles created or modified. For example: `
 
 **Q: Do I have to include all permission fields?**
 
-**A:** No. Include only the permissions you want to set. Omitted fields default to 0 (not granted). However, `role_label` is always required.
+**A:** It depends on whether you are creating or updating. For a **new role**, omitted fields default to minimum privileges (0 = No Access). For an **existing role** (identified by `unique_role_name`), only the fields you include will be changed — omitted fields retain their current values. In both cases, `role_label` is always required.
 
 **Q: Can I create a role with minimal permissions?**
 
@@ -264,4 +331,5 @@ On success, the API returns a count of roles created or modified. For example: `
 - RC-USER-03 — User Rights: Configuring User Privileges (reference for permission field names)
 - RC-API-25 — Export User Roles (retrieve existing role definitions)
 - RC-API-27 — Delete User Roles (remove roles from the project)
+- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)
 - RC-API-23 — Import Users (assign individual users to the project)

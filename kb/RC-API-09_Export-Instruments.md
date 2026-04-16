@@ -7,7 +7,7 @@ RC-API-09
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -23,20 +23,36 @@ When to use this method: When you need to list all instruments in a project, dis
 
 ---
 
-# 2. Parameters
+# 2. Endpoint
+
+```
+POST https://your-redcap-instance.edu/api/
+```
+
+Only `POST` is supported.
+
+---
+
+# 3. Permissions Required
+
+To call this method, the API token's owner must have **API Export** privilege in the project. Calls from tokens lacking this privilege will fail with a permissions error.
+
+---
+
+# 4. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'instrument'` for this method. |
-| `format` | Required | Response format: `'json'` (default), `'csv'`, or `'xml'`. |
-| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'`, `'csv'`, or `'xml'`. |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
+| `returnFormat` | Optional | Format of error messages (does not affect a successful response shape): `'csv'`, `'json'`, or `'xml'`. |
 
 ---
 
-# 3. Request Examples
+# 5. Request Examples
 
-## 3.1 Python
+## 5.1 Python
 
 ```python
 #!/usr/bin/env python
@@ -55,7 +71,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 5.2 R
 
 ```r
 #!/usr/bin/env Rscript
@@ -72,7 +88,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 5.3 cURL
 
 ```sh
 #!/bin/sh
@@ -88,7 +104,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 5.4 PHP
 
 ```php
 <?php
@@ -123,9 +139,9 @@ print $output;
 
 ---
 
-# 4. Response
+# 6. Response
 
-The method returns a list of instruments. Each instrument has properties including its internal name and display name.
+The method returns the project's instruments in the requested format, **ordered according to their order in the project** (matching the instrument ordering shown on the project's left-hand menu and in the Data Dictionary). Each instrument has an internal name (`instrument_name`) and a display label (`instrument_label`).
 
 **JSON format:**
 ```json
@@ -149,7 +165,7 @@ The method returns a list of instruments. Each instrument has properties includi
 
 ---
 
-# 5. Common Questions
+# 7. Common Questions
 
 **Q: What's the difference between instrument_name and instrument_label?**
 
@@ -173,7 +189,7 @@ The method returns a list of instruments. Each instrument has properties includi
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Assuming all returned names are instruments.** This method returns only form (instrument) names. Do not confuse these with field names or event names.
 
@@ -185,7 +201,7 @@ The method returns a list of instruments. Each instrument has properties includi
 
 ---
 
-# 7. Related Articles
+# 9. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-02 — Export Records (use instrument names to export specific forms)
