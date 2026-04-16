@@ -92,6 +92,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-10 | Longitudinal & Repeated Data Entry | RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md |
 | RC-DE-11 | Instrument Save Options | RC-DE-11_Instrument-Save-Options.md |
 | RC-DE-12 | Data Resolution Workflow | RC-DE-12_Data-Resolution-Workflow.md |
+| RC-DQ-01 | Data Quality Module | RC-DQ-01_Data-Quality-Module.md |
 | RC-FDL-01 | Form Display Logic | RC-FDL-01_Form-Display-Logic.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
@@ -1765,6 +1766,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-CALC-02 — Calculated Fields
+- RC-DQ-01 — Data Quality Module
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
@@ -2071,6 +2073,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-DE-08 — Field Comment Log
 - RC-INST-01 — Institution-Specific Settings & Policies
+
+---
+
+### RC-DQ-01 — Data Quality Module
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-CALC-01 — Special Functions Reference
+- RC-CALC-02 — Calculated Fields
+- RC-DAG-01 — Data Access Groups
+- RC-DE-02 — Basic Data Entry
+- RC-DE-04 — Editing Data & Audit Trail
+- RC-USER-01 — User Rights: Overview
+
+**Inbound links (referenced by):**
+- RC-CALC-01 — Special Functions Reference
 
 ---
 

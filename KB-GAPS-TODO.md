@@ -17,15 +17,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 4 — Surfaced by RC-UNCLASSIFIED-01 (good interim coverage exists)
 
-### ⚠️ RC-DQ-01 — Data Quality Module
-
-**Why needed:** RC-UNCLASSIFIED-01 §3 covers the Data Quality module including default rules, custom rules, real-time execution, Rule H (correcting calculated fields after design changes or imports). Referenced by RC-CALC-01 (Special Functions). No dedicated article exists.
-
-**Domain slug:** DQ (new)
-**What to cover:** Default rules, custom rule syntax (same as branching logic), real-time execution (forms only, not surveys), running rules manually, Rule H and when to use it, Data Quality vs. branching logic constraints
-**Interim coverage:** RC-UNCLASSIFIED-01 §3
-
----
 
 ### ⚠️ RC-PROJ-02 — Project Dashboards
 
@@ -90,11 +81,12 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-API-01 — REDCap API ✅ *(was Priority 5; based on official REDCap API documentation; supersedes RC-UNCLASSIFIED-01 §4 interim coverage)*
 - RC-PROJ-01 — Project Lifecycle: Status and Settings ✅ *(was Priority 4; supersedes RC-UNCLASSIFIED-01 §1–2)*
 - RC-MYCAP-01 through RC-MYCAP-08 — Full MyCap series ✅ *(supersedes RC-UNCLASSIFIED-01 §6)*
+- RC-DQ-01 — Data Quality Module ✅ *(was Priority 4; supersedes RC-UNCLASSIFIED-01 §3)*
 
 ---
 
 ## Notes
 
-- RC-UNCLASSIFIED-01 §3 provides interim coverage for RC-DQ-01. That section can serve as drafting source material. (Sections §1–2 and §6 have been removed from RC-UNCLASSIFIED-01 and are now covered by dedicated articles.)
+- RC-UNCLASSIFIED-01 §3 has been superseded by RC-DQ-01. RC-UNCLASSIFIED-01 now contains only the suggested articles table and related articles section. It can be archived or removed once RC-DDE-01 and RC-PROJ-02 are created.
 
-*Last updated: 2026-04-11 (RC-PROJ-01 resolved — supersedes RC-UNCLASSIFIED-01 §1–2; RC-MYCAP-01 through RC-MYCAP-08 resolved — supersedes RC-UNCLASSIFIED-01 §6; Notes updated to reflect sections removed from RC-UNCLASSIFIED-01)*
+*Last updated: 2026-04-15 (RC-DQ-01 resolved — supersedes RC-UNCLASSIFIED-01 §3; RC-UNCLASSIFIED-01 now empty of active interim content)*
