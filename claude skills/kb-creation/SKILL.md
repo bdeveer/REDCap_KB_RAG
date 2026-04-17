@@ -67,8 +67,6 @@ Use the Reference Map to:
 - Check whether any articles the new article will reference are already written (vs. marked ⚠️ as missing)
 - Identify articles that should gain an inbound link to the new article once it's added
 
-**⚠️ Special note for covered domains:** If writing an article for Project Lifecycle, Production Changes, Data Quality, API, MLM, or MyCap — **read `RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md` first** (it contains interim content for these areas). Use it as starting source material for the dedicated article, then structure it per the kb-builder template below. After writing, update KB-REFERENCE-MAP to mark the new article as live and note that RC-UNCLASSIFIED-01 was the predecessor.
-
 ### Domain slug double-check (run every time)
 
 Cross-check the proposed domain slug against the **Reference: Established domain slugs** table at the bottom of this skill file. This table is the canonical source.

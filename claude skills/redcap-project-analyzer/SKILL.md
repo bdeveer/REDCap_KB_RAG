@@ -368,5 +368,4 @@ project team, not just the REDCap admin — explain the user impact, not just th
   there's less to analyze — don't pad the report with non-issues.
 - Use judgment about what matters: a project with 10 fields and 1 form doesn't need the same
   scrutiny as a 300-field longitudinal study.
-- For MLM suggestions: check the KB article RC-UNCLASSIFIED-01 or search for MLM in the KB for
-  context on how MLM works and its limitations before recommending it.
+- For MLM suggestions: search for RC-MLM-01 in the KB for context on how MLM works and its limitations before recommending it.

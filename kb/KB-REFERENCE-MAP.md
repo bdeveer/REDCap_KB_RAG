@@ -177,7 +177,6 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-SURV-09 | PDF Snapshots of Records | RC-SURV-09_PDF-Snapshots-of-Records.md |
 | RC-TXT-01 | Texting in REDCap: Setup and Usage | RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md |
 | RC-TXT-02 | Texting: Administrator Setup | RC-TXT-02_Texting-Administrator-Setup.md |
-| RC-UNCLASSIFIED-01 | Unclassified: REDCap FAQ v16.1.3 Orphaned Topics | RC-UNCLASSIFIED-01_FAQ-v16-Orphaned-Topics.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |
 | RC-USER-02 | User Rights: Adding Users & Managing Roles | RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md |
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
@@ -203,9 +202,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
+*(None)*
 
-**Note:** Covers all four project lifecycle statuses (Development, Production, Analysis/Cleanup, Completed), status transitions, project copying and deletion, and the Draft Mode process for making safe production changes. Supersedes RC-UNCLASSIFIED-01 §1 (Project Lifecycle) and §2 (Making Production Changes).
+**Note:** Covers all four project lifecycle statuses (Development, Production, Analysis/Cleanup, Completed), status transitions, project copying and deletion, and the Draft Mode process for making safe production changes.
 
 ---
 
@@ -538,13 +537,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-07 — Survey Queue
 - RC-SURV-09 — PDF Snapshots of Records
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
-
-**Note:** Interim coverage was provided by RC-UNCLASSIFIED-01 §4 (API and Data Entry Trigger). RC-API-01 supersedes the API portion; the DET portion is covered by RC-INTG-01.
 
 ---
 
@@ -1974,7 +1970,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-07 — Survey Queue
 - RC-SURV-09 — PDF Snapshots of Records
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -2089,7 +2084,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DQ-01 — Data Quality Module
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -2977,7 +2971,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-API-01 — REDCap API
 - RC-API-03 — Import Records API
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -3079,7 +3072,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AI-03 — AI Translations
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -3101,7 +3093,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -3127,9 +3118,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-MYCAP-03 — MyCap: Task Scheduling
 - RC-MYCAP-04 — MyCap: Participant Onboarding
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
-**Note:** Supersedes RC-UNCLASSIFIED-01 §6 (MyCap Overview interim content). See also RC-MOB-01 — REDCap Mobile App for REDCap Mobile App vs. MyCap comparison.
+**Note:** See RC-MOB-01 — REDCap Mobile App for REDCap Mobile App vs. MyCap comparison.
 
 ---
 
@@ -3274,7 +3264,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
 - RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
-- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 ---
 
@@ -4109,30 +4098,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
-### RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
-
-**Prerequisites:** None
-
-**Outbound links:**
-- RC-API-01 — REDCap API
-- RC-BL-01 — Branching Logic: Overview & Scope
-- RC-CALC-01 — Special Functions Reference
-- RC-DQ-01 — Data Quality Module
-- RC-INTG-01 — Data Entry Trigger
-- RC-MLM-01 — Multi-Language Management
-- RC-MYCAP-01 — MyCap: Overview & Enabling
-- RC-MYCAP-08 — MyCap: Testing
-- RC-PROJ-01 — Project Lifecycle: Status and Settings
-
-**Inbound links (referenced by):**
-*(None yet)*
-
-**Note:** This article is a temporary holding area for FAQ v16.1.3 content that does not yet map to a dedicated KB article. Sections 1–2 (Project Lifecycle / Production Changes), 4 (API/DET), 5 (MLM), and 6 (MyCap) have been removed — all are now covered by dedicated articles (RC-PROJ-01, RC-API-01, RC-INTG-01, RC-MLM-01, RC-MYCAP-01 through RC-MYCAP-08). Only §3 (Data Quality) remains as active interim content, pending RC-DQ-01. See Section 7 of the article for remaining migration targets.
-
----
-
----
-
 ## Naming Inconsistencies to Review
 
 All previously identified naming inconsistencies have been resolved as of 2026-04-11. The following old IDs were corrected in article texts:
@@ -4148,16 +4113,16 @@ All previously identified naming inconsistencies have been resolved as of 2026-0
 
 *Last updated 2026-04-11. Full reference sync: corrected old IDs (RC-NAV-01/02/04→RC-NAV-REC, RC-EXPORT-01→RC-EXPRT-01) in article texts; regenerated all per-article outbound and inbound link entries from article text. Added RC-MYCAP-01 through RC-MYCAP-08 — 8-article MyCap series covering overview, instrument design, scheduling, participant onboarding, app settings & participant management, active tasks & mobile toolbox, advanced features (FDL/MLM/survey links), and testing. Supersedes RC-UNCLASSIFIED-01 §6 interim MyCap coverage. Domain slug MYCAP added to kb-builder SKILL.md. Remaining open gaps: RC-MOB-01, RC-DQ-01.*
 
-*Updated 2026-04-16. Added RC-API-45 — Create Folder (File Repository) API. First article in the File Repository API family (covers the `content=fileRepository`, `action=createFolder` endpoint). Distinct from RC-API-12/13/14, which operate on record-level file-upload fields rather than the project-wide File Repository. Additional File Repository API methods (list, export, import, delete folders) remain open gaps.*
+*Updated 2026-04-16. Added RC-API-45 — Create Folder (File Repository) API. First article in the File Repository API family (covers the `content=fileRepository`, `action=createFolder` endpoint). Distinct from RC-API-12/13/14, which operate on record-level file-upload fields rather than the project-wide File Repository. Additional File Repository API methods (list, export, import) remain open gaps.*
 
-*Updated 2026-04-16. Added RC-API-46 — List Files and Folders (File Repository) API (`content=fileRepository`, `action=list`). Second article in the File Repository API family. Returns immediate children of a given folder (sub-folders by `folder_id`, files by `doc_id`) and surfaces `role`/`dag` restriction metadata when present. Paired bidirectionally with RC-API-45. Remaining File Repository API gaps: export file, import file, delete file, delete folder.*
+*Updated 2026-04-16. Added RC-API-46 — List Files and Folders (File Repository) API (`content=fileRepository`, `action=list`). Second article in the File Repository API family. Returns immediate children of a given folder (sub-folders by `folder_id`, files by `doc_id`) and surfaces `role`/`dag` restriction metadata when present. Paired bidirectionally with RC-API-45. Remaining File Repository API gaps: export file, import file, delete file.*
 
-*Updated 2026-04-16. Added RC-API-47 — Export a File (File Repository) API (`content=fileRepository`, `action=export`). Third article in the File Repository API family. Downloads a single file by `doc_id` as raw binary content (no `format` parameter; `returnFormat` only shapes error messages). Counterpart to RC-API-12 for File Repository storage. Remaining File Repository API gaps: import file, delete file, delete folder.*
+*Updated 2026-04-16. Added RC-API-47 — Export a File (File Repository) API (`content=fileRepository`, `action=export`). Third article in the File Repository API family. Downloads a single file by `doc_id` as raw binary content (no `format` parameter; `returnFormat` only shapes error messages). Counterpart to RC-API-12 for File Repository storage. Remaining File Repository API gaps: import file, delete file.*
 
-*Updated 2026-04-16. Added RC-API-48 — Import a File (File Repository) API (`content=fileRepository`, `action=import`). Fourth article in the File Repository API family. Uploads a single file as multipart form data, optionally into a specific `folder_id`. Distinguishing characteristic: **no structured response body** — success is indicated by HTTP 200 alone (no `doc_id` returned). Response behavior confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Callers that need the new `doc_id` must call RC-API-46 (List) afterward. Remaining File Repository API gaps: delete file, delete folder.*
+*Updated 2026-04-16. Added RC-API-48 — Import a File (File Repository) API (`content=fileRepository`, `action=import`). Fourth article in the File Repository API family. Uploads a single file as multipart form data, optionally into a specific `folder_id`. Distinguishing characteristic: **no structured response body** — success is indicated by HTTP 200 alone (no `doc_id` returned). Response behavior confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Callers that need the new `doc_id` must call RC-API-46 (List) afterward. Remaining File Repository API gap: delete file.*
 
-*Updated 2026-04-16. Added RC-API-49 — Delete a File (File Repository) API (`content=fileRepository`, `action=delete`). Fifth article in the File Repository API family, completing the file-level CRUD set (createFolder, list, export, import, delete). Soft-deletes a single file by `doc_id` into the project's File Repository Recycle Bin, where it remains restorable for 30 days before permanent purge. No `format` parameter; `returnFormat` only shapes error messages. Response behavior matches RC-API-48: empty HTTP 200 body on success — confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Counterpart to RC-API-14 (which deletes files from record-level file-upload fields). Remaining File Repository API gap: delete folder.*
+*Updated 2026-04-16. Added RC-API-49 — Delete a File (File Repository) API (`content=fileRepository`, `action=delete`). Fifth article in the File Repository API family, completing the file-level CRUD set (createFolder, list, export, import, delete). Soft-deletes a single file by `doc_id` into the project's File Repository Recycle Bin, where it remains restorable for 30 days before permanent purge. No `format` parameter; `returnFormat` only shapes error messages. Response behavior matches RC-API-48: empty HTTP 200 body on success — confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Counterpart to RC-API-14 (which deletes files from record-level file-upload fields). File Repository API series complete.*
 
-*Updated 2026-04-16. Added RC-MOB-01 — REDCap Mobile App. First (and overview) article in the MOB domain. Covers what the REDCap Mobile App is, how it differs from MyCap and browser-based entry, administrator setup, project-level setup and mobile user management, project initialization, offline data entry workflow, synchronization, and security considerations. Supersedes the MOB-01 planned stub. RC-DQ-01 and RC-API-50 confirmed as live articles; ⚠️ flags removed. Remaining open gaps: File Repository API delete folder endpoint (no ID assigned yet).*
+*Updated 2026-04-16. Added RC-MOB-01 — REDCap Mobile App. First (and overview) article in the MOB domain. Covers what the REDCap Mobile App is, how it differs from MyCap and browser-based entry, administrator setup, project-level setup and mobile user management, project initialization, offline data entry workflow, synchronization, and security considerations. Supersedes the MOB-01 planned stub. RC-DQ-01 and RC-API-50 confirmed as live articles; ⚠️ flags removed. Remaining open gaps: none in the API domain.*
 
 *Previously: Added RC-PROJ-01 — Project Lifecycle: Status and Settings (supersedes RC-UNCLASSIFIED-01 §1–2). Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Updated 2026-04-11: RC-UNCLASSIFIED-01 sections 1–2, 4, 5, 6 removed — content migrated to dedicated articles; only §3 (Data Quality) remains.*

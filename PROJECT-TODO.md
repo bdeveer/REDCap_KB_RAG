@@ -6,9 +6,9 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ## KB Content
 
-- [ ] **Create control center articles** — Cover the REDCap Control Center from an administrator perspective. Determine scope and article breakdown (domains, slugs) before starting.
+- [ ] **Remove all Yale references** — Audit every article in `kb/` for Yale-specific placeholders and callout boxes. Replace with generic institution-agnostic language or a standardized `> **Institution-specific:**` placeholder pattern. Known affected files: RC-DQ-01, RC-DE-05, RC-SURV-08, RC-AI-01, RC-PIPE-04, RC-USER-03, RC-LONG-01, RC-LONG-02, RC-MOB-01, RC-MYCAP-01, RC-TXT-01, RC-EXPRT-06, RC-SURV-02, RC-USER-01 (14 files total).
 
-- [ ] **Remove all Yale references** — Audit every article in `kb/` for Yale-specific placeholders and callout boxes. Replace with generic institution-agnostic language or a standardized `> **Institution-specific:**` placeholder pattern. Check RC-DQ-01 Rule H section as a known example.
+- [ ] **Flesh out RC-INST-01** — The article structure and `[FILL IN]` template exist but all placeholders need to be populated with real values for this installation: support channel, support hours, server time zone, draft mode policy, account creation workflow, global suspension rules, and enabled/disabled external modules.
 
 ---
 
@@ -16,20 +16,22 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 - [ ] **Teach Claude how to build the alerts upload CSV** — Document the CSV format REDCap uses for importing Alerts & Notifications. Add to a skill (or to the relevant KB article) with enough spec detail that Claude can generate a valid import file from scratch.
 
-- [ ] **Create an inventory of all uploadable CSV formats** — REDCap supports CSV upload for multiple features (Data Dictionary, alerts, data quality rules, randomization, user rights, DAGs, etc.). Compile a reference document listing each upload type, its columns, accepted values, and any escaping rules.
-
-- [ ] **Create a skill: API call runner** — Skill that teaches Claude how to construct and execute REDCap API calls against a real project (token management, endpoint selection, parameter building, response parsing).
-
-- [ ] **Create a checklist: building out a project via API** — Step-by-step checklist for provisioning a REDCap project programmatically using the API (create project, import metadata, set arms/events, configure user rights, import data, etc.).
+- [ ] **Feed Claude examples of all uploadable file formats** — For each upload type in RC-IMP-03, provide a real or representative example file. Use these to expand the relevant KB articles with annotated column-by-column breakdowns, accepted values, escaping rules, and common mistakes. Goal: Claude can generate any valid upload file from scratch given a plain-language description.
 
 ---
 
-## Documentation & Templates
+## Documentation
 
-- [ ] **Flesh out the style guide for project building** — Expand `STYLE-GUIDE.md` (or create a companion doc) to cover REDCap project design conventions: naming standards for fields/instruments/events, branching logic patterns, calculated field practices, survey design guidelines, etc. Goal: usable as a reference when building new projects.
-
-- [ ] **Flesh out the institutional setup template** — Create or expand a template that captures institution-specific configuration (Control Center settings, external modules enabled, user role presets, DAG conventions, survey invitation defaults, etc.) so it can be filled in once and referenced by all KB articles.
+- [ ] **Flesh out the style guide** — Expand `STYLE-GUIDE.md` to cover REDCap project design conventions beyond field alignment: naming standards for fields/instruments/events, branching logic patterns, calculated field practices, survey design guidelines, etc. Also add a **"How to contribute to this guide"** section explaining the process for proposing and documenting new conventions (what triggers an addition, how to phrase a principle, where to add it).
 
 ---
 
-*Last updated: 2026-04-15*
+## Completed
+
+- [x] **Create an inventory of all uploadable CSV formats** — RC-IMP-03_CSV-Upload-Reference.md
+- [x] **Create API skills and project-build checklist** — RC-PROJ-02 (article) + supporting skill
+- [x] **Create institutional setup template structure** — RC-INST-01_Institution-Specific-Settings-and-Policies.md (template built; content population is the open task above)
+
+---
+
+*Last updated: 2026-04-16*
