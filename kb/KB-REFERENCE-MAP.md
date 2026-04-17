@@ -2154,6 +2154,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-MOB-01 — REDCap Mobile App
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
 
@@ -3088,6 +3089,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-DAG-01 — Data Access Groups
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
