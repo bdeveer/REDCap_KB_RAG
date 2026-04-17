@@ -106,6 +106,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DE-10 | Longitudinal & Repeated Data Entry | RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md |
 | RC-DE-11 | Instrument Save Options | RC-DE-11_Instrument-Save-Options.md |
 | RC-DE-12 | Data Resolution Workflow | RC-DE-12_Data-Resolution-Workflow.md |
+| RC-DDE-01 | Double Data Entry | RC-DDE-01_Double-Data-Entry.md |
 | RC-DQ-01 | Data Quality Module | RC-DQ-01_Data-Quality-Module.md |
 | RC-FDL-01 | Form Display Logic | RC-FDL-01_Form-Display-Logic.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
@@ -2409,6 +2410,22 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-DE-08 — Field Comment Log
 - RC-INST-01 — Institution-Specific Settings & Policies
+
+---
+
+### RC-DDE-01 — Double Data Entry
+
+**Prerequisites:** RC-DE-02 — Basic Data Entry
+
+**Outbound links:**
+- RC-DE-02 — Basic Data Entry
+- RC-DE-04 — Editing Data & Audit Trail
+- RC-DE-12 — Data Resolution Workflow
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+*(None yet)*
 
 ---
 

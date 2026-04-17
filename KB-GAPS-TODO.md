@@ -32,12 +32,9 @@ Covered by `kb/RC-PROJ-03_Project-Dashboards.md` (written 2026-04-17).
 
 ---
 
-### ⚠️ RC-DDE-01 — Double Data Entry
+### ✅ RC-DDE-01 — Double Data Entry *(resolved)*
 
-**Why needed:** No existing article covers Double Data Entry.
-
-**Domain slug:** DDE (new)
-**What to cover:** What Double Data Entry is (two independent data entry passes per record), enabling DDE, the reviewer role, merging records, resolving discrepancies, exporting merged records
+Covered by `kb/RC-DDE-01_Double-Data-Entry.md` (written 2026-04-17).
 
 ---
 
@@ -78,6 +75,7 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-MYCAP-01 through RC-MYCAP-08 — Full MyCap series ✅
 - RC-DQ-01 — Data Quality Module ✅ *(was Priority 4)*
 - RC-MOB-01 — REDCap Mobile App ✅ *(was Priority 5; covers Mobile App with reference to MyCap series for participant-facing side)*
+- RC-DDE-01 — Double Data Entry ✅ *(was Priority 4)*
 
 ---
 
@@ -85,4 +83,4 @@ These were previously marked ⚠️ but have since been resolved:
 
 - RC-PROJ-02 (ID) was used for "Project Setup Checklist" — the Project Dashboards article has been reassigned to RC-PROJ-03.
 
-*Last updated: 2026-04-17 (RC-PROJ-03 resolved — Project Dashboards article written)*
+*Last updated: 2026-04-17 (RC-DDE-01 resolved — Double Data Entry article written)*
