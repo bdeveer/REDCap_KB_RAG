@@ -93,6 +93,25 @@ If the user gives you partial information, ask only the missing pieces.
 
 Before generating, resolve these common ambiguities:
 
+**Classic mode vs. longitudinal mode — confirm longitudinal is the right choice**
+Per the team style guide (`STYLE-GUIDE.md` at the repo root, Section 2.1), longitudinal mode
+should only be used when at least one of the following is true:
+- The same instrument is completed by the same participant at more than one time point, OR
+- The project needs multiple arms, event-based branching logic, or scheduling windows
+
+If the user describes a project where each form is completed exactly once per participant —
+even if there are many forms — that is a classic project, not a longitudinal one. Classic mode
+achieves the same result with less configuration overhead. Flag this before building:
+
+> "Just to confirm: does each participant complete any of these forms more than once, or are
+> all forms completed exactly once? If every form is only ever completed once per participant,
+> a classic (non-longitudinal) REDCap project would be simpler to configure and avoids
+> unnecessary event setup and a more confusing record status dashboard."
+
+If the user confirms forms repeat across timepoints, or they have multiple arms, or they have a
+specific architectural reason to use longitudinal mode — proceed with the build. If they confirm
+everything is single-instance, redirect them to the `redcap-dd-builder` skill instead.
+
 **Single arm vs. multi-arm**: A longitudinal project can have just one arm. If the user
 describes a single cohort with multiple visits, that's one arm. If they describe parallel
 groups, treatment vs. control, or different study phases with different event schedules,

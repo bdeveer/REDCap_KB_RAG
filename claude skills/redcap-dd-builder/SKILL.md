@@ -217,6 +217,47 @@ For simple cases:
 
 ---
 
+### Style conventions
+
+Before finalizing field designs, apply the team's agreed conventions from `STYLE-GUIDE.md` at
+the repo root. Read it if you need the full rationale. The conventions most relevant to DD
+building:
+
+**Field alignment (Column N — Custom Alignment)**
+- `notes` fields: always use `LH` or `LV` — the half-width default (`RV`) makes text areas
+  cramped. There is rarely a reason to use a half-width notes field.
+- `radio` and `checkbox` fields: `LH` for 2–4 short choices; `LV` for 5+ choices or long labels.
+  Prefer Left (`L`) over Right for the page-position component.
+- `text`, `dropdown`, `yesno`, `truefalse`: leave blank (accept `RV` default) unless there is a
+  specific layout reason to override.
+- Avoid mixing Left and Right fields in the same section without a clear layout purpose —
+  alternating widths creates a visually fragmented form.
+
+When building the JSON spec, set the `alignment` property on fields where the convention calls
+for a non-default value (i.e., `notes` fields and any `radio`/`checkbox` field). If the build
+script doesn't support alignment, list the alignment decisions in the delivery notes so the user
+can apply them in the Online Designer.
+
+**Field Note (Column G) vs. Field Annotation (Column R)**
+- **Field Note** (`field_note` in the spec) — visible to everyone completing the form, including
+  survey participants. Use for: units (`mg/L`, `kg`), date format reminders (`YYYY-MM-DD`),
+  scope clarifications (`Include prescribed medications only`), acceptable ranges. Keep it to
+  one or two lines — longer notes get ignored.
+- **Field Annotation** (`field_annotation` in the spec) — visible only in the Data Dictionary
+  and Online Designer, never on the form. Use for: design rationale, outstanding to-do notes
+  for designers, coding decisions. Action tags also go here (e.g., `@HIDDEN-SURVEY @READONLY`).
+
+When combining a plain-text designer note with action tags in `field_annotation`, put the note
+first and the action tags after, separated by a space or line break.
+
+> **Never put user-facing instructions in `field_annotation`** — they will not be seen by
+> anyone completing the form. Use `field_note` for anything the data entry user needs to read.
+
+When gathering field details from the user, ask separately: (a) what, if anything, data entry
+users need to see on the form, and (b) any notes intended only for project designers.
+
+---
+
 ## Step 3: Confirm the design before building
 
 Before generating the CSV, present a summary of what you're about to build. This is important —
