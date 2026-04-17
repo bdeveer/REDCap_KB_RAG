@@ -26,13 +26,9 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Priority 4 — No dedicated article yet
 
-### ⚠️ RC-PROJ-03 — Project Dashboards
+### ✅ RC-PROJ-03 — Project Dashboards *(resolved)*
 
-**Why needed:** Smart Variables for dashboards are covered in RC-PIPE-14 but the dashboard feature itself (setup, chart/table wizard, public dashboards) has no home. *(Note: RC-PROJ-02 was taken by "Project Setup Checklist".)*
-
-**Domain slug:** PROJ (established)
-**What to cover:** What a project dashboard is, the dashboard wizard (smart charts, tables), public dashboards, embedding dashboards in survey confirmation pages or alerts
-**Related coverage:** RC-PIPE-14
+Covered by `kb/RC-PROJ-03_Project-Dashboards.md` (written 2026-04-17).
 
 ---
 
@@ -78,6 +74,7 @@ These were previously marked ⚠️ but have since been resolved:
 - RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
 - RC-API-01 — REDCap API ✅ *(was Priority 5)*
 - RC-PROJ-01 — Project Lifecycle: Status and Settings ✅ *(was Priority 4)*
+- RC-PROJ-03 — Project Dashboards ✅ *(was Priority 4)*
 - RC-MYCAP-01 through RC-MYCAP-08 — Full MyCap series ✅
 - RC-DQ-01 — Data Quality Module ✅ *(was Priority 4)*
 - RC-MOB-01 — REDCap Mobile App ✅ *(was Priority 5; covers Mobile App with reference to MyCap series for participant-facing side)*
@@ -88,4 +85,4 @@ These were previously marked ⚠️ but have since been resolved:
 
 - RC-PROJ-02 (ID) was used for "Project Setup Checklist" — the Project Dashboards article has been reassigned to RC-PROJ-03.
 
-*Last updated: 2026-04-16 (RC-UNCLASSIFIED-01 retired; RC-MOB-01 resolved; RC-PROJ-02 ID taken by Project Setup Checklist — Dashboards gap renumbered to RC-PROJ-03; RC-CC-* Control Center series added as Priority 3)*
+*Last updated: 2026-04-17 (RC-PROJ-03 resolved — Project Dashboards article written)*

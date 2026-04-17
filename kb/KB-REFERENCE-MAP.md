@@ -11,6 +11,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
+| RC-PROJ-03 | Project Dashboards | RC-PROJ-03_Project-Dashboards.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
 | RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |
@@ -244,6 +245,24 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 *(None yet)*
 
 **Note:** Dependency-ordered setup checklist covering all phases of project configuration from creation through go-live. Applies to all project types; longitudinal, survey, DAG, and randomization steps are clearly marked as conditional.
+
+---
+
+### RC-PROJ-03 — Project Dashboards
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
+- RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
+- RC-PIPE-14 — Smart Variables: Project Dashboards
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-PIPE-04 — Piping in Emails and Notifications
+
+**Inbound links (referenced by):**
+*(None yet)*
+
+**Note:** Covers creating and configuring project dashboards, adding widget content (text, charts, aggregate functions, tables), making dashboards public, access codes, and distributing dashboard links via surveys, alerts, and emails. Distinct from the Record Status Dashboard (RC-NAV-REC-04).
 
 ---
 
@@ -3311,7 +3330,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 *(None)*
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PROJ-03 — Project Dashboards
 
 ---
 
@@ -3457,6 +3476,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-ALERT-02 — Alert Management & Notification Log
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
+- RC-PROJ-03 — Project Dashboards
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
@@ -3582,6 +3602,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
 - RC-PIPE-14 — Smart Variables: Project Dashboards
 - RC-PIPE-15 — Smart Variables: Public Reports
+- RC-PROJ-03 — Project Dashboards
 
 ---
 
@@ -3596,6 +3617,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
 - RC-PIPE-15 — Smart Variables: Public Reports
+- RC-PROJ-03 — Project Dashboards
 
 ---
 
@@ -3623,7 +3645,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PROJ-03 — Project Dashboards
 
 ---
 

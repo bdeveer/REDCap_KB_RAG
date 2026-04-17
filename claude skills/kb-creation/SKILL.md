@@ -266,5 +266,6 @@ For every article the new article references, find its Per-Article Reference Det
 | MYCAP | MyCap Mobile App | Participant-facing mobile app; separate from MOB (REDCap Mobile App for study teams) |
 | FDL | Form Display Logic | — |
 | DQ | Data Quality | Covers the Data Quality module, default rules, custom rules, and Rule H |
+| PROJ | Project | Covers project lifecycle, setup checklist, and project dashboards |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.
