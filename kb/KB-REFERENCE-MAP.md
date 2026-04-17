@@ -10,6 +10,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 |---|---|---|
 | RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
+| RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
 | RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |
@@ -130,6 +131,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
 | RC-MLM-01 | Multi-Language Management | RC-MLM-01_Multi-Language-Management.md |
+| RC-MOB-01 | REDCap Mobile App | RC-MOB-01_REDCap-Mobile-App.md |
 | RC-MYCAP-01 | MyCap: Overview & Enabling | RC-MYCAP-01_MyCap-Overview-and-Enabling.md |
 | RC-MYCAP-02 | MyCap: Designing Instruments for MyCap | RC-MYCAP-02_Designing-Instruments-for-MyCap.md |
 | RC-MYCAP-03 | MyCap: Task Scheduling | RC-MYCAP-03_Task-Scheduling.md |
@@ -204,6 +206,45 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
 **Note:** Covers all four project lifecycle statuses (Development, Production, Analysis/Cleanup, Completed), status transitions, project copying and deletion, and the Draft Mode process for making safe production changes. Supersedes RC-UNCLASSIFIED-01 §1 (Project Lifecycle) and §2 (Making Production Changes).
+
+---
+
+### RC-PROJ-02 — Project Setup Checklist
+
+**Prerequisites:** RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Outbound links:**
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-06 — Automated Survey Invitations
+- RC-SURV-07 — Survey Queue
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-DQ-01 — Data Quality Module
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-02 — Randomization Setup Guide
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-EXPRT-08 — Custom Reports: Management & Organization
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-05 — Branching Logic — Longitudinal Projects
+- RC-CALC-02 — Calculated Fields
+- RC-AT-01 — Action Tags: Overview
+- RC-DE-05 — Field Validations
+- RC-FD-05 — Codebook
+
+**Inbound links (referenced by):**
+*(None yet)*
+
+**Note:** Dependency-ordered setup checklist covering all phases of project configuration from creation through go-live. Applies to all project types; longitudinal, survey, DAG, and randomization steps are clearly marked as conditional.
 
 ---
 
@@ -1867,10 +1908,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AT-01 — Action Tags: Overview
 - RC-AT-02 — @HIDDEN & @READONLY — Visibility Control
 - RC-AT-06 — Autofill Action Tags
+- RC-MOB-01 — REDCap Mobile App
 
 **Inbound links (referenced by):**
 - RC-AT-01 — Action Tags: Overview
 - RC-MLM-01 — Multi-Language Management
+- RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 
 ---
@@ -3039,13 +3082,34 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-MOB-01 — REDCap Mobile App
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+
+**Inbound links (referenced by):**
+- RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
+
+---
+
 ### RC-MYCAP-01 — MyCap: Overview & Enabling
 
 **Prerequisites:** None
 
 **Outbound links:**
 - RC-INST-01 — Institution-Specific Settings & Policies
-- ⚠️ RC-MOB-01 — REDCap Mobile App *(planned)*
+- RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-MYCAP-03 — MyCap: Task Scheduling
 - RC-MYCAP-04 — MyCap: Participant Onboarding
@@ -3063,7 +3127,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
 - RC-UNCLASSIFIED-01 — Unclassified: REDCap FAQ v16.1.3 Orphaned Topics
 
-**Note:** Supersedes RC-UNCLASSIFIED-01 §6 (MyCap Overview interim content). See also RC-MOB-01 *(coming soon)* for REDCap Mobile App vs. MyCap comparison.
+**Note:** Supersedes RC-UNCLASSIFIED-01 §6 (MyCap Overview interim content). See also RC-MOB-01 — REDCap Mobile App for REDCap Mobile App vs. MyCap comparison.
 
 ---
 
@@ -3267,11 +3331,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-DE-02 — Basic Data Entry
 - RC-INST-01 — Institution-Specific Settings & Policies
-- ⚠️ RC-MOB-01 — REDCap Mobile App *(planned)*
+- RC-MOB-01 — REDCap Mobile App
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-MOB-01 — REDCap Mobile App
 
 ---
 
@@ -3285,7 +3349,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 — Basic Data Entry
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-INST-01 — Institution-Specific Settings & Policies
-- ⚠️ RC-MOB-01 — REDCap Mobile App *(planned)*
+- RC-MOB-01 — REDCap Mobile App
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
@@ -4051,7 +4115,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-CALC-01 — Special Functions Reference
-- ⚠️ RC-DQ-01 — Data Quality Module *(planned)*
+- RC-DQ-01 — Data Quality Module
 - RC-INTG-01 — Data Entry Trigger
 - RC-MLM-01 — Multi-Language Management
 - RC-MYCAP-01 — MyCap: Overview & Enabling
@@ -4091,5 +4155,7 @@ All previously identified naming inconsistencies have been resolved as of 2026-0
 *Updated 2026-04-16. Added RC-API-48 — Import a File (File Repository) API (`content=fileRepository`, `action=import`). Fourth article in the File Repository API family. Uploads a single file as multipart form data, optionally into a specific `folder_id`. Distinguishing characteristic: **no structured response body** — success is indicated by HTTP 200 alone (no `doc_id` returned). Response behavior confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Callers that need the new `doc_id` must call RC-API-46 (List) afterward. Remaining File Repository API gaps: delete file, delete folder.*
 
 *Updated 2026-04-16. Added RC-API-49 — Delete a File (File Repository) API (`content=fileRepository`, `action=delete`). Fifth article in the File Repository API family, completing the file-level CRUD set (createFolder, list, export, import, delete). Soft-deletes a single file by `doc_id` into the project's File Repository Recycle Bin, where it remains restorable for 30 days before permanent purge. No `format` parameter; `returnFormat` only shapes error messages. Response behavior matches RC-API-48: empty HTTP 200 body on success — confirmed via live call against Wake Health prod server (REDCap v16.1.3, 2026-04-16). Counterpart to RC-API-14 (which deletes files from record-level file-upload fields). Remaining File Repository API gap: delete folder.*
+
+*Updated 2026-04-16. Added RC-MOB-01 — REDCap Mobile App. First (and overview) article in the MOB domain. Covers what the REDCap Mobile App is, how it differs from MyCap and browser-based entry, administrator setup, project-level setup and mobile user management, project initialization, offline data entry workflow, synchronization, and security considerations. Supersedes the MOB-01 planned stub. RC-DQ-01 and RC-API-50 confirmed as live articles; ⚠️ flags removed. Remaining open gaps: File Repository API delete folder endpoint (no ID assigned yet).*
 
 *Previously: Added RC-PROJ-01 — Project Lifecycle: Status and Settings (supersedes RC-UNCLASSIFIED-01 §1–2). Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API (replaces RC-UNCLASSIFIED-01 §4 interim API coverage). Updated 2026-04-11: RC-UNCLASSIFIED-01 sections 1–2, 4, 5, 6 removed — content migrated to dedicated articles; only §3 (Data Quality) remains.*
