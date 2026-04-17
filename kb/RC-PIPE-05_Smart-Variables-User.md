@@ -51,9 +51,9 @@ The human-readable name of a role, as defined by whoever created it. This is the
 | User Name | `[user-name]` | The logged-in user's REDCap username. | jane_doe |
 | User Full Name | `[user-fullname]` | The logged-in user's first and last name as listed on their Profile page. | Jane Doe |
 | User Email | `[user-email]` | The logged-in user's primary email address as listed on their Profile page. | jane.doe@example.edu |
-| User DAG Name | `[user-dag-name]` | The unique identifier of the Data Access Group to which the logged-in user belongs. Returns blank if the user is not assigned to any DAG. | vanderbilt_group |
+| User DAG Name | `[user-dag-name]` | The unique identifier of the Data Access Group to which the logged-in user belongs. Returns blank if the user is not assigned to any DAG. | site_a |
 | User DAG ID | `[user-dag-id]` | The numeric ID of the DAG to which the logged-in user belongs. Returns blank if not in a DAG. | 324 |
-| User DAG Label | `[user-dag-label]` | The human-readable name/label of the DAG to which the logged-in user belongs. Returns blank if not in a DAG. | Vanderbilt Group |
+| User DAG Label | `[user-dag-label]` | The human-readable name/label of the DAG to which the logged-in user belongs. Returns blank if not in a DAG. | Site A |
 | User Role ID | `[user-role-id]` | The numeric ID of the user role assigned to the logged-in user. This ID is unique across all REDCap projects. Returns blank if the user is not assigned to a role. NOTE: Copying a project results in new Role IDs for user roles in the copy. | 127 |
 | User Role Name | `[user-role-name]` | The unique name (within the current project) of the user role assigned to the logged-in user. Returns blank if not assigned to a role. NOTE: This role name is preserved when a project is copied, making it suitable for use in conditional logic. | U-699N7ET9KR |
 | User Role Label | `[user-role-label]` | The human-readable label of the user role (as defined by whoever created the role). Returns blank if not assigned to a role. | Data Entry Person |
@@ -99,7 +99,7 @@ User smart variables in survey invitations and confirmation emails resolve based
 
 **Q: My project uses Data Access Groups. How can I verify that a user belongs to a specific DAG?**
 
-**A:** Use the `[user-dag-name]` smart variable in branching logic or a calculated field. For example, you could create a branching logic rule that shows a field only if `[user-dag-name]='harvard_site'`. Alternatively, you can display the user's DAG label in a field note for confirmation: "You are accessing records in the `[user-dag-label]` group."
+**A:** Use the `[user-dag-name]` smart variable in branching logic or a calculated field. For example, you could create a branching logic rule that shows a field only if `[user-dag-name]='site_b'`. Alternatively, you can display the user's DAG label in a field note for confirmation: "You are accessing records in the `[user-dag-label]` group."
 
 **Q: I have multiple user roles in my project. How do I use a role smart variable in conditional logic?**
 
@@ -115,7 +115,7 @@ User smart variables in survey invitations and confirmation emails resolve based
 
 **Q: Can I use user smart variables in branching logic?**
 
-**A:** Yes. All nine user smart variables can be used in branching logic conditions. For example, `[user-dag-name]='vanderbilt_group'` shows a field only for users in that DAG. However, note that branching logic is evaluated every time the form loads, so the visible fields may change if a different user accesses the same record.
+**A:** Yes. All nine user smart variables can be used in branching logic conditions. For example, `[user-dag-name]='site_a'` shows a field only for users in that DAG. However, note that branching logic is evaluated every time the form loads, so the visible fields may change if a different user accesses the same record.
 
 ---
 

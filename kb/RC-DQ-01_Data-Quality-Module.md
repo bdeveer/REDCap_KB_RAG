@@ -227,7 +227,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 > **Important:** Auto-correct updates all flagged calculated fields simultaneously across the entire project. Review the list of affected records before clicking. This action cannot be undone through the interface — it overwrites stored values.
 
-> **Yale-specific:** [Note whether local policy requires supervisor review or audit trail documentation before running auto-correct in Production — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Local policy may require supervisor review or audit trail documentation before running auto-correct in Production. Contact your REDCap administrator to confirm any institutional requirements before using this feature on live data.
 
 ---
 

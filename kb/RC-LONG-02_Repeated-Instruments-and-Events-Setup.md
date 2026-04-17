@@ -139,7 +139,7 @@ Changing repeating instrument or event configuration in a project that has alrea
 
 **Best practice:** Before making any changes to the repeated setup of an active project, clone the entire project and test the modification in the copy first. If you are unsure about the potential impact, consult your local REDCap administrator before making changes in Production.
 
-> **Yale-specific:** Changes to repeating instrument or event configuration in a Production project may require administrator review. Contact Yale REDCap support before modifying the setup of an active production project.
+> **Institution-specific:** Changes to repeating instrument or event configuration in a Production project may require administrator review. Contact your REDCap support team before modifying the setup of an active production project.
 
 ---
 

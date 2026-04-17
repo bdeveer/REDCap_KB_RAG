@@ -199,7 +199,7 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 **Using a high-percentage survey width without testing on large monitors.** A 100% width survey on a wide monitor can feel uncomfortably stretched. Conversely, a 50% width on a small laptop can be cramped. If you deviate from fixed width, test on multiple screen sizes.
 
-**Entering a display label rather than a hex code in the color picker.** The color code field expects a six-digit hexadecimal value (e.g., `#2A5DAB`). Entering a CSS color name or a label like "Yale Blue" will not work. Use the hex code from your branding guidelines.
+**Entering a display label rather than a hex code in the color picker.** The color code field expects a six-digit hexadecimal value (e.g., `#2A5DAB`). Entering a CSS color name or a label like "Institution Blue" will not work. Use the hex code from your branding guidelines.
 
 **Assuming custom themes are project-wide or user-independent.** Custom themes belong to the user who creates them. If you leave a project or a colleague tries to recreate your theme in a different account, they will need the eight hex codes to reproduce it.
 

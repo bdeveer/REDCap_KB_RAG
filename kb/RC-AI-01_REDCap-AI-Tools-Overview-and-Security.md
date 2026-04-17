@@ -78,7 +78,7 @@ This architecture means REDCap does not send your data to a third-party service 
 
 REDCap administrators can enable or disable each of the three AI features independently. Availability can be set globally (for all projects) or restricted to specific projects. If an AI feature is not visible in your project, it may not be enabled for your installation or your specific project. Contact your REDCap administrative team to confirm the local AI configuration.
 
-> **Yale-specific:** [Describe which AI features are enabled, for which projects, and what the local data privacy policy is — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Which AI features are enabled and applicable data privacy policies vary by installation. Contact your REDCap administrator to learn what AI tools are available at your institution and what data governance rules apply to their use.
 
 ---
 

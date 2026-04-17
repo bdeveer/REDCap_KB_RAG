@@ -72,7 +72,7 @@ Once enabled, the longitudinal configuration tools — Define My Events and Desi
 
 > **Critical:** Disabling longitudinal mode after data collection has begun will delete all data that was not collected in the very first event of the project. Do not disable longitudinal mode unless you are certain no data outside the first event needs to be retained.
 
-> **Yale-specific:** In Production mode, disabling longitudinal mode or un-designating events requires administrator approval. This safeguard is enabled by default at Yale. Move your project to Production before collecting real data to benefit from this protection.
+> **Institution-specific:** In Production mode, disabling longitudinal mode or un-designating events may require administrator approval. Many installations enable this safeguard by default. Move your project to Production before collecting real data to benefit from this protection.
 
 ---
 
@@ -196,7 +196,7 @@ Changing arms, events, or instrument designations in a project that has already 
 
 **Best practice:** Before making any changes to an active project, clone the entire project and test the modifications in the copy first. If you are unsure about the impact of a change, consult your local REDCap administrator before proceeding.
 
-> **Yale-specific:** Production-mode changes to the longitudinal setup may require administrator approval. Contact Yale REDCap support before modifying the setup of an active production project.
+> **Institution-specific:** Production-mode changes to the longitudinal setup may require administrator approval. Contact your REDCap support team before modifying the setup of an active production project.
 
 ---
 

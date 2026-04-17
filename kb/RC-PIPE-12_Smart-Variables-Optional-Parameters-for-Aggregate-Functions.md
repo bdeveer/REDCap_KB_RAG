@@ -61,7 +61,7 @@ Parameters that cannot be used together in the same smart variable expression. F
 | Parameter | Syntax | Description | Example |
 |---|---|---|---|
 | Current User's DAG | `user-dag-name` | Filters results to include only records in the current user's Data Access Group. Only works where an authenticated user is assigned to a DAG in the project (does not work on public dashboards or survey pages). | `[aggregate-mean:weight:user-dag-name]` |
-| Specific DAG(s) | Unique DAG name(s) | Filters to records in specific DAGs by providing the DAG's unique group name from the Data Access Groups page. Multiple DAGs separated by commas. | `[aggregate-median:weight:vanderbilt_group]` or `[aggregate-median:weight:vanderbilt_group,duke_group,harvard_group]` |
+| Specific DAG(s) | Unique DAG name(s) | Filters to records in specific DAGs by providing the DAG's unique group name from the Data Access Groups page. Multiple DAGs separated by commas. | `[aggregate-median:weight:site_a]` or `[aggregate-median:weight:site_a,site_b,site_c]` |
 
 ### 3.4 Visualization Parameters
 
@@ -103,7 +103,7 @@ When using a report name filter (`R-XXXXXXXXXX`):
 
 **DAG and Event Filters Can Be Combined**
 
-You can use DAG and event filters together: `[aggregate-mean:age:vanderbilt_group,visit_1_arm_1]` filters to records in the Vanderbilt Group DAG within the Baseline event.
+You can use DAG and event filters together: `[aggregate-mean:age:site_a,visit_1_arm_1]` filters to records in the Site A DAG within the Baseline event.
 
 **Visualization Parameters Are Optional**
 
@@ -118,7 +118,7 @@ When filtering by event, use the unique event name (e.g., `baseline_arm_1`, `mon
 
 **DAG Naming**
 
-When filtering by DAG, use the unique DAG name (e.g., `vanderbilt_group`, `harvard_site`) from the Data Access Groups page. Do not use the DAG label (the human-readable display name).
+When filtering by DAG, use the unique DAG name (e.g., `site_a`, `site_b`) from the Data Access Groups page. Do not use the DAG label (the human-readable display name).
 
 **Current User vs. Specific User**
 
@@ -130,7 +130,7 @@ The `record-name` and `event-name` parameters only function in contexts where a 
 
 **Multiple Values for DAGs and Events**
 
-To include multiple DAGs or events, use comma separation (no spaces): `[aggregate-count:age:vanderbilt_group,duke_group,harvard_group]`. This filters to all three DAGs.
+To include multiple DAGs or events, use comma separation (no spaces): `[aggregate-count:age:site_a,site_b,site_c]`. This filters to all three DAGs.
 
 ---
 
@@ -138,7 +138,7 @@ To include multiple DAGs or events, use comma separation (no spaces): `[aggregat
 
 **Q: How do I filter an aggregate function to show only a specific Data Access Group?**
 
-**A:** Use the DAG name parameter. For example: `[aggregate-mean:weight:vanderbilt_group]` shows the mean weight for records in the Vanderbilt Group DAG. Use the unique DAG name, not the label. To include multiple DAGs: `[aggregate-mean:weight:vanderbilt_group,harvard_group]`.
+**A:** Use the DAG name parameter. For example: `[aggregate-mean:weight:site_a]` shows the mean weight for records in the Site A DAG. Use the unique DAG name, not the label. To include multiple DAGs: `[aggregate-mean:weight:site_a,site_b]`.
 
 **Q: Can I combine a report filter with a DAG filter?**
 
@@ -172,17 +172,17 @@ To include multiple DAGs or events, use comma separation (no spaces): `[aggregat
 
 # 6. Common Mistakes & Gotchas
 
-**Attempting to combine report filters with other parameters.** Report name filters (`R-XXXXXXXXXX`) cannot be used with DAG, event, or record-name filters. If you need multiple filters, add them to the report definition itself, not the smart variable. A common error is: `[aggregate-mean:age:R-5898NNMYL4,vanderbilt_group]` (invalid — do not mix report and DAG filters).
+**Attempting to combine report filters with other parameters.** Report name filters (`R-XXXXXXXXXX`) cannot be used with DAG, event, or record-name filters. If you need multiple filters, add them to the report definition itself, not the smart variable. A common error is: `[aggregate-mean:age:R-5898NNMYL4,site_a]` (invalid — do not mix report and DAG filters).
 
-**Using DAG labels instead of DAG names.** The DAG label is the human-readable display name (e.g., "Vanderbilt Group"). The DAG name is the unique identifier (e.g., "vanderbilt_group"). Always use the DAG name in parameters: `[aggregate-mean:age:vanderbilt_group]` (correct) not `[aggregate-mean:age:Vanderbilt Group]` (incorrect).
+**Using DAG labels instead of DAG names.** The DAG label is the human-readable display name (e.g., "Site A"). The DAG name is the unique identifier (e.g., "site_a"). Always use the DAG name in parameters: `[aggregate-mean:age:site_a]` (correct) not `[aggregate-mean:age:Site A]` (incorrect).
 
 **Using event labels instead of event names.** Similarly, use unique event names (e.g., `baseline_arm_1`) not event labels (e.g., "Baseline"): `[aggregate-mean:weight:baseline_arm_1]` (correct) not `[aggregate-mean:weight:Baseline]` (incorrect).
 
 **Assuming `record-name` and `event-name` work on dashboards.** These parameters only function in contexts where a single record or event is active (form fields, surveys, data entry). They return incorrect or blank results on dashboards where multiple records are visible.
 
-**Forgetting commas when specifying multiple events or DAGs.** Use comma separation (no spaces) to specify multiple values: `[aggregate-mean:age:vanderbilt_group,harvard_group]` (correct) not `[aggregate-mean:age:vanderbilt_group harvard_group]` (incorrect).
+**Forgetting commas when specifying multiple events or DAGs.** Use comma separation (no spaces) to specify multiple values: `[aggregate-mean:age:site_a,site_b]` (correct) not `[aggregate-mean:age:site_a site_b]` (incorrect).
 
-**Not accounting for empty results when using strict filters.** If you filter to a DAG or event that has no data, the aggregate function may return 0 or blank. For example, if no records belong to a specific DAG, `[aggregate-count:age:vanderbilt_group]` returns 0.
+**Not accounting for empty results when using strict filters.** If you filter to a DAG or event that has no data, the aggregate function may return 0 or blank. For example, if no records belong to a specific DAG, `[aggregate-count:age:site_a]` returns 0.
 
 **Mixing comma separators and parameter syntax incorrectly.** The syntax is: `[function:fields:param1,param2,param3]`. Commas separate parameters within the third argument, not between arguments. Do not use colons to separate multiple parameters.
 

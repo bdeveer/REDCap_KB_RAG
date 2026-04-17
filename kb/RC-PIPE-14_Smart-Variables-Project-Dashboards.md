@@ -49,7 +49,7 @@ A dashboard that has been configured to be accessible to users outside of REDCap
 | Smart Variable | Syntax | Description | Example Output |
 |---|---|---|---|
 | Dashboard Access Code | `[dashboard-access-code:unique_dash_name]` | The access code for the specified public project dashboard. Only returns a code if one has been defined for the dashboard. Returns blank if no access code is configured. The unique dashboard name (D-XXXXXXXXXX) is found on the dashboard configuration page. | aHmjK5@ctTqT4 |
-| Dashboard URL | `[dashboard-url:unique_dash_name]` | The web address (URL) of the specified public project dashboard. Includes the base REDCap URL and all necessary parameters. | https://redcap.school.wakehealth.edu/surveys/?__dashboard=D-557DRCW87L&... |
+| Dashboard URL | `[dashboard-url:unique_dash_name]` | The web address (URL) of the specified public project dashboard. Includes the base REDCap URL and all necessary parameters. | https://redcap.yourinstitution.edu/surveys/?__dashboard=D-557DRCW87L&... |
 | Dashboard Link (Default) | `[dashboard-link:unique_dash_name]` | An HTML web link to the specified public project dashboard. Uses the dashboard's configured title as the link text by default. | [Clickable link labeled "My Project Dashboard"] |
 | Dashboard Link (Custom Text) | `[dashboard-link:unique_dash_name:Custom Text]` | An HTML web link to the specified public project dashboard with custom link text instead of the dashboard title. | [Clickable link labeled "Click to view our dashboard"] |
 

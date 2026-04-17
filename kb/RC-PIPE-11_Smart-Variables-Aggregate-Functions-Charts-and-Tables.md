@@ -150,7 +150,7 @@ REDCap provides a 14-minute video demonstration of Smart Charts, Functions, and 
 
 **Q: How do I filter an aggregate function to show only records in a specific Data Access Group (DAG)?**
 
-**A:** Use the optional parameters (see RC-PIPE-12). For example: `[aggregate-mean:age:vanderbilt_group]` shows the mean age for records in the Vanderbilt Group DAG only. Multiple DAGs can be comma-separated.
+**A:** Use the optional parameters (see RC-PIPE-12). For example: `[aggregate-mean:age:site_a]` shows the mean age for records in the Site A DAG only. Multiple DAGs can be comma-separated.
 
 **Q: Can I use aggregate functions in regular form fields or only on dashboards?**
 

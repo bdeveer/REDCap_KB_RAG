@@ -103,7 +103,7 @@ If you trigger a specialty validation error, the popup names the validation. The
 
 In some REDCap installations, the system administrator has added validations specific to that institution. These custom validations behave the same as specialty validations — they display the validation name in the error popup — but they are not part of the standard REDCap distribution. Examples include institution-specific MRN formats, country-specific ID number formats, or locally defined code formats.
 
-> **Yale-specific:** [Describe any custom validations active in the Yale REDCap instance and their expected formats — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Some REDCap installations include custom validation types beyond the standard set. Contact your REDCap administrator to learn whether custom validations are available at your institution and what formats they expect.
 
 ---
 

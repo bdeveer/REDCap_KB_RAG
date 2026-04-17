@@ -78,7 +78,7 @@ Once public, you can optionally create a custom short link to make the URL easie
 
 > **Important:** Never make a report public if it contains sensitive, identifiable, or protected information. Some REDCap installations have disabled the public report feature entirely to comply with data privacy requirements.
 
-> **Yale-specific:** [Confirm whether public reports are enabled at this installation and any applicable data governance requirements — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Whether public reports are enabled varies by installation. Contact your REDCap administrator to confirm availability and any applicable data governance requirements before sharing report links externally.
 
 ## 4.3 Description
 

@@ -62,7 +62,7 @@ A condition that occurs when a participant has more than one active survey invit
 
 Texting must be enabled at the system level by a REDCap administrator before any project can use it. Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
 
-> **Yale-specific:** [Contact your local REDCap support team to confirm whether Twilio, Mosio, or both are available and what the enable permission level is — leave blank until confirmed]
+> **Institution-specific:** Texting provider availability (Twilio, Mosio, or both) and permission levels vary by installation. Contact your REDCap administrator to confirm which providers are enabled at your institution and what access level is required to enable them on a project.
 
 ## 3.2 Budget and cost
 

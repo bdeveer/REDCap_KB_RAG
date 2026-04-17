@@ -201,7 +201,7 @@ pid[project-id]_form[instrument-label]_id[record-name]
 
 An optional **Notes** field is available for internal documentation. It is not used anywhere in the consent workflow.
 
-> **Yale-specific:** [Describe any local policy on file storage location, naming conventions, or required footer/header content — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Local policies on e-consent file storage location, naming conventions, or required document content (such as footer or header language) vary by institution. Contact your REDCap administrator or IRB office to confirm any applicable requirements.
 
 Click **"Save Settings"** to finalize. Click **Cancel** to discard all entries.
 

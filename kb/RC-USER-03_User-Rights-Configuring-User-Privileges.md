@@ -141,7 +141,7 @@ Record locking is useful for larger projects where completed instruments should 
 
 Certain advanced features — such as Clinical Data Pull or SMS texting integrations (Twilio, Mosio) — require an administrator to enable and in some cases to assign at the user level. These will appear in the privileges popup only if enabled for your installation.
 
-> **Yale-specific:** [Describe which administrator-granted features are available at Yale and how users can request access — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** The features available through administrator-granted access vary by installation. Contact your REDCap administrator to learn which elevated permissions are available and how to request them.
 
 ---
 

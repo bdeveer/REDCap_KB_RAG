@@ -45,10 +45,10 @@ Records, like users, can be assigned to a Data Access Group to restrict who can 
 | Smart Variable | Syntax | Description | Example Output |
 |---|---|---|---|
 | Record Name | `[record-name]` | The unique record name (ID) of the current record. | 108 |
-| Record DAG Name | `[record-dag-name]` | The unique identifier of the Data Access Group to which the current record belongs. Returns blank if the record is not assigned to any DAG. | harvard_site |
+| Record DAG Name | `[record-dag-name]` | The unique identifier of the Data Access Group to which the current record belongs. Returns blank if the record is not assigned to any DAG. | site_b |
 | Record DAG ID | `[record-dag-id]` | The numeric ID of the DAG to which the current record belongs. Returns blank if not assigned to a DAG. | 96 |
-| Record DAG Label | `[record-dag-label]` | The human-readable name/label of the DAG to which the current record belongs. Returns blank if not assigned to a DAG. | Harvard Site |
-| Calendar URL | `[calendar-url]` | The web address (URL) of the calendar feed or downloadable ICS calendar file for the current record. Returns blank if the Calendar feature is not enabled. | https://redcap.school.wakehealth.edu/surveys/?__calendar=... |
+| Record DAG Label | `[record-dag-label]` | The human-readable name/label of the DAG to which the current record belongs. Returns blank if not assigned to a DAG. | Site B |
+| Calendar URL | `[calendar-url]` | The web address (URL) of the calendar feed or downloadable ICS calendar file for the current record. Returns blank if the Calendar feature is not enabled. | https://redcap.yourinstitution.edu/surveys/?__calendar=... |
 | Calendar Link | `[calendar-link]` or `[calendar-link:Custom Text]` | An HTML web link to the calendar feed or ICS file for the current record. Optionally specify custom link text; if omitted, defaults to displaying the URL as the link text. Returns blank if the Calendar feature is not enabled. | Download your calendar events (ICS file) or Click here for calendar |
 
 ---
@@ -86,8 +86,8 @@ Record smart variables are especially useful in emails. For example, a survey co
 **Q: My project uses Data Access Groups. How can I display which DAG a record belongs to?**
 
 **A:** Use one of the record DAG smart variables in a field note or descriptive text:
-- `[record-dag-label]` displays the human-readable DAG name (e.g., "Harvard Site").
-- `[record-dag-name]` displays the unique DAG identifier (e.g., "harvard_site").
+- `[record-dag-label]` displays the human-readable DAG name (e.g., "Site B").
+- `[record-dag-name]` displays the unique DAG identifier (e.g., "site_b").
 - `[record-dag-id]` displays the numeric DAG ID.
 
 The label is usually most user-friendly.
@@ -106,7 +106,7 @@ The email will contain a clickable link with your custom text. Note that the Cal
 
 **Q: Can I use record smart variables in branching logic?**
 
-**A:** Yes, `[record-name]` and all record DAG smart variables can be used in branching logic. For example, you could show a field only for records in a specific DAG: `[record-dag-name]='harvard_site'`. However, this is less common than using user smart variables for permission-based logic.
+**A:** Yes, `[record-name]` and all record DAG smart variables can be used in branching logic. For example, you could show a field only for records in a specific DAG: `[record-dag-name]='site_b'`. However, this is less common than using user smart variables for permission-based logic.
 
 **Q: If a record is not assigned to a DAG, what does `[record-dag-label]` display?**
 
@@ -122,7 +122,7 @@ The email will contain a clickable link with your custom text. Note that the Cal
 
 **Using calendar smart variables for surveys accessed by participants.** Calendar links work best in administrator-facing emails or forms. If a survey is accessed by an external participant without authentication, calendar smart variables may not function correctly. Test with your actual participants to confirm expected behavior.
 
-**Not accounting for blank record DAG values in conditional logic.** If a record might not be assigned to a DAG, logic like `[record-dag-name]='harvard_site'` will not display fields for unassigned records. If you need to show content for both assigned and unassigned records, add an OR clause in your logic, or use a separate calculated field.
+**Not accounting for blank record DAG values in conditional logic.** If a record might not be assigned to a DAG, logic like `[record-dag-name]='site_b'` will not display fields for unassigned records. If you need to show content for both assigned and unassigned records, add an OR clause in your logic, or use a separate calculated field.
 
 **Pasting calendar links directly into emails without testing.** Calendar URLs are long and may wrap unexpectedly in email clients. Always preview your email in multiple clients before sending, and test that the calendar link actually functions for participants.
 

@@ -71,7 +71,7 @@ Authentication varies by installation. The most common methods are:
 
 Some installations also require two-factor authentication as an additional layer on top of either method.
 
-> **Yale-specific:** [Describe the authentication method(s) in use at Yale and who handles account issues — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Authentication methods vary by installation (e.g., institutional SSO, local accounts, Shibboleth). Contact your REDCap administrator to learn which login method is in use and who handles account creation or access issues.
 
 A suspended account (disabled at the system level by an administrator) will receive a suspension message at login and cannot access any projects.
 

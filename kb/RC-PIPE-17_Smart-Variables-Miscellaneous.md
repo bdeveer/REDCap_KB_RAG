@@ -63,10 +63,10 @@ The version number of the REDCap software running on the current installation (e
 | Project IRB Number | `[project-irb-number]` | The IRB approval number associated with the current project, as configured in project settings. Returns blank if no IRB number is defined. | 2025-1234 |
 | Data Table (Current Project) | `[data-table]` | The name of the database table used by the current project to store record data. | redcap_data3 |
 | Data Table (Specific Project) | `[data-table:PID]` | The name of the database table used by a specific project (identified by Project ID). Replace PID with a numeric project ID. | redcap_data2 |
-| REDCap Base URL | `[redcap-base-url]` | The base web address (URL) of this REDCap installation. | https://redcap.school.wakehealth.edu/ |
+| REDCap Base URL | `[redcap-base-url]` | The base web address (URL) of this REDCap installation. | https://redcap.yourinstitution.edu/ |
 | REDCap Version | `[redcap-version]` | The current version number of the REDCap software running on this installation. | 16.1.3 |
-| REDCap Version URL | `[redcap-version-url]` | The base web address (URL) of the current REDCap version directory on this installation. | https://redcap.school.wakehealth.edu/redcap_v16.1.3/ |
-| Survey Base URL | `[survey-base-url]` | The base web address (URL) for surveys on this REDCap installation. | https://redcap.school.wakehealth.edu/surveys/ |
+| REDCap Version URL | `[redcap-version-url]` | The base web address (URL) of the current REDCap version directory on this installation. | https://redcap.yourinstitution.edu/redcap_v16.1.3/ |
+| Survey Base URL | `[survey-base-url]` | The base web address (URL) for surveys on this REDCap installation. | https://redcap.yourinstitution.edu/surveys/ |
 
 ---
 

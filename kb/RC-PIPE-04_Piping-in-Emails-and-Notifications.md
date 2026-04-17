@@ -80,7 +80,7 @@ ASIs are linked to a specific instrument and trigger automatically based on cond
 
 **Common uses:** Personalizing invitations with participant names, including direct survey links, specifying the survey queue link for participants enrolled in a multi-survey sequence.
 
-> **Yale-specific:** [Confirm local policies around automated survey invitation setup and any approval steps required for sending emails from REDCap — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Local policies around automated survey invitations and email-sending from REDCap vary by installation. Contact your REDCap administrator to confirm any approval steps or institutional requirements before setting up automated communications.
 
 ## 4.3 Piping Identifiable Information in Invitations
 

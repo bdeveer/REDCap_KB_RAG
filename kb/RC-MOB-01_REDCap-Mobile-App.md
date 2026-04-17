@@ -19,7 +19,7 @@ RC-MOB-01
 
 This article covers the REDCap Mobile App — a native iOS and Android application that allows study team members to enter and edit record data offline from a mobile device. The app is distinct from MyCap (the participant-facing mobile application). It is intended for study staff who collect data in environments without reliable internet access, such as clinical settings, field sites, refugee settlements, rural communities, or participant homes. Data entered offline is stored locally on the device and synchronized with the REDCap server when a connection becomes available. This is the only article in the RC-MOB series.
 
-> **Yale-specific:** [Confirm whether the REDCap Mobile App module is enabled on your institution's REDCap server and whether any approval or request process is required before use. Contact your local REDCap support team.]
+> **Institution-specific:** Whether the REDCap Mobile App module is enabled and whether any approval or request process is required before use varies by installation. Contact your REDCap administrator to confirm local requirements.
 
 ---
 
@@ -131,7 +131,7 @@ Before any project can use the REDCap Mobile App, a REDCap administrator must en
 
 A REDCap administrator enables the Mobile App module in the REDCap Control Center under the **Mobile App** section. Once enabled, the module becomes available to all projects on the server.
 
-> **Yale-specific:** [Confirm whether the Mobile App module is already enabled and whether projects require administrator approval or a request form before using it.]
+> **Institution-specific:** Whether the Mobile App module is already enabled and whether projects require administrator approval or a request form before use varies by installation. Contact your REDCap administrator to confirm.
 
 ## 5.2 Mobile App Settings in the Control Center
 
@@ -149,7 +149,7 @@ Administrators can configure server-wide settings including:
 
 In the project, navigate to **Project Setup** → **Enable optional modules and customizations** → check **Use the REDCap Mobile App**. This exposes the Mobile App section in the left sidebar under Applications.
 
-> **Yale-specific:** [Some institutions require a formal Mobile App request through a Help Desk form before enabling the module on a project. Confirm local procedures.]
+> **Institution-specific:** Some institutions require a formal Mobile App request through a Help Desk form before enabling the module on a project. Confirm local procedures with your REDCap administrator.
 
 ## 6.2 Grant User Rights
 
@@ -314,7 +314,7 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 
 **IRB and data governance:** Consider whether your IRB protocol needs to address Mobile App usage specifically. Write the Mobile App protocol into your IRB application if required at your institution.
 
-> **Yale-specific:** [Confirm whether IRB or institutional data security requirements mandate additional controls for devices running the REDCap Mobile App, such as MDM enrollment or full-disk encryption policy.]
+> **Institution-specific:** IRB or institutional data security requirements may mandate additional controls for devices running the REDCap Mobile App, such as MDM enrollment or full-disk encryption. Confirm requirements with your IRB and REDCap administrator.
 
 ---
 

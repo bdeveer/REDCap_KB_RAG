@@ -119,7 +119,7 @@ MyCap uses the following security controls for data protection in transit and at
 
 These controls meet common institutional and IRB requirements for mHealth data collection. Consult your institution's IRB for the approved language describing MyCap's security posture. Template IRB language is available on the MyCap website.
 
-> **Yale-specific:** [Confirm whether Yale's IRB has pre-approved MyCap security language and where to find it — leave blank until confirmed with Yale REDCap support team]
+> **Institution-specific:** Some IRBs have pre-approved MyCap security language for use in consent documents. Contact your IRB or REDCap administrator to determine whether pre-approved language is available at your institution.
 
 ---
 
@@ -129,7 +129,7 @@ These controls meet common institutional and IRB requirements for mHealth data c
 
 MyCap must first be enabled at the institutional (server) level. If you do not see the MyCap option in your project, contact your REDCap administrator.
 
-> **Yale-specific:** [Confirm whether MyCap is available by default or requires an admin request at this installation — see RC-INST-01 — Institution-Specific Settings & Policies, Section 7.1]
+> **Institution-specific:** Whether MyCap is available by default or requires an administrator request varies by installation. Contact your REDCap administrator to confirm availability.
 
 ## 6.2 Enabling MyCap in Your Project
 
