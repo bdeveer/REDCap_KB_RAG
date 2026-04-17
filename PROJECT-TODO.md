@@ -24,6 +24,16 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 - [ ] **Flesh out the style guide** — Expand `STYLE-GUIDE.md` to cover REDCap project design conventions beyond field alignment: naming standards for fields/instruments/events, branching logic patterns, calculated field practices, survey design guidelines, etc. Also add a **"How to contribute to this guide"** section explaining the process for proposing and documenting new conventions (what triggers an addition, how to phrase a principle, where to add it).
 
+- [ ] **Redo README** — The current README needs a full rewrite. Scope TBD — review what's there first and decide what it should cover (project purpose, repo structure, how to use the KB, how to contribute, etc.).
+
+---
+
+## Housekeeping
+
+- [ ] **Clean up Author field across all articles** — Audit the `Author` metadata row in every article in `kb/`. Standardize to a consistent value (e.g., "REDCap Support" or team name) and remove any placeholder or incorrect entries.
+
+- [ ] **Add TCC repo to attestation file** — Update `KB-SOURCE-ATTESTATION.md` to reference the TCC (The Center for Clinical Investigation?) repository as a source, specifically for the mobile app articles (RC-MOB-01, RC-MYCAP-01 through RC-MYCAP-08).
+
 ---
 
 ## Completed
