@@ -7,7 +7,7 @@ RC-API-27
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -30,7 +30,6 @@ Use this method to clean up unused roles, automate role lifecycle management, or
 | `token` | Required | Your project API token. Requires API Import and User Rights rights. |
 | `content` | Required | Always `'userRole'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `format` | Optional | Response format: `'json'` (default) or `'csv'`. |
 | `roles[0]`, `roles[1]`, ... | Required | Array of role IDs to delete (the `unique_role_name` values). Pass as `roles[0]=U-527D39JXAC&roles[1]=U-XXXXX`, etc. |
 
 ---
@@ -173,4 +172,5 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 - RC-USER-03 — User Rights: Configuring User Privileges (reference for permission types)
 - RC-API-25 — Export User Roles (retrieve role definitions and their IDs)
 - RC-API-26 — Import User Roles (create or update roles)
+- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)
 - RC-API-22 — Export Users (identify users and their permissions)

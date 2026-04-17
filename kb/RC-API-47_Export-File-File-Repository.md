@@ -51,7 +51,7 @@ In addition, the user's DAG and User Role assignments must grant access to the f
 # 4. Endpoint
 
 ```
-POST https://redcap.school.wakehealth.edu/api/
+POST https://your-redcap-instance.edu/api/
 ```
 
 Only `POST` is supported.

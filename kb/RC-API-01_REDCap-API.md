@@ -78,8 +78,6 @@ Before requesting a token:
 
 > **Note:** If you do not see an **API** link in the left-hand menu, you have not been granted API privileges for that project. Ask a project administrator to assign the API Export and/or API Import user right to your account via the User Rights page.
 
-> **Yale-specific:** [Describe local token approval process and expected turnaround time — leave blank until confirmed with Yale REDCap support team]
-
 ## 3.3 Token Security
 
 - **Never share your token.** Anyone with your token has the same access to that project's data as you do.

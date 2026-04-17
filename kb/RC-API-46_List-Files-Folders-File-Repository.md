@@ -52,7 +52,7 @@ Calls from tokens lacking either privilege will fail with a permissions error.
 # 4. Endpoint
 
 ```
-POST https://redcap.school.wakehealth.edu/api/
+POST https://your-redcap-instance.edu/api/
 ```
 
 Only `POST` is supported.

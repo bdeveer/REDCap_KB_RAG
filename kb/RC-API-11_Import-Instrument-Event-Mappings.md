@@ -7,7 +7,7 @@ RC-API-11
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Prerequisite** | RC-API-01 — REDCap API; RC-API-10 — Export Instrument-Event Mappings |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -27,7 +27,8 @@ When to use this method: When you need to programmatically assign instruments to
 # 2. Important Notes
 
 - **Longitudinal Only:** This method only works with longitudinal projects. Using it on a classic project returns an error.
-- **Requires API Design Right:** You must have API Design permission to use this method.
+- **Development Status Only:** This method is only available for projects in Development status. It cannot be used on projects in Production or Analysis status.
+- **Requires API Import/Update AND Project Design/Setup:** You must have both API Import/Update privileges and Project Design/Setup privileges in the project. API Import/Update alone is not sufficient.
 - **Replaces Existing Mappings:** This method replaces the entire mapping structure. All existing mappings are removed and replaced with the provided data.
 - **Instruments Must Exist:** All instruments referenced in the mappings must already exist in the project. Use RC-API-07 (Export Metadata) or RC-API-09 (Export Instruments) to verify.
 - **Events Must Exist:** All events referenced in the mappings must already exist in the project. Create events using RC-API-20 (Import Events) if needed.
@@ -38,61 +39,63 @@ When to use this method: When you need to programmatically assign instruments to
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Design right. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Project Design/Setup rights. |
 | `content` | Required | Always `'formEventMapping'` for this method. |
-| `format` | Required | Response format: `'json'` or `'xml'`. |
-| `data` | Required | The mappings to import, as a JSON or XML string containing arm, event, and form (instrument) definitions. |
-| `returnFormat` | Optional | Response format (alternative to `format` parameter): `'json'` or `'xml'`. |
+| `format` | Required | Data format of the `data` parameter: `'csv'`, `'json'`, or `'xml'` [default: `xml`]. |
+| `data` | Required | The mappings to import. Each mapping must contain `arm_num` (arm number), `unique_event_name` (the auto-generated unique event name), and `form` (the instrument's unique form name). Provide in the format specified by `format`. |
+| `returnFormat` | Optional | Specifies the format of error messages: `'csv'`, `'json'`, or `'xml'`. If omitted, defaults to the `format` value (or `xml` if `format` was also omitted). Does not apply when using a background process (`backgroundProcess=true`) — in that case, `success:true` or `success:false` is returned in the appropriate format. |
 
 ---
 
 # 4. Data Structure
 
-The `data` parameter must contain mapping definitions in JSON format. The structure organizes mappings by arm and event:
+The `data` parameter is a flat list of instrument-event mappings — one row per instrument per event. Each mapping has three fields: `arm_num`, `unique_event_name`, and `form`. The officially documented format is flat (not nested).
 
+**JSON format:**
 ```json
-[
-  {
-    "arm_num": "1",
-    "unique_event_name": "event_1_arm_1",
-    "form": "instr_1"
-  },
-  {
-    "arm_num": "1",
-    "unique_event_name": "event_1_arm_1",
-    "form": "instr_2"
-  },
-  {
-    "arm_num": "1",
-    "unique_event_name": "event_2_arm_1",
-    "form": "instr_1"
-  }
-]
+[{"arm_num":"1","unique_event_name":"baseline_arm_1","form":"demographics"},
+{"arm_num":"1","unique_event_name":"visit_1_arm_1","form":"day_3"},
+{"arm_num":"1","unique_event_name":"visit_1_arm_1","form":"other"},
+{"arm_num":"1","unique_event_name":"visit_2_arm_1","form":"other"}]
 ```
 
-Alternatively, the structure can organize by arm and event as nested objects:
-
-```json
-[
-  {
-    "arm": {
-      "number": "1",
-      "event": [
-        {
-          "unique_event_name": "event_1_arm_1",
-          "form": ["instr_1", "instr_2"]
-        },
-        {
-          "unique_event_name": "event_2_arm_1",
-          "form": ["instr_1"]
-        }
-      ]
-    }
-  }
-]
+**CSV format:**
+```
+arm_num,unique_event_name,form
+1,baseline_arm_1,demographics
+1,visit_1_arm_1,day_3
+1,visit_1_arm_1,other
+1,visit_2_arm_1,other
 ```
 
-Both formats are valid. Use whichever is more convenient for your workflow.
+**XML format:**
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<items>
+   <item>
+      <arm_num>1</arm_num>
+      <unique_event_name>baseline_arm_1</unique_event_name>
+      <form>demographics</form>
+   </item>
+   <item>
+      <arm_num>1</arm_num>
+      <unique_event_name>visit_1_arm_1</unique_event_name>
+      <form>day_3</form>
+   </item>
+   <item>
+      <arm_num>1</arm_num>
+      <unique_event_name>visit_1_arm_1</unique_event_name>
+      <form>other</form>
+   </item>
+   <item>
+      <arm_num>1</arm_num>
+      <unique_event_name>visit_2_arm_1</unique_event_name>
+      <form>other</form>
+   </item>
+</items>
+```
+
+> **Note:** Some REDCap API client libraries (e.g., RCurl in R) may also accept a nested structure grouping forms under each event. The flat format above is the officially documented format and should be preferred for reliability.
 
 ---
 
@@ -241,21 +244,7 @@ print $output;
 
 # 6. Response
 
-The method returns the number of mappings that were successfully created or updated, along with any validation errors.
-
-**Successful response (JSON):**
-```json
-{
-  "count": 3
-}
-```
-
-**Response with errors (JSON):**
-```json
-{
-  "error": "Error validating form-event mappings: Event 'event_1_arm_1' does not exist in arm 1"
-}
-```
+On success, the method returns the number of instrument-event mappings imported as a plain integer (e.g., `4`). On failure, an error message is returned in the format specified by `returnFormat` (or `format`, or `xml` by default).
 
 ---
 
@@ -277,6 +266,10 @@ The method returns the number of mappings that were successfully created or upda
 
 **A:** The import fails with a validation error. Ensure all instruments and events exist before importing mappings. Create missing instruments using RC-API-08 (Import Metadata) and events using RC-API-20 (Import Events).
 
+**Q: Can I use this on a project that's already in Production?**
+
+**A:** No. This method only works on projects in Development status. If your project is in Production, you would need to move it back to Development first (which typically requires REDCap administrator involvement), or make the mapping changes manually through the REDCap interface.
+
 **Q: Can I use this method to set up repeating instruments?**
 
 **A:** This method sets up static instrument-event mappings. Repeating instruments are configured separately through project settings. Once an instrument is mapped to an event, you can configure it as repeating through the REDCap interface or other API endpoints.
@@ -284,6 +277,10 @@ The method returns the number of mappings that were successfully created or upda
 ---
 
 # 8. Common Mistakes & Gotchas
+
+**Calling this method on a project in Production or Analysis status.** This method only works on projects in Development status. If your project is in Production, you cannot use this endpoint — you need to move to Development first (or use the REDCap interface to make mapping changes via a revision/move-to-dev workflow).
+
+**Using only API Import/Update right without Project Design/Setup.** Both privileges are required. A user with only API Import/Update will get a permissions error even though that right sounds sufficient for an import operation.
 
 **Forgetting to format data as JSON array.** The data must be a JSON-encoded array, even if you're only importing a few mappings. Single mapping objects must be wrapped in an array.
 

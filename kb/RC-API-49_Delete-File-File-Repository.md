@@ -10,7 +10,7 @@ RC-API-49
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Source** | REDCap API v16.1.3 official documentation examples; response behavior confirmed via live call against Wake Health prod server |
+| **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-45 — Create Folder (File Repository) API; RC-API-46 — List Files and Folders (File Repository) API; RC-API-47 — Export a File (File Repository) API; RC-API-48 — Import a File (File Repository) API; RC-API-14 — Delete File; RC-USER-03 — User Rights: Configuring User Privileges |
 
 ---
@@ -51,7 +51,7 @@ The user must also have access to the folder containing the target file. Files i
 # 4. Endpoint
 
 ```
-POST https://redcap.school.wakehealth.edu/api/
+POST https://your-redcap-instance.edu/api/
 ```
 
 Only `POST` is supported.
@@ -153,7 +153,7 @@ On error, the response body is an error message serialized in the format specifi
 
 When called as a background process (`backgroundProcess=true`), the response is `success:true` or `success:false` in the appropriate format instead of an empty body.
 
-> **Note:** This response behavior was verified against Wake Health's REDCap v16.1.3 production server (2026-04-16). If your institution runs a different REDCap version, confirm the response shape via the API Playground.
+> **Note:** If your institution runs a different REDCap version, confirm the response shape via the API Playground.
 
 ---
 
