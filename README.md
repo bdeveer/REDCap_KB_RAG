@@ -32,7 +32,7 @@ REDCap_KB_RAG/
 │   └── redcap-syntax-reader/              # Skill: explain and interpret REDCap expressions
 ├── KB-GAPS-TODO.md                   # Tracked knowledge gaps and planned articles
 ├── KB-SOURCE-ATTESTATION.md          # Source document provenance for KB articles
-├── STYLE-GUIDE.md                    # Writing standards for KB articles
+├── STYLE-GUIDE.md                    # Design conventions for building REDCap projects (alignment, longitudinal setup, etc.)
 └── README.md
 ```
 
@@ -53,8 +53,14 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-AT-EM` | Action Tags — External Module extensions |
 | `RC-BL` | Branching Logic |
 | `RC-CALC` | Calculations & Special Functions |
+| `RC-CC` | Control Center (admin configuration & system management) |
+| `RC-CDIS` | Clinical Data Interoperability Services (FHIR/HL7 integrations) |
 | `RC-DAG` | Data Access Groups |
+| `RC-DDE` | Double Data Entry |
+| `RC-DDP` | Dynamic Data Pull |
 | `RC-DE` | Data Entry |
+| `RC-DQ` | Data Quality Module |
+| `RC-EM` | External Modules |
 | `RC-EXPRT` | Data Export & Custom Reports |
 | `RC-FD` | Form Design |
 | `RC-FDL` | Form Display Logic |
@@ -63,6 +69,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-INTG` | Integrations (Data Entry Trigger, etc.) |
 | `RC-LONG` | Longitudinal Project Setup |
 | `RC-MLM` | Multi-Language Management |
+| `RC-MOB` | REDCap Mobile App |
 | `RC-MYCAP` | MyCap (mobile data collection) |
 | `RC-NAV-REC` | Record Navigation |
 | `RC-NAV-UI` | Project Navigation UI |
@@ -71,7 +78,6 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-RAND` | Randomization |
 | `RC-SURV` | Surveys |
 | `RC-TXT` | Texting (SMS) |
-| `RC-UNCLASSIFIED` | Interim holding area for topics not yet in a dedicated article |
 | `RC-USER` | User Rights |
 
 The `KB-REFERENCE-MAP.md` file lists all articles, their prerequisites, cross-references, and flags topics that are referenced but not yet written.
