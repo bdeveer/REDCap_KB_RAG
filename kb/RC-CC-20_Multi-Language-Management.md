@@ -1,0 +1,158 @@
+# RC-CC-20 — Control Center: Multi-Language Management
+
+> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+
+**Multi-Language Management (MLM)** (**Control Center → Miscellaneous Modules → Multi-Language Management**) is where administrators define system-level languages that projects can use to translate their user interfaces. When a project adopts a system language, the translations are copied into the project and can be freely customized there.
+
+MLM can be turned on or off system-wide. When off, surveys and data entry forms are not translated in any project, and the MLM menu is not visible to project users.
+
+> **Note:** This page does not auto-translate text. It provides tools so that translations can be entered and managed manually (or optionally using the AI translation feature).
+
+A PDF manual for MLM is available from the REDCap Language Library (linked from the Control Center sidebar under Administrator Resources).
+
+---
+
+## What MLM Does (and Doesn't Do)
+
+| Behavior | Detail |
+|---|---|
+| **Scope** | Languages defined here are available for **UI translations only** — field labels, survey button text, validation error messages, etc. Data values are not translated. |
+| **Applies to projects** | Translations are copied into a project when the project adopts the language. Changes to system languages do **not** retroactively affect existing projects. |
+| **Per-project customization** | After importing a system language, project managers can freely customize translations within their project. |
+| **Base language** | The language shown to a user when no language preference has been set. Only one language can be designated as the base language. |
+
+---
+
+## Page Tabs
+
+### Languages Tab
+
+The main tab where system languages are listed and managed. Each language entry shows:
+
+| Column | Notes |
+|---|---|
+| **ID** | ISO language code (e.g., `en-US`, `es-ES`) |
+| **Display Name** | Name shown in language selectors — should be written in the target language (e.g., "Deutsch" for German) |
+| **%** | Approximate percentage of UI items that have been translated |
+| **Active** | Whether the language is active for use in projects |
+| **Visible** | Whether the language appears in language selectors |
+| **Base Language** | Whether this is the fallback language |
+| **Initial** | Language used to initialize new project languages |
+| **RTL** | Whether this is a right-to-left language |
+| **Actions** | Edit, export, delete |
+
+**Adding a new language** can be done in three ways:
+1. From an available system language (using the built-in library)
+2. From a file (JSON, CSV, or INI)
+3. From scratch (manual entry)
+
+**Language ID format:** Use ISO 639-1 codes for language and ISO 3166-1 for country (e.g., `en-US` for American English, `de-DE` for German). Only letters and hyphens are allowed (optionally numbers at the end). The Language ID is case-insensitive.
+
+**Available system language library** includes languages such as: en-US, it-IT, zh-CN, hi-IN, es-ES, ar-SA, fr-FR, bn-BD, pt-BR, ur-PK, ja-JP, pa-IN, de-DE, ko-KR, fil-PH, vi-VN, ht-HT, and uk-UA (among others).
+
+**Language Notes:** An optional free-text field for documenting the source of translations, context, or other relevant information. Notes are exported on demand only and never imported.
+
+**Deleting a language** removes all associated UI translations permanently. It does not affect any existing projects that had already imported that language.
+
+---
+
+### User Interface Tab
+
+This tab is where the actual translation strings are entered and managed for each language.
+
+**What can be translated:** REDCap's stock UI elements that appear on forms and surveys, including:
+- Field validation error messages
+- Survey navigation buttons (Next Page, Previous Page, Submit)
+- Common UI labels (Close, Cancel, Confirm, Print, etc.)
+- Branching logic/calculation error messages
+- Cookie policy dialog text
+- Field type-specific messages (sliders, checkboxes, dropdowns, etc.)
+- reCAPTCHA and Protected Email module strings
+
+**Translation categories:** All | Common | Field Types | Data Entry | Survey | Validation | Protected Email | reCAPTCHA
+
+**Filtering and tools:**
+- **Hide translated items** — filter to show only untranslated items, making it easier to find gaps.
+- **Highlight untranslated text** — enabled from the Settings tab; highlights untranslated items across the page as a visual audit tool.
+- **Translate using AI** — available per category; uses the AI translation feature to auto-fill untranslated strings (requires the AI features to be enabled; see RC-AI-03).
+
+**Subscribed system languages:** If a language is designated as a "subscribed" system language, its UI items cannot be edited directly. However, administrators can still provide **selective overrides** for individual items while leaving the rest managed by the subscription.
+
+**Saving:** Use **Save Changes** or the keyboard shortcut **CTRL-S**. The page does not auto-save.
+
+**Reviewing changed items:** If the original REDCap text for a UI element changes (e.g., after a REDCap upgrade), translations that may be outdated are flagged. Administrators can review flagged items and either update the translation or accept the existing translation as still valid.
+
+---
+
+### Usage Tab
+
+Provides an overview of MLM usage across all projects on the instance.
+
+- Click a **project name link** to open that project in a new browser tab.
+- Click a **PID** to navigate to that project's settings page.
+- Hover over usage **counts** to see more detail; click to navigate to that project's MLM setup page.
+
+**Status icons:**
+
+| Icon | Meaning |
+|---|---|
+| Deactivated by user | The project user has deactivated MLM for that project |
+| Enabled by admin | An administrator has enabled MLM for that project |
+| Deactivated by admin | An administrator has deactivated MLM for that project |
+| Debug mode on | Translation debug mode is active for that project |
+| Highlight translation fallbacks | Translation fallback highlighting is enabled |
+
+The table supports **search by project language or status icon label**. An **Export** button is available to download the usage data.
+
+---
+
+### Settings Tab
+
+System-level controls that apply to how projects can use MLM.
+
+| Setting | Notes |
+|---|---|
+| **Disable multi-language support for all projects** | Turns off MLM system-wide immediately. **WARNING: affects all projects.** |
+| **Require admin activation in projects** | When enabled, an administrator must explicitly enable MLM in each project before it can be used. Projects that already have MLM enabled are unaffected. |
+| **Disable project language initialization from a file** | Prevents project managers from importing a new language from a file. |
+| **Disable project language initialization from scratch** | Prevents project managers from creating a new language manually. |
+| **Force subscription to system language updates** | Locks project languages to receive and stay in sync with system language updates. |
+| **Disable UI overrides in subscribed system languages** | Prevents project managers from overriding individual UI strings in subscribed system languages. |
+| **Debug mode** | Outputs translation status messages to the browser console (F12). Useful for diagnosing unexpected translation behavior. |
+
+These settings can be overridden on a per-project basis within that project's own MLM settings page.
+
+---
+
+## MyCap Integration
+
+Languages can be marked as **active for MyCap** (the mobile companion app). This is configured separately from the forms/surveys activation — MyCap language support is **all-or-nothing** per language: a language is either fully active for MyCap or not available at all.
+
+> **Note:** MyCap requires that the Language ID follow the ISO format list. Using a non-standard ID may result in the language not appearing in the MyCap app.
+
+---
+
+## Exporting and Importing Languages
+
+**Export options:**
+- Optionally include translation prompts, default values, and language notes
+- Formats: **JSON**, **CSV** (comma, semicolon, or tab delimited)
+- Export reflects the currently saved state only — unsaved changes are not included
+
+**Import/update options:**
+- Keep existing translations (only fill in gaps)
+- Overwrite existing translations
+- Allow blank values to overwrite existing translations
+
+**Export/Import General Settings:** The export/import for general settings (tab-level configuration) is separate from language export/import and uses JSON format.
+
+---
+
+## Related Articles
+
+- RC-MLM-01 — Multi-Language Management *(project-level setup, translation workflow, and action tags)*
+- RC-CC-02 — General Configuration
+- RC-CC-06 — Modules & Services Configuration
+- RC-AI-03 — AI Translations
+- RC-AT-10 — Action Tags: Language Action Tags
+- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
