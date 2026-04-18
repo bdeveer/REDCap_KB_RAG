@@ -10,7 +10,7 @@ RC-CC-05
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-CC-01 — Notifications & Reporting; RC-CC-06 — Modules & Services Configuration; RC-DE-12 — Data Resolution Workflow |
+| **Related Topics** | RC-CC-01 — Notifications & Reporting; RC-CC-06 — Modules & Services Configuration; RC-DE-12 — Data Resolution Workflow; RC-INST-01 — Institution-Specific Settings & Policies |
 
 ---
 

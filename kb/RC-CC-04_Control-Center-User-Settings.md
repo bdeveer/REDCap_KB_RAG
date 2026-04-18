@@ -10,7 +10,7 @@ RC-CC-04
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-CC-02 — General Configuration; RC-CC-07 — Users & Access Management; RC-PROJ-01 — Project Lifecycle; RC-USER-01 — User Rights: Overview & Three-Tier Access |
+| **Related Topics** | RC-CC-02 — General Configuration; RC-CC-07 — Users & Access Management; RC-INST-01 — Institution-Specific Settings & Policies; RC-PROJ-01 — Project Lifecycle; RC-USER-01 — User Rights: Overview & Three-Tier Access |
 
 ---
 

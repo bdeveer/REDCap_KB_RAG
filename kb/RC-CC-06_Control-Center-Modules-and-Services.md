@@ -10,7 +10,7 @@ RC-CC-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview |
+| **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview; RC-INST-01 — Institution-Specific Settings & Policies |
 
 ---
 

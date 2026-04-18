@@ -299,13 +299,29 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-API-01 — REDCap API
+- RC-CC-02 — Control Center: General Configuration
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Setup
 - RC-DE-12 — Data Resolution Workflow
+- RC-EM-01 — External Modules Overview
 - RC-FD-02 — Online Designer
+- RC-INTG-01 — Data Entry Trigger
+- RC-MLM-01 — Multi-Language Management
+- RC-MOB-01 — REDCap Mobile App
+- RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-PIPE-16 — Smart Variables: MyCap
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-RAND-01 — Randomization Concepts
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-TXT-01 — Texting in REDCap: Setup & Usage
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
 
@@ -578,6 +594,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-03 — Data Dictionary
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-IMP-01 — Data Import Overview
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-NAV-UI-02 — Project Menu Reference
@@ -3036,6 +3053,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-03 — Import Records API
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-INST-01 — Institution-Specific Settings & Policies
 ---
 
 ### RC-DDP-01 — Dynamic Data Pull — Overview & User Guide
@@ -3165,6 +3183,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AI-03 — AI Translations
 - RC-CC-20 — Control Center: Multi-Language Management (Admin)
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
 
 ---
@@ -3204,6 +3223,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-CC-21 — Control Center: Overview & Navigation
 
 ---
@@ -3238,6 +3258,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 ### RC-CC-05 — Control Center: File Storage & Upload Settings
@@ -3252,6 +3273,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 ### RC-CC-06 — Control Center: Modules & Services Configuration
@@ -3278,6 +3300,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 ### RC-CC-07 — Control Center: Users & Access Management
@@ -3297,6 +3320,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 ### RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
@@ -3539,6 +3563,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-AT-11 — Action Tags: Mobile App Action Tags
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
@@ -4135,6 +4160,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-52 — Randomize Record API
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
 ---
@@ -4406,6 +4432,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-TXT-02 — Texting: Administrator Setup
 ---
