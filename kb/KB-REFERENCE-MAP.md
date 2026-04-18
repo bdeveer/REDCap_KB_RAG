@@ -28,6 +28,7 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-CC-18 | Control Center: Custom Application Links | RC-CC-18_Custom-Application-Links.md | ✅ Written 2026-04-17 |
 | RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md | ✅ Written 2026-04-17 |
 | RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md | ✅ Written 2026-04-17 |
+| RC-CC-21 | Control Center: Overview & Navigation | RC-CC-21_Control-Center-Overview.md | ✅ Written 2026-04-17 |
 | RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md | ✅ Written 2026-04-17 |
 | RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md | ✅ Written 2026-04-17 |
 | RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md | ✅ Written 2026-04-17 |
@@ -3169,7 +3170,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ### RC-CC-20 — Control Center: Multi-Language Management (Admin)
 
-**Prerequisites:** RC-CC-01 (Control Center overview)
+**Prerequisites:** RC-CC-21 (Control Center overview)
 
 **Outbound links:**
 - RC-MLM-01 — Multi-Language Management
@@ -3181,6 +3182,39 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-MLM-01 — Multi-Language Management *(mentions admin must enable MLM system-wide)*
+
+---
+
+### RC-CC-21 — Control Center: Overview & Navigation
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-02 — General System Configuration
+- RC-CC-03 — Security & Authentication
+- RC-CC-04 — User Settings & Defaults
+- RC-CC-05 — File Storage & Upload Settings
+- RC-CC-06 — Modules & Services Configuration
+- RC-CC-07 — Users & Access Management
+- RC-CC-08 — Home Page, Templates & Project Defaults
+- RC-CC-09 — To-Do List
+- RC-CC-10 — URL Shortener
+- RC-CC-11 — System Statistics
+- RC-CC-12 — User Activity Log
+- RC-CC-13 — User Activity Graphs
+- RC-CC-14 — Map of Users
+- RC-CC-15 — Top Usage Report
+- RC-CC-16 — Database Activity Monitor
+- RC-CC-17 — Database Query Tool
+- RC-CC-18 — Custom Application Links
+- RC-CC-19 — Publication Matching
+- RC-CC-20 — Multi-Language Management (Control Center settings)
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-MLM-01 — Multi-Language Management
+
+**Inbound links (referenced by):**
+- RC-CC-20 — Control Center: Multi-Language Management (Admin) *(listed as prerequisite)*
 
 ---
 
