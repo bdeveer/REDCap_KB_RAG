@@ -22,6 +22,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-03 — Data Dictionary
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-LONG-01 — Longitudinal Project Setup
+- RC-PROJ-02 — Project Setup Checklist
 
 **Inbound links (referenced by):**
 - RC-CC-04 — Control Center: User Settings & Defaults
@@ -62,7 +63,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 **Note:** Dependency-ordered setup checklist covering all phases of project configuration from creation through go-live. Applies to all project types; longitudinal, survey, DAG, and randomization steps are clearly marked as conditional.
 
@@ -80,7 +81,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-04 — Piping in Emails and Notifications
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-PIPE-14 — Smart Variables: Project Dashboards
 
 **Note:** Covers creating and configuring project dashboards, adding widget content (text, charts, aggregate functions, tables), making dashboards public, access codes, and distributing dashboard links via surveys, alerts, and emails. Distinct from the Record Status Dashboard (RC-NAV-REC-04).
 
@@ -107,6 +109,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-MLM-01 — Multi-Language Management
 - RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-PIPE-16 — Smart Variables: MyCap
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-RAND-01 — Randomization Concepts
@@ -2162,7 +2165,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-CC-06 — Control Center: Modules & Services Configuration
 
 ---
 
@@ -2274,7 +2277,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -3104,6 +3108,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-CC-02 — Control Center: General System Configuration
 - RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-DDE-01 — Double Data Entry
+- RC-DE-07 — Computer Adaptive Tests (CAT)
 - RC-INTG-01 — Data Entry Trigger
 - RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-01 — MyCap: Overview & Enabling
@@ -3582,10 +3588,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** *(none listed)*
 
 **Outbound links:**
-*(None)*
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 ---
 
@@ -3594,10 +3604,15 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
-*(None)*
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 ---
 
@@ -3606,10 +3621,15 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
-*(None)*
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 ---
 
@@ -3618,9 +3638,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
-*(None)*
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 
 **Inbound links (referenced by):**
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-PROJ-03 — Project Dashboards
 
 ---
@@ -3633,6 +3658,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-02 — Basic Data Entry
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MOB-01 — REDCap Mobile App
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
@@ -3647,14 +3673,17 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-API-01 — REDCap API
+- RC-DDE-01 — Double Data Entry
 - RC-DE-02 — Basic Data Entry
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MOB-01 — REDCap Mobile App
+- RC-PROJ-03 — Project Dashboards
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-NAV-UI-01 — Project Navigation UI
 
 ---
 
@@ -3721,6 +3750,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-PIPE-06 — Smart Variables: Record
+- RC-PIPE-13 — Smart Variables: Randomization
+- RC-PIPE-15 — Smart Variables: Public Reports
+- RC-PIPE-17 — Smart Variables: Miscellaneous
 
 **Inbound links (referenced by):**
 - RC-ALERT-01 — Alerts & Notifications: Setup
@@ -3804,7 +3837,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-05 — Smart Variables: User
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PIPE-03 — Smart Variables Overview
 
 ---
 
@@ -3922,7 +3955,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PIPE-03 — Smart Variables Overview
+- RC-RAND-03 — Working with & Managing Randomization
 
 ---
 
@@ -3934,6 +3968,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
 - RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
+- RC-PROJ-03 — Project Dashboards
 
 **Inbound links (referenced by):**
 - RC-PROJ-03 — Project Dashboards
@@ -3951,7 +3986,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PIPE-03 — Smart Variables Overview
 
 ---
 
@@ -3981,7 +4016,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 
 **Inbound links (referenced by):**
-*(None yet)*
+- RC-PIPE-03 — Smart Variables Overview
 
 ---
 
@@ -4028,6 +4063,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-PIPE-13 — Smart Variables: Randomization
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
 
