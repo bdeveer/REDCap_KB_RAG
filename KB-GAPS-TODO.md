@@ -13,6 +13,25 @@ These articles are referenced by existing KB articles or skills but do not yet e
 **Domain slug:** CC (new)
 **What to cover:** Determine article breakdown before starting — likely includes: overview of the Control Center, user account management, project approval workflow, external module management, system configuration settings, and usage/audit monitoring. Scope and slug numbering TBD.
 
+**Progress (sourced from Control Center HTML pages, REDCap v16.1.3):**
+- ✅ RC-CC-01 — Notifications & Reporting (main dashboard / index page) — written 2026-04-17
+- ✅ RC-CC-03 — Security & Authentication Configuration — written 2026-04-17
+- ✅ RC-CC-09 — To-Do List — written 2026-04-17
+- ✅ RC-CC-10 — URL Shortener — written 2026-04-17
+- ✅ RC-CC-11 — System Statistics — written 2026-04-17
+- ✅ RC-CC-12 — User Activity Log — written 2026-04-17
+- ✅ RC-CC-13 — User Activity Graphs — written 2026-04-17
+- ✅ RC-CC-14 — Map of Users — written 2026-04-17
+- ✅ RC-CC-15 — Top Usage Report — written 2026-04-17
+- ✅ RC-CC-16 — Database Activity Monitor — written 2026-04-17
+- ✅ RC-CC-17 — Database Query Tool — written 2026-04-17
+- ⚠️ RC-CC-02 — General System Configuration (no HTML source provided yet)
+- ⚠️ RC-CC-04 — User Settings & Defaults (no HTML source provided yet)
+- ⚠️ RC-CC-05 — File Storage & Upload Settings (no HTML source provided yet)
+- ⚠️ RC-CC-06 — Modules & Services Configuration (no HTML source provided yet)
+- ⚠️ RC-CC-07 — Users & Access Management (no HTML source provided yet)
+- ⚠️ RC-CC-08 — Home Page, Templates & Project Defaults (no HTML source provided yet)
+
 ---
 
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
@@ -83,4 +102,4 @@ These were previously marked ⚠️ but have since been resolved:
 
 - RC-PROJ-02 (ID) was used for "Project Setup Checklist" — the Project Dashboards article has been reassigned to RC-PROJ-03.
 
-*Last updated: 2026-04-17 (RC-DDE-01 resolved — Double Data Entry article written)*
+*Last updated: 2026-04-17 (10 new RC-CC articles written from HTML source pages v16.1.3: RC-CC-01, RC-CC-09 through RC-CC-17)*

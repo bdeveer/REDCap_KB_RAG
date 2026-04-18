@@ -8,6 +8,30 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
+| RC-CC-01 | Control Center: Notifications & Reporting (Dashboard) | RC-CC-01_Control-Center-Notifications-and-Reporting.md | ✅ Written 2026-04-17 |
+| RC-CC-02 | Control Center: General System Configuration | RC-CC-02_Control-Center-General-Configuration.md | ✅ Written 2026-04-17 |
+| RC-CC-03 | Control Center: Security & Authentication | RC-CC-03_Control-Center-Security-and-Authentication.md | ✅ Written 2026-04-17 |
+| RC-CC-04 | Control Center: User Settings & Defaults | RC-CC-04_Control-Center-User-Settings.md | ✅ Written 2026-04-17 |
+| RC-CC-05 | Control Center: File Storage & Upload Settings | RC-CC-05_Control-Center-File-Storage-Settings.md | ✅ Written 2026-04-17 |
+| RC-CC-06 | Control Center: Modules & Services Configuration | RC-CC-06_Control-Center-Modules-and-Services.md |
+| RC-CC-07 | Control Center: Users & Access Management | RC-CC-07_Control-Center-User-Management.md | ✅ Written 2026-04-17 |
+| RC-CC-08 | Control Center: Home Page, Templates & Project Defaults | RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md | ✅ Written 2026-04-17 |
+| RC-CC-09 | Control Center: To-Do List | RC-CC-09_To-Do-List.md | ✅ Written 2026-04-17 |
+| RC-CC-10 | Control Center: URL Shortener | RC-CC-10_URL-Shortener.md | ✅ Written 2026-04-17 |
+| RC-CC-11 | Control Center: System Statistics | RC-CC-11_System-Statistics.md | ✅ Written 2026-04-17 |
+| RC-CC-12 | Control Center: User Activity Log | RC-CC-12_User-Activity-Log.md | ✅ Written 2026-04-17 |
+| RC-CC-13 | Control Center: User Activity Graphs | RC-CC-13_User-Activity-Graphs.md | ✅ Written 2026-04-17 |
+| RC-CC-14 | Control Center: Map of Users | RC-CC-14_Map-of-Users.md | ✅ Written 2026-04-17 |
+| RC-CC-15 | Control Center: Top Usage Report | RC-CC-15_Top-Usage-Report.md | ✅ Written 2026-04-17 |
+| RC-CC-16 | Control Center: Database Activity Monitor | RC-CC-16_Database-Activity-Monitor.md | ✅ Written 2026-04-17 |
+| RC-CC-17 | Control Center: Database Query Tool | RC-CC-17_Database-Query-Tool.md | ✅ Written 2026-04-17 |
+| RC-CC-18 | Control Center: Custom Application Links | RC-CC-18_Custom-Application-Links.md | ✅ Written 2026-04-17 |
+| RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md | ✅ Written 2026-04-17 |
+| RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md | ✅ Written 2026-04-17 |
+| RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md | ✅ Written 2026-04-17 |
+| RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md | ✅ Written 2026-04-17 |
+| RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md | ✅ Written 2026-04-17 |
+| RC-CDIS-04 | CDP vs CDM: Feature Comparison | RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md | ✅ Written 2026-04-17 |
 | RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
@@ -130,6 +154,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-IMP-03 | CSV Upload Reference: All Bulk Upload Options in REDCap | RC-IMP-03_CSV-Upload-Reference.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
+| RC-DDP-01 | Dynamic Data Pull — Overview & User Guide | RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md |
+| RC-DDP-02 | Dynamic Data Pull — Admin Setup & Technical Specs | RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
 | RC-MLM-01 | Multi-Language Management | RC-MLM-01_Multi-Language-Management.md |
@@ -3010,6 +3036,35 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-DDP-01 — Dynamic Data Pull — Overview & User Guide
+
+**Prerequisites:** RC-DE-01 — Record Creation and Record Home Page; RC-NAV-REC-04 — Record Status Dashboard
+
+**Outbound links:**
+- RC-DDP-02 — Dynamic Data Pull: Admin Setup & Technical Specs
+- RC-NAV-REC-04 — Record Status Dashboard
+- RC-DE-01 — Record Creation and Record Home Page
+- RC-USER-02 — User Rights: Adding Users and Managing Roles
+
+**Inbound links (referenced by):**
+- RC-DDP-02 — Dynamic Data Pull: Admin Setup & Technical Specs
+
+---
+
+### RC-DDP-02 — Dynamic Data Pull — Admin Setup & Technical Specs
+
+**Prerequisites:** RC-DDP-01 — Dynamic Data Pull: Overview & User Guide
+
+**Outbound links:**
+- RC-DDP-01 — Dynamic Data Pull: Overview & User Guide
+- RC-INTG-01 — Data Entry Trigger
+- RC-USER-02 — User Rights: Adding Users and Managing Roles
+
+**Inbound links (referenced by):**
+- RC-DDP-01 — Dynamic Data Pull: Overview & User Guide
+
+---
+
 ### RC-LONG-01 — Longitudinal Project Setup
 
 **Prerequisites:** RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI
@@ -3107,7 +3162,25 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-AI-03 — AI Translations
+- RC-CC-20 — Control Center: Multi-Language Management (Admin)
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
+
+---
+
+### RC-CC-20 — Control Center: Multi-Language Management (Admin)
+
+**Prerequisites:** RC-CC-01 (Control Center overview)
+
+**Outbound links:**
+- RC-MLM-01 — Multi-Language Management
+- RC-CC-02 — General Configuration
+- RC-CC-06 — Modules & Services Configuration
+- RC-AI-03 — AI Translations
+- RC-AT-10 — Action Tags: Language Action Tags
+- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
+
+**Inbound links (referenced by):**
+- RC-MLM-01 — Multi-Language Management *(mentions admin must enable MLM system-wide)*
 
 ---
 
