@@ -54,16 +54,17 @@ When in doubt, ask rather than decide unilaterally.
 
 ---
 
-## Step 2: Read the Reference Map & Determine the Article ID
+## Step 2: Read the Reference Files & Determine the Article ID
 
-Before assigning an ID, read:
+Before assigning an ID, read both:
 
 ```
-kb/KB-REFERENCE-MAP.md
+meta/KB-INDEX.md
+meta/KB-CROSS-REFS.md
 ```
 
-Use the Reference Map to:
-- Confirm the next available number in the relevant domain
+Use these to:
+- Confirm the next available number in the relevant domain (from the index)
 - Check whether any articles the new article will reference are already written (vs. marked ⚠️ as missing)
 - Identify articles that should gain an inbound link to the new article once it's added
 
@@ -200,11 +201,11 @@ Do not explain the entire article back to the user — they can read the documen
 
 ---
 
-## Updating KB-REFERENCE-MAP.md
+## Updating the Reference Files
 
-After the article is written and saved, update `kb/KB-REFERENCE-MAP.md` in place. Make all three changes in a single edit:
+After the article is written and saved, update both `meta/KB-INDEX.md` and `meta/KB-CROSS-REFS.md`. Make all three changes — ideally two edits, one per file:
 
-### 1. Add to the Article Index table
+### 1. Add to the Article Index table — edit `meta/KB-INDEX.md`
 
 Insert a new row in alphabetical/numerical order by Article ID:
 
@@ -214,7 +215,7 @@ Insert a new row in alphabetical/numerical order by Article ID:
 
 Note: the filename in the index uses `.md` (the RAG corpus version), not `.docx`.
 
-### 2. Add a Per-Article Reference Details section
+### 2. Add a Per-Article Reference Details section — edit `meta/KB-CROSS-REFS.md`
 
 Insert a new `###` section in document order (matching the Article Index order). Use this structure:
 
@@ -233,9 +234,9 @@ Insert a new `###` section in document order (matching the Article Index order).
 
 Mark any outbound link target that doesn't exist yet in the corpus with ⚠️.
 
-### 3. Update inbound links of referenced articles
+### 3. Update inbound links of referenced articles — edit `meta/KB-CROSS-REFS.md`
 
-For every article the new article references, find its Per-Article Reference Details section and add the new article to its **Inbound links** list. If the new article is a prerequisite of another existing article, note that too.
+For every article the new article references, find its Per-Article Reference Details section in `meta/KB-CROSS-REFS.md` and add the new article to its **Inbound links** list. If the new article is a prerequisite of another existing article, note that too.
 
 ---
 

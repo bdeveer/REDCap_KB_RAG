@@ -49,16 +49,16 @@ This convention reserves the standard sequential numbering (e.g., `RC-AT-01` thr
 
 Before searching, identify: What REDCap feature or concept is this about? Which domain(s) does it touch? Are there secondary concepts involved (e.g., a question about branching logic on checkboxes touches both BL and FD)?
 
-### Step 2 — Consult KB-REFERENCE-MAP.md
+### Step 2 — Consult the Article Index
 
-Read `kb/KB-REFERENCE-MAP.md`. It contains:
-- **Article Index** — a table of all articles with IDs, titles, and filenames
-- **Per-Article Reference Details** — prerequisites, outbound links, and inbound links for each article
+Read `meta/KB-INDEX.md`. It contains the article index table — all articles with IDs, titles, and filenames.
 
 Use this to:
 - Confirm which articles exist for a domain
-- Find related articles you might not think of from the title alone (follow the cross-references)
+- Identify relevant articles by title and ID
 - Check if a topic is covered (some articles are ⚠️ marked as not yet written)
+
+Note: per-article cross-reference details (prerequisites, outbound/inbound links) are in `meta/KB-CROSS-REFS.md` — load that file only if you need to trace dependencies between articles.
 
 ### Step 3 — Select articles to read
 

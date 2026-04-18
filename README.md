@@ -11,8 +11,10 @@ This repo supports an LLM-powered REDCap assistant. Rather than feeding raw docu
 ```
 REDCap_KB_RAG/
 ├── kb/                               # Markdown KB articles (RAG-ready) — 204 articles
-│   ├── KB-REFERENCE-MAP.md                # Cross-reference index of all articles
 │   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (204 articles)
+├── meta/                             # Navigation & cross-reference metadata (not for RAG indexing)
+│   ├── KB-INDEX.md                        # Article index: ID → Title → Filename (load for topic lookup)
+│   └── KB-CROSS-REFS.md                   # Per-article prerequisites, outbound/inbound links, changelog (load only when building/updating articles)
 ├── claude skills/
 │   ├── kb-creation/                       # Skill: build new KB articles from .docx outlines
 │   ├── kb-update/                         # Skill: update or correct existing KB articles

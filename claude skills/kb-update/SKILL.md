@@ -39,7 +39,7 @@ If the input is ambiguous about what it's describing, ask one clarifying questio
 
 ## Step 2: Find candidate articles
 
-Read `kb/KB-REFERENCE-MAP.md` to identify which existing articles might cover the same topic.
+Read `meta/KB-INDEX.md` to identify which existing articles might cover the same topic.
 
 Then read the 1–3 most likely candidates in full. Look for:
 - Does the existing article already cover this content (possibly just needs correction)?
@@ -80,7 +80,7 @@ If the input maps to one or more existing articles, make targeted edits.
 | Adding a new procedure or option | Add to the relevant procedural section (3+) |
 | Adding a Q&A pair | Append to the Common Questions section |
 | Adding a known mistake/gotcha | Append to the Common Mistakes & Gotchas section |
-| New cross-reference | Add to Related Articles; update KB-REFERENCE-MAP inbound/outbound links |
+| New cross-reference | Add to Related Articles; update `meta/KB-CROSS-REFS.md` inbound/outbound links |
 | Yale-specific policy | Add or update the Yale-specific callout at the relevant point |
 
 ### Rules for edits
@@ -119,16 +119,16 @@ Don't create new articles silently — always confirm first.
 
 ---
 
-## Step 4: Update KB-REFERENCE-MAP.md
+## Step 4: Update the Reference Files
 
-After any change, update `kb/KB-REFERENCE-MAP.md` if:
+After any change, update the appropriate file(s) in `meta/`:
 
-- A new cross-reference was added → update outbound links of the edited article **and** inbound links of the referenced article
-- The article title changed → update the Article Index table
-- A new article was created → follow the kb-builder's Reference Map update procedure (add to index, add per-article section, update inbound links of referenced articles)
-- An existing ⚠️ gap was filled → remove the ⚠️ marker from any articles that referenced the now-written article
+- **Article title changed** → update `meta/KB-INDEX.md` (the Article Index table)
+- **New cross-reference added** → load `meta/KB-CROSS-REFS.md` and update outbound links of the edited article **and** inbound links of the referenced article
+- **New article created** → follow the kb-builder's Reference Map update procedure: add to the index in `meta/KB-INDEX.md`, add the per-article section in `meta/KB-CROSS-REFS.md`, and update inbound links of referenced articles in `meta/KB-CROSS-REFS.md`
+- **Existing ⚠️ gap filled** → load `meta/KB-CROSS-REFS.md` and remove the ⚠️ marker from any articles that referenced the now-written article
 
-If nothing in the cross-reference structure changed, no Reference Map update is needed — say so explicitly so the user knows it was checked.
+Only load `meta/KB-CROSS-REFS.md` when cross-reference structure actually needs to change — for title-only edits, `meta/KB-INDEX.md` is sufficient. If nothing changed, say so explicitly.
 
 ---
 
@@ -137,6 +137,6 @@ If nothing in the cross-reference structure changed, no Reference Map update is 
 Briefly state:
 - Which article(s) were modified (ID + title)
 - What type of change was made (correction, addition, new article, etc.)
-- Whether the KB-REFERENCE-MAP was updated and why (or why not)
+- Whether `meta/KB-INDEX.md` or `meta/KB-CROSS-REFS.md` was updated and why (or why not)
 
 Don't explain every sentence you changed — the user can read the document. Keep the summary to 2–4 sentences.
