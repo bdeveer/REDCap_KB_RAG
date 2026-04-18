@@ -4,29 +4,32 @@ A structured knowledge base of REDCap documentation articles, built for ingestio
 
 ## Purpose
 
-This repo supports an LLM-powered REDCap assistant at Yale. Rather than feeding raw documentation into the model, each KB article covers a single, well-scoped concept and is formatted to maximize retrieval accuracy and response quality.
+This repo supports an LLM-powered REDCap assistant. Rather than feeding raw documentation into the model, each KB article covers a single, well-scoped concept and is formatted to maximize retrieval accuracy and response quality.
 
 ## Repo Structure
 
 ```
 REDCap_KB_RAG/
-├── kb/                               # Markdown KB articles (RAG-ready) — 158 articles
-│   ├── KB-REFERENCE-MAP.md           # Cross-reference index of all articles
-│   └── RC-[DOMAIN]-[NN]_...          # Individual KB articles
+├── kb/                               # Markdown KB articles (RAG-ready) — 204 articles
+│   ├── KB-REFERENCE-MAP.md                # Cross-reference index of all articles
+│   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (204 articles)
 ├── claude skills/
-│   ├── kb-creation/                  # Skill: build new KB articles from .docx outlines
-│   ├── kb-update/                    # Skill: update or correct existing KB articles
-│   ├── kb-update-workspace/          # Skill: update articles using workspace-mounted files
-│   ├── kb-search/                    # Skill: search and retrieve KB articles by topic
-│   ├── redcap-codebook-reader/       # Skill: summarize a project from a Codebook PDF or DD CSV
-│   ├── redcap-data-dictionary/       # Skill: analyze REDCap Data Dictionary CSV files
-│   ├── redcap-dd-builder/            # Skill: build a new Data Dictionary from scratch
-│   ├── redcap-dd-fixer/              # Skill: fix errors in an uploaded Data Dictionary
-│   ├── redcap-longitudinal-builder/  # Skill: build longitudinal project CSVs (Arms, Events, Designations)
-│   ├── redcap-longitudinal-structure/ # Skill: parse longitudinal structure from exported CSVs
-│   ├── redcap-syntax-builder/        # Skill: write REDCap expressions from a description
-│   ├── redcap-syntax-fixer/          # Skill: diagnose and fix broken REDCap expressions
-│   └── redcap-syntax-reader/         # Skill: explain and interpret REDCap expressions
+│   ├── kb-creation/                       # Skill: build new KB articles from .docx outlines
+│   ├── kb-update/                         # Skill: update or correct existing KB articles
+│   ├── kb-update-workspace/               # Skill: update articles using workspace-mounted files
+│   ├── kb-search/                         # Skill: search and retrieve KB articles by topic
+│   ├── redcap-codebook-reader/            # Skill: summarize a project from a Codebook PDF or DD CSV
+│   ├── redcap-data-dictionary/            # Skill: analyze REDCap Data Dictionary CSV files
+│   ├── redcap-dd-builder/                 # Skill: build a new Data Dictionary from scratch
+│   ├── redcap-dd-fixer/                   # Skill: fix errors in an uploaded Data Dictionary
+│   ├── redcap-longitudinal-builder/       # Skill: build longitudinal project CSVs (Arms, Events, Designations)
+│   ├── redcap-longitudinal-structure/     # Skill: parse longitudinal structure from exported CSVs
+│   ├── redcap-project-analyzer/           # Skill: audit a live REDCap project via API for design issues
+│   ├── redcap-syntax-builder/             # Skill: write REDCap expressions from a description
+│   ├── redcap-syntax-builder-workspace/   # Skill: syntax-builder variant for workspace-mounted files
+│   ├── redcap-syntax-fixer/               # Skill: diagnose and fix broken REDCap expressions
+│   ├── redcap-syntax-fixer-workspace/     # Skill: syntax-fixer variant for workspace-mounted files
+│   └── redcap-syntax-reader/              # Skill: explain and interpret REDCap expressions
 ├── KB-GAPS-TODO.md                   # Tracked knowledge gaps and planned articles
 ├── KB-SOURCE-ATTESTATION.md          # Source document provenance for KB articles
 ├── STYLE-GUIDE.md                    # Writing standards for KB articles
@@ -86,7 +89,7 @@ Each article is written for RAG retrieval using an 8-section template:
 7. **Prerequisites** — what the user needs to know first
 8. **Summary** — brief recap for retrieval context
 
-Articles are institution-agnostic in their core content so they can be reused across REDCap environments, though they are primarily maintained for Yale's deployment.
+Articles are institution-agnostic in their core content so they can be reused across REDCap environments.
 
 ## Claude Skills
 
@@ -104,8 +107,11 @@ The `claude skills/` directory contains Cowork skills that Claude uses to mainta
 | `redcap-dd-fixer` | Diagnose and fix errors in an uploaded Data Dictionary CSV |
 | `redcap-longitudinal-builder` | Build Arms, Events, and Instrument Designations CSVs for a longitudinal project |
 | `redcap-longitudinal-structure` | Parse and interpret longitudinal project structure from exported Arms/Events/Designations CSVs |
+| `redcap-project-analyzer` | Connect to the REDCap API and audit a live project for design issues, logic errors, and structural problems |
 | `redcap-syntax-builder` | Write a correct REDCap expression (branching logic, calc field, action tag) from a description |
+| `redcap-syntax-builder-workspace` | Same as redcap-syntax-builder, but works with fields from a workspace-mounted Data Dictionary |
 | `redcap-syntax-fixer` | Diagnose and fix broken REDCap expressions |
+| `redcap-syntax-fixer-workspace` | Same as redcap-syntax-fixer, but resolves field references against a workspace-mounted Data Dictionary |
 | `redcap-syntax-reader` | Explain and interpret what an existing REDCap expression does |
 
 ## Adding New Articles
