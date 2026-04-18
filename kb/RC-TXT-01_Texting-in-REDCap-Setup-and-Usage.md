@@ -10,7 +10,7 @@ RC-TXT-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-SURV-05 — Participant List and Manual Survey Invitations; RC-SURV-06 — Automated Survey Invitations; RC-ALERT-01 — Alerts and Notifications Setup; RC-TXT-02 — Texting: Administrator Setup |
+| **Related Topics** | RC-SURV-05 — Participant List and Manual Survey Invitations; RC-SURV-06 — Automated Survey Invitations; RC-ALERT-01 — Alerts and Notifications Setup; RC-TXT-02 — Texting: Administrator Setup; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -60,7 +60,7 @@ A condition that occurs when a participant has more than one active survey invit
 
 ## 3.1 Is texting available in your installation?
 
-Texting must be enabled at the system level by a REDCap administrator before any project can use it. Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
+Texting must be enabled at the system level by a REDCap administrator before any project can use it. Administrators configure Twilio and/or Mosio credentials and set access control in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06** and **RC-TXT-02** for the full admin setup process). Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
 
 > **Institution-specific:** Texting provider availability (Twilio, Mosio, or both) and permission levels vary by installation. Contact your REDCap administrator to confirm which providers are enabled at your institution and what access level is required to enable them on a project.
 
@@ -341,4 +341,5 @@ Overlapping invitations occur when a participant receives a second invitation be
 - RC-SURV-05 — Participant List and Manual Survey Invitations
 - RC-SURV-06 — Automated Survey Invitations
 - RC-ALERT-01 — Alerts and Notifications Setup
-- RC-TXT-02 — Texting: Administrator Setup
+- RC-TXT-02 — Texting: Administrator Setup (full admin setup: credentials, access control, provider configuration)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level Twilio/Mosio enablement and access permissions)

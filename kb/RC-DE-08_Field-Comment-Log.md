@@ -10,7 +10,7 @@ RC-DE-08
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow; RC-CC-02 — Control Center: General System Configuration |
 
 ---
 
@@ -192,10 +192,23 @@ When enabled, a pencil (edit) icon and a red X (delete) icon appear next to each
 
 ---
 
-# 10. Related Articles
+# 10. Administrator Configuration
+
+The Field Comment Log is available in all REDCap projects but has a system-level default setting that affects new projects. Administrators can configure whether the Field Comment Log is **enabled by default** for all newly created projects in the Control Center under System Configuration → General Configuration (see **RC-CC-02**, "Field Comment Log Default" setting).
+
+When set to enabled by default, every new project starts with the Field Comment Log active. Project administrators can change this per project from Project Setup → Additional Customizations.
+
+The Field Comment Log and the Data Resolution Workflow (RC-DE-12) are mutually exclusive — a project runs in one mode at a time. The system-level default affects which mode new projects start in, but the mode can always be changed at the project level.
+
+> **See also:** RC-CC-02 — Control Center: General System Configuration
+
+---
+
+# 11. Related Articles
 
 - RC-DE-02 — Basic Data Entry (foundational data entry skills)
 - RC-DE-04 — Editing Data & Audit Trail (related audit and annotation features)
 - RC-DE-05 — Field Validations (the field comment log is often used in conjunction with validation errors to document data issues)
 - RC-DE-12 — Data Resolution Workflow (the structured alternative to the Field Comment Log, with query tracking, assignment, and resolution metrics)
 - RC-FD-07 — Field Embedding (explains why embedded variables may lack a comment balloon)
+- RC-CC-02 — Control Center: General System Configuration (system-level Field Comment Log default for new projects)

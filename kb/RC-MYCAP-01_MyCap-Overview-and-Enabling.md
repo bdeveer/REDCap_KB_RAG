@@ -10,7 +10,7 @@ RC-MYCAP-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling; RC-MYCAP-04 — Participant Onboarding; RC-MOB-01 — REDCap Mobile App *(coming soon)* |
+| **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling; RC-MYCAP-04 — Participant Onboarding; RC-MOB-01 — REDCap Mobile App; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -127,7 +127,9 @@ These controls meet common institutional and IRB requirements for mHealth data c
 
 ## 6.1 Institutional Requirement
 
-MyCap must first be enabled at the institutional (server) level. If you do not see the MyCap option in your project, contact your REDCap administrator.
+MyCap must first be enabled at the institutional (server) level by a REDCap administrator in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). If you do not see the MyCap option in your project, contact your REDCap administrator.
+
+Administrators have an additional sub-setting that controls whether project users can enable MyCap themselves, or whether an administrator must do so per project.
 
 > **Institution-specific:** Whether MyCap is available by default or requires an administrator request varies by installation. Contact your REDCap administrator to confirm availability.
 
@@ -222,6 +224,7 @@ REDCap Multi-Language Management (MLM) is supported in MyCap. See RC-MYCAP-07 �
 - RC-MYCAP-06 — Active Tasks & Mobile Toolbox
 - RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links
 - RC-MYCAP-08 — Testing MyCap
-- RC-MOB-01 — REDCap Mobile App *(coming soon)*
+- RC-MOB-01 — REDCap Mobile App
 - RC-PIPE-16 — Smart Variables: MyCap
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level MyCap enable/disable and per-project access control)

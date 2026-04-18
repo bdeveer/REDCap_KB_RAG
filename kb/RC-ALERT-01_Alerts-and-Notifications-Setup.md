@@ -10,7 +10,7 @@ RC-ALERT-01
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-01 — Surveys – Basics; RC-ALERT-02 — Alert Management & Notification Log |
+| **Related Topics** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-01 — Surveys – Basics; RC-ALERT-02 — Alert Management & Notification Log; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -316,7 +316,23 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 ---
 
-# 8. Related Articles
+# 8. Administrator Configuration
+
+Several Alerts & Notifications behaviors are controlled by system-level settings in the Control Center (see **RC-CC-06** — Control Center: Modules & Services Configuration, Alerts & Notifications Settings section):
+
+- **Allow normal users to use project variables for email fields** — Controls whether the To/CC/BCC recipient fields can reference project fields containing email addresses. If this is disabled at the system level, dynamic email routing via project fields is unavailable to project users.
+- **Allow normal users to manually enter freeform email addresses** — Controls whether free-text email entry is permitted in recipient fields. Administrators can further restrict this by domain allowlist.
+- **Domain allowlist for freeform email entry** — If set, only email addresses at approved domains can be entered manually.
+- **Allow normal users to use project variables for phone fields** — Controls whether phone number fields for SMS alerts can reference project data fields.
+- **Allow normal users to enter freeform phone numbers** — Controls whether manual phone number entry is permitted for SMS alerts.
+
+If you find that certain recipient options are unavailable in your alert configuration (e.g., the "enter email address" option is greyed out), a system-level restriction is likely in place. Contact your REDCap administrator.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
+# 9. Related Articles
 
 - RC-ALERT-02 — Alert Management & Notification Log (managing multiple alerts, using the notification log)
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types (piping syntax used in alert subjects and message bodies)
@@ -326,3 +342,4 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements (logic syntax reference)
 - RC-SURV-01 — Surveys – Basics (survey fundamentals; alerts can send survey invitations)
 - RC-LONG-02 — Repeated Instruments & Events Setup (context for trigger limits in Step 1C)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level recipient field permissions for alerts)

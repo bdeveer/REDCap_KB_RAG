@@ -10,7 +10,7 @@ RC-LONG-02
 | **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
+| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
 
 ---
 
@@ -260,8 +260,21 @@ The button will not appear on the survey until both steps are complete. The "Rep
 ---
 
 
-# 11. Related Articles
+# 11. Administrator Configuration
 
+Whether project-level users can modify the repeating instruments and events configuration on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Normal Users to Modify Repeating Instruments & Events in Production").
+
+When this setting is disabled — which is the default in most instances — only REDCap administrators can change a project's repeating configuration while it is in Production status. Users who need this change must contact the REDCap support team.
+
+When the setting is enabled, users with Project Design and Setup rights can make repeating configuration changes in Production without administrator involvement.
+
+> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+
+---
+
+# 12. Related Articles
+
+- RC-CC-04 — Control Center: User Settings & Defaults (controls whether users can modify repeating setup in Production)
 - RC-LONG-01 — Longitudinal Project Setup (setting up arms, events, and instrument designations — prerequisite for longitudinal repeated setups)
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events (how instances appear during data entry)
 - RC-NAV-REC-02 — Longitudinal Mode & Arms (navigating longitudinal records)

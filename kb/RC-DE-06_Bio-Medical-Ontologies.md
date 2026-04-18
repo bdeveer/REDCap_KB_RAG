@@ -10,7 +10,7 @@ RC-DE-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-05 — Field Validations; RC-DE-02 — Basic Data Entry |
+| **Related Topics** | RC-DE-05 — Field Validations; RC-DE-02 — Basic Data Entry; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -122,8 +122,23 @@ LOINC is the standard vocabulary for laboratory tests, clinical observations, an
 
 ---
 
-# 7. Related Articles
+# 7. Administrator Configuration
+
+Bio-medical ontology field lookup depends on two system-level requirements that must be configured by a REDCap administrator:
+
+1. **Auto-Suggest for Biomedical Ontologies must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, no ontology lookup is available in any project.
+2. **A valid BioPortal API key must be entered** — The BioPortal integration requires an API key from [BioPortal](https://bioportal.bioontology.org/). This key is entered in the same Modules/Services Configuration page. Without a valid key, ontology lookups will fail even if the feature is enabled.
+3. **Outbound network access to BioPortal** — The REDCap server must be able to make HTTP requests to `https://data.bioontology.org/`. Servers in restricted-network environments may need a firewall rule added.
+
+If ontology fields are not appearing in your instruments or the lookup returns no results, contact your REDCap administrator to verify all three requirements.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
+# 8. Related Articles
 
 - RC-DE-05 — Field Validations (standard format-checking validations that accompany or complement ontology fields)
 - RC-DE-02 — Basic Data Entry (foundational data entry skills)
 - RC-DE-08 — Field Comment Log (how to document uncertainty when selecting an ontology term)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level ontology enablement and BioPortal API key)

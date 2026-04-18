@@ -4,35 +4,7 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-## Priority 3 — Out-of-scope references without a covering article
-
-### ⚠️ RC-CC-* — Control Center (Administrator Articles)
-
-**Why needed:** No articles cover REDCap from the administrator/Control Center perspective. This is a significant gap for any admin-facing KB use case.
-
-**Domain slug:** CC (new)
-**What to cover:** Determine article breakdown before starting — likely includes: overview of the Control Center, user account management, project approval workflow, external module management, system configuration settings, and usage/audit monitoring. Scope and slug numbering TBD.
-
-**Progress (sourced from Control Center HTML pages, REDCap v16.1.3):**
-- ✅ RC-CC-01 — Notifications & Reporting (main dashboard / index page) — written 2026-04-17
-- ✅ RC-CC-03 — Security & Authentication Configuration — written 2026-04-17
-- ✅ RC-CC-09 — To-Do List — written 2026-04-17
-- ✅ RC-CC-10 — URL Shortener — written 2026-04-17
-- ✅ RC-CC-11 — System Statistics — written 2026-04-17
-- ✅ RC-CC-12 — User Activity Log — written 2026-04-17
-- ✅ RC-CC-13 — User Activity Graphs — written 2026-04-17
-- ✅ RC-CC-14 — Map of Users — written 2026-04-17
-- ✅ RC-CC-15 — Top Usage Report — written 2026-04-17
-- ✅ RC-CC-16 — Database Activity Monitor — written 2026-04-17
-- ✅ RC-CC-17 — Database Query Tool — written 2026-04-17
-- ⚠️ RC-CC-02 — General System Configuration (no HTML source provided yet)
-- ⚠️ RC-CC-04 — User Settings & Defaults (no HTML source provided yet)
-- ⚠️ RC-CC-05 — File Storage & Upload Settings (no HTML source provided yet)
-- ⚠️ RC-CC-06 — Modules & Services Configuration (no HTML source provided yet)
-- ⚠️ RC-CC-07 — Users & Access Management (no HTML source provided yet)
-- ⚠️ RC-CC-08 — Home Page, Templates & Project Defaults (no HTML source provided yet)
-
----
+## Open Gaps
 
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
@@ -43,63 +15,180 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-## Priority 4 — No dedicated article yet
+## Maintenance Issues (Non-Gap)
 
-### ✅ RC-PROJ-03 — Project Dashboards *(resolved)*
+### ⚠️ RC-EM-01 & RC-EM-02 — Missing from KB-INDEX
 
-Covered by `kb/RC-PROJ-03_Project-Dashboards.md` (written 2026-04-17).
-
----
-
-### ✅ RC-DDE-01 — Double Data Entry *(resolved)*
-
-Covered by `kb/RC-DDE-01_Double-Data-Entry.md` (written 2026-04-17).
-
----
-
-## Priority 5 — Useful context for integrations and field data collection
-
-### ⚠️ RC-IMP-02 — Clinical Data Mart Integration
-
-**Why needed:** RC-IMP-01 lists Clinical Data Mart as an advanced import method and marks it out of scope. No existing article covers it.
-
-**Domain slug:** IMP (established)
-**What to cover:** What Clinical Data Mart is, how the integration works in REDCap (automated data pulls from an EHR/CDW), configuration requirements, typical use cases (clinical trial pre-population), limitations and data governance considerations
-**Note:** Highly institution-specific — only relevant if the local REDCap instance has CDM integration configured.
+`RC-EM-01_External-Modules-Overview-and-Manager.md` and `RC-EM-02_External-Modules-Installed-Catalog.md` exist in `kb/` but are **not listed in `meta/KB-INDEX.md`**. Add entries for both articles to the index.
 
 ---
 
 ## Already Exists — No Action Needed
 
-These were previously marked ⚠️ but have since been resolved:
+These were previously marked ⚠️ or are new additions since the last review. Listed roughly in order of when they were resolved.
 
-- RC-BL-05 — Branching Logic in Longitudinal Projects ✅ *(was Priority 3)*
-- RC-CALC-02 — Calculated Fields ✅ *(was Priority 3)*
-- RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅ *(was Priority 1)*
-- RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅ *(was Priority 2)*
+### Control Center (RC-CC)
+
+The full RC-CC series is written and on disk:
+
+- RC-CC-01 — Notifications & Reporting ✅
+- RC-CC-02 — General System Configuration ✅ *(was ⚠️)*
+- RC-CC-03 — Security & Authentication Configuration ✅
+- RC-CC-04 — User Settings & Defaults ✅ *(was ⚠️)*
+- RC-CC-05 — File Storage & Upload Settings ✅ *(was ⚠️)*
+- RC-CC-06 — Modules & Services Configuration ✅ *(was ⚠️)*
+- RC-CC-07 — Users & Access Management ✅ *(was ⚠️)*
+- RC-CC-08 — Home Page, Templates & Project Defaults ✅ *(was ⚠️)*
+- RC-CC-09 — To-Do List ✅
+- RC-CC-10 — URL Shortener ✅
+- RC-CC-11 — System Statistics ✅
+- RC-CC-12 — User Activity Log ✅
+- RC-CC-13 — User Activity Graphs ✅
+- RC-CC-14 — Map of Users ✅
+- RC-CC-15 — Top Usage Report ✅
+- RC-CC-16 — Database Activity Monitor ✅
+- RC-CC-17 — Database Query Tool ✅
+- RC-CC-18 — Custom Application Links ✅
+- RC-CC-19 — Publication Matching ✅
+- RC-CC-20 — Multi-Language Management ✅
+- RC-CC-21 — Control Center: Overview & Navigation ✅
+
+### Clinical Data Interoperability Services (RC-CDIS) — new domain
+
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup ✅
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage ✅
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage ✅ *(resolves RC-IMP-02 gap)*
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison ✅
+
+> **Note:** RC-IMP-02 (Clinical Data Mart Integration) was previously listed as a Priority 5 gap. It is now fully covered by the RC-CDIS domain, particularly RC-CDIS-03.
+
+### AI Tools (RC-AI) — new domain
+
+- RC-AI-01 — REDCap AI Tools: Overview & Security ✅
+- RC-AI-02 — AI Writing Tools ✅
+- RC-AI-03 — AI Translations ✅
+- RC-AI-04 — AI Summarization ✅
+
+### API (RC-API) — major expansion
+
+RC-API-01 was previously the only API article. The full API reference series (RC-API-02 through RC-API-56) now covers every API endpoint individually. ✅
+
+### Data Entry (RC-DE) — major expansion
+
+RC-DE-01 was previously the only DE article. The domain now covers:
+
+- RC-DE-02 — Basic Data Entry ✅
+- RC-DE-03 — Longitudinal Projects & DAGs ✅
+- RC-DE-04 — Editing Data & Audit Trail ✅
+- RC-DE-05 — Field Validations ✅
+- RC-DE-06 — Bio-Medical Ontologies ✅
+- RC-DE-07 — Computer Adaptive Tests (CAT) ✅
+- RC-DE-08 — Field Comment Log ✅
+- RC-DE-09 — Data Entry with Data Access Groups ✅
+- RC-DE-10 — Longitudinal & Repeated Data Entry ✅
+- RC-DE-11 — Instrument Save Options ✅
+- RC-DE-12 — Data Resolution Workflow ✅
+
+### Dynamic Data Pull (RC-DDP) — new domain
+
+- RC-DDP-01 — Dynamic Data Pull: Overview & User Guide ✅
+- RC-DDP-02 — Dynamic Data Pull: Admin Setup & Technical Specs ✅
+
+### External Modules (RC-EM) — new domain
+
+- RC-EM-01 — External Modules: Overview & Manager ✅ *(missing from KB-INDEX — see Maintenance Issues)*
+- RC-EM-02 — External Modules: Installed Catalog ✅ *(missing from KB-INDEX — see Maintenance Issues)*
+
+### Data Export & Reports (RC-EXPRT) — new domain
+
+- RC-EXPRT-01 — Data Export: Overview & Workflow ✅
+- RC-EXPRT-02 — Data Export: Export Formats ✅
+- RC-EXPRT-03 — Data Export: User Rights & Export Access ✅
+- RC-EXPRT-04 — Data Export: De-identification & Formatting Options ✅
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options ✅
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection ✅
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering ✅
+- RC-EXPRT-08 — Custom Reports: Management & Organization ✅
+
+### Form Design (RC-FD) — major expansion
+
+- RC-FD-01 — Form Design Overview ✅
+- RC-FD-02 — Online Designer ✅
+- RC-FD-03 — Data Dictionary ✅
+- RC-FD-04 — Instrument Library & Zip Files ✅
+- RC-FD-05 — Codebook ✅
+- RC-FD-06 — Online Designer – Instrument and Field Management ✅
+- RC-FD-07 — Field Embedding ✅
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques ✅ *(was Priority 3)*
+- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design ✅
+- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing ✅
+
+### Institution-Specific (RC-INST) — new domain
+
+- RC-INST-01 — Institution-Specific Settings & Policies ✅
+
+### Data Import (RC-IMP) — expansion
+
+- RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap ✅
+
+### Integration (RC-INTG) — new domain
+
+- RC-INTG-01 — Data Entry Trigger ✅
+
+### Navigation (RC-NAV-REC, RC-NAV-UI) — new domains
+
+- RC-NAV-REC-01 — Record Navigation Overview ✅
+- RC-NAV-REC-02 — Longitudinal Mode & Arms ✅
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events ✅
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links ✅
+- RC-NAV-UI-01 — Project Navigation UI ✅
+- RC-NAV-UI-02 — Project Menu Reference ✅
+
+### Piping & Smart Variables (RC-PIPE) — major expansion
+
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types ✅
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers ✅
+- RC-PIPE-03 — Smart Variables Overview ✅
+- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features ✅
+- RC-PIPE-05 through RC-PIPE-17 — Smart Variables (User, Record, Form, Survey, Event & Arm, Repeating, Aggregate Functions, Optional Parameters, Randomization, Project Dashboards, Public Reports, MyCap, Miscellaneous) ✅
+
+### Project (RC-PROJ)
+
+- RC-PROJ-02 — Project Setup Checklist ✅
+- RC-PROJ-03 — Project Dashboards ✅ *(was Priority 4)*
+
+### Texting (RC-TXT) — new domain
+
+- RC-TXT-01 — Texting in REDCap: Setup and Usage ✅
+- RC-TXT-02 — Texting: Administrator Setup ✅
+
+### Previously tracked (earlier resolved)
+
+- RC-BL-05 — Branching Logic in Longitudinal Projects ✅
+- RC-CALC-02 — Calculated Fields ✅
+- RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅
+- RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅
 - RC-LONG-01 — Longitudinal Project Setup ✅
 - RC-LONG-02 — Repeated Instruments & Events Setup ✅
-- RC-FDL-01 — Form Display Logic ✅ *(was Priority 3)*
-- RC-FD-08 — Data Dictionary Column Reference ✅
+- RC-FDL-01 — Form Display Logic ✅
 - RC-BL-01 through RC-BL-04 — Branching Logic series ✅
 - RC-RAND-01 through RC-RAND-03 — Randomization series ✅
 - RC-ALERT-01, RC-ALERT-02 — Alerts & Notifications ✅
 - RC-USER-01 through RC-USER-04 — User Rights series ✅
 - RC-DAG-01 — Data Access Groups ✅
-- RC-MLM-01 — Multi-Language Management ✅ *(was Priority 2)*
-- RC-ALERT-03 — Alternative Alert Delivery Types ✅ *(covered by RC-TXT-01 and RC-TXT-02)*
-- RC-API-01 — REDCap API ✅ *(was Priority 5)*
-- RC-PROJ-01 — Project Lifecycle: Status and Settings ✅ *(was Priority 4)*
-- RC-PROJ-03 — Project Dashboards ✅ *(was Priority 4)*
+- RC-MLM-01 — Multi-Language Management ✅
+- RC-API-01 — REDCap API ✅
+- RC-PROJ-01 — Project Lifecycle: Status and Settings ✅
 - RC-MYCAP-01 through RC-MYCAP-08 — Full MyCap series ✅
-- RC-DQ-01 — Data Quality Module ✅ *(was Priority 4)*
-- RC-MOB-01 — REDCap Mobile App ✅ *(was Priority 5; covers Mobile App with reference to MyCap series for participant-facing side)*
-- RC-DDE-01 — Double Data Entry ✅ *(was Priority 4)*
+- RC-DQ-01 — Data Quality Module ✅
+- RC-MOB-01 — REDCap Mobile App ✅
+- RC-DDE-01 — Double Data Entry ✅
 
 ---
 
 ## Notes
 
-- RC-PROJ-02 (ID) was used for "Project Setup Checklist" — the Project Dashboards article has been reassigned to RC-PROJ-03.
+- RC-PROJ-02 (ID) is used for "Project Setup Checklist."
+- RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-17 (10 new RC-CC articles written from HTML source pages v16.1.3: RC-CC-01, RC-CC-09 through RC-CC-17)*
+*Last updated: 2026-04-18 — Full reconciliation against kb/ and KB-INDEX. All CC articles now written. CDIS domain resolves the IMP-02 gap. RC-EM-01/EM-02 flagged as missing from KB-INDEX. Only open article gap: RC-DE-13.*

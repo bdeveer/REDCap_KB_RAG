@@ -13,7 +13,7 @@ RC-RAND-02
 | **Prerequisites** | RC-RAND-01 (Randomization Concepts & Terminology) — required. RC-LONG-01 (Longitudinal Projects), RC-RIGHTS-01 (User Rights & DAGs) — required if using those features. |
 | **REDCap Version** | 15.4.4+ |
 | **Last Reviewed** | 2025-01 |
-| **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs |
+| **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview
 
@@ -72,6 +72,7 @@ cause of model rebuilds.
 
   ------- ----------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------
   **✓**   **Pre-flight item**                                                                                               **Skip if...**
+  ☐       **Confirm Randomization is enabled system-wide** — verify with your REDCap administrator that the Randomization module is enabled in the Control Center (RC-CC-06). If the Randomization option does not appear in Project Setup, the module is disabled.   *Never — must be enabled before any project can use it*
   ☐       Decide: open (unblinded) or blinded randomization?                                                                *Never — this decision drives variable type and workflow*
   ☐       Decide: will you use stratification? If yes, list your strata (max 14, all must be single-choice field types)     *No stratification planned*
   ☐       Decide: will you use Data Access Groups (DAGs) for multi-site stratification?                                     *No DAGs in this project*
@@ -336,7 +337,13 @@ feature — verify your REDCap version supports it.
     \'rand\_group\'). Establish a naming convention before creating any
     randomization-related variables.
 
-# 8. Related Topics
+# 8. Administrator Configuration
+
+The Randomization module must be enabled at the system level before it can be enabled in any project. Administrators do this in the Control Center under System Configuration → Modules/Services Configuration. See **RC-CC-06** for details.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+# 9. Related Topics
 
 - **RC-RAND-01:** Randomization Concepts & Terminology — required
     prerequisite for this guide
@@ -350,7 +357,9 @@ feature — verify your REDCap version supports it.
 - **RC-LONG-01:** Longitudinal Projects — arm and event setup
     prerequisite for longitudinal randomization
 
-# 9. Version & Change Notes
+- **RC-CC-06:** Control Center: Modules & Services Configuration — system-level Randomization enable/disable
+
+# 10. Version & Change Notes
 
 | **REDCap Version** | **Notes** |
 | --- | --- |

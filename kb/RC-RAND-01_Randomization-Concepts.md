@@ -13,7 +13,7 @@ RC-RAND-01
 | **Prerequisites** | Completed foundational REDCap training: project setup, instruments, user rights, longitudinal mode basics |
 | **REDCap Version** | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
 | **Last Reviewed** | 2025-01 |
-| **Related Topics** | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs |
+| **Related Topics** | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview
 
@@ -235,7 +235,15 @@ before building your longitudinal framework:
     arm-switching is required, either use a single-arm design with
     branching logic, or perform randomization outside REDCap.
 
-# 7. Related Topics
+# 7. Administrator Configuration
+
+The Randomization module must be enabled at the system level by a REDCap administrator before it is available in any project. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, the Randomization option does not appear in Project Setup and the Randomize user right is not available.
+
+Once the module is enabled system-wide, randomization is enabled per project by turning on the **Randomization** option in Project Setup → Optional modules. User rights (Randomize and Set Up Randomization) are then assigned on the User Rights page.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+# 8. Related Topics
 
 - **RC-RAND-02:** Randomization Setup Guide — step-by-step
     configuration procedure
@@ -249,7 +257,9 @@ before building your longitudinal framework:
 - **RC-LONG-01:** Longitudinal Projects — prerequisite for
     multi-event randomization setup
 
-# 8. Version & Change Notes
+- **RC-CC-06:** Control Center: Modules & Services Configuration — system-level Randomization enable/disable
+
+# 9. Version & Change Notes
 
 | **REDCap Version** | **Notes** |
 | --- | --- |

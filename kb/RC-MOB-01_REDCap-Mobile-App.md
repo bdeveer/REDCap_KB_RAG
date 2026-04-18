@@ -11,7 +11,7 @@ RC-MOB-01
 | Version | 1.1 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-AT-11 — Action Tags: Mobile App Action Tags; RC-MYCAP-01 — MyCap: Overview & Enabling; RC-USER-01 — User Rights: Overview & Three-Tier Access |
+| Related Topics | RC-AT-11 — Action Tags: Mobile App Action Tags; RC-MYCAP-01 — MyCap: Overview & Enabling; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -129,7 +129,7 @@ Before any project can use the REDCap Mobile App, a REDCap administrator must en
 
 ## 5.1 Enable the Mobile App Module
 
-A REDCap administrator enables the Mobile App module in the REDCap Control Center under the **Mobile App** section. Once enabled, the module becomes available to all projects on the server.
+A REDCap administrator enables the Mobile App module in the REDCap Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). Once enabled, the module becomes available to all projects on the server.
 
 > **Institution-specific:** Whether the Mobile App module is already enabled and whether projects require administrator approval or a request form before use varies by installation. Contact your REDCap administrator to confirm.
 
@@ -402,3 +402,4 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-DAG-01 — Data Access Groups (DAG support in the Mobile App mirrors the user's server-side DAG assignment)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level Mobile App enable/disable and server-wide settings)

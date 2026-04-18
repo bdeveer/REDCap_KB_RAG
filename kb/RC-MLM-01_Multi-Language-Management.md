@@ -10,7 +10,7 @@ RC-MLM-01
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App |
+| **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App; RC-CC-20 — Control Center: Multi-Language Management |
 
 ---
 
@@ -18,7 +18,7 @@ RC-MLM-01
 
 Multi-Language Management (MLM) is a built-in REDCap feature that allows data entry forms and surveys to be displayed in multiple languages simultaneously. When MLM is enabled, respondents and data entry users see a language selector and can switch languages in real-time without losing or corrupting stored data. MLM covers field labels, choice labels, survey settings, alert messages, missing data code labels, PDF customizations, MyCap settings, and user interface text — but it does **not** translate content automatically. All translations must be provided by the project team. This article covers the full MLM workflow for project-level users: setting up languages, translating content, managing language selection behavior, and using MLM-specific action tags.
 
-> **Note:** MLM must be enabled at the system level by a REDCap administrator before it is available to projects. Contact your REDCap administrator if Multi-Language Management does not appear in your Applications menu.
+> **Note:** MLM must be enabled at the system level by a REDCap administrator before it is available to projects. This is configured in the Control Center under Miscellaneous Modules → Multi-Language Management (see **RC-CC-20**). Contact your REDCap administrator if Multi-Language Management does not appear in your Applications menu.
 
 ---
 
@@ -392,3 +392,4 @@ No. Switching languages in real-time only changes the display. Data already ente
 - RC-AT-09 — Action Tags: Calculations *(see RC-AT series for general action tag guidance)*
 - RC-AT-11 — Action Tags: Mobile App *(MyCap-specific action tags)*
 - RC-AI-03 — AI Translations *(AI-assisted translation integrates with MLM language IDs and display names)*
+- RC-CC-20 — Control Center: Multi-Language Management *(system-level MLM configuration: enabling MLM, managing system languages, setting access restrictions)*

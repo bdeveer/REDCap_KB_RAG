@@ -10,7 +10,7 @@ RC-EXPRT-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
+| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
 
 # 1. Overview
 
@@ -204,8 +204,21 @@ A: No. REDCap prevents duplicate variables in a report, regardless of which meth
 ---
 
 
-# 9. Related Articles
+# 9. Administrator Configuration
 
+Whether project-level users can make reports publicly accessible is controlled by a system-wide setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Reports to Be Made Public").
+
+Administrators can configure this permission to one of three levels: disabled entirely (no public reports allowed on the instance), allowed with admin approval (the request appears in the administrator's To-Do List before the public URL is activated), or allowed without approval (users can publish reports on their own). In some REDCap instances — particularly those operating under strict data privacy requirements — public reports are disabled entirely.
+
+If the public reports option does not appear in the report builder, the feature has been disabled at the system level. Contact your REDCap administrator to confirm whether public reports are permitted at your institution.
+
+> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+
+---
+
+# 10. Related Articles
+
+- RC-CC-04 — Control Center: User Settings & Defaults (controls whether public reports are permitted and whether admin approval is required)
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options (prerequisite — covers the built-in report options this article builds on)
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering (next article — filters, logic builder, live filters, and result ordering)
 - RC-EXPRT-08 — Custom Reports: Management & Organization (saving, copying, deleting, and organizing reports into folders)

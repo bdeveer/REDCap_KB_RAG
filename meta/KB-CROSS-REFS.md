@@ -16,6 +16,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-CALC-01 — Special Functions Reference
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-09 — Control Center: To-Do List
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
 - RC-INST-01 — Institution-Specific Settings & Policies
@@ -137,11 +139,13 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-02 — AI Writing Tools
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
+- RC-CC-06 — Control Center: Modules & Services Configuration
 
 **Inbound links (referenced by):**
 - RC-AI-02 — AI Writing Tools
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
+- RC-CC-06 — Control Center: Modules & Services Configuration
 
 ---
 
@@ -159,6 +163,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
+- RC-CC-06 — Control Center: Modules & Services Configuration
 
 ---
 
@@ -176,6 +181,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools
 - RC-AI-04 — AI Summarization
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-MLM-01 — Multi-Language Management
 ---
@@ -196,6 +202,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools
 - RC-AI-03 — AI Translations
+- RC-CC-06 — Control Center: Modules & Services Configuration
 
 ---
 
@@ -207,6 +214,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-02 — Alert Management & Notification Log
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-PIPE-03 — Smart Variables Overview
@@ -310,6 +318,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-51 — Export Repeating Instruments and Events API
 - RC-API-53 — Import Repeating Instruments and Events API
 - RC-API-52 — Randomize Record API
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-IMP-01 — Data Import Overview
@@ -2112,6 +2121,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-DE-02 — Basic Data Entry
 
 **Outbound links:**
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-DE-02 — Basic Data Entry
 - RC-DE-06 — Bio-Medical Ontologies
 - RC-DE-08 — Field Comment Log
@@ -2131,6 +2141,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-DE-05 — Field Validations
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DE-02 — Basic Data Entry
 - RC-DE-05 — Field Validations
 - RC-DE-08 — Field Comment Log
@@ -2145,6 +2156,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-DE-02 — Basic Data Entry
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DE-02 — Basic Data Entry
 - RC-DE-08 — Field Comment Log
 - RC-SURV-01 — Surveys – Basics
@@ -2159,6 +2171,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-DE-02 — Basic Data Entry
 
 **Outbound links:**
+- RC-CC-02 — Control Center: General System Configuration
 - RC-DE-02 — Basic Data Entry
 - RC-DE-04 — Editing Data & Audit Trail
 - RC-DE-05 — Field Validations
@@ -2417,6 +2430,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-API-01 — REDCap API
 - RC-API-38 — Export Reports API
+- RC-CC-04 — Control Center: User Settings & Defaults
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
@@ -2598,6 +2612,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-FD-01 — Form Design Overview
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
@@ -2835,6 +2850,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** None
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-DE-02 — Basic Data Entry
 - RC-LONG-02 — Repeated Instruments & Events Setup
@@ -2891,6 +2907,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-20 — Import Events API
 - RC-API-21 — Delete Events API
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-CC-04 — Control Center: User Settings & Defaults
 - RC-DE-03 — Longitudinal Projects & DAGs
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
@@ -2933,6 +2950,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-11 — Import Instrument-Event Mappings API
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-CC-04 — Control Center: User Settings & Defaults
 - RC-DE-03 — Longitudinal Projects & DAGs
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
@@ -2969,6 +2987,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-CC-20 — Control Center: Multi-Language Management
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
@@ -3014,8 +3033,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
-- RC-INST-01 — Institution-Specific Settings & Policies
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-DE-08 — Data Entry: Field Comment Log
+- RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
 ### RC-CC-03 — Control Center: Security & Authentication
@@ -3049,7 +3069,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 ---
 ### RC-CC-05 — Control Center: File Storage & Upload Settings
@@ -3072,6 +3096,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** None
 
 **Outbound links:**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-AI-02 — AI Writing Tools
+- RC-AI-03 — AI Translations
+- RC-AI-04 — AI Summarization
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-API-01 — REDCap API
 - RC-CC-02 — Control Center: General System Configuration
@@ -3085,13 +3113,27 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-TXT-02 — Texting: Administrator Setup
 
 **Inbound links (referenced by):**
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-API-01 — REDCap API
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-CC-18 — Control Center: Custom Application Links
 - RC-CC-19 — Control Center: Publication Matching
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-DE-06 — Bio-Medical Ontologies
+- RC-DE-07 — Computer Adaptive Tests (CAT)
+- RC-FD-04 — Instrument Library & Zip Files
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-INTG-01 — Data Entry Trigger
+- RC-MOB-01 — REDCap Mobile App
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-02 — Randomization Setup Guide
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-TXT-01 — Texting in REDCap: Setup and Usage
 
 ---
 ### RC-CC-07 — Control Center: Users & Access Management
@@ -3126,6 +3168,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-DE-05 — Field Validations
 
 ---
 ### RC-CC-09 — Control Center: To-Do List
@@ -3140,6 +3183,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 ---
 ### RC-CC-10 — Control Center: URL Shortener
@@ -3304,6 +3348,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-MLM-01 — Multi-Language Management
 
 ---
 ### RC-CC-21 — Control Center: Overview & Navigation
@@ -3344,6 +3389,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
@@ -3365,6 +3411,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** None
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
@@ -3943,6 +3990,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** *(none listed — recommended before RC-RAND-02)*
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
@@ -3961,6 +4009,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-RAND-01; RC-LONG-01 (if using longitudinal features); RC-DAG-01 (if using DAGs)
 
 **Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
@@ -3995,6 +4044,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-SURV-02 — Survey Settings: Basic Options & Design
@@ -4173,6 +4223,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-AT-01 — Action Tags: Overview
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-FD-02 — Online Designer
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
@@ -4216,6 +4267,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-06 — Automated Survey Invitations (ASI)

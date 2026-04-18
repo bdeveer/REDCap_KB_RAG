@@ -10,7 +10,7 @@ RC-CC-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview; RC-INST-01 — Institution-Specific Settings & Policies |
+| **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview; RC-INST-01 — Institution-Specific Settings & Policies; RC-AI-01 — REDCap AI Tools: Overview & Security; RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization |
 
 ---
 
@@ -181,3 +181,53 @@ An optional enhancement to the record locking feature that generates a PDF confi
 <!-- PLACEHOLDER: Insert annotated screenshot of e-Consent PDF Storage section -->
 
 When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location (same options as the File Upload Settings storage configuration). Leave disabled unless required for regulatory compliance.
+
+---
+
+# AI Services
+
+<!-- PLACEHOLDER: Insert annotated screenshot of AI Services section -->
+
+REDCap can use Artificial Intelligence (AI) to augment existing features. The AI services connect to an AI provider over a private endpoint that your institution controls, ensuring data security and privacy.
+
+**Enable system-wide AI services?**
+Master toggle for all AI features. Options are:
+- *Disabled*
+- *Enabled using OpenAI Service*
+- *Enabled using Gemini AI Service*
+
+Once the master toggle is on, individual AI features below become active. System-wide configuration values can be overridden at the project level on the Edit Project Settings page for individual projects.
+
+## Individual AI Features
+
+| Feature | Behavior when enabled |
+| --- | --- |
+| **Feature 1 — Writing Tools** | A magic wand icon appears in the toolbar of all rich text editors throughout REDCap (except the @RICHTEXT action tag). Users can alter and enhance text including changing length, tone, and reading level. See RC-AI-02 |
+| **Feature 2 — Summarize free-form text on reports** | A magic wand icon appears next to free-form text fields on reports, allowing users to have the AI service summarize field values across the report. See RC-AI-04 |
+| **Feature 3 — Auto-translate on MLM setup page** | On the Multi-Language Management page, a button appears that auto-translates all untranslated text in one click. See RC-AI-03 |
+
+## OpenAI Configuration
+
+Three deployment options are supported:
+
+**Azure OpenAI (cloud-hosted) — preferred:** REDCap's AI services can use the Microsoft Azure OpenAI deployment of ChatGPT via a private virtual network endpoint. API Endpoint URL format: `https://{your-resource-name}.openai.azure.com/openai/deployments/[AI_DEPLOYMENT_NAME]`. The `[AI_DEPLOYMENT_NAME]` is the custom name given when deploying the resource (not the model name like `gpt-4o`). The Model Version field should match the `api-version` shown in the Azure Endpoint Target URI (e.g., `2024-08-01-preview`).
+
+**Additional cloud-hosted OpenAI-compatible services:** Many cloud AI services expose an OpenAI-compatible API, including Mistral AI, Nebius AI Studio, GroqCloud, and Together AI. Each has its own endpoint URL and API key. REDCap/Vanderbilt has no affiliation with these services; review their security documentation before enabling.
+
+**Locally-hosted OpenAI-compatible services:** Run an OpenAI-compatible server on-premises using tools such as LM Studio, LocalAI, GPT4All, or Ollama. These allow locally-hosted open-source language models. Provide the local endpoint URL; the API key field may be left blank if not required by the local service.
+
+**OpenAI configuration fields:**
+- **API Endpoint URL** — Full endpoint URL for the deployed model
+- **API Key** — Secret key for authentication (may be blank for local deployments)
+- **API Model Version/Name** — For Azure: the `api-version` string (e.g., `2025-01-01-preview`). For other services: the model name or identifier (e.g., `mistral-tiny`, `hermes-3-llama-3.2-3b`)
+
+## Gemini AI Configuration
+
+Google Gemini (cloud-hosted) can be used as an alternative to OpenAI. Obtain an API key from Google AI Studio.
+
+**Gemini configuration fields:**
+- **API Key** — Your Google Gemini API key
+- **API Model Name** — The Gemini model to use (e.g., `gemini-1.5-flash`, `gemini-2.0-flash`)
+- **API Version** — The API version (e.g., `v1`, `v1beta`)
+
+See RC-AI-01 for an overview of REDCap's AI tools and security considerations.

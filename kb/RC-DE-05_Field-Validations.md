@@ -10,7 +10,7 @@ RC-DE-05
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-06 — Bio-Medical Ontologies; RC-DE-02 — Basic Data Entry; RC-FD-01 — Form Design Overview |
+| **Related Topics** | RC-CC-08 — Control Center: Home Page, Templates & Project Defaults; RC-DE-06 — Bio-Medical Ontologies; RC-DE-02 — Basic Data Entry; RC-FD-01 — Form Design Overview |
 
 ---
 
@@ -169,8 +169,21 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 ---
 
-# 7. Related Articles
+# 7. Administrator Configuration
 
+The set of validation types available in the Online Designer is controlled by a REDCap administrator in the Control Center under System Configuration → Home Page, Templates & Project Defaults (see **RC-CC-08**, "Field Validation Types" section). Administrators can enable or disable any built-in validation type and can register custom institution-specific validation types using JavaScript-based pattern matching or range checking.
+
+A disabled validation type does not appear in the **Validation** dropdown in the Online Designer or the Add/Edit Field dialog. However, existing fields that already use a disabled type continue to function normally — the disable only prevents new fields from selecting that type via the UI. Disabled types can still be applied by entering them directly in a Data Dictionary CSV upload.
+
+If a validation type you expect to see is missing from the Validation dropdown, contact your REDCap administrator to check whether it has been disabled, or whether a custom validation has been created to replace it.
+
+> **See also:** RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+
+---
+
+# 8. Related Articles
+
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults (system-level management of available validation types)
 - RC-DE-02 — Basic Data Entry (foundational data entry skills)
 - RC-DE-06 — Bio-Medical Ontologies (a distinct lookup-based field type often paired with validated fields)
 - RC-DE-08 — Field Comment Log (how to flag problematic validated fields without altering the dataset)

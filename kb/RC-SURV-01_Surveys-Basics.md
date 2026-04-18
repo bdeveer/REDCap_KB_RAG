@@ -10,7 +10,7 @@ RC-SURV-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026-04-02 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-FD-02 — Online Designer; RC-RIGHTS-01 — User Rights; RC-ALERT-01 — Automated Survey Invitations |
+| **Related Topics** | RC-FD-02 — Online Designer; RC-RIGHTS-01 — User Rights; RC-ALERT-01 — Automated Survey Invitations; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -65,7 +65,7 @@ Enabling a survey for the first time requires three steps in order: enable surve
 
 ## 4.1 Enabling Survey Functionality in the Project
 
-Before any instrument can be used as a survey, surveys must be turned on for the project as a whole.
+Before any instrument can be used as a survey, surveys must be turned on for the project as a whole. Note that the project-level toggle only appears if surveys have been enabled at the **system level** by a REDCap administrator. If the **Use Surveys in this project** option is not visible under Main Project Settings, contact your REDCap administrator — surveys may be disabled for the entire instance (see **RC-CC-06** — Control Center: Modules & Services Configuration).
 
 | 1 | Navigate to the **Project Setup** page from the left-hand menu. |
 | --- | --- |
@@ -329,7 +329,22 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 ---
 
-# 11. Related Articles
+# 11. Administrator Configuration
+
+Survey functionality must be enabled at the system level before any project can use surveys. This is configured in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled system-wide, the **Use Surveys in this project** option does not appear in Project Setup.
+
+Additional survey-related settings that administrators control in the Control Center:
+
+- **Google reCAPTCHA** — Optional bot protection for public surveys; must be configured in RC-CC-06 before the per-project reCAPTCHA option becomes available.
+- **Alerts & Notifications email recipient settings** — Controls whether project users can include project variables or freeform email addresses in survey invitation fields (RC-CC-06).
+- **e-Consent Framework** — Must be enabled in RC-CC-06 before the e-Consent option appears in survey settings (see RC-SURV-08).
+- **URL Shortening Service** — Must be enabled in RC-CC-06 for the "Get Short Survey Link" option to work in Survey Distribution Tools.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
+# 12. Related Articles
 
 - RC-FD-02 — Online Designer (navigating to the Online Designer, the instrument list, and the instrument editor — required context for Section 4.2)
 - RC-FD-01 — Form Design Overview (understanding instruments and fields before adding survey functionality)
@@ -337,6 +352,7 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 - RC-ALERT-01 — Automated Survey Invitations (advanced feature for triggering survey invitations based on data conditions — referenced in Section 4.2)
 - RC-SURV-02 — Survey Customizations (covers the advanced settings in Survey Customizations, Survey Access, and Survey Termination Options introduced but not detailed in this article)
 - RC-SURV-03 — Survey Queue (managing sequential multi-survey workflows)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level survey enablement and related settings)
 
 ---
 

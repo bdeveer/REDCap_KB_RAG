@@ -10,7 +10,7 @@ RC-AI-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization |
+| **Related Topics** | RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -82,6 +82,22 @@ REDCap administrators can enable or disable each of the three AI features indepe
 
 ---
 
+# Administrator Configuration
+
+REDCap's AI tools require both a configured AI server and explicit enablement by a system administrator. None of the three AI features (Writing Tools, Translations, Summarization) are available to users until they have been turned on at the system level.
+
+**What must be configured in the Control Center:**
+
+- The AI server URL and credentials must be entered under the AI configuration section of the Control Center (under System Configuration → Modules/Services Configuration — see **RC-CC-06**).
+- Each of the three AI features can be enabled or disabled independently.
+- Administrators can restrict availability to specific projects rather than enabling globally.
+
+If you do not see the AI writing tools icon (purple wizard's wand) in the rich text editor, AI translations in MLM, or the AI summarization icon in reports, the feature is either disabled system-wide or not enabled for your specific project. Contact your REDCap administrator.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
 # 5. Common Questions
 
 **What AI features does REDCap have?**
@@ -120,3 +136,4 @@ As of version 15.5.3, REDCap provides three main AI features. Additional capabil
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
 - RC-NAV-UI-01 — Project Navigation UI
+- RC-CC-06 — Control Center: Modules & Services Configuration (where AI features are enabled system-wide)

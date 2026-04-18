@@ -10,7 +10,7 @@ RC-LONG-01
 | **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-LONG-02 — Repeated Instruments & Events Setup; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
+| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-LONG-02 — Repeated Instruments & Events Setup; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
 
 ---
 
@@ -314,8 +314,21 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 ---
 
 
-# 11. Related Articles
+# 11. Administrator Configuration
 
+Whether project-level users can add or modify events and arms on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Normal Users to Add or Modify Events and Arms in Production").
+
+When this setting is disabled — which is the default in most instances — only REDCap administrators can add or modify events and arms on a project in Production status. Users who need this change must submit a request to the REDCap support team.
+
+When the setting is enabled, project-level users with Project Design and Setup rights can add events and modify certain event properties directly on a Production project. Even then, only administrators can delete events in production. Users can designate instruments to events that have not yet been designated, but cannot un-designate instruments that are already designated.
+
+> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+
+---
+
+# 12. Related Articles
+
+- RC-CC-04 — Control Center: User Settings & Defaults (controls whether users can modify events/arms in Production)
 - RC-LONG-02 — Repeated Instruments & Events Setup (layering repeated instruments or events onto a longitudinal project)
 - RC-NAV-REC-02 — Longitudinal Mode & Arms (navigating longitudinal records as a data entry user)
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events (navigating repeated instances as a data entry user)

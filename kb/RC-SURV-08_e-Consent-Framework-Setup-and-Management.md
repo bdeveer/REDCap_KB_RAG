@@ -10,7 +10,7 @@ RC-SURV-08
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-SURV-09 — PDF Snapshots of Records; RC-DAG-01 — Data Access Groups; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-FD-02 — Online Designer; RC-AT-01 — Action Tags: Overview |
+| **Related Topics** | RC-SURV-09 — PDF Snapshots of Records; RC-DAG-01 — Data Access Groups; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-FD-02 — Online Designer; RC-AT-01 — Action Tags: Overview; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -336,6 +336,20 @@ A: Yes, if AI tools are enabled on your REDCap instance. The rich text editor in
 
 ---
 
+# Administrator Configuration
+
+The e-Consent Framework requires system-level enablement by a REDCap administrator before it is visible in any project's survey settings. Administrators configure this in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**):
+
+- **Display 'e-Consent Framework' Option for All Surveys** — Must be enabled for the e-Consent configuration button to appear in the Online Designer and survey settings.
+- **Capture IP Address of Participants** — Optional setting to store the participant's IP address as part of each e-Consent record.
+- **Custom Message for e-Consent Framework Settings** — Administrators can add institution-specific guidance (e.g., links to IRB requirements or compliance checklists) that appears to project administrators when configuring e-Consent.
+
+If the e-Consent option is not visible in your project's Online Designer, contact your REDCap administrator.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
 # Related Articles
 
 - RC-SURV-09 — PDF Snapshots of Records
@@ -348,3 +362,4 @@ A: Yes, if AI tools are enabled on your REDCap instance. The rich text editor in
 - RC-AT-01 — Action Tags: Overview
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level e-Consent Framework enablement)

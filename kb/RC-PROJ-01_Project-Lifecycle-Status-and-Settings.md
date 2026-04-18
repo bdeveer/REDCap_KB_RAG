@@ -10,7 +10,7 @@ RC-PROJ-01
 | **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-INST-01 — Institution-Specific Settings & Policies; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-NAV-UI-02 — Project Menu Reference; RC-CALC-01 — Special Functions Reference |
+| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-CC-09 — Control Center: To-Do List; RC-INST-01 — Institution-Specific Settings & Policies; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-NAV-UI-02 — Project Menu Reference; RC-CALC-01 — Special Functions Reference |
 
 ---
 
@@ -253,3 +253,27 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 **Q: Will Draft Preview Mode affect other users or trigger any automations?**
 
 **A:** No. Draft Preview Mode is active only for your own user account and only for your current session. Other users see and work with the project normally. No alerts, automated survey invitations, or Data Entry Triggers will fire while you are in Draft Preview Mode.
+
+---
+
+# 8. Administrator Configuration
+
+Several aspects of the project lifecycle are controlled by system-wide settings in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**):
+
+**Project creation rights** — Administrators configure whether all authenticated users can create new projects, or whether users must submit a request that goes to the administrator for approval. In restricted environments, users see a "Request New Project" button instead of a "New Project" button, and the resulting request appears in the administrator's To-Do List (see **RC-CC-09**).
+
+**Moving projects to Production** — Administrators control whether project owners can self-approve production moves, or whether an administrator must approve the transition. In environments that require approval, users see a "Request To Move to Production" button and the request enters the administrator's To-Do List.
+
+**Draft Mode auto-approval** — Administrators configure whether certain categories of Draft Mode changes are automatically approved without requiring manual administrator review. Options range from "never auto-approve" (all changes require admin sign-off) to "auto-approve if no critical issues exist." In most production environments, a conservative threshold is used to protect data integrity. Changes that do require review appear in the To-Do List.
+
+> **See also:** RC-CC-04 — Control Center: User Settings & Defaults; RC-CC-09 — Control Center: To-Do List
+
+---
+
+# 9. Related Articles
+
+- RC-CC-04 — Control Center: User Settings & Defaults (project creation rights, production approval, draft auto-approval)
+- RC-CC-09 — Control Center: To-Do List (where draft approvals and project requests appear)
+- RC-FD-02 — Online Designer (making design changes in Development and Draft Mode)
+- RC-FD-03 — Data Dictionary (alternative approach to making structural changes)
+- RC-INST-01 — Institution-Specific Settings & Policies (institution-level guidance on production approval timelines)

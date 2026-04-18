@@ -10,7 +10,7 @@ RC-DE-07
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-SURV-01 — Surveys: Basics |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-SURV-01 — Surveys: Basics; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
 
@@ -98,8 +98,22 @@ The CAT instrument determines when enough information has been gathered to produ
 
 ---
 
-# 6. Related Articles
+# 6. Administrator Configuration
+
+CAT instruments require two system-level prerequisites configured by a REDCap administrator:
+
+1. **Computer Adaptive Tests (CATs) and Auto-Scoring Instruments must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, CAT instruments cannot be added to projects and existing ones will not function.
+2. **Outbound network access to the Assessment Center API** — The CAT scoring algorithm communicates with a third-party API hosted by Vanderbilt University at `https://www.redcap-cats.org/promis_api/`. The REDCap server must be able to reach this URL. Data sent to the service is de-identified and cannot be linked to individual respondents.
+
+If CAT instruments are unavailable in your instance, or if a CAT fails to load or score correctly, contact your REDCap administrator to verify these system-level settings.
+
+> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
+# 7. Related Articles
 
 - RC-DE-02 — Basic Data Entry (foundational data entry skills)
 - RC-SURV-01 — Surveys: Basics (relevant if the CAT instrument is administered as a participant-facing survey)
 - RC-DE-08 — Field Comment Log (how to document issues encountered during a CAT administration)
+- RC-CC-06 — Control Center: Modules & Services Configuration (system-level CAT module enablement)
