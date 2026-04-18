@@ -1,6 +1,18 @@
-# RC-CC-20 — Control Center: Multi-Language Management
+RC-CC-20
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: Multi-Language Management**
+
+| **Article ID** | RC-CC-20 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-MLM-01 — Multi-Language Management; RC-CC-06 — Modules & Services Configuration; RC-AI-03 — AI Translations; RC-AT-10 — Action Tags: Language |
+
+---
 
 **Multi-Language Management (MLM)** (**Control Center → Miscellaneous Modules → Multi-Language Management**) is where administrators define system-level languages that projects can use to translate their user interfaces. When a project adopts a system language, the translations are copied into the project and can be freely customized there.
 
@@ -12,10 +24,10 @@ A PDF manual for MLM is available from the REDCap Language Library (linked from 
 
 ---
 
-## What MLM Does (and Doesn't Do)
+# What MLM Does (and Doesn't Do)
 
 | Behavior | Detail |
-|---|---|
+| --- | --- |
 | **Scope** | Languages defined here are available for **UI translations only** — field labels, survey button text, validation error messages, etc. Data values are not translated. |
 | **Applies to projects** | Translations are copied into a project when the project adopts the language. Changes to system languages do **not** retroactively affect existing projects. |
 | **Per-project customization** | After importing a system language, project managers can freely customize translations within their project. |
@@ -23,14 +35,14 @@ A PDF manual for MLM is available from the REDCap Language Library (linked from 
 
 ---
 
-## Page Tabs
+# Page Tabs
 
-### Languages Tab
+## Languages Tab
 
 The main tab where system languages are listed and managed. Each language entry shows:
 
 | Column | Notes |
-|---|---|
+| --- | --- |
 | **ID** | ISO language code (e.g., `en-US`, `es-ES`) |
 | **Display Name** | Name shown in language selectors — should be written in the target language (e.g., "Deutsch" for German) |
 | **%** | Approximate percentage of UI items that have been translated |
@@ -56,7 +68,7 @@ The main tab where system languages are listed and managed. Each language entry 
 
 ---
 
-### User Interface Tab
+## User Interface Tab
 
 This tab is where the actual translation strings are entered and managed for each language.
 
@@ -84,7 +96,7 @@ This tab is where the actual translation strings are entered and managed for eac
 
 ---
 
-### Usage Tab
+## Usage Tab
 
 Provides an overview of MLM usage across all projects on the instance.
 
@@ -95,7 +107,7 @@ Provides an overview of MLM usage across all projects on the instance.
 **Status icons:**
 
 | Icon | Meaning |
-|---|---|
+| --- | --- |
 | Deactivated by user | The project user has deactivated MLM for that project |
 | Enabled by admin | An administrator has enabled MLM for that project |
 | Deactivated by admin | An administrator has deactivated MLM for that project |
@@ -106,12 +118,12 @@ The table supports **search by project language or status icon label**. An **Exp
 
 ---
 
-### Settings Tab
+## Settings Tab
 
 System-level controls that apply to how projects can use MLM.
 
 | Setting | Notes |
-|---|---|
+| --- | --- |
 | **Disable multi-language support for all projects** | Turns off MLM system-wide immediately. **WARNING: affects all projects.** |
 | **Require admin activation in projects** | When enabled, an administrator must explicitly enable MLM in each project before it can be used. Projects that already have MLM enabled are unaffected. |
 | **Disable project language initialization from a file** | Prevents project managers from importing a new language from a file. |
@@ -124,7 +136,7 @@ These settings can be overridden on a per-project basis within that project's ow
 
 ---
 
-## MyCap Integration
+# MyCap Integration
 
 Languages can be marked as **active for MyCap** (the mobile companion app). This is configured separately from the forms/surveys activation — MyCap language support is **all-or-nothing** per language: a language is either fully active for MyCap or not available at all.
 
@@ -132,7 +144,7 @@ Languages can be marked as **active for MyCap** (the mobile companion app). This
 
 ---
 
-## Exporting and Importing Languages
+# Exporting and Importing Languages
 
 **Export options:**
 - Optionally include translation prompts, default values, and language notes
@@ -145,14 +157,3 @@ Languages can be marked as **active for MyCap** (the mobile companion app). This
 - Allow blank values to overwrite existing translations
 
 **Export/Import General Settings:** The export/import for general settings (tab-level configuration) is separate from language export/import and uses JSON format.
-
----
-
-## Related Articles
-
-- RC-MLM-01 — Multi-Language Management *(project-level setup, translation workflow, and action tags)*
-- RC-CC-02 — General Configuration
-- RC-CC-06 — Modules & Services Configuration
-- RC-AI-03 — AI Translations
-- RC-AT-10 — Action Tags: Language Action Tags
-- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links

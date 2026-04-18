@@ -3,7 +3,7 @@ RC-CC-03
 **Control Center: Security & Authentication Configuration**
 
 | **Article ID** | RC-CC-03 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |
@@ -35,7 +35,7 @@ This page is organized into the following sections:
 Controls how all users authenticate to REDCap system-wide. This also determines the default authentication method for newly created projects.
 
 | Option | Description |
-|---|---|
+| --- | --- |
 | **None (Public)** | No authentication required — pages are publicly accessible |
 | **Table-based** | Username/password stored in REDCap's own user table |
 | **LDAP** | Authenticate against an LDAP directory server |
@@ -65,7 +65,7 @@ Two-factor authentication (2FA), also called 2-step login, adds a verification s
 ## 3.1 Enable/Disable 2FA
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Two-Factor Authentication | Disabled (default) / Enabled |
 
 When enabled, all applicable users must complete the second step every time they log in (subject to the settings below).
@@ -75,7 +75,7 @@ When enabled, all applicable users must complete the second step every time they
 Only relevant when using an "X & Table-based" hybrid authentication method.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Enforce 2FA ONLY for Table-based users? | No, enforce on all users (default) / Yes, enforce only on Table-based users |
 
 If set to "Yes", users authenticating via the external provider (e.g., Shibboleth, Entra ID) are exempt from all 2FA requirements.
@@ -85,7 +85,7 @@ If set to "Yes", users authenticating via the external provider (e.g., Shibbolet
 Allows scoping 2FA enforcement by IP range — useful for exempting users on a trusted institutional network or VPN.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Enforce 2FA only for certain IP addresses? | Enforce on all users (default) / Enforce on all users EXCEPT those in a specified range |
 
 When the exception option is selected, you enter IPv4 ranges (wildcard or hyphenated) or IPv6 subnet masks, comma-separated. There is also a checkbox to automatically include all private network IP ranges (RFC 1918) in the exceptions.
@@ -97,7 +97,7 @@ Example format: `1.2.3.*, 1.2.3.0-1.2.3.255, 21DA:00D3:0000:2F3B::/64`
 If enabled, users who complete 2FA can opt to have their device remembered for a specified number of days, after which they must complete 2FA again.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Trust period | Number of days (0 = Disabled; decimals allowed for partial days) |
 
 ## 3.5 Secondary Authentication Interval for Specific IP Ranges
@@ -112,7 +112,7 @@ An optional alternative trust period that applies to users within specified IP r
 Allows users to substitute their 2FA PIN (or Duo push) for their password when performing an e-signature on data entry forms or when using the File Upload field enhancement.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Allow e-signing with 2FA PIN or Duo push | Disabled (default) / Enabled |
 
 This is commonly used for 21 CFR Part 11 compliance in FDA-regulated trials. Note: not compatible with the Duo two-factor option.
@@ -122,7 +122,7 @@ This is commonly used for 21 CFR Part 11 compliance in FDA-regulated trials. Not
 When the setting above is enabled, this allows users to provide their 2FA PIN only once per REDCap session rather than for every e-signature action.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | E-sign once per session | Disabled (default) / Enabled |
 
 ## 3.7 Two-Factor Login Options
@@ -134,7 +134,7 @@ These settings control which verification methods are available to users when 2F
 Users generate a 6-digit TOTP code from the Google Authenticator or Microsoft Authenticator app on their mobile device. Users must set up the app using a QR code on their REDCap Profile page before using this option.
 
 | Setting | Default |
-|---|---|
+| --- | --- |
 | Authenticator App | Enabled (default in REDCap 16.x) |
 
 ### 3.7.2 Email
@@ -142,7 +142,7 @@ Users generate a 6-digit TOTP code from the Google Authenticator or Microsoft Au
 A 6-digit code is sent to the user's primary email address registered in their REDCap account. Recommended to leave enabled as a fallback option.
 
 | Setting | Notes |
-|---|---|
+| --- | --- |
 | Email option | The code originates from the configured administrator email address |
 
 ### 3.7.3 Twilio SMS
@@ -179,7 +179,7 @@ These settings apply to all authentication methods except Shibboleth (which mana
 Controls how long a user can be inactive before REDCap automatically logs them out.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Auto logout time | Number of minutes (0 = disabled; minimum 3 if non-zero, maximum 1440) |
 
 Users receive a two-minute warning dialog before being logged out.
@@ -197,7 +197,7 @@ A rich text field for custom content displayed on the login page, appearing abov
 Two settings work together to lock out users after repeated failed login attempts:
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Failed login attempt limit | Number of failures before lockout (0 = disabled) |
 | Lockout duration | Minutes the user is locked out after exceeding the limit (0 = disabled) |
 
@@ -206,7 +206,7 @@ Two settings work together to lock out users after repeated failed login attempt
 Controls whether users' browsers are allowed to autofill the username and password fields on the REDCap login page.
 
 | Setting | Notes |
-|---|---|
+| --- | --- |
 | Allow autocomplete (default) | Browsers may suggest saved credentials |
 | Disable autocomplete | Improves security, especially for shared/public computers |
 
@@ -225,7 +225,7 @@ If left blank, REDCap displays the default message: *"The password for the user 
 ## 5.2 Password Reuse Limit
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Enforce password re-use limit | No (default) / Yes |
 
 When enabled, users may not reuse any of their 5 most recent passwords.
@@ -233,7 +233,7 @@ When enabled, users may not reuse any of their 5 most recent passwords.
 ## 5.3 Password Expiration
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Force password change after X days | Number of days (0 = disabled) |
 
 Users receive advance notice prompting them to change their password before expiration.
@@ -241,13 +241,13 @@ Users receive advance notice prompting them to change their password before expi
 ## 5.4 Password Minimum Length
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Minimum length | Integer between 6 and 99 (default: 9) |
 
 ## 5.5 Password Complexity
 
 | Level | Requirement |
-|---|---|
+| --- | --- |
 | 0 | Letters and numbers |
 | 1 | Lowercase + uppercase letters + numbers (default) |
 | 2 | Lowercase + uppercase letters + either numbers or special characters |
@@ -280,7 +280,7 @@ Required when authentication method is set to **Microsoft Entra ID** (formerly A
 **Configuration fields:**
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | API Client ID | Application (client) ID from Azure App Registration |
 | API Client Secret | Client secret from Azure App Registration |
 | Endpoint Version | V1 (default) or V2 — V2 supports multi-tenant authentication |
@@ -308,7 +308,7 @@ Before configuring, set the following values on the Identity Provider (IdP) serv
 **Configuration fields:**
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | Client ID | Application client ID from the OIDC provider |
 | Client Secret | Client secret from the OIDC provider |
 | Additional scope (optional) | May be needed for Azure B2C (enter Application client ID) |
@@ -334,7 +334,7 @@ Required when authentication method is set to **Shibboleth** or **Shibboleth & T
 ## 9.1 Core Shibboleth Settings
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | Shibboleth Username Login Field | The `$_SERVER` variable containing the username (e.g., `REMOTE_USER`, `HTTP_REMOTE_USER`, `HTTP_AUTH_USER`, `HTTP_SHIB_EDUPERSON_PRINCIPAL_NAME`, `Shib-EduPerson-Principal-Name`, or a custom value) |
 | URL for Shibboleth Logout Page | Full URL with qualifiers for the IdP logout endpoint |
 
@@ -343,7 +343,7 @@ Required when authentication method is set to **Shibboleth** or **Shibboleth & T
 Controls whether REDCap auto-populates user profile fields (name, email) from Shibboleth attributes on login.
 
 | Setting | Values |
-|---|---|
+| --- | --- |
 | Set user information using Shibboleth | Disabled (default) / Enabled |
 | Set user information on each login | No (default) / Yes — if Yes, overrides stored values on every login |
 | Shibboleth User First Name Field | `$_SERVER` variable name (default: `givenName`) |
@@ -355,7 +355,7 @@ Controls whether REDCap auto-populates user profile fields (name, email) from Sh
 When using Shibboleth & Table-based authentication, a splash/landing page lets users choose their login method.
 
 | Setting | Notes |
-|---|---|
+| --- | --- |
 | Default login method | Table-based (default) or a configured Shibboleth IdP |
 | Table login selection title | Clickable text for Table-based login (default: "Use local REDCap login") |
 
@@ -364,7 +364,7 @@ When using Shibboleth & Table-based authentication, a splash/landing page lets u
 Multiple Identity Providers can be configured. Each IdP entry includes:
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | Shibboleth login selection title | Clickable text for this IdP's login option |
 | Shibboleth login descriptive text | Descriptive text displayed with the login option |
 | Shibboleth Link Image URL | URL of an image to display for this IdP's login link |
@@ -379,7 +379,7 @@ Additional IdPs can be added or removed dynamically on the configuration page.
 Required when authentication method is set to **AAF** or **AAF & Table-based**. AAF uses RapidConnect for federated authentication. See the REDCap Community for the AAF RapidConnect setup guide.
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | Access URL (required) | URL provided by AAF when registering your service |
 | Audience URL (required) | URL users are redirected to after authentication (typically the REDCap base URL) |
 | Issuer URL (required) | `https://rapid.test.aaf.edu.au` (test) or `https://rapid.aaf.edu.au` (production) |
@@ -397,7 +397,7 @@ Required when authentication method is set to **AAF** or **AAF & Table-based**. 
 Required when authentication method is set to **SAMS (for CDC)**.
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | URL for SAMS Logout Page | Full URL with qualifiers for the SAMS logout endpoint |
 
 ---
@@ -422,7 +422,7 @@ http://www.yoursite.edu
 Controls whether REDCap pages can be embedded inside `<iframe>` elements on external websites.
 
 | Setting | Technical Effect |
-|---|---|
+| --- | --- |
 | Allow external websites to embed REDCap pages | No HTTP header restriction added |
 | Prevent clickjacking (default) | Adds `X-Frame-Options: SAMEORIGIN` HTTP header |
 

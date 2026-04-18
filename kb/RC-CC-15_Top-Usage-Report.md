@@ -3,7 +3,7 @@ RC-CC-15
 **Top Usage Report**
 
 | **Article ID** | RC-CC-15 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |

@@ -1,12 +1,24 @@
-# RC-CC-06 — Control Center: Modules & Services Configuration
+RC-CC-06
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: Modules & Services Configuration**
+
+| **Article ID** | RC-CC-06 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview |
+
+---
 
 The **Modules/Services Configuration** page (under **System Configuration**) is the largest configuration page in the Control Center. It controls which features and integrations are enabled across the entire instance, and includes settings for third-party services like SMS platforms and email delivery providers.
 
 ---
 
-## External Module Framework
+# External Module Framework
 
 <!-- PLACEHOLDER: Insert annotated screenshot of External Module Framework section -->
 
@@ -19,14 +31,14 @@ For the full External Modules policy and activation process, see your institutio
 
 ---
 
-## Feature Enable/Disable Table
+# Feature Enable/Disable Table
 
 <!-- PLACEHOLDER: Insert annotated screenshot of feature enable/disable table -->
 
 The following features can be enabled or disabled system-wide. When a feature is disabled here, it is unavailable in all projects regardless of project-level settings.
 
 | Feature | Notes |
-|---|---|
+| --- | --- |
 | **Surveys** | Enables the survey functionality across all projects. A sub-setting controls **Google reCAPTCHA** on public surveys — see the reCAPTCHA section below |
 | **URL Shortening Service** | Enables short link generation for public survey links, public project dashboards, and public report links via the REDCAP.LINK service hosted by Vanderbilt on AWS. Disable if your server cannot make outbound HTTP requests to the public web |
 | **Randomization** | Enables the randomization module; see RC-RAND-01 |
@@ -56,7 +68,7 @@ The following features can be enabled or disabled system-wide. When a feature is
 
 ---
 
-## Google reCAPTCHA for Public Surveys
+# Google reCAPTCHA for Public Surveys
 
 Google reCAPTCHA can be enabled as an optional protection on public surveys (i.e., surveys with a public link that require no login). This is a sub-setting of the Surveys feature.
 
@@ -68,9 +80,9 @@ A project-level default can be configured: new projects can default to reCAPTCHA
 
 ---
 
-## SMS Services
+# SMS Services
 
-### Twilio (SMS & Voice Calls)
+## Twilio (SMS & Voice Calls)
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Twilio section -->
 
@@ -85,17 +97,17 @@ Twilio is a third-party service that enables SMS and voice call delivery for sur
 
 See RC-TXT-01 and RC-TXT-02 for more on texting workflows and administrator setup.
 
-### Mosio (SMS)
+## Mosio (SMS)
 
 Mosio is an alternative SMS service provider. Configuration mirrors Twilio, including the same three-option access control (All users / Admin approval / Administrators only) and the "Display information to all users" visibility toggle. Requires outbound HTTPS access to `https://api.mosio.com` and a publicly reachable server. See your institution's SMS strategy documentation before enabling.
 
-### SendGrid (Email Templates)
+## SendGrid (Email Templates)
 
 SendGrid is an external email delivery service that enables template-based emails for Alerts & Notifications. Requires a SendGrid account and API key, and outbound HTTPS access to `https://api.sendgrid.com/v3`. Access control has two options: *All users* or *Administrators only* (no Admin approval option). Includes the same "Display information to all users" visibility toggle. See your institution's email delivery architecture before enabling.
 
 ---
 
-## Statistics & Charts
+# Statistics & Charts
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Stats & Charts section -->
 
@@ -107,7 +119,7 @@ When enabled, project administrators can opt to show a respondent their response
 
 ---
 
-## e-Consent Framework for PDF Auto-Archiver
+# e-Consent Framework for PDF Auto-Archiver
 
 <!-- PLACEHOLDER: Insert annotated screenshot of e-Consent section -->
 
@@ -124,7 +136,7 @@ See RC-SURV-08 for detailed e-Consent setup documentation.
 
 ---
 
-## Alerts & Notifications Settings
+# Alerts & Notifications Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Alerts & Notifications Settings section -->
 
@@ -140,7 +152,7 @@ See RC-ALERT-01 for alert setup and RC-TXT-01 for SMS alert configuration.
 
 ---
 
-## File Upload Field Enhancement
+# File Upload Field Enhancement
 
 <!-- PLACEHOLDER: Insert annotated screenshot of File Upload Enhancement section -->
 
@@ -148,7 +160,7 @@ An optional enhancement that adds password verification before a file in a File 
 
 ---
 
-## Rapid Retrieval (Page-Level Caching)
+# Rapid Retrieval (Page-Level Caching)
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Rapid Retrieval section -->
 
@@ -156,7 +168,7 @@ Rapid Retrieval caches certain REDCap pages to improve load times on large or hi
 
 ---
 
-## Record-Level Locking Enhancement
+# Record-Level Locking Enhancement
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Record-Level Locking section -->
 
@@ -164,25 +176,8 @@ An optional enhancement to the record locking feature that generates a PDF confi
 
 ---
 
-## e-Consent Framework: PDF External Storage Settings
+# e-Consent Framework: PDF External Storage Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of e-Consent PDF Storage section -->
 
 When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location (same options as the File Upload Settings storage configuration). Leave disabled unless required for regulatory compliance.
-
----
-
-## Related Articles
-
-- RC-CC-01 — Control Center: Overview & Navigation
-- RC-CC-05 — File Storage & Upload Settings
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-TXT-01 — Texting in REDCap: Setup and Usage
-- RC-TXT-02 — Texting: Administrator Setup
-- RC-SURV-08 — e-Consent Framework: Setup & Management
-- RC-API-01 — REDCap API
-- RC-RAND-01 — Randomization Concepts & Terminology
-- RC-MLM-01 — Multi-Language Management
-- RC-MOB-01 — REDCap Mobile App
-- RC-MYCAP-01 — MyCap: Overview & Enabling
-- RC-INTG-01 — Data Entry Trigger

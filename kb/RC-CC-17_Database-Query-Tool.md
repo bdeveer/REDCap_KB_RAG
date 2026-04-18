@@ -3,7 +3,7 @@ RC-CC-17
 **Database Query Tool**
 
 | **Article ID** | RC-CC-17 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap super-user administrator access |

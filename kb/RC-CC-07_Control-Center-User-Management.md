@@ -1,6 +1,18 @@
-# RC-CC-07 — Control Center: Users & Access Management
+RC-CC-07
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: Users & Access Management**
+
+| **Article ID** | RC-CC-07 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings & Defaults; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-API-01 — REDCap API |
+
+---
 
 The **Users** section of the Control Center gives administrators tools to manage user accounts across the entire REDCap instance. This is distinct from project-level user management (handled within individual projects) — the Users section here is for system-level account administration.
 
@@ -16,18 +28,18 @@ The Users section contains the following tools:
 
 ---
 
-## Browse Users
+# Browse Users
 
 A searchable list of all user accounts on the REDCap instance. Administrators can look up users by **username, first name, last name, or primary email address**.
 
-### User Account Details
+## User Account Details
 
 Selecting a user displays their full account record, including:
 
 **Editable user attributes:**
 
 | Attribute | Notes |
-|---|---|
+| --- | --- |
 | Username | The login identifier (typically email for SSO instances) |
 | Name | First and last name |
 | Primary email | Verified on account creation |
@@ -44,7 +56,7 @@ Selecting a user displays their full account record, including:
 **Statistics & account history (read-only):**
 
 | Field | Notes |
-|---|---|
+| --- | --- |
 | User currently logged in | Live indicator |
 | Projects user can access | Count with a link to the full project list |
 | Time of account creation | |
@@ -54,7 +66,7 @@ Selecting a user displays their full account record, including:
 | Time of last activity | |
 | Time of suspension | Populated if account is suspended |
 
-### Account Actions
+## Account Actions
 
 From the Browse Users page, administrators can:
 
@@ -66,17 +78,17 @@ From the Browse Users page, administrators can:
 
 > **Note:** Administrator accounts cannot be deleted through this interface. To remove administrator access, first revoke admin privileges via the Administrator Privileges page, then delete the account if needed.
 
-### View User List By Criteria
+## View User List By Criteria
 
 In addition to individual user search, administrators can switch to a **View User List By Criteria** mode to filter and browse users in bulk based on attributes or activity.
 
 ---
 
-## User Allowlist
+# User Allowlist
 
 The User Allowlist is only relevant when using an **external authentication method** (e.g., LDAP, Shibboleth, or similar SSO). It does not apply to table-based authentication.
 
-### How it works
+## How it works
 
 **When the allowlist is disabled (default):** REDCap authenticates the user via the external provider and immediately grants access. Anyone with a valid credential for that external system can log into REDCap without any prior approval step.
 
@@ -84,16 +96,16 @@ The User Allowlist is only relevant when using an **external authentication meth
 
 > **Note:** REDCap Administrators are always automatically added to the allowlist when it is enabled, regardless of which option is chosen.
 
-### Enabling the Allowlist
+## Enabling the Allowlist
 
 When you first enable the allowlist, REDCap presents two initialization options:
 
 | Option | Effect | When to use |
-|---|---|---|
+| --- | --- |---|
 | **Option 1** — Add all existing users | All users who have previously accessed REDCap (via external auth) are automatically added to the allowlist | Use when you want to preserve access for current users while gatekeeping all new registrations |
 | **Option 2** — Leave allowlist empty | No existing users are added (except Administrators) | Use when you want a hard cutover — no one gets access until explicitly added, even if they used REDCap before |
 
-### Adding Users to the Allowlist
+## Adding Users to the Allowlist
 
 Users can be added individually or in bulk:
 
@@ -104,17 +116,17 @@ Users can also be removed individually, or the entire allowlist can be cleared w
 
 ---
 
-## Email Users
+# Email Users
 
 A tool for sending a system-level email to all users or a targeted subset of users on the REDCap instance.
 
 > **Note:** Suspended user accounts cannot be emailed through this tool.
 
-### Composing a Message
+## Composing a Message
 
 The **Compose Message** tab is where administrators write and send emails. Before sending, a **User Filter** can be applied to target a specific subset of users.
 
-### User Filters
+## User Filters
 
 User filters allow administrators to define which users will receive an email. Filters are built using a rule-based interface:
 
@@ -126,7 +138,7 @@ User filters allow administrators to define which users will receive an email. F
 **Filter toolbar icons:**
 
 | Icon | Action |
-|---|---|
+| --- | --- |
 | Edit (pencil) | Edit the selected user filter |
 | List | Show the list of users matched by the selected filter |
 | Plus | Create a new user filter |
@@ -135,7 +147,7 @@ User filters allow administrators to define which users will receive an email. F
 **User Filter Manager controls:**
 
 | Control | Action |
-|---|---|
+| --- | --- |
 | Add new rule | Add a single filter condition |
 | Add new group | Add a grouped block of conditions |
 | Move up / Move down | Reorder nodes within the hierarchy |
@@ -144,26 +156,26 @@ User filters allow administrators to define which users will receive an email. F
 
 The **test button** (show list) previews the specific users who match the current filter before sending.
 
-### Message History
+## Message History
 
 The **Message History** tab shows all previously sent emails. Administrators can reuse a past message by clicking the **import icon**, which loads its content into the Compose Message tab for editing or resending.
 
 ---
 
-## API Tokens
+# API Tokens
 
 The API Tokens page is the system-level view of all API tokens across the entire REDCap instance.
 
 > **Note:** API tokens are specific to a single user for a single project. A project can have multiple tokens (one per user with API access), and an individual user can hold multiple tokens (one per project they have API access to).
 
-### Viewing Tokens
+## Viewing Tokens
 
 Two drop-down filters allow administrators to view tokens by:
 
 - **Individual user** — see all tokens held by a specific user across all their projects
 - **Project** — see all users who have an API token for a specific project
 
-### Token Actions
+## Token Actions
 
 For any existing token, administrators can:
 
@@ -172,14 +184,14 @@ For any existing token, administrators can:
 
 Administrators can also **create a new API token** for a user who does not yet have one for a given project.
 
-### Super API Tokens
+## Super API Tokens
 
 In addition to standard project-level tokens, REDCap supports **Super API Tokens**. These grant the holder the ability to create new REDCap projects via the API without requiring administrator approval.
 
 Key characteristics:
 
 | Property | Detail |
-|---|---|
+| --- | --- |
 | Length | 64 characters (vs. 32 characters for standard project-level tokens) |
 | Scope | System-wide; not tied to a single project |
 | Limit per user | One super token per user |
@@ -188,7 +200,7 @@ Key characteristics:
 
 > **Best practice:** Super API Tokens carry significant system-level access and bypass the normal token approval workflow. Grant them sparingly and with explicit authorization.
 
-### Related Token Settings
+## Related Token Settings
 
 - **Auto-generation of tokens:** Controlled in **User Settings** (RC-CC-04). When disabled, users must request a token; when enabled, users can self-generate.
 - **API rate limiting / IP banning:** Configured in **General Configuration** (RC-CC-02).
@@ -198,20 +210,20 @@ See RC-API-01 for a full overview of the REDCap API and how tokens are used.
 
 ---
 
-## Banned IP Addresses
+# Banned IP Addresses
 
 The Banned IP Addresses page lists all IP addresses that are blocked from the REDCap installation. Any user attempting to load any REDCap page — **including public surveys** — from a banned IP address immediately receives a message stating they cannot use REDCap. No partial access is granted.
 
 Both **IPv4 and IPv6** addresses are supported.
 
-### How IPs Get Banned
+## How IPs Get Banned
 
 - **Manually** by an administrator on this page — for example to block a suspicious actor, a known source of abusive traffic, or an IP involved in unauthorized access attempts.
 - **Automatically** by the **Rate Limiter**, when an IP exceeds the configured request threshold. The Rate Limiter is configured on the General Configuration page (RC-CC-02).
 
 Automatic bans from the Rate Limiter persist until deleted by an administrator. A recurring pattern of automatic bans may indicate a misconfigured automated process or an active unauthorized access attempt.
 
-### Adding IPs to the Blocklist
+## Adding IPs to the Blocklist
 
 Paste one or more IP addresses into the input field — **one per line** — and submit. Bulk entries are supported. The list shows each banned IP address and its **Time of Ban**. Individual entries can be deleted, and a **Delete All** button clears the entire blocklist at once.
 
@@ -219,20 +231,20 @@ Paste one or more IP addresses into the input field — **one per line** — and
 
 ---
 
-## Access Control Groups
+# Access Control Groups
 
 Access Control Groups (ACGs) allow administrators to define the **maximum set of user privileges** that can be granted within projects across the instance.
 
-### What ACGs Do
+## What ACGs Do
 
 ACGs do not define what rights a user actually has in a project — they define the **upper boundary** of what rights can be granted. A User Rights manager can assign any subset of the rights permitted by the applicable ACG, but cannot grant rights that exceed it.
 
 This is particularly useful in regulated or compliance-sensitive environments where certain capabilities (such as data export, record deletion, or user rights management) should never be grantable in specific contexts, regardless of what a project manager might attempt to configure.
 
-### Scope and Behavior
+## Scope and Behavior
 
 | Property | Detail |
-|---|---|
+| --- | --- |
 | Defined at | System level (Control Center) |
 | Applied to | All projects system-wide when enabled |
 | Enforcement points | When adding a user to a project; when modifying existing user privileges |
@@ -240,7 +252,7 @@ This is particularly useful in regulated or compliance-sensitive environments wh
 
 Enabling or disabling ACGs does not retroactively change any existing user rights records. The ceiling is enforced only at the next privilege assignment or modification.
 
-### ACG Compliance for Existing Projects
+## ACG Compliance for Existing Projects
 
 When ACGs are first enabled on an instance that already has projects and users, those existing rights are not automatically adjusted. Each project has an **ACG Compliance** page where administrators can:
 
@@ -248,10 +260,10 @@ When ACGs are first enabled on an instance that already has projects and users, 
 - **Notify** the project's User Rights manager(s) about non-compliant users.
 - **Expire** non-compliant users directly from the compliance page.
 
-### Page Tabs
+## Page Tabs
 
 | Tab | Purpose |
-|---|---|
+| --- | --- |
 | **User Assignments** | View and manage which ACG is assigned to each user |
 | **Access Control Groups** | Define and configure the ACGs themselves |
 | **Reports** | View compliance status and non-compliant counts across all projects |
@@ -260,13 +272,13 @@ When ACGs are first enabled on an instance that already has projects and users, 
 
 ---
 
-## Administrator Privileges
+# Administrator Privileges
 
 Located at `ControlCenter/superusers.php`, this page manages which user accounts have REDCap administrator privileges and controls exactly what each administrator can do. Administrator access in REDCap is **granular** — not all-or-nothing — and is composed of seven independent privilege flags that can be mixed and matched per user.
 
 Any user who has been granted at least one administrator privilege gains access to the Control Center, but they will only be able to access and use the sections corresponding to their specific granted privileges.
 
-### The Seven Administrator Privilege Types
+## The Seven Administrator Privilege Types
 
 **Set Administrator Privileges (`admin_rights`)**
 The user can access the Administrator Privileges page and can grant or revoke admin rights for any user. This is effectively a meta-privilege — it lets a user control who else has admin access.
@@ -293,25 +305,14 @@ The user can install External Modules from the REDCap Repository and enable and 
 **Access to Control Center Dashboards (`access_admin_dashboards`)**
 The user can access all pages under the "Dashboards & Activity" section of the Control Center sidebar: System Statistics, FHIR Statistics, User Activity Log, User Activity Graphs, Map of Users, Top Usage Report, Database Activity Monitor, Database Query Tool, and Recent Errors.
 
-### Assigning and Removing Privileges
+## Assigning and Removing Privileges
 
 Privileges are granted per user via checkboxes on the Administrator Privileges page. Use the "add a new admin" link at the bottom of the page to add a user — they must already have a valid REDCap account.
 
 Unchecking all privilege checkboxes for a user removes all admin access. REDCap displays a notice confirming the user is no longer an administrator and will no longer appear on this page. Their regular account is unaffected and admin access can be restored at any time.
 
-### Multiple Environments
+## Multiple Environments
 
 On instances with separate environments (development, test, production), administrator access is configured independently per environment. It is common for administrators to have broader access in lower environments and more restricted access in production.
 
 > **Best practice:** Limit the number of administrators — especially those with the `super_user` or `admin_rights` flags — to those with an active operational need. Use the granular privilege system to grant only the access each person actively requires.
-
----
-
-## Related Articles
-
-- RC-CC-01 — Control Center: Overview & Navigation
-- RC-CC-03 — Security & Authentication
-- RC-CC-04 — User Settings & Defaults
-- RC-CC-02 — General Configuration (rate limiting, API settings)
-- RC-API-01 — REDCap API
-- RC-USER-01 — User Rights: Overview & Three-Tier Access

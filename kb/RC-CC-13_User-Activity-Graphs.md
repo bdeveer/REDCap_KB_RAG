@@ -3,22 +3,22 @@ RC-CC-13
 **User Activity Graphs**
 
 | **Article ID** | RC-CC-13 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
-| **Related Topics** | RC-CC-11 (System Statistics); RC-CC-12 (User Activity Log); RC-CC-14 (Map of Users); RC-CC-15 (Top Usage Report) |
+| **Related Topics** | RC-CC-11 — System Statistics; RC-CC-12 — User Activity Log; RC-CC-14 — Map of Users; RC-CC-15 — Top Usage Report |
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 The User Activity Graphs page displays visual charts summarizing REDCap system usage over time. It is accessible under "Dashboards & Activity" in the Control Center sidebar. The charts provide at-a-glance trend views that complement the raw data available in the User Activity Log (RC-CC-12) and System Statistics (RC-CC-11).
 
-## 2. Time Range Selection
+# 2. Time Range Selection
 
 All charts can be filtered by time range using the navigation at the top of the page. The available options are:
 
@@ -32,7 +32,7 @@ All charts can be filtered by time range using the navigation at the top of the 
 
 Switching between time ranges reloads all charts for the selected period.
 
-## 3. Available Charts
+# 3. Available Charts
 
 Charts are loaded dynamically. Based on REDCap v16.x, the charts include (but may not be limited to):
 
@@ -43,7 +43,7 @@ Charts are loaded dynamically. Based on REDCap v16.x, the charts include (but ma
 
 Charts show "Loading chart..." until the data query completes. The exact set of charts may vary by REDCap version.
 
-## 4. Chart Interaction
+# 4. Chart Interaction
 
 Most charts display:
 
@@ -53,7 +53,7 @@ Most charts display:
 
 Charts can often be hovered over to view exact values for specific time points.
 
-## 5. Relationship to Other Monitoring Tools
+# 5. Relationship to Other Monitoring Tools
 
 Activity Graphs provide trend visualization, complementing:
 
@@ -62,11 +62,11 @@ Activity Graphs provide trend visualization, complementing:
 - **Map of Users** (RC-CC-14) — for geographic distribution of users
 - **Top Usage Report** (RC-CC-15) — for identifying the most active projects and users
 
-## 6. Performance and Caching
+# 6. Performance and Caching
 
 The charts may take several seconds to load, especially for longer time ranges (Past Year or All). Results are typically cached to improve subsequent load times. If data appears outdated, administrators may need to wait for the cache to refresh or contact system administrators.
 
-## Related Resources
+# Related Resources
 
 - [RC-CC-11: System Statistics](RC-CC-11_System-Statistics.md)
 - [RC-CC-12: User Activity Log](RC-CC-12_User-Activity-Log.md)

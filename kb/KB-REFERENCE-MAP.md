@@ -8,31 +8,31 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 
 | Article ID | Title | File |
 |---|---|---|
-| RC-CC-01 | Control Center: Notifications & Reporting (Dashboard) | RC-CC-01_Control-Center-Notifications-and-Reporting.md | ✅ Written 2026-04-17 |
-| RC-CC-02 | Control Center: General System Configuration | RC-CC-02_Control-Center-General-Configuration.md | ✅ Written 2026-04-17 |
-| RC-CC-03 | Control Center: Security & Authentication | RC-CC-03_Control-Center-Security-and-Authentication.md | ✅ Written 2026-04-17 |
-| RC-CC-04 | Control Center: User Settings & Defaults | RC-CC-04_Control-Center-User-Settings.md | ✅ Written 2026-04-17 |
-| RC-CC-05 | Control Center: File Storage & Upload Settings | RC-CC-05_Control-Center-File-Storage-Settings.md | ✅ Written 2026-04-17 |
+| RC-CC-01 | Control Center: Notifications & Reporting (Dashboard) | RC-CC-01_Control-Center-Notifications-and-Reporting.md |
+| RC-CC-02 | Control Center: General System Configuration | RC-CC-02_Control-Center-General-Configuration.md |
+| RC-CC-03 | Control Center: Security & Authentication | RC-CC-03_Control-Center-Security-and-Authentication.md |
+| RC-CC-04 | Control Center: User Settings & Defaults | RC-CC-04_Control-Center-User-Settings.md |
+| RC-CC-05 | Control Center: File Storage & Upload Settings | RC-CC-05_Control-Center-File-Storage-Settings.md |
 | RC-CC-06 | Control Center: Modules & Services Configuration | RC-CC-06_Control-Center-Modules-and-Services.md |
-| RC-CC-07 | Control Center: Users & Access Management | RC-CC-07_Control-Center-User-Management.md | ✅ Written 2026-04-17 |
-| RC-CC-08 | Control Center: Home Page, Templates & Project Defaults | RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md | ✅ Written 2026-04-17 |
-| RC-CC-09 | Control Center: To-Do List | RC-CC-09_To-Do-List.md | ✅ Written 2026-04-17 |
-| RC-CC-10 | Control Center: URL Shortener | RC-CC-10_URL-Shortener.md | ✅ Written 2026-04-17 |
-| RC-CC-11 | Control Center: System Statistics | RC-CC-11_System-Statistics.md | ✅ Written 2026-04-17 |
-| RC-CC-12 | Control Center: User Activity Log | RC-CC-12_User-Activity-Log.md | ✅ Written 2026-04-17 |
-| RC-CC-13 | Control Center: User Activity Graphs | RC-CC-13_User-Activity-Graphs.md | ✅ Written 2026-04-17 |
-| RC-CC-14 | Control Center: Map of Users | RC-CC-14_Map-of-Users.md | ✅ Written 2026-04-17 |
-| RC-CC-15 | Control Center: Top Usage Report | RC-CC-15_Top-Usage-Report.md | ✅ Written 2026-04-17 |
-| RC-CC-16 | Control Center: Database Activity Monitor | RC-CC-16_Database-Activity-Monitor.md | ✅ Written 2026-04-17 |
-| RC-CC-17 | Control Center: Database Query Tool | RC-CC-17_Database-Query-Tool.md | ✅ Written 2026-04-17 |
-| RC-CC-18 | Control Center: Custom Application Links | RC-CC-18_Custom-Application-Links.md | ✅ Written 2026-04-17 |
-| RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md | ✅ Written 2026-04-17 |
-| RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md | ✅ Written 2026-04-17 |
-| RC-CC-21 | Control Center: Overview & Navigation | RC-CC-21_Control-Center-Overview.md | ✅ Written 2026-04-17 |
-| RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md | ✅ Written 2026-04-17 |
-| RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md | ✅ Written 2026-04-17 |
-| RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md | ✅ Written 2026-04-17 |
-| RC-CDIS-04 | CDP vs CDM: Feature Comparison | RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md | ✅ Written 2026-04-17 |
+| RC-CC-07 | Control Center: Users & Access Management | RC-CC-07_Control-Center-User-Management.md |
+| RC-CC-08 | Control Center: Home Page, Templates & Project Defaults | RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md |
+| RC-CC-09 | Control Center: To-Do List | RC-CC-09_To-Do-List.md |
+| RC-CC-10 | Control Center: URL Shortener | RC-CC-10_URL-Shortener.md |
+| RC-CC-11 | Control Center: System Statistics | RC-CC-11_System-Statistics.md |
+| RC-CC-12 | Control Center: User Activity Log | RC-CC-12_User-Activity-Log.md |
+| RC-CC-13 | Control Center: User Activity Graphs | RC-CC-13_User-Activity-Graphs.md |
+| RC-CC-14 | Control Center: Map of Users | RC-CC-14_Map-of-Users.md |
+| RC-CC-15 | Control Center: Top Usage Report | RC-CC-15_Top-Usage-Report.md |
+| RC-CC-16 | Control Center: Database Activity Monitor | RC-CC-16_Database-Activity-Monitor.md |
+| RC-CC-17 | Control Center: Database Query Tool | RC-CC-17_Database-Query-Tool.md |
+| RC-CC-18 | Control Center: Custom Application Links | RC-CC-18_Custom-Application-Links.md |
+| RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md |
+| RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md |
+| RC-CC-21 | Control Center: Overview & Navigation | RC-CC-21_Control-Center-Overview.md |
+| RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md |
+| RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md |
+| RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md |
+| RC-CDIS-04 | CDP vs CDM: Feature Comparison | RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md |
 | RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
@@ -231,10 +231,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
-*(None)*
-
-**Note:** Covers all four project lifecycle statuses (Development, Production, Analysis/Cleanup, Completed), status transitions, project copying and deletion, and the Draft Mode process for making safe production changes.
-
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-09 — Control Center: To-Do List
+- RC-CC-19 — Control Center: Publication Matching
 ---
 
 ### RC-PROJ-02 — Project Setup Checklist
@@ -311,6 +310,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-04 — User Rights: User Management
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-FD-02 — Online Designer
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
@@ -320,7 +320,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
-
 ---
 
 ### RC-AI-01 — REDCap AI Tools: Overview & Security
@@ -370,8 +369,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools
 - RC-AI-04 — AI Summarization
+- RC-CC-20 — Control Center: Multi-Language Management
 - RC-MLM-01 — Multi-Language Management
-
 ---
 
 ### RC-AI-04 — AI Summarization
@@ -410,6 +409,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-ALERT-02 — Alert Management & Notification Log
 - RC-CALC-01 — Special Functions Reference
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-INST-01 — Institution-Specific Settings & Policies
@@ -428,7 +428,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-09 — PDF Snapshots of Records
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
-
 ---
 
 ### RC-ALERT-02 — Alert Management & Notification Log
@@ -560,6 +559,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-47 — Export a File (File Repository) API
 - RC-API-48 — Import a File (File Repository) API
 - RC-API-49 — Delete a File (File Repository) API
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-18 — Control Center: Custom Application Links
 - RC-DAG-01 — Data Access Groups
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-DE-02 — Basic Data Entry
@@ -588,7 +590,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
-
 ---
 
 ### RC-API-02 — Export Records API
@@ -1940,7 +1941,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-AT-01 — Action Tags: Overview
-
+- RC-CC-20 — Control Center: Multi-Language Management
 ---
 
 ### RC-AT-11 — Action Tags: Mobile App Action Tags
@@ -2310,11 +2311,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-DE-06 — Bio-Medical Ontologies
 - RC-DE-08 — Field Comment Log
 - RC-DE-12 — Data Resolution Workflow
 - RC-FD-06 — Online Designer – Instrument and Field Management
-
 ---
 
 ### RC-DE-06 — Bio-Medical Ontologies
@@ -2435,9 +2436,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-08 — Field Comment Log
 
 **Inbound links (referenced by):**
+- RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-DE-08 — Field Comment Log
 - RC-INST-01 — Institution-Specific Settings & Policies
-
 ---
 
 ### RC-DDE-01 — Double Data Entry
@@ -2727,6 +2728,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 - RC-CALC-02 — Calculated Fields
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-FD-01 — Form Design Overview
 - RC-FD-03 — Data Dictionary
 - RC-FD-04 — Instrument Library & Zip Files
@@ -2745,7 +2747,6 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-09 — PDF Snapshots of Records
-
 ---
 
 ### RC-FD-03 — Data Dictionary
@@ -3034,7 +3035,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-API-01 — REDCap API
 - RC-API-03 — Import Records API
-
+- RC-CC-06 — Control Center: Modules & Services Configuration
 ---
 
 ### RC-DDP-01 — Dynamic Data Pull — Overview & User Guide
@@ -3168,56 +3169,360 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
-### RC-CC-20 — Control Center: Multi-Language Management (Admin)
+### RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
 
-**Prerequisites:** RC-CC-21 (Control Center overview)
+**Prerequisites:** None
 
 **Outbound links:**
-- RC-MLM-01 — Multi-Language Management
-- RC-CC-02 — General Configuration
-- RC-CC-06 — Modules & Services Configuration
-- RC-AI-03 — AI Translations
-- RC-AT-10 — Action Tags: Language Action Tags
-- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-09 — Control Center: To-Do List
+- RC-CC-11 — Control Center: System Statistics
 
 **Inbound links (referenced by):**
-- RC-MLM-01 — Multi-Language Management *(mentions admin must enable MLM system-wide)*
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-09 — Control Center: To-Do List
+- RC-CC-10 — Control Center: URL Shortener
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-21 — Control Center: Overview & Navigation
 
 ---
+### RC-CC-02 — Control Center: General System Configuration
 
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Inbound links (referenced by):**
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-03 — Control Center: Security & Authentication
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-04 — User Rights: User Management
+
+**Inbound links (referenced by):**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-04 — Control Center: User Settings & Defaults
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-05 — Control Center: File Storage & Upload Settings
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-DE-12 — Data Resolution Workflow
+
+**Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-06 — Control Center: Modules & Services Configuration
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-API-01 — REDCap API
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-INTG-01 — Data Entry Trigger
+- RC-MOB-01 — REDCap Mobile App
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-TXT-01 — Texting in REDCap: Setup and Usage
+- RC-TXT-02 — Texting: Administrator Setup
+
+**Inbound links (referenced by):**
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-18 — Control Center: Custom Application Links
+- RC-CC-19 — Control Center: Publication Matching
+- RC-CC-20 — Control Center: Multi-Language Management
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+
+---
+### RC-CC-07 — Control Center: Users & Access Management
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+
+---
+### RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-DE-05 — Field Validations
+- RC-FD-02 — Online Designer
+
+**Inbound links (referenced by):**
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-09 — Control Center: To-Do List
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Inbound links (referenced by):**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+
+---
+### RC-CC-10 — Control Center: URL Shortener
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+
+**Inbound links (referenced by):**
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-11 — Control Center: System Statistics
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-13 — Control Center: User Activity Graphs
+
+**Inbound links (referenced by):**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-12 — Control Center: User Activity Log
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-13 — Control Center: User Activity Graphs
+
+**Inbound links (referenced by):**
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-16 — Control Center: Database Activity Monitor
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-13 — Control Center: User Activity Graphs
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-15 — Control Center: Top Usage Report
+
+**Inbound links (referenced by):**
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-14 — Control Center: Map of Users
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-15 — Control Center: Top Usage Report
+
+**Inbound links (referenced by):**
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-15 — Control Center: Top Usage Report
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-16 — Control Center: Database Activity Monitor
+
+**Inbound links (referenced by):**
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-16 — Control Center: Database Activity Monitor
+- RC-CC-17 — Control Center: Database Query Tool
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-16 — Control Center: Database Activity Monitor
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-17 — Control Center: Database Query Tool
+
+**Inbound links (referenced by):**
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-17 — Control Center: Database Query Tool
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-17 — Control Center: Database Query Tool
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-16 — Control Center: Database Activity Monitor
+
+**Inbound links (referenced by):**
+- RC-CC-16 — Control Center: Database Activity Monitor
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-18 — Control Center: Custom Application Links
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
+
+**Inbound links (referenced by):**
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-19 — Control Center: Publication Matching
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Inbound links (referenced by):**
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
+### RC-CC-20 — Control Center: Multi-Language Management
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-AI-03 — AI Translations
+- RC-AT-10 — Action Tags: Language Action Tags
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-MLM-01 — Multi-Language Management
+
+**Inbound links (referenced by):**
+- RC-CC-21 — Control Center: Overview & Navigation
+
+---
 ### RC-CC-21 — Control Center: Overview & Navigation
 
 **Prerequisites:** None
 
 **Outbound links:**
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
-- RC-CC-02 — General System Configuration
-- RC-CC-03 — Security & Authentication
-- RC-CC-04 — User Settings & Defaults
-- RC-CC-05 — File Storage & Upload Settings
-- RC-CC-06 — Modules & Services Configuration
-- RC-CC-07 — Users & Access Management
-- RC-CC-08 — Home Page, Templates & Project Defaults
-- RC-CC-09 — To-Do List
-- RC-CC-10 — URL Shortener
-- RC-CC-11 — System Statistics
-- RC-CC-12 — User Activity Log
-- RC-CC-13 — User Activity Graphs
-- RC-CC-14 — Map of Users
-- RC-CC-15 — Top Usage Report
-- RC-CC-16 — Database Activity Monitor
-- RC-CC-17 — Database Query Tool
-- RC-CC-18 — Custom Application Links
-- RC-CC-19 — Publication Matching
-- RC-CC-20 — Multi-Language Management (Control Center settings)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-CC-09 — Control Center: To-Do List
+- RC-CC-10 — Control Center: URL Shortener
+- RC-CC-11 — Control Center: System Statistics
+- RC-CC-12 — Control Center: User Activity Log
+- RC-CC-13 — Control Center: User Activity Graphs
+- RC-CC-14 — Control Center: Map of Users
+- RC-CC-15 — Control Center: Top Usage Report
+- RC-CC-16 — Control Center: Database Activity Monitor
+- RC-CC-17 — Control Center: Database Query Tool
+- RC-CC-18 — Control Center: Custom Application Links
+- RC-CC-19 — Control Center: Publication Matching
+- RC-CC-20 — Control Center: Multi-Language Management
 - RC-MLM-01 — Multi-Language Management
 
 **Inbound links (referenced by):**
-- RC-CC-20 — Control Center: Multi-Language Management (Admin) *(listed as prerequisite)*
+- RC-CC-18 — Control Center: Custom Application Links
+- RC-CC-19 — Control Center: Publication Matching
 
 ---
-
 ### RC-MOB-01 — REDCap Mobile App
 
 **Prerequisites:** None
@@ -3233,10 +3538,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
-
 ---
 
 ### RC-MYCAP-01 — MyCap: Overview & Enabling
@@ -3257,13 +3562,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-MYCAP-03 — MyCap: Task Scheduling
 - RC-MYCAP-04 — MyCap: Participant Onboarding
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
-
-**Note:** See RC-MOB-01 — REDCap Mobile App for REDCap Mobile App vs. MyCap comparison.
-
 ---
 
 ### RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
@@ -3829,10 +4133,10 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-API-52 — Randomize Record API
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
-
 ---
 
 ### RC-RAND-02 — Randomization Setup Guide
@@ -4062,9 +4366,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-SURV-09 — PDF Snapshots of Records
-
 ---
 
 ### RC-SURV-09 — PDF Snapshots of Records
@@ -4101,9 +4405,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-TXT-02 — Texting: Administrator Setup
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-TXT-02 — Texting: Administrator Setup
-
 ---
 
 ### RC-TXT-02 — Texting: Administrator Setup
@@ -4114,8 +4418,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
-
 ---
 
 ### RC-USER-01 — User Rights: Overview & Three-Tier Access
@@ -4142,13 +4446,14 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-25 — Export User Roles API
 - RC-API-26 — Import User Roles API
 - RC-API-27 — Delete User Roles API
+- RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-07 — Control Center: Users & Access Management
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
-
 ---
 
 ### RC-USER-02 — User Rights: Adding Users & Managing Roles
@@ -4168,12 +4473,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-04 — User Rights: User Management
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-DAG-01 — Data Access Groups
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
-
 ---
 
 ### RC-USER-03 — User Rights: Configuring User Privileges
@@ -4236,12 +4541,12 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-DAG-01 — Data Access Groups
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
-
 ---
 
 ## Naming Inconsistencies to Review
@@ -4250,10 +4555,10 @@ All previously identified naming inconsistencies have been resolved as of 2026-0
 
 | Old ID | Correct ID | Fixed In |
 |---|---|---|
-| RC-NAV-01 | RC-NAV-REC-01 | RC-DE-01, RC-DE-02 |
-| RC-NAV-02 | RC-NAV-REC-02 | RC-DE-03 |
-| RC-NAV-04 | RC-NAV-REC-04 | RC-DE-01, RC-DE-03 |
-| RC-EXPORT-01 | RC-EXPRT-01 | RC-NAV-UI-02, RC-RAND-03 |
+| RC-NAV-01 | RC-NAV-REC-01 |
+| RC-NAV-02 | RC-NAV-REC-02 |
+| RC-NAV-04 | RC-NAV-REC-04 |
+| RC-EXPORT-01 | RC-EXPRT-01 |
 
 ---
 

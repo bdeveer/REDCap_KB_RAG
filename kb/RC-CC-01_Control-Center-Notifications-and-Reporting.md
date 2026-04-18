@@ -3,7 +3,7 @@ RC-CC-01
 **Control Center Notifications & Reporting**
 
 | **Article ID** | RC-CC-01 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |

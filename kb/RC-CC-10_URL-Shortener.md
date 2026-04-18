@@ -3,7 +3,7 @@ RC-CC-10
 **URL Shortener**
 
 | **Article ID** | RC-CC-10 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |

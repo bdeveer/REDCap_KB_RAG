@@ -3,7 +3,7 @@ RC-CC-11
 **System Statistics**
 
 | **Article ID** | RC-CC-11 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |

@@ -3,7 +3,7 @@ RC-CC-16
 **Database Activity Monitor**
 
 | **Article ID** | RC-CC-16 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap super-user administrator access |

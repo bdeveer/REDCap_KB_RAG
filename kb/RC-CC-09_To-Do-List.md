@@ -3,7 +3,7 @@ RC-CC-09
 **To-Do List**
 
 | **Article ID** | RC-CC-09 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |

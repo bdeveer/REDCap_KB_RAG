@@ -1,12 +1,24 @@
-# RC-CC-04 — Control Center: User Settings & Defaults
+RC-CC-04
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: User Settings & Defaults**
+
+| **Article ID** | RC-CC-04 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CC-02 — General Configuration; RC-CC-07 — Users & Access Management; RC-PROJ-01 — Project Lifecycle; RC-USER-01 — User Rights: Overview & Three-Tier Access |
+
+---
 
 The **User Settings** page (under **System Configuration**) controls what regular users can and cannot do within REDCap, and what default behaviors new accounts start with. These settings do not require any individual project configuration — they apply system-wide.
 
 ---
 
-## Project Creation & Status Changes
+# Project Creation & Status Changes
 
 **Allow Normal Users to Create New Projects**
 Controls whether any authenticated user can create a new project in REDCap. Options:
@@ -39,7 +51,7 @@ Surveys must be one-page public surveys and cannot use Survey Queue, Auto-Contin
 
 ---
 
-## Email Notification Settings
+# Email Notification Settings
 
 **Notify Admin When a New Account Is Created**
 When enabled, the system sends an email to the REDCap administrator whenever a new user account is created via external authentication. Table-based users are excluded because an administrator creates those accounts manually.
@@ -54,7 +66,7 @@ The body of this email contains stock text that can reference your instance URL 
 
 ---
 
-## General User Settings
+# General User Settings
 
 **Allow Normal Users to Auto-Generate API Tokens**
 Controls whether users can generate API tokens for their projects without administrator involvement. Options:
@@ -130,7 +142,7 @@ Controls visibility of the "suggest variable name" feature in the Add Field popu
 
 ---
 
-## Default Settings for New Users
+# Default Settings for New Users
 
 These settings define the starting state of new user accounts. They primarily affect users created via external authentication methods (LDAP, Shibboleth, etc.). Table-based user accounts have these values set manually by an administrator at account creation.
 
@@ -159,7 +171,7 @@ Applies to all CSV exports. Options include comma, semicolon, tab, space, pipe (
 
 ---
 
-## Public Reports, Project Dashboards & Smart Charts
+# Public Reports, Project Dashboards & Smart Charts
 
 **Allow Reports to Be Made Public**
 When enabled, project users with User Rights privileges can generate publicly accessible URLs for reports. Public report URLs do not require REDCap authentication. Options:
@@ -181,16 +193,6 @@ This setting does not apply when viewing charts/reports from inside a REDCap pro
 
 ---
 
-## Account Expiration Email Templates (Optional)
+# Account Expiration Email Templates (Optional)
 
 Custom email text can be configured for the two automated account expiration reminder emails REDCap sends: 14 days before expiration and 2 days before expiration. Separate templates can be defined for users without a sponsor and users with a sponsor. Dynamic variables can be included to personalize the email with the user's information. If no custom text is provided, REDCap uses stock email text.
-
----
-
-## Related Articles
-
-- RC-CC-01 — Control Center: Overview & Navigation
-- RC-CC-02 — General System Configuration
-- RC-CC-07 — Users & Access Management
-- RC-PROJ-01 — Project Lifecycle: Status and Settings
-- RC-USER-01 — User Rights: Overview & Three-Tier Access

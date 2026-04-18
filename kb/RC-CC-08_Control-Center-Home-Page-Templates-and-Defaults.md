@@ -1,12 +1,24 @@
-# RC-CC-08 — Control Center: Home Page, Templates, Project Defaults & Field Validations
+RC-CC-08
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: Home Page, Templates, Project Defaults & Field Validations**
+
+| **Article ID** | RC-CC-08 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CC-02 — General Configuration; RC-CC-04 — User Settings & Defaults; RC-DE-05 — Field Validations; RC-FD-02 — Online Designer |
+
+---
 
 This article covers four related System Configuration pages that control the appearance and default behavior of REDCap projects: **Home Page Settings**, **Project Templates**, **Default Project Settings**, and **Footer Settings**. It also covers **Field Validation Types**, which determines what validation options are available to form designers across all projects.
 
 ---
 
-## Home Page Settings
+# Home Page Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Home Page Settings section -->
 
@@ -29,7 +41,7 @@ The Home Page Settings control what users see on the REDCap landing page (before
 
 ---
 
-## Project Templates
+# Project Templates
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Project Templates section -->
 
@@ -40,7 +52,7 @@ Administrators can manage which templates are available, add new templates from 
 **Default templates shipped with REDCap** (as of v16.x) include:
 
 | Template | Description |
-|---|---|
+| --- | --- |
 | Base Project with eConsent | Starter project incorporating the e-Consent framework |
 | Basic Demography | Single instrument for capturing basic demographic information |
 | Classic Database | Six forms: demography, baseline, three monthly follow-ups, and a completion form |
@@ -62,7 +74,7 @@ Administrators can manage which templates are available, add new templates from 
 
 ---
 
-## Default Project Settings
+# Default Project Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Default Project Settings section -->
 
@@ -91,7 +103,7 @@ A text block (with optional link) that appears at the bottom of all survey pages
 
 ---
 
-## Footer Settings (All Projects)
+# Footer Settings (All Projects)
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Footer Settings section -->
 
@@ -105,7 +117,7 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 
 ---
 
-## Field Validation Types
+# Field Validation Types
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Field Validation Types section -->
 
@@ -118,7 +130,7 @@ Administrators can enable or disable any validation type. Once enabled, it appea
 **Standard validation types shipped with REDCap** (internal Data Dictionary names in parentheses):
 
 | Validation label | DD name |
-|---|---|
+| --- | --- |
 | Date (D-M-Y) | `date_dmy` |
 | Date (M-D-Y) | `date_mdy` |
 | Date (Y-M-D) | `date_ymd` |
@@ -162,14 +174,3 @@ Administrators can enable or disable any validation type. Once enabled, it appea
 
 **Custom Validation Types**
 REDCap administrators can develop and register custom validation types for institution-specific needs. Custom validations use JavaScript-based pattern matching or range checking. Once registered here, they become available in the validation type dropdown alongside standard types.
-
----
-
-## Related Articles
-
-- RC-CC-01 — Control Center: Overview & Navigation
-- RC-CC-02 — General System Configuration
-- RC-CC-04 — User Settings & Defaults
-- RC-DE-05 — Field Validations
-- RC-FD-02 — Online Designer
-- RC-PROJ-01 — Project Lifecycle: Status and Settings

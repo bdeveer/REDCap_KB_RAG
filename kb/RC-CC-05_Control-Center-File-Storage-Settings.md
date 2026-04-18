@@ -1,12 +1,24 @@
-# RC-CC-05 — Control Center: File Storage & Upload Settings
+RC-CC-05
 
-> **Administrator access required.** This page is only available to REDCap super users via the Control Center.
+**Control Center: File Storage & Upload Settings**
+
+| **Article ID** | RC-CC-05 |
+| --- | --- |
+| **Domain** | Control Center (Admin) |
+| **Applies To** | REDCap administrators |
+| **Prerequisite** | REDCap administrator access |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CC-01 — Notifications & Reporting; RC-CC-06 — Modules & Services Configuration; RC-DE-12 — Data Resolution Workflow |
+
+---
 
 The **File Upload Settings** page (under **System Configuration**) controls where REDCap stores uploaded files and what file upload behaviors are allowed across the system. Configuration here applies to all projects on the instance.
 
 ---
 
-## File Storage Methods
+# File Storage Methods
 
 REDCap supports several file storage backends. Only one method should be active at a time. All uploaded files are stored on your web server or an external server — REDCap itself does not retain them in the database.
 
@@ -40,9 +52,9 @@ The Azure environment can be set to either *Azure Commercial/Global* (default) o
 
 ---
 
-## Storage Configuration Settings
+# Storage Configuration Settings
 
-### Local Server File Storage
+## Local Server File Storage
 
 **Set Local File Storage Location**
 An alternative directory path can be specified for local file storage. If left blank, REDCap uses the default `edocs` folder. For security, this path should not be accessible over the web (i.e., not under the web root).
@@ -56,7 +68,7 @@ Options: *Disabled* / *Enabled*
 
 ---
 
-## Restricted File Types for Uploaded Files
+# Restricted File Types for Uploaded Files
 
 A system-level blocklist of file extensions prevents users from uploading potentially dangerous file types into REDCap. This applies to all upload locations across the system (File Repository, file upload fields, Send-It, etc.).
 
@@ -75,13 +87,13 @@ This list covers executables, scripts, system files, and installer formats that 
 
 ---
 
-## Configuration Options for Various Types of Stored Files
+# Configuration Options for Various Types of Stored Files
 
 Upload limits and enable/disable controls are set independently for each file upload context in REDCap.
 
 > **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The server default is typically 1024 MB unless changed. Per-context limits in REDCap can only be set *lower* than the server default.
 
-### File Repository
+## File Repository
 
 **Enable File Uploading for the File Repository Module**
 Globally enables or disables user-initiated file uploads to the File Repository. Even when disabled, REDCap still stores automatically generated files in the File Repository (e.g., data export files, eConsent PDFs).
@@ -101,7 +113,7 @@ Options: *Disabled* / *Enabled*
 
 > Disable this setting if your institution's data security policy requires authenticated access to all files stored in REDCap.
 
-### 'File Upload' Fields
+## 'File Upload' Fields
 
 **Enable 'File Upload' Field Types**
 Globally enables or disables the File Upload field type on data entry forms and surveys. When disabled, the field type is hidden in the Online Designer and any existing File Upload fields become non-functional (though their configuration is retained).
@@ -111,7 +123,7 @@ Options: *Disabled* / *Enabled*
 **Upload Max File Size for 'File' Field Types on Forms/Surveys**
 Maximum size (in MB) for a file uploaded via a File Upload field on a data entry form or survey. If left blank, the server default applies.
 
-### Send-It
+## Send-It
 
 **Enable Send-It**
 Send-It allows users to securely transfer files to other recipients via a temporary expiring link. It can be enabled for all REDCap locations, or restricted to specific areas. Files are deleted from the server when their link expires.
@@ -125,12 +137,12 @@ Options:
 **Send-It Upload Max File Size**
 Maximum size (in MB) for a file sent via Send-It. If left blank, the server default applies.
 
-### File Attachments (General)
+## File Attachments (General)
 
 **Upload Max File Size for General File Attachments**
 Applies to miscellaneous file attachment contexts not covered above, including attachments to Descriptive fields and files uploaded in the Data Resolution Workflow.
 
-### Data Resolution Workflow
+## Data Resolution Workflow
 
 **Allow File Attachments for Data Queries**
 When enabled, users can attach files to open data queries in the Data Resolution Workflow (e.g., uploading source documentation to support a query response). When disabled, this option does not appear within the DRW.
@@ -138,11 +150,3 @@ When enabled, users can attach files to open data queries in the Data Resolution
 Options: *Disabled* / *Enabled*
 
 > See RC-DE-12 for more on the Data Resolution Workflow.
-
----
-
-## Related Articles
-
-- RC-CC-01 — Control Center: Overview & Navigation
-- RC-CC-06 — Modules & Services Configuration
-- RC-DE-12 — Data Resolution Workflow

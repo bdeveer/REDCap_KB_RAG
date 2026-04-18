@@ -3,7 +3,7 @@ RC-CC-14
 **Map of Users**
 
 | **Article ID** | RC-CC-14 |
-|---|---|
+| --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap administrator access |
