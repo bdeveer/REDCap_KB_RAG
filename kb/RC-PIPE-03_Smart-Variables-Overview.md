@@ -191,4 +191,8 @@ The embedded help text lists every available smart variable, its syntax, its cat
 - RC-PIPE-01 — Piping Basics, Syntax & Field Types (core piping syntax and field type behavior)
 - RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (instance qualifier smart variables; cross-event piping)
 - RC-PIPE-04 — Piping in Emails & Notifications (using smart variables in confirmation emails, invitations, and alerts)
+- RC-PIPE-06 — Smart Variables: Record (record-level metadata smart variables)
+- RC-PIPE-13 — Smart Variables: Randomization (smart variables for capturing randomization metadata)
+- RC-PIPE-15 — Smart Variables: Public Reports (smart variables for linking to public reports)
+- RC-PIPE-17 — Smart Variables: Miscellaneous (miscellaneous smart variables not covered in other sub-articles)
 - RC-BL-01 — Branching Logic Overview & Scope (using smart variables in logic conditions)

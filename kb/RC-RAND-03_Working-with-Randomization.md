@@ -294,6 +294,9 @@ reason properly**
 - **RC-ALERT-01:** Alerts & Notifications — setting up alerts based
     on randomization events using smart variables
 
+- **RC-PIPE-13:** Smart Variables: Randomization — reference for the
+    \[rand-time\], \[rand-utc-time\], and \[rand-number\] smart variables
+
 # 11. Version & Change Notes
 
 | **REDCap Version** | **Notes** |

@@ -294,6 +294,12 @@ Support and documentation resources. Always visible to all users.
 - **RC-MOB-01:** REDCap Mobile App vs. MyCap — full comparison of
     the two mobile tools
 
+- **RC-PROJ-03:** Project Dashboards — creating and configuring
+    custom project dashboards (Custom Reports & Project Dashboards menu section)
+
+- **RC-DDE-01:** Double Data Entry — parallel data entry and
+    adjudication workflow (Data Comparison Tool menu item)
+
 # 8. Version & Change Notes
 
 | **REDCap Version** | **Notes** |

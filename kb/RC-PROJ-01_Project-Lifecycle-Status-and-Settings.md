@@ -277,3 +277,4 @@ Several aspects of the project lifecycle are controlled by system-wide settings 
 - RC-FD-02 — Online Designer (making design changes in Development and Draft Mode)
 - RC-FD-03 — Data Dictionary (alternative approach to making structural changes)
 - RC-INST-01 — Institution-Specific Settings & Policies (institution-level guidance on production approval timelines)
+- RC-PROJ-02 — Project Setup Checklist (dependency-ordered checklist covering all phases of project configuration from creation through go-live)

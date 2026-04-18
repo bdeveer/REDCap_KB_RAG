@@ -231,3 +231,16 @@ Google Gemini (cloud-hosted) can be used as an alternative to OpenAI. Obtain an 
 - **API Version** — The API version (e.g., `v1`, `v1beta`)
 
 See RC-AI-01 for an overview of REDCap's AI tools and security considerations.
+
+---
+
+# Related Articles
+
+- RC-AI-01 — REDCap AI Tools: Overview & Security (overview of AI features enabled by this page)
+- RC-CC-02 — Control Center: General System Configuration (related system-wide settings)
+- RC-CC-05 — Control Center: File Storage & Upload Settings (file-related module settings)
+- RC-DDE-01 — Double Data Entry (project-level feature enabled via Project Setup; enable/disable table context)
+- RC-DE-07 — Computer Adaptive Tests (CAT) (CAT instruments require system-level enablement here)
+- RC-MOB-01 — REDCap Mobile App (mobile app module configuration)
+- RC-MYCAP-01 — MyCap: Overview & Enabling (MyCap module configuration)
+- RC-RAND-01 — Randomization Concepts & Terminology (randomization module configuration)
