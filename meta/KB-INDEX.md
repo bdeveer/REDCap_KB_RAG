@@ -55,6 +55,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-AI-02 | AI Writing Tools | RC-AI-02_AI-Writing-Tools.md |
 | RC-AI-03 | AI Translations | RC-AI-03_AI-Translations.md |
 | RC-AI-04 | AI Summarization | RC-AI-04_AI-Summarization.md |
+| RC-MCP-01 | REDCap MCP Server: Setup and Management | RC-MCP-01_MCP-Server-Setup-and-Management.md |
 | RC-ALERT-01 | Alerts & Notifications: Setup | RC-ALERT-01_Alerts-and-Notifications-Setup.md |
 | RC-ALERT-02 | Alert Management & Notification Log | RC-ALERT-02_Alert-Management-and-Notification-Log.md |
 | RC-API-01 | REDCap API | RC-API-01_REDCap-API.md |
