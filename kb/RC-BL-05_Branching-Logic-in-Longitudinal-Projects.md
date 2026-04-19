@@ -9,7 +9,7 @@ RC-BL-05
 | **Prerequisite** | RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-LONG-01 — Longitudinal Project Setup |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Overview & Scope; RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers |
 
 ---

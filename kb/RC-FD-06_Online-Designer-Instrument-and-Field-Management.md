@@ -9,7 +9,7 @@ RC-FD-06
 | **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI; RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer |
 | **Version** | 1.2 |
 | **Last Updated** | 2026-04-11 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-BL-01 — Branching Logic Overview and Scope |
 
 ---

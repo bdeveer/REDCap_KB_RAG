@@ -9,7 +9,7 @@ RC-NAV-REC-01
 | **Prerequisite** | User is logged into a REDCap instance |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 
 # 1. Overview
 

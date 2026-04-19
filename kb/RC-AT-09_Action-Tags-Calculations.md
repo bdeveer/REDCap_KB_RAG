@@ -9,7 +9,7 @@ RC-AT-09
 | **Prerequisite** | RC-AT-01 — Action Tags Overview; familiarity with REDCap calculated fields |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-06 — Autofill Action Tags; RC-AT-08 — @IF; RC-DE-05 — Field Validations |
 
 ---

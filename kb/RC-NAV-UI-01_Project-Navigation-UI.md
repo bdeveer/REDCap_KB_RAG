@@ -13,6 +13,7 @@ RC-NAV-UI-01
 | **Prerequisites** | Logged into a REDCap instance; familiarity with basic web navigation |
 | **REDCap Version** | 13.x+ (UI layout has been stable across recent major versions) |
 | **Last Reviewed** | 2025-01 |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-UI-02: Project Menu Reference; RC-DE-02: Basic Data Entry; RC-SURV-01: Survey Setup |
 
 # 2. Overview

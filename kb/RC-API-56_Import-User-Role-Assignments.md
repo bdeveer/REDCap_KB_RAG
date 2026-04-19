@@ -9,7 +9,7 @@ RC-API-56
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-55 — Export User-Role Assignments; RC-API-25 — Export User Roles; RC-USER-01 — User Rights: Overview & Three-Tier Access |
 

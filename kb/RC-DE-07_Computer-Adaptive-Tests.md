@@ -9,7 +9,7 @@ RC-DE-07
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-SURV-01 — Surveys: Basics; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

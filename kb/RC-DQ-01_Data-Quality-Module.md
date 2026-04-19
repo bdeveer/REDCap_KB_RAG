@@ -10,7 +10,7 @@ RC-DQ-01
 | Prerequisite | RC-DE-02 — Basic Data Entry |
 | Version | 1.2 |
 | Last Updated | 2026 |
-| Author | REDCap Support |
+| Author | See KB-SOURCE-ATTESTATION.md |
 | Related Topics | RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-CALC-01 — Special Functions Reference; RC-CALC-02 — Calculated Fields |
 
 ---

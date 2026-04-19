@@ -9,7 +9,7 @@ RC-SURV-03
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design; RC-ALERT-01 — Alerts & Notifications: Setup; RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-LONG-01 — Longitudinal Project Setup |
 
 ---

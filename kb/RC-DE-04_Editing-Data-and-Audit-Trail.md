@@ -9,7 +9,7 @@ RC-DE-04
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-01 — Record Creation; RC-DE-02 — Basic Data Entry; RC-DE-03 — Longitudinal Projects & DAGs |
 
 # 1. Overview

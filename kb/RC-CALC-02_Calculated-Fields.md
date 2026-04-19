@@ -9,7 +9,7 @@ RC-CALC-02
 | **Prerequisite** | RC-FD-02 — Online Designer; RC-BL-02 — Branching Logic: Syntax & Atomic Statements |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CALC-01 — Special Functions Reference; RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE; RC-FD-03 — Data Dictionary; RC-FD-08 — Data Dictionary: Column Reference |
 
 ---

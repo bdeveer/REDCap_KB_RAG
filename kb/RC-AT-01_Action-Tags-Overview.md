@@ -9,7 +9,7 @@ RC-AT-01
 | **Prerequisite** | RC-FD-02 — Online Designer; foundational Project Build & Management knowledge |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-02 through RC-AT-07 (category articles); RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary |
 
 ---

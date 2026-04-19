@@ -9,7 +9,7 @@ RC-SURV-01
 | **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI; RC-FD-02 — Online Designer |
 | **Version** | 1.0 |
 | **Last Updated** | 2026-04-02 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-RIGHTS-01 — User Rights; RC-ALERT-01 — Automated Survey Invitations; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

@@ -13,6 +13,7 @@ RC-RAND-02
 | **Prerequisites** | RC-RAND-01 (Randomization Concepts & Terminology) — required. RC-LONG-01 (Longitudinal Projects), RC-RIGHTS-01 (User Rights & DAGs) — required if using those features. |
 | **REDCap Version** | 15.4.4+ |
 | **Last Reviewed** | 2025-01 |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview

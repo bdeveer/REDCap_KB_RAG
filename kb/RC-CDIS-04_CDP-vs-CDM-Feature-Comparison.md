@@ -1,5 +1,10 @@
 # RC-CDIS-04 — CDP vs CDM: Feature Comparison
 
+
+| **Article ID** | RC-CDIS-04 |
+| --- | --- |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
+
 Both **Clinical Data Pull (CDP)** and **Clinical Data Mart (CDM)** use the CDIS infrastructure and FHIR web services to import EHR data into REDCap, but they serve different use cases and work in fundamentally different ways. This article summarizes when to use each and how they compare across key dimensions.
 
 ---

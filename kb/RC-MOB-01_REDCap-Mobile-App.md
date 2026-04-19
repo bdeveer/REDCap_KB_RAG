@@ -10,7 +10,7 @@ RC-MOB-01
 | Prerequisite | None |
 | Version | 1.1 |
 | Last Updated | 2026 |
-| Author | REDCap Support |
+| Author | See KB-SOURCE-ATTESTATION.md |
 | Related Topics | RC-AT-11 — Action Tags: Mobile App Action Tags; RC-MYCAP-01 — MyCap: Overview & Enabling; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

@@ -9,7 +9,7 @@ RC-EXPRT-07
 | **Prerequisite** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-DAG-01 — Data Access Groups; RC-LONG-01 — Longitudinal Project Setup |
 
 # 1. Overview

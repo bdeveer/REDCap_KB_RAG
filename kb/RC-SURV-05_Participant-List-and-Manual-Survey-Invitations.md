@@ -9,7 +9,7 @@ RC-SURV-05
 | **Prerequisite** | RC-SURV-04 — Survey Link Types & Access Methods |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-04 — Survey Link Types & Access Methods; RC-SURV-06 — Automated Survey Invitations; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
 
 ---

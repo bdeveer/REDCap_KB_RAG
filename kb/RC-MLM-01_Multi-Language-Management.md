@@ -9,7 +9,7 @@ RC-MLM-01
 | **Prerequisite** | None |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App; RC-CC-20 — Control Center: Multi-Language Management |
 
 ---

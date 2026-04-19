@@ -9,7 +9,7 @@ RC-CC-01
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-03 — Security & Authentication; RC-CC-09 — To-Do List; RC-CC-11 — System Statistics |
 
 ---

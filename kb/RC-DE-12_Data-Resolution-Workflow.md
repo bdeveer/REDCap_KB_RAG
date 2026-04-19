@@ -9,7 +9,7 @@ RC-DE-12
 | **Prerequisite** | RC-DE-08 — Field Comment Log |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-08 — Field Comment Log |
 
 ---

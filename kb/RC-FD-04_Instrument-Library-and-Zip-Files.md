@@ -9,7 +9,7 @@ RC-FD-04
 | **Prerequisite** | RC-FD-01 — Form Design Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 # 1. Overview

@@ -9,7 +9,7 @@ RC-AI-04
 | **Prerequisite** | RC-AI-01 — REDCap AI Tools: Overview & Security |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AI-01 — REDCap AI Tools: Overview & Security; RC-EXPRT-01 — Data Export: Overview & Workflow; RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
 
 ---

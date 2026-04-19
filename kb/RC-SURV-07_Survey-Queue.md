@@ -9,7 +9,7 @@ RC-SURV-07
 | **Prerequisite** | RC-SURV-06 — Automated Survey Invitations |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-06 — Automated Survey Invitations; RC-SURV-05 — Participant List & Manual Survey Invitations; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-BL-01 — Branching Logic: Overview & Scope; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-PIPE-03 — Smart Variables Overview |
 
 ---

@@ -9,7 +9,7 @@ RC-API-01
 | **Prerequisite** | RC-USER-03 — User Rights: Configuring User Privileges |
 | **Version** | 1.3 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API v16.1.3 official documentation |
 | **Related Topics** | RC-INTG-01 — Data Entry Trigger; RC-EXPRT-01 — Data Export Overview; RC-IMP-01 — Data Import Overview; RC-USER-03 — User Rights: Configuring User Privileges; RC-CC-06 — Control Center: Modules & Services Configuration |
 

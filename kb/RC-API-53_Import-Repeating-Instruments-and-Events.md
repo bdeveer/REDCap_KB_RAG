@@ -9,7 +9,7 @@ RC-API-53
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-51 — Export Repeating Instruments and Events; RC-API-09 — Export Instruments; RC-API-10 — Export Instrument-Event Mappings; RC-LONG-02 — Repeated Instruments & Events Setup |
 

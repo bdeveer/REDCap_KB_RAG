@@ -9,7 +9,7 @@ RC-TXT-02
 | **Prerequisite** | RC-TXT-01 — Texting in REDCap: Setup and Usage |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-TXT-01 — Texting in REDCap: Setup and Usage |
 
 ---

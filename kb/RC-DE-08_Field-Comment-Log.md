@@ -9,7 +9,7 @@ RC-DE-08
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow; RC-CC-02 — Control Center: General System Configuration |
 
 ---

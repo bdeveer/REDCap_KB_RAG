@@ -9,7 +9,7 @@ RC-API-52
 | **Prerequisite** | RC-API-01 — REDCap API; RC-RAND-01 — Randomization Concepts & Terminology |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | RC-API-01 — REDCap API; RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-02 — Randomization Setup Guide; RC-RAND-03 — Working with & Managing Randomization |
 

@@ -13,6 +13,7 @@ RC-RAND-01
 | **Prerequisites** | Completed foundational REDCap training: project setup, instruments, user rights, longitudinal mode basics |
 | **REDCap Version** | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
 | **Last Reviewed** | 2025-01 |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview

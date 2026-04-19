@@ -9,7 +9,7 @@ RC-DE-06
 | **Prerequisite** | RC-DE-05 — Field Validations |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-05 — Field Validations; RC-DE-02 — Basic Data Entry; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

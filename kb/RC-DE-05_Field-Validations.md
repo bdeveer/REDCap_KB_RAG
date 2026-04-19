@@ -9,7 +9,7 @@ RC-DE-05
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-08 — Control Center: Home Page, Templates & Project Defaults; RC-DE-06 — Bio-Medical Ontologies; RC-DE-02 — Basic Data Entry; RC-FD-01 — Form Design Overview |
 
 ---

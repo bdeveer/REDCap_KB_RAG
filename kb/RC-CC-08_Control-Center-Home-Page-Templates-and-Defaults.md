@@ -9,7 +9,7 @@ RC-CC-08
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-02 — General Configuration; RC-CC-04 — User Settings & Defaults; RC-DE-05 — Field Validations; RC-FD-02 — Online Designer |
 
 ---

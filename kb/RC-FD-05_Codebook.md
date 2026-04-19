@@ -9,7 +9,7 @@ RC-FD-05
 | **Prerequisite** | RC-FD-01 — Form Design Overview |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-04 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-08 — Data Dictionary Column Reference & Advanced Techniques |
 
 # 1. Overview

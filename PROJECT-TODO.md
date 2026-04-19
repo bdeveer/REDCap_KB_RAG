@@ -6,7 +6,7 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ## KB Content
 
-- [ ] **Remove all Yale references** — Audit every article in `kb/` for Yale-specific placeholders and callout boxes. Replace with generic institution-agnostic language or a standardized `> **Institution-specific:**` placeholder pattern. Known affected files: RC-DQ-01, RC-DE-05, RC-SURV-08, RC-AI-01, RC-PIPE-04, RC-USER-03, RC-LONG-01, RC-LONG-02, RC-MOB-01, RC-MYCAP-01, RC-TXT-01, RC-EXPRT-06, RC-SURV-02, RC-USER-01 (14 files total).
+- [x] **Remove all Yale references** — Audit every article in `kb/` for Yale-specific placeholders and callout boxes. Replace with generic institution-agnostic language or a standardized `> **Institution-specific:**` placeholder pattern. Known affected files: RC-DQ-01, RC-DE-05, RC-SURV-08, RC-AI-01, RC-PIPE-04, RC-USER-03, RC-LONG-01, RC-LONG-02, RC-MOB-01, RC-MYCAP-01, RC-TXT-01, RC-EXPRT-06, RC-SURV-02, RC-USER-01 (14 files total).
 
 - [ ] **Flesh out RC-INST-01** — The article structure and `[FILL IN]` template exist but all placeholders need to be populated with real values for this installation: support channel, support hours, server time zone, draft mode policy, account creation workflow, global suspension rules, and enabled/disabled external modules.
 
@@ -30,9 +30,7 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ## Housekeeping
 
-- [ ] **Clean up Author field across all articles** — Audit the `Author` metadata row in every article in `kb/`. Standardize to a consistent value (e.g., "REDCap Support" or team name) and remove any placeholder or incorrect entries.
-
-- [ ] **Add TCC repo to attestation file** — Update `KB-SOURCE-ATTESTATION.md` to reference the TCC (The Center for Clinical Investigation?) repository as a source, specifically for the mobile app articles (RC-MOB-01, RC-MYCAP-01 through RC-MYCAP-08).
+*(no open items)*
 
 ---
 
@@ -41,7 +39,10 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 - [x] **Create an inventory of all uploadable CSV formats** — RC-IMP-03_CSV-Upload-Reference.md
 - [x] **Create API skills and project-build checklist** — RC-PROJ-02 (article) + supporting skill
 - [x] **Create institutional setup template structure** — RC-INST-01_Institution-Specific-Settings-and-Policies.md (template built; content population is the open task above)
+- [x] **Remove all Yale references** — Confirmed clean via audit; literal "Yale" text was already removed in a prior commit. All 14 flagged articles use the correct `> **Institution-specific:**` callout pattern.
+- [x] **Clean up Author field across all articles** — All 204 KB articles now have `| **Author** | See KB-SOURCE-ATTESTATION.md |`. The previous "REDCap Support" placeholder has been removed. CDIS articles (which had no metadata table) received a minimal header; RAND and NAV-UI articles had the Author row inserted after `Last Reviewed`.
+- [x] **Add TCC repo to attestation file** — TCC (Training Collaboration Committee) section added to `KB-SOURCE-ATTESTATION.md`, covering RC-MOB-01, RC-MYCAP-01 through RC-MYCAP-08, and RC-MLM-01. Includes specific source document credits and repository URL.
 
 ---
 
-*Last updated: 2026-04-16*
+*Last updated: 2026-04-19 (Author cleanup done; TCC section added to attestation; Yale cleanup confirmed done)*

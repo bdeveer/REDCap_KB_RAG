@@ -9,7 +9,7 @@ RC-PROJ-02
 | **Prerequisite** | RC-PROJ-01 — Project Lifecycle: Status and Settings |
 | **Version** | 1.2 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-SURV-01 — Surveys – Basics; RC-USER-01 — User Rights Overview; RC-DAG-01 — Data Access Groups; RC-ALERT-01 — Alerts & Notifications: Setup; RC-RAND-02 — Randomization Setup Guide |
 
 ---

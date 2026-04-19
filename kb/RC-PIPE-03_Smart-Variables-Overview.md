@@ -9,7 +9,7 @@ RC-PIPE-03
 | **Prerequisite** | RC-PIPE-01 — Piping Basics, Syntax & Field Types |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-01 — Piping Basics, Syntax & Field Types; RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers; RC-PIPE-04 — Piping in Emails & Notifications; RC-BL-01 — Branching Logic Overview & Scope |
 
 ---

@@ -10,7 +10,7 @@ RC-IMP-03
 | **Skill Level** | Intermediate |
 | **Version** | 1.0 |
 | **Last Updated** | 2026-04-16 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-IMP-01 — Data Import Overview; RC-FD-03 — Data Dictionary; RC-LONG-01 — Longitudinal Project Setup; RC-USER-02 — User Rights: Adding Users & Managing Roles; RC-DAG-01 — Data Access Groups |
 
 ---

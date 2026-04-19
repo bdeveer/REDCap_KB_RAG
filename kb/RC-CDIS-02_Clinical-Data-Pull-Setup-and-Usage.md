@@ -1,5 +1,10 @@
 # RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
 
+
+| **Article ID** | RC-CDIS-02 |
+| --- | --- |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
+
 > **Prerequisite:** CDIS must be configured at the system level before CDP can be used. See RC-CDIS-01.
 
 ---

@@ -9,7 +9,7 @@ RC-CC-03
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-INST-01 — Institution-Specific Settings & Policies; RC-USER-02 — User Rights; RC-USER-04 — User Management |
 
 ---

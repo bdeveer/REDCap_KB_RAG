@@ -9,7 +9,7 @@ RC-EXPRT-08
 | **Prerequisite** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-USER-03 — User Rights: Configuring User Privileges |
 
 # 1. Overview

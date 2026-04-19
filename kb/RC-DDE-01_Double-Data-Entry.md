@@ -9,7 +9,7 @@ RC-DDE-01
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-04 — Editing Data & Audit Trail; RC-USER-03 — User Rights: Configuring User Privileges; RC-EXPRT-01 — Data Export: Overview & Workflow |
 
 ---

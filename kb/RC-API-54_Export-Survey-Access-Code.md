@@ -9,7 +9,7 @@ RC-API-54
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-40 — Export Survey Link; RC-API-41 — Export Survey Queue Link; RC-API-42 — Export Survey Return Code |
 

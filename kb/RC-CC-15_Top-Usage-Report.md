@@ -9,7 +9,7 @@ RC-CC-15
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-12 — User Activity Log; RC-CC-13 — User Activity Graphs; RC-CC-14 — Map of Users; RC-CC-16 — Database Activity Monitor |
 
 ---

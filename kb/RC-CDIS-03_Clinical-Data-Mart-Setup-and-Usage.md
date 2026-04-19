@@ -1,5 +1,10 @@
 # RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
 
+
+| **Article ID** | RC-CDIS-03 |
+| --- | --- |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
+
 > **Prerequisite:** CDIS must be configured at the system level before CDM can be used. See RC-CDIS-01.
 
 ---

@@ -9,7 +9,7 @@ RC-MYCAP-04
 | **Prerequisite** | RC-MYCAP-01 — MyCap: Overview & Enabling |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-05 — App Settings & Participant Management; RC-PIPE-16 — Smart Variables: MyCap; RC-ALERT-01 — Alerts & Notifications: Setup |
 
 ---

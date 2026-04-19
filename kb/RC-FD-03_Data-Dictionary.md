@@ -10,7 +10,7 @@ RC-FD-03
 | **Skill Level** | Advanced |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-05 — Codebook |
 
 # 1. Overview

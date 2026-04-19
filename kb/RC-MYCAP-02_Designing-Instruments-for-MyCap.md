@@ -9,7 +9,7 @@ RC-MYCAP-02
 | **Prerequisite** | RC-MYCAP-01 — MyCap: Overview & Enabling |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-03 — Task Scheduling; RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links; RC-FD-01 — Form Design Overview; RC-AT-11 — Action Tags: Mobile App Action Tags |
 
 ---

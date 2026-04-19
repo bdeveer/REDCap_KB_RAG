@@ -1,5 +1,10 @@
 # RC-CDIS-01 — Clinical Data Interoperability Services (CDIS): Overview and Control Center Setup
 
+
+| **Article ID** | RC-CDIS-01 |
+| --- | --- |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
+
 > **Administrator access required.** The CDIS Control Center page is only available to REDCap super users.
 
 ---

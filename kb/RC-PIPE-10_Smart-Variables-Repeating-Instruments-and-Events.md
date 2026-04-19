@@ -9,7 +9,7 @@ RC-PIPE-10
 | **Prerequisite** | RC-PIPE-03 — Smart Variables Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-03 — Smart Variables Overview; RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers; RC-PIPE-09 — Smart Variables: Event & Arm |
 
 ---

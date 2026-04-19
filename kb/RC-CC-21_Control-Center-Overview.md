@@ -9,7 +9,7 @@ RC-CC-21
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-01 — Notifications & Reporting; RC-CC-02 — General Configuration; RC-CC-07 — Users & Access Management; RC-CC-09 — To-Do List |
 
 ---

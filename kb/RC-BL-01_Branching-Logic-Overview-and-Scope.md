@@ -9,7 +9,7 @@ RC-BL-01
 | **Prerequisite** | RC-FD-02 — Online Designer |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields & Checkboxes; RC-FD-02 — Online Designer |
 
 ---

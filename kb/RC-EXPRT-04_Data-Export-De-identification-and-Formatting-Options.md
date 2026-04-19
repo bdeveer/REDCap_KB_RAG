@@ -9,7 +9,7 @@ RC-EXPRT-04
 | **Prerequisite** | RC-EXPRT-01 — Data Export: Overview & Workflow; RC-EXPRT-03 — User Rights & Export Access |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-02 — Export Formats |
 
 # 1. Overview

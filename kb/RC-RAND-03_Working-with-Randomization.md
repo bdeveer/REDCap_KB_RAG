@@ -13,6 +13,7 @@ RC-RAND-03
 | **Prerequisites** | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Randomization Setup Guide — a working randomization model must already be configured |
 | **REDCap Version** | 15.4.4+ |
 | **Last Reviewed** | 2025-01 |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Setup Guide; RC-RIGHTS-01: User Rights & DAGs |
 
 # 2. Overview

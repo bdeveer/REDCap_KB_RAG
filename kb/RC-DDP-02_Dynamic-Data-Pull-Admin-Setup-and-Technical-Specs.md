@@ -9,7 +9,7 @@ RC-DDP-02
 | **Prerequisite** | RC-DDP-01 — Dynamic Data Pull: Overview & User Guide |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DDP-01 — DDP Overview & User Guide; RC-INTG-01 — Data Entry Trigger |
 
 ---

@@ -9,7 +9,7 @@ RC-PIPE-14
 | **Prerequisite** | RC-PIPE-03 — Smart Variables Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-03 — Smart Variables Overview; RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables |
 
 ---

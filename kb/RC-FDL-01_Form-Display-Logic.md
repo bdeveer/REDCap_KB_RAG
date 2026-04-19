@@ -9,7 +9,7 @@ RC-FDL-01
 | **Prerequisite** | RC-BL-02 — Branching Logic: Syntax & Atomic Statements |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Branching Logic Overview; RC-PIPE-05 — Smart Variables: User; RC-NAV-REC-04 — Record Status Dashboard; RC-SURV-07 — Survey Queue |
 
 ---

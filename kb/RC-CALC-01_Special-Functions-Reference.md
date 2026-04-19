@@ -9,7 +9,7 @@ RC-CALC-01
 | **Prerequisite** | RC-BL-01 — Branching Logic: Overview & Scope |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE; RC-PIPE-03 — Smart Variables Overview |
 
 ---

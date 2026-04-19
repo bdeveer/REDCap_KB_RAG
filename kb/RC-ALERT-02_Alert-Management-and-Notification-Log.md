@@ -9,7 +9,7 @@ RC-ALERT-02
 | **Prerequisite** | RC-ALERT-01 — Alerts & Notifications: Setup |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-ALERT-01 — Alerts & Notifications: Setup; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features |
 
 ---

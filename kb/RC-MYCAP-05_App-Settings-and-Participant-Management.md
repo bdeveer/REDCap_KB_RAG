@@ -9,7 +9,7 @@ RC-MYCAP-05
 | **Prerequisite** | RC-MYCAP-01 — MyCap: Overview & Enabling |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-04 — Participant Onboarding |
 
 ---

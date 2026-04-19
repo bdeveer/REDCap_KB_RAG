@@ -9,7 +9,7 @@ RC-INST-01
 | **Prerequisite** | None |
 | **Version** | 2.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-02 — General Configuration; RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings; RC-CC-05 — File Storage; RC-CC-06 — Modules & Services; RC-CC-07 — User Management; RC-NAV-UI-01 — Project Navigation UI; RC-NAV-UI-02 — Project Menu Reference; RC-USER-02 — User Rights: Adding Users & Managing Roles; RC-USER-04 — User Rights: User Management; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-API-01 — REDCap API |
 
 ---

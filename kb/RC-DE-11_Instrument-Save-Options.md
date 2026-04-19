@@ -9,7 +9,7 @@ RC-DE-11
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-01 — Record Creation & the Record Home Page; RC-DE-10 — Longitudinal & Repeated Data Entry; RC-SURV-01 — Surveys: Basics |
 
 ---

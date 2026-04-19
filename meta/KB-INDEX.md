@@ -134,6 +134,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DDE-01 | Double Data Entry | RC-DDE-01_Double-Data-Entry.md |
 | RC-DQ-01 | Data Quality Module | RC-DQ-01_Data-Quality-Module.md |
 | RC-FDL-01 | Form Display Logic | RC-FDL-01_Form-Display-Logic.md |
+| RC-EM-01 | External Modules: Overview & Manager | RC-EM-01_External-Modules-Overview-and-Manager.md |
+| RC-EM-02 | External Modules: Installed Catalog | RC-EM-02_External-Modules-Installed-Catalog.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |

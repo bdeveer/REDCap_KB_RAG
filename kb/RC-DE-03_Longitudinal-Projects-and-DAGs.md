@@ -9,7 +9,7 @@ RC-DE-03
 | **Prerequisite** | RC-DE-01 — Record Creation; RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-04 — Record Status Dashboard; RC-DE-01; RC-DE-02 |
 
 # 1. Overview

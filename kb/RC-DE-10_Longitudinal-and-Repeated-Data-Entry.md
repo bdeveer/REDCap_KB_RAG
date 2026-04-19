@@ -9,7 +9,7 @@ RC-DE-10
 | **Prerequisite** | RC-DE-01 — Record Creation & the Record Home Page; RC-DE-02 — Basic Data Entry; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Events |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-03 — Longitudinal Projects & DAGs; RC-DE-11 — Instrument Save Options; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-03 — Repeated Instruments & Events |
 
 ---

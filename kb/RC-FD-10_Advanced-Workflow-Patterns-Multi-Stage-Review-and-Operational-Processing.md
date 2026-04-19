@@ -9,7 +9,7 @@ RC-FD-10
 | **Prerequisite** | RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design; RC-AT-06 — Autofill Action Tags; RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE; RC-PIPE-04 — Piping in Emails and Notifications; RC-PIPE-08 — Smart Variables: Survey; RC-ALERT-01 — Alerts & Notifications: Setup |
 
 ---

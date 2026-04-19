@@ -9,7 +9,7 @@ RC-AT-11
 | **Prerequisite** | RC-AT-01 — Action Tags Overview; REDCap Mobile App must be installed and project initialized |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-02 — @HIDDEN & @READONLY |
 
 ---

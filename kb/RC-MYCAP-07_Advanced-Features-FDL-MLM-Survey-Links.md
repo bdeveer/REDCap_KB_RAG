@@ -9,7 +9,7 @@ RC-MYCAP-07
 | **Prerequisite** | RC-MYCAP-02 — Designing Instruments for MyCap |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FDL-01 — Form Display Logic; RC-MLM-01 — Multi-Language Management; RC-MYCAP-03 — Task Scheduling |
 
 ---

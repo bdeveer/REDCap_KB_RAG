@@ -9,7 +9,7 @@ RC-API-47
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-45 — Create Folder (File Repository) API; RC-API-46 — List Files and Folders (File Repository) API; RC-API-12 — Export File; RC-USER-03 — User Rights: Configuring User Privileges |
 

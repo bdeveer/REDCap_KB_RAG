@@ -13,6 +13,7 @@ RC-NAV-UI-02
 | **Prerequisites** | RC-NAV-UI-01: Project Navigation UI (menu/workspace layout, hamburger mode) |
 | **REDCap Version** | 14.x+ (item names and availability may vary slightly in older versions) |
 | **Last Reviewed** | 2025-01 |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-UI-01: Navigation UI; RC-RIGHTS-01: User Rights; RC-DE-02: Data Entry; RC-SURV-01: Surveys; RC-API-01: API |
 
 # 2. Overview

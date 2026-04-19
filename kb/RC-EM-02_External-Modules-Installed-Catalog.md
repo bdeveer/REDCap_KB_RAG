@@ -9,7 +9,7 @@ RC-EM-02
 | **Prerequisite** | RC-EM-01 — External Modules Overview & Manager |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EM-01 — External Modules Overview; RC-AT-01 — Action Tags Overview; RC-DAG-01 — Data Access Groups; RC-RAND-01 — Randomization Concepts |
 
 ---

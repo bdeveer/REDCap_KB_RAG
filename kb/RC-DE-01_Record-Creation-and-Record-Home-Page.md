@@ -9,7 +9,7 @@ RC-DE-01
 | **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-NAV-REC-01 — Record Navigation Overview; RC-NAV-REC-04 — Record Status Dashboard |
 
 # 1. Overview

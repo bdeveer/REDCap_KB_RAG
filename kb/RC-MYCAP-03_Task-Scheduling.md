@@ -9,7 +9,7 @@ RC-MYCAP-03
 | **Prerequisite** | RC-MYCAP-02 — Designing Instruments for MyCap |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-01 — MyCap: Overview & Enabling; RC-MYCAP-06 — Active Tasks & Mobile Toolbox; RC-LONG-01 — Longitudinal Project Setup |
 
 ---

@@ -9,7 +9,7 @@ RC-CC-16
 | **Prerequisite** | REDCap super-user administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-15 — Top Usage Report; RC-CC-17 — Database Query Tool; RC-CC-12 — User Activity Log |
 
 ---

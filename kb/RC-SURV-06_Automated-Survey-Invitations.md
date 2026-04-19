@@ -9,7 +9,7 @@ RC-SURV-06
 | **Prerequisite** | RC-SURV-05 — Participant List & Manual Survey Invitations |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-05 — Participant List & Manual Survey Invitations; RC-SURV-07 — Survey Queue; RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview |
 
 ---

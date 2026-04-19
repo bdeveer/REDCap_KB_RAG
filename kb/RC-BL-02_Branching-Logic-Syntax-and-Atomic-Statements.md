@@ -9,7 +9,7 @@ RC-BL-02
 | **Prerequisite** | RC-BL-01 — Branching Logic Overview & Scope |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Overview; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields; RC-FD-03 — Data Dictionary |
 
 # 1. Overview

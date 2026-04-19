@@ -9,7 +9,7 @@ RC-PROJ-03
 | **Prerequisite** | None |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables; RC-PIPE-14 — Smart Variables: Project Dashboards; RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions |
 
 ---

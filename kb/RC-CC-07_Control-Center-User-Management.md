@@ -9,7 +9,7 @@ RC-CC-07
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings & Defaults; RC-INST-01 — Institution-Specific Settings & Policies; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-API-01 — REDCap API |
 
 ---

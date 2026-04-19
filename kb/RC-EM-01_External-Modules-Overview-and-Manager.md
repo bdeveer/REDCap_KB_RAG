@@ -9,7 +9,7 @@ RC-EM-01
 | **Prerequisite** | Control Center access for system-level management; Project Design and Setup rights for project-level enabling |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EM-02 — External Modules Catalog; RC-AT-01 — Action Tags Overview; RC-INST-01 — Institution-Specific Settings |
 
 ---

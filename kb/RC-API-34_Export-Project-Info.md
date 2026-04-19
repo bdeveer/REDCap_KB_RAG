@@ -9,7 +9,7 @@ RC-API-34
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-35 — Import Project Info; RC-API-36 — Export Project XML; RC-API-37 — Import Project (Create Project) |
 

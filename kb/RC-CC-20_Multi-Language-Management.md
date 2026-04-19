@@ -9,7 +9,7 @@ RC-CC-20
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MLM-01 — Multi-Language Management; RC-CC-06 — Modules & Services Configuration; RC-AI-03 — AI Translations; RC-AT-10 — Action Tags: Language |
 
 ---

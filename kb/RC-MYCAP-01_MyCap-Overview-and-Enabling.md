@@ -9,7 +9,7 @@ RC-MYCAP-01
 | **Prerequisite** | None |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling; RC-MYCAP-04 — Participant Onboarding; RC-MOB-01 — REDCap Mobile App; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

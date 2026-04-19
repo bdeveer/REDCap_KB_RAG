@@ -9,7 +9,7 @@ RC-AT-EM-01
 | **Prerequisite** | RC-AT-01 — Action Tags Overview; HIDESUBMIT Action Tags External Module must be enabled for the project |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-08 — @IF |
 
 ---

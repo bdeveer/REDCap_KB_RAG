@@ -9,7 +9,7 @@ RC-AT-08
 | **Prerequisite** | RC-AT-01 — Action Tags Overview; familiarity with branching logic syntax |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-02 — @HIDDEN & @READONLY; RC-AT-03 — Radio/Dropdown Action Tags; RC-AT-06 — Autofill Action Tags; RC-BL-01 — Branching Logic Overview |
 
 ---

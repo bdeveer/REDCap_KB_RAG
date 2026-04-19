@@ -15,12 +15,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-## Maintenance Issues (Non-Gap)
-
-### ⚠️ RC-EM-01 & RC-EM-02 — Missing from KB-INDEX
-
-`RC-EM-01_External-Modules-Overview-and-Manager.md` and `RC-EM-02_External-Modules-Installed-Catalog.md` exist in `kb/` but are **not listed in `meta/KB-INDEX.md`**. Add entries for both articles to the index.
-
 ---
 
 ## Already Exists — No Action Needed
@@ -96,8 +90,8 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 
 ### External Modules (RC-EM) — new domain
 
-- RC-EM-01 — External Modules: Overview & Manager ✅ *(missing from KB-INDEX — see Maintenance Issues)*
-- RC-EM-02 — External Modules: Installed Catalog ✅ *(missing from KB-INDEX — see Maintenance Issues)*
+- RC-EM-01 — External Modules: Overview & Manager ✅
+- RC-EM-02 — External Modules: Installed Catalog ✅
 
 ### Data Export & Reports (RC-EXPRT) — new domain
 
@@ -191,4 +185,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-18 — Full reconciliation against kb/ and KB-INDEX. All CC articles now written. CDIS domain resolves the IMP-02 gap. RC-EM-01/EM-02 flagged as missing from KB-INDEX. Only open article gap: RC-DE-13.*
+*Last updated: 2026-04-19 — RC-EM-01 and RC-EM-02 added to KB-INDEX. Only open article gap: RC-DE-13.*

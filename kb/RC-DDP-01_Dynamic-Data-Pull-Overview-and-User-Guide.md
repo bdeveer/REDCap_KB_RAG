@@ -9,7 +9,7 @@ RC-DDP-01
 | **Prerequisite** | RC-DE-01 — Record Creation and Record Home Page; RC-NAV-REC-04 — Record Status Dashboard |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DDP-02 — DDP Admin Setup & Technical Specs; RC-NAV-REC-04 — Record Status Dashboard; RC-USER-02 — User Rights |
 
 ---

@@ -9,7 +9,7 @@ RC-AT-06
 | **Prerequisite** | RC-AT-01 — Action Tags Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Overview; RC-AT-05 — Free Text Tags; RC-LONG-01 — Longitudinal Project Setup; RC-FD-02 — Online Designer |
 
 ---

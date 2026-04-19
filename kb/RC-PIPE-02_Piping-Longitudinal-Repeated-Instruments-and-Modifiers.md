@@ -9,7 +9,7 @@ RC-PIPE-02
 | **Prerequisite** | RC-PIPE-01 — Piping Basics, Syntax & Field Types |
 | **Version** | 1.2 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-01 — Piping Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup |
 
 ---

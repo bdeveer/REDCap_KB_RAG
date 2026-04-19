@@ -9,7 +9,7 @@ RC-MYCAP-06
 | **Prerequisite** | RC-MYCAP-03 — Task Scheduling |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling |
 
 ---

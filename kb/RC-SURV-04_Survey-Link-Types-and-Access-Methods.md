@@ -9,7 +9,7 @@ RC-SURV-04
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-05 — Participant List & Manual Survey Invitations; RC-PIPE-03 — Smart Variables Overview; RC-LONG-01 — Longitudinal Project Setup |
 
 ---

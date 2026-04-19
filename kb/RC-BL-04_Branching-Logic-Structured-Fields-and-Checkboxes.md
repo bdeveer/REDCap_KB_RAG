@@ -9,7 +9,7 @@ RC-BL-04
 | **Prerequisite** | RC-BL-02 — Syntax & Atomic Statements |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-FD-05 — Codebook; RC-DE-02 — Basic Data Entry |
 
 # 1. Overview

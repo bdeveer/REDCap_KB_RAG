@@ -9,7 +9,7 @@ RC-IMP-01
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI |
 | **Version** | 1.8 |
 | **Last Updated** | 2026-04-10 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-04 — Instrument Library & Zip Files; RC-FD-03 — Data Dictionary; RC-DE-01 — Record Creation and Record Home Page |
 
 ---

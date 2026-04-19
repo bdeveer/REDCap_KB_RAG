@@ -9,7 +9,7 @@ RC-SURV-09
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-08 — e-Consent Framework: Setup & Management; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-06 — Automated Survey Invitations (ASI); RC-ALERT-01 — Alerts & Notifications: Setup |
 
 ---

@@ -9,7 +9,7 @@ RC-EXPRT-01
 | **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-02 — Export Formats; RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-04 — De-identification & Formatting Options; RC-EXPRT-05 — Report Types |
 
 # 1. Overview

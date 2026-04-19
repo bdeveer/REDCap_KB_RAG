@@ -9,7 +9,7 @@ RC-CC-02
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-01 — Notifications & Reporting; RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings & Defaults; RC-CC-07 — Users & Access Management; RC-INST-01 — Institution-Specific Settings & Policies; RC-PROJ-01 — Project Lifecycle |
 
 ---

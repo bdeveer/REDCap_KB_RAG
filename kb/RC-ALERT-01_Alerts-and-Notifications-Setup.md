@@ -9,7 +9,7 @@ RC-ALERT-01
 | **Prerequisite** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-01 — Surveys – Basics; RC-ALERT-02 — Alert Management & Notification Log; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

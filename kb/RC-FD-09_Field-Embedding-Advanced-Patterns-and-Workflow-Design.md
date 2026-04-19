@@ -9,7 +9,7 @@ RC-FD-09
 | **Prerequisite** | RC-FD-07 — Field Embedding; RC-PIPE-01 — Piping Basics, Syntax & Field Types |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-07 — Field Embedding; RC-PIPE-04 — Piping in Emails and Notifications; RC-PIPE-08 — Smart Variables: Survey; RC-ALERT-01 — Alerts & Notifications: Setup; RC-AT-EM-01 — Action Tags: HIDESUBMIT |
 
 ---

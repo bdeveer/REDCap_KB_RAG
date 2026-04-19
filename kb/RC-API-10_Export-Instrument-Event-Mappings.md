@@ -9,7 +9,7 @@ RC-API-10
 | **Prerequisite** | RC-API-01 — REDCap API |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | RC-API-01 — REDCap API; RC-API-09 — Export Instruments; RC-API-11 — Import Instrument-Event Mappings; RC-API-20 — Import Events |
 | **Important** | **Longitudinal projects only** — This method is only available for longitudinal projects (projects with multiple arms and/or repeating events). Classic projects do not have instrument-event mappings. |

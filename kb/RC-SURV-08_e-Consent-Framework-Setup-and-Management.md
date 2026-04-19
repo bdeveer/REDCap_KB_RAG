@@ -9,7 +9,7 @@ RC-SURV-08
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-09 — PDF Snapshots of Records; RC-DAG-01 — Data Access Groups; RC-USER-01 — User Rights: Overview & Three-Tier Access; RC-FD-02 — Online Designer; RC-AT-01 — Action Tags: Overview; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

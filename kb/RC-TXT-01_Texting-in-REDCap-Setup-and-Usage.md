@@ -9,7 +9,7 @@ RC-TXT-01
 | **Prerequisite** | RC-SURV-01 — Surveys: Basics |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-05 — Participant List and Manual Survey Invitations; RC-SURV-06 — Automated Survey Invitations; RC-ALERT-01 — Alerts and Notifications Setup; RC-TXT-02 — Texting: Administrator Setup; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

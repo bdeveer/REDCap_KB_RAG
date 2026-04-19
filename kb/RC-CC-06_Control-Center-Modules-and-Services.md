@@ -9,7 +9,7 @@ RC-CC-06
 | **Prerequisite** | REDCap administrator access |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-05 — File Storage & Upload Settings; RC-CC-02 — General Configuration; RC-ALERT-01 — Alerts & Notifications; RC-EM-01 — External Modules Overview; RC-INST-01 — Institution-Specific Settings & Policies; RC-AI-01 — REDCap AI Tools: Overview & Security; RC-AI-02 — AI Writing Tools; RC-AI-03 — AI Translations; RC-AI-04 — AI Summarization |
 
 ---

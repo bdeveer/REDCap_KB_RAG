@@ -9,7 +9,7 @@ RC-FD-07
 | **Prerequisite** | RC-FD-02 — Online Designer |
 | **Version** | 1.3 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-06 — Online Designer Instrument and Field Management; RC-BL-01 — Branching Logic Overview & Scope |
 
 ---

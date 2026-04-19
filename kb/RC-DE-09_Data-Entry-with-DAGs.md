@@ -9,7 +9,7 @@ RC-DE-09
 | **Prerequisite** | RC-DE-02 — Basic Data Entry |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DAG-01 — Data Access Groups; RC-DE-01 — Record Creation & the Record Home Page; RC-DE-02 — Basic Data Entry |
 
 ---

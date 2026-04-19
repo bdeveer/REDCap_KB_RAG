@@ -9,7 +9,7 @@ RC-BL-03
 | **Prerequisite** | RC-BL-02 — Syntax & Atomic Statements |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-04 — Structured Fields; RC-BL-01 — Overview |
 
 # 1. Overview

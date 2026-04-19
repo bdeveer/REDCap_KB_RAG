@@ -9,7 +9,7 @@ RC-USER-03
 | **Prerequisite** | RC-USER-01 — User Rights: Overview & Three-Tier Access |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-USER-02 — Adding Users & Managing Roles; RC-USER-04 — User Management; RC-DAG-01 — Data Access Groups; RC-EXPRT-01 — Data Export: Overview & Workflow |
 
 ---

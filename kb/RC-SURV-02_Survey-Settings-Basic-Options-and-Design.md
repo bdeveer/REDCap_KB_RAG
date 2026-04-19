@@ -9,7 +9,7 @@ RC-SURV-02
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-FD-02 — Online Designer |
 
 ---

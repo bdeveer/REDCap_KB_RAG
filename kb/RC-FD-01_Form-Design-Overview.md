@@ -9,7 +9,7 @@ RC-FD-01
 | **Prerequisite** | User is logged in and has Project Design and Setup rights |
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-04 — Instrument Library & Zip Files; RC-FD-05 — Codebook |
 
 # 1. Overview

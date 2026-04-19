@@ -9,7 +9,7 @@ RC-INTG-01
 | **Prerequisite** | None |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-SURV-01 — Surveys: Basics; RC-LONG-02 — Repeated Instruments & Events Setup; RC-DAG-01 — Data Access Groups; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---
