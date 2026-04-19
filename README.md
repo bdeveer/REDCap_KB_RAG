@@ -6,6 +6,16 @@ A structured knowledge base of REDCap documentation articles, built for ingestio
 
 This repo supports an LLM-powered REDCap assistant. Rather than feeding raw documentation into the model, each KB article covers a single, well-scoped concept and is formatted to maximize retrieval accuracy and response quality.
 
+## How to Search This KB
+
+**Step 1 — Find the right article:** Read `meta/KB-INDEX.md`. It is a compact table of every article by ID, title, and filename. Scan titles and domain prefixes to identify candidates, then read the article file(s) directly from `kb/`.
+
+**Step 2 — Can't find it by title?** Read `meta/KB-KEYWORD-MAP.md`. It maps common user phrasings, synonyms, and ambiguous topics to the relevant domain or article ID. Use it when the question doesn't obviously map to a domain name (e.g. "prevent retaking" → RC-SURV, "prepopulate" → RC-PIPE).
+
+**Step 3 — Need related articles?** Read `meta/KB-CROSS-REFS.md` to find prerequisites and follow-on articles for a given ID. This file is large — only load it when you need dependency or cross-reference information, not for simple lookups.
+
+**Domain routing:** Articles are grouped by domain prefix (e.g. `RC-SURV` for surveys, `RC-BL` for branching logic). The domain table below maps prefixes to topic areas. See the **Disambiguation Notes** section below the table for topics that could belong to more than one domain.
+
 ## Repo Structure
 
 ```
@@ -14,6 +24,7 @@ REDCap_KB_RAG/
 │   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (204 articles)
 ├── meta/                             # Navigation & cross-reference metadata (not for RAG indexing)
 │   ├── KB-INDEX.md                        # Article index: ID → Title → Filename (load for topic lookup)
+│   ├── KB-KEYWORD-MAP.md                  # Keyword/synonym map: user phrasings → domain or article ID
 │   └── KB-CROSS-REFS.md                   # Per-article prerequisites, outbound/inbound links, changelog (load only when building/updating articles)
 ├── claude skills/
 │   ├── kb-creation/                       # Skill: build new KB articles from .docx outlines
@@ -82,7 +93,24 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-TXT` | Texting (SMS) |
 | `RC-USER` | User Rights |
 
-The `KB-REFERENCE-MAP.md` file lists all articles, their prerequisites, cross-references, and flags topics that are referenced but not yet written.
+Article navigation is in `meta/KB-INDEX.md` (topic lookup) and `meta/KB-CROSS-REFS.md` (per-article prerequisites and cross-references).
+
+## Disambiguation Notes
+
+Some topics could map to more than one domain. Use these rules to pick the right one:
+
+| Question type | Go to |
+|---|---|
+| Sending automated emails or SMS | RC-ALERT (triggered notifications) vs RC-SURV-06 (survey invitations — pick based on whether it's survey-related) |
+| Hiding or showing fields | RC-BL (branching logic — field appears/disappears based on logic) vs RC-AT-02 (@HIDDEN/@READONLY — static or action-tag-driven) vs RC-FDL (form display logic — hides entire forms, not individual fields) |
+| Exporting data | RC-EXPRT (UI-based reports and exports) vs RC-API (programmatic export via API) |
+| Importing data | RC-IMP (CSV upload via UI) vs RC-API (programmatic import via API) |
+| File uploads | RC-FD (file-upload field type in an instrument) vs RC-API-12–15 (API methods for record-level files) vs RC-API-45–49 (API methods for File Repository) |
+| Calculations / formulas | RC-CALC (calculated fields, special functions) vs RC-AT-09 (@CALCTEXT / @CALCDATE action tags) |
+| Translations / multilingual | RC-MLM (Multi-Language Management — UI and instrument translation) vs RC-AI-03 (AI translation tool) |
+| Mobile data collection | RC-MOB (REDCap Mobile App — staff-facing offline data entry) vs RC-MYCAP (MyCap — participant-facing mobile app) |
+| Prepopulating fields | RC-PIPE (piping and smart variables) vs RC-AT-06 (autofill action tags) |
+| Survey access / links | RC-SURV (survey setup and settings) vs RC-PIPE (smart variable survey links) |
 
 ## Article Format
 
@@ -128,11 +156,11 @@ New articles are built from source training outline documents or written from sc
 
 1. Open a Cowork session and upload the source `.docx` (or describe the topic)
 2. Claude uses the `kb-creation` skill to produce a properly formatted KB article
-3. The article is saved to `kb/` and `KB-REFERENCE-MAP.md` is updated
+3. The article is saved to `kb/` and `meta/KB-INDEX.md` and `meta/KB-CROSS-REFS.md` are updated
 
 ## Updating Existing Articles
 
-To revise or correct an article, open a Cowork session and either upload updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `KB-REFERENCE-MAP.md` in sync.
+To revise or correct an article, open a Cowork session and either upload updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `meta/KB-INDEX.md` and `meta/KB-CROSS-REFS.md` in sync.
 
 ## Syncing Changes
 
