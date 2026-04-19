@@ -6,6 +6,14 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Open Gaps
 
+### ⚠️ RC-IMP-02 — (Intentionally absent or merged; ID reserved)
+
+**Why noted:** The index goes RC-IMP-01 → RC-IMP-03 with no RC-IMP-02. This gap is documented here to clarify the skip is intentional and the ID is not a missing article. If a second import article is ever needed, RC-IMP-02 is available.
+
+**Status:** No article needed at this time.
+
+---
+
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.

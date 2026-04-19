@@ -1,6 +1,6 @@
-# REDCap KB Reference Map
+# KB Article Index
 
-A complete cross-reference of all KB articles — their prerequisites, outbound references, and which articles reference them (inbound links). Also flags articles that are referenced but not yet written.
+A complete index of all KB articles by ID, title, and filename. Use this file for topic lookup and navigation.
 
 ---
 
@@ -108,8 +108,8 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-API-49 | Delete a File (File Repository) API | RC-API-49_Delete-File-File-Repository.md |
 | RC-API-50 | Generate Next Record Name API | RC-API-50_Generate-Next-Record-Name.md |
 | RC-API-51 | Export Repeating Instruments and Events API | RC-API-51_Export-Repeating-Instruments-and-Events.md |
-| RC-API-53 | Import Repeating Instruments and Events API | RC-API-53_Import-Repeating-Instruments-and-Events.md |
 | RC-API-52 | Randomize Record API | RC-API-52_Randomize-Record.md |
+| RC-API-53 | Import Repeating Instruments and Events API | RC-API-53_Import-Repeating-Instruments-and-Events.md |
 | RC-API-54 | Export Survey Access Code API | RC-API-54_Export-Survey-Access-Code.md |
 | RC-API-55 | Export User-Role Assignments API | RC-API-55_Export-User-Role-Assignments.md |
 | RC-API-56 | Import User-Role Assignments API | RC-API-56_Import-User-Role-Assignments.md |
