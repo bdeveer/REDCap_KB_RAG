@@ -2,16 +2,16 @@ RC-API-12
 
 **Export File API**
 
-| **Article ID** | RC-API-12 |
+| Article ID | RC-API-12 |
 |---|---|
-| **Domain** | API |
-| **Applies To** | REDCap projects with file upload fields |
-| **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | RC-API-01 — REDCap API; RC-API-13 — Import File; RC-API-14 — Delete File |
+| Domain | API |
+| Applies To | REDCap projects with file upload fields |
+| Prerequisite | RC-API-01 — REDCap API |
+| Version | 1.1 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Source | REDCap API v16.1.3 official documentation examples |
+| Related Topics | RC-API-01 — REDCap API; RC-API-13 — Import File; RC-API-14 — Delete File |
 
 ---
 
@@ -183,6 +183,10 @@ The `returnFormat` parameter controls the format of error messages only and does
 **Q: Can I export a file that was uploaded to a repeating instrument?**
 
 **A:** Yes. Include the `repeat_instance` parameter with the instance number you want to retrieve. The `field` parameter should still be the variable name of the file-upload field. If you omit `repeat_instance`, the API defaults to instance 1.
+
+**Q: Can I export a file stored in a Signature field using this method?**
+
+**A:** Yes. Export File works for both standard file-upload fields and Signature fields. Use the Signature field's variable name as the `field` parameter. The signature image is returned as a PNG file and should be written to disk in binary mode like any other file download.
 
 ---
 

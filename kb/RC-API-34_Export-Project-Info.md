@@ -23,7 +23,26 @@ This method requires only the API Export right and returns a JSON object contain
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Project Metadata
+Project-level configuration and properties including title, production status, longitudinal/survey settings, PI information, and structural flags. This does not include data or instrument designs.
+
+### Production Status
+A boolean field indicating whether the project is in production (active data collection) or in development/draft mode. Once a project is in production, certain structural changes are restricted.
+
+### API Export Privilege
+A permission that allows reading project data, metadata, and configuration via the API. This is the only privilege required for the Export Project Info method.
+
+### Boolean Fields
+Metadata fields that represent true/false values returned as `'0'` (false) or `'1'` (true) in the API response, rather than as JSON boolean types.
+
+### Configuration Flag
+A binary setting that controls project behavior, such as `surveys_enabled`, `randomization_enabled`, `record_autonumbering_enabled`, or `is_longitudinal`.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -36,7 +55,7 @@ This method requires only the API Export right and returns a JSON object contain
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -54,7 +73,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -70,7 +89,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -85,7 +104,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -118,7 +137,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns project metadata in the format specified. Boolean values are represented as `'0'` (false) or `'1'` (true). All date/time values are returned in `Y-M-D H:M:S` format.
 
@@ -156,7 +175,7 @@ The API returns project metadata in the format specified. Boolean values are rep
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What is the difference between Export Project Info and Export Project XML?**
 A: Export Project Info (RC-API-34) returns only project metadata and configuration. Export Project XML (RC-API-36) returns the complete project structure including instruments, fields, events, and can be used to recreate the project.
@@ -175,7 +194,7 @@ A: You can request `'csv'`, `'json'`, or `'xml'`. The default is `'xml'` if no f
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Missing format parameter:** While format is optional, always explicitly specify `'csv'`, `'json'`, or `'xml'` to avoid ambiguity. The default is `'xml'`, which may catch you off guard if you're expecting JSON without specifying it.
 
@@ -185,7 +204,7 @@ A: You can request `'csv'`, `'json'`, or `'xml'`. The default is `'xml'` if no f
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-35 — Import Project Info

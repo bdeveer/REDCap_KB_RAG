@@ -25,7 +25,23 @@ Use this method to automate bulk role assignments, replicate role structures acr
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### User Role
+A template of permissions that can be assigned to multiple users. Each role has a unique system-generated ID (unique_role_name).
+
+### Unique Role Name
+A system-generated identifier for a role (e.g., `U-2119C4Y87T`), used to specify which role to assign during import.
+
+### Role Assignment
+The mapping of a specific user to a specific role. Determines the permissions that user has in the project.
+
+### Data Access Group (DAG)
+A logical division of project users and records. Can be assigned to a user at the same time as a role assignment using the optional data_access_group field.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -38,7 +54,7 @@ Use this method to automate bulk role assignments, replicate role structures acr
 
 ---
 
-## 2.1 Data Attribute Reference
+## 3.1 Data Attribute Reference
 
 Each record in the `data` payload contains:
 
@@ -87,9 +103,9 @@ global_user,
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 from config import config
 import requests, json
@@ -113,7 +129,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -138,7 +154,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -156,7 +172,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -197,13 +213,13 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 On success, the API returns a count of user-role assignments added or updated. For example: `3` means three assignment records were processed.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: How do I remove a user from their role without deleting the user?**
 
@@ -231,7 +247,7 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Omitting `unique_role_name` when you meant to keep the assignment.** If you build your data payload from a partial record and forget to include the role field, the user will be unassigned. Always verify your payload includes both `username` and `unique_role_name` for every record you intend to keep assigned.
 
@@ -245,7 +261,7 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-API-55 — Export User-Role Assignments (retrieve current assignments before modifying them)

@@ -1,15 +1,28 @@
 # RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
 
 
-| **Article ID** | RC-CDIS-02 |
-| --- | --- |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
+| Field | Value |
+|---|---|
+| Article ID | RC-CDIS-02 |
+| Domain | Clinical Data Interoperability Services |
+| Applies To | Institutions using real-time, prospective clinical data collection from an EHR |
+| Prerequisite | RC-CDIS-01 — CDIS Overview and Control Center Setup |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-CDIS-01 — CDIS Overview; RC-CDIS-03 — Clinical Data Mart; RC-CDIS-04 — CDP vs CDM Comparison |
 
 > **Prerequisite:** CDIS must be configured at the system level before CDP can be used. See RC-CDIS-01.
 
 ---
 
-## What Is Clinical Data Pull (CDP)?
+## 1. Overview
+
+Clinical Data Pull (CDP) is a REDCap module that imports clinical data from an EHR system one patient at a time. It uses an adjudication workflow, meaning all imported data is held in a temporary cache and must be reviewed and approved by project users before it is saved. CDP is ideal for real-time, prospective clinical studies and longitudinal research where data quality review is important.
+
+---
+
+## 2. What Is Clinical Data Pull (CDP)?
 
 **Clinical Data Pull (CDP)** is a REDCap module that imports clinical data from an EHR into a REDCap project — one patient at a time. It uses an **adjudication workflow**, meaning all incoming EHR data is held in a temporary cache and must be reviewed and approved by a user before it is officially saved in the project.
 
@@ -20,7 +33,7 @@ CDP is best suited for:
 
 ---
 
-## Enabling CDP for a Project
+## 3. Enabling CDP for a Project
 
 Only a REDCap administrator can enable CDP for a project. This is done via the **Project Setup** page for the individual project. Once enabled, users with **CDP Setup/Mapping privileges** in the project can access the CDP Mapping page.
 
@@ -28,7 +41,7 @@ To contact your REDCap administrator about enabling CDP for a project, follow yo
 
 ---
 
-## Field Mapping
+## 4. Field Mapping
 
 Before data can be pulled, a user with CDP mapping privileges must map EHR data fields to REDCap fields. This is done on the **CDP Mapping page**, accessible from the Project Setup page.
 
@@ -68,7 +81,7 @@ For the fields **race**, **sex**, and **ethnicity**, CDP requires that answer ch
 
 ---
 
-## Importing Data: Two Access Methods
+## 5. Importing Data: Two Access Methods
 
 ### 1. EHR Launch
 
@@ -90,7 +103,7 @@ Users can access their REDCap project from a regular browser and pull data for e
 
 ---
 
-## Adjudication
+## 6. Adjudication
 
 **Adjudication** is the process of reviewing and approving EHR data before it is saved in the project. All pulled data is stored in a temporary cache first.
 
@@ -106,19 +119,55 @@ On the adjudication screen:
 
 ---
 
-## Automatic Data Monitoring (Cron Job)
+## 7. Automatic Data Monitoring (Cron Job)
 
 Once a patient has been added to a CDP project, REDCap automatically monitors the EHR for new data via a cron job. This continues for a configurable number of days defined by the setting **"Time of inactivity after which REDCap will stop checking for new data"**, which is set by the administrator on the CDIS Control Center page.
 
 ---
 
-## User Access Web Service (Optional)
+## 8. User Access Web Service (Optional)
 
 Administrators can optionally set up a **User Access Web Service** to add an extra layer of control over which users are authorized to adjudicate data from the EHR. This is configured by the REDCap administrator and technical team, and provides finer-grained access management beyond standard project user rights.
 
 ---
 
-## Related Articles
+## 9. Common Questions
+
+**Q: Can I use CDP without mapping all of my EHR fields?**
+Yes. Field mapping is flexible — you only map the EHR fields that are relevant to your study. You are not required to map every available EHR field. Map only what you need for your project.
+
+**Q: What happens if a temporal field does not have an associated date field with a value?**
+Temporal fields (like lab results or vitals) will not be fetched from the EHR until their associated date/time field has a value entered in REDCap. This is by design — the date field defines the time window for the query. Without a date, there is no time window to search.
+
+**Q: Can I use the same EHR field mapped to multiple REDCap fields?**
+Yes. CDP supports many-to-many field mappings, meaning one EHR field can map to multiple REDCap fields, and one REDCap field can receive data from multiple EHR fields. This flexibility allows you to organize EHR data according to your study's needs.
+
+**Q: How long does the automatic cron job monitor for new EHR data after a patient is added?**
+The duration is configurable by your REDCap administrator on the CDIS Control Center page. The setting is called "Time of inactivity after which REDCap will stop checking for new data." Once this period elapses, automatic monitoring stops, though users can still manually pull data by entering the MRN.
+
+**Q: What is the difference between adjudicating one value versus multiple values?**
+If the EHR returns only one value for a field, it is pre-selected on the adjudication screen automatically. If multiple values are returned (e.g., multiple lab results on the same date), the user must select which value(s) to import. Pre-selection rules like "Minimum value" or "Latest value" can be configured on the mapping page to auto-select a value when multiple results exist.
+
+**Q: Can clinical notes be imported in any format?**
+No. CDP only imports clinical notes if they are in HTML format. If your EHR stores notes in other formats (plain text, PDF, etc.), you cannot import them via CDP. Use the Clinical Data Mart (CDM) instead, which accepts notes in any format.
+
+---
+
+## 10. Common Mistakes & Gotchas
+
+**Forgetting to map the patient identifier field (MRN) before enabling EHR Launch.** CDP requires a field mapped to the EHR patient identifier so that REDCap knows which patient record to retrieve. If the MRN field is not mapped, users will not be able to add patients from the EHR. Always map your institution's patient ID field first.
+
+**Not understanding the difference between EHR Launch and REDCap-side access.** EHR Launch (opening REDCap from inside the EHR) is required for initial OAuth2 authorization, but after that, users can access CDP from a regular browser. A common mistake is assuming users must always launch from the EHR. Once authorized, users have the flexibility to use either method.
+
+**Using day offsets that are too narrow for temporal fields.** The day offset defines a ± window around a date (e.g., ±1 day means 3 days total). If you set too narrow a window, relevant lab results or vitals that fall outside the range will be missed. Discuss appropriate windows with your clinical team before mapping temporal fields.
+
+**Assigning demography fields without using the correct FHIR terminology codes.** If you map race, sex, or ethnicity fields without the required standardized FHIR code lists, data validation will fail and the mapping will not work. Contact your REDCap administrator for the specific code lists required for these fields.
+
+**Adjudicating data without reviewing field names and units.** It is easy to approve EHR data quickly without noticing that values are in different units or that field labels don't match expectations. Always review the adjudication screen carefully, especially for numeric values (e.g., is this lab value in mg/dL or mmol/L?).
+
+---
+
+## 11. Related Articles
 
 - RC-CDIS-01 — CDIS Overview and Control Center Setup
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage

@@ -2,16 +2,16 @@ RC-API-09
 
 **Export Instruments API**
 
-| **Article ID** | RC-API-09 |
+| Article ID | RC-API-09 |
 |---|---|
-| **Domain** | API |
-| **Applies To** | All REDCap projects |
-| **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | RC-API-01 — REDCap API; RC-API-07 — Export Metadata; RC-API-15 — Export Instruments PDF |
+| Domain | API |
+| Applies To | All REDCap projects |
+| Prerequisite | RC-API-01 — REDCap API |
+| Version | 1.1 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Source | REDCap API v16.1.3 official documentation examples |
+| Related Topics | RC-API-01 — REDCap API; RC-API-07 — Export Metadata; RC-API-15 — Export Instruments PDF |
 
 ---
 

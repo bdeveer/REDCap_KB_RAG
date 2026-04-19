@@ -25,7 +25,23 @@ The method optionally supports creating the new folder as a **sub-folder** of an
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### File Repository
+The project-level file storage area in REDCap, separate from record-level file-upload fields. It holds shared documents, generated files (e.g., e-consent PDFs, data exports), and any files uploaded through the File Repository interface. Access is controlled by folder-level permissions.
+
+### Folder ID
+A numeric identifier that uniquely identifies a folder in the File Repository. Used as the parent reference when creating sub-folders or uploading files into specific locations.
+
+### Data Access Group (DAG)
+A logical division of project users and records that enforces row-level access control. When a folder is restricted to a DAG, only users in that DAG can access it.
+
+### User Role
+A template of permissions that can be assigned to users as a group. When a folder is restricted to a role, only users assigned to that role can access it.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -41,7 +57,7 @@ The method optionally supports creating the new folder as a **sub-folder** of an
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have **both** of the following in the project:
 
@@ -52,7 +68,7 @@ Calls from tokens lacking either privilege will fail with a permissions error.
 
 ---
 
-# 4. Endpoint
+# 5. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -62,9 +78,9 @@ Only `POST` is supported.
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 ```python
 from config import config
@@ -99,7 +115,7 @@ fields = {
 }
 ```
 
-## 5.2 R
+## 6.2 R
 
 ```r
 source('config.R')
@@ -117,7 +133,7 @@ result <- postForm(
 print(result)
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 . ./config
@@ -132,7 +148,7 @@ $CURL -H "Accept: application/json" \
       $API_URL
 ```
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -168,7 +184,7 @@ print $output;
 
 ---
 
-# 6. Response
+# 7. Response
 
 On success, the API returns the `folder_id` of the newly created folder in the requested format.
 
@@ -193,7 +209,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: What's the difference between this method and Import File (RC-API-13)?**
 
@@ -221,7 +237,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Confusing the File Repository with record-level file uploads.** Create Folder only affects the project-level File Repository — it has no connection to file-upload fields attached to records. If you need to store a file against a specific record, use Import File (RC-API-13) instead. Files stored in the File Repository are not linked to any particular record.
 
@@ -235,7 +251,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-12 — Export File (download files from record-level file-upload fields)

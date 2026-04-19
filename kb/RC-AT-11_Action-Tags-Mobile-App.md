@@ -89,6 +89,14 @@ Without this tag, images uploaded via the browser are not automatically pushed t
 
 **A:** The REDCap Mobile App supports standard 1D barcodes (UPC, EAN, Code 128, etc.) and 2D codes (QR codes, Data Matrix). The decoded value is stored as a text string regardless of format.
 
+**Q: If I use @APPUSERNAME-APP and also @USERNAME on the same field, what happens?**
+
+**A:** This creates a conflict. The field cannot store both usernames simultaneously. Avoid combining them on the same field. Instead, use `@USERNAME` on a separate field for web-based entry and `@APPUSERNAME-APP` on a different field for mobile app entry.
+
+**Q: Does @SYNC-APP work offline, or do images need to be present before syncing?**
+
+**A:** Images must be uploaded to the REDCap server first (via web or another app user). When a mobile device syncs with the server, `@SYNC-APP` pulls server-side images down to the app so they are available for viewing when working offline. The tag does not affect images uploaded from within the mobile app itself.
+
 ---
 
 # 6. Common Mistakes & Gotchas

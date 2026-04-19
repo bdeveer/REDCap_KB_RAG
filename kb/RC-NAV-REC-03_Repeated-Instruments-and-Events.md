@@ -1,15 +1,15 @@
-RC-NAV-REC-03
+| Field | Value |
+|---|---|
+| Article ID | RC-NAV-REC-03 |
+| Domain | Record Navigation |
+| Applies To | Projects with repeated instruments or events |
+| Prerequisite | RC-NAV-REC-01 — Record Navigation Overview |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links |
 
-**Repeated Instruments & Repeated Events**
-
-| **Article ID** | RC-NAV-REC-03 |
-| --- | --- |
-| **Domain** | Navigation |
-| **Applies To** | REDCap projects with repeated instruments or repeated events |
-| **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
+---
 
 # 1. Overview
 

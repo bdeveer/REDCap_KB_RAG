@@ -218,22 +218,20 @@ through those buttons directly.
 
 # 8. Common Mistakes & Gotchas
 
-- Making changes in Production without expecting a review step: design
+- **Making changes in Production without expecting a review step.** Design
     changes in Production mode are not applied immediately. If your
     changes aren\'t showing up, check whether they are pending review in
     the Online Designer\'s change queue.
 
-- Using \'form\' and \'survey\' and \'instrument\' interchangeably in
-    logic and variable names: REDCap treats these as one object type.
+- **Using inconsistent terminology (form, survey, instrument).** REDCap treats these as one object type.
     Using inconsistent terminology in documentation or training creates
     confusion. Standardize on \'instrument\' throughout.
 
-- Skipping the Data Dictionary download before making bulk changes:
-    downloading the current Data Dictionary before a major edit is the
+- **Skipping the Data Dictionary download before making bulk changes.** Downloading the current Data Dictionary before a major edit is the
     only reliable way to recover from a bad import. Build this habit
     before every bulk change.
 
-- Assuming the advanced feature buttons open tools: they open
+- **Confusing advanced feature buttons with tools.** They open
     reference documentation, not editors. The actual features (Piping,
     \@Action Tags, etc.) are configured within the Online Designer or
     Data Dictionary.

@@ -2,16 +2,16 @@ RC-API-13
 
 **Import File API**
 
-| **Article ID** | RC-API-13 |
+| Article ID | RC-API-13 |
 |---|---|
-| **Domain** | API |
-| **Applies To** | REDCap projects with file upload fields |
-| **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | RC-API-01 — REDCap API; RC-API-12 — Export File; RC-API-14 — Delete File |
+| Domain | API |
+| Applies To | REDCap projects with file upload fields |
+| Prerequisite | RC-API-01 — REDCap API |
+| Version | 1.1 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Source | REDCap API v16.1.3 official documentation examples |
+| Related Topics | RC-API-01 — REDCap API; RC-API-12 — Export File; RC-API-14 — Delete File |
 
 ---
 
@@ -182,6 +182,10 @@ Example success response (JSON):
 **Q: Do I need the `event` parameter for classic projects?**
 
 **A:** No. For classic (non-longitudinal) projects, omit the `event` parameter if the file-upload field is not event-specific.
+
+**Q: What happens if a file already exists in the target field? Will it be overwritten?**
+
+**A:** Yes. If a file already exists in the target file-upload field, importing a new file replaces it. The previous file is permanently removed. If you need to preserve the original, export it first using RC-API-12 before importing the replacement.
 
 ---
 

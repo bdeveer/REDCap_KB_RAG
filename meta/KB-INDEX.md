@@ -33,7 +33,9 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md |
 | RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md |
 | RC-CDIS-04 | CDP vs CDM: Feature Comparison | RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md |
-| RC-INST-01 | Institution-Specific Settings & Policies | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
+| RC-INST-01 | Institution-Specific Settings & Policies — Production | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
+| RC-INST-02 | Institution-Specific Settings & Policies — Test / Staging | RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md |
+| RC-INST-03 | Institution-Specific Settings & Policies — Development | RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md |
 | RC-PROJ-01 | Project Lifecycle: Status and Settings | RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md |
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
 | RC-PROJ-03 | Project Dashboards | RC-PROJ-03_Project-Dashboards.md |
@@ -135,7 +137,9 @@ A complete cross-reference of all KB articles — their prerequisites, outbound 
 | RC-DQ-01 | Data Quality Module | RC-DQ-01_Data-Quality-Module.md |
 | RC-FDL-01 | Form Display Logic | RC-FDL-01_Form-Display-Logic.md |
 | RC-EM-01 | External Modules: Overview & Manager | RC-EM-01_External-Modules-Overview-and-Manager.md |
-| RC-EM-02 | External Modules: Installed Catalog | RC-EM-02_External-Modules-Installed-Catalog.md |
+| RC-EM-02 | External Modules: Installed Catalog — Production | RC-EM-02_External-Modules-Installed-Catalog.md |
+| RC-EM-03 | External Modules: Installed Catalog — Test / Staging | RC-EM-03_External-Modules-Installed-Catalog-Test.md |
+| RC-EM-04 | External Modules: Installed Catalog — Development | RC-EM-04_External-Modules-Installed-Catalog-Development.md |
 | RC-EXPRT-01 | Data Export: Overview & Workflow | RC-EXPRT-01_Data-Export-Overview-and-Workflow.md |
 | RC-EXPRT-02 | Data Export: Export Formats | RC-EXPRT-02_Data-Export-Export-Formats.md |
 | RC-EXPRT-03 | Data Export: User Rights & Export Access | RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md |

@@ -14,6 +14,12 @@ RC-CC-05
 
 ---
 
+# 1. Overview
+
+The **File Upload Settings** page controls the infrastructure for how and where all uploaded files are stored across the REDCap instance, as well as what types of files can be uploaded and what size limits apply in different contexts. This includes configuring storage backends (local, S3, Azure, etc.), file blocklists for security, and upload limits for the File Repository, file upload fields, Send-It, and other file upload locations. Settings here apply uniformly to all projects on the instance.
+
+---
+
 The **File Upload Settings** page (under **System Configuration**) controls where REDCap stores uploaded files and what file upload behaviors are allowed across the system. Configuration here applies to all projects on the instance.
 
 ---
@@ -150,3 +156,42 @@ When enabled, users can attach files to open data queries in the Data Resolution
 Options: *Disabled* / *Enabled*
 
 > See RC-DE-12 for more on the Data Resolution Workflow.
+
+---
+
+# 10. Common Questions
+
+**Q: Which file storage backend should I use?**
+Local storage is simplest for single-server deployments but requires adequate disk space and security hardening. Cloud storage (S3, Azure, GCP) is recommended for cloud-hosted or load-balanced instances because it centralizes file access and eliminates per-server disk requirements. Choose a backend that matches your hosting provider (S3 for AWS-hosted REDCap, Azure Blob Storage for Azure-hosted, etc.) to simplify access control and reduce data transfer costs.
+
+**Q: How do I know if my file storage is running out of space?**
+Monitor available disk space (for local storage) or cloud storage quota regularly. The Configuration Check page does not specifically test storage capacity, so you must monitor this separately. Implement alerts if available space drops below 10-20% to avoid a full-disk situation that would prevent new file uploads and break data exports.
+
+**Q: What file types should I block in the restricted file types list?**
+The default list covers executables, scripts, installer formats, and system files that could execute malicious code. Add institution-specific dangerous types if needed (e.g., `.ps1` for PowerShell scripts if you want to block automated attacks). Avoid over-blocking legitimate file types — if researchers legitimately need to upload `.jar` files or scripts, consider requiring approval instead of blocking them outright.
+
+**Q: What happens if a user tries to upload a blocked file type?**
+The upload is rejected with a message indicating that the file type is not allowed. Users must use a different format or request that the administrator unblock the type. No blocked files are stored; the upload fails immediately.
+
+**Q: Should I set the same file size limits across all contexts or vary them?**
+Vary them based on context. The File Repository typically allows larger files (e.g., 500 MB) because it is designed for document storage. File Upload fields might have tighter limits (e.g., 100 MB) to avoid survey upload delays. Send-It might be more restrictive (e.g., 50 MB) because files expire and should be temporary. Align limits with your users' typical file sizes and institutional policies.
+
+---
+
+# 11. Common Mistakes & Gotchas
+
+**Accidentally using the web-accessible directory for local file storage.** If local file storage is configured to a directory under the web root (e.g., `/public/uploads`), uploaded files become web-accessible, creating a major security risk. Always store uploaded files outside the web root (e.g., `/var/edocs` or `/data/redcap-storage`). Test that files are not accessible via HTTP after configuration.
+
+**Not archiving old file storage backends when switching to a new one.** If switching from local storage to S3, existing files in local storage are not automatically migrated. Plan a data migration strategy: either maintain the old backend in read-only mode for accessing historical files, or migrate all files to the new backend before removing the old one. Losing access to historical files breaks audit trails and data integrity.
+
+**Setting overly restrictive file size limits that block legitimate research documents.** If researchers are uploading source documents or study materials (e.g., survey PDFs, consent forms), setting the File Repository limit to less than 100 MB may be too restrictive. Estimate your typical file sizes and set limits accordingly, or use the per-project override to accommodate outlier projects.
+
+---
+
+# 12. Related Articles
+
+- RC-CC-02 — Control Center: General Configuration (system configuration and performance settings)
+- RC-CC-06 — Control Center: Modules & Services (Send-It and other file-related module configuration)
+- RC-FILE-01 — File Repository (file storage user guide and workflows)
+- RC-FILE-02 — File Upload Fields (file upload field configuration and constraints)
+- RC-INST-01 — Institution-Specific Settings & Policies (file storage policy considerations)

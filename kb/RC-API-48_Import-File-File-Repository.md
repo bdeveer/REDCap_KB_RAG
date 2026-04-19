@@ -23,7 +23,20 @@ The file is transmitted as **multipart form data** (a file upload), not as a JSO
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### File Repository
+The project-level centralized file storage area, accessible through a folder structure with optional access restrictions. Distinct from record-level file-upload fields on instruments.
+
+### Multipart Form Data
+An HTTP encoding format for file uploads that allows binary file content to be transmitted alongside form fields. Required for uploading files through the API.
+
+### Folder ID
+A numeric identifier for a specific folder in the File Repository. Obtained from List Files and Folders (RC-API-46) and used to specify where a file should be uploaded.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -34,11 +47,11 @@ The file is transmitted as **multipart form data** (a file upload), not as a JSO
 | `folder_id` | Optional | The `folder_id` of the folder into which the file should be placed. If omitted, the file is placed at the top level of the File Repository. |
 | `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. If omitted, defaults to `xml`. Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
 
-Note: this method has **no `format` parameter**. The successful response is not a structured data payload (see Section 6), so there is no response format to choose. `returnFormat` only controls how error messages are serialized.
+Note: this method has **no `format` parameter**. The successful response is not a structured data payload (see Section 7), so there is no response format to choose. `returnFormat` only controls how error messages are serialized.
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have **both** of the following in the project:
 
@@ -49,7 +62,7 @@ If `folder_id` is provided and the target folder is restricted to a DAG or User 
 
 ---
 
-# 4. Endpoint
+# 5. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -59,9 +72,9 @@ Only `POST` is supported.
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 Import a file to the top level of the File Repository:
 
@@ -101,7 +114,7 @@ fields = {
 }
 ```
 
-## 5.2 R
+## 6.2 R
 
 ```r
 source('config.R')
@@ -120,7 +133,7 @@ result <- postForm(
 print(result)
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 . ./config
@@ -134,7 +147,7 @@ $CURL -H "Accept: application/json" \
       $API_URL
 ```
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -174,7 +187,7 @@ print $output;
 
 ---
 
-# 6. Response
+# 7. Response
 
 Unlike other File Repository API methods, Import a File does **not** return a structured payload in the response body. A successful upload is indicated solely by an **HTTP 200** response. No `doc_id`, JSON object, or XML document is returned.
 
@@ -188,7 +201,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: How do I find out what `doc_id` was assigned to the file I just imported?**
 
@@ -216,7 +229,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Sending the file as a string or base64-encoded blob.** The `file` parameter must be an actual file upload transmitted as multipart form data. Attempts to send file contents as a plain string, a JSON field, or base64 text will be rejected. Use your HTTP library's file upload mechanism (`files=` in Python requests, `httr::upload_file()` in R, `-F "file=@..."` in cURL).
 
@@ -232,7 +245,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-45 — Create Folder (File Repository) API (create folders to import into)

@@ -25,7 +25,26 @@ Logging is essential for HIPAA compliance, data governance, and understanding wh
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Audit Trail
+A chronological record of all actions taken in a REDCap project, including data exports, imports, record edits, deletions, and system changes. Used for compliance tracking and security investigations.
+
+### Log Type
+A category of logged events such as 'export', 'manage', 'record_edit', 'record_delete', 'user', 'page_view', etc. Filtering by log type reduces result sets and improves query performance.
+
+### Timestamp
+The date and time when an action was logged, stored in the REDCap server's local timezone. Format: `YYYY-MM-DD HH:MM:SS` in responses; filter format: `YYYY-MM-DD HH:MM`.
+
+### Logging Privilege
+A user-level permission that grants access to view audit trail entries via API or the web interface. Must be combined with API Export privilege to use this method.
+
+### Filter Logic
+Optional parameters (username, record, DAG, date range) that restrict which log entries are returned. Filtering improves performance on large projects with extensive logging history.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -44,7 +63,7 @@ Logging is essential for HIPAA compliance, data governance, and understanding wh
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -67,7 +86,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -88,7 +107,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -103,7 +122,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -141,7 +160,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns an array of log entries with action details:
 
@@ -172,7 +191,7 @@ The API returns an array of log entries with action details:
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What is the time format for beginTime and endTime?**
 A: Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time.
@@ -191,7 +210,7 @@ A: Yes. Filtering reduces the result set significantly. Always filter on known c
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Timestamp format errors:** The correct format for `beginTime` and `endTime` is `YYYY-MM-DD HH:MM` (e.g., `2020-10-06 17:37`). Using other formats such as `M/D/YYYY HH:MM` will cause the filter to fail silently and return unfiltered results.
 
@@ -201,7 +220,7 @@ A: Yes. Filtering reduces the result set significantly. Always filter on known c
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-DE-04 — Editing Data & Audit Trail (the audit trail that this method exports programmatically)

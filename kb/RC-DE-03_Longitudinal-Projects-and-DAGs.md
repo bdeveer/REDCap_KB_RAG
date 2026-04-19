@@ -12,6 +12,8 @@ RC-DE-03
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-02 — Longitudinal Mode & Arms; RC-NAV-REC-04 — Record Status Dashboard; RC-DE-01; RC-DE-02 |
 
+---
+
 # 1. Overview
 
 This article explains how two common project features — Longitudinal

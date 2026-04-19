@@ -157,6 +157,10 @@ When present on any field of a survey page in a project with MLM active (with at
 
 **A:** The tag has no effect — the page renders in the default language, and the language selector remains visible.
 
+**Q: Can I use @LANGUAGE-SET to allow users to select their language and have it persist across forms in a longitudinal project?**
+
+**A:** Yes. Combine `@LANGUAGE-SET` on a field in an early form (to let users select their language) with `@LANGUAGE-FORCE` on subsequent forms that reads the stored language value. This creates a persistent language preference throughout the project.
+
 ---
 
 # 8. Common Mistakes & Gotchas

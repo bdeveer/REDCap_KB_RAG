@@ -1,15 +1,23 @@
 # RC-CDIS-04 — CDP vs CDM: Feature Comparison
 
+| Field | Value |
+|---|---|
+| Article ID | RC-CDIS-04 |
+| Domain | Clinical Data Interoperability Services |
+| Applies To | Administrators deciding between CDP and CDM for their institution |
+| Prerequisite | RC-CDIS-01 — CDIS Overview and Control Center Setup |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-CDIS-02 — Clinical Data Pull; RC-CDIS-03 — Clinical Data Mart; RC-CDIS-01 — CDIS Overview |
 
-| **Article ID** | RC-CDIS-04 |
-| --- | --- |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
+## 1. Overview
 
-Both **Clinical Data Pull (CDP)** and **Clinical Data Mart (CDM)** use the CDIS infrastructure and FHIR web services to import EHR data into REDCap, but they serve different use cases and work in fundamentally different ways. This article summarizes when to use each and how they compare across key dimensions.
+Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules built on the same CDIS infrastructure. They serve different use cases: CDP is best for real-time, prospective, patient-by-patient data collection with quality review; CDM is best for bulk imports of many patients at once without adjudication. Understanding the differences helps you choose the right tool for each project.
 
 ---
 
-## When to Use Each
+## 2. When to Use Each
 
 | Use Case | CDP | CDM |
 |---|---|---|
@@ -23,7 +31,7 @@ Both **Clinical Data Pull (CDP)** and **Clinical Data Mart (CDM)** use the CDIS 
 
 ---
 
-## Side-by-Side Comparison
+## 3. Side-by-Side Comparison
 
 ### Data Mapping to EHR Fields
 
@@ -72,7 +80,7 @@ Both **Clinical Data Pull (CDP)** and **Clinical Data Mart (CDM)** use the CDIS 
 
 ---
 
-## Key Structural Differences at a Glance
+## 4. Key Structural Differences at a Glance
 
 - **CDP is flexible, user-configured, and patient-by-patient.** It requires more setup (mapping) but gives project teams precise control over what is pulled and when.
 - **CDM is structured, pre-defined, and bulk-oriented.** It requires less project setup but offers less granular control. The project structure cannot be customized.
@@ -81,7 +89,43 @@ Both **Clinical Data Pull (CDP)** and **Clinical Data Mart (CDM)** use the CDIS 
 
 ---
 
-## Related Articles
+## 5. Common Questions
+
+**Q: If I enable both CDP and CDM at the system level, do I have to use both in every project?**
+No. Both modules are independent. Once CDIS is configured, you can enable one module, the other module, or both. Each project decides which module(s) to use based on its needs. A single institution can have some projects using CDP, some using CDM, and some using both.
+
+**Q: Can I convert a CDP project to a CDM project or vice versa?**
+No. CDP and CDM projects have fundamentally different structures. A CDP project has user-defined instruments and flexible mappings; a CDM project has pre-defined instruments. You cannot convert one to the other. You would need to create a new project with the appropriate module.
+
+**Q: For prospective studies, is CDP always better than CDM?**
+CDP is typically better for prospective, real-time studies because it allows flexible field mapping and adjudication. However, CDM can also be used for prospective studies if the pre-defined project structure fits your needs. Evaluate both options based on your specific data needs.
+
+**Q: Why does CDP require adjudication but CDM doesn't?**
+Adjudication in CDP provides a quality control step — every data value is reviewed before being saved. CDM imports data directly because it typically pulls historical data in bulk, and the assumption is that this data has already been validated in the EHR. For real-time prospective work, adjudication is valuable; for historical bulk pulls, it is usually less critical.
+
+**Q: If I enable "Allow multiple data pulls" for a CDM project, can I pull different patients each time?**
+Yes. Multiple data pulls lets you fetch data as many times as you want. However, the MRN list and date range are typically the same for all pulls unless you separately enable "Allow configuration changes" and request admin approval to modify them.
+
+**Q: Does CDP or CDM pull all available EHR data, or only what I map/request?**
+CDP pulls only the fields you explicitly map. CDM pulls data for all available fields within the pre-defined instruments (Demographics, Vital Signs, Labs, Allergies, Medications, Problem List) and the date range specified at project creation. You cannot selectively exclude fields in CDM.
+
+---
+
+## 6. Common Mistakes & Gotchas
+
+**Choosing CDP for a retrospective registry study.** CDP is designed for real-time, prospective, patient-by-patient pulls. If you have a large retrospective cohort and just need to import all available EHR data at once, CDM is the better choice. Using CDP for retrospective work is cumbersome because it requires manual patient-by-patient data entry and adjudication.
+
+**Assuming CDM's pre-defined project structure is customizable.** CDM's fixed instrument structure (Demographics, Vital Signs, Labs, etc.) cannot be changed without risking data pull failures. If your study needs a different project structure, use CDP instead, where you can map any fields you want.
+
+**Forgetting that CDM data is not adjudicated, then discovering data quality issues.** CDM imports data directly without a human review step. If your EHR data contains duplicate entries, unit errors, or other quality issues, they will be imported as-is into REDCap. Plan for a post-import review or data cleaning step if data quality is a concern.
+
+**Enabling both CDP and CDM privileges without clear documentation.** If your institution supports both modules, ensure that users understand which projects should use which module. Document your criteria (e.g., "CDP for prospective studies under 50 patients; CDM for registries over 100 patients"). Without clear guidelines, users may choose the wrong tool.
+
+**Not planning for repeated data in CDM.** In CDM, each individual value from the EHR becomes a separate repeating instance. A patient with 100 lab results will generate 100 repeating instances of the Labs instrument. Plan your data analysis and export strategy accordingly, and be aware of the size of the dataset you are pulling.
+
+---
+
+## 7. Related Articles
 
 - RC-CDIS-01 — CDIS Overview and Control Center Setup
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage

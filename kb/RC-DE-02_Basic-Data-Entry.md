@@ -12,6 +12,8 @@ RC-DE-02
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-01 — Record Creation; RC-DE-04 — Editing Data & Audit Trail; RC-NAV-REC-01 — Record Navigation Overview |
 
+---
+
 # 1. Overview
 
 This article covers the mechanics of entering data into a REDCap

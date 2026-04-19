@@ -23,7 +23,20 @@ Use this method to audit which users belong to which roles, verify role assignme
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### User Role
+A template of permissions that can be assigned to multiple users as a group. Defined once and reused to manage consistent access levels across users.
+
+### Unique Role Name
+A system-generated identifier for a role (e.g., `U-527D39JXAC`), distinct from the human-readable role label.
+
+### Role Assignment
+The mapping between a specific user and a user role. Determines what permissions that user has in the project.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -34,9 +47,9 @@ Use this method to audit which users belong to which roles, verify role assignme
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 from config import config
 import requests
@@ -52,7 +65,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -68,7 +81,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -83,7 +96,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -116,7 +129,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 On success, the method returns the list of user-role assignments in the requested format. Each record contains two fields:
 
@@ -127,7 +140,7 @@ Users who have no role assignment are not included in the response.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What's the difference between this method and Export Users?**
 
@@ -147,7 +160,7 @@ Users who have no role assignment are not included in the response.
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Confusing this method with Export User Roles.** Export User Roles (RC-API-25) returns role *definitions* (what permissions each role has). This method returns role *assignments* (which users are in which role). Both are needed for a full picture of project access.
 
@@ -159,7 +172,7 @@ Users who have no role assignment are not included in the response.
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-API-22 — Export Users (export full per-user permission sets)

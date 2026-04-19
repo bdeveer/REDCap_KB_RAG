@@ -87,3 +87,35 @@ The Database Activity Monitor is helpful in these scenarios:
 
 This page requires full super-user administrator access. Because it provides visibility into all database activity across all users and projects, access should be restricted to trusted administrators.
 
+# 11. Common Questions
+
+**Q: What is the difference between "Script Time" and "Query Time"?**
+Script Time is how long the overall REDCap page or script has been running. Query Time is how long the specific database query shown in that row has been executing. A query may have been running for 5 seconds while the overall script has been running for 20 seconds because other operations or queries completed before this one.
+
+**Q: If I see a query that has been running for 10 minutes, should I kill it?**
+Not necessarily. Very long-running queries sometimes indicate a legitimate large operation (bulk data export, report generation). Before killing a process, understand the context: who is the user, what project are they in, and what is the URL they are accessing. Only kill a process if you have confirmed it is problematic or stuck.
+
+**Q: Can I see the query history or past queries?**
+No. The Database Activity Monitor shows only currently active queries at the moment of the page load or auto-refresh. It does not log historical queries. To troubleshoot a query that ran in the past, use the Database Query Tool to examine log data, or check your database server logs if available.
+
+**Q: Does the auto-refresh interval affect database performance?**
+Yes. Very frequent auto-refresh (every 10 seconds) means the monitor itself is generating queries to fetch the process list. If you are using a 10-second refresh interval, you are adding some load to the database. Use a 10-second interval only when actively troubleshooting, and use 30 or 60 seconds for periodic monitoring.
+
+**Q: What happens to the monitor if the database server becomes unavailable?**
+If the database is down or unreachable, the monitor will not load and will display an error. The monitor cannot function without an active database connection, as it relies on the MySQL/MariaDB process list API.
+
+# 12. Common Mistakes & Gotchas
+
+**Killing a process without understanding its impact.** Terminating a database process can cause cascading effects. The query may have been initiated by a scheduled task, API call, or user action. Killing it can interrupt data imports, break user sessions, or leave partial data in an inconsistent state. Always verify the context before killing a process.
+
+**Using a very short auto-refresh interval all the time.** Setting the monitor to refresh every 10 seconds is useful for active troubleshooting, but leaving it enabled 24/7 creates continuous database load. Switch to a 30 or 60-second interval when the issue has been resolved, or stop monitoring altogether if the problem has been identified and fixed.
+
+**Assuming all long-running queries are problems.** Some queries are legitimately slow because they involve large datasets, complex joins, or intensive calculations. A 5-minute query may be normal for a large data export or complex report. Check the URL and understand what operation the user is performing before deciding a long query is a problem.
+
+# 13. Related Articles
+
+- RC-CC-15 — Top Usage Report
+- RC-CC-17 — Database Query Tool
+- RC-CC-12 — User Activity Log
+- RC-CC-21 — Control Center Overview
+

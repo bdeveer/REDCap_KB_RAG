@@ -25,7 +25,26 @@ When a project is created via this method, REDCap automatically seeds it with de
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Super API Token
+A high-privilege administrative credential (64 characters) issued by REDCap administrators for instance-wide operations. Required for project creation; distinct from regular project-level API tokens with limited scope.
+
+### Project Purpose Code
+A numeric classification (0-4) indicating the project's intent: Practice, Other, Research, Quality Improvement, or Operational Support. This field is required when creating a project.
+
+### CDISC ODM XML
+A standardized XML format (Operational Data Model) containing project metadata and optionally data. Can be provided to import complete project designs from exported projects or external systems.
+
+### Auto-numbered Record ID
+A system feature that automatically assigns sequential numeric or alphanumeric identifiers to new records. Can be enabled via the `record_autonumbering_enabled` field.
+
+### Longitudinal Configuration
+A project structure supporting multiple time points (events) and study arms. Requires `is_longitudinal: 1` and can include event and arm definitions.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -52,7 +71,7 @@ When a project is created via this method, REDCap automatically seeds it with de
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -80,7 +99,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -108,7 +127,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -123,7 +142,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -189,7 +208,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 On success, the API returns the newly created project's API token:
 
@@ -209,7 +228,7 @@ On error, you receive an error message:
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What is a Super API Token and where do I get one?**
 A: A Super API Token is a 64-character administrative credential issued by your REDCap administrator. It grants instance-wide permissions for operations like creating projects. Request it from your REDCap admins through secure channels. Never share it publicly.
@@ -228,7 +247,7 @@ A: Yes, if you include a complete XML export with arm and event definitions. Use
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Super token confusion:** Many developers attempt this with regular project tokens and receive authentication errors. Verify you are using a Super API Token, not a project-specific token.
 
@@ -242,7 +261,7 @@ A: Yes, if you include a complete XML export with arm and event definitions. Use
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info

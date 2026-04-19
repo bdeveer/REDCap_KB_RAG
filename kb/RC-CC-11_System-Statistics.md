@@ -118,3 +118,43 @@ The statistics displayed on the System Statistics page overlap with (but are not
 A separate System Statistics page is available for FHIR (Fast Healthcare Interoperability Resources) reporting on instances with FHIR integration or Dynamic Data Pull enabled. This page, accessible at `ControlCenter/fhir_stats.php`, displays FHIR-specific metrics and is typically linked in the Control Center sidebar adjacent to the main System Statistics page.
 
 For more information on FHIR integration and statistics, consult your institution's FHIR administrator or the REDCap documentation on FHIR support.
+
+---
+
+# 7. Common Questions
+
+**Q: Why do some statistics show "Loading..." on the System Statistics page?**
+Some statistics require time-consuming database queries (such as total logged events and Dynamic Data Pull metrics). These statistics are loaded asynchronously after the page renders to keep the page responsive. Wait a few seconds to a few minutes depending on your database size and server performance.
+
+**Q: Can I export the statistics for use in reports or trend analysis?**
+Yes. The "Download as CSV" button exports all visible statistics to a CSV file. The filename includes the current timestamp. You can then import the CSV into spreadsheet applications or data analysis tools to track trends over time by comparing exports from different dates.
+
+**Q: What counts as an "active user" for the purposes of System Statistics?**
+Active users are typically counted based on login activity within a specified recent time interval (e.g., last 30 or 90 days, depending on your configuration). The exact definition may vary by REDCap version. Contact your system administrator if you need clarity on the definition used at your institution.
+
+**Q: How do survey responses differ from data entry records in the statistics?**
+Data entry records are created by authenticated users entering data manually on forms. Survey responses are created by unauthenticated respondents completing survey instruments. Both count toward the "Total records" metric, but the breakdown allows you to understand the balance between staff data entry and survey-based data collection.
+
+**Q: Are the statistics real-time or is there a delay?**
+Most statistics are near real-time, reflecting activity that occurred within the last few minutes. However, asynchronously loaded statistics (like total logged events) may take longer to compute and may reflect data from a few minutes or hours ago, depending on database performance. Plan important statistical reports accordingly.
+
+**Q: Where can I find the REDCap version number on the System Statistics page?**
+The REDCap version is listed under the Infrastructure section of the System Statistics page. It shows the current version number of the REDCap installation on your server.
+
+# 8. Common Mistakes & Gotchas
+
+**Assuming all statistics are loaded immediately.** Administrators sometimes screenshot or export the System Statistics page before asynchronous statistics have finished loading, capturing incomplete data. Always wait for all "Loading..." placeholders to be replaced with actual values before exporting or relying on the statistics.
+
+**Using old statistics snapshots without verifying current data.** If you export System Statistics regularly for trend tracking, ensure you are comparing apples to apples. The definition of "active users" or counting methodology may change between REDCap versions, making historical comparisons less meaningful. Document the REDCap version and date of each snapshot.
+
+**Not accounting for how DDP and Dynamic Data Pull affect record counts.** If you use Dynamic Data Pull to import records from external systems, these imported records are counted in the "Total records" metric. Be aware that record counts reflect both natively created records and those pulled from external sources. Understanding this helps interpret the statistics correctly.
+
+**Misinterpreting API-enabled projects as projects actually using the API.** The "API-enabled projects" statistic shows how many projects have API access turned on, not how many projects actively use the API. Many projects may be API-enabled but rarely or never use it. Use the User Activity Log or API call volume metrics for actual usage.
+
+**Forgetting that FHIR statistics are separate from main statistics.** If your instance has FHIR integration, remember that FHIR-specific metrics are on a different page (`ControlCenter/fhir_stats.php`). The main System Statistics page may not include all FHIR-related metrics you need for compliance or reporting.
+
+# 9. Related Articles
+
+- RC-CC-01 — Notifications & Reporting
+- RC-CC-12 — User Activity Log
+- RC-CC-13 — User Activity Graphs

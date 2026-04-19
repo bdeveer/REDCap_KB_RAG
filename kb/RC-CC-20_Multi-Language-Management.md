@@ -35,9 +35,9 @@ A PDF manual for MLM is available from the REDCap Language Library (linked from 
 
 ---
 
-# Page Tabs
+# 1. Page Tabs
 
-## Languages Tab
+## 1.1 Languages Tab
 
 The main tab where system languages are listed and managed. Each language entry shows:
 
@@ -68,7 +68,7 @@ The main tab where system languages are listed and managed. Each language entry 
 
 ---
 
-## User Interface Tab
+## 1.2 User Interface Tab
 
 This tab is where the actual translation strings are entered and managed for each language.
 
@@ -96,7 +96,7 @@ This tab is where the actual translation strings are entered and managed for eac
 
 ---
 
-## Usage Tab
+## 1.3 Usage Tab
 
 Provides an overview of MLM usage across all projects on the instance.
 
@@ -118,7 +118,7 @@ The table supports **search by project language or status icon label**. An **Exp
 
 ---
 
-## Settings Tab
+## 1.4 Settings Tab
 
 System-level controls that apply to how projects can use MLM.
 
@@ -136,7 +136,7 @@ These settings can be overridden on a per-project basis within that project's ow
 
 ---
 
-# MyCap Integration
+# 2. MyCap Integration
 
 Languages can be marked as **active for MyCap** (the mobile companion app). This is configured separately from the forms/surveys activation — MyCap language support is **all-or-nothing** per language: a language is either fully active for MyCap or not available at all.
 
@@ -144,7 +144,7 @@ Languages can be marked as **active for MyCap** (the mobile companion app). This
 
 ---
 
-# Exporting and Importing Languages
+# 3. Exporting and Importing Languages
 
 **Export options:**
 - Optionally include translation prompts, default values, and language notes
@@ -157,3 +157,35 @@ Languages can be marked as **active for MyCap** (the mobile companion app). This
 - Allow blank values to overwrite existing translations
 
 **Export/Import General Settings:** The export/import for general settings (tab-level configuration) is separate from language export/import and uses JSON format.
+
+# 4. Common Questions
+
+**Q: If I disable Multi-Language Management system-wide, what happens to projects that already use it?**
+If you disable MLM in the Settings tab, surveys and data entry forms will stop being translated across all projects immediately. Projects that had MLM enabled will revert to the base/default language. The translations are not deleted, but they are not active. If you re-enable MLM later, translations will be available again, but the change is disruptive to active projects.
+
+**Q: Does Multi-Language Management translate the data that users enter?**
+No. MLM only translates the user interface — field labels, button text, validation error messages, and other UI elements. The actual data values that users enter (e.g., survey responses, data entry) are not translated. MLM makes surveys accessible in multiple languages, but the data collected remains in the original format entered by users.
+
+**Q: Can a project that imported a system language keep using it even if I delete the system language?**
+Yes. Deleting a system language from the Control Center does not remove translations from projects that already imported it. Projects that have already adopted a system language will continue to use those translations. Deletion only prevents new projects from importing that language going forward.
+
+**Q: What is the difference between "Active" and "Visible" language settings?**
+"Active" means the language is available for use within projects (projects can import and use it). "Visible" means the language appears in the language selector dropdown presented to users. A language can be active but not visible (users cannot see it to select), or visible but not active (users can select it but it will not work). Typically both are enabled together.
+
+**Q: Can I set a base language that is different from English?**
+Yes. The base language is the fallback language shown to users who have not selected a language preference. Only one language can be designated as the base language at a time. Many institutions set English as the base language, but you can choose any language you have configured. Changing the base language affects the default display for all users.
+
+# 5. Common Mistakes & Gotchas
+
+**Disabling MLM system-wide without notifying projects that depend on it.** If you disable Multi-Language Management globally, all projects immediately lose their active translations and revert to the base language. This can disrupt surveys and forms for end users without warning. Always plan ahead and communicate changes to project managers before disabling MLM.
+
+**Changing the base language without ensuring the new base language is fully translated.** The base language is the fallback when a user has no language preference or when a language has missing translations. If you designate a language with incomplete translations as the base, users will see blank or missing text. Always verify that your chosen base language has good translation coverage (>90%) before making it the base.
+
+**Assuming "Force subscription to system language updates" means projects can never customize translations.** When force subscription is enabled, projects receive updates to system language strings automatically. However, administrators can still provide "selective overrides" for individual items while staying subscribed to the base language. Projects are not locked in completely — they have some flexibility even under forced subscriptions.
+
+# 6. Related Articles
+
+- RC-MLM-01 — Multi-Language Management
+- RC-CC-06 — Modules & Services Configuration
+- RC-AI-03 — AI Translations
+- RC-AT-10 — Action Tags: Language

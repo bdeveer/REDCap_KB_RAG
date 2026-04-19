@@ -21,7 +21,29 @@ The Import User-DAG Assignments API method assigns users to Data Access Groups (
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### API Token
+A unique credential string issued by REDCap that authenticates your API requests. For this method, your token must have both API Import/Update and Data Access Groups privileges at the project level.
+
+### Data Access Group (DAG)
+A data isolation mechanism in REDCap that restricts which records a user can access. Each user can be assigned to at most one DAG. An empty assignment grants the user access to all records across all DAGs.
+
+### Unique Group Name
+The system identifier for a DAG (e.g., `'group_1'`, `'api_testing_group'`), distinct from the human-readable display label. The API always requires unique group names, not display labels.
+
+### All-DAG Access
+When a user is assigned an empty `redcap_data_access_group` value, they can view and edit records from all Data Access Groups in the project. This is typically granted to administrators and managers.
+
+### Bulk Assignment
+The ability to assign multiple users to DAGs in a single API call by passing an array of user-DAG records in the `data` parameter.
+
+### User-DAG Mapping
+The relationship between a username and the unique group name of the DAG to which the user is assigned. One mapping exists per user per project.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -36,7 +58,7 @@ The Import User-DAG Assignments API method assigns users to Data Access Groups (
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 from config import config
 import requests, json
@@ -61,7 +83,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -87,7 +109,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -102,7 +124,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -150,7 +172,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 On success, the API returns the count of user-DAG assignments created or updated. For example: `2` means two users were assigned or reassigned to DAGs. If a user already has the same DAG assignment, the operation is still counted as successful.
 
@@ -158,7 +180,7 @@ Example response: `2`
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: Can I assign a user to multiple DAGs?**
 
@@ -190,7 +212,7 @@ Example response: `2`
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Using the DAG display name instead of the unique group name.** The `redcap_data_access_group` field requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method (RC-API-28) to find the correct unique names.
 
@@ -210,7 +232,7 @@ Example response: `2`
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (foundational; required reading before using any API method)
 - RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)

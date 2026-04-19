@@ -2,16 +2,16 @@ RC-API-19
 
 **Export Events API**
 
-| **Article ID** | RC-API-19 |
+| Article ID | RC-API-19 |
 |---|---|
-| **Domain** | API |
-| **Applies To** | Longitudinal REDCap projects only |
-| **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | RC-API-01 — REDCap API; RC-API-20 — Import Events; RC-API-21 — Delete Events |
+| Domain | API |
+| Applies To | Longitudinal REDCap projects only |
+| Prerequisite | RC-API-01 — REDCap API |
+| Version | 1.1 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Source | REDCap API v16.1.3 official documentation examples |
+| Related Topics | RC-API-01 — REDCap API; RC-API-20 — Import Events; RC-API-21 — Delete Events |
 
 ---
 
@@ -168,6 +168,10 @@ Example JSON response:
 **Q: What do the offset fields mean?**
 
 **A:** The `day_offset` is the expected number of days after enrollment that the event should occur. The `offset_min` and `offset_max` define the acceptable window (e.g., ±3 days). These are used to track visit windows in longitudinal studies.
+
+**Q: Can I use the `day_offset` values to calculate expected visit dates for a participant?**
+
+**A:** Yes. Add the `day_offset` (in days) to the participant's enrollment or study start date to get the target date for each event. The `offset_min` and `offset_max` fields define the acceptable window on either side of that date. This is the standard approach for monitoring visit compliance in clinical studies.
 
 ---
 

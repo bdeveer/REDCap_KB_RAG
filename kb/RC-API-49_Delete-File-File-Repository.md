@@ -23,7 +23,20 @@ This method is the File Repository counterpart to Delete File (RC-API-14), which
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Soft Delete
+A deletion method where files are moved to the Recycle Bin rather than immediately destroyed. They can be restored within 30 days through the web interface.
+
+### Doc ID
+A numeric identifier that uniquely identifies a file in the File Repository. Used to specify which file to delete.
+
+### Recycle Bin
+A temporary storage area in the File Repository where deleted files are retained for up to 30 days before permanent purge.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -33,11 +46,11 @@ This method is the File Repository counterpart to Delete File (RC-API-14), which
 | `doc_id` | Required | The `doc_id` of the file to delete. |
 | `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. If omitted, defaults to `xml`. Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
 
-Note: this method has **no `format` parameter** because a successful response does not include a structured data payload (see Section 6). `returnFormat` only controls how errors are serialized.
+Note: this method has **no `format` parameter** because a successful response does not include a structured data payload (see Section 7). `returnFormat` only controls how errors are serialized.
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have **both** of the following in the project:
 
@@ -48,7 +61,7 @@ The user must also have access to the folder containing the target file. Files i
 
 ---
 
-# 4. Endpoint
+# 5. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -58,9 +71,9 @@ Only `POST` is supported.
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 ```python
 from config import config
@@ -80,7 +93,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 5.2 R
+## 6.2 R
 
 ```r
 source('config.R')
@@ -97,7 +110,7 @@ result <- postForm(
 print(result)
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 . ./config
@@ -110,7 +123,7 @@ $CURL -d "token=$API_TOKEN" \
       $API_URL
 ```
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -145,7 +158,7 @@ print $output;
 
 ---
 
-# 6. Response
+# 7. Response
 
 A successful delete returns an **HTTP 200** response with no structured data payload — no JSON, XML, CSV, or confirmation object. The empty body plus a 200 status is the sole indicator of success, matching the pattern of Import a File (RC-API-48).
 
@@ -157,7 +170,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: What happens to the file after I delete it?**
 
@@ -185,7 +198,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Passing a `folder_id` instead of a `doc_id`.** These are distinct identifier spaces. A `folder_id` targets a folder; a `doc_id` targets a file. Confirm the value you are passing came from the `doc_id` field of a List response (RC-API-46), not the `folder_id` field.
 
@@ -199,7 +212,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-45 — Create Folder (File Repository) API (create folders in the File Repository)

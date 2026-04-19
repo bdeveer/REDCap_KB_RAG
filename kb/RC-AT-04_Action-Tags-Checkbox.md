@@ -88,9 +88,31 @@ Both operate independently and do not interfere with each other.
 
 **A:** No. It only sets a maximum. A respondent can select 0, 1, 2, or 3 options (if the limit is 3). To enforce a minimum, you would need to use branching logic or custom validation.
 
+**Q: What happens if a respondent selects a "none of the above" option along with other options?**
+
+**A:** REDCap displays a prompt asking the respondent to either clear the other selections or cancel their action. The form does not save until they resolve the conflict. This ensures data integrity — the record cannot have both "none of the above" and substantive answers simultaneously.
+
+**Q: Can I have multiple "none of the above" options on the same checkbox field?**
+
+**A:** Yes. Use `@NONEOFTHEABOVE='99, 98, 97'` to designate multiple options as mutually exclusive. They are all mutually exclusive with each other as well as with any non-designated options.
+
+**Q: If I add @MAXCHECKED after respondents have already selected more than the limit, what happens?**
+
+**A:** When those respondents return to the form, any excess selections remain checked and visible (the tag does not retroactively remove selections). However, they will not be able to select additional unchecked options until they uncheck enough to fall below the limit.
+
 ---
 
-# 6. Related Articles
+# 6. Common Mistakes & Gotchas
+
+**Forgetting that @NONEOFTHEABOVE only works on checkboxes.** Trying to use it on radio buttons or dropdowns will have no effect, and no error is raised. Verify the field type before applying the tag.
+
+**Designating the wrong raw value as "none of the above."** If the raw value in `@NONEOFTHEABOVE` does not match an actual option's raw value, the tag will silently fail. Double-check the coded value in the field's choices list.
+
+**Assuming @MAXCHECKED prevents saving when over the limit.** The limit is enforced by disabling unchecked options, not by preventing form submission. A respondent cannot check additional options, but if they somehow exceed the limit (e.g., via data import or editing via the API), the saved data will reflect the excess.
+
+---
+
+# 7. Related Articles
 
 - RC-AT-01 — Action Tags Overview
 - RC-AT-03 — Radio/Dropdown Action Tags

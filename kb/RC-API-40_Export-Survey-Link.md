@@ -25,7 +25,26 @@ Surveys must be enabled on the project, and the instrument must be marked as a s
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Survey Link
+A unique, non-expiring URL that allows respondents to access a specific survey instrument without authentication. The link includes an embedded access code specific to the record and instrument.
+
+### Survey Distribution Tools Privilege
+A user-level permission required to access survey distribution features including sending invitations and generating survey links via API. API Export privilege alone is insufficient.
+
+### Respondent
+An individual completing a survey. Respondents access the survey using the generated link and do not require REDCap user accounts.
+
+### Repeating Instance
+A specific occurrence of a repeating instrument or event. Default is `'1'`; higher numbers apply to subsequent repetitions in projects with repeating instruments/events enabled.
+
+### Event (Longitudinal Projects)
+A time point in a longitudinal study. Required for longitudinal projects; each event can have survey instruments assigned. Classic projects do not use the event parameter.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -41,7 +60,7 @@ Surveys must be enabled on the project, and the instrument must be marked as a s
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -62,7 +81,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -81,7 +100,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -96,7 +115,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -132,7 +151,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns a unique survey URL as **plain text** (not JSON):
 
@@ -144,7 +163,7 @@ The URL is valid immediately and can be distributed via email, text message, or 
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: Can I regenerate the same survey URL for the same record?**
 A: Yes. Calling the API multiple times for the same record and instrument always returns the same URL, allowing you to resend links as needed.
@@ -163,7 +182,7 @@ A: Specify the event in which you want the respondent to complete the survey. Th
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Missing Survey Distribution Tools privilege:** API Export alone is not sufficient. The user account associated with the token must also have Survey Distribution Tools access in the project. Without it, the call returns an error even if the token itself is valid.
 
@@ -177,7 +196,7 @@ A: Specify the event in which you want the respondent to complete the survey. Th
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-41 — Export Survey Queue Link

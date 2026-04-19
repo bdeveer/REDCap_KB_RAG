@@ -2,19 +2,17 @@ RC-RAND-01
 
 **REDCap Randomization**
 
-# 1. Document Metadata
-
-| **Article ID** | RC-RAND-01 |
+| Article ID | RC-RAND-01 |
 | --- | --- |
-| **Topic** | Randomization concepts, terminology, and study design considerations |
-| **REDCap Module** | Randomization (Randomization 2.0) |
-| **Primary Audience** | PIs, Study Coordinators, Project Builders — anyone planning a randomized study in REDCap |
-| **Skill Level** | Intermediate (foundational REDCap knowledge required) |
-| **Prerequisites** | Completed foundational REDCap training: project setup, instruments, user rights, longitudinal mode basics |
-| **REDCap Version** | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
-| **Last Reviewed** | 2025-01 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
+| Topic | Randomization concepts, terminology, and study design considerations |
+| REDCap Module | Randomization (Randomization 2.0) |
+| Primary Audience | PIs, Study Coordinators, Project Builders — anyone planning a randomized study in REDCap |
+| Skill Level | Intermediate (foundational REDCap knowledge required) |
+| Prerequisites | Completed foundational REDCap training: project setup, instruments, user rights, longitudinal mode basics |
+| REDCap Version | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
+| Last Reviewed | 2025-01 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Related Topics | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview
 
@@ -191,6 +189,30 @@ before building your longitudinal framework:
 
 # 5. Questions & Answers
 
+**Q: What is the difference between stratified and unstratified randomization?**
+
+Unstratified randomization assigns participants purely at random with no constraints. Stratified randomization ensures that each randomization group has a similar composition across key variables (e.g., sex, age group, disease severity). For example, stratifying by sex prevents all men from ending up in the control group by accident. REDCap supports up to 14 stratification variables, all of which must be single-choice field types (dropdown, radio button, yes/no, true/false).
+
+**Q: What is an allocation table and why doesn't REDCap just generate random assignments on the fly?**
+
+An allocation table is a pre-generated, sequenced list of group assignments that REDCap works through in order. REDCap does not generate randomization assignments dynamically because allocation tables allow the randomization sequence to be pre-audited and reproduced — a standard practice in clinical trials. This approach ensures the sequence can be reviewed for bias and validated by a statistician before data collection begins.
+
+**Q: What is the difference between open and blinded randomization?**
+
+Open (unblinded) randomization is a setup where the study team can see which group each participant is assigned to. It uses a dropdown or radio button randomization variable with group labels visible in the interface. Blinded randomization is a setup where even the study team does not know which group a participant is assigned to; it requires a plain text randomization variable with no validation, so the assigned value is opaque. The key for decoding group assignments is stored outside REDCap and shared only with designated unblinded individuals (e.g., pharmacy staff).
+
+**Q: Can I randomize records into different arms in a multi-arm longitudinal project?**
+
+No. REDCap cannot automatically move records between arms based on randomization. If your study design requires cohorts to follow completely separate arms (e.g., intervention arm vs. control arm), you must either randomize outside REDCap or redesign the project to use a single-arm design with branching logic keyed to the randomization variable. You can set up a separate randomization model for each arm if needed, but each model requires its own randomization variable and allocation table.
+
+**Q: What are the three randomization-specific user rights and who should have them?**
+
+The three rights are: (1) **Setup** — configure the randomization model (assign to project builders and study coordinators involved in setup; restrict after setup is complete); (2) **Randomize** — click the Randomize button to manually randomize a record (assign to data entry staff who perform randomization, and project builders during testing; not required if using automatic trigger options); and (3) **Dashboard** — view the randomization dashboard with allocation counts and assigned records (assign to PIs, statisticians, data coordinators, and anyone needing to monitor progress).
+
+**Q: What happens if the allocation table runs out of slots before enrollment is complete?**
+
+Only a REDCap administrator can append additional allocations to a production allocation table. This is a recoverable situation but an avoidable one with proper planning. To prevent this, generate at minimum double your target enrollment per group and account for dropout, screen failures, and protocol deviations. Consult your statistician for the appropriate buffer for your specific design.
+
 # 6. Common Mistakes & Gotchas
 
 **Setting up randomization without consulting a statistician**
@@ -244,7 +266,7 @@ Once the module is enabled system-wide, randomization is enabled per project by 
 
 > **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
 
-# 8. Related Topics
+# 8. Related Articles
 
 - **RC-RAND-02:** Randomization Setup Guide — step-by-step
     configuration procedure

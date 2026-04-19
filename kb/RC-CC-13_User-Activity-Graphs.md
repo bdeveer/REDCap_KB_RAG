@@ -66,9 +66,40 @@ Activity Graphs provide trend visualization, complementing:
 
 The charts may take several seconds to load, especially for longer time ranges (Past Year or All). Results are typically cached to improve subsequent load times. If data appears outdated, administrators may need to wait for the cache to refresh or contact system administrators.
 
-# Related Resources
+# 7. Common Questions
 
-- [RC-CC-11: System Statistics](RC-CC-11_System-Statistics.md)
-- [RC-CC-12: User Activity Log](RC-CC-12_User-Activity-Log.md)
-- [RC-CC-14: Map of Users](RC-CC-14_Map-of-Users.md)
-- [RC-CC-15: Top Usage Report](RC-CC-15_Top-Usage-Report.md)
+**Q: What is the default time range shown when I first load the User Activity Graphs page?**
+The default time range is "Past Week" (last 7 days). This provides a reasonable balance between showing recent trends and avoiding excessive amounts of historical data. You can change the time range using the navigation buttons at the top of the page.
+
+**Q: Can I zoom in or interact with individual data points on the charts?**
+Most charts support hovering to view exact values for specific time points. The exact level of interactivity depends on the charting library and REDCap version. Try hovering over or clicking on chart elements to see if additional details are revealed.
+
+**Q: What does "Concurrent Users/Respondents" measure?**
+This metric shows the number of users and survey respondents simultaneously active in REDCap during the selected time period. A high peak may indicate a scheduled event, a major launch, or unusual activity. Use this chart to identify periods of highest system load.
+
+**Q: Why would the "First-Time Visitors" chart show spikes at certain times?**
+Spikes in new user registrations may correspond to planned onboarding events, the launch of major research studies, or institutional training sessions. If you see unexpected spikes, it may indicate that many new users were added at once, which could be related to project creation or user provisioning.
+
+**Q: How do the User Activity Graphs differ from the User Activity Log?**
+User Activity Graphs display trends and summaries over time, providing a high-level overview of usage patterns. The User Activity Log provides detailed, event-by-event information with filtering capabilities. Use graphs for trend analysis and the log for detailed investigations.
+
+**Q: Is the data in the charts real-time, or is there a delay?**
+Charts are typically near real-time, but may have a slight delay (minutes to hours depending on server performance and caching). Very recent activity may not appear until the next cache refresh. For the most current information, use the User Activity Log instead.
+
+# 8. Common Mistakes & Gotchas
+
+**Waiting too long for charts to load on "Past Year" or "All" views.** Querying charts for very long time periods can take considerable time, especially on active instances with years of historical data. Be patient and allow several seconds or minutes for results to load. Switching to a shorter time range will load much faster.
+
+**Misinterpreting chart axes and unit scales.** Different charts may use different units (days vs. weeks, counts vs. percentages). Always read the axis labels and legend carefully to understand what is being measured. A sharp-looking spike might represent only a small absolute change if the Y-axis scale is zoomed in.
+
+**Confusing "Concurrent Users" with "Total Active Users."** Concurrent Users shows how many people are using REDCap at the same moment. It is different from total active users over the period, which would count each active person once regardless of when they logged in. These are complementary but distinct metrics.
+
+**Assuming cached data represents the current moment.** Charts may be cached to improve performance, which means they may represent data from several minutes or hours ago, not the exact current moment. If you need up-to-the-minute information, refresh the page or check the User Activity Log for the latest entries.
+
+**Ignoring seasonal or scheduled patterns.** Usage graphs often show predictable patterns (e.g., lower activity on weekends, higher activity during academic terms, spikes around deadlines). Do not be alarmed by regular cycles; instead, use them to establish baselines for detecting truly anomalous activity.
+
+# 9. Related Articles
+
+- RC-CC-11 — System Statistics
+- RC-CC-12 — User Activity Log
+- RC-CC-14 — Map of Users

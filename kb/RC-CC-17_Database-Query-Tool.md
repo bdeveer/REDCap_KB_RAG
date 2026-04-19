@@ -125,3 +125,34 @@ This tool requires super-user administrator access. Because it provides direct d
 - **Database Activity Monitor (RC-CC-16)** — to see real-time database processes and identify long-running queries
 - **Top Usage Report (RC-CC-15)** — for pre-built usage statistics and analytics
 
+# 11. Common Questions
+
+**Q: Can I run UPDATE or DELETE queries to fix data?**
+No. The Database Query Tool only accepts read-only query types (SELECT, SHOW, EXPLAIN). Any attempt to run INSERT, UPDATE, DELETE, DROP, ALTER, or other write-based queries will be rejected. This restriction prevents accidental data modification. If you need to modify data, use the REDCap UI or contact your database administrator.
+
+**Q: How do I know which table contains the data I am looking for?**
+The Database Query Tool displays a sidebar with all REDCap database tables. Click on any table name to view its column structure and field definitions. Review the table documentation to understand which tables contain your target data. For example, user information is in `redcap_user_information`, and data values are in `redcap_data`.
+
+**Q: Can I save queries I write frequently?**
+Yes. The tool supports saving named custom queries. Add or edit custom queries through the in-page dialog, give each query a descriptive name, and save it. You can then reuse that query without re-typing it. You can also organize queries into folders and export/import them as CSV files.
+
+**Q: What is "Use query context" and when should I use it?**
+The query context option allows a query to be run within the scope of a specific project. This may affect how certain variables or calculations are resolved. Use this option if you are running a query that depends on project-specific settings or variables. For most queries, this is optional.
+
+**Q: How do I export the results of my query?**
+The Database Query Tool displays results in a table on the page. You can select the table data and copy it, or take a screenshot. The tool does not have a built-in export button, but you can paste the results into a spreadsheet or text file.
+
+# 12. Common Mistakes & Gotchas
+
+**Running very large or unfiltered queries without a LIMIT clause.** A query like `SELECT * FROM redcap_log_event` with no WHERE clause or LIMIT can retrieve millions of rows, which will freeze your browser, consume significant memory, and put load on the database server. Always start with a LIMIT clause (e.g., `LIMIT 100`) when exploring unfamiliar data, and use specific WHERE clauses to narrow results.
+
+**Forgetting to filter on indexed columns.** Queries that filter on indexed columns (such as `project_id` or `user_id`) will perform much faster than queries that filter on unindexed fields. If a query takes a very long time, try restructuring it to filter on indexed columns first, or run the query during off-peak hours when database load is lower.
+
+**Importing custom queries with non-SELECT statement types in CSV.** When importing custom queries from a CSV file, all queries must begin with SELECT, SHOW, or EXPLAIN. If your import includes UPDATE, DELETE, or other write-type queries, the entire import will be rejected. Verify all queries in your CSV before importing, or test the import in a non-production environment first.
+
+# 13. Related Articles
+
+- RC-CC-16 — Database Activity Monitor
+- RC-CC-15 — Top Usage Report
+- RC-CC-21 — Control Center Overview
+

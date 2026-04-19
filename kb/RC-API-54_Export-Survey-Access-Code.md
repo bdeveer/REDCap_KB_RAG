@@ -27,7 +27,20 @@ Surveys must be enabled on the project, and the instrument must be marked as a s
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Survey Access Code
+A short alphanumeric code that participants can enter at the REDCap survey login page to access their assigned survey, instead of clicking a full URL. Useful for distribution via SMS, print, or in-person enrollment.
+
+### Survey Link
+A full URL that points directly to a survey for a specific record and instrument. Differs from an access code in that it is a direct link rather than a code to be entered.
+
+### Survey Distribution Tools
+A REDCap permission that grants users the ability to access survey-related API methods and features beyond basic data entry.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -41,9 +54,9 @@ Surveys must be enabled on the project, and the instrument must be marked as a s
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -63,7 +76,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -81,7 +94,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -95,7 +108,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -130,7 +143,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns a survey access code as **plain text**:
 
@@ -142,7 +155,7 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What is the difference between a survey access code and a survey link?**
 A: A survey link (RC-API-40) is a full URL the participant clicks to go directly to their survey. An access code is a short code the participant types at the REDCap survey login page. Both grant access to the same survey for the same record; the difference is how the participant gets there.
@@ -161,7 +174,7 @@ A: Yes. Both methods grant access to the same survey entry for that record. You 
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Missing Survey Distribution Tools privilege:** API Export alone is not sufficient. The user account associated with the token must also have Survey Distribution Tools access in the project. Without it, the call returns an error even if the token is otherwise valid.
 
@@ -175,7 +188,7 @@ A: Yes. Both methods grant access to the same survey entry for that record. You 
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-40 — Export Survey Link

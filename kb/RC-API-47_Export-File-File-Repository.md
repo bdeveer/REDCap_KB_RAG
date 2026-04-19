@@ -23,7 +23,20 @@ Because this method acts on a specific file by `doc_id`, you normally discover t
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Doc ID
+A numeric identifier assigned to each file in the File Repository. Obtained by calling List Files and Folders (RC-API-46) and used to export, delete, or otherwise act upon a specific file.
+
+### File Repository
+The project-level centralized file storage area, distinct from record-level file-upload fields. Contains shared documents and auto-generated files accessible through folder structure with optional access restrictions.
+
+### Binary File Content
+The raw bytes of the file itself (as opposed to metadata or structured data). The API response body on success is the unencoded binary content, which must be written to disk rather than parsed as JSON or text.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -37,7 +50,7 @@ Note: this method has **no `format` parameter**, because the body of a successfu
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have **both** of the following in the project:
 
@@ -48,7 +61,7 @@ In addition, the user's DAG and User Role assignments must grant access to the f
 
 ---
 
-# 4. Endpoint
+# 5. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -58,9 +71,9 @@ Only `POST` is supported.
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 ```python
 from config import config
@@ -85,7 +98,7 @@ with open('/tmp/exported_file.bin', 'wb') as f:
 
 > **Tip:** The filename and MIME type can be recovered from the response's `Content-Disposition` and `Content-Type` headers when present.
 
-## 5.2 R
+## 6.2 R
 
 ```r
 source('config.R')
@@ -103,7 +116,7 @@ result <- postForm(
 writeBin(result, '/tmp/exported_file.bin')
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 . ./config
@@ -119,7 +132,7 @@ $CURL -d "token=$API_TOKEN" \
 
 The `-o` flag writes the raw response body to a file, which is what you want for binary content.
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -154,7 +167,7 @@ file_put_contents('/tmp/exported_file.bin', $output);
 
 ---
 
-# 6. Response
+# 7. Response
 
 On success, the response **body is the raw contents of the file** (binary data). The HTTP status code will be 200. Filename and MIME type information is typically provided via response headers (e.g., `Content-Disposition: attachment; filename="consent_form_v3.pdf"` and `Content-Type: application/pdf`).
 
@@ -164,7 +177,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: How do I find the `doc_id` of the file I want to export?**
 
@@ -192,7 +205,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Treating the response as JSON or text.** The body on success is raw file bytes. Parsing it as JSON or decoding it as UTF-8 will corrupt binary files (PDFs, images, Office docs, zip archives). Write the response directly to disk in binary mode and then open it as the appropriate file type.
 
@@ -206,7 +219,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-45 — Create Folder (File Repository) API (create folders that this method's files live in)

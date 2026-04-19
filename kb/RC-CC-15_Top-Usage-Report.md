@@ -68,3 +68,36 @@ The Top Usage Report is one of several tools available for performance monitorin
 - **Map of Users (RC-CC-14)** — For geographic visualization of user access patterns
 
 Together, these tools provide multiple perspectives on REDCap system performance and usage.
+
+# 7. Common Questions
+
+**Q: If a project shows up in the Top Usage Report with high CPU time, does that mean there is a bug?**
+No. High usage simply means the project is being actively used. Many active research projects will appear in top usage reports because they legitimately have many users, records, and transactions. A project appearing in the top report is expected behavior for busy instances.
+
+**Q: Can I filter the report to exclude certain projects or users?**
+The report provides a CPU time percentage minimum threshold filter, which helps reduce noise by excluding low-utilization items. However, there is no explicit project or user exclusion filter. If you need to focus on a specific subset of data, consider the time window and threshold filters to narrow results.
+
+**Q: Why do percentages in the report sometimes add up to more than 100%?**
+Hours and percentages are accurate portions of tracked totals, but they may be duplicated between different categories (e.g., "Most active projects" and "Most active users"). The same request may be counted in multiple categories, so percentages across different types can exceed 100%.
+
+**Q: What time period does the report cover by default?**
+The report covers all data collected since the "Begin time" parameter you set. If you do not set a specific begin time, the report will include the earliest available data. Set a specific start time to limit results to a relevant window (e.g., the last 24 hours or last week).
+
+**Q: Does the Top Usage Report track all HTTP requests to REDCap?**
+No. The report tracks many HTTP requests but not all. For a complete record of all HTTP activity, consult your web server's access logs. The report is most useful for identifying trends and resource-heavy components rather than for complete request accounting.
+
+# 8. Common Mistakes & Gotchas
+
+**Interpreting high usage as a performance problem.** A project appearing in the "Most active projects" list does not indicate a malfunction or problem — it simply means that project is being actively used. High activity is normal and expected. Only investigate further if you are experiencing actual performance issues (slow response times, timeouts, crashes) and the report helps you pinpoint the source.
+
+**Setting the CPU time threshold too high and missing important data.** If you set the minimum CPU time percentage threshold too aggressively, you may filter out entries that would be useful to analyze. If you are investigating a specific performance issue, use a lower threshold to see more entries, then sort or focus on the most resource-intensive ones.
+
+**Assuming External Module Timed Crons are included in the statistics.** External Module Timed Crons are explicitly excluded from the Top Usage Report. If you are troubleshooting slow scheduled tasks from External Modules, use the Database Activity Monitor or check cron logs separately rather than relying on this report.
+
+# 9. Related Articles
+
+- RC-CC-12 — User Activity Log
+- RC-CC-13 — User Activity Graphs
+- RC-CC-14 — Map of Users
+- RC-CC-16 — Database Activity Monitor
+- RC-CC-21 — Control Center Overview

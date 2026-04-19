@@ -1,22 +1,17 @@
-RC-NAV-UI-02
+| Field | Value |
+|---|---|
+| Article ID | RC-NAV-UI-02 |
+| Domain | Project Navigation |
+| Applies To | All project types |
+| Prerequisite | RC-NAV-UI-01 — Project Navigation UI |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-NAV-UI-01 — Project Navigation UI, RC-RIGHTS-01 — User Rights, RC-DE-02 — Basic Data Entry |
 
-**REDCap Project Menu Reference**
+---
 
-# 1. Document Metadata
-
-| **Article ID** | RC-NAV-UI-02 |
-| --- | --- |
-| **Topic** | Left-hand project menu — all sections and items |
-| **REDCap Module** | Core UI — applies to all projects |
-| **Primary Audience** | New REDCap users, Study Coordinators, PIs |
-| **Skill Level** | Beginner to Intermediate |
-| **Prerequisites** | RC-NAV-UI-01: Project Navigation UI (menu/workspace layout, hamburger mode) |
-| **REDCap Version** | 14.x+ (item names and availability may vary slightly in older versions) |
-| **Last Reviewed** | 2025-01 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-NAV-UI-01: Navigation UI; RC-RIGHTS-01: User Rights; RC-DE-02: Data Entry; RC-SURV-01: Surveys; RC-API-01: API |
-
-# 2. Overview
+# 1. Overview
 
 ## What is this?
 
@@ -57,13 +52,13 @@ After reviewing this reference, the user will be able to:
 - Identify the correct menu item when trying to accomplish a specific
     task
 
-# 4. Menu Section Reference
+# 2. Menu Section Reference
 
 > **Note:** *\'Always\' means the item appears for any user in any
 > project. \'Conditional\' means it requires specific user rights and/or
 > an enabled feature.*
 
-## 4.1 Top-Left Navigation
+## 2.1 Top-Left Navigation
 
 This group of links sits above the labeled menu sections and handles
 global navigation — they typically take the user out of the current
@@ -77,7 +72,7 @@ project.
 | **REDCap Messenger** | Always\*         A HIPAA-compliant in-project messaging tool for user-to-user communication. Cannot send external email, texts, or messages to other REDCap installations. (\*Availability depends on whether your institution has enabled this feature.) |
 | **Contact REDCap Administrator** | Always           Links to your institution\'s REDCap support channel (email, website, or survey). Configured by your local admin team. See RC-INST-01 for what this link opens at this installation. |
 
-## 4.2 Project Home and Design
+## 2.2 Project Home and Design
 
 This section covers features related to the setup and design of a
 project. It is most relevant during the project build phase and for
@@ -119,7 +114,7 @@ users with appropriate rights):
     Data Dictionary only restores instruments and fields — not user
     rights, survey settings, or longitudinal configuration.
 
-## 4.3 Data Collection
+## 2.3 Data Collection
 
 The primary section for day-to-day data entry and participant
 management. Users with any data entry rights will see at least the two
@@ -133,7 +128,7 @@ core items.
 | **MyCap Participant Management** | Conditional      Manage participants using the MyCap mobile app. Requires MyCap to be enabled; mutually exclusive with longitudinal mode. Consult your support team before using. |
 | **Record shortcuts** | Conditional      When a user is actively viewing a record, shortcuts to that record\'s instruments and record home page appear dynamically in this section. |
 
-## 4.4 Applications
+## 2.4 Applications
 
 Features that fall outside the core design and data collection
 workflows. Availability is based on user rights and project settings.
@@ -168,7 +163,7 @@ Each application is self-contained.
 > for individual participants to enter their own data into a single
 > record on their personal device.*
 
-## 4.5 Custom Reports & Project Dashboards (Dynamic Sections)
+## 2.5 Custom Reports & Project Dashboards (Dynamic Sections)
 
 When a user creates custom reports or project dashboards, REDCap
 automatically adds new labeled sections to the left menu listing those
@@ -183,7 +178,7 @@ or dashboard has been created and the user has access to it.
 - **Project Dashboards section:** Lists all dashboards accessible to
     the user.
 
-## 4.6 External Modules
+## 2.6 External Modules
 
 External modules are community-developed add-ons that extend REDCap\'s
 functionality. They must be downloaded and enabled by your local REDCap
@@ -205,7 +200,7 @@ available at this installation and the local policy on enabling them, see
 > own risk and consult your REDCap admin before enabling unfamiliar
 > modules.*
 
-## 4.7 Help & Information
+## 2.7 Help & Information
 
 Support and documentation resources. Always visible to all users.
 
@@ -216,9 +211,9 @@ Support and documentation resources. Always visible to all users.
 | **Suggest a New Feature** | Always           Submits a feature idea to the Vanderbilt REDCap development team. Not a support channel — no direct response is given. Suggestions may influence the development roadmap over time. |
 | **Contact REDCap Administrator** | Always           Connects to your institution\'s support team. Includes project metadata automatically so the support team knows which project you are asking about. This is the correct channel for immediate assistance. |
 
-# 5. Questions & Answers
+# 3. Questions & Answers
 
-# 6. Common Mistakes & Gotchas
+# 4. Common Mistakes & Gotchas
 
 **Using \'Suggest a New Feature\' for support requests**
 
@@ -269,7 +264,7 @@ Support and documentation resources. Always visible to all users.
     module. Understand that modules are community-maintained and support
     is not guaranteed.
 
-# 7. Related Topics
+# 5. Related Topics
 
 - **RC-NAV-UI-01:** Project Navigation UI — the two-panel layout,
     hamburger mode, and project status overview
@@ -300,13 +295,3 @@ Support and documentation resources. Always visible to all users.
 
 - **RC-DDE-01:** Double Data Entry — parallel data entry and
     adjudication workflow (Data Comparison Tool menu item)
-
-# 8. Version & Change Notes
-
-| **REDCap Version** | **Notes** |
-| --- | --- |
-| **14.x+** | Menu item names and section structure consistent with this document as of this version. |
-| **13.x** | Data Resolution Workflow, MLM, and MyCap were available but may have had different enable/disable paths. Verify with your admin. |
-| **Any version** | External module availability is entirely installation-dependent. Always check with your local admin team. |
-
-REDCap LLM Knowledge Base \| RC-NAV-UI-02 \| Project Menu Reference

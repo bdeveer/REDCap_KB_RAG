@@ -14,6 +14,12 @@ RC-CC-04
 
 ---
 
+# 1. Overview
+
+The **User Settings** page is where REDCap administrators control system-wide user behaviors and defaults that affect all users across the instance. This includes controlling who can create projects, what features users can access, what default preferences are applied to new accounts, and what oversight or approval mechanisms are required for certain user actions. Settings here apply uniformly to all users unless otherwise noted.
+
+---
+
 The **User Settings** page (under **System Configuration**) controls what regular users can and cannot do within REDCap, and what default behaviors new accounts start with. These settings do not require any individual project configuration — they apply system-wide.
 
 ---
@@ -196,3 +202,42 @@ This setting does not apply when viewing charts/reports from inside a REDCap pro
 # Account Expiration Email Templates (Optional)
 
 Custom email text can be configured for the two automated account expiration reminder emails REDCap sends: 14 days before expiration and 2 days before expiration. Separate templates can be defined for users without a sponsor and users with a sponsor. Dynamic variables can be included to personalize the email with the user's information. If no custom text is provided, REDCap uses stock email text.
+
+---
+
+# 11. Common Questions
+
+**Q: Should we allow normal users to create projects or require administrator approval?**
+Allowing users to create projects increases self-sufficiency and agility, but requires oversight to ensure projects comply with institutional standards. Requiring administrator approval provides more control but creates bottlenecks. A middle ground is to allow creation but set a record limit for development projects and use custom project creation surveys to collect required metadata (IRB numbers, data governance approvals, etc.).
+
+**Q: What is the recommended setting for auto-suspending inactive users?**
+Auto-suspension helps maintain a clean user roster and reduces the number of active accounts that require password changes or security policies. A 180-day (6-month) inactivity period is common and allows researchers time to return without losing their accounts. For highly sensitive environments, consider shorter periods (90 days). Always enable the notification email so users know why their account was suspended and can request reactivation.
+
+**Q: How do draft mode approvals affect project development workflow?**
+The auto-approval setting (section "Allow Production Draft Mode Changes to Be Approved Automatically") determines how quickly projects can iterate after going to production. Stricter settings (e.g., "Never" auto-approve) provide more oversight but slow development. Settings that allow auto-approval for non-critical changes (like adding new fields) balance safety with speed, while still requiring admin approval for risky changes like field deletion.
+
+**Q: What does "Default Instrument-Level User Access" apply to?**
+This setting controls what access new project users automatically receive when a new instrument is added to a production project. If set to "No Access," users do not see the new instrument until explicitly granted access, which prevents accidental data leakage but requires manual maintenance. If set to "View & Edit," new instruments are automatically visible to all users, which is more convenient but assumes users should have consistent access levels.
+
+**Q: Should we restrict email domains for user account creation?**
+Restricting to institutional domains (e.g., `university.edu`) limits account creation to internal users and is appropriate when external collaboration should be managed through formal mechanisms. Allowing external domains (e.g., Gmail, Yahoo) makes onboarding faster but requires vetting of external users. A hybrid approach is to allow institutional domains automatically but require approval for external domains.
+
+---
+
+# 12. Common Mistakes & Gotchas
+
+**Not configuring custom project creation surveys despite having institutional requirements.** If your institution requires IRB approvals, data governance agreements, or specific PI information before a project goes live, custom creation surveys capture this metadata at the right time. Without them, administrators manually track these requirements, leading to missed compliance steps and inconsistent documentation.
+
+**Setting auto-suspension too aggressively without considering seasonal researchers.** If researchers only use REDCap seasonally (e.g., during summer field studies), an auto-suspension period that is too short (e.g., 30 days) will suspend active researchers outside their season. Consider 120-180 days as a minimum, or implement a longer period with a process for manual reactivation.
+
+**Enabling draft mode auto-approval for projects with regulated data without proper review criteria.** Auto-approval for non-critical changes sounds convenient, but in FDA-regulated or Part 11 environments, every field change should be documented and approved. For these projects, disable auto-approval entirely and implement a formal change control process that is separate from the draft mode system.
+
+---
+
+# 13. Related Articles
+
+- RC-CC-02 — Control Center: General Configuration (system-wide settings and email configuration)
+- RC-CC-03 — Control Center: Security & Authentication (authentication and login settings affecting user accounts)
+- RC-CC-07 — Control Center: Users & Access Management (user account browsing, suspension, and management)
+- RC-PROJ-01 — Project Lifecycle (project status transitions and requirements)
+- RC-USER-01 — User Rights: Overview & Three-Tier Access (user privilege concepts and project-level access)

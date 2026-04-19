@@ -2,19 +2,17 @@ RC-RAND-02
 
 **REDCap Randomization Setup**
 
-# 1. Document Metadata
-
-| **Article ID** | RC-RAND-02 |
+| Article ID | RC-RAND-02 |
 | --- | --- |
-| **Topic** | Step-by-step randomization setup in REDCap — from pre-flight checklist to production readiness |
-| **REDCap Module** | Randomization (Randomization 2.0), Project Setup, User Rights |
-| **Primary Audience** | Project Builders, Study Coordinators with project design rights |
-| **Skill Level** | Advanced |
-| **Prerequisites** | RC-RAND-01 (Randomization Concepts & Terminology) — required. RC-LONG-01 (Longitudinal Projects), RC-RIGHTS-01 (User Rights & DAGs) — required if using those features. |
-| **REDCap Version** | 15.4.4+ |
-| **Last Reviewed** | 2025-01 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
+| Topic | Step-by-step randomization setup in REDCap — from pre-flight checklist to production readiness |
+| REDCap Module | Randomization (Randomization 2.0), Project Setup, User Rights |
+| Primary Audience | Project Builders, Study Coordinators with project design rights |
+| Skill Level | Advanced |
+| Prerequisites | RC-RAND-01 (Randomization Concepts & Terminology) — required. RC-LONG-01 (Longitudinal Projects), RC-RIGHTS-01 (User Rights & DAGs) — required if using those features. |
+| REDCap Version | 15.4.4+ |
+| Last Reviewed | 2025-01 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Related Topics | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
 
 # 2. Overview
 
@@ -344,7 +342,7 @@ The Randomization module must be enabled at the system level before it can be en
 
 > **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
 
-# 9. Related Topics
+# 9. Related Articles
 
 - **RC-RAND-01:** Randomization Concepts & Terminology — required
     prerequisite for this guide

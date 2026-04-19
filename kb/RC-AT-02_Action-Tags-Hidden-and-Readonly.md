@@ -114,6 +114,8 @@ These two tag families can be mixed to achieve fine-grained control. For example
 
 **Mixing bare `@HIDDEN` with `@READONLY` variants.** A bare `@HIDDEN` overrides all read-only variants on the same field. Use specific variants (`@HIDDEN-FORM`, etc.) instead.
 
+**Adding `@READONLY` to a field expecting users to enter data and assuming the field will still appear on surveys.** `@READONLY` displays the field but prevents editing. If you meant to hide it from one context but keep it editable elsewhere, use context-specific variants like `@READONLY-FORM` and `@HIDDEN-SURVEY` instead of applying a bare `@READONLY` to all contexts.
+
 ---
 
 # 7. Related Articles

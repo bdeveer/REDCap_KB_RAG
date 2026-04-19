@@ -25,7 +25,20 @@ The method is read-only and works across all REDCap instances regardless of proj
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### API Token
+A unique string credential issued by a REDCap administrator that authorizes API requests on behalf of a specific user in a specific project. Tokens are required for all API calls and can be standard (project-level) or Super tokens (cross-project).
+
+### Version String
+A semantic version identifier in the format MAJOR.MINOR.PATCH (e.g., 16.1.3) that indicates the current release of a REDCap instance. Version numbers determine which features and API endpoints are available.
+
+### Super API Token
+A special administrator-issued token that grants API access across multiple projects, without being tied to a single project context. Used primarily for administrative and system-level workflows.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -35,9 +48,9 @@ The method is read-only and works across all REDCap instances regardless of proj
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -54,7 +67,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -69,7 +82,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -84,7 +97,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -116,7 +129,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns the version string as plain text:
 
@@ -131,7 +144,7 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: Why is this API useful?**
 A: Use this method to (1) verify API connectivity, (2) detect instance version before calling version-specific APIs, (3) log version information in automated workflows, or (4) ensure compatibility with your script.
@@ -150,7 +163,7 @@ A: The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Incorrect content value:** Use exactly `'version'` (lowercase). Using `'Version'` or other variations will fail.
 
@@ -158,6 +171,6 @@ A: The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API

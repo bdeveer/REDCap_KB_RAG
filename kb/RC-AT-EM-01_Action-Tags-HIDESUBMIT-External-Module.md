@@ -161,6 +161,14 @@ Result: The Submit button is hidden until the agreement checkbox is checked.
 
 **A:** Yes. Because the hide behavior is driven by the field's branching logic visibility, and `@IF` is an independent action tag evaluation, combining them is possible but requires careful design to avoid unexpected interactions.
 
+**Q: Can I use @HIDESUBMIT to hide save buttons only in surveys but not in data entry forms?**
+
+**A:** Yes. Use `@HIDESUBMIT-SURVEY` on a field with survey-specific branching logic. The button will be hidden on surveys when the field is visible, and remain available on forms. Alternatively, use `@HIDESUBMIT-FORM` to hide buttons only in forms while keeping survey submissions available.
+
+**Q: What if I want to hide the submit button until all required fields are filled?**
+
+**A:** Create a hidden helper field with branching logic that evaluates whether required fields are empty. For example, if `[name]` and `[email]` are required, set the helper field's logic to `[name]='' OR [email]=''`. Then add `@HIDESUBMIT-SURVEY` to that helper field. The button will be hidden until both fields have values.
+
 ---
 
 # 7. Common Mistakes & Gotchas

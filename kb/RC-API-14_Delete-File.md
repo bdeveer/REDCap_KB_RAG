@@ -2,16 +2,16 @@ RC-API-14
 
 **Delete File API**
 
-| **Article ID** | RC-API-14 |
+| Article ID | RC-API-14 |
 |---|---|
-| **Domain** | API |
-| **Applies To** | REDCap projects with file upload fields |
-| **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | RC-API-01 — REDCap API; RC-API-12 — Export File; RC-API-13 — Import File |
+| Domain | API |
+| Applies To | REDCap projects with file upload fields |
+| Prerequisite | RC-API-01 — REDCap API |
+| Version | 1.1 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Source | REDCap API v16.1.3 official documentation examples |
+| Related Topics | RC-API-01 — REDCap API; RC-API-12 — Export File; RC-API-13 — Import File |
 
 ---
 
@@ -166,6 +166,10 @@ Example success response (JSON):
 **Q: Do I need the `event` parameter for classic projects?**
 
 **A:** No. For classic (non-longitudinal) projects, omit the `event` parameter if the file-upload field is not event-specific.
+
+**Q: Can I delete a file from a specific instance of a repeating instrument?**
+
+**A:** Yes. Include the `repeat_instance` parameter set to the instance number you want to target. If you omit `repeat_instance`, the API defaults to instance 1. Because deletion is permanent, confirm the correct instance number before calling the method.
 
 ---
 

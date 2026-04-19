@@ -2,15 +2,16 @@ RC-INST-01
 
 **Institution-Specific Settings & Policies**
 
-| **Article ID** | RC-INST-01 |
+| Article ID | RC-INST-01 |
 |---|---|
-| **Domain** | Institution |
-| **Applies To** | All REDCap users at this installation |
-| **Prerequisite** | None |
-| **Version** | 2.0 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-CC-02 — General Configuration; RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings; RC-CC-05 — File Storage; RC-CC-06 — Modules & Services; RC-CC-07 — User Management; RC-NAV-UI-01 — Project Navigation UI; RC-NAV-UI-02 — Project Menu Reference; RC-USER-02 — User Rights: Adding Users & Managing Roles; RC-USER-04 — User Rights: User Management; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-API-01 — REDCap API |
+| Instance | Production |
+| Domain | Institution |
+| Applies To | All REDCap users at this installation |
+| Prerequisite | None |
+| Version | 2.0 |
+| Last Updated | 2026 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Related Topics | RC-INST-02 — Test / Staging Settings; RC-INST-03 — Development Settings; RC-CC-02 — General Configuration; RC-CC-03 — Security & Authentication; RC-CC-04 — User Settings; RC-CC-05 — File Storage; RC-CC-06 — Modules & Services; RC-CC-07 — User Management; RC-NAV-UI-01 — Project Navigation UI; RC-NAV-UI-02 — Project Menu Reference; RC-USER-02 — User Rights: Adding Users & Managing Roles; RC-USER-04 — User Rights: User Management; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-API-01 — REDCap API |
 
 ---
 
@@ -21,11 +22,19 @@ RC-INST-01
 > RC-INST-01 is the single most important article to populate before deploying this KB in a RAG system. Every `[FILL IN]` placeholder in this article represents a question that a real user might ask — and that the RAG system currently cannot answer correctly. Unanswered questions about login method, 2FA, feature availability, file upload limits, and support channels are among the most common support requests at any REDCap installation.
 >
 > **Before going live with this KB, your REDCap administrator should:**
-> 1. Create one copy of this article per active instance (production, test, development, etc.)
+> 1. Per-instance articles already exist: RC-INST-01 (Production), RC-INST-02 (Test / Staging), RC-INST-03 (Development). Populate each separately.
 > 2. Replace every `[FILL IN]` with the actual value for that instance
 > 3. Remove placeholder rows from tables (e.g., the Other Instances table in Section 3, the External Modules table in Section 9)
 > 4. Delete feature rows from the Section 8 table that are definitively not available, to avoid confusing the model
 > 5. Remove this notice block once the article is fully populated
+>
+> **Adding more instance articles:** If your organization runs additional REDCap instances beyond Production, Test/Staging, and Development — for example, a 21 CFR Part 11-compliant instance, a FISMA-compliant instance, a GDPR-scoped instance, a dedicated Training environment, or a separate instance for a specific faculty or department — create a new article for each:
+> 1. Copy this file as a starting template.
+> 2. Assign the next sequential Article ID (`RC-INST-04`, `RC-INST-05`, etc.) and update all metadata fields accordingly.
+> 3. Set the `Instance` metadata field to a short, unambiguous label that the RAG system can use to scope retrieval (e.g., `Part 11 — Production`, `FISMA`, `Training`, `Faculty of Medicine`).
+> 4. Adjust contextual notes in Sections 4 (Authentication), 7 (Project Lifecycle), and 8 (Feature Availability) to reflect what is typical or required for that environment — Part 11 instances commonly enforce stricter audit trail and e-signature settings; FISMA instances may restrict external integrations; Training instances may disable API access and limit record creation.
+> 5. Update the **Other Instances** table (Section 3) in **every existing RC-INST article** to include the new entry with its article ID.
+> 6. Add the new article to `meta/KB-INDEX.md`.
 >
 > Until this article is populated, the RAG system will correctly answer generic REDCap questions but will be unable to answer institution-specific questions — and may actively mislead users by returning empty or placeholder responses as if they were answers.
 
@@ -69,6 +78,8 @@ Most institutions run REDCap across multiple environments, each with its own URL
 | `[Other — e.g., Training]` | `[FILL IN]` | `[FILL IN]` | `[FILL IN]` |
 
 > **Warning:** Test/staging instances may have the REDCap cron job accessible via browser trigger. If scheduled alerts, invitations, or notifications have been configured on a test project that mirrors production content, triggering the cron manually can send those emails to real recipients. Exercise caution when running background processes on non-production instances.
+
+For KB cross-references: Production settings are documented in this article (RC-INST-01). Test/Staging settings are in RC-INST-02. Development settings are in RC-INST-03.
 
 ---
 

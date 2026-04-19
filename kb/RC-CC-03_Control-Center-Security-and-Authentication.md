@@ -457,3 +457,41 @@ A: Yes. If you embed REDCap public surveys in external websites using iframes, t
 
 **Q: What is the difference between OpenID Connect "username" and "preferred_username" attributes?**
 A: Both map to OIDC standard claims, but `preferred_username` is the human-readable login name as preferred by the user, while `username` is the canonical account identifier. The correct choice depends on what your OIDC provider populates. If the selected attribute is empty for a user, REDCap falls back to the user's email address.
+
+---
+
+# 15. Common Questions
+
+**Q: Should I enable two-factor authentication for all users or just certain groups?**
+Enabling 2FA for all users provides the strongest security but may reduce usability, especially for less technical users. A common approach is to enable 2FA for all users but use IP-based exceptions (section 3.3) to exempt users on trusted institutional networks or VPNs. For external users or those accessing from public networks, 2FA should always be enforced.
+
+**Q: What is the best two-factor authentication method to use?**
+The Google/Microsoft Authenticator app (section 3.7.1) is the most reliable because it does not require outbound communication from REDCap — the user generates the code locally. Email (3.7.2) is a good fallback and requires no third-party service. Twilio SMS (3.7.3) and Duo (3.7.4) both require paid accounts and third-party services but offer additional flexibility (SMS and push notifications). Ideally, enable multiple options and let users choose their preferred method.
+
+**Q: How do I prevent users from bypassing the auto logout setting?**
+The auto logout time setting (section 4.1) is enforced after the specified period of inactivity. Users are notified before being logged out and must re-authenticate. The setting cannot be bypassed — if you set it to 30 minutes, users will be logged out after 30 minutes of inactivity regardless of whether they object. Very short timeout periods (less than 10 minutes) can negatively impact usability for long data entry sessions.
+
+**Q: What password complexity level should we require?**
+Complexity level 1 (lowercase + uppercase + numbers, default) is a good balance between security and usability. Level 3 (lowercase + uppercase + numbers + special characters) is more secure but increases the likelihood of users writing passwords down or forgetting them. Level 0 is not recommended for production systems handling sensitive data. Combine your complexity choice with a reasonable minimum length (at least 9 characters) and, if appropriate, password expiration (section 5.3).
+
+**Q: Can we use both Shibboleth and Table-based authentication at the same time?**
+Yes. The "Shibboleth & Table-based" option (section 2.1) presents a splash page where users choose their authentication method. Table-based users can continue using local accounts while Shibboleth users authenticate via your institutional IdP. This is useful during a migration from local to federated authentication or when supporting both internal and external users.
+
+---
+
+# 16. Common Mistakes & Gotchas
+
+**Enabling complex password policies without testing ease of use.** Very strict password complexity requirements (level 3 + long minimum length) can create user frustration and lead to passwords being written down or stored insecurely. Pilot any new password policy with a subset of users first to gauge impact and identify training needs.
+
+**Misconfiguring the OAuth2 redirect URI or OIDC metadata endpoint.** A common issue with Google OAuth2 and OIDC configurations is entering the wrong redirect URL or metadata endpoint. Google must have the exact REDCap base URL in its Authorized Redirect URIs, and the OIDC metadata endpoint must point to the correct `.well-known/openid-configuration` path. Double-check these values and test login before rolling out to production users.
+
+**Leaving clickjacking prevention disabled when embedding surveys.** The default setting (section 12.2) prevents clickjacking attacks by adding the `X-Frame-Options: SAMEORIGIN` HTTP header. If surveys need to be embedded in iframes on external websites, this setting must be disabled, but be aware that this removes clickjacking protection and should only be used when the embedding is intentional and necessary.
+
+---
+
+# 17. Related Articles
+
+- RC-CC-04 — Control Center: User Settings & Defaults (user creation and account defaults)
+- RC-CC-07 — Control Center: Users & Access Management (user account management and suspension)
+- RC-USER-02 — User Rights: Overview & Three-Tier Access (authentication relationship to project-level permissions)
+- RC-INST-01 — Institution-Specific Settings & Policies (institutional security policies and authentication strategy)

@@ -316,3 +316,42 @@ Unchecking all privilege checkboxes for a user removes all admin access. REDCap 
 On instances with separate environments (development, test, production), administrator access is configured independently per environment. It is common for administrators to have broader access in lower environments and more restricted access in production.
 
 > **Best practice:** Limit the number of administrators — especially those with the `super_user` or `admin_rights` flags — to those with an active operational need. Use the granular privilege system to grant only the access each person actively requires.
+
+---
+
+# 15. Common Questions
+
+**Q: Can I recover a deleted user account?**
+Once a user is deleted from the Browse Users page, they are permanently removed from the system. Deletion is not reversible through the REDCap UI. If you need to preserve a user's access but prevent future logins, use the Suspend option instead, which can be reversed later. If a user is truly no longer needed, delete them; if there is any chance they might need access again, suspend them instead.
+
+**Q: What is the difference between suspending a user and expiring their account?**
+Suspending a user (from Browse Users) immediately blocks login and marks the suspension timestamp. Suspension can be reversed at any time. Account expiration (set on the user's account record) automatically blocks login on a specified date but is less reversible — you must manually change the expiration date to reactivate them. Suspension is used for immediate action (security incident, termination); expiration is used for planned future disablement (contract end date, leave of absence).
+
+**Q: How do I prevent specific users from accessing the API?**
+Users can be granted or denied API privileges on their account record in Browse Users. Alternatively, administrators can delete or revoke API tokens from the API Tokens page, preventing that user from using the API for their projects. To prevent all users from generating tokens, modify the "Allow Normal Users to Auto-Generate API Tokens" setting in the User Settings page.
+
+**Q: What happens if an administrator leaves but they are the only one with certain privileges?**
+If you have only one user with the `admin_rights` privilege and they leave, you will be unable to change administrator privileges until the owner/super-administrator manually restores access (likely via direct database intervention). Always maintain at least two users with `admin_rights` and `super_user` privileges for continuity. Document your administrator role distribution.
+
+**Q: Can I bulk-edit user attributes for many users at once?**
+The Browse Users interface allows one-at-a-time editing. For bulk operations (e.g., changing email domain, suspending a group of users, or assigning expiration dates), there is no built-in bulk UI — you would need to edit each user individually or contact Vanderbilt for a custom database script. Plan ahead for predictable bulk operations (e.g., suspending seasonal researchers at end of season).
+
+---
+
+# 16. Common Mistakes & Gotchas
+
+**Deleting a user account instead of suspending it when the account might be needed again.** User deletion is permanent and cannot be undone through the UI. If there is any possibility the user will need access again (leave of absence, temporary contractor, role change), suspend them instead. Only delete users when you are certain they will never need REDCap access.
+
+**Granting the `super_user` privilege too broadly.** The `super_user` flag grants full access to every project with maximum user-level privileges. Only grant this to administrators with an active need to manage all projects. For administrators who only need to manage specific projects or features, use the granular privileges (e.g., `access_system_config`, `account_manager`) instead.
+
+**Not monitoring API token usage and forgetting which tokens are in use.** Active API tokens that are no longer needed or whose purpose is forgotten create unnecessary security risk. Regularly review the API Tokens page and delete tokens that are no longer actively used. Regenerate tokens if there is any concern they may be compromised.
+
+---
+
+# 17. Related Articles
+
+- RC-CC-03 — Control Center: Security & Authentication (authentication methods affecting user login)
+- RC-CC-04 — Control Center: User Settings & Defaults (system-wide user behavior controls)
+- RC-USER-01 — User Rights: Overview & Three-Tier Access (user privilege concepts at project level)
+- RC-API-01 — REDCap API (API token usage and configuration)
+- RC-INST-01 — Institution-Specific Settings & Policies (user management governance)

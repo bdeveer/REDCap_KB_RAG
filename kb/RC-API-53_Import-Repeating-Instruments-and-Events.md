@@ -27,7 +27,20 @@ When to use this method: when programmatically configuring a project's repeating
 
 ---
 
-# 2. Endpoint
+# 2. Key Concepts & Definitions
+
+### Repeating Instrument
+An instrument (form) designated to allow multiple instances per record. Configured by specifying the form_name in the import data.
+
+### Repeating Event
+An entire event in a longitudinal project designated to repeat. Configured by submitting a row with blank form_name and the event_name specified.
+
+### Custom Repeat Label
+An optional display label for the instances table header, provided in the custom_repeat_instrument_label field.
+
+---
+
+# 3. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -37,7 +50,7 @@ Only `POST` is supported.
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have both **API Import/Update** privilege **and** **Project Setup/Design** privilege in the project. Both are required; neither alone is sufficient.
 
@@ -45,7 +58,7 @@ Super API Tokens (issued by a REDCap administrator via the API Tokens page in th
 
 ---
 
-# 4. Parameters
+# 5. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -57,7 +70,7 @@ Super API Tokens (issued by a REDCap administrator via the API Tokens page in th
 
 ---
 
-# 5. Data Structure
+# 6. Data Structure
 
 The `data` payload follows the same structure as the export response from RC-API-51. Each item represents one repeating instrument or one repeating event.
 
@@ -105,9 +118,9 @@ In the second entry above, `form_name` is blank, configuring `follow_up_arm_1` a
 
 ---
 
-# 6. Request Examples
+# 7. Request Examples
 
-## 6.1 Python
+## 7.1 Python
 
 ```python
 #!/usr/bin/env python
@@ -136,7 +149,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 6.2 R
+## 7.2 R
 
 ```r
 #!/usr/bin/env Rscript
@@ -159,7 +172,7 @@ result <- postForm(
 print(result)
 ```
 
-## 6.3 cURL
+## 7.3 cURL
 
 ```sh
 #!/bin/sh
@@ -174,7 +187,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 6.4 PHP
+## 7.4 PHP
 
 ```php
 <?php
@@ -218,7 +231,7 @@ print $output;
 
 ---
 
-# 7. Response
+# 8. Response
 
 On success, the method returns the **number of repeating instruments or repeating events that were imported** as an integer.
 
@@ -230,7 +243,7 @@ On failure, an error message is returned in the format specified by `returnForma
 
 ---
 
-# 8. Common Questions
+# 9. Common Questions
 
 **Q: Does this method add to the existing repeating configuration, or does it replace it?**
 
@@ -254,7 +267,7 @@ On failure, an error message is returned in the format specified by `returnForma
 
 ---
 
-# 9. Common Mistakes & Gotchas
+# 10. Common Mistakes & Gotchas
 
 **Submitting a partial list and losing existing configuration.** This method overwrites the full repeating configuration. If you only include one instrument in the payload, all other repeating instruments are removed. Always export the current configuration first (RC-API-51) and merge your changes before importing.
 
@@ -268,7 +281,7 @@ On failure, an error message is returned in the format specified by `returnForma
 
 ---
 
-# 10. Related Articles
+# 11. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-51 — Export Repeating Instruments and Events (retrieve current repeating configuration before importing)

@@ -12,6 +12,8 @@ RC-DE-04
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-01 — Record Creation; RC-DE-02 — Basic Data Entry; RC-DE-03 — Longitudinal Projects & DAGs |
 
+---
+
 # 1. Overview
 
 This article explains how to edit previously saved data in REDCap, how

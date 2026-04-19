@@ -1,22 +1,17 @@
-RC-NAV-UI-01
+| Field | Value |
+|---|---|
+| Article ID | RC-NAV-UI-01 |
+| Domain | Project Navigation |
+| Applies To | All project types |
+| Prerequisite | None |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-NAV-UI-02 — Project Menu Reference, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Survey Setup |
 
-**REDCap Project Navigation**
+---
 
-# 1. Document Metadata
-
-| **Article ID** | RC-NAV-UI-01 |
-| --- | --- |
-| **Topic** | Project-level UI navigation and layout |
-| **REDCap Module** | Core UI — applies to all projects |
-| **Primary Audience** | New REDCap users, Study Coordinators, PIs |
-| **Skill Level** | Beginner |
-| **Prerequisites** | Logged into a REDCap instance; familiarity with basic web navigation |
-| **REDCap Version** | 13.x+ (UI layout has been stable across recent major versions) |
-| **Last Reviewed** | 2025-01 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-NAV-UI-02: Project Menu Reference; RC-DE-02: Basic Data Entry; RC-SURV-01: Survey Setup |
-
-# 2. Overview
+# 1. Overview
 
 ## What is this?
 
@@ -53,7 +48,7 @@ confusion and unnecessary support requests.
     can be in: Development, Production, Analysis/Cleanup, or Completed.
     Controls what changes are allowed.
 
-# 3. Learning Objectives
+# 2. Learning Objectives
 
 After completing this module, the user will be able to:
 
@@ -70,9 +65,9 @@ After completing this module, the user will be able to:
 - Describe the four project status stages and their implications for
     data entry and editing
 
-# 4. Step-by-Step Procedure
+# 3. Step-by-Step Procedure
 
-## 4.1 Navigating to a project
+## 3.1 Navigating to a project
 
 | **Step** | **Action & Detail** |
 | --- | --- |
@@ -80,7 +75,7 @@ After completing this module, the user will be able to:
 | **2 — Find your project** | Locate your project in the list. Projects can be searched or filtered. Click the project name to open it. |
 | **3 — Confirm you are in the project** | The left menu will appear with project-specific sections. The workspace will show the Project Home page by default. |
 
-## 4.2 Using the two-panel layout
+## 3.2 Using the two-panel layout
 
 Once inside a project, the interface is split into two panels that are
 always present:
@@ -90,7 +85,7 @@ always present:
 | **Left — Menu** | Persistent navigation. Always visible (unless in hamburger mode). Organized into labeled sections. Changes based on user rights and enabled features. |
 | **Right — Workspace** | Variable content area. Displays whatever section you have navigated to: a form designer, a data entry screen, user rights settings, reports, etc. |
 
-## 4.3 Recovering from hamburger mode
+## 3.3 Recovering from hamburger mode
 
 | **Step** | **Action & Detail** |
 | --- | --- |
@@ -102,9 +97,9 @@ always present:
 > look on a participant\'s mobile device while still working on a
 > desktop computer.*
 
-# 5. Questions & Answers
+# 4. Questions & Answers
 
-# 6. Common Mistakes & Gotchas
+# 5. Common Mistakes & Gotchas
 
 **Assuming a missing menu item is a bug**
 
@@ -160,7 +155,7 @@ always present:
 - **Prevention:** Clarify the use case before recommending either app.
     Consult your REDCap support team before implementing either.
 
-# 7. Related Topics
+# 6. Related Topics
 
 - **RC-NAV-UI-02:** Project Menu Reference — detailed guide to every
     item in the REDCap left menu
@@ -176,12 +171,3 @@ always present:
 
 - **RC-MOB-01:** REDCap Mobile App vs. MyCap — detailed comparison
     of both mobile tools
-
-# 8. Version & Change Notes
-
-| **REDCap Version** | **Notes** |
-| --- | --- |
-| **13.x+** | Two-panel layout and hamburger mode behavior have been stable across recent major versions. |
-| **14.x+** | Project status workflow and menu section names are consistent with this article as of this version. Verify section names if using an older installation. |
-
-REDCap LLM Knowledge Base \| RC-NAV-UI-01 \| Project Navigation UI

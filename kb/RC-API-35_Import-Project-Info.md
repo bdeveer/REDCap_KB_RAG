@@ -23,7 +23,26 @@ The Import Project Info API allows you to update project-level settings programm
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### API Import/Update Privilege
+A permission that allows the API user to modify project data, metadata, and configuration via the API. This privilege alone is not sufficient for this method — Project Setup/Design privilege is also required.
+
+### Project Setup/Design Privilege
+A permission that allows the user to modify project structure and settings. This privilege is required in addition to API Import/Update to use this method.
+
+### Updatable Fields
+The subset of project metadata that can be modified via the API, such as title, purpose, PI information, survey/scheduling flags, and missing data codes. Some read-only fields (creation_time, production_time) cannot be changed.
+
+### Configuration Flag
+A binary setting that controls project behavior (e.g., `is_longitudinal`, `surveys_enabled`, `randomization_enabled`) represented as `0` (false/disabled) or `1` (true/enabled).
+
+### Partial Update
+The ability to modify only specific project fields in a single API call. Fields omitted from the request are left unchanged.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -62,7 +81,7 @@ Boolean-type fields use `0` (false/no) or `1` (true/yes).
 
 # 3. Request Examples
 
-## 3.1 PHP
+## 4.1 PHP
 ```php
 <?php
 
@@ -100,7 +119,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 On success, the API returns the **number of values accepted for update** (including fields whose values did not change). For example, if you submitted 3 fields, you will receive `3`.
 
@@ -108,7 +127,7 @@ On error, you receive an error message with details about what failed.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: Can I update only some project settings, or do I need to include all fields?**
 A: You only need to include the fields you want to change. Fields omitted from the data payload are left untouched.
@@ -124,7 +143,7 @@ A: Yes. You can enable or disable surveys on a project at any time, even after d
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Incomplete field list:** The API supports 19 updatable fields, including PI information, IRB/grant numbers, scheduling, randomization, and record autonumbering. Don't assume only title, longitudinal mode, and surveys are available.
 
@@ -136,7 +155,7 @@ A: Yes. You can enable or disable surveys on a project at any time, even after d
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info

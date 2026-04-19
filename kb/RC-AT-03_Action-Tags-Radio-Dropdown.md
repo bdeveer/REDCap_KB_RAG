@@ -107,9 +107,31 @@ Each entry is `raw_value=limit`. Separate multiple entries with commas.
 
 **A:** `@RANDOMORDER`, `@HIDECHOICE`, and `@SHOWCHOICE` do not work on matrix fields. `@MAXCHOICE` is the exception and does work on matrix fields.
 
+**Q: If I use @HIDECHOICE, will the hidden option still be visible to a respondent who already selected it?**
+
+**A:** Yes. If a previous response has a hidden option selected, that option remains visible and selectable for that record. The hidden option is only removed from the list of available choices for new selections or when a respondent deselects and reselects.
+
+**Q: How does @MAXCHOICE handle simultaneous form submissions?**
+
+**A:** `@MAXCHOICE` checks availability only when the form loads, not in real time. If two respondents load the form when one spot remains and both select it before either saves, both submissions will be accepted. Monitor high-demand fields manually or use other controls if simultaneous access is a concern.
+
+**Q: Can I use @SHOWCHOICE to show options dynamically based on branching logic?**
+
+**A:** No. `@SHOWCHOICE` is a static tag applied at field design time and shows the same options regardless of form context or branching conditions. To show different options based on logic, use branching logic on the field itself or consider using multiple fields with conditional visibility.
+
 ---
 
-# 7. Related Articles
+# 7. Common Mistakes & Gotchas
+
+**Using the option label instead of the raw value in @HIDECHOICE or @SHOWCHOICE.** These tags require the raw coded value (e.g., `'1'`, `'2'`) not the display label. If you enter the label by mistake, the tag will silently fail and all options will remain visible.
+
+**Assuming @MAXCHOICE enforces the limit with real-time updates.** The count is checked only when the form loads. A gap between when the form loads and when responses are saved can result in overshoots, especially with concurrent participants. Plan for manual review or implement additional controls if capacity limits are strict.
+
+**Mixing @HIDECHOICE and @SHOWCHOICE without understanding precedence.** If both tags target the same option, `@SHOWCHOICE` wins and the option displays. This can be counterintuitive if you intended `@HIDECHOICE` to hide something universally.
+
+---
+
+# 8. Related Articles
 
 - RC-AT-01 — Action Tags Overview
 - RC-AT-04 — Checkbox Action Tags

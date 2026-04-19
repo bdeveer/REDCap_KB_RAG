@@ -82,3 +82,41 @@ The Notifications & Reporting page displays additional system configuration info
 - **PHP error log path**: Full path to the PHP error log file
 
 This information is useful for troubleshooting, audit purposes, and verifying server configuration details.
+
+---
+
+# 7. Common Questions
+
+**Q: What should I do if I see an alert about temp directory access restrictions?**
+REDCap recommends that web servers restrict public access to temporary directories to prevent unauthorized access to sensitive files. The alert provides configuration instructions for your specific web server (NGINX or Apache). If you see this alert, follow the provided instructions to configure your web server's access controls, then verify the change by checking the Notifications & Reporting page again.
+
+**Q: How often are external module updates checked?**
+The system checks for available module updates automatically, and the update banners appear on the Notifications & Reporting page whenever new versions are available in the REDCap Repository. You can review the Release Notes before upgrading to understand what changes are included in each version.
+
+**Q: Can I upgrade REDCap using Easy Upgrade if my system is load-balanced?**
+No. Easy Upgrade cannot be used in load-balanced environments because the downloaded code would only be deployed to a single application server, leaving other servers running outdated code. Load-balanced installations require manual upgrade procedures or coordination with your server administrators to upgrade all servers simultaneously.
+
+**Q: Why do I need to report statistics to the REDCap Consortium?**
+REDCap is community-driven software maintained by Vanderbilt University. Reporting usage statistics to the Consortium helps support REDCap's continued development and improvement. The statistics sent are anonymized and do not include any project data. If your firewall prevents outbound connections, contact your REDCap administrator about using the email-based alternative reporting method.
+
+**Q: How do I know if automatic reporting to the Consortium is working?**
+The Notifications & Reporting page displays the date statistics were last successfully reported. If you are using automatic reporting, verify that this date is recent (within the last week). If reporting appears to have stopped, check your outbound internet connectivity to the Consortium server or consider the email-based alternative reporting method.
+
+---
+
+# 8. Common Mistakes & Gotchas
+
+**Not monitoring temp directory warnings.** Temp directory access restrictions are a common security misconfiguration that can expose sensitive files. Check the Notifications & Reporting page regularly for these alerts and follow the provided remediation steps promptly. Delaying action on this warning leaves your instance vulnerable.
+
+**Forgetting to review module Release Notes before upgrading.** Upgrading all external modules at once without reviewing their Release Notes can introduce unexpected changes or dependencies. Always review the Release Notes for any updates and test them in a staging environment before deploying to production.
+
+**Neglecting to configure the Easy Upgrade alternative for load-balanced systems.** If your instance uses load balancing, attempting to use Easy Upgrade will result in only one server being updated. This creates version mismatch issues and unpredictable behavior. Plan ahead for manual or coordinated upgrade procedures on load-balanced systems.
+
+---
+
+# 9. Related Articles
+
+- RC-CC-02 — Control Center: General System Configuration (Consortium reporting settings, Easy Upgrade configuration)
+- RC-CC-03 — Control Center: Security & Authentication (server security recommendations)
+- RC-CC-06 — Control Center: Modules & Services (external module management overview)
+- RC-EM-01 — External Modules Overview (external module concepts and management)

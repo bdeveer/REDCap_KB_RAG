@@ -8,7 +8,7 @@ RC-BL-02
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-BL-01 — Branching Logic Overview & Scope |
 | **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Overview; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields; RC-FD-03 — Data Dictionary |
 

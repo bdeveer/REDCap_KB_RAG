@@ -79,3 +79,40 @@ The To-Do List is tightly integrated with REDCap's Production mode workflow.
 6. The changes take effect (if approved) or are returned for revision (if rejected)
 
 This workflow ensures that production projects remain stable and that all design modifications are intentionally reviewed and approved before implementation. See RC-PROJ-01 for detailed information on Production mode and the draft change process.
+
+---
+
+# 7. Common Questions
+
+**Q: Where is the To-Do List located in the Control Center?**
+The To-Do List is accessible from the top of the Control Center sidebar at `ToDoList/index.php`. It is listed under the main navigation and is typically one of the first items visible to administrators.
+
+**Q: How do I know when there are pending requests in the To-Do List?**
+The To-Do List often displays a count of pending items in the sidebar or on the icon. Additionally, administrators may receive email notifications when new tasks are added (depending on your system configuration). Check the To-Do List regularly or configure email alerts to stay aware of pending actions.
+
+**Q: Can I reject a draft change proposal and request revisions?**
+Yes. When reviewing draft changes, administrators can reject the proposal and provide feedback to the requesting user. The user will then need to revise their proposal and resubmit it for approval. Rejected changes do not take effect and must be resubmitted.
+
+**Q: What happens to a completed request in the To-Do List?**
+After an administrator takes action on a request (approves or rejects it), the request automatically moves from the Active Requests section to the Completed & Archived Requests section. The archived entry remains in the system for audit purposes, showing when and by whom the task was completed.
+
+**Q: How long are completed requests retained in the archive?**
+Completed requests are retained indefinitely in the system for audit and compliance purposes. You can access the full history of past requests at any time, filtered by date or other criteria. This historical record is important for documenting institutional review and approval workflows.
+
+**Q: Can I create tasks in the To-Do List manually, or are all tasks generated automatically?**
+Tasks are generated automatically by REDCap when specific actions occur (such as draft design changes being submitted). Administrators cannot manually create arbitrary tasks in the To-Do List. The list serves as a system-driven workflow queue, not a general task management tool.
+
+# 8. Common Mistakes & Gotchas
+
+**Missing draft change notifications.** Administrators may not realize that draft changes have been submitted if they don't check the To-Do List regularly and have not configured email notifications. Establish a routine to check the To-Do List daily, or configure your system to send email alerts when production projects have pending changes awaiting review.
+
+**Accidentally rejecting changes without clear feedback.** If you reject a draft change proposal without providing detailed feedback, the requesting user may resubmit the same changes without understanding why they were rejected. Always include specific feedback explaining what needs to change or why the proposal was not approved.
+
+**Forgetting that approved changes affect active projects immediately.** When you approve draft changes to a production project, the changes take effect immediately. Users currently working with the project may see the updated design in real-time. Communicate with your research teams about planned design changes, and consider scheduling approvals during maintenance windows or off-peak hours to minimize disruption.
+
+**Archived requests becoming lost in pagination.** If your institution has many historical requests, the Completed & Archived Requests section becomes long and requires pagination. Use search and date filters to locate specific past requests rather than scrolling through pages.
+
+# 9. Related Articles
+
+- RC-CC-01 — Notifications & Reporting
+- RC-PROJ-01 — Project Lifecycle: Status and Settings

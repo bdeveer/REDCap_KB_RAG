@@ -27,7 +27,20 @@ The method works whether or not your project has record auto-numbering enabled.
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Record ID (Record Name)
+A unique identifier for each record in a REDCap project, typically either a numeric auto-generated value or a custom-assigned string. Used as the primary key for data entry and retrieval.
+
+### Auto-Numbering
+A REDCap feature that automatically assigns sequential numeric record IDs to new records. Can be enabled or disabled at the project level.
+
+### Data Access Group (DAG)
+A logical division of project users and records that enforces row-level access control. When DAGs are enabled, record IDs are prefixed with the DAG number (e.g., `223-3`).
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -36,9 +49,9 @@ The method works whether or not your project has record auto-numbering enabled.
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 
 ```python
 #!/usr/bin/env python
@@ -68,7 +81,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 
 ```sh
 #!/bin/sh
@@ -83,7 +96,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 
 ```php
 <?php
@@ -114,7 +127,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns the next record name as a plain text string — the maximum integer record ID in the project plus one.
 
@@ -132,7 +145,7 @@ On error, an error message string is returned.
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: Does calling this method reserve the record name?**
 
@@ -156,7 +169,7 @@ On error, an error message string is returned.
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Treating the result as a reservation.** This method does not lock or reserve the ID. In active projects with concurrent users, the next record name can change between this call and your subsequent import. Use auto-numbering in the import instead if uniqueness is critical.
 
@@ -166,7 +179,7 @@ On error, an error message string is returned.
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-03 — Import Records API (creating records; use `forceAutoNumber` to avoid race conditions)

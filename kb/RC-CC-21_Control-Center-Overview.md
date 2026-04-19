@@ -99,3 +99,35 @@ The largest section of the Control Center, containing all system-wide behavioral
 The Control Center is visible **only to REDCap administrators** (super users). On the left navigation, regular users will not see the Control Center link. Administrator accounts are managed under **Users → Administrator Privileges** in the Control Center itself (see RC-CC-07).
 
 Different tiers of administrator access may exist depending on instance configuration — for example, some administrators may have full system access while others are granted limited privileges for specific environments (development, test, production).
+
+# Common Questions
+
+**Q: If I make a change in the Control Center, how quickly does it take effect across all projects?**
+Most Control Center changes take effect immediately. For example, disabling a feature, enabling a module, or changing email settings updates the behavior system-wide right away. However, some changes may require users to log out and log back in to see the effect, or may only apply to new data created after the change. Always document when you make changes so you can explain timing to affected users.
+
+**Q: Can I restrict certain administrators to have limited Control Center access (e.g., only certain sections)?**
+REDCap administrators at the instance level typically have full Control Center access. However, some institutions configure role-based or tiered administrator access through the "Administrator Privileges" section. Check with your REDCap administrator team or instance configuration to see if limited administrative roles are available. Project-level admins never have Control Center access.
+
+**Q: What happens if two administrators make changes to the Control Center settings at the same time?**
+REDCap typically handles concurrent changes gracefully, but if two administrators save contradictory settings simultaneously, the last save will overwrite the previous one. To avoid confusion, coordinate major changes with your administration team or use a change management log to document who is making what changes and when.
+
+**Q: Can project users see the Control Center?**
+No. Standard project users and project-level admins do not have access to the Control Center. The Control Center link only appears in the left-hand menu for accounts with super-user administrator privileges. Project-level admins can configure their own project settings, but they cannot access system-wide Control Center functions.
+
+**Q: How do I know which Control Center changes are safe to make on a live (production) instance?**
+Many Control Center changes are low-risk (e.g., updating contact information, adding custom links). However, some changes are disruptive (e.g., disabling a feature used by active projects, changing authentication settings). Review the documentation for each setting, test changes in a development instance first if possible, and communicate planned changes to relevant project managers before implementing on production.
+
+# Common Mistakes & Gotchas
+
+**Making system-wide changes without considering impacts on active projects.** Control Center settings affect all projects on the instance. For example, disabling file uploads, changing field validation types, or modifying default project settings impacts every project immediately. Always assess the downstream effects before making changes, and communicate with project managers when you are making system-wide modifications.
+
+**Forgetting to save changes before navigating away from a Control Center page.** Some Control Center pages do not auto-save. If you make changes and navigate away without clicking "Save" or pressing CTRL+S, your changes will be lost. Make it a habit to explicitly save before moving to another page or section.
+
+**Assuming Control Center changes automatically apply to existing projects or data.** Many Control Center settings establish defaults for *new* projects or *new* data created after the change. Existing projects and historical data may not be affected by system-wide changes. For example, changing the default language or date format applies to new projects, but projects created before the change retain their previous settings. Always clarify whether a setting applies retroactively or only to new items.
+
+# Related Articles
+
+- RC-CC-01 — Notifications & Reporting
+- RC-CC-02 — General Configuration
+- RC-CC-07 — Users & Access Management
+- RC-CC-09 — To-Do List

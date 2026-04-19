@@ -2,19 +2,17 @@ RC-RAND-03
 
 **REDCap Randomization**
 
-# 1. Document Metadata
-
-| **Article ID** | RC-RAND-03 |
+| Article ID | RC-RAND-03 |
 | --- | --- |
-| **Topic** | Running randomizations, monitoring via dashboard, smart variables, and administrator-level interventions |
-| **REDCap Module** | Randomization (Randomization 2.0) |
-| **Primary Audience** | Study Coordinators (Sections 4--6); REDCap Administrators (Section 7) |
-| **Skill Level** | Intermediate (users); Advanced (administrators) |
-| **Prerequisites** | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Randomization Setup Guide — a working randomization model must already be configured |
-| **REDCap Version** | 15.4.4+ |
-| **Last Reviewed** | 2025-01 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Setup Guide; RC-RIGHTS-01: User Rights & DAGs |
+| Topic | Running randomizations, monitoring via dashboard, smart variables, and administrator-level interventions |
+| REDCap Module | Randomization (Randomization 2.0) |
+| Primary Audience | Study Coordinators (Sections 4--6); REDCap Administrators (Section 7) |
+| Skill Level | Intermediate (users); Advanced (administrators) |
+| Prerequisites | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Randomization Setup Guide — a working randomization model must already be configured |
+| REDCap Version | 15.4.4+ |
+| Last Reviewed | 2025-01 |
+| Author | See KB-SOURCE-ATTESTATION.md |
+| Related Topics | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Setup Guide; RC-RIGHTS-01: User Rights & DAGs |
 
 # 2. Overview
 
@@ -278,7 +276,7 @@ reason properly**
     insufficient allocation table size, incorrect stratification setup,
     or inadequate user training.
 
-# 10. Related Topics
+# 10. Related Articles
 
 - **RC-RAND-01:** Randomization Concepts & Terminology ---
     foundational concepts

@@ -14,6 +14,12 @@ RC-CC-06
 
 ---
 
+# 1. Overview
+
+The **Modules/Services Configuration** page is the control panel for enabling/disabling major REDCap features and configuring third-party service integrations. This is the largest and most feature-rich configuration page in the Control Center, where administrators control whether features like Surveys, the API, External Modules, Randomization, and various AI services are available to users across the instance. It also includes configuration for SMS services (Twilio, Mosio), email providers (SendGrid), and specialized features like e-Consent, CATs, and Data Transfer Services.
+
+---
+
 The **Modules/Services Configuration** page (under **System Configuration**) is the largest configuration page in the Control Center. It controls which features and integrations are enabled across the entire instance, and includes settings for third-party services like SMS platforms and email delivery providers.
 
 ---
@@ -234,13 +240,43 @@ See RC-AI-01 for an overview of REDCap's AI tools and security considerations.
 
 ---
 
-# Related Articles
+# 27. Common Questions
+
+**Q: What is the difference between enabling a feature here and enabling it at the project level?**
+System-level settings on this page are the master on/off switches — if a feature is disabled here, no project can use it, regardless of project settings. If a feature is enabled here, project-level settings then control whether individual projects use it. For example, if "Surveys" is disabled here, no project can create surveys even if they want to. If it is enabled here, each project can independently choose whether to use surveys.
+
+**Q: Should I enable the REDCap Mobile App if we are not planning to use it?**
+It is safe to leave unused features enabled — they simply will not appear in projects where they are not configured. Leaving the Mobile App enabled allows projects to start using it if research needs change, without requiring administrator intervention to toggle the system setting. However, if your institutional policy is to restrict certain features (e.g., for compliance reasons), disable them here.
+
+**Q: What do I need to configure to use SendGrid for alerts and notifications?**
+System-level configuration of SendGrid on this page (Modules/Services) enables SendGrid as an option for template-based emails in Alerts & Notifications. A separate SendGrid API key in General Configuration is used for sending general REDCap emails. Both configurations are required if you want to use SendGrid for both email delivery and alert templates.
+
+**Q: Should I enable text-to-speech if my users' browsers do not support it?**
+Text-to-speech relies on the IBM Watson service hosted by Vanderbilt and is supported in modern browsers. If your users are on older browsers that do not support the Web Audio API, text-to-speech will fail silently. Enabling it causes no harm — users on unsupported browsers simply will not see the text-to-speech button on surveys.
+
+**Q: How do I decide whether to use OpenAI, Gemini, or a locally-hosted AI model?**
+OpenAI (Azure) and Google Gemini are cloud-hosted, managed services that require no infrastructure on your side but may involve data transmission to external services. Locally-hosted OpenAI-compatible models (LM Studio, Ollama) keep all data on-premises but require server resources and ongoing maintenance. Choose based on your data governance requirements and available infrastructure.
+
+---
+
+# 28. Common Mistakes & Gotchas
+
+**Enabling third-party service features (SMS, AI) without configuring the required credentials.** Enabling Twilio, SendGrid, or AI services without entering valid API credentials leaves users unable to use the feature and can generate confusing error messages. Always test third-party integrations in a staging environment and verify that API keys are correct and active before rolling out to production.
+
+**Disabling core features that projects are already using.** If you disable Surveys or the API after projects are using them, those projects will experience broken functionality. Document which features are in use before disabling anything, and communicate deprecation timelines to project owners if you plan to remove a feature.
+
+**Misconfiguring email service (SMTP vs. third-party API).** If you enable a third-party email provider (SendGrid, Mailgun, etc.) and it is not correctly configured, all outgoing emails (alerts, survey invitations, etc.) will fail silently. Test email delivery in staging before rolling out, and monitor the first few days of production use to catch any issues.
+
+---
+
+# 29. Related Articles
 
 - RC-AI-01 — REDCap AI Tools: Overview & Security (overview of AI features enabled by this page)
 - RC-CC-02 — Control Center: General System Configuration (related system-wide settings)
 - RC-CC-05 — Control Center: File Storage & Upload Settings (file-related module settings)
-- RC-DDE-01 — Double Data Entry (project-level feature enabled via Project Setup; enable/disable table context)
-- RC-DE-07 — Computer Adaptive Tests (CAT) (CAT instruments require system-level enablement here)
+- RC-ALERT-01 — Alerts & Notifications (alert configuration and SendGrid integration)
+- RC-EM-01 — External Modules Overview (external module concepts and management)
 - RC-MOB-01 — REDCap Mobile App (mobile app module configuration)
 - RC-MYCAP-01 — MyCap: Overview & Enabling (MyCap module configuration)
 - RC-RAND-01 — Randomization Concepts & Terminology (randomization module configuration)
+- RC-TXT-01 — SMS Texting: Overview & Workflows (SMS service configuration and usage)

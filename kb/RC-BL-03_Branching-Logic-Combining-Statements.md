@@ -8,7 +8,7 @@ RC-BL-03
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-BL-02 — Syntax & Atomic Statements |
 | **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-04 — Structured Fields; RC-BL-01 — Overview |
 

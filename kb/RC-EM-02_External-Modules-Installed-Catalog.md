@@ -1,24 +1,46 @@
 RC-EM-02
 
-**External Modules — Installed Module Catalog**
+**External Modules — Installed Module Catalog — Production Instance**
 
-| **Article ID** | RC-EM-02 |
+| Article ID | RC-EM-02 |
 |---|---|
-| **Domain** | External Modules |
-| **Applies To** | REDCap administrators; project designers evaluating module capabilities |
-| **Prerequisite** | RC-EM-01 — External Modules Overview & Manager |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-EM-01 — External Modules Overview; RC-AT-01 — Action Tags Overview; RC-DAG-01 — Data Access Groups; RC-RAND-01 — Randomization Concepts |
+| Instance | Production |
+| Domain | External Modules |
+| Applies To | REDCap administrators; project designers on the Production instance |
+| Prerequisite | RC-EM-01 — External Modules Overview & Manager |
+| Version | 1.0 |
+| Last Updated | 2026 |
+| Author | REDCap Support |
+| Related Topics | RC-EM-01 — External Modules Overview; RC-EM-03 — Test / Staging Catalog; RC-EM-04 — Development Catalog |
 
 ---
 
+> ## ⚠️ RAG IMPLEMENTATION NOTICE
+>
+> **This article is currently a template for the Production instance module catalog. It does not yet contain actual module information.**
+>
+> RC-EM-02 is the single reference for which External Modules are installed and available on the Production REDCap instance. Every `[FILL IN]` placeholder represents information that users and the RAG system need but cannot currently answer. Module availability questions are among the most common support requests.
+>
+> **Before going live with this KB, your REDCap administrator should:**
+> 1. Replace every `[FILL IN]` module entry with a real module entry for the Production instance
+> 2. Remove the placeholder template blocks once real entries are added
+> 3. Populate Section 3 (Module Categories) with actual module names
+> 4. Fill in Section 4 (Requesting and Enabling Modules) with local policy
+> 5. Delete this notice block once the article is fully populated
+>
+> For module catalogs covering other instances, see RC-EM-03 (Test / Staging) and RC-EM-04 (Development). Module availability commonly differs between instances.
+>
+> **Adding more instance articles:** If your organization runs additional REDCap instances beyond Production, Test/Staging, and Development — for example, a 21 CFR Part 11-compliant instance, a FISMA-compliant instance, a GDPR-scoped instance, a dedicated Training environment, or a separate instance for a specific faculty or department — create a new module catalog article for each:
+> 1. Copy RC-EM-02 (Production) as a starting template.
+> 2. Assign the next sequential Article ID (`RC-EM-05`, `RC-EM-06`, etc.) and update all metadata fields accordingly.
+> 3. Set the `Instance` metadata field to a short, unambiguous label that the RAG system can use to scope retrieval (e.g., `Part 11 — Production`, `FISMA`, `Training`, `Faculty of Medicine`).
+> 4. Populate the module catalog (Section 2) with modules actually installed on that instance. Part 11 instances may enforce stricter module approval requirements; Training instances may have a limited module set by design.
+> 5. Update the **Related Topics** metadata field and cross-references in Sections 1 and 4 in **every existing RC-EM catalog article** to include the new entry.
+> 6. Add the new article to `meta/KB-INDEX.md`.
+
 # 1. Overview
 
-This article is a template for documenting the External Modules installed at your REDCap installation. Complete it with the modules available at your site so that users and administrators have a single reference for what is installed, what each module does, and any local configuration notes.
-
-> **Note for KB maintainers:** Entries marked with `[FILL IN]` require confirmation from the REDCap administrator before publishing. Do not leave placeholder values in the live KB. Review and update this article after every major REDCap upgrade or module change.
+This article catalogs the External Modules installed on the **Production** REDCap instance. For modules available on other instances, see RC-EM-03 (Test / Staging) and RC-EM-04 (Development). Module availability may differ between instances — always verify in the Module Manager for your target instance.
 
 > For instructions on enabling, configuring, and managing modules, see RC-EM-01.
 

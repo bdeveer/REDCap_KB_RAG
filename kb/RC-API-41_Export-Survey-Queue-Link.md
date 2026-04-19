@@ -25,7 +25,26 @@ Survey Queue must be enabled in the project for this method to work. If it is no
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Survey Queue
+A REDCap feature that presents multiple surveys to a respondent in a guided, sequential workflow. Differs from individual survey links which target a single instrument.
+
+### Queue Link
+A unique, non-expiring URL that displays all surveys assigned to a record, presented in the order and manner configured in the project. Respondents access via this single link.
+
+### Record
+The unique primary identifier for a participant or subject in REDCap. The queue link is specific to a record and shows all surveys queued for that record.
+
+### Survey Distribution Tools Privilege
+A user-level permission that may be required to generate survey queue links via API, depending on REDCap version. Combined with API Export privilege.
+
+### Content Parameter
+The identifier sent in API requests specifying which type of resource to export. For Survey Queue Link, always set to `'surveyQueueLink'`.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -38,7 +57,7 @@ Survey Queue must be enabled in the project for this method to work. If it is no
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -56,7 +75,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -72,7 +91,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -87,7 +106,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -120,7 +139,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns a unique survey queue URL as a plain text string (not wrapped in JSON or XML):
 
@@ -132,7 +151,7 @@ This URL presents the respondent with all surveys in their queue for the specifi
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: What is the difference between a survey link and a survey queue link?**
 A: A survey link (RC-API-40) is specific to one instrument. A survey queue link (RC-API-41) presents multiple surveys in a guided workflow on a single page.
@@ -154,7 +173,7 @@ A: The API still returns a valid URL, but accessing it will show a message that 
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Confusing surveyLink and surveyQueueLink:** These are distinct content types. Use `'surveyLink'` (RC-API-40) for a link to a single instrument; use `'surveyQueueLink'` for the full multi-survey queue workflow.
 
@@ -166,7 +185,7 @@ A: The API still returns a valid URL, but accessing it will show a message that 
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-40 — Export Survey Link

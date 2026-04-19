@@ -2,7 +2,6 @@ RC-DQ-01
 
 **Data Quality Module**
 
-| Field | Value |
 |---|---|
 | Article ID | RC-DQ-01 |
 | Domain | Data Quality |

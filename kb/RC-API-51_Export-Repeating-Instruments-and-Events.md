@@ -27,7 +27,20 @@ When to use this method: when you need to programmatically determine which instr
 
 ---
 
-# 2. Endpoint
+# 2. Key Concepts & Definitions
+
+### Repeating Instrument
+An instrument (form) configured to allow multiple instances per record. Participants or staff can fill out the same form multiple times for the same record, with each instance numbered sequentially.
+
+### Repeating Event
+An entire event in a longitudinal project configured to allow multiple instances. All instruments assigned to that event repeat together as instances.
+
+### Custom Repeat Label
+An optional human-readable label displayed instead of the generic "Repeat [Instrument]" header in the data entry UI.
+
+---
+
+# 3. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -37,13 +50,13 @@ Only `POST` is supported.
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have both **API Export** privilege **and** **Project Setup/Design** privilege in the project. This is a higher permission requirement than most export methods, which require only API Export.
 
 ---
 
-# 4. Parameters
+# 5. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -53,9 +66,9 @@ To call this method, the API token's owner must have both **API Export** privile
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 ```python
 #!/usr/bin/env python
@@ -74,7 +87,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 5.2 R
+## 6.2 R
 
 ```r
 #!/usr/bin/env Rscript
@@ -91,7 +104,7 @@ result <- postForm(
 print(result)
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 #!/bin/sh
@@ -107,7 +120,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -142,7 +155,7 @@ print $output;
 
 ---
 
-# 6. Response
+# 7. Response
 
 The method returns results ordered according to their order in the project. Each row or object represents either a repeating instrument or a repeating event.
 
@@ -190,7 +203,7 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: How do I tell the difference between a repeating instrument and a repeating event in the response?**
 
@@ -214,7 +227,7 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Assuming all instruments appear in the response.** This method only returns instruments configured as repeating. Non-repeating instruments are excluded entirely. If you need the full instrument list, call RC-API-09 separately.
 
@@ -226,7 +239,7 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-09 — Export Instruments (full list of all instruments; not just repeating)

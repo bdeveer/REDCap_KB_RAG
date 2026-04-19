@@ -25,7 +25,26 @@ Two conditions must be true for this method to work: (1) the instrument must be 
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Return Code
+A unique alphanumeric string that allows a respondent to resume a partially completed survey from their last saved point. Appended to the survey link as a query parameter.
+
+### Save & Return Later
+A survey feature that enables respondents to save their progress, close the survey, and resume later using a return code. Must be explicitly enabled in survey settings.
+
+### Survey Link
+The base URL that gives access to a survey. The return code is appended to this link to allow resumption from a saved point.
+
+### Respondent Session
+A respondent's interaction with a survey. Return codes are tied to a specific session and allow re-entry at the previously saved point.
+
+### Repeating Instruments/Events
+Project structures where an instrument or event can be repeated multiple times per record. The repeat_instance parameter specifies which repetition the return code applies to.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -41,7 +60,7 @@ Two conditions must be true for this method to work: (1) the instrument must be 
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -61,7 +80,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -79,7 +98,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -94,7 +113,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -129,7 +148,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns the return code as a plain text string (not wrapped in JSON or XML):
 
@@ -147,7 +166,7 @@ Retrieve the base survey link separately using the Export Survey Link method (RC
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: How do I use a return code with a survey link?**
 A: Get the base survey link from RC-API-40, then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
@@ -169,7 +188,7 @@ A: A survey link takes the respondent to the start of the survey. A return code,
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Save & Return Later not enabled:** If the survey doesn't have Save & Return Later enabled, this API returns an error. This is easy to overlook — verify the survey setting before debugging API calls.
 
@@ -183,7 +202,7 @@ A: A survey link takes the respondent to the start of the survey. A return code,
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-40 — Export Survey Link

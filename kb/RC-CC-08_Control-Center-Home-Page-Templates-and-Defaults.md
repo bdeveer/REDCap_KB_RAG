@@ -14,11 +14,13 @@ RC-CC-08
 
 ---
 
-This article covers four related System Configuration pages that control the appearance and default behavior of REDCap projects: **Home Page Settings**, **Project Templates**, **Default Project Settings**, and **Footer Settings**. It also covers **Field Validation Types**, which determines what validation options are available to form designers across all projects.
+# 1. Overview
+
+This article covers four related System Configuration pages that control the appearance and default behavior of REDCap projects: **Home Page Settings**, **Project Templates**, **Default Project Settings**, and **Footer Settings**. It also covers **Field Validation Types**, which determines what validation options are available to form designers across all projects. These settings apply instance-wide and affect all users and projects on the REDCap instance.
 
 ---
 
-# Home Page Settings
+# 2. Home Page Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Home Page Settings section -->
 
@@ -41,7 +43,7 @@ The Home Page Settings control what users see on the REDCap landing page (before
 
 ---
 
-# Project Templates
+# 3. Project Templates
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Project Templates section -->
 
@@ -74,7 +76,7 @@ Administrators can manage which templates are available, add new templates from 
 
 ---
 
-# Default Project Settings
+# 4. Default Project Settings
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Default Project Settings section -->
 
@@ -103,7 +105,7 @@ A text block (with optional link) that appears at the bottom of all survey pages
 
 ---
 
-# Footer Settings (All Projects)
+# 5. Footer Settings (All Projects)
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Footer Settings section -->
 
@@ -117,7 +119,7 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 
 ---
 
-# Field Validation Types
+# 6. Field Validation Types
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Field Validation Types section -->
 
@@ -174,3 +176,45 @@ Administrators can enable or disable any validation type. Once enabled, it appea
 
 **Custom Validation Types**
 REDCap administrators can develop and register custom validation types for institution-specific needs. Custom validations use JavaScript-based pattern matching or range checking. Once registered here, they become available in the validation type dropdown alongside standard types.
+
+---
+
+# 7. Common Questions
+
+**Q: Can I customize the text shown on the login page and home page?**
+Yes. The Top-of-page announcement displays on both the Home page and optionally on the login page. Use the Bottom-of-page text field to add persistent guidance below the main content on the Home page. For login page-specific customization when SSO is in use, consult your authentication configuration.
+
+**Q: How do users see project templates when creating a new project?**
+When a user clicks "Create New Project," they are offered the option to start from a template. Available templates appear in a selection list; only enabled templates are shown. Administrators can enable, disable, or remove templates from the Project Templates page.
+
+**Q: If I disable a validation type, will existing projects using it break?**
+No. Disabling a validation type hides it from the Online Designer dropdown (preventing new fields from selecting it), but existing fields with that validation type continue to function normally. The validation rules already applied to projects remain in effect. Users can still enter validation types directly via Data Dictionary CSV upload even if disabled.
+
+**Q: What happens when I change the default survey footer text?**
+The new footer text applies to all survey pages in all projects going forward. Existing surveys created before the change already have the footer text embedded; they do not retroactively update unless the project administrator manually changes the survey footer in that specific project.
+
+**Q: Can I use HTML in the announcement text and footer text fields?**
+Yes. The announcement text, bottom-of-page text, and custom survey footer text all support HTML. You can include styled text, hyperlinks, images, and other HTML elements. Test your HTML in a development project before deploying to production.
+
+**Q: What is the purpose of creating institution-specific project templates?**
+Institution-specific templates allow you to standardize data collection across projects. By creating templates that reflect your organization's common workflows (standard instruments, user roles, event structures), you reduce redundant work and ensure consistency in project setup. Over time, as common patterns emerge in your institution, custom templates become invaluable.
+
+# 8. Common Mistakes & Gotchas
+
+**Forgetting to enable newly created templates.** When you add a new template to the system, it is created in a disabled state by default. It will not appear in the template list for users creating new projects until you explicitly enable it on the Project Templates page. Administrators sometimes add a template and wonder why users cannot see it.
+
+**Changing instance defaults does not affect already-created projects.** If you modify the Default Project Settings (e.g., character encoding, display of the Today button), these changes apply only to new projects created after the change. Existing projects retain their original settings. To update existing projects, project administrators must change those settings individually in each project's Additional Customizations.
+
+**Disabling validation types without warning form designers.** If you disable a validation type that is in active use at your institution, form designers may be confused when they can no longer find it in the Online Designer dropdown. Communicate with your design team before disabling validation types, and consider removing only truly obsolete types.
+
+**HTML injection in announcement text poses security risks.** While HTML is supported in announcement and footer text, malicious HTML (scripts, forms, etc.) could compromise security. Always vet HTML content carefully and limit who can edit these fields. Never allow untrusted users to edit announcement or footer text.
+
+**Survey footer text applies instance-wide, affecting all surveys.** Custom survey footer text is a global setting. If you change it, the new footer appears on all survey pages across all projects. Consider your institution's branding and legal requirements before making changes, as the footer may include disclaimers or compliance notices.
+
+# 9. Related Articles
+
+- RC-CC-02 — General Configuration
+- RC-CC-04 — User Settings & Defaults
+- RC-DE-05 — Field Validations
+- RC-FD-02 — Online Designer
+- RC-PROJ-01 — Project Lifecycle: Status and Settings

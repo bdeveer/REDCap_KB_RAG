@@ -14,6 +14,12 @@ RC-CC-02
 
 ---
 
+# 1. Overview
+
+The **General Configuration** page is the central hub for REDCap instance-level settings that control how the system operates at a technical level. It is organized into several major sections: Configuration Check (diagnostic tools), Server Configuration Settings (basic system operations), Configuration for Outgoing Emails (mail delivery), and Other System Settings (institutional and behavioral options). These settings affect all users and projects on the instance and require REDCap administrator access to modify.
+
+---
+
 The **General Configuration** page contains the core technical and operational settings that govern how REDCap runs at the instance level. It is organized into three sub-sections: **Server Configuration Settings**, **Configuration for Outgoing Emails**, and **Other System Settings**. A separate **Configuration Check** tool also lives under System Configuration.
 
 ---
@@ -341,3 +347,43 @@ If the server-side cron cannot be configured immediately, the cron job can also 
 ## Cron History
 
 The bottom of the Cron Jobs page shows a log of recent cron executions with timestamps, useful for confirming the scheduler is firing consistently and diagnosing gaps.
+
+---
+
+# 20. Common Questions
+
+**Q: What should I do if the Configuration Check reports a cron job failure?**
+A cron job failure means that automated background processes (like survey invitations and alerts) will not execute. On Linux/Unix, verify the crontab entry with `crontab -l` and ensure the path to the PHP executable and REDCap installation are correct. On Windows, verify the Task Scheduler entry and confirm the PHP path exists. If the cron has never been set up, follow the setup instructions for your operating system in the Cron Jobs Setup section.
+
+**Q: Why should I use a Read Replica database instead of upgrading my primary database server?**
+A Read Replica offloads read-heavy operations (reports, exports, dashboards) to a separate database, improving performance under load without requiring primary database hardware upgrades. However, it only helps if your bottleneck is read operations. Implement it only after investigating other performance improvements (hardware, indexing, etc.) and confirming that read operations are the primary bottleneck.
+
+**Q: Can I change the REDCap Base URL without affecting existing surveys?**
+The Base URL is used to construct all internal links and survey invitation URLs. Changing it should match your actual access URL to prevent broken links. A warning is displayed if the saved Base URL does not match your current access URL. If you must change it, verify that the new URL is publicly accessible and update any bookmarks or documentation that references the old URL.
+
+**Q: What happens if I enable development/debug mode on a production server?**
+Enabling debug mode displays PHP error reporting on all pages and should only be used on non-production servers. Leaving it enabled on production exposes technical details and error messages to users, creating a security risk. Always keep it disabled on production systems.
+
+**Q: How should I handle email SMTP configuration issues when emails won't send?**
+Verify that the web server's PHP mail subsystem is functional (the Configuration Check page will report if it is not). If using a third-party email service (SendGrid, Mailgun, etc.), confirm the API key and domain settings are correct. Check that outbound SMTP connections are not blocked by a firewall. If emails are being rejected by recipients' mail servers, the Universal FROM email address setting might help if your institution's SMTP restricts sender addresses.
+
+---
+
+# 21. Common Mistakes & Gotchas
+
+**Forgetting to configure the cron job on initial setup.** A missing cron job is a silent failure — no error message appears on the Control Center, but all time-dependent features (survey invitations, alerts, quality checks, scheduled tasks) will not work. Always run the Configuration Check and verify that the cron job status is "Good" immediately after deployment.
+
+**Changing database settings without testing on staging first.** Database configuration changes (binlog_format, replica setup, connection limits) can have unexpected performance impacts or cause failures. Always test any database configuration changes on a staging environment first and monitor system resources for several days after implementation.
+
+**Misconfiguring the survey base URL for reverse proxies.** If your REDCap instance is behind a reverse proxy but surveys are hosted on a different domain, leaving the Survey Base URL blank will use the main Base URL, potentially creating incorrect links. Set the Survey Base URL explicitly to the domain users actually access for surveys.
+
+---
+
+# 22. Related Articles
+
+- RC-CC-01 — Control Center: Notifications & Reporting (system health checks, Consortium reporting configuration)
+- RC-CC-03 — Control Center: Security & Authentication (authentication and login security settings)
+- RC-CC-04 — Control Center: User Settings & Defaults (user creation and defaults)
+- RC-CC-05 — Control Center: File Storage & Upload Settings (file storage configuration related to disk space)
+- RC-CC-07 — Control Center: Users & Access Management (user account management)
+- RC-INST-01 — Institution-Specific Settings & Policies (institutional configuration best practices)

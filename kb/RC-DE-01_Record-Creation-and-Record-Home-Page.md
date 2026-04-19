@@ -12,6 +12,8 @@ RC-DE-01
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-DE-02 — Basic Data Entry; RC-NAV-REC-01 — Record Navigation Overview; RC-NAV-REC-04 — Record Status Dashboard |
 
+---
+
 # 1. Overview
 
 This article explains how to create new records in REDCap and how to
@@ -181,6 +183,10 @@ Record Home Page?**
 A: Yes. You can click any dot in the Record Status Dashboard to go
 directly to that instrument for that record, bypassing the Record Home
 Page entirely.
+
+**Q: How can I bulk create multiple records at once instead of adding them one by one?**
+
+A: You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the RC-API-03 — Import Records API to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
 
 # 5. Common Mistakes & Gotchas
 

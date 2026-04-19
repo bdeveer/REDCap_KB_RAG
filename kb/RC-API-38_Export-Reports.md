@@ -27,7 +27,29 @@ This is particularly useful for recurring report generation, integration with do
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Custom Report
+A user-defined view of project data created in the REDCap interface that filters records, fields, and events according to specified criteria. Each report has a unique numeric ID.
+
+### Report ID
+The numeric identifier of a custom report, visible in the URL or report management table. Required to export a specific report via API.
+
+### Data Export Rights
+User-level permissions controlling field-level access during export: Full Data Set (no restrictions), De-Identified (strips identifiers), or Remove All Identifier Fields (more aggressive stripping). These rights are enforced on API exports.
+
+### Flat Format
+The standard tabular data structure (one row per record/event) with columns for each field. All data exported via the Export Reports API is in flat format regardless of the project structure.
+
+### rawOrLabel Parameter
+Determines whether exported values are raw coded values (e.g., `'1'`, `'0'`) or human-readable labels (e.g., `'Yes'`, `'No'`). Applies to field values, not column headers.
+
+### CSV Delimiter
+The character used to separate fields in CSV output. Options include comma (default), tab, semicolon, pipe, or caret, allowing flexibility for downstream systems.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -46,7 +68,7 @@ This is particularly useful for recurring report generation, integration with do
 
 # 3. Request Examples
 
-## 3.1 Python
+## 4.1 Python
 ```python
 #!/usr/bin/env python
 
@@ -65,7 +87,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-## 3.2 R
+## 4.2 R
 ```r
 #!/usr/bin/env Rscript
 
@@ -82,7 +104,7 @@ result <- postForm(
 print(result)
 ```
 
-## 3.3 cURL
+## 4.3 cURL
 ```sh
 #!/bin/sh
 
@@ -97,7 +119,7 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       $API_URL
 ```
 
-## 3.4 PHP
+## 4.4 PHP
 ```php
 <?php
 
@@ -131,7 +153,7 @@ print $output;
 
 ---
 
-# 4. Response
+# 5. Response
 
 The API returns data rows as configured in the report, ordered first by record (the project's primary key) and then by event ID. Results are always in flat format regardless of project structure.
 
@@ -160,7 +182,7 @@ The API returns data rows as configured in the report, ordered first by record (
 
 ---
 
-# 5. Common Questions
+# 6. Common Questions
 
 **Q: How do I find my report's ID?**
 A: In the REDCap interface, go to "Manage" > "Custom reports." The report ID appears in the URL bar (e.g., `...?pid=123&report_id=1`) or is listed in the report management table.
@@ -179,7 +201,7 @@ A: `rawOrLabel` controls field values (e.g., coded values vs. display text). `ra
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
 
 **Incorrect report_id format:** Report IDs are numeric. Passing a string like `"my_report"` will fail. Always use the numeric ID from the URL or report list.
 
@@ -195,7 +217,7 @@ A: `rawOrLabel` controls field values (e.g., coded values vs. display text). `ra
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-API-01 — REDCap API
 - RC-API-02 — Export Records

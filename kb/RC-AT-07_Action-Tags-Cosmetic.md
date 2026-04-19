@@ -107,7 +107,31 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 ---
 
-# 6. Common Mistakes
+# 6. Common Questions
+
+**Q: Can I use @INLINE with a video or audio file?**
+
+**A:** No. `@INLINE` supports only static image and PDF formats (JPG, PNG, GIF, TIF, BMP, PDF). Video and audio files cannot be displayed inline; only the filename will show.
+
+**Q: What is the difference between @INLINE and @INLINE-PREVIEW?**
+
+**A:** `@INLINE` displays the file immediately and always (at 100% width by default or a specified size). `@INLINE-PREVIEW` adds a toggle button so the file is hidden by default and displayed on demand. Use `@INLINE-PREVIEW` for sensitive images or large files you want respondents to view only if needed.
+
+**Q: If I use @HIDEBUTTON on a date field, can respondents still manually enter a date?**
+
+**A:** Yes. `@HIDEBUTTON` only hides the "Today" or "Now" button; respondents can still type or use a date picker to enter a date manually (depending on the field validation and browser support).
+
+**Q: Can I use @INLINE to display a PDF that is dynamically piped from another field?**
+
+**A:** No. `@INLINE` displays a file upload field's content based on what is already uploaded to that specific field. You cannot pipe a filename from another field. To reference a file from elsewhere, use the piped syntax `[field:inline]` on a descriptive field instead.
+
+**Q: Does @INLINE work on mobile devices or in the REDCap Mobile App?**
+
+**A:** `@INLINE` works on mobile browsers, but rendering and sizing may vary significantly depending on the device screen size and the file format. Test on representative devices. The tag has no effect in the REDCap Mobile App unless the Mobile App displays files in a context that supports inline rendering (functionality varies by app version).
+
+---
+
+# 7. Common Mistakes
 
 **Not testing `@INLINE` across devices.** Pixel-based sizing looks very different on high-density smartphone screens versus standard monitors. Always test on representative devices.
 
@@ -117,7 +141,7 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-AT-01 — Action Tags Overview
 - RC-AT-05 — Free Text Action Tags

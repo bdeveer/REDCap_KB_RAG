@@ -25,7 +25,20 @@ This method is the entry point for programmatic navigation of the File Repositor
 
 ---
 
-# 2. Parameters
+# 2. Key Concepts & Definitions
+
+### Doc ID
+A numeric identifier that uniquely identifies a file in the File Repository. Used to export, delete, or reference specific files.
+
+### Folder ID
+A numeric identifier that uniquely identifies a folder in the File Repository. Used to list contents of a specific folder or as a parent reference when creating sub-folders.
+
+### Access Restrictions
+Folder-level permissions that limit access to specific users based on their Data Access Group or User Role assignment. Restricted folders include `role` and/or `dag` fields in the response.
+
+---
+
+# 3. Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -38,7 +51,7 @@ This method is the entry point for programmatic navigation of the File Repositor
 
 ---
 
-# 3. Permissions Required
+# 4. Permissions Required
 
 To call this method, the API token's owner must have **both** of the following in the project:
 
@@ -49,7 +62,7 @@ Calls from tokens lacking either privilege will fail with a permissions error.
 
 ---
 
-# 4. Endpoint
+# 5. Endpoint
 
 ```
 POST https://your-redcap-instance.edu/api/
@@ -59,9 +72,9 @@ Only `POST` is supported.
 
 ---
 
-# 5. Request Examples
+# 6. Request Examples
 
-## 5.1 Python
+## 6.1 Python
 
 List the top-level of the File Repository:
 
@@ -96,7 +109,7 @@ fields = {
 }
 ```
 
-## 5.2 R
+## 6.2 R
 
 ```r
 source('config.R')
@@ -113,7 +126,7 @@ result <- postForm(
 print(result)
 ```
 
-## 5.3 cURL
+## 6.3 cURL
 
 ```sh
 . ./config
@@ -127,7 +140,7 @@ $CURL -H "Accept: application/json" \
       $API_URL
 ```
 
-## 5.4 PHP
+## 6.4 PHP
 
 ```php
 <?php
@@ -162,7 +175,7 @@ print $output;
 
 ---
 
-# 6. Response
+# 7. Response
 
 The API returns the list of files and sub-folders inside the requested folder. Each sub-folder entry has a `folder_id` and each file entry has a `doc_id`. Restricted folders also include a `role` (unique User Role name) and/or `dag` (unique Data Access Group name).
 
@@ -195,7 +208,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 7. Common Questions
+# 8. Common Questions
 
 **Q: How do I list the contents of the entire File Repository?**
 
@@ -223,7 +236,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Expecting a recursive tree from one call.** The response lists the direct children of the requested folder only. If you need a full File Repository tree, you must walk it yourself by re-calling the method for each nested `folder_id`.
 
@@ -237,7 +250,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-API-01 — REDCap API (overview; authentication, tokens, playground)
 - RC-API-45 — Create Folder (File Repository) API (creates folders whose contents this method can list)
