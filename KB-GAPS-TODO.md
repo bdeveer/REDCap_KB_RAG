@@ -6,6 +6,134 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Open Gaps
 
+### ⚠️ RC-CAL-01 — Calendar
+
+**Why needed:** REDCap includes a built-in Calendar module accessible from the project menu, but no KB article covers it. Users occasionally ask how to use it or what its limitations are.
+
+**Domain slug:** CAL (new domain)
+**What to cover:** Accessing the Calendar from the project menu, how calendar entries are created (manually vs. from scheduling fields), viewing by day/week/month, filtering by user or instrument, difference between the project calendar and the scheduling module, known limitations (not integrated with external calendars)
+
+---
+
+### ⚠️ RC-PROJ-04 — Additional Project Settings (Secondary ID, Record Label, etc.)
+
+**Why needed:** RC-PROJ-01 covers project lifecycle/status. RC-PROJ-02 covers the setup checklist. Neither article explains the miscellaneous project-level settings available in Project Setup that affect how records are identified and displayed.
+
+**Domain slug:** PROJ (established)
+**What to cover:** Secondary unique field (secondary ID) — what it is, how to designate it, effect on record lookup; Custom record label — syntax, piping support, where it appears; other notable Project Setup options not covered elsewhere (e.g., project notes, project purpose/IRB settings, move to production requirements)
+
+---
+
+### ⚠️ RC-FD-11 — Advanced Online Designer Options
+
+**Why needed:** RC-FD-02 and RC-FD-06 cover the core Online Designer and instrument/field management. Advanced or lesser-known designer capabilities have no dedicated coverage.
+
+**Domain slug:** FD (established)
+**What to cover:** Matrix field groups (matrix of radio buttons / checkboxes); field annotation (notes visible only in designer); stop actions on required fields; section header customization; field alignment options; copy/move fields between instruments from within the designer; drag-and-drop reordering; using the designer in production (move to production implications); differences between the designer and the Data Dictionary for complex edits
+
+---
+
+### ⚠️ RC-LOCK-01 — Record Locking & E-Signatures
+
+**Why needed:** Record locking is a significant REDCap feature for clinical data integrity and regulatory workflows. It is mentioned in passing in RC-DE-13 (Record Administration) but has no dedicated article. E-signature support makes this a distinct topic from simple record-level admin actions.
+
+**Domain slug:** LOCK (new domain)
+**What to cover:** What record locking does (prevents further edits to a form/record), difference between locking a single instrument vs. entire record; how to enable record locking (project-level setting, user rights required); locking and unlocking workflow; e-signature configuration and user flow; locked form indicators in the UI; interaction with Data Resolution Workflow; locking in longitudinal projects (per-event behavior); audit trail entries for lock/unlock/e-sign events; admin override capabilities
+
+---
+
+### ⚠️ RC-CC-22 — Admin: Imitate User (Access As)
+
+**Why needed:** REDCap Control Center includes an "Access As" (imitate user) function that allows administrators to log in and navigate REDCap as another user. This is a powerful diagnostic and support tool with no KB coverage.
+
+**Domain slug:** CC (established)
+**What to cover:** Where to find the imitate-user function (Control Center → Users & Access Management or similar); how to initiate a session as another user; what the admin can and cannot do while imitating (project access governed by the imitated user's rights); session behavior and how to exit imitation; audit trail and logging — whether admin actions during imitation are attributed to the admin or the imitated user; appropriate use cases (troubleshooting, support); privacy and policy considerations
+
+---
+
+### ⚠️ RC-MSG-01 — REDCap Messenger
+
+**Why needed:** REDCap includes a built-in internal messaging system (REDCap Messenger) for communication between users on the same instance. It has no KB coverage despite being a commonly noticed feature.
+
+**Domain slug:** MSG (new domain)
+**What to cover:** Accessing the Messenger (My Projects menu or project header); sending a message to another REDCap user; group conversations; message notifications and indicators; limitations (internal only, not email); admin controls and whether messages can be disabled; privacy considerations; difference between Messenger and the field comment log
+
+---
+
+### ⚠️ RC-PROF-01 — My Profile (User Profile Settings)
+
+**Why needed:** Every REDCap user has a "My Profile" page where they can manage personal settings. No KB article covers this, and users occasionally ask what can be changed there.
+
+**Domain slug:** PROF (new domain)
+**What to cover:** Accessing My Profile; editable fields (name, email, institution, phone, etc.); changing your own password; two-factor authentication / login settings (if user-configurable); notification preferences; API token management from the profile page; profile photo or display settings if applicable; what cannot be changed by the user vs. admin-only fields
+
+---
+
+### ⚠️ RC-CC-23 — Backup Options
+
+**Why needed:** REDCap offers project-level and system-level backup mechanisms (e.g., project XML export, database backups configured in Control Center). No KB article explains what backup options exist or how to use them.
+
+**Domain slug:** CC (established)
+**What to cover:** Project XML export as a backup mechanism (full project structure + data); Control Center backup settings (if applicable to hosted instances); what is and is not included in an XML export; restoring from backup (creating a new project from XML); scheduled/automated backup options; difference between a backup and a project copy; institutional responsibility vs. REDCap platform responsibility for backups
+
+---
+
+### ⚠️ RC-PROJ-05 — Copy Project
+
+**Why needed:** REDCap includes a "Copy Project" function that allows users to duplicate an existing project. This is a common workflow for creating templates or starting new studies, but it has no dedicated KB coverage.
+
+**Domain slug:** PROJ (established)
+**What to cover:** Accessing Copy Project (from project header or Project Setup); options during copy (copy data records, copy user list, copy DAGs, copy reports, etc.); what is always copied vs. optional; resulting project status (Draft); limitations (survey participant lists, randomization setup, external module configurations may not carry over); use cases (templates, pilot-to-production, cloning a study arm)
+
+---
+
+### ⚠️ RC-PROJ-06 — Project Migrations
+
+**Why needed:** Projects sometimes need to be moved between REDCap instances (e.g., from a test server to production, or between institutions). The process involves XML export/import and has important caveats that are not documented in the KB.
+
+**Domain slug:** PROJ (established)
+**What to cover:** When and why a migration is needed; exporting a project as XML (full vs. no-data); importing XML to create a new project on the target instance; what survives migration (structure, branching logic, surveys, user rights structure) and what does not (user accounts, data, file uploads, API tokens, external module configs, DAG assignments); post-migration checklist; migrating longitudinal projects; common pitfalls and troubleshooting
+
+---
+
+### ⚠️ RC-PLUS-01 — REDCap+
+
+**Why needed:** REDCap+ (or REDCap Plus) is an extended offering beyond standard REDCap — no KB article explains what it is, how it differs from standard REDCap, or how to access its features.
+
+**Domain slug:** PLUS (new domain)
+**What to cover:** What REDCap+ is and how it relates to standard REDCap; additional features or modules included; licensing/access model; how to enable or request REDCap+ features; any relevant setup steps in Control Center; differences in user experience compared to standard REDCap
+
+*Note: Content for this article will need to be sourced from institutional documentation or REDCap consortium materials, as REDCap+ specifics may vary by deployment.*
+
+---
+
+### ⚠️ RC-FREP-01 — File Repository
+
+**Why needed:** REDCap's File Repository is a project-level file storage area for documents that are not tied to a specific record/field. It is distinct from file upload fields in instruments and has no KB coverage.
+
+**Domain slug:** FREP (new domain)
+**What to cover:** Accessing the File Repository (project menu); uploading and organizing files (folders); who can access the File Repository (user rights); downloading files; deleting files and audit trail; difference between File Repository and file upload instrument fields; using the File Repository for sharing documents with study staff; storage limits; API access to File Repository (export/import file repository file endpoints)
+
+---
+
+### ⚠️ RC-NOTIF-01 — REDCap System Notifications (Notification Center)
+
+**Why needed:** REDCap has an in-app notification system (bell icon / notification center) that surfaces system messages, project activity, and admin broadcasts. This is distinct from the Alerts & Notifications module (RC-ALERT series) and has no KB coverage.
+
+**Domain slug:** NOTIF (new domain)
+**What to cover:** Where notifications appear in the UI (bell icon, notification panel); types of notifications generated (project status changes, user invitations, system messages, admin broadcasts); marking notifications as read/dismissed; admin-side: sending broadcasts or system-wide notifications via Control Center; notification preferences (if user-configurable); difference between this notification center and email-based Alerts & Notifications
+
+---
+
+### ⚠️ RC-SURV-10 — Survey Login (Respondent Authentication)
+
+**Why needed:** RC-SURV-03 touches on survey access methods briefly, and RC-SURV-04 covers link types, but the Survey Login feature — which requires respondents to authenticate before accessing a survey — has no dedicated article.
+
+**Domain slug:** SURV (established)
+**What to cover:** What Survey Login is and when to use it; enabling survey login for an instrument; authentication methods (e.g., requiring a field value match such as date of birth or MRN); how respondents experience the login prompt; combining survey login with the survey queue; interaction with public vs. private survey links; troubleshooting failed logins; difference between survey login and e-consent or survey access codes
+
+---
+
 ### ⚠️ RC-IMP-02 — (Intentionally absent or merged; ID reserved)
 
 **Why noted:** The index goes RC-IMP-01 → RC-IMP-03 with no RC-IMP-02. This gap is documented here to clarify the skip is intentional and the ID is not a missing article. If a second import article is ever needed, RC-IMP-02 is available.
@@ -193,4 +321,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-19 — RC-EM-01 and RC-EM-02 added to KB-INDEX. Only open article gap: RC-DE-13.*
+*Last updated: 2026-04-19 — Added 14 new open gaps: RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-PROF-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10. Open gaps: RC-DE-13, RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-PROF-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
