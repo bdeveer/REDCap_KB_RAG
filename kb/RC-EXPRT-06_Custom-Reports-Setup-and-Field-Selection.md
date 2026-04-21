@@ -10,7 +10,7 @@ RC-EXPRT-06
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges |
+| **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges; RC-NAV-REC-01 — Record Navigation Overview; RC-NAV-REC-04 — Record Status Dashboard |
 
 # 1. Overview
 
@@ -224,3 +224,5 @@ If the public reports option does not appear in the report builder, the feature 
 - RC-EXPRT-08 — Custom Reports: Management & Organization (saving, copying, deleting, and organizing reports into folders)
 - RC-DAG-01 — Data Access Groups (background on DAGs referenced in user access configuration)
 - RC-USER-03 — User Rights: Configuring User Privileges (covers Add/Edit/Organize Reports and instrument-level access)
+- RC-NAV-REC-01 — Record Navigation Overview (any Record ID displayed in a report is a clickable link that opens the Record Home Page for that record)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (reports are one of several locations in REDCap where Record ID links appear; custom dashboards and custom reports serve complementary purposes)

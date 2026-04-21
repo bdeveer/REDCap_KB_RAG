@@ -10,7 +10,7 @@ RC-USER-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-USER-02 — Adding Users & Managing Roles; RC-USER-03 — Configuring User Privileges; RC-USER-04 — User Management; RC-DAG-01 — Data Access Groups |
+| **Related Topics** | RC-USER-02 — Adding Users & Managing Roles; RC-USER-03 — Configuring User Privileges; RC-USER-04 — User Management; RC-DAG-01 — Data Access Groups; RC-NAV-UI-01 — Project Navigation UI; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -170,3 +170,6 @@ When a user reports they cannot access a project or perform an expected action, 
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-USER-04 — User Rights: User Management
 - RC-DAG-01 — Data Access Groups
+- RC-NAV-UI-01 — Project Navigation UI (user rights control which menu items a user can see; explains why menu items may appear or disappear)
+- RC-NAV-UI-02 — Project Menu Reference (the User Rights and DAGs menu items are described here, along with every other feature they gate)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (instrument-level access rights and DAG membership filter what appears on the dashboard)

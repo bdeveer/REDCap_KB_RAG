@@ -7,7 +7,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-NAV-UI-02 — Project Menu Reference, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Survey Setup |
+| Related Topics | RC-NAV-UI-02 — Project Menu Reference, RC-NAV-REC-01 — Record Navigation Overview, RC-PROJ-01 — Project Lifecycle, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Surveys Basics, RC-USER-01 — User Rights Overview, RC-MYCAP-01 — MyCap Overview, RC-FD-01 — Form Design Overview, RC-MOB-01 — REDCap Mobile App |
 
 ---
 
@@ -160,14 +160,29 @@ always present:
 - **RC-NAV-UI-02:** Project Menu Reference — detailed guide to every
     item in the REDCap left menu
 
+- **RC-NAV-REC-01:** Record Navigation Overview — how to navigate
+    to records and instruments once inside a project
+
+- **RC-PROJ-01:** Project Lifecycle: Status and Settings — detailed
+    coverage of Development, Production, Analysis/Cleanup, and
+    Completed status stages and what changes are permitted in each
+
 - **RC-DE-02:** Basic Data Entry — covers Record Status Dashboard
     and Add/Edit Records
 
-- **RC-SURV-01:** Survey Setup — referenced by the Survey
+- **RC-SURV-01:** Surveys – Basics — referenced by the Survey
     Distribution Tools menu item
 
-- **RC-RIGHTS-01:** User Rights — how to configure permissions that
-    control menu visibility
+- **RC-USER-01:** User Rights: Overview & Three-Tier Access — how
+    to configure permissions that control which menu items a user
+    can see and interact with
 
-- **RC-MOB-01:** REDCap Mobile App vs. MyCap — detailed comparison
-    of both mobile tools
+- **RC-FD-01:** Form Design Overview — covers the Online Designer
+    and Data Dictionary accessible from the Project Home and Design
+    menu section
+
+- **RC-MOB-01:** REDCap Mobile App — offline data collection for
+    study staff
+
+- **RC-MYCAP-01:** MyCap: Overview & Enabling — participant-facing
+    mobile data entry; distinct from the REDCap Mobile App

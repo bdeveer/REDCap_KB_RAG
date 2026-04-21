@@ -10,7 +10,7 @@ RC-MLM-01
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App; RC-CC-20 — Control Center: Multi-Language Management |
+| **Related Topics** | RC-SURV-01 — Survey Setup; RC-ALERT-01 — Alerts and Notifications Setup; RC-AT-11 — Action Tags: Mobile App; RC-CC-20 — Control Center: Multi-Language Management; RC-NAV-UI-02 — Project Menu Reference |
 
 ---
 
@@ -393,3 +393,4 @@ No. Switching languages in real-time only changes the display. Data already ente
 - RC-AT-11 — Action Tags: Mobile App *(MyCap-specific action tags)*
 - RC-AI-03 — AI Translations *(AI-assisted translation integrates with MLM language IDs and display names)*
 - RC-CC-20 — Control Center: Multi-Language Management *(system-level MLM configuration: enabling MLM, managing system languages, setting access restrictions)*
+- RC-NAV-UI-02 — Project Menu Reference *(the Multi-Language Management item appears in the Applications section of the left menu when MLM is enabled)*

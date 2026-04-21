@@ -10,7 +10,7 @@ RC-SURV-05
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-SURV-04 — Survey Link Types & Access Methods; RC-SURV-06 — Automated Survey Invitations; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
+| **Related Topics** | RC-SURV-04 — Survey Link Types & Access Methods; RC-SURV-06 — Automated Survey Invitations; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -249,3 +249,5 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 - RC-ALERT-02 — Alert Management & Notification Log (email history for Alerts & Notifications)
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types (using piped variables in email bodies)
 - RC-PIPE-03 — Smart Variables Overview (`[survey-link]`, `[survey-url]`, and related tokens)
+- RC-NAV-UI-02 — Project Menu Reference (the Participant List is accessed via Survey Distribution Tools in the Data Collection section of the left menu)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (Record ID links in the invitation log and participant list navigate to the Record Home Page only in identified mode; links are disabled in anonymous surveys)

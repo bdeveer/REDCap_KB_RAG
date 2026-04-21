@@ -162,6 +162,14 @@ New articles are built from source training outline documents or written from sc
 
 To revise or correct an article, open a Cowork session and either upload updated source material or describe the change. Claude uses the `kb-update` or `kb-update-workspace` skill to locate the relevant article, apply the edits, and keep `meta/KB-INDEX.md` and `meta/KB-CROSS-REFS.md` in sync.
 
+## Disclaimer
+
+This repository contains original documentation and guidance written by the maintainer based on experience working with REDCap. It is **not affiliated with, endorsed by, or approved by Vanderbilt University** or the REDCap Consortium. REDCap® is a trademark of Vanderbilt University.
+
+No REDCap software is distributed in this repository. All content reflects the maintainer's own explanations, workflows, and best practices — not reproductions of official REDCap documentation or training materials.
+
+For official REDCap resources, visit [project-redcap.org](https://projectredcap.org) or the REDCap Community forum.
+
 ## Syncing Changes
 
 Changes are committed locally by Claude and pushed to GitHub manually:

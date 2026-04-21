@@ -10,7 +10,7 @@ RC-DE-08
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow; RC-CC-02 — Control Center: General System Configuration |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-12 — Data Resolution Workflow; RC-CC-02 — Control Center: General System Configuration; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -212,3 +212,5 @@ The Field Comment Log and the Data Resolution Workflow (RC-DE-12) are mutually e
 - RC-DE-12 — Data Resolution Workflow (the structured alternative to the Field Comment Log, with query tracking, assignment, and resolution metrics)
 - RC-FD-07 — Field Embedding (explains why embedded variables may lack a comment balloon)
 - RC-CC-02 — Control Center: General System Configuration (system-level Field Comment Log default for new projects)
+- RC-NAV-UI-02 — Project Menu Reference (the Field Comment Log appears in the Applications section; replaced by the Data Resolution Workflow when that feature is enabled)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (Record ID links in the Field Comment Log navigate to the Record Home Page; variable-level links navigate to the specific field)

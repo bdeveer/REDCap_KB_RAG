@@ -10,7 +10,7 @@ RC-DQ-01
 | Version | 1.2 |
 | Last Updated | 2026 |
 | Author | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-CALC-01 — Special Functions Reference; RC-CALC-02 — Calculated Fields |
+| Related Topics | RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-CALC-01 — Special Functions Reference; RC-CALC-02 — Calculated Fields; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -298,3 +298,5 @@ A: "Run all rules except A & B" still runs default rules C through H alongside a
 - RC-DE-04 — Editing Data & Audit Trail (audit trail behavior after Auto-correct)
 - RC-DAG-01 — Data Access Groups (DAG filtering of discrepancy results)
 - RC-USER-01 — User Rights: Overview (Data Quality user right)
+- RC-NAV-UI-02 — Project Menu Reference (the Data Quality module appears in the Applications section of the left menu)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (Data Quality results include variable-level links that navigate directly to a specific field within a record)

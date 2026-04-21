@@ -7,7 +7,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-NAV-UI-01 — Project Navigation UI, RC-RIGHTS-01 — User Rights, RC-DE-02 — Basic Data Entry |
+| Related Topics | RC-NAV-UI-01 — Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04 — Record Status Dashboard, RC-USER-01 — User Rights Overview, RC-DE-02 — Basic Data Entry, RC-PROJ-01 — Project Lifecycle, RC-FD-01 — Form Design Overview, RC-FD-05 — Codebook, RC-EXPRT-01 — Data Export Overview, RC-MLM-01 — Multi-Language Management, RC-IMP-01 — Data Import Overview, RC-DQ-01 — Data Quality Module, RC-DAG-01 — Data Access Groups, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-LONG-01 — Longitudinal Project Setup, RC-SURV-01 — Surveys Basics, RC-SURV-05 — Participant List and Survey Invitations, RC-ALERT-01 — Alerts and Notifications, RC-RAND-01 — Randomization Concepts, RC-PROJ-03 — Project Dashboards, RC-API-01 — REDCap API, RC-MOB-01 — REDCap Mobile App, RC-MYCAP-01 — MyCap Overview |
 
 ---
 
@@ -269,29 +269,77 @@ Support and documentation resources. Always visible to all users.
 - **RC-NAV-UI-01:** Project Navigation UI — the two-panel layout,
     hamburger mode, and project status overview
 
-- **RC-RIGHTS-01:** User Rights — how to configure permissions that
-    control menu item visibility
+- **RC-NAV-REC-01:** Record Navigation Overview — navigating to
+    records and instruments from the Data Collection section
+
+- **RC-NAV-REC-04:** Record Status Dashboard & Other Record Links —
+    detailed guide to the dashboard, custom dashboards, and all
+    locations that link to records
+
+- **RC-USER-01:** User Rights: Overview & Three-Tier Access — how
+    to configure permissions that control which menu items a user
+    can see and interact with
+
+- **RC-PROJ-01:** Project Lifecycle: Status and Settings — detailed
+    guide to the four project status stages shown in the Project
+    Home and Design section
+
+- **RC-FD-01:** Form Design Overview — background for the Designer,
+    Dictionary, and Code Book menu items
+
+- **RC-FD-05:** Codebook — the read-only instrument/field reference
+    listed under Project Home and Design
 
 - **RC-DE-02:** Basic Data Entry — covers Record Status Dashboard
     and Add/Edit Records in depth
 
-- **RC-SURV-01:** Survey Setup — covers survey enabling, instrument
-    survey settings, and Survey Distribution Tools
+- **RC-SURV-01:** Surveys – Basics — covers survey enabling and the
+    Survey Distribution Tools menu item
 
-- **RC-ALERT-01:** Alerts & Notifications — detailed configuration
-    guide
+- **RC-SURV-05:** Participant List & Manual Survey Invitations —
+    detailed guide to the participant list accessible from Survey
+    Distribution Tools
 
-- **RC-EXPRT-01:** Data Exports, Reports, and Stats — detailed
-    guide to exporting and custom reports
+- **RC-ALERT-01:** Alerts & Notifications: Setup — detailed
+    configuration guide for the Alerts & Notifications menu item
 
-- **RC-API-01:** API — introduction to the REDCap API for technical
-    users
+- **RC-MLM-01:** Multi-Language Management — detailed guide to the
+    MLM application listed under Applications
 
-- **RC-MOB-01:** REDCap Mobile App vs. MyCap — full comparison of
-    the two mobile tools
+- **RC-EXPRT-01:** Data Export: Overview & Workflow — detailed
+    guide to the Data Exports, Reports, and Stats menu item
+
+- **RC-IMP-01:** Data Import Overview — detailed guide to the Data
+    Import Tool menu item
+
+- **RC-DQ-01:** Data Quality Module — detailed guide to the Data
+    Quality menu item
+
+- **RC-DAG-01:** Data Access Groups — detailed guide to the DAGs
+    menu item
+
+- **RC-DE-08:** Field Comment Log — detailed guide to the Field
+    Comment Log menu item under Applications
+
+- **RC-DE-12:** Data Resolution Workflow — detailed guide to the
+    Data Resolution Workflow (Resolve Issues) menu item
+
+- **RC-LONG-01:** Longitudinal Project Setup — background for the
+    Calendar application, which is designed for longitudinal
+    follow-up tracking
+
+- **RC-RAND-01:** Randomization Concepts — background for the
+    Randomization application (appears when randomization is enabled)
 
 - **RC-PROJ-03:** Project Dashboards — creating and configuring
-    custom project dashboards (Custom Reports & Project Dashboards menu section)
+    custom project dashboards (Custom Reports & Project Dashboards
+    menu section)
 
-- **RC-DDE-01:** Double Data Entry — parallel data entry and
-    adjudication workflow (Data Comparison Tool menu item)
+- **RC-API-01:** REDCap API — introduction to the API and API
+    Playground menu items
+
+- **RC-MOB-01:** REDCap Mobile App — detailed guide to the REDCap
+    Mobile App menu item for offline data collection
+
+- **RC-MYCAP-01:** MyCap: Overview & Enabling — detailed guide to
+    the MyCap Participant Management menu item

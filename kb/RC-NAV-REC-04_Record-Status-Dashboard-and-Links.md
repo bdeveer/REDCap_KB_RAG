@@ -7,7 +7,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events |
+| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-UI-01 — Project Navigation UI, RC-NAV-UI-02 — Project Menu Reference, RC-USER-01 — User Rights Overview, RC-USER-03 — Configuring User Privileges, RC-DAG-01 — Data Access Groups, RC-PROJ-03 — Project Dashboards, RC-EXPRT-06 — Custom Reports Setup, RC-SURV-05 — Participant List and Survey Invitations, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 — Data Quality Module |
 
 ---
 
@@ -193,8 +193,47 @@ project.
 
 # 8. Related Articles
 
-- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-01 — Record Navigation Overview — foundational article
+    covering Add/Edit Records, the Record Home Page, and dot color
+    meanings
 
-- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-02 — Longitudinal Mode & Arms — how arm tabs and
+    event columns appear on the dashboard in longitudinal projects
 
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events — stacked
+    dot indicators shown on the dashboard for repeated instruments
+
+- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout
+    and how to reach the Record Status Dashboard from the menu
+
+- RC-NAV-UI-02 — Project Menu Reference — full reference for the
+    Data Collection menu section where the dashboard lives
+
+- RC-USER-01 — User Rights: Overview & Three-Tier Access — how
+    user permissions control which instruments appear on the dashboard
+
+- RC-USER-03 — User Rights: Configuring User Privileges — instrument-
+    level access settings that filter dashboard visibility
+
+- RC-DAG-01 — Data Access Groups — DAG membership restricts which
+    records appear on the dashboard; key troubleshooting context
+
+- RC-PROJ-03 — Project Dashboards — creating custom dashboards that
+    filter, sort, or group the default dashboard view
+
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection — Report
+    Record IDs are clickable links to the Record Home Page; custom
+    dashboards and reports are complementary tools
+
+- RC-SURV-05 — Participant List & Manual Survey Invitations — survey
+    invitation logs contain Record ID links, but only in identified
+    (non-anonymous) survey mode
+
+- RC-DE-08 — Field Comment Log — Record IDs in the comment log link
+    to the Record Home Page; variable-level links also available
+
+- RC-DE-12 — Data Resolution Workflow — deep variable links to
+    specific instruments are available from this tool
+
+- RC-DQ-01 — Data Quality Module — variable-level links to specific
+    instruments and fields are available from data quality results

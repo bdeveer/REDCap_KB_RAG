@@ -10,7 +10,7 @@ RC-FD-01
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-04 — Instrument Library & Zip Files; RC-FD-05 — Codebook |
+| **Related Topics** | RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-04 — Instrument Library & Zip Files; RC-FD-05 — Codebook; RC-NAV-UI-01 — Project Navigation UI; RC-NAV-UI-02 — Project Menu Reference |
 
 # 1. Overview
 
@@ -256,3 +256,7 @@ through those buttons directly.
 - RC-FD-04 — Instrument Library & Zip Files
 
 - RC-FD-05 — Codebook
+
+- RC-NAV-UI-01 — Project Navigation UI (the Designer, Dictionary, and Code Book links are in the Project Home and Design menu section)
+
+- RC-NAV-UI-02 — Project Menu Reference (full reference for the Project Home and Design menu items that lead to these form design tools)

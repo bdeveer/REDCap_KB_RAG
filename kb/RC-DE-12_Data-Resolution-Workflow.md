@@ -10,7 +10,7 @@ RC-DE-12
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-08 — Field Comment Log |
+| **Related Topics** | RC-DE-02 — Basic Data Entry; RC-DE-04 — Editing Data & Audit Trail; RC-DE-08 — Field Comment Log; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -289,3 +289,5 @@ Use Resolution Metrics to identify recurring data entry problems (candidate fiel
 - RC-DE-08 — Field Comment Log (the simpler annotation alternative to the DRW; also covers setup shared between both modes)
 - RC-DE-05 — Field Validations (field validations and DRW queries are often used together to document out-of-range or exceptional values)
 - RC-DAG-01 — Data Access Groups (the DRW dashboard can be filtered by DAG; useful context for multi-site projects)
+- RC-NAV-UI-02 — Project Menu Reference (the Data Resolution Workflow appears in the Applications section as "Resolve Issues"; replaces the Field Comment Log when enabled)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (the DRW provides variable-level links that navigate directly to a specific field within an instrument)

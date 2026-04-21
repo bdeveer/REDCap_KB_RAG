@@ -10,7 +10,7 @@ RC-DAG-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-USER-01 — Overview & Three-Tier Access; RC-USER-02 — Adding Users & Managing Roles; RC-USER-03 — Configuring User Privileges; RC-USER-04 — User Management; RC-EXPRT-03 — Data Export: User Rights & Export Access; RC-RAND-01 — Randomization Concepts & Terminology |
+| **Related Topics** | RC-USER-01 — Overview & Three-Tier Access; RC-USER-02 — Adding Users & Managing Roles; RC-USER-03 — Configuring User Privileges; RC-USER-04 — User Management; RC-EXPRT-03 — Data Export: User Rights & Export Access; RC-RAND-01 — Randomization Concepts & Terminology; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-04 — Record Status Dashboard |
 
 ---
 
@@ -197,3 +197,5 @@ This is useful for initial project setup with many sites or for migrating a DAG 
 - RC-USER-04 — User Rights: User Management
 - RC-EXPRT-03 — Data Export: User Rights & Export Access (how DAGs affect exports)
 - RC-RAND-01 — Randomization Concepts & Terminology (DAGs and randomization)
+- RC-NAV-UI-02 — Project Menu Reference (the DAGs item appears in the Applications section; requires appropriate user rights to see)
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (DAG membership filters which records are visible on the dashboard — only records in the user's assigned DAG appear)

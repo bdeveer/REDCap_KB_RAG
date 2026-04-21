@@ -12,7 +12,7 @@ RC-RAND-01
 | REDCap Version | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
 | Last Reviewed | 2025-01 |
 | Author | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
+| Related Topics | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-USER-01: User Rights Overview & Three-Tier Access; RC-DAG-01: Data Access Groups; RC-CC-06: Control Center: Modules & Services Configuration; RC-NAV-UI-02: Project Menu Reference |
 
 # 2. Overview
 
@@ -274,13 +274,16 @@ Once the module is enabled system-wide, randomization is enabled per project by 
 - **RC-RAND-03:** Working with & Managing Randomization — running,
     monitoring, and admin options
 
-- **RC-RIGHTS-01:** User Rights & DAGs — prerequisite for
-    understanding DAG-based site stratification
+- **RC-USER-01:** User Rights: Overview & Three-Tier Access — prerequisite for understanding the Randomize right and DAG-based site stratification
+
+- **RC-DAG-01:** Data Access Groups — prerequisite for understanding DAG-based stratification and restricted randomization access
 
 - **RC-LONG-01:** Longitudinal Projects — prerequisite for
     multi-event randomization setup
 
 - **RC-CC-06:** Control Center: Modules & Services Configuration — system-level Randomization enable/disable
+
+- **RC-NAV-UI-02:** Project Menu Reference — the Randomization application appears in the Applications section of the left menu when randomization is enabled for the project
 
 # 9. Version & Change Notes
 

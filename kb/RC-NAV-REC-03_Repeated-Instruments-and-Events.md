@@ -7,7 +7,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | Author | REDCap Support |
-| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links |
+| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-02 — Repeated Instruments and Events Setup, RC-DE-10 — Longitudinal and Repeated Data Entry, RC-SURV-01 — Surveys Basics |
 
 ---
 
@@ -191,8 +191,27 @@ Dashboard that filters or groups the view.
 
 # 8. Related Articles
 
-- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-01 — Record Navigation Overview — foundational article
+    covering navigation paths and instrument status dot colors
 
-- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-02 — Longitudinal Mode & Arms — how the Record Home
+    Page grid works in longitudinal projects; context for where
+    repeated instrument stacked dots appear
 
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links —
+    how repeated instrument and event indicators appear on the
+    dashboard
+
+- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout and
+    the menu that leads to records and instruments
+
+- RC-LONG-02 — Repeated Instruments & Events Setup — how to
+    configure instruments and events as repeatable; the setup side
+    of what this article covers from a navigation perspective
+
+- RC-DE-10 — Longitudinal & Repeated Data Entry — detailed data
+    entry procedures for repeated instruments and repeated events
+
+- RC-SURV-01 — Surveys – Basics — repeated instruments can be
+    enabled as surveys; survey-completed entries count as complete
+    for stacked dot color purposes

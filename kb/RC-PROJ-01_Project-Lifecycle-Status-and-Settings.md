@@ -278,3 +278,5 @@ Several aspects of the project lifecycle are controlled by system-wide settings 
 - RC-FD-03 — Data Dictionary (alternative approach to making structural changes)
 - RC-INST-01 — Institution-Specific Settings & Policies (institution-level guidance on production approval timelines)
 - RC-PROJ-02 — Project Setup Checklist (dependency-ordered checklist covering all phases of project configuration from creation through go-live)
+- RC-NAV-UI-01 — Project Navigation UI (how project status is displayed in the interface and what changes at each stage)
+- RC-NAV-UI-02 — Project Menu Reference (the Project Home and Design menu section where status is shown and managed)

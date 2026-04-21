@@ -10,7 +10,7 @@ RC-IMP-01
 | **Version** | 1.8 |
 | **Last Updated** | 2026-04-10 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-FD-04 — Instrument Library & Zip Files; RC-FD-03 — Data Dictionary; RC-DE-01 — Record Creation and Record Home Page |
+| **Related Topics** | RC-FD-04 — Instrument Library & Zip Files; RC-FD-03 — Data Dictionary; RC-DE-01 — Record Creation and Record Home Page; RC-NAV-UI-02 — Project Menu Reference; RC-NAV-REC-01 — Record Navigation Overview |
 
 ---
 
@@ -393,3 +393,5 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 - RC-NAV-UI-01 — Project Navigation UI (navigating to import features)
 - RC-DE-01 — Record Creation and Record Home Page (manual data entry as an alternative to bulk import)
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap (detailed reference for every CSV upload in REDCap)
+- RC-NAV-UI-02 — Project Menu Reference (the Data Import Tool appears in the Applications section of the left menu)
+- RC-NAV-REC-01 — Record Navigation Overview (instrument status dot values can be bulk-updated via data import using coded values 0/1/2)

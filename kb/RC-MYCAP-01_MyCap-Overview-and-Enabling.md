@@ -10,7 +10,7 @@ RC-MYCAP-01
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling; RC-MYCAP-04 — Participant Onboarding; RC-MOB-01 — REDCap Mobile App; RC-CC-06 — Control Center: Modules & Services Configuration |
+| **Related Topics** | RC-MYCAP-02 — Designing Instruments for MyCap; RC-MYCAP-03 — Task Scheduling; RC-MYCAP-04 — Participant Onboarding; RC-MOB-01 — REDCap Mobile App; RC-CC-06 — Control Center: Modules & Services Configuration; RC-NAV-UI-02 — Project Menu Reference |
 
 ---
 
@@ -228,3 +228,4 @@ REDCap Multi-Language Management (MLM) is supported in MyCap. See RC-MYCAP-07 �
 - RC-PIPE-16 — Smart Variables: MyCap
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-CC-06 — Control Center: Modules & Services Configuration (system-level MyCap enable/disable and per-project access control)
+- RC-NAV-UI-02 — Project Menu Reference (the MyCap Participant Management item appears in the Data Collection section of the left menu; mutually exclusive with longitudinal mode)

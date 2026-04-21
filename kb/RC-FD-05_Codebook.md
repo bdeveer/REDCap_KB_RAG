@@ -10,7 +10,7 @@ RC-FD-05
 | **Version** | 1.1 |
 | **Last Updated** | 2026-04 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-08 — Data Dictionary Column Reference & Advanced Techniques |
+| **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-08 — Data Dictionary Column Reference & Advanced Techniques; RC-NAV-UI-02 — Project Menu Reference |
 
 # 1. Overview
 
@@ -423,3 +423,7 @@ be different.
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types (piping
     expressions in field labels appear as raw syntax in the Codebook
     rather than resolved values)
+
+- RC-NAV-UI-02 — Project Menu Reference (the Code Book link appears
+    in the Project Home and Design menu section; always visible to
+    all users regardless of rights)

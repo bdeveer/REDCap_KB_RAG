@@ -28,6 +28,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-09 — Control Center: To-Do List
 - RC-CC-19 — Control Center: Publication Matching
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
 ---
 
 ### RC-PROJ-02 — Project Setup Checklist
@@ -118,12 +120,16 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-TXT-01 — Texting in REDCap: Setup & Usage
+- RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
+- RC-INST-03 — Institution-Specific Settings & Policies — Development
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
 
 **Inbound links (referenced by):**
 - RC-CC-03 — Control Center: Security & Authentication
 - RC-FD-02 — Online Designer
+- RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
+- RC-INST-03 — Institution-Specific Settings & Policies — Development
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
@@ -149,6 +155,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-MCP-01 — REDCap MCP Server: Setup and Management
 
 ---
 
@@ -406,6 +413,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-07 — Survey Queue
 - RC-SURV-09 — PDF Snapshots of Records
+- RC-MCP-01 — REDCap MCP Server: Setup and Management
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
@@ -2014,6 +2022,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-08 — Custom Reports: Management & Organization
 - RC-INTG-01 — Data Entry Trigger
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-MOB-01 — REDCap Mobile App
@@ -2042,6 +2052,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-10 — Longitudinal & Repeated Data Entry
 - RC-DE-11 — Instrument Save Options
 - RC-IMP-01 — Data Import Overview
+- RC-NAV-REC-01 — Record Navigation Overview
 
 ---
 
@@ -2186,6 +2197,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-06 — Bio-Medical Ontologies
 - RC-DE-07 — Computer Adaptive Tests (CAT)
 - RC-DE-12 — Data Resolution Workflow
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -2263,6 +2276,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-DE-08 — Field Comment Log
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-02 — Project Menu Reference
 ---
 
 ### RC-DDE-01 — Double Data Entry
@@ -2298,6 +2313,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CALC-01 — Special Functions Reference
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -2446,6 +2463,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-38 — Export Reports API
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 - RC-EXPRT-08 — Custom Reports: Management & Organization
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 ---
 
@@ -2510,6 +2529,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-36 — Export Project XML API
 - RC-DE-05 — Field Validations
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
 - RC-FD-04 — Instrument Library & Zip Files
@@ -2655,6 +2676,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-SURV-04 — Survey Link Types & Access Methods
 - RC-SURV-07 — Survey Queue
 
@@ -2791,6 +2813,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-03 — Import Records API
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-MYCAP-04 — MyCap: Participant Onboarding
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -2931,6 +2955,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-10 — Longitudinal & Repeated Data Entry
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 - RC-FD-05 — Codebook
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-MYCAP-03 — MyCap: Task Scheduling
@@ -2977,6 +3003,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-INTG-01 — Data Entry Trigger
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-MYCAP-03 — MyCap: Task Scheduling
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
 - RC-SURV-07 — Survey Queue
 
@@ -2999,6 +3026,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-20 — Control Center: Multi-Language Management (Admin)
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -3432,6 +3460,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-MYCAP-03 — MyCap: Task Scheduling
@@ -3588,9 +3618,16 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** *(none listed)*
 
 **Outbound links:**
+- RC-DE-01 — Record Creation & the Record Home Page
+- RC-DE-02 — Basic Data Entry
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-IMP-01 — Data Import Overview
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-01 — Project Navigation UI
 
 **Inbound links (referenced by):**
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
@@ -3604,9 +3641,13 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
+- RC-DE-03 — Longitudinal Projects and DAGs
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-LONG-01 — Longitudinal Project Setup
 - RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-01 — Project Navigation UI
 
 **Inbound links (referenced by):**
 - RC-DE-10 — Longitudinal & Repeated Data Entry
@@ -3621,9 +3662,13 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
 - RC-DE-10 — Longitudinal & Repeated Data Entry
@@ -3638,9 +3683,20 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-NAV-REC-01 — Record Navigation Overview
 
 **Outbound links:**
+- RC-DAG-01 — Data Access Groups
+- RC-DE-08 — Field Comment Log
+- RC-DE-12 — Data Resolution Workflow
+- RC-DQ-01 — Data Quality Module
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-PROJ-03 — Project Dashboards
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 **Inbound links (referenced by):**
 - RC-NAV-REC-01 — Record Navigation Overview
@@ -3656,13 +3712,22 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Outbound links:**
 - RC-DE-02 — Basic Data Entry
+- RC-FD-01 — Form Design Overview
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-MOB-01 — REDCap Mobile App
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-SURV-01 — Surveys – Basics
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Inbound links (referenced by):**
 - RC-MOB-01 — REDCap Mobile App
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-02 — Longitudinal Mode & Arms
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 ---
 
@@ -3673,17 +3738,35 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-API-01 — REDCap API
-- RC-DDE-01 — Double Data Entry
+- RC-DAG-01 — Data Access Groups
 - RC-DE-02 — Basic Data Entry
+- RC-DE-08 — Field Comment Log
+- RC-DE-12 — Data Resolution Workflow
+- RC-DQ-01 — Data Quality Module
 - RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-FD-01 — Form Design Overview
+- RC-FD-05 — Codebook
+- RC-IMP-01 — Data Import Overview
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-MLM-01 — Multi-Language Management
 - RC-MOB-01 — REDCap Mobile App
+- RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-NAV-REC-01 — Record Navigation Overview
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-PROJ-03 — Project Dashboards
+- RC-RAND-01 — Randomization Concepts
 - RC-SURV-01 — Surveys – Basics
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Inbound links (referenced by):**
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+
+**Note:** RC-DDE-01 (Double Data Entry) was previously referenced but does not yet exist in the KB. Reference removed pending article creation.
 
 ---
 
@@ -4035,6 +4118,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DAG-01 — Data Access Groups
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
 ---
@@ -4097,6 +4181,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 - RC-INTG-01 — Data Entry Trigger
 - RC-MLM-01 — Multi-Language Management
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
@@ -4196,6 +4281,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-API-43 — Export Survey Participants API
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-SURV-04 — Survey Link Types & Access Methods
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-07 — Survey Queue
@@ -4356,6 +4443,9 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-NAV-UI-01 — Project Navigation UI
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
@@ -4426,6 +4516,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-08 — Custom Reports: Management & Organization
 - RC-FDL-01 — Form Display Logic
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
 
@@ -4453,6 +4544,184 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
+---
+
+### RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-07 — Control Center: Users & Access Management
+
+**Inbound links (referenced by):**
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+- RC-INST-01 — Institution-Specific Settings & Policies
+---
+
+### RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+
+**Prerequisites:** RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+
+**Outbound links:**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+- RC-AT-07 — Cosmetic Action Tags
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+---
+
+### RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+
+**Prerequisites:** RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+
+**Outbound links:**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-09 — Control Center: To-Do List
+- RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Inbound links (referenced by):**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-04 — CDP vs CDM: Feature Comparison
+---
+
+### RC-CDIS-04 — CDP vs CDM: Feature Comparison
+
+**Prerequisites:** RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+
+**Outbound links:**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+
+**Inbound links (referenced by):**
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+---
+
+### RC-EM-01 — External Modules: Overview & Manager
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+- RC-EM-04 — External Modules: Installed Catalog — Development
+- RC-AT-01 — Action Tags: Overview
+- RC-INST-01 — Institution-Specific Settings & Policies
+
+**Inbound links (referenced by):**
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+- RC-EM-04 — External Modules: Installed Catalog — Development
+- RC-INST-01 — Institution-Specific Settings & Policies
+---
+
+### RC-EM-02 — External Modules: Installed Catalog — Production
+
+**Prerequisites:** RC-EM-01 — External Modules: Overview & Manager
+
+**Outbound links:**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+- RC-EM-04 — External Modules: Installed Catalog — Development
+- RC-AT-01 — Action Tags: Overview
+
+**Inbound links (referenced by):**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+- RC-EM-04 — External Modules: Installed Catalog — Development
+---
+
+### RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+
+**Prerequisites:** RC-EM-01 — External Modules: Overview & Manager
+
+**Outbound links:**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-04 — External Modules: Installed Catalog — Development
+- RC-AT-01 — Action Tags: Overview
+
+**Inbound links (referenced by):**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-04 — External Modules: Installed Catalog — Development
+---
+
+### RC-EM-04 — External Modules: Installed Catalog — Development
+
+**Prerequisites:** RC-EM-01 — External Modules: Overview & Manager
+
+**Outbound links:**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+- RC-AT-01 — Action Tags: Overview
+
+**Inbound links (referenced by):**
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-02 — External Modules: Installed Catalog — Production
+- RC-EM-03 — External Modules: Installed Catalog — Test / Staging
+---
+
+### RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
+
+**Prerequisites:** RC-INST-01 — Institution-Specific Settings & Policies
+
+**Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-INST-03 — Institution-Specific Settings & Policies — Development
+
+**Inbound links (referenced by):**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-INST-03 — Institution-Specific Settings & Policies — Development
+---
+
+### RC-INST-03 — Institution-Specific Settings & Policies — Development
+
+**Prerequisites:** RC-INST-01 — Institution-Specific Settings & Policies
+
+**Outbound links:**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
+
+**Inbound links (referenced by):**
+- RC-INST-01 — Institution-Specific Settings & Policies
+- RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
+---
+
+### RC-MCP-01 — REDCap MCP Server: Setup and Management
+
+**Prerequisites:** RC-API-01 — REDCap API; RC-AI-01 — REDCap AI Tools: Overview & Security
+
+**Outbound links:**
+- RC-API-01 — REDCap API
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-DAG-01 — Data Access Groups
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-01 — REDCap API
+- RC-AI-01 — REDCap AI Tools: Overview & Security
 ---
 
 ## Naming Inconsistencies to Review
