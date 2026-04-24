@@ -122,6 +122,10 @@ AI, artificial intelligence, AI writing, AI translation, AI summarize, AI summar
 
 local settings, site policy, institutional policy, custom configuration, environment-specific
 
+## Send-It — RC-SENDIT
+
+Send-It, send it, secure file transfer, secure file sharing, large file transfer, share file, send large file, file too big for email, password protected download, file upload link, send file to recipient, expiring download link, file delivery
+
 ---
 
-*Last updated: 2026-04-19*
+*Last updated: 2026-04-23*

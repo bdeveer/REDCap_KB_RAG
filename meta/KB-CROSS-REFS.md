@@ -4767,6 +4767,20 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 ---
 
+### RC-SENDIT-01 — Send-It: Secure File Transfer
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-MSG-01 — REDCap Messenger
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-06 — Control Center: Modules & Services Configuration
+
+**Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
 ## Naming Inconsistencies to Review
 
 All previously identified naming inconsistencies have been resolved as of 2026-04-11. The following old IDs were corrected in article texts:
@@ -4795,3 +4809,5 @@ All previously identified naming inconsistencies have been resolved as of 2026-0
 *Updated 2026-04-16. Added RC-MOB-01 — REDCap Mobile App. First (and overview) article in the MOB domain. Covers what the REDCap Mobile App is, how it differs from MyCap and browser-based entry, administrator setup, project-level setup and mobile user management, project initialization, offline data entry workflow, synchronization, and security considerations. Supersedes the MOB-01 planned stub. RC-DQ-01 and RC-API-50 confirmed as live articles; ⚠️ flags removed. Remaining open gaps: none in the API domain.*
 
 *Previously: Added RC-PROJ-01 — Project Lifecycle: Status and Settings. Added RC-API-02 through RC-API-44 — 43 method-specific API articles based on official REDCap API v16.1.3 documentation examples. Added RC-API-01 — REDCap API.*
+
+*Updated 2026-04-23. Added RC-SENDIT-01 — Send-It: Secure File Transfer. New domain SENDIT. Article covers the Send-It secure file transfer feature: how to access it, the upload form fields, the two-email security model (separate link and password emails per recipient), expiration window (1–14 days), file type restrictions, download confirmation option, and administrator enable/disable. Sourced from live REDCap v16.0.24 Send-It page. No prerequisites; links outbound to RC-MSG-01, RC-CC-05, RC-CC-06.*
