@@ -40,6 +40,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
 | RC-PROJ-03 | Project Dashboards | RC-PROJ-03_Project-Dashboards.md |
 | RC-PROJ-04 | Project Setup: Additional Customizations | RC-PROJ-04_Project-Setup-Additional-Customizations.md |
+| RC-PROF-01 | My Profile: User Profile Settings | RC-PROF-01_My-Profile-User-Profile-Settings.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
 | RC-AT-03 | Radio & Dropdown Action Tags | RC-AT-03_Action-Tags-Radio-Dropdown.md |

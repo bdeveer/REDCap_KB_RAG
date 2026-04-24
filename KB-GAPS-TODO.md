@@ -60,12 +60,9 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-PROF-01 — My Profile (User Profile Settings)
+### ✅ RC-PROF-01 — My Profile (User Profile Settings)
 
-**Why needed:** Every REDCap user has a "My Profile" page where they can manage personal settings. No KB article covers this, and users occasionally ask what can be changed there.
-
-**Domain slug:** PROF (new domain)
-**What to cover:** Accessing My Profile; editable fields (name, email, institution, phone, etc.); changing your own password; two-factor authentication / login settings (if user-configurable); notification preferences; API token management from the profile page; profile photo or display settings if applicable; what cannot be changed by the user vs. admin-only fields
+Resolved 2026-04-23. Article written: `RC-PROF-01_My-Profile-User-Profile-Settings.md`
 
 ---
 
@@ -292,6 +289,10 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-TXT-01 — Texting in REDCap: Setup and Usage ✅
 - RC-TXT-02 — Texting: Administrator Setup ✅
 
+### Profile (RC-PROF) — new domain
+
+- RC-PROF-01 — My Profile: User Profile Settings ✅
+
 ### Previously tracked (earlier resolved)
 
 - RC-BL-05 — Branching Logic in Longitudinal Projects ✅
@@ -321,4 +322,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-19 — Added 14 new open gaps: RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-PROF-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10. Open gaps: RC-DE-13, RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-PROF-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-23 — Resolved RC-PROF-01 (My Profile). Open gaps (14): RC-DE-13, RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
