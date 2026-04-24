@@ -1,13 +1,16 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-NAV-UI-02 |
-| Domain | Project Navigation |
-| Applies To | All project types |
-| Prerequisite | RC-NAV-UI-01 — Project Navigation UI |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-NAV-UI-01 — Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04 — Record Status Dashboard, RC-USER-01 — User Rights Overview, RC-DE-02 — Basic Data Entry, RC-PROJ-01 — Project Lifecycle, RC-FD-01 — Form Design Overview, RC-FD-05 — Codebook, RC-EXPRT-01 — Data Export Overview, RC-MLM-01 — Multi-Language Management, RC-IMP-01 — Data Import Overview, RC-DQ-01 — Data Quality Module, RC-DAG-01 — Data Access Groups, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-LONG-01 — Longitudinal Project Setup, RC-SURV-01 — Surveys Basics, RC-SURV-05 — Participant List and Survey Invitations, RC-ALERT-01 — Alerts and Notifications, RC-RAND-01 — Randomization Concepts, RC-PROJ-03 — Project Dashboards, RC-API-01 — REDCap API, RC-MOB-01 — REDCap Mobile App, RC-MYCAP-01 — MyCap Overview |
+RC-NAV-UI-02
+
+**Project Menu Reference**
+
+| **Article ID** | RC-NAV-UI-02 |
+| --- | --- |
+| **Domain** | Project Navigation |
+| **Applies To** | All project types |
+| **Prerequisite** | RC-NAV-UI-01 — Project Navigation UI |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-NAV-UI-01 — Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04 — Record Status Dashboard, RC-USER-01 — User Rights Overview, RC-DE-02 — Basic Data Entry, RC-PROJ-01 — Project Lifecycle, RC-FD-01 — Form Design Overview, RC-FD-05 — Codebook, RC-EXPRT-01 — Data Export Overview, RC-MLM-01 — Multi-Language Management, RC-IMP-01 — Data Import Overview, RC-DQ-01 — Data Quality Module, RC-DAG-01 — Data Access Groups, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-LONG-01 — Longitudinal Project Setup, RC-SURV-01 — Surveys Basics, RC-SURV-05 — Participant List and Survey Invitations, RC-ALERT-01 — Alerts and Notifications, RC-RAND-01 — Randomization Concepts, RC-PROJ-03 — Project Dashboards, RC-API-01 — REDCap API, RC-MOB-01 — REDCap Mobile App, RC-MYCAP-01 — MyCap Overview |
 
 ---
 

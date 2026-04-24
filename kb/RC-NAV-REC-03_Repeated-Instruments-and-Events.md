@@ -1,13 +1,16 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-NAV-REC-03 |
-| Domain | Record Navigation |
-| Applies To | Projects with repeated instruments or events |
-| Prerequisite | RC-NAV-REC-01 — Record Navigation Overview |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-02 — Repeated Instruments and Events Setup, RC-DE-10 — Longitudinal and Repeated Data Entry, RC-SURV-01 — Surveys Basics |
+RC-NAV-REC-03
+
+**Repeated Instruments and Events**
+
+| **Article ID** | RC-NAV-REC-03 |
+| --- | --- |
+| **Domain** | Record Navigation |
+| **Applies To** | Projects with repeated instruments or events |
+| **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-02 — Repeated Instruments and Events Setup, RC-DE-10 — Longitudinal and Repeated Data Entry, RC-SURV-01 — Surveys Basics |
 
 ---
 

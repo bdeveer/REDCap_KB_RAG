@@ -1,13 +1,16 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-NAV-REC-04 |
-| Domain | Record Navigation |
-| Applies To | All project types |
-| Prerequisite | RC-NAV-REC-01 — Record Navigation Overview |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-UI-01 — Project Navigation UI, RC-NAV-UI-02 — Project Menu Reference, RC-USER-01 — User Rights Overview, RC-USER-03 — Configuring User Privileges, RC-DAG-01 — Data Access Groups, RC-PROJ-03 — Project Dashboards, RC-EXPRT-06 — Custom Reports Setup, RC-SURV-05 — Participant List and Survey Invitations, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 — Data Quality Module |
+RC-NAV-REC-04
+
+**Record Status Dashboard and Links**
+
+| **Article ID** | RC-NAV-REC-04 |
+| --- | --- |
+| **Domain** | Record Navigation |
+| **Applies To** | All project types |
+| **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-UI-01 — Project Navigation UI, RC-NAV-UI-02 — Project Menu Reference, RC-USER-01 — User Rights Overview, RC-USER-03 — Configuring User Privileges, RC-DAG-01 — Data Access Groups, RC-PROJ-03 — Project Dashboards, RC-EXPRT-06 — Custom Reports Setup, RC-SURV-05 — Participant List and Survey Invitations, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 — Data Quality Module |
 
 ---
 

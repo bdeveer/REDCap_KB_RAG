@@ -1,13 +1,16 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-NAV-REC-01 |
-| Domain | Record Navigation |
-| Applies To | All project types |
-| Prerequisite | None |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-DE-01 — Record Creation and Record Home Page, RC-DE-02 — Basic Data Entry, RC-LONG-01 — Longitudinal Project Setup, RC-LONG-02 — Repeated Instruments and Events Setup, RC-IMP-01 — Data Import Overview, RC-EXPRT-06 — Custom Reports Setup |
+RC-NAV-REC-01
+
+**Record Navigation Overview**
+
+| **Article ID** | RC-NAV-REC-01 |
+| --- | --- |
+| **Domain** | Record Navigation |
+| **Applies To** | All project types |
+| **Prerequisite** | None |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-DE-01 — Record Creation and Record Home Page, RC-DE-02 — Basic Data Entry, RC-LONG-01 — Longitudinal Project Setup, RC-LONG-02 — Repeated Instruments and Events Setup, RC-IMP-01 — Data Import Overview, RC-EXPRT-06 — Custom Reports Setup |
 
 ---
 

@@ -1,13 +1,16 @@
-| Field | Value |
-|---|---|
-| Article ID | RC-NAV-UI-01 |
-| Domain | Project Navigation |
-| Applies To | All project types |
-| Prerequisite | None |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| **Author** | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-NAV-UI-02 — Project Menu Reference, RC-NAV-REC-01 — Record Navigation Overview, RC-PROJ-01 — Project Lifecycle, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Surveys Basics, RC-USER-01 — User Rights Overview, RC-MYCAP-01 — MyCap Overview, RC-FD-01 — Form Design Overview, RC-MOB-01 — REDCap Mobile App |
+RC-NAV-UI-01
+
+**Project Navigation UI**
+
+| **Article ID** | RC-NAV-UI-01 |
+| --- | --- |
+| **Domain** | Project Navigation |
+| **Applies To** | All project types |
+| **Prerequisite** | None |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-NAV-UI-02 — Project Menu Reference, RC-NAV-REC-01 — Record Navigation Overview, RC-PROJ-01 — Project Lifecycle, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Surveys Basics, RC-USER-01 — User Rights Overview, RC-MYCAP-01 — MyCap Overview, RC-FD-01 — Form Design Overview, RC-MOB-01 — REDCap Mobile App |
 
 ---
 
