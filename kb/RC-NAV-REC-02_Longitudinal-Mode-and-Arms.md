@@ -6,7 +6,7 @@
 | Prerequisite | RC-NAV-REC-01 — Record Navigation Overview |
 | Version | 1.0 |
 | Last Updated | 2026 |
-| Author | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | Related Topics | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-01 — Longitudinal Project Setup, RC-DE-03 — Longitudinal Projects and DAGs, RC-DE-10 — Longitudinal and Repeated Data Entry |
 
 ---

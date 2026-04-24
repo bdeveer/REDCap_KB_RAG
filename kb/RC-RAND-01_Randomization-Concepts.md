@@ -9,7 +9,7 @@ RC-RAND-01
 | **Prerequisite** | Foundational REDCap knowledge required: project setup, instruments, user rights, and longitudinal mode basics |
 | **Version** | 1.0 |
 | **Last Updated** | 2025-01 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-02 — Randomization Setup Guide; RC-RAND-03 — Working with & Managing Randomization; RC-USER-01 — User Rights Overview; RC-DAG-01 — Data Access Groups; RC-CC-06 — Control Center: Modules & Services Configuration; RC-NAV-UI-02 — Project Menu Reference |
 
 ---

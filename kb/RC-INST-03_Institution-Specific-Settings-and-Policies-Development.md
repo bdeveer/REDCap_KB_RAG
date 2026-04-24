@@ -10,7 +10,7 @@ RC-INST-03
 | Prerequisite | RC-INST-01 — Institution-Specific Settings (Production) |
 | Version | 1.0 |
 | Last Updated | 2026 |
-| Author | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | Related Topics | RC-INST-01 — Production Settings; RC-INST-02 — Test / Staging Settings |
 
 ---

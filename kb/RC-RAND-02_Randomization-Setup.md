@@ -9,7 +9,7 @@ RC-RAND-02
 | **Prerequisite** | RC-RAND-01 — Randomization Concepts & Terminology; RC-LONG-01 — Longitudinal Projects; RC-RIGHTS-01 — User Rights Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2025-01 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-03 — Working with & Managing Randomization; RC-RIGHTS-01 — User Rights Overview; RC-CC-06 — Control Center: Modules & Services Configuration |
 
 ---

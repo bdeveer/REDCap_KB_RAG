@@ -9,7 +9,7 @@ RC-CDIS-03
 | **Prerequisite** | RC-CDIS-01 — CDIS Overview and Control Center Setup |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CDIS-01 — CDIS Overview; RC-CDIS-02 — Clinical Data Pull; RC-CDIS-04 — CDP vs CDM Comparison |
 
 ---

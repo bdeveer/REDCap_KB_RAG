@@ -9,7 +9,7 @@ RC-RAND-03
 | **Prerequisite** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-02 — Randomization Setup Guide |
 | **Version** | 1.0 |
 | **Last Updated** | 2025-01 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-02 — Randomization Setup Guide; RC-RIGHTS-01 — User Rights Overview; RC-EXPRT-01 — Data Exports, Reports, and Stats; RC-ALERT-01 — Alerts & Notifications |
 
 ---
