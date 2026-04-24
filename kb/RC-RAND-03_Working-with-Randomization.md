@@ -1,18 +1,18 @@
 RC-RAND-03
 
-**REDCap Randomization**
+**REDCap Randomization – Working with & Managing Randomization**
 
-| Article ID | RC-RAND-03 |
+| **Article ID** | RC-RAND-03 |
 | --- | --- |
-| Topic | Running randomizations, monitoring via dashboard, smart variables, and administrator-level interventions |
-| REDCap Module | Randomization (Randomization 2.0) |
-| Primary Audience | Study Coordinators (Sections 4--6); REDCap Administrators (Section 7) |
-| Skill Level | Intermediate (users); Advanced (administrators) |
-| Prerequisites | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Randomization Setup Guide — a working randomization model must already be configured |
-| REDCap Version | 15.4.4+ |
-| Last Reviewed | 2025-01 |
-| Author | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-RAND-01: Concepts & Terminology; RC-RAND-02: Setup Guide; RC-RIGHTS-01: User Rights & DAGs |
+| **Domain** | Randomization |
+| **Applies To** | Study Coordinators and data entry staff (Sections 4–6); REDCap Administrators (Section 7); requires project in Production with a configured randomization model |
+| **Prerequisite** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-02 — Randomization Setup Guide |
+| **Version** | 1.0 |
+| **Last Updated** | 2025-01 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-02 — Randomization Setup Guide; RC-RIGHTS-01 — User Rights Overview; RC-EXPRT-01 — Data Exports, Reports, and Stats; RC-ALERT-01 — Alerts & Notifications |
+
+---
 
 # 2. Overview
 

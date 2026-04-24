@@ -1,16 +1,18 @@
-# RC-CDIS-01 — Clinical Data Interoperability Services (CDIS): Overview and Control Center Setup
+RC-CDIS-01
 
+**Clinical Data Interoperability Services (CDIS): Overview and Control Center Setup**
 
-| Field | Value |
-|---|---|
-| Article ID | RC-CDIS-01 |
-| Domain | Clinical Data Interoperability Services |
-| Applies To | Institutions with FHIR/HL7 integration and EHR connectivity |
-| Prerequisite | None |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-CDIS-02 — Clinical Data Pull Setup; RC-CDIS-03 — Clinical Data Mart Setup; RC-CDIS-04 — CDP vs CDM Comparison |
+| **Article ID** | RC-CDIS-01 |
+| --- | --- |
+| **Domain** | Clinical Data Interoperability Services |
+| **Applies To** | Institutions with FHIR/HL7 integration and EHR connectivity |
+| **Prerequisite** | None |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CDIS-02 — Clinical Data Pull Setup; RC-CDIS-03 — Clinical Data Mart Setup; RC-CDIS-04 — CDP vs CDM Comparison |
+
+---
 
 > **Administrator access required.** The CDIS Control Center page is only available to REDCap super users.
 

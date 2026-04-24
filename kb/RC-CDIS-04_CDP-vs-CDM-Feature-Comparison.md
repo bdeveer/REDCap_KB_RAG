@@ -1,15 +1,18 @@
-# RC-CDIS-04 — CDP vs CDM: Feature Comparison
+RC-CDIS-04
 
-| Field | Value |
-|---|---|
-| Article ID | RC-CDIS-04 |
-| Domain | Clinical Data Interoperability Services |
-| Applies To | Administrators deciding between CDP and CDM for their institution |
-| Prerequisite | RC-CDIS-01 — CDIS Overview and Control Center Setup |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-CDIS-02 — Clinical Data Pull; RC-CDIS-03 — Clinical Data Mart; RC-CDIS-01 — CDIS Overview |
+**CDP vs CDM: Feature Comparison**
+
+| **Article ID** | RC-CDIS-04 |
+| --- | --- |
+| **Domain** | Clinical Data Interoperability Services |
+| **Applies To** | Administrators deciding between CDP and CDM for their institution |
+| **Prerequisite** | RC-CDIS-01 — CDIS Overview and Control Center Setup |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CDIS-02 — Clinical Data Pull; RC-CDIS-03 — Clinical Data Mart; RC-CDIS-01 — CDIS Overview |
+
+---
 
 ## 1. Overview
 

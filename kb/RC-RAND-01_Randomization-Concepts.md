@@ -1,18 +1,18 @@
 RC-RAND-01
 
-**REDCap Randomization**
+**REDCap Randomization – Concepts & Terminology**
 
-| Article ID | RC-RAND-01 |
+| **Article ID** | RC-RAND-01 |
 | --- | --- |
-| Topic | Randomization concepts, terminology, and study design considerations |
-| REDCap Module | Randomization (Randomization 2.0) |
-| Primary Audience | PIs, Study Coordinators, Project Builders — anyone planning a randomized study in REDCap |
-| Skill Level | Intermediate (foundational REDCap knowledge required) |
-| Prerequisites | Completed foundational REDCap training: project setup, instruments, user rights, longitudinal mode basics |
-| REDCap Version | 15.4.4+ (Randomization 2.0 introduced significant changes — verify version before use) |
-| Last Reviewed | 2025-01 |
-| Author | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-RAND-02: Randomization Setup Guide; RC-RAND-03: Working with & Managing Randomization; RC-USER-01: User Rights Overview & Three-Tier Access; RC-DAG-01: Data Access Groups; RC-CC-06: Control Center: Modules & Services Configuration; RC-NAV-UI-02: Project Menu Reference |
+| **Domain** | Randomization |
+| **Applies To** | All REDCap project types with Randomization module enabled; intended for PIs, Study Coordinators, and Project Builders planning a randomized study |
+| **Prerequisite** | Foundational REDCap knowledge required: project setup, instruments, user rights, and longitudinal mode basics |
+| **Version** | 1.0 |
+| **Last Updated** | 2025-01 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-RAND-02 — Randomization Setup Guide; RC-RAND-03 — Working with & Managing Randomization; RC-USER-01 — User Rights Overview; RC-DAG-01 — Data Access Groups; RC-CC-06 — Control Center: Modules & Services Configuration; RC-NAV-UI-02 — Project Menu Reference |
+
+---
 
 # 2. Overview
 

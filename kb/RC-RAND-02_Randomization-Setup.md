@@ -2,17 +2,17 @@ RC-RAND-02
 
 **REDCap Randomization Setup**
 
-| Article ID | RC-RAND-02 |
+| **Article ID** | RC-RAND-02 |
 | --- | --- |
-| Topic | Step-by-step randomization setup in REDCap — from pre-flight checklist to production readiness |
-| REDCap Module | Randomization (Randomization 2.0), Project Setup, User Rights |
-| Primary Audience | Project Builders, Study Coordinators with project design rights |
-| Skill Level | Advanced |
-| Prerequisites | RC-RAND-01 (Randomization Concepts & Terminology) — required. RC-LONG-01 (Longitudinal Projects), RC-RIGHTS-01 (User Rights & DAGs) — required if using those features. |
-| REDCap Version | 15.4.4+ |
-| Last Reviewed | 2025-01 |
-| Author | See KB-SOURCE-ATTESTATION.md |
-| Related Topics | RC-RAND-01: Concepts & Terminology; RC-RAND-03: Working with & Managing Randomization; RC-RIGHTS-01: User Rights & DAGs; RC-CC-06: Control Center: Modules & Services Configuration |
+| **Domain** | Randomization |
+| **Applies To** | All REDCap project types with Randomization module enabled; requires Project Design and Setup rights and User Rights management access |
+| **Prerequisite** | RC-RAND-01 — Randomization Concepts & Terminology; RC-LONG-01 — Longitudinal Projects; RC-RIGHTS-01 — User Rights Overview |
+| **Version** | 1.0 |
+| **Last Updated** | 2025-01 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-RAND-01 — Randomization Concepts & Terminology; RC-RAND-03 — Working with & Managing Randomization; RC-RIGHTS-01 — User Rights Overview; RC-CC-06 — Control Center: Modules & Services Configuration |
+
+---
 
 # 2. Overview
 

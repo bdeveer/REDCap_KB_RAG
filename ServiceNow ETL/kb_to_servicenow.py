@@ -36,17 +36,33 @@ def parse_article(path: Path) -> dict:
             title = stripped
             break
 
-    # --- Extract metadata from the table ---
+    # --- Extract metadata from the header table ONLY ---
+    # Stop as soon as we hit the first # heading or a --- divider after leaving
+    # the table — this prevents body tables from bleeding into metadata.
     meta = {}
+    in_header_section = True
+    past_first_table = False
     for line in lines:
-        m = META_RE.match(line)
-        if m:
-            key = m.group(1).strip()
-            val = m.group(2).strip()
-            if key and key.lower() != "article id" and val:
-                meta[key] = val
-            elif key.lower() == "article id":
-                meta["Article ID"] = val
+        # Once we reach the first heading, stop metadata parsing entirely
+        if in_header_section and re.match(r"^#{1,3}\s", line):
+            break
+        if line.strip().startswith("|"):
+            past_first_table = True
+            m = META_RE.match(line)
+            if m:
+                key = m.group(1).strip()
+                val = m.group(2).strip()
+                # Skip separator rows like | --- | --- |
+                if re.match(r"^[-\s]+$", key):
+                    continue
+                if key.lower() == "article id":
+                    meta["Article ID"] = val
+                elif key and val:
+                    meta[key] = val
+        else:
+            # If we've already seen the metadata table and hit a non-table line
+            # followed by a heading, the next heading will break us out above.
+            pass
 
     # --- Find where the table ends, use everything after as body ---
     in_table = False
@@ -72,9 +88,18 @@ def parse_article(path: Path) -> dict:
         extensions=["tables", "fenced_code", "nl2br"]
     )
 
+    # --- Normalise field names: handle alternate key names across article templates ---
+    # Each tuple is (canonical_key, [accepted_aliases])
+    def get_meta(*keys):
+        for k in keys:
+            v = meta.get(k, "")
+            if v:
+                return v
+        return ""
+
     # --- Parse cross-references ---
-    prerequisites = meta.get("Prerequisite", "")
-    related = meta.get("Related Topics", "")
+    prerequisites = get_meta("Prerequisite", "Prerequisites")
+    related = get_meta("Related Topics")
 
     prereq_ids = REF_RE.findall(prerequisites)
     related_ids = REF_RE.findall(related)
@@ -82,11 +107,11 @@ def parse_article(path: Path) -> dict:
     return {
         "source_id": meta.get("Article ID", path.stem.split("_")[0]),
         "short_description": title,
-        "category": meta.get("Domain", ""),
-        "applies_to": meta.get("Applies To", ""),
-        "version": meta.get("Version", ""),
-        "last_updated": meta.get("Last Updated", ""),
-        "author": meta.get("Author", ""),
+        "category": get_meta("Domain", "Topic", "REDCap Module"),
+        "applies_to": get_meta("Applies To", "Primary Audience"),
+        "version": get_meta("Version", "REDCap Version"),
+        "last_updated": get_meta("Last Updated", "Last Reviewed"),
+        "author": get_meta("Author"),
         "prerequisite_raw": prerequisites,
         "related_topics_raw": related,
         "workflow_state": "draft",

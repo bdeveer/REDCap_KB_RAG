@@ -1,16 +1,18 @@
-# RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+RC-CDIS-03
 
+**Clinical Data Mart (CDM): Setup and Usage**
 
-| Field | Value |
-|---|---|
-| Article ID | RC-CDIS-03 |
-| Domain | Clinical Data Interoperability Services |
-| Applies To | Institutions using bulk clinical data import for registries and retrospective studies |
-| Prerequisite | RC-CDIS-01 — CDIS Overview and Control Center Setup |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | REDCap Support |
-| Related Topics | RC-CDIS-01 — CDIS Overview; RC-CDIS-02 — Clinical Data Pull; RC-CDIS-04 — CDP vs CDM Comparison |
+| **Article ID** | RC-CDIS-03 |
+| --- | --- |
+| **Domain** | Clinical Data Interoperability Services |
+| **Applies To** | Institutions using bulk clinical data import for registries and retrospective studies |
+| **Prerequisite** | RC-CDIS-01 — CDIS Overview and Control Center Setup |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | REDCap Support |
+| **Related Topics** | RC-CDIS-01 — CDIS Overview; RC-CDIS-02 — Clinical Data Pull; RC-CDIS-04 — CDP vs CDM Comparison |
+
+---
 
 > **Prerequisite:** CDIS must be configured at the system level before CDM can be used. See RC-CDIS-01.
 
