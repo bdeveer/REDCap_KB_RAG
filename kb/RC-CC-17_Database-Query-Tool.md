@@ -7,7 +7,7 @@ RC-CC-17
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-16 — Database Activity Monitor; RC-CC-15 — Top Usage Report |
@@ -41,6 +41,20 @@ Administrators type their SQL into the query text box and execute it. Results ar
 - `SELECT project_id, project_name FROM redcap_projects WHERE status = 0`
 - `SELECT COUNT(*) as record_count FROM redcap_data WHERE project_id = 123`
 - `SELECT * FROM redcap_log_event WHERE user = 'username' LIMIT 100`
+
+## 4.1 Built-In System Query: Recent Errors
+
+The Control Center sidebar includes a **Recent Errors** menu item under "Dashboards & Activity." Despite appearing as a distinct navigation link, it is not a separate tool — it simply opens the Database Query Tool with a pre-canned SQL query already loaded and executed:
+
+```sql
+select * -- Recent Errors (retained for 30 days)
+from redcap_error_log 
+order by error_id desc
+```
+
+This query returns all rows from `redcap_error_log`, sorted newest first. The comment in the query (`-- Recent Errors (retained for 30 days)`) documents the retention window: REDCap automatically purges error log entries older than 30 days.
+
+Because Recent Errors is just a convenience shortcut into the Database Query Tool, you can modify the query once it loads — for example, adding a `WHERE` clause to filter by error type or a `LIMIT` clause for large logs.
 
 # 5. Custom Query Management
 
@@ -126,6 +140,9 @@ This tool requires super-user administrator access. Because it provides direct d
 - **Top Usage Report (RC-CC-15)** — for pre-built usage statistics and analytics
 
 # 11. Common Questions
+
+**Q: What is the "Recent Errors" menu item in the Control Center?**
+"Recent Errors" is a shortcut that opens the Database Query Tool with a pre-loaded query against `redcap_error_log`, sorted by most recent error first. It is not a standalone tool — it is simply a pre-canned `SELECT *` query with a 30-day retention window documented in the SQL comment. Once the page loads you can edit the query normally, for example to filter on a specific error type.
 
 **Q: Can I run UPDATE or DELETE queries to fix data?**
 No. The Database Query Tool only accepts read-only query types (SELECT, SHOW, EXPLAIN). Any attempt to run INSERT, UPDATE, DELETE, DROP, ALTER, or other write-based queries will be rejected. This restriction prevents accidental data modification. If you need to modify data, use the REDCap UI or contact your database administrator.

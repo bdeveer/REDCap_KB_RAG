@@ -28,6 +28,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-09 — Control Center: To-Do List
 - RC-CC-19 — Control Center: Publication Matching
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
 ---
@@ -155,6 +156,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-03 — AI Translations
 - RC-AI-04 — AI Summarization
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-MCP-01 — REDCap MCP Server: Setup and Management
 
 ---
@@ -3120,6 +3122,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
@@ -3152,6 +3155,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-CC-18 — Control Center: Custom Application Links
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-CC-19 — Control Center: Publication Matching
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-CC-21 — Control Center: Overview & Navigation
@@ -3202,6 +3206,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-DE-05 — Field Validations
 
 ---
@@ -3410,11 +3415,33 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-18 — Control Center: Custom Application Links
 - RC-CC-19 — Control Center: Publication Matching
 - RC-CC-20 — Control Center: Multi-Language Management
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-MLM-01 — Multi-Language Management
 
 **Inbound links (referenced by):**
 - RC-CC-18 — Control Center: Custom Application Links
 - RC-CC-19 — Control Center: Publication Matching
+- RC-CC-24 — Control Center: Edit Project Settings
+
+---
+
+### RC-CC-24 — Control Center: Edit Project Settings
+
+**Prerequisites:** RC-CC-21 — Control Center: Overview & Navigation
+
+**Outbound links:**
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-AI-01 — REDCap AI Tools: Overview and Security
+- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-TXT-02 — Texting: Administrator Setup
+
+**Inbound links (referenced by):**
+- (none yet)
 
 ---
 
@@ -4426,6 +4453,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
 ---
 
@@ -4572,6 +4600,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-07 — Control Center: Users & Access Management
 
 **Inbound links (referenced by):**
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
 - RC-CDIS-04 — CDP vs CDM: Feature Comparison

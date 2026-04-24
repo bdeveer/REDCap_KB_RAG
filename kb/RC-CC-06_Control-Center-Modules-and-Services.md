@@ -162,7 +162,18 @@ See RC-ALERT-01 for alert setup and RC-TXT-01 for SMS alert configuration.
 
 <!-- PLACEHOLDER: Insert annotated screenshot of File Upload Enhancement section -->
 
-An optional enhancement that adds password verification before a file in a File Upload field can be accessed, with optional automatic archiving to external storage. Requires specific configuration for full Part 11 compliance workflows. Leave disabled unless your institution has a specific FDA or Part 11 compliance requirement.
+An optional enhancement that adds password verification and automatic external archiving to File Upload fields. When enabled at the system level and then activated in a project, any user uploading a file is asked to confirm it is the correct file. On data entry forms specifically, the user must also enter their REDCap password as part of the verification step. Once confirmed, the file is saved normally in REDCap and simultaneously stored as a duplicate on a configured external server. This feature is intended for projects that require FDA 21 CFR Part 11 compliance.
+
+> **Note:** Enabling this at the system level does **not** auto-enable it in any project. Users with Project Setup & Design rights must activate it per project via the Additional Customizations popup on the Project Setup page.
+
+**Supported external storage methods:**
+
+| Method | Requirement |
+| --- | --- |
+| SFTP | Hostname (no protocol prefix), port 22, username, password, server directory, optional private key path |
+| WebDAV | Hostname (must begin with `http://` or `https://`), port 80/443, username, password, server directory, authentication type (Digest, NTLM, or Basic) |
+| Microsoft Azure Blob Storage | Only available if Azure is already configured as the system-level File Storage Method; requires bucket/container name |
+| Amazon S3 | Only available if S3 is already configured as the system-level File Storage Method; requires bucket/container name |
 
 ---
 
@@ -170,7 +181,18 @@ An optional enhancement that adds password verification before a file in a File 
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Rapid Retrieval section -->
 
-Rapid Retrieval caches certain REDCap pages to improve load times on large or high-traffic instances. Can be configured to use file-based or database-based storage. An alternative directory can be specified for the cache.
+Rapid Retrieval is a read-through page-level caching feature that improves load times for slower REDCap pages, particularly exports, reports, and the record status dashboard. When a requested page is not in the cache, the system automatically fetches and stores it for subsequent requests, reducing direct database queries and wait times.
+
+**Storage modes:**
+
+| Mode | Notes |
+| --- | --- |
+| **Disabled** | Caching off; all pages load from the database directly |
+| **File-based storage** *(recommended)* | Cached files are stored in REDCap's `temp` folder (or an alternative directory if configured). Files are fully encrypted at rest and are immediately removed once invalidated. Preferred for most deployments, especially high-traffic servers, because database storage can bog down the server and cause the MySQL binary log to grow rapidly |
+| **Database storage** | Cached data is stored in the `redcap_cache` database table. Can degrade performance on busy servers; not recommended for high-traffic instances |
+
+**Alternative directory for cached files (optional)**
+By default, file-based caching stores files in REDCap's `temp` folder. An alternative directory path on the web server can be specified here. This is particularly useful in **load-balanced or multi-node cloud deployments** where the alternative directory points to centralized external file storage that all servers/nodes share. If REDCap is running on a single server, leaving this blank is recommended.
 
 ---
 
@@ -178,7 +200,11 @@ Rapid Retrieval caches certain REDCap pages to improve load times on large or hi
 
 <!-- PLACEHOLDER: Insert annotated screenshot of Record-Level Locking section -->
 
-An optional enhancement to the record locking feature that generates a PDF confirmation when a record is locked, with optional automatic archiving to external storage. Primarily useful for studies that require a full Part 11-compliant electronic signature and audit trail. Leave disabled unless there is a specific regulatory requirement.
+An optional enhancement to the record locking feature that adds PDF review and automatic external archiving to the record locking workflow. This applies only to **entire-record locking** (not instrument-level locking). When enabled at the system level and then activated in a project, any user locking a full record is first asked to review a PDF copy of the complete record to confirm it is correct. Once the user confirms the PDF, the record is locked. At that point, the PDF is saved into the project's File Repository and a duplicate copy is archived on a configured external server. This feature is primarily useful for studies requiring a full Part 11-compliant electronic signature and audit trail.
+
+> **Note:** Enabling this at the system level does **not** auto-enable it in any project. Users with Project Setup & Design rights must activate it per project via the Additional Customizations popup on the Project Setup page.
+
+Supported external storage methods are identical to those for the File Upload Field Enhancement above (SFTP, WebDAV, Azure Blob Storage, Amazon S3), with the same configuration fields and prerequisites.
 
 ---
 

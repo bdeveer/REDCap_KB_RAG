@@ -29,6 +29,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md |
 | RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md |
 | RC-CC-21 | Control Center: Overview & Navigation | RC-CC-21_Control-Center-Overview.md |
+| RC-CC-24 | Control Center: Edit Project Settings | RC-CC-24_Control-Center-Edit-Project-Settings.md |
 | RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md |
 | RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md |
 | RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md |
@@ -40,6 +41,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-PROJ-02 | Project Setup Checklist | RC-PROJ-02_Project-Setup-Checklist.md |
 | RC-PROJ-03 | Project Dashboards | RC-PROJ-03_Project-Dashboards.md |
 | RC-PROJ-04 | Project Setup: Additional Customizations | RC-PROJ-04_Project-Setup-Additional-Customizations.md |
+| RC-PROJ-05 | Project Migration: Moving a Project Between REDCap Installations | RC-PROJ-05_Project-Migration.md |
 | RC-PROF-01 | My Profile: User Profile Settings | RC-PROF-01_My-Profile-User-Profile-Settings.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |

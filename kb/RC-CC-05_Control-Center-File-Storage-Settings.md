@@ -41,7 +41,7 @@ Files are stored in an AWS S3 bucket. Required configuration: AWS Access Key, AW
 For REDCap instances hosted on Google Cloud Platform. Requires two GCS buckets: one for permanent file storage and one for temporary file storage (they must be different buckets). The subfolder-by-project-ID option (see below) also applies to this storage type.
 
 **Google Cloud Storage using API Service Account**
-For non-App Engine GCP hosting. Requires a GCP Project ID, bucket name, and service account secret key. Includes an independent setting for organizing files into subfolders by project ID.
+For non-App Engine GCP hosting. Requires a GCP Project ID, bucket name, and service account secret key. Includes an independent setting for organizing files into subfolders by project ID; this setting defaults to *Enabled* for this storage type (unlike the Local Storage version, which defaults to *Disabled*).
 
 **Microsoft Azure Blob Storage**
 Files are stored in a Microsoft Azure Blob Storage container. Required configuration: storage account name, storage account key, and container name.
@@ -52,7 +52,7 @@ Setup steps:
 3. Under the storage account, navigate to *Access keys* and copy a Key value
 4. Under the storage account, navigate to *Blobs* and create a container
 
-The Azure environment can be set to either *Azure Commercial/Global* (default) or *Azure U.S. Government*. The U.S. Government option is only for Microsoft-authorized government and CSP partners serving US federal, state, and local government entities.
+The Azure environment can be set to either *Azure Commercial/Global* (default, endpoint: `blob.core.windows.net`) or *Azure U.S. Government* (endpoint: `blob.core.usgovcloudapi.net`). The U.S. Government option is only for Microsoft-authorized government and CSP partners serving US federal, state, and local government entities.
 
 > **Recommendation:** For cloud-hosted REDCap instances, using the same cloud provider's native storage service simplifies access control, reduces egress costs, and aligns with institutional cloud governance policies.
 
