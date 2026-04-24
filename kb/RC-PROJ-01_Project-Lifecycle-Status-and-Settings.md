@@ -7,8 +7,8 @@ RC-PROJ-01
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | None |
-| **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-04-23 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-CC-09 — Control Center: To-Do List; RC-INST-01 — Institution-Specific Settings & Policies; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-NAV-UI-02 — Project Menu Reference; RC-CALC-01 — Special Functions Reference |
 
@@ -92,7 +92,9 @@ Moving a Production project back to Development requires a REDCap administrator.
 
 ---
 
-# 4. Copying a Project
+# 4. Copying and Backing Up a Project
+
+## 4.1 Copying a Project
 
 Users with the right to create projects can navigate to **Project Setup → Other Functionality** to request a copy.
 
@@ -108,9 +110,24 @@ REDCap only shows options that are active in the source project.
 
 > **Important:** Project logging is **never** copied. This includes record creation timestamps, survey timestamps, and project management history. The copy starts with a clean log.
 
+## 4.2 Downloading a Backup (XML / CDISC ODM)
+
+REDCap can export the entire project — or just its structure — as an XML file in **CDISC ODM format**. Two options are available from **Other Functionality**:
+
+- **Download metadata only (XML)** — Exports all instruments, fields, project attributes, and settings, but no record data.
+- **Download metadata & data (XML)** — Exports the full project including all records and data.
+
+The resulting XML file can be used to:
+- Clone the project on the same REDCap server or on a different REDCap server (upload it on the Create New Project page).
+- Import the project into another ODM-compatible system.
+
+> **Note:** Like a project copy, the exported XML does **not** contain the project's logging history (audit trail). Download the full log from the top of the Logging page if you need it.
+
 ---
 
-# 5. Deleting a Project
+# 5. Data Management
+
+## 5.1 Deleting a Project
 
 **Development projects** can be deleted by project users via **Other Functionality → Delete the project**.
 
@@ -120,6 +137,44 @@ After an administrator deletes a project:
 
 - The project persists in the database for a configurable grace period (default: **30 days**) before permanent removal. During this window, a REDCap administrator can recover the project. The grace period duration is set by the administrator in the Control Center and may differ at your institution — check with your local support team if you need to know the exact window.
 - Associated files take an additional 30 days beyond the grace period to be fully removed.
+
+## 5.2 Erasing All Data
+
+**Other Functionality → Erase all data** removes all currently collected data while keeping the project structure (instruments, fields, settings) intact. This is distinct from deleting the project entirely.
+
+**What IS erased:**
+- All record data (including survey responses)
+- Calendar events
+- Documents uploaded onto forms and surveys
+- Archived data export files stored in the File Repository
+- Logged events that pertain to data collection
+
+**What is NOT erased:**
+- File attachments uploaded to File Upload fields (stored separately from record data)
+- Survey logos
+- Survey participants in the Participant List
+- Files uploaded by users directly into the File Repository (as opposed to files attached to records via forms)
+
+> **Caution:** This action is irreversible. REDCap will ask you to confirm before proceeding. Use this only when you are certain all data in the project should be discarded — for example, when cleaning up after a test phase before real data collection begins.
+
+## 5.3 Bulk Record Delete
+
+**Other Functionality → Bulk Record Delete** allows you to delete multiple records in a single operation, or to delete data for multiple instruments across multiple records without removing the records themselves.
+
+This is useful when you need to selectively clear data — for example, deleting a batch of test records, or removing all data for a specific instrument across a cohort of records before re-collecting it.
+
+The Bulk Record Delete page presents filter options to select which records (and optionally which instruments) to target before deletion.
+
+## 5.4 Clearing Record and Page Caches
+
+**(Administrators only)** If records appear to be missing from the project, or if some pages (reports, Record Status Dashboard, etc.) are not reflecting recent data changes, the internal caches may be out of sync. Use **Other Functionality → Clear all record & page caches** to resolve this.
+
+Two caches are cleared by this action:
+
+- **Record List Cache** — A secondary index of all record names maintained by REDCap for performance. If this falls out of sync, certain records may not appear in drop-down lists or the Record Status Dashboard even though the underlying data is intact.
+- **Rapid Retrieval** — A page-level cache that stores rendered versions of frequently accessed pages to speed up load times. If a page is returning stale data, clearing this cache forces REDCap to re-render it from the database.
+
+Clearing both caches causes the Record List Cache to regenerate and removes all stored page-level caches for the project. This is safe to do at any time, though REDCap notes it is normally not needed.
 
 ---
 
@@ -253,6 +308,24 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 **Q: Will Draft Preview Mode affect other users or trigger any automations?**
 
 **A:** No. Draft Preview Mode is active only for your own user account and only for your current session. Other users see and work with the project normally. No alerts, automated survey invitations, or Data Entry Triggers will fire while you are in Draft Preview Mode.
+
+---
+
+**Q: What is the difference between "Erase all data" and "Delete the project"?**
+
+**A:** "Erase all data" removes all records and collected data while keeping the project structure (instruments, fields, settings) fully intact. You can continue using the project afterward. "Delete the project" removes the entire project — structure and data — and it can only be recovered during a brief administrator-controlled grace period. Use "Erase all data" when you want to discard test data and start fresh; use "Delete the project" only when the project itself is no longer needed.
+
+---
+
+**Q: Records seem to be missing from the Record Status Dashboard or reports. Is the data gone?**
+
+**A:** Probably not. This symptom is often caused by the Record List Cache falling out of sync with the actual data. Go to **Other Functionality → Clear all record & page caches** (administrators only) to force the cache to rebuild. The records should reappear after the page refreshes. If the issue persists after clearing the cache, contact your REDCap administrator.
+
+---
+
+**Q: Some pages in my project show old data even after I updated records. How do I fix this?**
+
+**A:** This is typically the Rapid Retrieval page cache serving a stored version of the page. Go to **Other Functionality → Clear all record & page caches** (administrators only) to clear the page cache and force REDCap to re-render from the database.
 
 ---
 
