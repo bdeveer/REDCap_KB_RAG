@@ -15,12 +15,9 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-PROJ-04 — Additional Project Settings (Secondary ID, Record Label, etc.)
+### ✅ RC-PROJ-04 — Additional Project Settings (Secondary ID, Record Label, etc.)
 
-**Why needed:** RC-PROJ-01 covers project lifecycle/status. RC-PROJ-02 covers the setup checklist. Neither article explains the miscellaneous project-level settings available in Project Setup that affect how records are identified and displayed.
-
-**Domain slug:** PROJ (established)
-**What to cover:** Secondary unique field (secondary ID) — what it is, how to designate it, effect on record lookup; Custom record label — syntax, piping support, where it appears; other notable Project Setup options not covered elsewhere (e.g., project notes, project purpose/IRB settings, move to production requirements)
+Resolved. Article written: `RC-PROJ-04_Project-Setup-Additional-Customizations.md`
 
 ---
 
@@ -51,12 +48,9 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-MSG-01 — REDCap Messenger
+### ✅ RC-MSG-01 — REDCap Messenger
 
-**Why needed:** REDCap includes a built-in internal messaging system (REDCap Messenger) for communication between users on the same instance. It has no KB coverage despite being a commonly noticed feature.
-
-**Domain slug:** MSG (new domain)
-**What to cover:** Accessing the Messenger (My Projects menu or project header); sending a message to another REDCap user; group conversations; message notifications and indicators; limitations (internal only, not email); admin controls and whether messages can be disabled; privacy considerations; difference between Messenger and the field comment log
+Resolved. Article written: `RC-MSG-01_REDCap-Messenger.md`
 
 ---
 
@@ -131,22 +125,12 @@ Resolved 2026-04-23. Article written: `RC-PROF-01_My-Profile-User-Profile-Settin
 
 ---
 
-### ⚠️ RC-IMP-02 — (Intentionally absent or merged; ID reserved)
-
-**Why noted:** The index goes RC-IMP-01 → RC-IMP-03 with no RC-IMP-02. This gap is documented here to clarify the skip is intentional and the ID is not a missing article. If a second import article is ever needed, RC-IMP-02 is available.
-
-**Status:** No article needed at this time.
-
----
-
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
 
 **Domain slug:** DE (established)
 **What to cover:** Accessing 'Choose action for record' from the Record Home Page, available actions (move record to different DAG, rename/renumber record, delete record, lock/unlock record), who can perform each action (user rights required), consequences and irreversibility of deletion, audit trail behavior after admin actions
-
----
 
 ---
 
@@ -289,6 +273,14 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-TXT-01 — Texting in REDCap: Setup and Usage ✅
 - RC-TXT-02 — Texting: Administrator Setup ✅
 
+### Messaging (RC-MSG) — new domain
+
+- RC-MSG-01 — REDCap Messenger ✅
+
+### Project (RC-PROJ) — continued
+
+- RC-PROJ-04 — Project Setup: Additional Customizations ✅
+
 ### Profile (RC-PROF) — new domain
 
 - RC-PROF-01 — My Profile: User Profile Settings ✅
@@ -322,4 +314,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-23 — Resolved RC-PROF-01 (My Profile). Open gaps (14): RC-DE-13, RC-CAL-01, RC-PROJ-04, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-MSG-01, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-23 — Resolved RC-PROJ-04 (Additional Project Settings) and RC-MSG-01 (REDCap Messenger); articles already existed on disk. Open gaps (12): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*

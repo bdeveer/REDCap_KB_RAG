@@ -3417,6 +3417,20 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-19 — Control Center: Publication Matching
 
 ---
+
+### RC-MSG-01 — REDCap Messenger
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-PROF-01 — My Profile: User Profile Settings
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-TXT-01 — Texting in REDCap: Setup and Usage
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+
+---
 ### RC-MOB-01 — REDCap Mobile App
 
 **Prerequisites:** None

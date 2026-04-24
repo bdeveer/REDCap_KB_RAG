@@ -169,6 +169,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
 | RC-MLM-01 | Multi-Language Management | RC-MLM-01_Multi-Language-Management.md |
+| RC-MSG-01 | REDCap Messenger | RC-MSG-01_REDCap-Messenger.md |
 | RC-MOB-01 | REDCap Mobile App | RC-MOB-01_REDCap-Mobile-App.md |
 | RC-MYCAP-01 | MyCap: Overview & Enabling | RC-MYCAP-01_MyCap-Overview-and-Enabling.md |
 | RC-MYCAP-02 | MyCap: Designing Instruments for MyCap | RC-MYCAP-02_Designing-Instruments-for-MyCap.md |

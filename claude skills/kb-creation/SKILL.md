@@ -268,5 +268,6 @@ For every article the new article references, find its Per-Article Reference Det
 | FDL | Form Display Logic | — |
 | DQ | Data Quality | Covers the Data Quality module, default rules, custom rules, and Rule H |
 | PROJ | Project | Covers project lifecycle, setup checklist, and project dashboards |
+| MSG | Messenger | Covers REDCap Messenger: conversations, user roles, notifications, file sharing |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.
