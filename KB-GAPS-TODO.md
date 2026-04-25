@@ -33,7 +33,7 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-CC-22 — Admin: Imitate User (Access As)
+### ✅ RC-CC-22 — Admin: View Project as User (Imitate User)
 
 **Why needed:** REDCap Control Center includes an "Access As" (imitate user) function that allows administrators to log in and navigate REDCap as another user. This is a powerful diagnostic and support tool with no KB coverage.
 
@@ -271,4 +271,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-24 — Resolved RC-PROJ-05 (Copy Project, absorbed into RC-PROJ-01) and RC-PROJ-06 (Project Migrations, written as RC-PROJ-05 on disk). Open gaps (9): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-25 — Written RC-CC-22 (View Project as User). Open gaps (8): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
