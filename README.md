@@ -91,14 +91,18 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-INST` | Institution-Specific Settings & Policies |
 | `RC-INTG` | Integrations (Data Entry Trigger, etc.) |
 | `RC-LONG` | Longitudinal Project Setup |
+| `RC-MCP` | REDCap MCP Server (setup & management) |
 | `RC-MLM` | Multi-Language Management |
 | `RC-MOB` | REDCap Mobile App |
+| `RC-MSG` | REDCap Messenger |
 | `RC-MYCAP` | MyCap (mobile data collection) |
 | `RC-NAV-REC` | Record Navigation |
 | `RC-NAV-UI` | Project Navigation UI |
 | `RC-PIPE` | Piping & Smart Variables |
+| `RC-PROF` | My Profile (user profile settings) |
 | `RC-PROJ` | Project Lifecycle & Status |
 | `RC-RAND` | Randomization |
+| `RC-SENDIT` | Send-It (secure file transfer) |
 | `RC-SURV` | Surveys |
 | `RC-TXT` | Texting (SMS) |
 | `RC-USER` | User Rights |
