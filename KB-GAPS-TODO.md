@@ -60,15 +60,6 @@ Resolved 2026-04-23. Article written: `RC-PROF-01_My-Profile-User-Profile-Settin
 
 ---
 
-### ⚠️ RC-CC-23 — Backup Options
-
-**Why needed:** REDCap offers project-level and system-level backup mechanisms (e.g., project XML export, database backups configured in Control Center). No KB article explains what backup options exist or how to use them.
-
-**Domain slug:** CC (established)
-**What to cover:** Project XML export as a backup mechanism (full project structure + data); Control Center backup settings (if applicable to hosted instances); what is and is not included in an XML export; restoring from backup (creating a new project from XML); scheduled/automated backup options; difference between a backup and a project copy; institutional responsibility vs. REDCap platform responsibility for backups
-
----
-
 ### ⚠️ RC-PROJ-05 — Copy Project
 
 **Why needed:** REDCap includes a "Copy Project" function that allows users to duplicate an existing project. This is a common workflow for creating templates or starting new studies, but it has no dedicated KB coverage.
@@ -314,4 +305,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-23 — Resolved RC-PROJ-04 (Additional Project Settings) and RC-MSG-01 (REDCap Messenger); articles already existed on disk. Open gaps (12): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-CC-23, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-24 — Resolved RC-CC-23 (Backup Options). Open gaps (11): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*

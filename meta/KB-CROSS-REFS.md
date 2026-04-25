@@ -1241,6 +1241,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info API
 - RC-API-37 — Import Project (Create Project) API
+- RC-CC-23 — Backup Options
 
 ---
 
@@ -1258,6 +1259,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-34 — Export Project Info API
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
+- RC-CC-23 — Backup Options
 
 ---
 
@@ -2360,6 +2362,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+- RC-CC-23 — Backup Options
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-RAND-03 — Working with & Managing Randomization
 - RC-USER-03 — User Rights: Configuring User Privileges
@@ -2381,6 +2384,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-API-02 — Export Records API
+- RC-CC-23 — Backup Options
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
@@ -3421,7 +3425,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-CC-18 — Control Center: Custom Application Links
 - RC-CC-19 — Control Center: Publication Matching
+- RC-CC-23 — Backup Options
 - RC-CC-24 — Control Center: Edit Project Settings
+
+---
+
+### RC-CC-23 — Backup Options
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-API-36 — Export Project XML API
+- RC-API-37 — Import Project (Create Project) API
+- RC-CC-21 — Control Center: Overview & Navigation
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-EXPRT-02 — Data Export: Export Formats
+
+**Inbound links (referenced by):**
 
 ---
 
