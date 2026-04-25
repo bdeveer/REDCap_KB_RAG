@@ -20,8 +20,8 @@ This repo supports an LLM-powered REDCap assistant. Rather than feeding raw docu
 
 ```
 REDCap_KB_RAG/
-├── kb/                               # Markdown KB articles (RAG-ready) — 204 articles
-│   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (204 articles)
+├── kb/                               # Markdown KB articles (RAG-ready) — 216 articles
+│   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (216 articles)
 ├── meta/                             # Navigation & cross-reference metadata (not for RAG indexing)
 │   ├── KB-INDEX.md                        # Article index: ID → Title → Filename (load for topic lookup)
 │   ├── KB-KEYWORD-MAP.md                  # Keyword/synonym map: user phrasings → domain or article ID
@@ -43,8 +43,18 @@ REDCap_KB_RAG/
 │   ├── redcap-syntax-fixer/               # Skill: diagnose and fix broken REDCap expressions
 │   ├── redcap-syntax-fixer-workspace/     # Skill: syntax-fixer variant for workspace-mounted files
 │   └── redcap-syntax-reader/              # Skill: explain and interpret REDCap expressions
+├── MCP server/                       # Python MCP server exposing REDCap API methods as Claude tools
+│   ├── redcap_mcp_server.py               # Server implementation (all major API endpoints)
+│   └── install.sh                         # Setup script (installs mcp[cli] + registers named instances)
+├── ServiceNow ETL/                   # Tooling to export KB articles into ServiceNow knowledge base
+│   ├── kb_to_servicenow.py                # Converts kb/ markdown to a 3-sheet Excel workbook
+│   ├── REDCap_KB_ServiceNow_Import.xlsx   # Most-recent export (Articles, Relationships, Import Instructions)
+│   └── ServiceNow_Admin_Handoff.md        # Field-by-field import guide for ServiceNow admins
+├── visualization/
+│   └── kb_dependency_graph.html           # Interactive graph of inter-article dependencies
 ├── KB-GAPS-TODO.md                   # Tracked knowledge gaps and planned articles
 ├── KB-SOURCE-ATTESTATION.md          # Source document provenance for KB articles
+├── PROJECT-TODO.md                   # Running dev task list for the KB/RAG project (non-article work)
 ├── STYLE-GUIDE.md                    # Design conventions for building REDCap projects (alignment, longitudinal setup, etc.)
 └── README.md
 ```
