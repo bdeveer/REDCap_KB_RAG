@@ -29,7 +29,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-CC-19 | Control Center: Publication Matching | RC-CC-19_Publication-Matching.md |
 | RC-CC-20 | Control Center: Multi-Language Management | RC-CC-20_Multi-Language-Management.md |
 | RC-CC-21 | Control Center: Overview & Navigation | RC-CC-21_Control-Center-Overview.md |
-| RC-CC-22 | Admin: Administrator Project Tools (View as User, Project Switcher) | RC-CC-22_View-Project-as-User.md |
+| RC-CC-22 | Admin: Administrator Project Tools (View as User, Project Switcher) | RC-CC-22_Administrator-Project-Tools.md |
 | RC-CC-23 | Backup Options | RC-CC-23_Backup-Options.md |
 | RC-CC-24 | Control Center: Edit Project Settings | RC-CC-24_Control-Center-Edit-Project-Settings.md |
 | RC-CDIS-01 | Clinical Data Interoperability Services: Overview & Control Center Setup | RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md |
