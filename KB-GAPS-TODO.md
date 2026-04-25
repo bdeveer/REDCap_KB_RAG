@@ -15,12 +15,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ✅ RC-PROJ-04 — Additional Project Settings (Secondary ID, Record Label, etc.)
-
-Resolved. Article written: `RC-PROJ-04_Project-Setup-Additional-Customizations.md`
-
----
-
 ### ⚠️ RC-FD-11 — Advanced Online Designer Options
 
 **Why needed:** RC-FD-02 and RC-FD-06 cover the core Online Designer and instrument/field management. Advanced or lesser-known designer capabilities have no dedicated coverage.
@@ -45,36 +39,6 @@ Resolved. Article written: `RC-PROJ-04_Project-Setup-Additional-Customizations.m
 
 **Domain slug:** CC (established)
 **What to cover:** Where to find the imitate-user function (Control Center → Users & Access Management or similar); how to initiate a session as another user; what the admin can and cannot do while imitating (project access governed by the imitated user's rights); session behavior and how to exit imitation; audit trail and logging — whether admin actions during imitation are attributed to the admin or the imitated user; appropriate use cases (troubleshooting, support); privacy and policy considerations
-
----
-
-### ✅ RC-MSG-01 — REDCap Messenger
-
-Resolved. Article written: `RC-MSG-01_REDCap-Messenger.md`
-
----
-
-### ✅ RC-PROF-01 — My Profile (User Profile Settings)
-
-Resolved 2026-04-23. Article written: `RC-PROF-01_My-Profile-User-Profile-Settings.md`
-
----
-
-### ⚠️ RC-PROJ-05 — Copy Project
-
-**Why needed:** REDCap includes a "Copy Project" function that allows users to duplicate an existing project. This is a common workflow for creating templates or starting new studies, but it has no dedicated KB coverage.
-
-**Domain slug:** PROJ (established)
-**What to cover:** Accessing Copy Project (from project header or Project Setup); options during copy (copy data records, copy user list, copy DAGs, copy reports, etc.); what is always copied vs. optional; resulting project status (Draft); limitations (survey participant lists, randomization setup, external module configurations may not carry over); use cases (templates, pilot-to-production, cloning a study arm)
-
----
-
-### ⚠️ RC-PROJ-06 — Project Migrations
-
-**Why needed:** Projects sometimes need to be moved between REDCap instances (e.g., from a test server to production, or between institutions). The process involves XML export/import and has important caveats that are not documented in the KB.
-
-**Domain slug:** PROJ (established)
-**What to cover:** When and why a migration is needed; exporting a project as XML (full vs. no-data); importing XML to create a new project on the target instance; what survives migration (structure, branching logic, surveys, user rights structure) and what does not (user accounts, data, file uploads, API tokens, external module configs, DAG assignments); post-migration checklist; migrating longitudinal projects; common pitfalls and troubleshooting
 
 ---
 
@@ -271,6 +235,8 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 ### Project (RC-PROJ) — continued
 
 - RC-PROJ-04 — Project Setup: Additional Customizations ✅
+- RC-PROJ-05 (Copy Project gap) — Copy Project content integrated into RC-PROJ-01 ✅
+- RC-PROJ-05 (on disk) — Project Migration ✅ *(resolves RC-PROJ-06 gap)*
 
 ### Profile (RC-PROF) — new domain
 
@@ -305,4 +271,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-24 — Resolved RC-CC-23 (Backup Options). Open gaps (11): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-PROJ-05, RC-PROJ-06, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-24 — Resolved RC-PROJ-05 (Copy Project, absorbed into RC-PROJ-01) and RC-PROJ-06 (Project Migrations, written as RC-PROJ-05 on disk). Open gaps (9): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-CC-22, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
