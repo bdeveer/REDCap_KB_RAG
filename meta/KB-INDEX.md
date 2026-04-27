@@ -218,6 +218,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-SURV-07 | Survey Queue | RC-SURV-07_Survey-Queue.md |
 | RC-SURV-08 | e-Consent Framework: Setup & Management | RC-SURV-08_e-Consent-Framework-Setup-and-Management.md |
 | RC-SURV-09 | PDF Snapshots of Records | RC-SURV-09_PDF-Snapshots-of-Records.md |
+| RC-SURV-10 | Survey Login | RC-SURV-10_Survey-Login.md |
 | RC-TXT-01 | Texting in REDCap: Setup and Usage | RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md |
 | RC-TXT-02 | Texting: Administrator Setup | RC-TXT-02_Texting-Administrator-Setup.md |
 | RC-USER-01 | User Rights: Overview & Three-Tier Access | RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md |

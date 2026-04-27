@@ -232,6 +232,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
 - RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
 
 **Inbound links (referenced by):**
 - RC-ALERT-02 — Alert Management & Notification Log
@@ -2565,6 +2566,11 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-04 — Instrument Library & Zip Files
 - RC-FD-05 — Codebook
 - RC-INST-01 — Institution-Specific Settings & Policies
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-07 — Survey Queue
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-SURV-10 — Survey Login
 
 **Inbound links (referenced by):**
 - RC-AI-02 — AI Writing Tools
@@ -4233,6 +4239,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-FD-02 — Online Designer
 - RC-API-40 — Export Survey Link API
 - RC-API-41 — Export Survey Queue Link API
 - RC-API-42 — Export Survey Return Code API
@@ -4260,6 +4267,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-SURV-01 — Surveys – Basics
 
 **Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
@@ -4268,6 +4276,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 
 **Inbound links (referenced by):**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-FD-02 — Online Designer
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
@@ -4394,6 +4404,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-API-41 — Export Survey Queue Link API
+- RC-FD-02 — Online Designer
 - RC-FDL-01 — Form Display Logic
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-06 — Automated Survey Invitations (ASI)
@@ -4419,6 +4430,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-FD-02 — Online Designer
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-SURV-09 — PDF Snapshots of Records
 ---
@@ -4442,6 +4454,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-API-15 — Export Instruments PDF API
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+
+---
+
+### RC-SURV-10 — Survey Login
+
+**Prerequisites:** RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design
+
+**Outbound links:**
+- RC-SURV-01 — Surveys – Basics
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-SURV-04 — Survey Link Types & Access Methods
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-07 — Survey Queue
+
+**Inbound links (referenced by):**
+- RC-FD-02 — Online Designer
 
 ---
 

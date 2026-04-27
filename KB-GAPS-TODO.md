@@ -71,15 +71,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-SURV-10 — Survey Login (Respondent Authentication)
-
-**Why needed:** RC-SURV-03 touches on survey access methods briefly, and RC-SURV-04 covers link types, but the Survey Login feature — which requires respondents to authenticate before accessing a survey — has no dedicated article.
-
-**Domain slug:** SURV (established)
-**What to cover:** What Survey Login is and when to use it; enabling survey login for an instrument; authentication methods (e.g., requiring a field value match such as date of birth or MRN); how respondents experience the login prompt; combining survey login with the survey queue; interaction with public vs. private survey links; troubleshooting failed logins; difference between survey login and e-consent or survey access codes
-
----
-
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
@@ -248,6 +239,7 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-CALC-02 — Calculated Fields ✅
 - RC-AT-01 through RC-AT-11, RC-AT-EM-01 — Full Action Tags series ✅
 - RC-SURV-01 through RC-SURV-09 — Full Surveys series ✅
+- RC-SURV-10 — Survey Login ✅
 - RC-LONG-01 — Longitudinal Project Setup ✅
 - RC-LONG-02 — Repeated Instruments & Events Setup ✅
 - RC-FDL-01 — Form Display Logic ✅
@@ -271,4 +263,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-25 — Written RC-CC-22 (View Project as User). Open gaps (8): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01, RC-SURV-10.*
+*Last updated: 2026-04-26 — Added Survey Notifications section to RC-SURV-02 and Survey options area documentation to RC-FD-02 (content additions, no new article). Open gaps (7): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01.*

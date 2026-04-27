@@ -10,7 +10,7 @@ RC-SURV-02
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-FD-02 — Online Designer |
+| **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-FD-02 — Online Designer; RC-ALERT-01 — Alerts & Notifications: Setup |
 
 ---
 
@@ -163,7 +163,29 @@ The **Copy Design to Other Surveys** button (top-right of the Survey Design Opti
 
 ---
 
-# 5. Common Questions
+# 5. Survey Notifications
+
+Survey Notifications is a per-survey feature that sends a brief system-generated email to a project user each time a participant completes a survey. It is configured separately from the Survey Settings page and does not appear inside the Survey Settings dialog.
+
+**Where to find it:** In the **Online Designer**, scroll to the **Survey options** section at the top of the instrument list. Click the **Survey Notifications** button to open the notification setup dialog. A list of all surveys in the project is displayed — use the dropdown next to each survey to select which project user should receive the notification. The dropdown lists each user's primary, secondary, and tertiary email addresses as configured in their REDCap profile. To disable notifications for a survey, set the dropdown back to **Not selected**.
+
+**What the notification contains:** REDCap sends a standard system email. The message is not customizable — it does not include project field values, a custom subject, or any conditional logic. One recipient can be selected per survey.
+
+**When to use something else:** If you need any of the following, use **Alerts & Notifications** (RC-ALERT-01) instead:
+- Notifying more than one person per survey completion
+- Including participant data or smart variables in the notification message
+- Triggering a notification only when certain conditions are met
+- Customizing the subject or message body
+
+Survey Notifications is best suited for simple, low-volume projects where a single staff member needs a heads-up each time a response comes in, and no customization is required.
+
+---
+
+# 6. Common Questions
+
+
+**Q: Can I notify multiple users when a survey is completed?**
+Survey Notifications supports one recipient per survey. To notify multiple users simultaneously, use Alerts & Notifications (RC-ALERT-01), which supports multiple recipients and allows you to include participant data in the message.
 
 **Q: Can I turn a survey off temporarily without losing my settings?**
 Set **Survey Status** to **Survey Offline**. All settings and data are preserved. The survey can be re-activated at any time by switching the status back to **Survey Active**.
@@ -191,7 +213,9 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 ---
 
-# 6. Common Mistakes & Gotchas
+# 7. Common Mistakes & Gotchas
+
+**Expecting Survey Notifications to send a customized message.** The notification email is system-generated and contains no project data, custom subject, or body text. If you need a tailored message with participant details — such as a record ID, name, or response summary — use Alerts & Notifications instead.
 
 **Forgetting to re-activate a survey after edits.** Setting a survey offline for edits is good practice, but it is easy to forget to set it back to active afterward. Participants who attempt to access the survey during that window will see the offline message (or a default offline screen if no message is set). Build re-activation into your editing checklist.
 
@@ -205,11 +229,12 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 ---
 
-# 7. Related Articles
+# 8. Related Articles
 
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (Column N alignment codes and how they interact with enhanced buttons)
+- RC-ALERT-01 — Alerts & Notifications: Setup (for customizable or multi-recipient survey completion notifications)
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types

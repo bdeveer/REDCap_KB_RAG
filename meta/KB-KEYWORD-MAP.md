@@ -104,7 +104,7 @@ randomize, randomization, stratification, allocation, treatment arm, blinding, r
 
 ## Surveys — RC-SURV
 
-survey, public survey link, survey settings, participant list, survey queue, automated survey invitation, ASI, e-consent, eConsent, signature consent, survey access code, prevent retaking, single response, survey completion, survey return code, respondent, public link, anonymous survey, survey notification, survey stop action, survey expiration
+survey, public survey link, survey settings, participant list, survey queue, automated survey invitation, ASI, e-consent, eConsent, signature consent, survey access code, prevent retaking, single response, survey completion, survey return code, respondent, public link, anonymous survey, survey notification, survey stop action, survey expiration, survey login, survey authentication, respondent login, login fields, failed login, lockout, authenticate survey, survey access control, require login, verify respondent identity
 
 ## Texting / SMS — RC-TXT
 

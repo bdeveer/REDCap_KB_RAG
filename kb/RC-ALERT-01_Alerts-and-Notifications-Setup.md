@@ -341,5 +341,6 @@ If you find that certain recipient options are unavailable in your alert configu
 - RC-BL-01 — Branching Logic: Overview & Scope (prerequisite for writing logic triggers)
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements (logic syntax reference)
 - RC-SURV-01 — Surveys – Basics (survey fundamentals; alerts can send survey invitations)
+- RC-SURV-02 — Survey Settings: Basic Options & Design (Survey Notifications feature — simple per-survey email alerts without custom logic)
 - RC-LONG-02 — Repeated Instruments & Events Setup (context for trigger limits in Step 1C)
 - RC-CC-06 — Control Center: Modules & Services Configuration (system-level recipient field permissions for alerts)
