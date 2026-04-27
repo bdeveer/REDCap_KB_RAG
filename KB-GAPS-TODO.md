@@ -33,14 +33,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ✅ RC-CC-22 — Admin: View Project as User (Imitate User)
-
-**Why needed:** REDCap Control Center includes an "Access As" (imitate user) function that allows administrators to log in and navigate REDCap as another user. This is a powerful diagnostic and support tool with no KB coverage.
-
-**Domain slug:** CC (established)
-**What to cover:** Where to find the imitate-user function (Control Center → Users & Access Management or similar); how to initiate a session as another user; what the admin can and cannot do while imitating (project access governed by the imitated user's rights); session behavior and how to exit imitation; audit trail and logging — whether admin actions during imitation are attributed to the admin or the imitated user; appropriate use cases (troubleshooting, support); privacy and policy considerations
-
----
 
 ### ⚠️ RC-PLUS-01 — REDCap+
 
@@ -62,14 +54,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-NOTIF-01 — REDCap System Notifications (Notification Center)
-
-**Why needed:** REDCap has an in-app notification system (bell icon / notification center) that surfaces system messages, project activity, and admin broadcasts. This is distinct from the Alerts & Notifications module (RC-ALERT series) and has no KB coverage.
-
-**Domain slug:** NOTIF (new domain)
-**What to cover:** Where notifications appear in the UI (bell icon, notification panel); types of notifications generated (project status changes, user invitations, system messages, admin broadcasts); marking notifications as read/dismissed; admin-side: sending broadcasts or system-wide notifications via Control Center; notification preferences (if user-configurable); difference between this notification center and email-based Alerts & Notifications
-
----
 
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
@@ -263,4 +247,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-26 — Added Survey Notifications section to RC-SURV-02 and Survey options area documentation to RC-FD-02 (content additions, no new article). Open gaps (7): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01, RC-NOTIF-01.*
+*Last updated: 2026-04-26 — Added Survey Notifications section to RC-SURV-02 and Survey options area documentation to RC-FD-02 (content additions, no new article). Removed RC-NOTIF-01 (feature does not exist); removed RC-CC-22 (article added). Open gaps (6): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01.*
