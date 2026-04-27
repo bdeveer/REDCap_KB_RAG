@@ -10,7 +10,7 @@ RC-FD-02
 | **Version** | 1.0 |
 | **Last Updated** | 2025 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-03 — Data Dictionary; RC-FD-05 — Codebook |
+| **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-03 — Data Dictionary; RC-FD-05 — Codebook; RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
 
 # 1. Overview
 
@@ -101,7 +101,20 @@ to the research team.
 
 - Open the branching logic editor for a specific variable.
 
-## 4.3 What the Online Designer Cannot Do
+## 4.3 Survey-Level Options
+
+When surveys are enabled for the project, a **Survey options** section appears at the top of the Online Designer instrument list. These are project-wide controls — they apply across all surveys, not to a single instrument. The section contains the following buttons:
+
+- **e-Consent** — Enable and configure the e-Consent Framework (see RC-SURV-08).
+- **Survey Queue** — Configure the Survey Queue, which controls the order and conditions under which surveys are presented to participants after completing a prior survey. Includes a dropdown for bulk import/export of Survey Queue settings via CSV (see RC-SURV-07).
+- **Auto Invitation options** — Bulk upload or download Automated Invitation settings across all surveys as a CSV file.
+- **Survey Login** — Configure survey login (password protection) for the project (see RC-SURV-10).
+- **Survey Notifications** — Select a project user to receive a notification email each time each survey is completed. Settings apply per survey. See RC-SURV-02 for details.
+- **Survey Settings** — Bulk import or export Survey Settings for all instruments at once via CSV.
+
+These project-level buttons are distinct from the per-instrument buttons that appear in the instrument row when an instrument has been enabled as a survey. Each instrument row has its own **Survey settings** button (which opens the Survey Settings page for that instrument) and an **Automated Invitations** button (which configures the ASI for that specific instrument).
+
+## 4.4 What the Online Designer Cannot Do
 
 - Split one instrument into two or more instruments — use the Data
     Dictionary for this (RC-FD-03).
@@ -114,14 +127,13 @@ to the research team.
 
 # 5. Behavior in Development vs. Production Mode
 
-  --------------------- ---------------------------------------------- -----------------------------------------------------------------
-  **Action**            **Development Mode**                           **Production Mode**
-  Making a change       Applied immediately                            Added to the pending change queue
-  Seeing the change     Visible in data entry right away               Not visible until the change is approved
-  Cancelling a change   Edit and re-save or delete the field           Cancel the pending change from the change queue before approval
-  Approval required     No                                             Yes — automatic or administrator, per institutional policy
-  Rollback              Re-edit or re-upload a saved Data Dictionary   Cancel before approval; no rollback after approval
-  --------------------- ---------------------------------------------- -----------------------------------------------------------------
+| **Action** | **Development Mode** | **Production Mode** |
+| --- | --- | --- |
+| Making a change | Applied immediately | Added to the pending change queue |
+| Seeing the change | Visible in data entry right away | Not visible until the change is approved |
+| Cancelling a change | Edit and re-save or delete the field | Cancel the pending change from the change queue before approval |
+| Approval required | No | Yes — automatic or administrator, per institutional policy |
+| Rollback | Re-edit or re-upload a saved Data Dictionary | Cancel before approval; no rollback after approval |
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Important:** The level of automatic approvals in Production mode is set centrally by your institution\'s REDCap support team. Some institutions allow minor changes (adding a new field) to be auto-approved, while others require administrator review for any change. For this installation\'s specific policy, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 4: Draft Mode Approval Policy**.
@@ -254,3 +266,7 @@ significant change is critical.
 
 - RC-FD-05 — Codebook (read-only reference companion to the Online
     Designer)
+
+- RC-SURV-01 — Surveys – Basics (enabling surveys and the survey setup workflow)
+
+- RC-SURV-02 — Survey Settings: Basic Options & Design (Survey Settings page and Survey Notifications)
