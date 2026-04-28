@@ -14,13 +14,13 @@ RC-CDIS-04
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules built on the same CDIS infrastructure. They serve different use cases: CDP is best for real-time, prospective, patient-by-patient data collection with quality review; CDM is best for bulk imports of many patients at once without adjudication. Understanding the differences helps you choose the right tool for each project.
 
 ---
 
-## 2. When to Use Each
+# 2. When to Use Each
 
 | Use Case | CDP | CDM |
 |---|---|---|
@@ -34,9 +34,9 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-## 3. Side-by-Side Comparison
+# 3. Side-by-Side Comparison
 
-### Data Mapping to EHR Fields
+## Data Mapping to EHR Fields
 
 | Dimension | Clinical Data Pull (CDP) | Clinical Data Mart (CDM) |
 |---|---|---|
@@ -49,7 +49,7 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-### Activation Process
+## Activation Process
 
 | Dimension | Clinical Data Pull (CDP) | Clinical Data Mart (CDM) |
 |---|---|---|
@@ -60,7 +60,7 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-### User Privileges
+## User Privileges
 
 | Dimension | Clinical Data Pull (CDP) | Clinical Data Mart (CDM) |
 |---|---|---|
@@ -71,7 +71,7 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-### Data Pull Behavior
+## Data Pull Behavior
 
 | Dimension | Clinical Data Pull (CDP) | Clinical Data Mart (CDM) |
 |---|---|---|
@@ -83,7 +83,7 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-## 4. Key Structural Differences at a Glance
+# 4. Key Structural Differences at a Glance
 
 - **CDP is flexible, user-configured, and patient-by-patient.** It requires more setup (mapping) but gives project teams precise control over what is pulled and when.
 - **CDM is structured, pre-defined, and bulk-oriented.** It requires less project setup but offers less granular control. The project structure cannot be customized.
@@ -92,7 +92,7 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
-## 5. Common Questions
+# 5. Common Questions
 
 **Q: If I enable both CDP and CDM at the system level, do I have to use both in every project?**
 No. Both modules are independent. Once CDIS is configured, you can enable one module, the other module, or both. Each project decides which module(s) to use based on its needs. A single institution can have some projects using CDP, some using CDM, and some using both.
@@ -114,7 +114,7 @@ CDP pulls only the fields you explicitly map. CDM pulls data for all available f
 
 ---
 
-## 6. Common Mistakes & Gotchas
+# 6. Common Mistakes & Gotchas
 
 **Choosing CDP for a retrospective registry study.** CDP is designed for real-time, prospective, patient-by-patient pulls. If you have a large retrospective cohort and just need to import all available EHR data at once, CDM is the better choice. Using CDP for retrospective work is cumbersome because it requires manual patient-by-patient data entry and adjudication.
 
@@ -128,7 +128,7 @@ CDP pulls only the fields you explicitly map. CDM pulls data for all available f
 
 ---
 
-## 7. Related Articles
+# 7. Related Articles
 
 - RC-CDIS-01 — CDIS Overview and Control Center Setup
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage

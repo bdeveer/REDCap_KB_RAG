@@ -12,6 +12,8 @@ RC-BL-02
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Overview; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields; RC-FD-03 — Data Dictionary |
 
+---
+
 # 1. Overview
 
 This article covers the REDCap logic syntax in detail — the operators,
@@ -19,6 +21,8 @@ brackets, quotes, and boolean keywords that make up valid logic
 expressions — and explains how to construct an atomic logic statement:
 the simplest, single-condition statement that forms the building block
 of all branching logic.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -51,6 +55,8 @@ variable reference.
 For structured field types (radio buttons, dropdowns, checkboxes),
 REDCap stores the coded option value — not the display label — in
 the dataset. Logic statements must reference raw values, not labels.
+
+---
 
 # 3. Syntax Language Reference
 
@@ -136,6 +142,8 @@ lowercase are accepted.
 Combining AND and OR in the same statement requires parentheses to
 control evaluation order. See RC-BL-03 for full details.
 
+---
+
 # 4. The Atomic Logic Statement
 
 Every logic statement — no matter how complex — is built from atomic
@@ -157,6 +165,8 @@ The comparison value can be one of the following types:
   Empty / blank               Two quotes with nothing between them          \[email\]\<\>\'\'
   Another variable            Variable name in square brackets              \[email1\]=\[email2\]
   --------------------------- --------------------------------------------- -------------------------
+
+---
 
 # 5. Worked Examples
 
@@ -215,6 +225,8 @@ have the same entry (e.g., email confirmation).
   **Important:** REDCap validates that your logic syntax is correct (valid operators, properly closed brackets, known variable names), but it does not validate whether the logic makes sense for your study. A statement like \[age\]=999 is syntactically valid but will never match any realistic data. Always test your logic against real or realistic test data.
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. Empty vs. Zero --- A Critical Distinction
 
 One of the most common logic errors in REDCap is treating an empty field
@@ -229,6 +241,8 @@ as equivalent to a field containing zero. They are not the same.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Note:** Using \[nr\_pregnancies\]\<\>0 will evaluate to true for both an empty field AND for values like 1, 2, 3. If you specifically want to test for a field that has been actively filled in with a non-zero number, combine conditions: \[nr\_pregnancies\]\<\>\'\' and \[nr\_pregnancies\]\<\>0.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 7. Common Questions
 
@@ -267,6 +281,8 @@ invalid and will not save it. In the Data Dictionary, an invalid
 variable reference will cause an upload error. Always verify variable
 names against the Codebook (RC-FD-05) before writing logic.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 - Comparing text without quotes: \[status\]=enrolled is invalid ---
@@ -290,6 +306,8 @@ names against the Codebook (RC-FD-05) before writing logic.
     not meaning. A statement can be syntactically valid but logically
     impossible (e.g., a range where min \> max). Always run test records
     to confirm the field shows and hides as intended.
+
+---
 
 # 9. Related Articles
 

@@ -14,7 +14,7 @@ RC-RAND-01
 
 ---
 
-# 2. Overview
+# 1. Overview
 
 ## What is this?
 
@@ -42,7 +42,9 @@ trigger options). This document and its companion articles are written
 for REDCap 15.4.4+. If your institution runs an older version, some
 features described here may not be available.
 
-# 3. Learning Objectives
+---
+
+# 2. Learning Objectives
 
 After reviewing this document, the user will be able to:
 
@@ -63,7 +65,9 @@ After reviewing this document, the user will be able to:
 - Identify the constraints that longitudinal project design places on
     randomization setup
 
-# 4. Core Concepts
+---
+
+# 3. Core Concepts
 
 **What is randomization?**
 
@@ -187,7 +191,9 @@ before building your longitudinal framework:
 > events afterward as long as you do not change the event containing the
 > randomization variable.*
 
-# 5. Questions & Answers
+---
+
+# 4. Questions & Answers
 
 **Q: What is the difference between stratified and unstratified randomization?**
 
@@ -213,7 +219,9 @@ The three rights are: (1) **Setup** — configure the randomization model (assig
 
 Only a REDCap administrator can append additional allocations to a production allocation table. This is a recoverable situation but an avoidable one with proper planning. To prevent this, generate at minimum double your target enrollment per group and account for dropout, screen failures, and protocol deviations. Consult your statistician for the appropriate buffer for your specific design.
 
-# 6. Common Mistakes & Gotchas
+---
+
+# 5. Common Mistakes & Gotchas
 
 **Setting up randomization without consulting a statistician**
 
@@ -258,7 +266,9 @@ Only a REDCap administrator can append additional allocations to a production al
     arm-switching is required, either use a single-arm design with
     branching logic, or perform randomization outside REDCap.
 
-# 7. Administrator Configuration
+---
+
+# 6. Administrator Configuration
 
 The Randomization module must be enabled at the system level by a REDCap administrator before it is available in any project. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, the Randomization option does not appear in Project Setup and the Randomize user right is not available.
 
@@ -266,7 +276,9 @@ Once the module is enabled system-wide, randomization is enabled per project by 
 
 > **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
 
-# 8. Related Articles
+---
+
+# 7. Related Articles
 
 - **RC-RAND-02:** Randomization Setup Guide — step-by-step
     configuration procedure
@@ -285,7 +297,9 @@ Once the module is enabled system-wide, randomization is enabled per project by 
 
 - **RC-NAV-UI-02:** Project Menu Reference — the Randomization application appears in the Applications section of the left menu when randomization is enabled for the project
 
-# 9. Version & Change Notes
+---
+
+# 8. Version & Change Notes
 
 | **REDCap Version** | **Notes** |
 | --- | --- |

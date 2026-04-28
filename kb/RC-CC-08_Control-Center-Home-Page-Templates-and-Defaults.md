@@ -199,6 +199,8 @@ Yes. The announcement text, bottom-of-page text, and custom survey footer text a
 **Q: What is the purpose of creating institution-specific project templates?**
 Institution-specific templates allow you to standardize data collection across projects. By creating templates that reflect your organization's common workflows (standard instruments, user roles, event structures), you reduce redundant work and ensure consistency in project setup. Over time, as common patterns emerge in your institution, custom templates become invaluable.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Forgetting to enable newly created templates.** When you add a new template to the system, it is created in a disabled state by default. It will not appear in the template list for users creating new projects until you explicitly enable it on the Project Templates page. Administrators sometimes add a template and wonder why users cannot see it.
@@ -210,6 +212,8 @@ Institution-specific templates allow you to standardize data collection across p
 **HTML injection in announcement text poses security risks.** While HTML is supported in announcement and footer text, malicious HTML (scripts, forms, etc.) could compromise security. Always vet HTML content carefully and limit who can edit these fields. Never allow untrusted users to edit announcement or footer text.
 
 **Survey footer text applies instance-wide, affecting all surveys.** Custom survey footer text is a global setting. If you change it, the new footer appears on all survey pages across all projects. Consider your institution's branding and legal requirements before making changes, as the footer may include disclaimers or compliance notices.
+
+---
 
 # 9. Related Articles
 

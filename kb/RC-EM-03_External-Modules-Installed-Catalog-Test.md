@@ -35,6 +35,8 @@ RC-EM-03
 > 5. Update the **Related Topics** metadata field and cross-references in Sections 1 and 4 in **every existing RC-EM catalog article** to include the new entry.
 > 6. Add the new article to `meta/KB-INDEX.md`.
 
+---
+
 # 1. Overview
 
 This article catalogs the External Modules installed on the **Test / Staging** REDCap instance. Module availability may differ from the Production instance — see RC-EM-02 for the Production catalog. Always verify module availability in the Module Manager for the instance you are working on.
@@ -156,4 +158,3 @@ Once a module is installed at the system level, it must also be enabled at the p
 **Q: How do I know which version of a module is currently installed?**
 
 **A:** The installed version number is shown in the Control Center Module Manager. This article reflects the modules installed at the time it was last updated — for current version numbers, always check the Module Manager directly.
-

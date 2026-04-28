@@ -9,7 +9,7 @@ RC-NAV-REC-03
 | **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-02 — Repeated Instruments and Events Setup, RC-DE-10 — Longitudinal and Repeated Data Entry, RC-SURV-01 — Surveys Basics |
 
 ---
@@ -19,6 +19,8 @@ RC-NAV-REC-03
 This article explains how REDCap handles instruments and events that can
 be filled out multiple times for the same record. It covers the visual
 indicators for repeated entries and how to navigate between them.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -53,6 +55,8 @@ Appears when a repeated event has been repeated three or more times.
 Clicking it collapses the repeated-event columns to save horizontal
 space.
 
+---
+
 # 3. Visual Indicators for Repeated Instruments
 
 ## 3.1 Symbols at a Glance
@@ -81,6 +85,8 @@ that repeated instrument:
   -------------------------------------------------------------------------------------------
   **Note:** A completed survey entry counts as Complete when determining stacked dot color.
   -------------------------------------------------------------------------------------------
+
+---
 
 # 4. Step-by-Step: Navigating Repeated Instruments
 
@@ -125,6 +131,8 @@ that repeated instrument:
 - Click any dot within a repeated event column to open that instrument
     instance.
 
+---
+
 # 5. Combining Repeated Instruments and Longitudinal Mode
 
 Repeated instruments and longitudinal mode can be combined in several
@@ -142,38 +150,42 @@ ways:
   **Important:** A repeated instrument and a repeated event are mutually exclusive within the same event. You cannot have a repeated instrument inside a repeated event. Either the entire event repeats, or individual instruments within a non-repeated event repeat — but not both at once.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. Common Questions
 
 **Q: How do I know how many entries a repeated instrument has without
 clicking the stacked dot?**
 
-A: The stacked dot itself indicates there are multiple entries, but the
+**A:** The stacked dot itself indicates there are multiple entries, but the
 exact count is only visible after clicking it to open the popup list.
 
 **Q: What does a blue stacked dot mean?**
 
-A: It means there is a mix of form statuses across the repeated entries
+**A:** It means there is a mix of form statuses across the repeated entries
 --- for example, some entries are marked Complete while others are still
 Incomplete or Unverified.
 
 **Q: Can repeated instruments be used as surveys?**
 
-A: Yes. Individual entries of a repeated instrument can be filled out as
+**A:** Yes. Individual entries of a repeated instrument can be filled out as
 surveys. A completed survey entry counts as a complete form for the
 purpose of the stacked dot color.
 
 **Q: Can I have a repeated instrument inside a repeated event?**
 
-A: No. These two features are mutually exclusive. An event is either
+**A:** No. These two features are mutually exclusive. An event is either
 repeatable as a whole, or its instruments are repeatable independently
 --- not both.
 
 **Q: The Record Home Page is very wide and hard to read. What can I
 do?**
 
-A: Use the double back arrow to collapse repeated event columns. Also
+**A:** Use the double back arrow to collapse repeated event columns. Also
 consider asking your project designer to set up a custom Record Status
 Dashboard that filters or groups the view.
+
+---
 
 # 7. Common Mistakes & Gotchas
 
@@ -191,6 +203,8 @@ Dashboard that filters or groups the view.
 
 - Assuming a blue stacked dot means an error: blue only means mixed
     statuses. It is not an error indicator.
+
+---
 
 # 8. Related Articles
 

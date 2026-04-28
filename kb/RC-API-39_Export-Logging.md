@@ -61,7 +61,7 @@ Optional parameters (username, record, DAG, date range) that restrict which log 
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -194,19 +194,19 @@ The API returns an array of log entries with action details:
 # 6. Common Questions
 
 **Q: What is the time format for beginTime and endTime?**
-A: Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time.
+**A:** Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time.
 
 **Q: Can I export logs for a specific date range?**
-A: Yes. Set both `beginTime` and `endTime` to define the range. Timestamp is inclusive on both boundaries.
+**A:** Yes. Set both `beginTime` and `endTime` to define the range. Timestamp is inclusive on both boundaries.
 
 **Q: Which logtypes are most useful for compliance audits?**
-A: `'export'` (data exports), `'record_edit'` (field modifications), `'record_delete'` (deleted records), and `'user'` (user access logs) are typically most relevant for compliance tracking.
+**A:** `'export'` (data exports), `'record_edit'` (field modifications), `'record_delete'` (deleted records), and `'user'` (user access logs) are typically most relevant for compliance tracking.
 
 **Q: How far back does the audit log go?**
-A: REDCap retains logs according to your instance's data retention policy. Contact your administrator if you need historical log data beyond the default retention period.
+**A:** REDCap retains logs according to your instance's data retention policy. Contact your administrator if you need historical log data beyond the default retention period.
 
 **Q: Are filtered exports (by user, record, logtype) more efficient than exporting everything?**
-A: Yes. Filtering reduces the result set significantly. Always filter on known criteria to improve query performance.
+**A:** Yes. Filtering reduces the result set significantly. Always filter on known criteria to improve query performance.
 
 ---
 

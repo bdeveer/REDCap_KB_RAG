@@ -12,6 +12,8 @@ RC-EXPRT-06
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-DAG-01 — Data Access Groups; RC-USER-03 — User Rights: Configuring User Privileges; RC-NAV-REC-01 — Record Navigation Overview; RC-NAV-REC-04 — Record Status Dashboard |
 
+---
+
 # 1. Overview
 
 This article explains how to create a custom report in REDCap and select the variables it displays. Custom reports let you define a persistent, reusable view of specific fields across your project's records — unlike the built-in "All Data" or single-instrument options, which are fixed. This is the first article in the Custom Reports series (RC-EXPRT-06 through RC-EXPRT-08); it covers navigation to the report builder, report-level settings (name, public access, description, user access), and all methods for adding and arranging variables. Filtering and result ordering are covered in RC-EXPRT-07; saving and report management in RC-EXPRT-08.
@@ -159,25 +161,25 @@ These options appear below the field list and apply to the full report. The defa
 # 7. Common Questions
 
 **Q: Do I need a special permission to create custom reports?**
-A: Yes. You must have the **Add/Edit/Organize Reports** privilege in your user rights. Without it, you can view reports you have been granted access to, but cannot create, edit, copy, or delete them.
+**A:** Yes. You must have the **Add/Edit/Organize Reports** privilege in your user rights. Without it, you can view reports you have been granted access to, but cannot create, edit, copy, or delete them.
 
 **Q: Can I build a report that pulls from multiple instruments?**
-A: Yes. You can mix variables from any combination of instruments in a single report. Use the Quick Add method or the Look Up method to add variables from different instruments.
+**A:** Yes. You can mix variables from any combination of instruments in a single report. Use the Quick Add method or the Look Up method to add variables from different instruments.
 
 **Q: What does "public report" actually mean — who can see it?**
-A: Anyone who has the public link can view the report, with no login required. There is no authentication barrier. Only make a report public if the data it contains is safe for unrestricted public access.
+**A:** Anyone who has the public link can view the report, with no login required. There is no authentication barrier. Only make a report public if the data it contains is safe for unrestricted public access.
 
 **Q: Why does adding a large instrument slow down the report builder?**
-A: REDCap is loading all the variable rows into your browser's interface. The slowdown is a client-side rendering issue, not a server problem. For very large instruments, use Quick Add and select only the variables you need instead of using Choose Instrument.
+**A:** REDCap is loading all the variable rows into your browser's interface. The slowdown is a client-side rendering issue, not a server problem. For very large instruments, use Quick Add and select only the variables you need instead of using Choose Instrument.
 
 **Q: If I grant a role view access to a report, will users added to that role later see the report automatically?**
-A: Yes. Role and DAG selections are dynamic. Users added to the role or DAG after the report is saved gain access automatically, with no manual update needed.
+**A:** Yes. Role and DAG selections are dynamic. Users added to the role or DAG after the report is saved gain access automatically, with no manual update needed.
 
 **Q: A user says they can see the report but some data is missing. Why?**
-A: The most likely reason is that the user's instrument-level access rights exclude some of the instruments whose variables appear in the report. Data from instruments they cannot view will not be displayed, even if the report includes those variables. Check the user's instrument access in User Rights.
+**A:** The most likely reason is that the user's instrument-level access rights exclude some of the instruments whose variables appear in the report. Data from instruments they cannot view will not be displayed, even if the report includes those variables. Check the user's instrument access in User Rights.
 
 **Q: Can I add the same variable to a report more than once?**
-A: No. REDCap prevents duplicate variables in a report, regardless of which method you use to add them.
+**A:** No. REDCap prevents duplicate variables in a report, regardless of which method you use to add them.
 
 ---
 

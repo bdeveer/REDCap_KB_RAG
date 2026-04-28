@@ -14,7 +14,7 @@ RC-RAND-03
 
 ---
 
-# 2. Overview
+# 1. Overview
 
 ## What is this?
 
@@ -31,7 +31,9 @@ record, misreading the dashboard, or an administrator making an
 unnecessary intervention — can compromise study integrity and require
 protocol deviations.
 
-# 3. Learning Objectives
+---
+
+# 2. Learning Objectives
 
 After reviewing this document, the user will be able to:
 
@@ -54,9 +56,11 @@ After reviewing this document, the user will be able to:
 - (Administrators) Use allocation-level edit actions and understand
     when they are appropriate
 
-# 4. Randomizing a Record
+---
 
-## 4.1 Manual randomization — Randomize button
+# 3. Randomizing a Record
+
+## 3.1 Manual randomization — Randomize button
 
 This is the default trigger option. The randomization variable field is
 replaced in the UI by a Randomize button.
@@ -73,7 +77,7 @@ replaced in the UI by a Randomize button.
 > not to randomize real participants. This warning does not appear in
 > Production mode.*
 
-## 4.2 Automatic trigger randomization
+## 3.2 Automatic trigger randomization
 
 If the randomization model was configured with one of the two trigger
 logic options, randomization can fire automatically in addition to (or
@@ -89,7 +93,7 @@ instead of) the manual button.
 > time. A user without Randomize rights will see the field greyed out
 > and non-interactive regardless of trigger mode.*
 
-## 4.3 What unauthorized users see
+## 3.3 What unauthorized users see
 
 Users who do not have the Randomize right assigned to their account see
 the randomization variable as a greyed-out, non-interactive field ---
@@ -97,7 +101,9 @@ for both open and blinded randomization types. They cannot click the
 Randomize button or interact with the field in any way. This is by
 design and is not a bug.
 
-# 5. Randomization Summary Table
+---
+
+# 4. Randomization Summary Table
 
 Navigate to Applications → Randomization to see the summary table for
 all randomization models in the project. Each row is one model.
@@ -113,13 +119,15 @@ all randomization models in the project. Each row is one model.
 | **Dashboard (icon)** | Opens the randomization dashboard for that model. Requires Dashboard user right. |
 | **Randomization ID** | A system-generated global ID for the model. Primarily used by REDCap administrators for backend database lookups. |
 
-# 6. Randomization Dashboard
+---
+
+# 5. Randomization Dashboard
 
 The dashboard provides a real-time view of allocation usage for a
 specific randomization model. Access it via the Dashboard icon in the
 summary table. Requires the Dashboard user right.
 
-## 6.1 What all users see
+## 5.1 What all users see
 
 | **Column** | **What it shows** |
 | --- | --- |
@@ -134,14 +142,14 @@ summary table. Requires the Dashboard user right.
 > with 2 cohorts and 2 stratification levels will have 4 rows per cohort
 > combination, not 2.*
 
-## 6.2 What administrators additionally see
+## 5.2 What administrators additionally see
 
 Administrators see one additional column: View. Clicking the dashboard
 icon in the View column drills into that specific allocation group and
 reveals the full allocation table with individual slot-level actions.
 See Section 7 for administrator actions.
 
-## 6.3 Monitoring best practices
+## 5.3 Monitoring best practices
 
 - **Check \'Not Used\' counts regularly:** If a group is approaching
     zero remaining slots, contact your REDCap administrator to append
@@ -153,6 +161,8 @@ See Section 7 for administrator actions.
 
 - **Record IDs are clickable:** Use the dashboard to navigate directly
     to randomized records for quick auditing.
+
+---
 
 # 6. Randomization Smart Variables
 
@@ -169,6 +179,8 @@ to create an audit trail or trigger downstream logic.
 > **Note:** *For projects with multiple randomization models, each smart
 > variable can be targeted to a specific model. Consult the REDCap smart
 > variable documentation within REDCap for the exact syntax.*
+
+---
 
 # 7. Administrator Options
 
@@ -227,7 +239,11 @@ are limited and all have significant consequences.
 > project and starting over. Neither is straightforward. This reinforces
 > why thorough testing before production is essential.*
 
+---
+
 # 8. Questions & Answers
+
+---
 
 # 9. Common Mistakes & Gotchas
 
@@ -276,6 +292,8 @@ reason properly**
     insufficient allocation table size, incorrect stratification setup,
     or inadequate user training.
 
+---
+
 # 10. Related Articles
 
 - **RC-RAND-01:** Randomization Concepts & Terminology ---
@@ -295,6 +313,8 @@ reason properly**
 
 - **RC-PIPE-13:** Smart Variables: Randomization — reference for the
     \[rand-time\], \[rand-utc-time\], and \[rand-number\] smart variables
+
+---
 
 # 11. Version & Change Notes
 

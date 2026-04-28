@@ -173,31 +173,31 @@ REDCap does not provide a native scheduled backup feature accessible from the pr
 # 8. Common Questions
 
 **Q: How do I back up my REDCap project?**
-A: Go to Project Setup → Other Functionality and download the project ZIP archive. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API (RC-API-36) in an automated script.
+**A:** Go to Project Setup → Other Functionality and download the project ZIP archive. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API (RC-API-36) in an automated script.
 
 **Q: Can I restore a project from a backup without losing the original?**
-A: Yes. Restoring always creates a new project — REDCap does not overwrite an existing project. Your original project remains unchanged, and the restored backup becomes a separate project that you can compare or rename.
+**A:** Yes. Restoring always creates a new project — REDCap does not overwrite an existing project. Your original project remains unchanged, and the restored backup becomes a separate project that you can compare or rename.
 
 **Q: Does the project XML export include file uploads from File Upload fields?**
-A: Not by default. File attachments are excluded from the standard project XML download in the UI. Via the API, you can set `exportFiles=true` to embed file attachments, but this can make the export very large. File Repository contents are not included in any project XML export.
+**A:** Not by default. File attachments are excluded from the standard project XML download in the UI. Via the API, you can set `exportFiles=true` to embed file attachments, but this can make the export very large. File Repository contents are not included in any project XML export.
 
 **Q: Does the project XML export include user rights?**
-A: No. User accounts, user rights, and user-role assignments are not included in the project XML. After restoring from backup, you must reconfigure user access manually.
+**A:** No. User accounts, user rights, and user-role assignments are not included in the project XML. After restoring from backup, you must reconfigure user access manually.
 
 **Q: Can I use my backup to move my project to a different institution's REDCap?**
-A: Yes, with limitations. The ODM XML file can be imported on any REDCap instance. However, features specific to the source instance (external modules, institutional integrations, field validation types not enabled on the destination) may not carry over. Test the import in a development environment before relying on it for a critical migration.
+**A:** Yes, with limitations. The ODM XML file can be imported on any REDCap instance. However, features specific to the source instance (external modules, institutional integrations, field validation types not enabled on the destination) may not carry over. Test the import in a development environment before relying on it for a critical migration.
 
 **Q: Who is responsible for making sure my REDCap data is backed up?**
-A: Responsibility is shared. Project managers and administrators are responsible for maintaining project-level XML backups. The institution's IT team is responsible for infrastructure-level database backups. For critical studies, both layers of backup are recommended.
+**A:** Responsibility is shared. Project managers and administrators are responsible for maintaining project-level XML backups. The institution's IT team is responsible for infrastructure-level database backups. For critical studies, both layers of backup are recommended.
 
 **Q: Is there a way to schedule automatic backups within REDCap?**
-A: Not natively. REDCap does not include a built-in scheduled backup feature. Automation requires using the API in an external script or relying on IT-managed infrastructure backups.
+**A:** Not natively. REDCap does not include a built-in scheduled backup feature. Automation requires using the API in an external script or relying on IT-managed infrastructure backups.
 
 **Q: What is the difference between a backup and a project copy?**
-A: A project copy duplicates the project design (instruments, fields, logic) with no data. A backup (full XML export) preserves both the project design and all data records. Use project copy for reusing a design; use a backup for disaster recovery or archiving.
+**A:** A project copy duplicates the project design (instruments, fields, logic) with no data. A backup (full XML export) preserves both the project design and all data records. Use project copy for reusing a design; use a backup for disaster recovery or archiving.
 
 **Q: Can I restore just a subset of records from a backup?**
-A: Not directly via the restore process. The project XML import always creates a new project with everything in the file. To restore only a subset of records, import the full backup into a new project, then re-export just the records you need and import them into your production project using the data import process.
+**A:** Not directly via the restore process. The project XML import always creates a new project with everything in the file. To restore only a subset of records, import the full backup into a new project, then re-export just the records you need and import them into your production project using the data import process.
 
 ---
 

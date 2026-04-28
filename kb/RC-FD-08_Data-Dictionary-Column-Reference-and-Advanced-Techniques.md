@@ -566,31 +566,31 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 
 **Q: What exactly does REDCap delete when I upload a Data Dictionary that is missing some rows?**
 
-A: Any variable present in the current project but absent from the uploaded CSV is deleted — including any data collected for that variable. REDCap warns you during the upload review if variables with existing data are about to be removed, but the deletion is irreversible once confirmed. Always verify your row count before uploading.
+**A:** Any variable present in the current project but absent from the uploaded CSV is deleted — including any data collected for that variable. REDCap warns you during the upload review if variables with existing data are about to be removed, but the deletion is irreversible once confirmed. Always verify your row count before uploading.
 
 **Q: What is the difference between `dropdown` and `radio`?**
 
-A: Both field types allow single-select from a defined list and use the same choices syntax (Column F). The difference is purely visual: `dropdown` renders as a compact drop-down menu (better when there are many choices), while `radio` renders all choices as visible radio buttons (better for short lists where seeing all options at once is helpful).
+**A:** Both field types allow single-select from a defined list and use the same choices syntax (Column F). The difference is purely visual: `dropdown` renders as a compact drop-down menu (better when there are many choices), while `radio` renders all choices as visible radio buttons (better for short lists where seeing all options at once is helpful).
 
 **Q: Can I add or change action tags using the Online Designer instead of the Data Dictionary?**
 
-A: Yes. The Online Designer's field editor includes a Field Annotation box where you can add or edit action tags for individual variables. The Data Dictionary is more efficient when you need to add the same action tag to many variables at once.
+**A:** Yes. The Online Designer's field editor includes a Field Annotation box where you can add or edit action tags for individual variables. The Data Dictionary is more efficient when you need to add the same action tag to many variables at once.
 
 **Q: Can I use the Data Dictionary to rename an instrument?**
 
-A: Partially. Changing the value in Column B (Form Name) changes the internal instrument identifier. REDCap also allows you to separately set a display name (with spaces and capitalization) in the Online Designer after import. If you change the Form Name for an existing instrument, REDCap treats it as a new instrument — the old one is deleted if no variables remain assigned to it.
+**A:** Partially. Changing the value in Column B (Form Name) changes the internal instrument identifier. REDCap also allows you to separately set a display name (with spaces and capitalization) in the Online Designer after import. If you change the Form Name for an existing instrument, REDCap treats it as a new instrument — the old one is deleted if no variables remain assigned to it.
 
 **Q: My upload was rejected with a validation error in Column F. What is the most likely cause?**
 
-A: The most common causes are: (1) a comma embedded in a raw value (e.g., `1, Yes, confirmed` has a comma in the label preceding a pipe separator), (2) the column is blank for a dropdown, radio, or checkbox field, or (3) the choice list uses incorrect syntax (missing commas between raw values and labels, or missing pipe separators between choices).
+**A:** The most common causes are: (1) a comma embedded in a raw value (e.g., `1, Yes, confirmed` has a comma in the label preceding a pipe separator), (2) the column is blank for a dropdown, radio, or checkbox field, or (3) the choice list uses incorrect syntax (missing commas between raw values and labels, or missing pipe separators between choices).
 
 **Q: My branching logic worked in the Online Designer but REDCap rejected it in the Data Dictionary upload. Why?**
 
-A: The most common cause is using double quotes instead of single quotes around string values. The Online Designer accepts double quotes, but the Data Dictionary validator requires single quotes. Replace all `"` with `'` in Column L before uploading.
+**A:** The most common cause is using double quotes instead of single quotes around string values. The Online Designer accepts double quotes, but the Data Dictionary validator requires single quotes. Replace all `"` with `'` in Column L before uploading.
 
 **Q: Can I include HTML in the Field Label or Field Note columns?**
 
-A: Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` for emphasis, `<br>` for line breaks, and `<i>italic</i>`. Test HTML rendering in both survey mode and data entry mode, as display may differ slightly.
+**A:** Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` for emphasis, `<br>` for line breaks, and `<i>italic</i>`. Test HTML rendering in both survey mode and data entry mode, as display may differ slightly.
 
 ---
 

@@ -18,6 +18,8 @@ RC-CC-09
 
 The To-Do List is the REDCap administrator's task queue for pending action items that require review or approval. Accessible from the top of the Control Center sidebar at `ToDoList/index.php`, the To-Do List displays requests generated automatically by REDCap when users perform actions requiring administrator review. This centralized queue helps administrators manage their workflow and ensure timely processing of critical tasks.
 
+---
+
 # 2. Active Requests
 
 The main section of the To-Do List displays all pending tasks awaiting administrator action. 
@@ -32,6 +34,8 @@ The main section of the To-Do List displays all pending tasks awaiting administr
 
 Administrators can click on any request to view details and take action.
 
+---
+
 # 3. Common Task Types
 
 The most common task type is **"Approve draft changes"**, which is automatically generated when a project in Production mode has pending design changes submitted for review. This ensures administrators review and approve all structural changes to production projects before they take effect.
@@ -40,6 +44,8 @@ Other task types may appear depending on system configuration and feature usage,
 - Copy project requests requiring approval
 - Project creation requests requiring approval
 - Other custom workflows configured at your institution
+
+---
 
 # 4. Completing Tasks
 
@@ -53,6 +59,8 @@ To complete a task, administrators click on the request to open it.
 
 After the administrator takes action (approve or reject), the request moves from the Active Requests section to the Completed & Archived section.
 
+---
+
 # 5. Completed & Archived Requests
 
 A paginated history of all previously handled requests is maintained for audit and reference purposes. Each archived entry shows:
@@ -65,6 +73,8 @@ A paginated history of all previously handled requests is maintained for audit a
 - **Completing administrator**: The name of the administrator who processed it
 
 The archived list is paginated and searchable, making it easy to locate past requests for compliance and audit purposes.
+
+---
 
 # 6. Relationship to Draft Mode
 
@@ -102,6 +112,8 @@ Completed requests are retained indefinitely in the system for audit and complia
 **Q: Can I create tasks in the To-Do List manually, or are all tasks generated automatically?**
 Tasks are generated automatically by REDCap when specific actions occur (such as draft design changes being submitted). Administrators cannot manually create arbitrary tasks in the To-Do List. The list serves as a system-driven workflow queue, not a general task management tool.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Missing draft change notifications.** Administrators may not realize that draft changes have been submitted if they don't check the To-Do List regularly and have not configured email notifications. Establish a routine to check the To-Do List daily, or configure your system to send email alerts when production projects have pending changes awaiting review.
@@ -111,6 +123,8 @@ Tasks are generated automatically by REDCap when specific actions occur (such as
 **Forgetting that approved changes affect active projects immediately.** When you approve draft changes to a production project, the changes take effect immediately. Users currently working with the project may see the updated design in real-time. Communicate with your research teams about planned design changes, and consider scheduling approvals during maintenance windows or off-peak hours to minimize disruption.
 
 **Archived requests becoming lost in pagination.** If your institution has many historical requests, the Completed & Archived Requests section becomes long and requires pagination. Use search and date filters to locate specific past requests rather than scrolling through pages.
+
+---
 
 # 9. Related Articles
 

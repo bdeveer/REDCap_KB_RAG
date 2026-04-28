@@ -130,6 +130,8 @@ At the bottom of the Custom Application Links page, provide:
 
 Save the link, then configure User Access and other per-link settings as needed.
 
+---
+
 # 6. Common Questions
 
 **Q: Can I create a link to another REDCap project on the same instance?**
@@ -147,6 +149,8 @@ Yes. When configuring user access, you can specify "Excluded projects." The link
 **Q: If I use Advanced Link, does the external site need to be on the same institution network?**
 No. The external site can be anywhere, as long as it is accessible over the internet. The Advanced Link requires that the external site be able to receive POST requests and communicate with the REDCap API endpoint to verify the authkey. The external site can be on any server, including cloud-hosted platforms.
 
+---
+
 # 7. Common Mistakes & Gotchas
 
 **Using Simple Link instead of Advanced Link when user identity is needed.** If your external application needs to know who the user is, you must use Advanced Link type. Simple Link does not send any user information, so the external site will have no way to identify the person visiting. This is a common mistake when trying to integrate with external systems that require authentication.
@@ -154,6 +158,8 @@ No. The external site can be anywhere, as long as it is accessible over the inte
 **Forgetting to URL-encode special characters in the link destination.** If your URL contains special characters (spaces, ampersands, question marks), they must be properly URL-encoded. For example, spaces become `%20` and ampersands in query parameters should be part of the query string, not standalone characters. Test the link after creation to ensure it works correctly.
 
 **Appending record ID to a link without testing what happens when no record is active.** If you enable "Append record info to URL" but users access the link from a page without a record context (like the project home), the external site may malfunction or display an error if it does not handle missing record IDs. Always test your link from multiple pages within a project to ensure it works in all contexts.
+
+---
 
 # 8. Related Articles
 

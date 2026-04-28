@@ -18,13 +18,13 @@ RC-CDIS-01
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 Clinical Data Interoperability Services (CDIS) is the technical infrastructure that enables REDCap to communicate with Electronic Health Record (EHR) systems. It uses the SMART on FHIR technology stack to standardize how clinical data flows from an EHR into REDCap. CDIS must be configured once at the system level; after setup, two distinct modules — Clinical Data Pull (CDP) and Clinical Data Mart (CDM) — can use it independently to import clinical data in different ways suited to different use cases.
 
 ---
 
-## 2. What Is CDIS?
+# 2. What Is CDIS?
 
 **Clinical Data Interoperability Services (CDIS)** is the technical infrastructure within REDCap that enables communication between REDCap and an EHR (Electronic Health Record) system. It powers two built-in REDCap modules:
 
@@ -35,7 +35,7 @@ Both modules rely on the same CDIS foundation. Once CDIS is configured at the sy
 
 ---
 
-## 3. Key Terminology
+# 3. Key Terminology
 
 | Term | Meaning |
 |---|---|
@@ -49,7 +49,7 @@ Both modules rely on the same CDIS foundation. Once CDIS is configured at the sy
 
 ---
 
-## 4. How CDIS Works
+# 4. How CDIS Works
 
 CDIS uses the **SMART on FHIR** technology stack — a set of HTTP web services that transfer structured clinical data out of an EHR in a standardized FHIR format. Most major EHR systems (Epic, Cerner, etc.) implement their own version of FHIR web services, so the setup process varies by EHR, but the overall framework is consistent.
 
@@ -57,11 +57,11 @@ From a security standpoint, CDIS requires **HTTPS (encryption-in-transit)** for 
 
 ---
 
-## 5. System-Level Setup (Control Center)
+# 5. System-Level Setup (Control Center)
 
 Before any project can use CDP or CDM, an administrator must configure CDIS on the **Clinical Data Interoperability Services** page in the Control Center.
 
-### Setup Steps
+## Setup Steps
 
 1. **Download the setup ZIP file** from the CDIS Control Center page. The ZIP contains setup instructions and technical specifications. Use the EHR-specific instructions if available, otherwise use the "Instructions - General" file.
 
@@ -74,13 +74,13 @@ Before any project can use CDP or CDM, an administrator must configure CDIS on t
 
 Once REDCap can be launched from inside the EHR, it can also make outbound calls to the EHR when users access CDP or CDM from the REDCap side (i.e., in their web browser, outside the EHR).
 
-### Where to Find CDIS in the Control Center
+## Where to Find CDIS in the Control Center
 
 The CDIS page is a dedicated section within the Control Center, separate from the general Modules/Services Configuration page. It includes documentation links, the comparison table between CDP and CDM, and configuration fields for enabling each module and entering FHIR credentials.
 
 ---
 
-## 6. Additional Control Center Resources on the CDIS Page
+# 6. Additional Control Center Resources on the CDIS Page
 
 The CDIS Control Center page also links to:
 
@@ -92,7 +92,7 @@ The CDIS Control Center page also links to:
 
 ---
 
-## 7. Common Questions
+# 7. Common Questions
 
 **Q: What is the difference between CDIS, CDP, and CDM?**
 CDIS is the underlying infrastructure and configuration layer that must be set up first. CDP and CDM are two separate modules that both use CDIS to import data. CDP is best for small-scale, real-time, patient-by-patient data pulls with adjudication; CDM is best for bulk imports of many patients at once. You can use both modules simultaneously once CDIS is configured.
@@ -114,7 +114,7 @@ No. After the user completes the initial EHR Launch (which triggers OAuth2 autho
 
 ---
 
-## 8. Common Mistakes & Gotchas
+# 8. Common Mistakes & Gotchas
 
 **Not downloading and reviewing the EHR-specific setup instructions.** The CDIS Control Center provides a setup ZIP file with institution-specific or EHR-specific instructions. Some EHR systems (like Epic) have simplified procedures or different technical requirements. Skipping this step often leads to misconfigured FHIR endpoints or missing required credentials. Always download the ZIP and follow the instructions for your specific EHR.
 
@@ -126,7 +126,7 @@ No. After the user completes the initial EHR Launch (which triggers OAuth2 autho
 
 ---
 
-## 9. Related Articles
+# 9. Related Articles
 
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage

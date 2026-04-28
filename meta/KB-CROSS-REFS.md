@@ -4,6 +4,30 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 ---
 
+### RC-FILE-01 — File Repository
+
+**Prerequisites:** RC-NAV-UI-01 — Project Navigation UI
+
+**Outbound links:**
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-DAG-01 — Data Access Groups
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-SENDIT-01 — Send-It: Secure File Transfer
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-API-45 — Create Folder (File Repository) API
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
+
+**Inbound links (referenced by):**
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+
+---
+
 ## Per-Article Reference Details
 
 Each entry lists: **Prerequisites** (must be read first), **Outbound links** (articles this one references), and **Inbound links** (articles that reference this one). ⚠️ marks articles not yet in the KB.

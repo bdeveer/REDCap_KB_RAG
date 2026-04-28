@@ -22,6 +22,8 @@ fields and branching logic work, how to set form status, and all
 available save options. Understanding these mechanics is required before
 entering any data in REDCap.
 
+---
+
 # 2. Key Concepts & Definitions
 
 **Instrument (Form)**
@@ -62,6 +64,8 @@ user — fields simply appear or disappear as data is entered.
 REDCap does not auto-save. Data is only committed to the database when
 the user explicitly saves the form using one of four save buttons at the
 bottom of every instrument.
+
+---
 
 # 3. Field Types
 
@@ -112,6 +116,8 @@ and shows an error if the value does not match.
   Zipcode                  Requires a US ZIP code format.
   ------------------------ -----------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Required Fields
 
 A required field is marked with a red asterisk (\*) next to the field
@@ -121,6 +127,8 @@ empty, REDCap displays a warning listing the empty required fields.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Important:** Required fields are a soft constraint for regular users. The save warning can be dismissed and the form saved anyway with the required field empty. If your study protocol requires these fields to be filled, enforce compliance through team training and data quality checks — not solely through REDCap\'s required-field mechanism.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 5. Branching Logic
 
@@ -145,6 +153,8 @@ instrument (or in some configurations, other instruments).
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Troubleshooting:** If a field seems to be missing from an instrument, check whether branching logic may be hiding it before reporting it as a bug. Changing an earlier field value may reveal it.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 6. Form Status
 
@@ -173,6 +183,8 @@ dot in the Record Home Page and Record Status Dashboard.
     automatically and are separate from the manual form status described
     here.
 
+---
+
 # 7. Saving Data
 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -193,25 +205,27 @@ Every instrument has four save options at the bottom of the page:
   **Warning:** Clicking Cancel on an instrument discards all unsaved changes on that form and returns you to the Record Home Page. There is no undo.
   ----------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 8. Common Questions
 
 **Q: A required field has a red asterisk but I need to save the form
 without filling it in. Can I?**
 
-A: Yes. The required field warning is a soft prompt. You can dismiss the
+**A:** Yes. The required field warning is a soft prompt. You can dismiss the
 warning and save the form anyway. REDCap will not block the save.
 However, your study\'s data quality rules may flag this for follow-up.
 
 **Q: A field I expected to see on the form is not there. What
 happened?**
 
-A: The field is likely hidden by branching logic. Check whether an
+**A:** The field is likely hidden by branching logic. Check whether an
 earlier field that controls the logic has been filled in correctly. The
 hidden field will appear once the branching condition is met.
 
 **Q: What is the difference between the grey dot and the red dot?**
 
-A: Grey means no data has been saved to that instrument at all. Red
+**A:** Grey means no data has been saved to that instrument at all. Red
 means data has been saved but the Form Status dropdown is still set to
 \'Incomplete\' (the default). A single saved value is enough to turn a
 grey dot red.
@@ -219,29 +233,31 @@ grey dot red.
 **Q: Do I have to set the form status to \'Complete\' after every
 entry?**
 
-A: No. It is optional. However, using yellow and green statuses makes it
+**A:** No. It is optional. However, using yellow and green statuses makes it
 much easier to track which records have been reviewed versus just
 entered, especially in large projects with many instruments.
 
 **Q: What does \'Save and Go to Next Record\' do if I am on the last
 record?**
 
-A: If there is no next record, REDCap will not navigate further. It
+**A:** If there is no next record, REDCap will not navigate further. It
 behaves like \'Save and Stay\' and you remain on the current form.
 
 **Q: Can I enter data in checkboxes by selecting multiple options?**
 
-A: Yes. Checkboxes allow any number of options to be selected
+**A:** Yes. Checkboxes allow any number of options to be selected
 independently. Each checkbox option is stored as a separate yes/no
 binary variable in the dataset export.
 
 **Q: What happens to a field hidden by branching logic — is the data
 deleted?**
 
-A: Yes. When branching logic hides a field, REDCap clears and deletes
+**A:** Yes. When branching logic hides a field, REDCap clears and deletes
 any value previously stored in that field. This is by design. If the
 field becomes visible again (because the controlling value changed
 back), it starts empty.
+
+---
 
 # 9. Common Mistakes & Gotchas
 

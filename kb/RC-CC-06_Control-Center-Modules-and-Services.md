@@ -266,7 +266,7 @@ See RC-AI-01 for an overview of REDCap's AI tools and security considerations.
 
 ---
 
-# 27. Common Questions
+# 2. Common Questions
 
 **Q: What is the difference between enabling a feature here and enabling it at the project level?**
 System-level settings on this page are the master on/off switches — if a feature is disabled here, no project can use it, regardless of project settings. If a feature is enabled here, project-level settings then control whether individual projects use it. For example, if "Surveys" is disabled here, no project can create surveys even if they want to. If it is enabled here, each project can independently choose whether to use surveys.
@@ -285,7 +285,7 @@ OpenAI (Azure) and Google Gemini are cloud-hosted, managed services that require
 
 ---
 
-# 28. Common Mistakes & Gotchas
+# 3. Common Mistakes & Gotchas
 
 **Enabling third-party service features (SMS, AI) without configuring the required credentials.** Enabling Twilio, SendGrid, or AI services without entering valid API credentials leaves users unable to use the feature and can generate confusing error messages. Always test third-party integrations in a staging environment and verify that API keys are correct and active before rolling out to production.
 
@@ -295,7 +295,7 @@ OpenAI (Azure) and Google Gemini are cloud-hosted, managed services that require
 
 ---
 
-# 29. Related Articles
+# 4. Related Articles
 
 - RC-AI-01 — REDCap AI Tools: Overview & Security (overview of AI features enabled by this page)
 - RC-CC-02 — Control Center: General System Configuration (related system-wide settings)

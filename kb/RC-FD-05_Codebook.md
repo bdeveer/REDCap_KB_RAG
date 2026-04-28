@@ -12,6 +12,8 @@ RC-FD-05
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-FD-08 — Data Dictionary Column Reference & Advanced Techniques; RC-NAV-UI-02 — Project Menu Reference |
 
+---
+
 # 1. Overview
 
 The Codebook is a read-only, human-readable view of every instrument and
@@ -19,6 +21,8 @@ variable in a REDCap project. It provides a comprehensive, always
 up-to-date reference of the project's structure without requiring the
 user to navigate the Online Designer or parse a CSV file. This article
 explains what the Codebook shows, where to find it, and when to use it.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -43,6 +47,8 @@ links that open the branching logic editor for specific variables. These
 links are shortcuts — they take you to the appropriate design tool,
 not to an editable state within the Codebook itself.
 
+---
+
 # 3. Accessing the Codebook
 
 - From the Project Setup page: click **Codebook** in the Design Your Data
@@ -53,6 +59,8 @@ not to an editable state within the Codebook itself.
 
 - The Codebook opens to a full listing of all instruments and their
     variables, organized by instrument.
+
+---
 
 # 4. Codebook Layout
 
@@ -112,6 +120,8 @@ The main body of the Codebook is a field-by-field table with three columns:
 Each instrument is introduced by a banner row showing the instrument's
 display name, form name, and whether it is **Enabled as survey** (shown
 in green).
+
+---
 
 # 5. What the Codebook Shows
 
@@ -216,6 +226,8 @@ calculated fields using the standard variable name syntax:
   **Note:** The Codebook always reflects the currently applied state of the project. In Production mode, pending (unapproved) Online Designer changes are not shown — the Codebook shows only what is live.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. When to Use the Codebook
 
 The Codebook is the right tool in these situations:
@@ -264,6 +276,8 @@ The Codebook is the right tool in these situations:
     arm/event assignments, repeating setup, field types, choices, branching
     logic, and action tags, all in one structured document.
 
+---
+
 # 7. Codebook vs. Other Reference Options
 
   ---------------------------------- ----------------------------------------- ------------------------------- ------------------------------------------------------------------
@@ -279,32 +293,34 @@ The Codebook is the right tool in these situations:
 > tabular structure described in this article and includes the header, instruments/events summary tables, and the full
 > field-by-field table with all attributes. Use it when you need a compact, attribute-rich snapshot of your project structure.
 
+---
+
 # 8. Common Questions
 
 **Q: Can I edit variables directly from the Codebook?**
 
-A: No. The Codebook is read-only. It contains inline links that open the
+**A:** No. The Codebook is read-only. It contains inline links that open the
 Online Designer's edit interface or branching logic editor for
 individual variables, but the editing itself happens in those tools —
 not in the Codebook.
 
 **Q: Does the Codebook update in real time as I make changes?**
 
-A: Yes, for applied changes. In Development mode, changes made in the
+**A:** Yes, for applied changes. In Development mode, changes made in the
 Online Designer or via Data Dictionary upload are reflected immediately.
 In Production mode, pending (unapproved) changes are not shown — the
 Codebook reflects only the live project state.
 
 **Q: Is the Codebook the same as the Data Dictionary?**
 
-A: No. The Data Dictionary is a CSV file that defines your project's
+**A:** No. The Data Dictionary is a CSV file that defines your project's
 variables and can be uploaded to modify them. The Codebook is a
 read-only web view of the same information in a more readable format.
 They present similar content but serve entirely different purposes.
 
 **Q: Can I export the Codebook as a file?**
 
-A: Not directly as a Codebook export from the Codebook page itself.
+**A:** Not directly as a Codebook export from the Codebook page itself.
 For a portable version, use **Download the current Data Dictionary
 (CSV)** or **Download PDF of All Instruments**, both available from
 the Design Your Data Collection Instruments section. The PDF option
@@ -314,7 +330,7 @@ Codebook view.
 **Q: I'm new to a project and need to understand its structure quickly.
 Is the Codebook the best starting point?**
 
-A: Yes. The Codebook gives you a structured, human-readable view of all
+**A:** Yes. The Codebook gives you a structured, human-readable view of all
 instruments and variables — including branching logic conditions, action
 tags, and (for longitudinal projects) the events each instrument is
 assigned to — without requiring you to interpret a CSV or navigate the
@@ -322,17 +338,19 @@ Online Designer instrument by instrument.
 
 **Q: Where do I find the exact unique event names I need for branching logic or piping?**
 
-A: The Events table in the Codebook header section lists all events with
+**A:** The Events table in the Codebook header section lists all events with
 their unique event names (the internal identifiers used in expressions).
 This is the fastest way to confirm the exact string you need.
 
 **Q: Why does my field label in the Codebook show something like `[enterprise_redcap_arm_1][field_name]` instead of a real label?**
 
-A: In longitudinal projects with repeated instruments, field labels are
+**A:** In longitudinal projects with repeated instruments, field labels are
 sometimes built using piping syntax that pulls values from another event.
 The Codebook displays the raw syntax as it was entered — it does not
 resolve piped values. The actual label a user sees during data entry will
 be different.
+
+---
 
 # 9. Common Mistakes & Gotchas
 
@@ -384,6 +402,8 @@ be different.
     auto-generated `_complete` completion status fields. They appear in
     the Codebook and in data exports but are intentionally absent from
     the Data Dictionary. This is expected behavior, not a project error.
+
+---
 
 # 10. Related Articles
 

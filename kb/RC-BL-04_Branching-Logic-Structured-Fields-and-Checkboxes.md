@@ -12,6 +12,8 @@ RC-BL-04
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-FD-05 — Codebook; RC-DE-02 — Basic Data Entry |
 
+---
+
 # 1. Overview
 
 This article explains how to write branching logic for structured field
@@ -19,6 +21,8 @@ types — fields with a predefined set of options. It covers the concept
 of raw values, the distinction between single-choice and multiple-choice
 (checkbox) fields, and the special sub-variable syntax required to
 reference individual checkbox options.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -55,6 +59,8 @@ The individual variable created for each option in a checkbox field. A
 checkbox with 5 options creates 5 sub-variables. Sub-variables are
 referenced in logic using the format \[variable\_name(raw\_value)\].
 Each sub-variable has a value of 1 (checked) or 0 (unchecked).
+
+---
 
 # 3. Raw Values --- What They Are and How to Find Them
 
@@ -98,6 +104,8 @@ field can share a raw value.
   **Important:** Always use the raw value in logic statements, never the display label. If the label is \'Strongly Agree\' and the raw value is 1, write \[field\]=\'1\' — not \[field\]=\'Strongly Agree\'. Labels can be changed by the project designer at any time; raw values are stable.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Single-Choice Fields in Branching Logic
 
 Single-choice fields store exactly one value — the raw value of the
@@ -132,6 +140,8 @@ signature captured:
 
 You cannot compare the file contents — only the presence or absence of
 the file.
+
+---
 
 # 5. Checkbox Fields in Branching Logic
 
@@ -221,6 +231,8 @@ Show a field when a specific option is explicitly NOT checked:
   **Warning:** Do not switch a checkbox field to a radio button field (or vice versa) after branching logic has been written that references it. The sub-variable syntax for checkboxes is incompatible with the single-value syntax for radio buttons. Any existing logic referencing that field will break and must be rewritten.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. Common Questions
 
 **Q: How do I find the raw values for a field\'s options?**
@@ -270,6 +282,8 @@ affected field in the Online Designer, review the branching logic, and
 update the syntax. The Data Dictionary can speed this up if many fields
 are affected.
 
+---
+
 # 7. Common Mistakes & Gotchas
 
 - Using the display label instead of the raw value:
@@ -296,6 +310,8 @@ are affected.
     for users familiar with radio buttons is writing checkbox logic
     without the sub-variable syntax. The field name alone does not refer
     to any single value for a checkbox field.
+
+---
 
 # 8. Related Articles
 

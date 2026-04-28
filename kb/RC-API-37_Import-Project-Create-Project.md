@@ -69,7 +69,7 @@ A project structure supporting multiple time points (events) and study arms. Req
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -231,19 +231,19 @@ On error, you receive an error message:
 # 6. Common Questions
 
 **Q: What is a Super API Token and where do I get one?**
-A: A Super API Token is a 64-character administrative credential issued by your REDCap administrator. It grants instance-wide permissions for operations like creating projects. Request it from your REDCap admins through secure channels. Never share it publicly.
+**A:** A Super API Token is a 64-character administrative credential issued by your REDCap administrator. It grants instance-wide permissions for operations like creating projects. Request it from your REDCap admins through secure channels. Never share it publicly.
 
 **Q: Can I use a regular project API token for this method?**
-A: No. Regular project tokens are project-specific and have limited scope. Import Project requires a Super API Token with admin-level privileges.
+**A:** No. Regular project tokens are project-specific and have limited scope. Import Project requires a Super API Token with admin-level privileges.
 
 **Q: How do I clone an entire project with all its instruments?**
-A: (1) Export the source project using RC-API-36 (Export Project XML), (2) Use this API (RC-API-37) to create a new project with the exported XML data.
+**A:** (1) Export the source project using RC-API-36 (Export Project XML), (2) Use this API (RC-API-37) to create a new project with the exported XML data.
 
 **Q: What purpose code should I use for my research study?**
-A: Use `2` for Research. Full mapping: `0` = Practice/just for fun, `1` = Other (requires `purpose_other` text), `2` = Research, `3` = Quality Improvement, `4` = Operational Support.
+**A:** Use `2` for Research. Full mapping: `0` = Practice/just for fun, `1` = Other (requires `purpose_other` text), `2` = Research, `3` = Quality Improvement, `4` = Operational Support.
 
 **Q: Can I create a longitudinal project with arms and events via API?**
-A: Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from RC-API-36.
+**A:** Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from RC-API-36.
 
 ---
 

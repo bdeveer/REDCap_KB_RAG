@@ -18,17 +18,25 @@ RC-CC-14
 
 The Map of Users displays a geographic map showing where users are accessing REDCap from, based on their IP addresses. It is accessible under "Dashboards & Activity" in the Control Center sidebar and uses Google Maps to render the visualization. This tool provides a visual summary of user distribution and activity patterns across geographic regions.
 
+---
+
 # 2. How It Works
 
 REDCap resolves user IP addresses to approximate geographic coordinates using an IP geolocation service. IP addresses are processed in batches (asynchronously) to avoid long page load times. A progress counter updates as batches complete, showing the number of IPs processed. This asynchronous approach ensures the page remains responsive while geolocation data is being collected and mapped.
+
+---
 
 # 3. Time Window
 
 The map shows user activity within a configurable time window (in hours). Adjusting this parameter allows viewing recent activity (e.g., past hour) or broader activity patterns (e.g., past 24 hours). This flexibility helps administrators focus on specific time periods of interest, such as recent unusual activity or typical usage patterns.
 
+---
+
 # 4. Map Markers
 
 Active users appear as blue pin markers on the map. Clicking a marker opens an info window with details about the user, such as username and activity context. This interactive feature allows administrators to drill down from the map view to understand who is accessing REDCap from specific locations.
+
+---
 
 # 5. Limitations and Privacy Considerations
 
@@ -38,6 +46,8 @@ IP geolocation is approximate — it identifies a general geographic area, not a
 - Mobile users may show approximate locations based on their ISP's service area
 
 Administrators should be aware of any institutional privacy policies before sharing or acting on geographic user data. The data should be treated with appropriate care, as it reveals information about user location patterns.
+
+---
 
 # 6. Use Cases
 
@@ -69,6 +79,8 @@ Clicking a marker displays an info window with details about the user, such as t
 **Q: Can I export the map data or save it as an image?**
 The map is displayed in Google Maps, which allows you to take screenshots or save them to your device. Some browsers and mapping tools allow exporting or printing maps. For detailed geographic data, use the System Statistics page or export the User Activity Log for further analysis.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Assuming IP geolocation is precise enough for security decisions.** IP geolocation is approximate and can be off by miles or even show users in the wrong country, especially for VPN users. Never use the Map of Users as the sole basis for determining whether access is legitimate or suspicious. Always investigate further using the User Activity Log and project context.
@@ -80,6 +92,8 @@ The map is displayed in Google Maps, which allows you to take screenshots or sav
 **Not refreshing the map when changing the time window.** After you adjust the time window parameter, the map may need a few seconds to reload with new data. If the markers don't change immediately, wait a moment or manually refresh the page to update the display.
 
 **Ignoring mobile users and off-campus workers.** Mobile users appear based on their cellular ISP's service area, which may not match their actual location. Similarly, remote workers may appear in different geographic locations depending on their ISP and network configuration. Do not assume that geographic markers represent permanent user locations.
+
+---
 
 # 9. Related Articles
 

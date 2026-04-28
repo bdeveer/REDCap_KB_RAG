@@ -18,6 +18,8 @@ RC-CC-11
 
 The System Statistics page provides a comprehensive snapshot of the REDCap instance's usage, configuration, and infrastructure. It is accessible under "Dashboards & Activity" in the Control Center sidebar. Statistics are displayed in a table format and can be exported as a CSV file for further analysis or trend tracking.
 
+---
+
 # 2. Statistics Categories
 
 The System Statistics page displays statistics across multiple categories:
@@ -84,6 +86,8 @@ Statistics on instance-wide feature adoption, including:
 
 - **Total count of logged events**: Cumulative count of audit log entries across the system (all user actions, data modifications, system changes, etc.)
 
+---
+
 # 3. Dynamic Loading
 
 Some statistics on the System Statistics page are loaded asynchronously after the page renders. These statistics require time-consuming database queries and may not be available immediately:
@@ -92,6 +96,8 @@ Some statistics on the System Statistics page are loaded asynchronously after th
 - **Dynamic Data Pull (DDP)** statistics: Values pulled, records imported
 
 When the page initially loads, these fields display "Loading..." or a similar placeholder. Once the asynchronous query completes (typically within seconds to minutes, depending on database size and server performance), the actual values are populated. Avoid closing or navigating away from the page until all statistics have loaded if you need complete data.
+
+---
 
 # 4. Exporting Statistics
 
@@ -109,9 +115,13 @@ To export:
 4. Save the file to your local computer
 5. Open in your spreadsheet application or data analysis tool as needed
 
+---
+
 # 5. Reporting to the Consortium
 
 The statistics displayed on the System Statistics page overlap with (but are not identical to) metrics reported to the REDCap Consortium. For details on consortium reporting, including which statistics are reported, frequency, and any privacy considerations, see RC-CC-01 — Notifications & Reporting.
+
+---
 
 # 6. FHIR Statistics
 
@@ -141,6 +151,8 @@ Most statistics are near real-time, reflecting activity that occurred within the
 **Q: Where can I find the REDCap version number on the System Statistics page?**
 The REDCap version is listed under the Infrastructure section of the System Statistics page. It shows the current version number of the REDCap installation on your server.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Assuming all statistics are loaded immediately.** Administrators sometimes screenshot or export the System Statistics page before asynchronous statistics have finished loading, capturing incomplete data. Always wait for all "Loading..." placeholders to be replaced with actual values before exporting or relying on the statistics.
@@ -152,6 +164,8 @@ The REDCap version is listed under the Infrastructure section of the System Stat
 **Misinterpreting API-enabled projects as projects actually using the API.** The "API-enabled projects" statistic shows how many projects have API access turned on, not how many projects actively use the API. Many projects may be API-enabled but rarely or never use it. Use the User Activity Log or API call volume metrics for actual usage.
 
 **Forgetting that FHIR statistics are separate from main statistics.** If your instance has FHIR integration, remember that FHIR-specific metrics are on a different page (`ControlCenter/fhir_stats.php`). The main System Statistics page may not include all FHIR-related metrics you need for compliance or reporting.
+
+---
 
 # 9. Related Articles
 

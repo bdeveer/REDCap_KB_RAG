@@ -12,6 +12,8 @@ RC-EXPRT-03
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-01 — Overview & Workflow; RC-EXPRT-04 — De-identification & Formatting Options; RC-USER-01 — User Rights (when available) |
 
+---
+
 # 1. Overview
 
 This article explains how REDCap user rights control what data a user
@@ -20,6 +22,8 @@ are configured per instrument and can restrict a user to de-identified
 exports only, or block export entirely. Understanding these rights is
 essential for troubleshooting export access issues and for correctly
 configuring access for project team members.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -60,6 +64,8 @@ for Identifiers in the Project Setup page. Export rights levels that
 include de-identification use this flag to determine which fields to
 remove.
 
+---
+
 # 3. Data Export Rights Levels
 
 Export rights are configured per instrument in User Rights. A user may
@@ -73,6 +79,8 @@ determines what the export dialog shows and what options are available.
   **Remove All Identifier Fields**   Exports all fields except those flagged as identifiers. The user can optionally apply further de-identification in the export dialog (see RC-EXPRT-04). Free-form text and date fields are included unless the user elects to remove them.
   **Full Data Set**                  Exports all fields including identifiers. The user can choose to export in identified or de-identified form. All de-identification options in the export dialog are optional.
   ---------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 4. How Rights Affect the Export Dialog
 
@@ -109,6 +117,8 @@ and Stats application may not appear in the menu at all.
   **Tip:** To remove the Data Exports, Reports, and Stats application from a user\'s menu entirely, set their export rights to No Access for all instruments and uncheck the Add/Edit/Organize Reports right.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 5. Data Access Groups and Export Scope
 
 DAG membership limits which records a user can export, regardless of
@@ -127,6 +137,8 @@ their Data Export Rights level.
   **Important:** If a user reports that their export is missing records, check whether they are assigned to a DAG. Their export rights may be Full Data Set, but DAG membership still limits which records they can access.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. Common Questions
 
   ------------------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,6 +149,8 @@ their Data Export Rights level.
   *I need to create a custom report but don\'t see the option. What right do I need?*   The Add/Edit/Organize Reports right must be enabled for your account. This is separate from Data Export Rights. Contact your project administrator to request this right.
   *Does the De-identified export level remove all sensitive data automatically?*        It removes free-form text fields, date/time fields, and fields flagged as identifiers. However, de-identification depends on the project designer having correctly flagged identifier fields. If identifier flagging was incomplete during project design, some sensitive fields may still appear in de-identified exports.
   ------------------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 7. Common Mistakes & Gotchas
 
@@ -163,6 +177,8 @@ blocked.** Setting export rights to No Access for all instruments still
 leaves the application visible if the Add/Edit/Organize Reports right is
 enabled. To hide the application entirely, both conditions must be
 addressed.
+
+---
 
 # 8. Related Articles
 

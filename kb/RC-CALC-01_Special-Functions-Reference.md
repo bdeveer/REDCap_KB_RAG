@@ -254,39 +254,39 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Q: Where can I access the Special Functions list in REDCap?**
 
-A: Open the Online Designer and click into any field's branching logic or calculated field editor. The Logic Editor toolbar includes a "Special Functions" button that opens the complete reference list. It is also accessible from the Codebook page.
+**A:** Open the Online Designer and click into any field's branching logic or calculated field editor. The Logic Editor toolbar includes a "Special Functions" button that opens the complete reference list. It is also accessible from the Codebook page.
 
 **Q: Can I use datediff() in branching logic, not just calculated fields?**
 
-A: Yes. Any Special Function can be used in branching logic. The function's return value is used as part of a comparison — for example, `datediff([visit_date], 'today', 'd') > 30` will evaluate as true or false and control field visibility accordingly.
+**A:** Yes. Any Special Function can be used in branching logic. The function's return value is used as part of a comparison — for example, `datediff([visit_date], 'today', 'd') > 30` will evaluate as true or false and control field visibility accordingly.
 
 **Q: What's the difference between datediff() and age_at_date()?**
 
-A: `datediff()` is a general-purpose date subtraction function that works in any units (days, months, years, hours, etc.) and can return signed or unsigned values. `age_at_date()` is specifically designed to calculate a person's age and correctly handles calendar-accurate age calculation (e.g., whether a birthday has passed in a given year). For calculating age, use `age_at_date()`. For other date differences, use `datediff()`.
+**A:** `datediff()` is a general-purpose date subtraction function that works in any units (days, months, years, hours, etc.) and can return signed or unsigned values. `age_at_date()` is specifically designed to calculate a person's age and correctly handles calendar-accurate age calculation (e.g., whether a birthday has passed in a given year). For calculating age, use `age_at_date()`. For other date differences, use `datediff()`.
 
 **Q: Why do my aggregate functions (sum, mean, etc.) give unexpected results?**
 
-A: Blank values are silently excluded from all aggregate calculations. If a field has no value, it is not counted — so `mean([a], [b], [c])` with only `[a]` and `[b]` filled in will return the average of just those two values, not divide by 3. This is intentional behavior. Use `isblankormissingcode()` in branching logic to handle fields where blank values need special treatment.
+**A:** Blank values are silently excluded from all aggregate calculations. If a field has no value, it is not counted — so `mean([a], [b], [c])` with only `[a]` and `[b]` filled in will return the average of just those two values, not divide by 3. This is intentional behavior. Use `isblankormissingcode()` in branching logic to handle fields where blank values need special treatment.
 
 **Q: What's the difference between sum() and just adding variables together with +?**
 
-A: `sum([a], [b], [c])` will return a result even if some variables are blank — blanks are skipped and the remaining values are totaled. By contrast, `[a]+[b]+[c]` returns blank if *any* of the variables is blank. Use `sum()` when partial totals are acceptable. Use `+` when you want the result to be blank until all inputs are filled in.
+**A:** `sum([a], [b], [c])` will return a result even if some variables are blank — blanks are skipped and the remaining values are totaled. By contrast, `[a]+[b]+[c]` returns blank if *any* of the variables is blank. Use `sum()` when partial totals are acceptable. Use `+` when you want the result to be blank until all inputs are filled in.
 
 **Q: Can I nest functions inside other functions?**
 
-A: Yes. REDCap functions can be nested to any reasonable depth. For example, `round(datediff([dob], 'today', 'y'), 0)` rounds the result of datediff, and `lower(concat(trim([first_name]), '_', trim([last_name])))` nests trim, concat, and lower together. Parentheses must be balanced.
+**A:** Yes. REDCap functions can be nested to any reasonable depth. For example, `round(datediff([dob], 'today', 'y'), 0)` rounds the result of datediff, and `lower(concat(trim([first_name]), '_', trim([last_name])))` nests trim, concat, and lower together. Parentheses must be balanced.
 
 **Q: Can I use 'today' or 'now' in date functions?**
 
-A: Yes. The literals `'today'` and `'now'` (in single quotes) can be used in `datediff()`, `dayoftheweek()`, `year()`, `month()`, and `day()` instead of a field variable. `'today'` resolves to the current date; `'now'` resolves to the current date and time.
+**A:** Yes. The literals `'today'` and `'now'` (in single quotes) can be used in `datediff()`, `dayoftheweek()`, `year()`, `month()`, and `day()` instead of a field variable. `'today'` resolves to the current date; `'now'` resolves to the current date and time.
 
 **Q: Do text functions work on date fields?**
 
-A: Only on date fields using YMD formatting. Text functions should not be used on date or datetime fields formatted as MDY or DMY — the results will be unreliable. If you need to extract parts of a date, use `year()`, `month()`, or `day()` instead.
+**A:** Only on date fields using YMD formatting. Text functions should not be used on date or datetime fields formatted as MDY or DMY — the results will be unreliable. If you need to extract parts of a date, use `year()`, `month()`, or `day()` instead.
 
 **Q: What is the difference between contains() and find()?**
 
-A: `contains()` returns true or false and is used in branching logic or boolean conditions. `find()` returns the position (a number) of the needle within the haystack — useful when you need to know *where* in a string something appears, such as finding the position of a dash to then use with `mid()`.
+**A:** `contains()` returns true or false and is used in branching logic or boolean conditions. `find()` returns the position (a number) of the needle within the haystack — useful when you need to know *where* in a string something appears, such as finding the position of a dash to then use with `mid()`.
 
 ---
 

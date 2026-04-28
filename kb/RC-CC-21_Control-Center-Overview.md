@@ -14,7 +14,7 @@ RC-CC-21
 
 ---
 
-# What Is the Control Center?
+# 1. What Is the Control Center?
 
 The Control Center is the administrative hub of a REDCap instance. It is only accessible to REDCap **administrators** (also called super users). Standard project users and project-level admins do not have access to the Control Center. Administrators reach it via the **Control Center** link in the left-hand navigation menu, which is only visible to accounts with administrator privileges.
 
@@ -24,7 +24,7 @@ From the Control Center, an administrator can configure system-wide settings, ma
 
 ---
 
-# Navigation Overview
+# 2. Navigation Overview
 
 The Control Center is organized into several top-level sections, each accessible from a sidebar menu. The sections and their primary purposes are:
 
@@ -94,13 +94,15 @@ The largest section of the Control Center, containing all system-wide behavioral
 
 ---
 
-# Who Can Access the Control Center?
+# 3. Who Can Access the Control Center?
 
 The Control Center is visible **only to REDCap administrators** (super users). On the left navigation, regular users will not see the Control Center link. Administrator accounts are managed under **Users → Administrator Privileges** in the Control Center itself (see RC-CC-07).
 
 Different tiers of administrator access may exist depending on instance configuration — for example, some administrators may have full system access while others are granted limited privileges for specific environments (development, test, production).
 
-# Common Questions
+---
+
+# 4. Common Questions
 
 **Q: If I make a change in the Control Center, how quickly does it take effect across all projects?**
 Most Control Center changes take effect immediately. For example, disabling a feature, enabling a module, or changing email settings updates the behavior system-wide right away. However, some changes may require users to log out and log back in to see the effect, or may only apply to new data created after the change. Always document when you make changes so you can explain timing to affected users.
@@ -117,7 +119,9 @@ No. Standard project users and project-level admins do not have access to the Co
 **Q: How do I know which Control Center changes are safe to make on a live (production) instance?**
 Many Control Center changes are low-risk (e.g., updating contact information, adding custom links). However, some changes are disruptive (e.g., disabling a feature used by active projects, changing authentication settings). Review the documentation for each setting, test changes in a development instance first if possible, and communicate planned changes to relevant project managers before implementing on production.
 
-# Common Mistakes & Gotchas
+---
+
+# 5. Common Mistakes & Gotchas
 
 **Making system-wide changes without considering impacts on active projects.** Control Center settings affect all projects on the instance. For example, disabling file uploads, changing field validation types, or modifying default project settings impacts every project immediately. Always assess the downstream effects before making changes, and communicate with project managers when you are making system-wide modifications.
 
@@ -125,7 +129,9 @@ Many Control Center changes are low-risk (e.g., updating contact information, ad
 
 **Assuming Control Center changes automatically apply to existing projects or data.** Many Control Center settings establish defaults for *new* projects or *new* data created after the change. Existing projects and historical data may not be affected by system-wide changes. For example, changing the default language or date format applies to new projects, but projects created before the change retain their previous settings. Always clarify whether a setting applies retroactively or only to new items.
 
-# Related Articles
+---
+
+# 6. Related Articles
 
 - RC-CC-01 — Notifications & Reporting
 - RC-CC-02 — General Configuration

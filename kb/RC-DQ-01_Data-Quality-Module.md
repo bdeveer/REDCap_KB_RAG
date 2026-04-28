@@ -233,40 +233,40 @@ Rule H deserves separate attention because it serves a specific remediation func
 # 10. Common Questions
 
 **Q: Do I need special user rights to access Data Quality?**
-A: Yes. A user must have the Data Quality user right assigned in their project role. Users without this right will not see the module in the Applications menu.
+**A:** Yes. A user must have the Data Quality user right assigned in their project role. Users without this right will not see the module in the Applications menu.
 
 **Q: Can I use special functions like `datediff()` in a custom rule?**
-A: Yes. All special functions listed in RC-CALC-01 — Special Functions Reference are available in custom rule logic, just as they are in calculated fields.
+**A:** Yes. All special functions listed in RC-CALC-01 — Special Functions Reference are available in custom rule logic, just as they are in calculated fields.
 
 **Q: Why does a real-time execution pop-up appear even after I've excluded the result?**
-A: Real-time exclusions are per-record and per-rule. If the exclusion was applied to one record, it will not suppress the same violation on a different record. Verify that the exclusion was applied to the correct record.
+**A:** Real-time exclusions are per-record and per-rule. If the exclusion was applied to one record, it will not suppress the same violation on a different record. Verify that the exclusion was applied to the correct record.
 
 **Q: Can surveys trigger real-time data quality rules?**
-A: No. Real-time execution only fires when a user saves a data entry form through the normal REDCap interface. Survey submissions do not trigger real-time data quality checks.
+**A:** No. Real-time execution only fires when a user saves a data entry form through the normal REDCap interface. Survey submissions do not trigger real-time data quality checks.
 
 **Q: My calculated field values look wrong after I changed the formula. What should I do?**
-A: Run Rule H. It will identify all records where the stored value no longer matches the current formula. Use the Auto-correct button to update them all at once.
+**A:** Run Rule H. It will identify all records where the stored value no longer matches the current formula. Use the Auto-correct button to update them all at once.
 
 **Q: Can a user in a Data Access Group see discrepancies from other groups?**
-A: No. Users assigned to a DAG see only discrepancies from their own group's records. Project administrators not assigned to a DAG see discrepancies stratified by group.
+**A:** No. Users assigned to a DAG see only discrepancies from their own group's records. Project administrators not assigned to a DAG see discrepancies stratified by group.
 
 **Q: What happens if a field referenced in a custom rule is deleted from the project?**
-A: The rule will likely fail to execute or return an error. Rules referencing deleted or renamed fields should be updated or removed from the Data Quality module.
+**A:** The rule will likely fail to execute or return an error. Rules referencing deleted or renamed fields should be updated or removed from the Data Quality module.
 
 **Q: Can I run Data Quality rules via the API?**
-A: No. The Data Quality module does not expose rule execution through the REDCap API. Rules must be executed from the module interface.
+**A:** No. The Data Quality module does not expose rule execution through the REDCap API. Rules must be executed from the module interface.
 
 **Q: Can I copy custom rules from one project to another?**
-A: Yes. Export the rules from the source project as a CSV, then import that CSV into the destination project. Review and adjust any field names or event references that differ between projects before importing.
+**A:** Yes. Export the rules from the source project as a CSV, then import that CSV into the destination project. Review and adjust any field names or event references that differ between projects before importing.
 
 **Q: Does importing rules overwrite my existing custom rules?**
-A: No. Importing appends the new rules to the bottom of the existing custom rule list. Existing rules are not modified or removed.
+**A:** No. Importing appends the new rules to the bottom of the existing custom rule list. Existing rules are not modified or removed.
 
 **Q: My project has hundreds of fields and running rules is slow. Is there a faster way?**
-A: In REDCap 16 and later, use the field selector to limit standard default rules to specific fields rather than running them across the entire project. You can also use the "Run all custom" button to skip default rules entirely if only custom rule results are needed.
+**A:** In REDCap 16 and later, use the field selector to limit standard default rules to specific fields rather than running them across the entire project. You can also use the "Run all custom" button to skip default rules entirely if only custom rule results are needed.
 
 **Q: What is the difference between "Run all rules except A & B" and "Run all custom"?**
-A: "Run all rules except A & B" still runs default rules C through H alongside all custom rules — it only skips the Required Fields (A) and Identifier Fields (B) checks. "Run all custom" skips all default rules and runs only the rules you have written yourself.
+**A:** "Run all rules except A & B" still runs default rules C through H alongside all custom rules — it only skips the Required Fields (A) and Identifier Fields (B) checks. "Run all custom" skips all default rules and runs only the rules you have written yourself.
 
 ---
 

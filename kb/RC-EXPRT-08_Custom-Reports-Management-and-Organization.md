@@ -12,6 +12,8 @@ RC-EXPRT-08
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-07 — Custom Reports: Filtering & Ordering; RC-USER-03 — User Rights: Configuring User Privileges |
 
+---
+
 # 1. Overview
 
 This article covers saving custom reports and working with the My Reports & Exports overview — including the options available after saving, the per-report action buttons, report identifiers, and the tools for organizing reports into folders. It is the third article in the Custom Reports series and assumes you have already created a report using RC-EXPRT-06 and optionally configured filters using RC-EXPRT-07.
@@ -130,25 +132,25 @@ The report section header also includes two additional navigation links:
 # 6. Common Questions
 
 **Q: I deleted a report by accident. Can I recover it?**
-A: No. Deleting a report is permanent and there is no undo. The report definition is gone; you would need to recreate it from scratch. The data the report displayed is not affected — only the report configuration is lost.
+**A:** No. Deleting a report is permanent and there is no undo. The report definition is gone; you would need to recreate it from scratch. The data the report displayed is not affected — only the report configuration is lost.
 
 **Q: What is the difference between the Report ID and the Unique Report Name?**
-A: Both are unique identifiers, but they are used in different contexts. The Report ID (short numeric) is used in API calls to export a specific report's data programmatically. The Unique Report Name (longer alphanumeric) is used in the Project Dashboard feature to build charts from a report. Neither is user-facing in the report itself.
+**A:** Both are unique identifiers, but they are used in different contexts. The Report ID (short numeric) is used in API calls to export a specific report's data programmatically. The Unique Report Name (longer alphanumeric) is used in the Project Dashboard feature to build charts from a report. Neither is user-facing in the report itself.
 
 **Q: Can I assign a report to more than one folder?**
-A: Yes. A report can belong to multiple folders simultaneously. This is intentional — if a report is relevant to two different teams, it can appear in both teams' folders.
+**A:** Yes. A report can belong to multiple folders simultaneously. This is intentional — if a report is relevant to two different teams, it can appear in both teams' folders.
 
 **Q: Who can see report folders?**
-A: All project users who have view access to at least one report in a folder will see the folder in the overview. Users with no access to any report in a folder will not see that folder.
+**A:** All project users who have view access to at least one report in a folder will see the folder in the overview. Users with no access to any report in a folder will not see that folder.
 
 **Q: Can I reorder reports within the overview?**
-A: Custom reports appear in the order they were created by default. Report folders provide the primary means of organization. Within a folder, the order is determined by the order reports were assigned to it.
+**A:** Custom reports appear in the order they were created by default. Report folders provide the primary means of organization. Within a folder, the order is determined by the order reports were assigned to it.
 
 **Q: Where do I find the Report ID for an API call?**
-A: The Report ID is displayed in the My Reports & Exports overview, in the row for the report. It is a short numeric value. You can also find it in the report URL when editing the report (the `id=` parameter in the URL).
+**A:** The Report ID is displayed in the My Reports & Exports overview, in the row for the report. It is a short numeric value. You can also find it in the report URL when editing the report (the `id=` parameter in the URL).
 
 **Q: I don't see the Organize link to access report folders. Why?**
-A: The Organize link is located in the left-hand project menu under the reports section header — not on the Data Exports, Reports & Stats page. If you do not see it, your version of REDCap may not support report folders, or you may not have the Add/Edit/Organize Reports privilege.
+**A:** The Organize link is located in the left-hand project menu under the reports section header — not on the Data Exports, Reports & Stats page. If you do not see it, your version of REDCap may not support report folders, or you may not have the Add/Edit/Organize Reports privilege.
 
 ---
 

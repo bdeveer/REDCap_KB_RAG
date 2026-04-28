@@ -87,6 +87,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-EXPRT` | Data Export & Custom Reports |
 | `RC-FD` | Form Design |
 | `RC-FDL` | Form Display Logic |
+| `RC-FILE` | File Repository |
 | `RC-IMP` | Data Import |
 | `RC-INST` | Institution-Specific Settings & Policies |
 | `RC-INTG` | Integrations (Data Entry Trigger, etc.) |
@@ -119,7 +120,7 @@ Some topics could map to more than one domain. Use these rules to pick the right
 | Hiding or showing fields | RC-BL (branching logic — field appears/disappears based on logic) vs RC-AT-02 (@HIDDEN/@READONLY — static or action-tag-driven) vs RC-FDL (form display logic — hides entire forms, not individual fields) |
 | Exporting data | RC-EXPRT (UI-based reports and exports) vs RC-API (programmatic export via API) |
 | Importing data | RC-IMP (CSV upload via UI) vs RC-API (programmatic import via API) |
-| File uploads | RC-FD (file-upload field type in an instrument) vs RC-API-12–15 (API methods for record-level files) vs RC-API-45–49 (API methods for File Repository) |
+| File uploads | RC-FD (file-upload field type in an instrument) vs RC-API-12–15 (API methods for record-level files) vs RC-API-45–49 (API methods for File Repository) vs RC-FILE (File Repository UI — uploading, folders, sharing, access restrictions) |
 | Calculations / formulas | RC-CALC (calculated fields, special functions) vs RC-AT-09 (@CALCTEXT / @CALCDATE action tags) |
 | Translations / multilingual | RC-MLM (Multi-Language Management — UI and instrument translation) vs RC-AI-03 (AI translation tool) |
 | Mobile data collection | RC-MOB (REDCap Mobile App — staff-facing offline data entry) vs RC-MYCAP (MyCap — participant-facing mobile app) |

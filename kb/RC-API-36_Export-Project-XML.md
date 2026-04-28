@@ -69,7 +69,7 @@ Project features that allow data collection forms or time points to be repeated 
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -173,22 +173,22 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 # 6. Common Questions
 
 **Q: Can I use the exported XML to create a new project?**
-A: Yes. Use the Export Project XML API to download your project design, then use RC-API-37 (Import Project / Create Project) with that XML to clone the project.
+**A:** Yes. Use the Export Project XML API to download your project design, then use RC-API-37 (Import Project / Create Project) with that XML to clone the project.
 
 **Q: What is the difference between `returnMetadataOnly` true and false?**
-A: `'true'` returns only the project structure — all fields, forms, events, and arms — with no data records. `'false'` (the default) returns both metadata and data, optionally filtered by `records`, `fields`, `events`, or `filterLogic`.
+**A:** `'true'` returns only the project structure — all fields, forms, events, and arms — with no data records. `'false'` (the default) returns both metadata and data, optionally filtered by `records`, `fields`, `events`, or `filterLogic`.
 
 **Q: Will the exported XML include data records?**
-A: Yes, by default. `returnMetadataOnly` defaults to `'false'`, so data is included unless you explicitly set it to `'true'`.
+**A:** Yes, by default. `returnMetadataOnly` defaults to `'false'`, so data is included unless you explicitly set it to `'true'`.
 
 **Q: Can I export only specific records or fields?**
-A: Yes. Use the `records` parameter to specify an array of record names, the `fields` parameter for specific field names, or `filterLogic` to return only records matching a logic expression. These filters apply only to data — all metadata is always exported.
+**A:** Yes. Use the `records` parameter to specify an array of record names, the `fields` parameter for specific field names, or `filterLogic` to return only records matching a logic expression. These filters apply only to data — all metadata is always exported.
 
 **Q: How large can the exported XML be?**
-A: Export size depends on project complexity and the amount of data. Setting `exportFiles=true` can make the export extremely large if the project contains many or large file uploads. REDCap has default request limits; use `returnMetadataOnly=true` or filter parameters to reduce export size if you hit errors.
+**A:** Export size depends on project complexity and the amount of data. Setting `exportFiles=true` can make the export extremely large if the project contains many or large file uploads. REDCap has default request limits; use `returnMetadataOnly=true` or filter parameters to reduce export size if you hit errors.
 
 **Q: Can I use this export to clone a project?**
-A: Yes. The ODM XML can be uploaded on the REDCap Create New Project page to recreate the project on the same instance or another REDCap server.
+**A:** Yes. The ODM XML can be uploaded on the REDCap Create New Project page to recreate the project on the same instance or another REDCap server.
 
 ---
 

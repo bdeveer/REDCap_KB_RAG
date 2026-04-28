@@ -9,7 +9,7 @@ RC-NAV-UI-01
 | **Prerequisite** | None |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-UI-02 — Project Menu Reference, RC-NAV-REC-01 — Record Navigation Overview, RC-PROJ-01 — Project Lifecycle, RC-DE-02 — Basic Data Entry, RC-SURV-01 — Surveys Basics, RC-USER-01 — User Rights Overview, RC-MYCAP-01 — MyCap Overview, RC-FD-01 — Form Design Overview, RC-MOB-01 — REDCap Mobile App |
 
 ---
@@ -51,6 +51,8 @@ confusion and unnecessary support requests.
     can be in: Development, Production, Analysis/Cleanup, or Completed.
     Controls what changes are allowed.
 
+---
+
 # 2. Learning Objectives
 
 After completing this module, the user will be able to:
@@ -67,6 +69,8 @@ After completing this module, the user will be able to:
 
 - Describe the four project status stages and their implications for
     data entry and editing
+
+---
 
 # 3. Step-by-Step Procedure
 
@@ -100,7 +104,11 @@ always present:
 > look on a participant\'s mobile device while still working on a
 > desktop computer.*
 
+---
+
 # 4. Questions & Answers
+
+---
 
 # 5. Common Mistakes & Gotchas
 
@@ -158,7 +166,9 @@ always present:
 - **Prevention:** Clarify the use case before recommending either app.
     Consult your REDCap support team before implementing either.
 
-# 6. Related Topics
+---
+
+# 6. Related Articles
 
 - **RC-NAV-UI-02:** Project Menu Reference — detailed guide to every
     item in the REDCap left menu

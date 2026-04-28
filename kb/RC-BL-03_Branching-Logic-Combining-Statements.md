@@ -12,6 +12,8 @@ RC-BL-03
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-04 — Structured Fields; RC-BL-01 — Overview |
 
+---
+
 # 1. Overview
 
 This article explains how to combine multiple atomic logic statements
@@ -19,6 +21,8 @@ using AND, OR, and parentheses. Combined statements unlock more precise
 and flexible branching conditions. Understanding how each operator
 affects evaluation is essential for writing logic that behaves as
 intended.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -53,6 +57,8 @@ stops at the first false statement (the result cannot be true). For OR,
 evaluation stops at the first true statement (the result cannot be
 false). This affects performance in large logic chains but not
 correctness.
+
+---
 
 # 3. The AND Operator
 
@@ -121,6 +127,8 @@ causing the field to always show regardless of data values:
 | // If you intended a range, this might not be what you wanted    |
 +------------------------------------------------------------------+
 
+---
+
 # 4. The OR Operator
 
 **OR** joins two statements. The combined result is true when **at least
@@ -173,6 +181,8 @@ for every possible value:
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Note:** Always-true OR statements are harder to spot than always-false AND statements. Be especially careful when using OR with numeric comparison operators.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 5. Combining AND and OR
 
@@ -231,6 +241,8 @@ used.
   OR             At least one condition is true   All conditions are false
   -------------- -------------------------------- ------------------------------
 
+---
+
 # 6. Worked Examples
 
 **Example 1 — Age range with AND**
@@ -279,6 +291,8 @@ The field appears for participants who have diabetes AND use insulin, OR
 for participants who have hypertension AND take blood pressure
 medication.
 
+---
+
 # 7. Common Questions
 
 **Q: Does REDCap differentiate between uppercase AND/OR and lowercase
@@ -318,6 +332,8 @@ which would prevent the condition from ever being met.
 programming languages do. Use the \<\> operator to express \'not equal
 to\'.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 - Omitting parentheses when mixing AND and OR: without parentheses,
@@ -342,6 +358,8 @@ to\'.
     error. Count opening and closing parentheses carefully in complex
     statements, or build compound logic incrementally and test each
     step.
+
+---
 
 # 9. Related Articles
 

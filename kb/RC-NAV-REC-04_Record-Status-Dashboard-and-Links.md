@@ -9,7 +9,7 @@ RC-NAV-REC-04
 | **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-UI-01 — Project Navigation UI, RC-NAV-UI-02 — Project Menu Reference, RC-USER-01 — User Rights Overview, RC-USER-03 — Configuring User Privileges, RC-DAG-01 — Data Access Groups, RC-PROJ-03 — Project Dashboards, RC-EXPRT-06 — Custom Reports Setup, RC-SURV-05 — Participant List and Survey Invitations, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 — Data Quality Module |
 
 ---
@@ -19,6 +19,8 @@ RC-NAV-REC-04
 This article covers the Record Status Dashboard in detail — including
 custom dashboards — and describes all other locations in REDCap where
 you can find clickable links to records or specific instruments.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -46,6 +48,8 @@ Page for that record.
 In certain data quality and data resolution tools, REDCap can link
 directly to a specific instrument and even highlight a specific variable
 within that instrument.
+
+---
 
 # 3. The Record Status Dashboard
 
@@ -76,6 +80,8 @@ REDCap automatically filters the dashboard based on your access level:
   **Troubleshooting:** If instruments seem to be missing from the dashboard, the most likely cause is either a custom dashboard filter or your access level. Check whether you are viewing a custom dashboard vs. the default dashboard.
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Custom Dashboards
 
 ## 4.1 What Custom Dashboards Can Do
@@ -100,6 +106,8 @@ following options:
 
 - They are automatically available to all project users once created
     — no additional setup is required per user.
+
+---
 
 # 5. Other Locations with Record Links
 
@@ -141,39 +149,43 @@ data cleaning tools:
 
 - E-Signature and Locking Management
 
+---
+
 # 6. Common Questions
 
 **Q: Why are some instruments missing from my Record Status Dashboard?**
 
-A: The two most common reasons are: (1) you are viewing a custom
+**A:** The two most common reasons are: (1) you are viewing a custom
 dashboard that filters certain events or instruments, or (2) your user
 access level restricts which instruments you can see. Switch to the
 default dashboard to see everything you have permission to access.
 
 **Q: Who can create a custom dashboard?**
 
-A: Only users with Project Design rights can create custom dashboards.
+**A:** Only users with Project Design rights can create custom dashboards.
 Once created, they are visible to all project users automatically.
 
 **Q: Why do Record ID links not work in the survey invitation log?**
 
-A: When a survey is configured in anonymous mode, REDCap deactivates
+**A:** When a survey is configured in anonymous mode, REDCap deactivates
 Record ID links in the invitation log and participant list to preserve
 respondent anonymity.
 
 **Q: What is the difference between a Record ID link and a variable
 link?**
 
-A: A Record ID link takes you to the Record Home Page for that record. A
+**A:** A Record ID link takes you to the Record Home Page for that record. A
 variable link takes you directly to a specific instrument and highlights
 a specific field — this level of precision is only available in data
 quality and resolution tools.
 
 **Q: Can I sort the dashboard by something other than Record ID?**
 
-A: Yes, but only in a custom dashboard. A user with Project Design
+**A:** Yes, but only in a custom dashboard. A user with Project Design
 rights can configure the custom dashboard to sort by any variable in the
 project.
+
+---
 
 # 7. Common Mistakes & Gotchas
 
@@ -193,6 +205,8 @@ project.
     will not see records outside your group — even on the default
     dashboard. This is an access control feature, not a dashboard
     filter.
+
+---
 
 # 8. Related Articles
 

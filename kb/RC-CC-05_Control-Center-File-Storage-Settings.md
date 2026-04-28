@@ -159,7 +159,7 @@ Options: *Disabled* / *Enabled*
 
 ---
 
-# 10. Common Questions
+# 2. Common Questions
 
 **Q: Which file storage backend should I use?**
 Local storage is simplest for single-server deployments but requires adequate disk space and security hardening. Cloud storage (S3, Azure, GCP) is recommended for cloud-hosted or load-balanced instances because it centralizes file access and eliminates per-server disk requirements. Choose a backend that matches your hosting provider (S3 for AWS-hosted REDCap, Azure Blob Storage for Azure-hosted, etc.) to simplify access control and reduce data transfer costs.
@@ -178,7 +178,7 @@ Vary them based on context. The File Repository typically allows larger files (e
 
 ---
 
-# 11. Common Mistakes & Gotchas
+# 3. Common Mistakes & Gotchas
 
 **Accidentally using the web-accessible directory for local file storage.** If local file storage is configured to a directory under the web root (e.g., `/public/uploads`), uploaded files become web-accessible, creating a major security risk. Always store uploaded files outside the web root (e.g., `/var/edocs` or `/data/redcap-storage`). Test that files are not accessible via HTTP after configuration.
 
@@ -188,7 +188,7 @@ Vary them based on context. The File Repository typically allows larger files (e
 
 ---
 
-# 12. Related Articles
+# 4. Related Articles
 
 - RC-CC-02 — Control Center: General Configuration (system configuration and performance settings)
 - RC-CC-06 — Control Center: Modules & Services (Send-It and other file-related module configuration)

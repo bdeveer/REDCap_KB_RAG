@@ -53,7 +53,7 @@ A binary setting that controls project behavior, such as `surveys_enabled`, `ran
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -178,19 +178,19 @@ The API returns project metadata in the format specified. Boolean values are rep
 # 6. Common Questions
 
 **Q: What is the difference between Export Project Info and Export Project XML?**
-A: Export Project Info (RC-API-34) returns only project metadata and configuration. Export Project XML (RC-API-36) returns the complete project structure including instruments, fields, events, and can be used to recreate the project.
+**A:** Export Project Info (RC-API-34) returns only project metadata and configuration. Export Project XML (RC-API-36) returns the complete project structure including instruments, fields, events, and can be used to recreate the project.
 
 **Q: Can I export all projects' metadata at once?**
-A: No. Each API call requires a project-specific token. You must loop through your project tokens and call the API for each project separately.
+**A:** No. Each API call requires a project-specific token. You must loop through your project tokens and call the API for each project separately.
 
 **Q: Which right do I need to use this method?**
-A: You need the API Export right at the user level within the project.
+**A:** You need the API Export right at the user level within the project.
 
 **Q: Can I modify project settings using this API?**
-A: Not with this method. Use RC-API-35 (Import Project Info) to update project settings. Export Project Info is read-only.
+**A:** Not with this method. Use RC-API-35 (Import Project Info) to update project settings. Export Project Info is read-only.
 
 **Q: What format options are available?**
-A: You can request `'csv'`, `'json'`, or `'xml'`. The default is `'xml'` if no format is specified. JSON is more commonly used in modern integrations, so it's worth specifying explicitly.
+**A:** You can request `'csv'`, `'json'`, or `'xml'`. The default is `'xml'` if no format is specified. JSON is more commonly used in modern integrations, so it's worth specifying explicitly.
 
 ---
 

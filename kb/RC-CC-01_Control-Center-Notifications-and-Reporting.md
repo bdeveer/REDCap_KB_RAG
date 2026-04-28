@@ -18,6 +18,8 @@ RC-CC-01
 
 The Control Center Notifications & Reporting page is the main dashboard administrators land on when accessing the Control Center. Located at `ControlCenter/index.php` and labeled "Notifications & Reporting" in the sidebar, this page displays critical system health information, update alerts, and consortium reporting tools. It serves as the central hub for monitoring REDCap server status and administrative tasks.
 
+---
+
 # 2. System Notifications & Warnings
 
 The Notifications & Warnings section displays alerts about server configuration issues that may impact REDCap functionality and security. Common alerts include:
@@ -26,6 +28,8 @@ The Notifications & Warnings section displays alerts about server configuration 
 - **Web server configuration recommendations**: Alerts specific to your server environment and configuration.
 
 The system provides configuration instructions tailored to common web servers, including NGINX and Apache, to help administrators remediate these issues.
+
+---
 
 # 3. External Module Update Alerts
 
@@ -40,6 +44,8 @@ Each alert displays:
 - Available version
 - Links to Release Notes for reviewing changes before upgrading
 
+---
+
 # 4. Easy Upgrade
 
 The Easy Upgrade feature allows administrators to upgrade REDCap to a newer version directly through the browser interface, without requiring direct server access. 
@@ -49,6 +55,8 @@ The Easy Upgrade feature allows administrators to upgrade REDCap to a newer vers
 - Valid internet connectivity
 
 **Important Limitation:** Easy Upgrade cannot be used in load-balanced environments where the REDCap web server uses multiple application servers. In these environments, the downloaded source code would only be deployed to a single server, leaving other servers running outdated code. Load-balanced installations require manual upgrade procedures or coordination with server administrators.
+
+---
 
 # 5. Reporting Stats to the Consortium
 
@@ -71,6 +79,8 @@ REDCap administrators are expected to report usage statistics to the REDCap Cons
 - The page displays the date statistics were last successfully reported
 - The current reporting method is shown
 - A link to "What stats are sent?" explains which data elements are shared with the Consortium
+
+---
 
 # 6. Other System Information
 

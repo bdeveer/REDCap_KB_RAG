@@ -289,34 +289,34 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 # 8. Common Questions
 
 **Q: Does REDCap automatically verify the identity of the person signing the consent?**
-A: No. REDCap does not perform automated identity verification (such as background checks or account-based identity confirmation). Verification is a procedural step performed by a staff member, captured through a separate attestation instrument and PDF Snapshot.
+**A:** No. REDCap does not perform automated identity verification (such as background checks or account-based identity confirmation). Verification is a procedural step performed by a staff member, captured through a separate attestation instrument and PDF Snapshot.
 
 **Q: Can I use e-Consent without the versioning system?**
-A: Yes. If you do not add a descriptive field placeholder, you can still configure an e-Consent — but consent content must be managed directly in the Online Designer, REDCap will not track versions automatically, and you cannot assign different content by DAG or language.
+**A:** Yes. If you do not add a descriptive field placeholder, you can still configure an e-Consent — but consent content must be managed directly in the Online Designer, REDCap will not track versions automatically, and you cannot assign different content by DAG or language.
 
 **Q: What happens if a record is not assigned to a DAG and I have no default consent version?**
-A: The participant will see a blank consent form — no content will be displayed. Always create a version assigned to the default DAG option ("When record is not assigned to a DAG") to prevent this.
+**A:** The participant will see a blank consent form — no content will be displayed. Always create a version assigned to the default DAG option ("When record is not assigned to a DAG") to prevent this.
 
 **Q: Can I edit a submitted consent response?**
-A: By default, no. The "Allow editing after submission" option in Primary Settings must be explicitly enabled. Note that enabling this does not alter the PDF already generated at the time of original consent.
+**A:** By default, no. The "Allow editing after submission" option in Primary Settings must be explicitly enabled. Note that enabling this does not alter the PDF already generated at the time of original consent.
 
 **Q: How many concurrent consent versions can I have?**
-A: The maximum is (number of DAGs + 1) × (number of languages + 1). The +1 accounts for the default slot in each dimension. Example: 4 DAGs and 3 languages = 5 × 4 = 20 concurrent versions.
+**A:** The maximum is (number of DAGs + 1) × (number of languages + 1). The +1 accounts for the default slot in each dimension. Example: 4 DAGs and 3 languages = 5 × 4 = 20 concurrent versions.
 
 **Q: When does a new consent version go live?**
-A: Immediately upon clicking "Add new consent form" — including in Production mode. There is no staging or preview step. Review content carefully before submitting.
+**A:** Immediately upon clicking "Add new consent form" — including in Production mode. There is no staging or preview step. Review content carefully before submitting.
 
 **Q: Where is the consent PDF stored?**
-A: Always in the File Repository under "PDF Snapshot Archive." Optionally also in a per-record file upload field if configured.
+**A:** Always in the File Repository under "PDF Snapshot Archive." Optionally also in a per-record file upload field if configured.
 
 **Q: Can I use the same e-Consent instrument for multiple e-Consent entries?**
-A: No. Each e-Consent entry is linked to exactly one survey instrument. To run multiple distinct consent processes, create separate instruments and configure each as its own e-Consent entry.
+**A:** No. Each e-Consent entry is linked to exactly one survey instrument. To run multiple distinct consent processes, create separate instruments and configure each as its own e-Consent entry.
 
 **Q: What happens when a participant clicks "Previous" during the consent flow?**
-A: Any fields defined as signature fields in the e-Consent settings are automatically cleared. The participant must re-enter them before proceeding.
+**A:** Any fields defined as signature fields in the e-Consent settings are automatically cleared. The participant must re-enter them before proceeding.
 
 **Q: Can I use the AI writing tool to draft consent content?**
-A: Yes, if AI tools are enabled on your REDCap instance. The rich text editor in the "Add consent form" popup includes an AI draft option. Always have any AI-generated text reviewed by the relevant compliance office or IRB before going live.
+**A:** Yes, if AI tools are enabled on your REDCap instance. The rich text editor in the "Add consent form" popup includes an AI draft option. Always have any AI-generated text reviewed by the relevant compliance office or IRB before going live.
 
 ---
 

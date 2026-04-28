@@ -18,13 +18,13 @@ RC-CDIS-03
 
 ---
 
-## 1. Overview
+# 1. Overview
 
 Clinical Data Mart (CDM) is a REDCap module that imports clinical data in bulk from an EHR for multiple patients at once. Unlike CDP, which pulls one patient at a time with adjudication, CDM uses a pre-defined project structure and imports data directly without a review step. CDM is ideal for registries, retrospective studies, and bulk data retrieval across large patient cohorts.
 
 ---
 
-## 2. What Is the Clinical Data Mart (CDM)?
+# 2. What Is the Clinical Data Mart (CDM)?
 
 The **Clinical Data Mart** (also called **Data Mart** or **CDM**) is a REDCap module that imports clinical data **in bulk** from an EHR for many patients at once. Unlike CDP, which pulls one patient at a time with an adjudication step, Data Mart is designed for larger-scale, batch data retrieval.
 
@@ -35,13 +35,13 @@ Data Mart is best suited for:
 
 ---
 
-## 3. Administrator Prerequisites
+# 3. Administrator Prerequisites
 
-### 1. CDIS Must Be Enabled
+## 1. CDIS Must Be Enabled
 
 The CDIS infrastructure must be configured and enabled in the Control Center before Data Mart can function. See RC-CDIS-01.
 
-### 2. Grant User-Level Data Mart Privileges
+## 2. Grant User-Level Data Mart Privileges
 
 Unlike CDP (which is enabled per project), Data Mart access is a **user account privilege**, not a project-level right. An administrator must grant this privilege to individual user accounts via the **Browse Users** page in the Control Center.
 
@@ -51,7 +51,7 @@ Once granted, the user will see an option to create a **Clinical Data Mart proje
 
 ---
 
-## 4. Creating a Data Mart Project
+# 4. Creating a Data Mart Project
 
 A user with Data Mart privileges can create a new Data Mart project from the **Create New Project** page.
 
@@ -64,7 +64,7 @@ During project creation, the user defines the initial **data pull configuration*
 
 ---
 
-## 5. Pre-Defined Project Structure
+# 5. Pre-Defined Project Structure
 
 Unlike CDP, **no field mapping is required** for a Data Mart project. The entire project structure — instruments and fields — is pre-defined when the project is created:
 
@@ -77,11 +77,11 @@ Each individual data value on the repeating instruments is stored as a separate 
 
 ---
 
-## 6. Pulling Data
+# 6. Pulling Data
 
 Once the project is created, data is pulled via the **Clinical Data Mart page**, accessible from the left-hand project menu.
 
-### Fetch Clinical Data
+## Fetch Clinical Data
 
 Users click the **"Fetch clinical data"** button to trigger a data pull. By default:
 - A user can only pull data **one time**.
@@ -89,13 +89,13 @@ Users click the **"Fetch clinical data"** button to trigger a data pull. By defa
 
 These defaults can be changed by a REDCap administrator in the project's **Project Setup** page (see Project-Level Settings below).
 
-### Requesting Configuration Changes
+## Requesting Configuration Changes
 
 If the project-level setting permits it, users with **Project Setup/Design rights** in the project can request changes to the data pull configuration (e.g., adding new MRNs, adding new fields, or modifying the date range). Such requests go through an audit process and must be approved by an administrator via the **To-Do List** in the Control Center.
 
 ---
 
-## 7. Project-Level Settings (Administrator-Controlled)
+# 7. Project-Level Settings (Administrator-Controlled)
 
 On the **Project Setup page** for a Data Mart project, a REDCap administrator can adjust:
 
@@ -107,13 +107,13 @@ On the **Project Setup page** for a Data Mart project, a REDCap administrator ca
 
 ---
 
-## 8. EHR Access Requirement
+# 8. EHR Access Requirement
 
 Users must have access to the EHR and must have launched REDCap from inside the EHR interface at least once. This is required because the EHR launch initiates the OAuth2 authorization needed to pull data.
 
 ---
 
-## 9. Recommended Administrative Process
+# 9. Recommended Administrative Process
 
 Before approving a Data Mart project or enabling configuration changes, administrators may want to verify:
 - IRB approval status
@@ -123,13 +123,13 @@ This review step is optional but recommended, particularly at institutions with 
 
 ---
 
-## 10. Clinical Notes in Data Mart
+# 10. Clinical Notes in Data Mart
 
 CDM accepts clinical notes in **any format** (not just HTML), making it more flexible than CDP for institutions that receive notes in varied formats. Clinical notes are imported via the FHIR `DocumentReference` resource.
 
 ---
 
-## 11. Common Questions
+# 11. Common Questions
 
 **Q: Can I customize the pre-defined project structure (instruments and fields) in CDM?**
 You can add new instruments and fields to a Data Mart project, but you cannot modify or delete the pre-defined instruments (Demographics, Vital Signs, Labs, Allergies, Medications, Problem List) without risking broken data pulls. If you need a highly customized structure, use CDP instead.
@@ -151,7 +151,7 @@ Yes, you can delete records from a Data Mart project like any other REDCap proje
 
 ---
 
-## 12. Common Mistakes & Gotchas
+# 12. Common Mistakes & Gotchas
 
 **Modifying or deleting pre-defined instruments or fields.** The Demographics, Vital Signs, Labs, Allergies, Medications, and Problem List instruments are created with a specific structure to match FHIR data. If you delete or significantly alter these instruments, future data pulls may fail or insert data into the wrong fields. Leave the pre-defined structure intact.
 
@@ -165,7 +165,7 @@ Yes, you can delete records from a Data Mart project like any other REDCap proje
 
 ---
 
-## 13. Related Articles
+# 13. Related Articles
 
 - RC-CDIS-01 — CDIS Overview and Control Center Setup
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage

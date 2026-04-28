@@ -18,9 +18,13 @@ RC-CC-15
 
 The Top Usage Report identifies the most resource-intensive projects, users, pages, URLs, External Modules, and cron jobs over a specified time period. It is accessible under "Dashboards & Activity" in the Control Center sidebar. Its primary purpose is to help diagnose server performance issues by pinpointing where load is concentrated.
 
+---
+
 # 2. When to Use
 
 This report is most useful when REDCap is experiencing performance issues such as slow response times or crash messages. It helps answer questions like "which projects or users are consuming the most server resources right now?" By identifying resource-heavy components, administrators can take targeted action to resolve bottlenecks or investigate unexpected spikes in usage.
+
+---
 
 # 3. Important Caveats
 
@@ -34,6 +38,8 @@ The Top Usage Report includes several important limitations and clarifications t
 
 - **External Module Timed Crons are excluded** — External Module Timed Crons are not included in these statistics.
 
+---
+
 # 4. Filters
 
 Administrators can configure the report using the following parameters:
@@ -43,6 +49,8 @@ Administrators can configure the report using the following parameters:
 - **CPU time percentage minimum threshold** — Filters out entries below a specified CPU contribution percentage. This reduces noise by excluding low-utilization items from the results, allowing focus on the most significant consumers of resources.
 
 - **Include incomplete HTTP requests** — Optional toggle to include requests that did not complete normally. Incomplete requests may indicate errors or client disconnections.
+
+---
 
 # 5. Report Contents
 
@@ -58,6 +66,8 @@ The report surfaces the "top" entries across multiple categories:
 
 - **Cron jobs** — Lists cron jobs with the highest execution time, helpful for identifying long-running scheduled tasks.
 
+---
+
 # 6. Relationship to Other Tools
 
 The Top Usage Report is one of several tools available for performance monitoring:
@@ -68,6 +78,8 @@ The Top Usage Report is one of several tools available for performance monitorin
 - **Map of Users (RC-CC-14)** — For geographic visualization of user access patterns
 
 Together, these tools provide multiple perspectives on REDCap system performance and usage.
+
+---
 
 # 7. Common Questions
 
@@ -86,6 +98,8 @@ The report covers all data collected since the "Begin time" parameter you set. I
 **Q: Does the Top Usage Report track all HTTP requests to REDCap?**
 No. The report tracks many HTTP requests but not all. For a complete record of all HTTP activity, consult your web server's access logs. The report is most useful for identifying trends and resource-heavy components rather than for complete request accounting.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Interpreting high usage as a performance problem.** A project appearing in the "Most active projects" list does not indicate a malfunction or problem — it simply means that project is being actively used. High activity is normal and expected. Only investigate further if you are experiencing actual performance issues (slow response times, timeouts, crashes) and the report helps you pinpoint the source.
@@ -93,6 +107,8 @@ No. The report tracks many HTTP requests but not all. For a complete record of a
 **Setting the CPU time threshold too high and missing important data.** If you set the minimum CPU time percentage threshold too aggressively, you may filter out entries that would be useful to analyze. If you are investigating a specific performance issue, use a lower threshold to see more entries, then sort or focus on the most resource-intensive ones.
 
 **Assuming External Module Timed Crons are included in the statistics.** External Module Timed Crons are explicitly excluded from the Top Usage Report. If you are troubleshooting slow scheduled tasks from External Modules, use the Database Activity Monitor or check cron logs separately rather than relying on this report.
+
+---
 
 # 9. Related Articles
 

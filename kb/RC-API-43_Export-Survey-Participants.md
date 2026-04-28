@@ -58,7 +58,7 @@ A user-level permission required to access participant lists and survey distribu
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -197,22 +197,22 @@ Example JSON response:
 # 6. Common Questions
 
 **Q: What does `invitation_sent_status` mean?**
-A: `1` means an invitation has been sent to the participant; `0` means no invitation has been sent yet. Note: this reflects REDCap's tracking of distribution — it is not confirmation of email delivery.
+**A:** `1` means an invitation has been sent to the participant; `0` means no invitation has been sent yet. Note: this reflects REDCap's tracking of distribution — it is not confirmation of email delivery.
 
 **Q: What does `email_occurrence` mean?**
-A: It is the count of how many times that email address appears in the participant list. Because the same email can be added more than once (e.g., to send multiple surveys), `email` alone is not unique. Use `email` + `email_occurrence` together as the unique identifier.
+**A:** It is the count of how many times that email address appears in the participant list. Because the same email can be added more than once (e.g., to send multiple surveys), `email` alone is not unique. Use `email` + `email_occurrence` together as the unique identifier.
 
 **Q: What does `response_status` mean?**
-A: `0` = No response, `1` = Partial response, `2` = Completed. This is the same status shown in the Survey Distribution Tools interface.
+**A:** `0` = No response, `1` = Partial response, `2` = Completed. This is the same status shown in the Survey Distribution Tools interface.
 
 **Q: What are `survey_access_code` and `survey_link`?**
-A: Each participant receives a unique access code and a direct URL to their survey session. The `survey_link` is the full URL a participant would use to access the survey; you can send this in a custom notification rather than using REDCap's built-in invitation system.
+**A:** Each participant receives a unique access code and a direct URL to their survey session. The `survey_link` is the full URL a participant would use to access the survey; you can send this in a custom notification rather than using REDCap's built-in invitation system.
 
 **Q: Can I modify participant information via API?**
-A: No. This method is read-only. To manage participants, use the Survey Distribution Tools interface in REDCap.
+**A:** No. This method is read-only. To manage participants, use the Survey Distribution Tools interface in REDCap.
 
 **Q: For longitudinal projects, what happens if I don't specify an event?**
-A: REDCap will return an error. The `event` parameter is required for longitudinal projects.
+**A:** REDCap will return an error. The `event` parameter is required for longitudinal projects.
 
 ---
 

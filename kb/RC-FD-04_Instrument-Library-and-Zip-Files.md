@@ -12,6 +12,8 @@ RC-FD-04
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-CC-06 — Control Center: Modules & Services Configuration |
 
+---
+
 # 1. Overview
 
 This article covers two mechanisms for importing and exporting REDCap
@@ -19,6 +21,8 @@ instruments: the REDCap Instrument Library and the Zip File feature.
 Both allow instruments to move into or out of a project without building
 them from scratch, but they serve different use cases and draw from
 different sources.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -52,6 +56,8 @@ A conflict that occurs when an imported instrument has the same internal
 name (form\_name) as an existing instrument in the destination project.
 REDCap handles this similarly to variable name collisions — it flags
 the conflict and suggests an alternative name.
+
+---
 
 # 3. REDCap Instrument Library
 
@@ -103,6 +109,8 @@ is made publicly available.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Important:** Always review imported instruments in the Online Designer after import. Variable names from the library may conflict with names already in your project, or the instrument\'s branching logic may reference variables that don\'t exist in your project context.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 4. Zip File Feature
 
@@ -160,6 +168,8 @@ is made publicly available.
   **Note:** Zip file import does not overwrite existing instruments — it adds the imported instrument as a new one. If you want to replace an existing instrument with a zip file version, you must delete the existing instrument first (only possible if it contains no data).
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 5. Library vs. Zip File: When to Use Each
 
   -------------------- ------------------------------------------------- ----------------------------------------------------------
@@ -173,25 +183,27 @@ is made publicly available.
   Collision handling   Automatic detection; must resolve before import   Automatic detection with suggested alternatives
   -------------------- ------------------------------------------------- ----------------------------------------------------------
 
+---
+
 # 6. Common Questions
 
 **Q: Does importing from the Instrument Library add the instrument to my
 project permanently?**
 
-A: Yes. Once imported, the instrument is part of your project and can be
+**A:** Yes. Once imported, the instrument is part of your project and can be
 modified, deleted (if no data), or exported like any other instrument.
 The library copy is unaffected.
 
 **Q: Can I export an instrument that already has data collected in it?**
 
-A: Yes. The zip file export captures the instrument\'s metadata only ---
+**A:** Yes. The zip file export captures the instrument\'s metadata only ---
 it does not include any collected data. The export is safe to perform at
 any time regardless of data collection status.
 
 **Q: What should I do if REDCap flags a variable name collision during
 import?**
 
-A: Accept REDCap\'s suggested alternative name, or type your own
+**A:** Accept REDCap\'s suggested alternative name, or type your own
 alternative — as long as it is unique across the project. After
 import, update any branching logic or other references that used the
 original variable name, since they will now reference the renamed
@@ -200,7 +212,7 @@ variable.
 **Q: Can I share a zip file with someone at a different institution
 using a different REDCap instance?**
 
-A: Yes. Zip files are portable across REDCap instances as long as both
+**A:** Yes. Zip files are portable across REDCap instances as long as both
 instances are running compatible REDCap versions. Variable name and
 instrument name collisions are handled at import time by the destination
 project.
@@ -208,7 +220,7 @@ project.
 **Q: Are copyrighted instruments from the library restricted in how I
 can use them?**
 
-A: Yes. Fee-based or copyrighted instruments in the library come with
+**A:** Yes. Fee-based or copyrighted instruments in the library come with
 license terms that govern their use. The library indicates which
 instruments have licensing requirements. Do not import a fee-based
 instrument without verifying your institution has the appropriate
@@ -216,9 +228,11 @@ license.
 
 **Q: Can I contribute my instrument to the Instrument Library?**
 
-A: Yes, through your local REDCap support team. The submission goes
+**A:** Yes, through your local REDCap support team. The submission goes
 through a committee review process before being published. Contact your
 institution\'s REDCap administrator to start the process.
+
+---
 
 # 7. Common Mistakes & Gotchas
 
@@ -246,6 +260,8 @@ institution\'s REDCap administrator to start the process.
     the Project Setup page: users often look for import/export on the
     setup page and miss it. The feature is accessed from within the
     Online Designer\'s instrument list.
+
+---
 
 # 8. Administrator Configuration
 

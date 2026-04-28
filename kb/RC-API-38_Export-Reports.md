@@ -66,7 +66,7 @@ The character used to separate fields in CSV output. Options include comma (defa
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -185,19 +185,19 @@ The API returns data rows as configured in the report, ordered first by record (
 # 6. Common Questions
 
 **Q: How do I find my report's ID?**
-A: In the REDCap interface, go to "Manage" > "Custom reports." The report ID appears in the URL bar (e.g., `...?pid=123&report_id=1`) or is listed in the report management table.
+**A:** In the REDCap interface, go to "Manage" > "Custom reports." The report ID appears in the URL bar (e.g., `...?pid=123&report_id=1`) or is listed in the report management table.
 
 **Q: What happens if a user doesn't have access to a report?**
-A: If the report is restricted to specific users, your API token must belong to a user with permission to view that report. Otherwise, you receive an access denied error.
+**A:** If the report is restricted to specific users, your API token must belong to a user with permission to view that report. Otherwise, you receive an access denied error.
 
 **Q: Can I export all reports at once?**
-A: No. You must call the API separately for each report ID. Loop through your report IDs and call the API for each one.
+**A:** No. You must call the API separately for each report ID. Loop through your report IDs and call the API for each one.
 
 **Q: Are the results filtered by Data Access Groups (DAGs)?**
-A: Yes. If your API token user is restricted to a DAG, the report respects that restriction and only returns records the user can access.
+**A:** Yes. If your API token user is restricted to a DAG, the report respects that restriction and only returns records the user can access.
 
 **Q: What is the difference between rawOrLabel and rawOrLabelHeaders?**
-A: `rawOrLabel` controls field values (e.g., coded values vs. display text). `rawOrLabelHeaders` controls column headers (e.g., `age` vs. `Age (years)`).
+**A:** `rawOrLabel` controls field values (e.g., coded values vs. display text). `rawOrLabelHeaders` controls column headers (e.g., `age` vs. `Age (years)`).
 
 ---
 

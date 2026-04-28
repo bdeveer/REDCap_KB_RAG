@@ -147,19 +147,19 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 # 6. Common Questions
 
 **Q: Why is this API useful?**
-A: Use this method to (1) verify API connectivity, (2) detect instance version before calling version-specific APIs, (3) log version information in automated workflows, or (4) ensure compatibility with your script.
+**A:** Use this method to (1) verify API connectivity, (2) detect instance version before calling version-specific APIs, (3) log version information in automated workflows, or (4) ensure compatibility with your script.
 
 **Q: How do I parse the response in my script?**
-A: The response is plain text. Simply read the returned string and split on periods to extract major, minor, and patch versions. Example: `version.split('.')` returns `['16', '1', '3']`.
+**A:** The response is plain text. Simply read the returned string and split on periods to extract major, minor, and patch versions. Example: `version.split('.')` returns `['16', '1', '3']`.
 
 **Q: Does the version change frequently?**
-A: REDCap typically releases major and minor versions annually. Patch versions address critical issues more frequently. Check with your administrator for your instance's update schedule.
+**A:** REDCap typically releases major and minor versions annually. Patch versions address critical issues more frequently. Check with your administrator for your instance's update schedule.
 
 **Q: Can I use this API to detect feature availability?**
-A: Partially. Version number indicates when features were introduced, but not all features are available in every instance. Consult the REDCap documentation for version-specific features.
+**A:** Partially. Version number indicates when features were introduced, but not all features are available in every instance. Consult the REDCap documentation for version-specific features.
 
 **Q: What format does the response come in?**
-A: The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with `xml` as the default. That said, since the response is a single string value, the format distinction matters very little in practice — most callers just read the raw response text regardless of format.
+**A:** The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with `xml` as the default. That said, since the response is a single string value, the format distinction matters very little in practice — most callers just read the raw response text regardless of format.
 
 ---
 

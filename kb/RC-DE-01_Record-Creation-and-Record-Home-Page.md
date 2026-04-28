@@ -21,6 +21,8 @@ navigate to existing ones using the Add/Edit Records page. It also
 describes the Record Home Page — the central hub for any single record
 --- and explains how REDCap assigns and uses the Record ID.
 
+---
+
 # 2. Key Concepts & Definitions
 
 **Record**
@@ -55,6 +57,8 @@ within a single record.
 A search feature on the Add/Edit Records page that allows lookup by any
 variable value across all records in a project. Can be scoped to a
 single variable for speed in large projects.
+
+---
 
 # 3. Step-by-Step Procedures
 
@@ -136,11 +140,13 @@ single variable for speed in large projects.
   **Note:** The \'Choose action for record\' button on the Record Home Page provides advanced administrative functions (moving records, deleting records, etc.). These are covered in RC-DE-13 — Record Administration *(coming soon)*.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Common Questions
 
 **Q: What is the Record ID and why does REDCap need it?**
 
-A: The Record ID is the unique identifier that REDCap uses to link all
+**A:** The Record ID is the unique identifier that REDCap uses to link all
 forms, events, and data to a single participant. Every piece of data in
 a REDCap project is associated with a Record ID. It is automatically
 assigned as an incrementing integer when a new record is created.
@@ -148,7 +154,7 @@ assigned as an incrementing integer when a new record is created.
 **Q: Can I assign my own Record ID instead of using the
 auto-incrementing number?**
 
-A: Yes. The Record ID field is the first field of the first instrument,
+**A:** Yes. The Record ID field is the first field of the first instrument,
 and it can be edited like any other text field before the record is
 saved for the first time. However, once a record ID is assigned and data
 has been entered, changing it requires administrative intervention. For
@@ -156,7 +162,7 @@ most projects, the auto-assigned ID is the recommended approach.
 
 **Q: What happens if I click \'Add new record\' by accident?**
 
-A: REDCap creates a record and assigns it a Record ID as soon as you
+**A:** REDCap creates a record and assigns it a Record ID as soon as you
 save any data. If you clicked \'Add new record\' but have not saved
 anything yet, you can navigate away without creating a record. If data
 was already saved, contact your project administrator to delete the test
@@ -165,13 +171,13 @@ record.
 **Q: What is the fastest way to find a record when I know the Record
 ID?**
 
-A: Use the Data Search box on the Add/Edit Records page. Type the Record
+**A:** Use the Data Search box on the Add/Edit Records page. Type the Record
 ID and press Enter. This is faster than scrolling through the dropdown
 in large projects.
 
 **Q: I can see the Record Home Page but some dots are missing. Why?**
 
-A: The most likely reasons are: (1) your user access does not include
+**A:** The most likely reasons are: (1) your user access does not include
 permission to view certain instruments, or (2) the project is
 longitudinal and those instruments are not assigned to every event. In a
 project with Data Access Groups, you may also only see records from your
@@ -180,13 +186,15 @@ own group.
 **Q: Can I navigate directly to an instrument without going through the
 Record Home Page?**
 
-A: Yes. You can click any dot in the Record Status Dashboard to go
+**A:** Yes. You can click any dot in the Record Status Dashboard to go
 directly to that instrument for that record, bypassing the Record Home
 Page entirely.
 
 **Q: How can I bulk create multiple records at once instead of adding them one by one?**
 
-A: You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the RC-API-03 — Import Records API to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
+**A:** You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the RC-API-03 — Import Records API to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
+
+---
 
 # 5. Common Mistakes & Gotchas
 

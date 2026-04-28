@@ -56,7 +56,7 @@ A permission that allows the API token user to perform write operations. While n
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python

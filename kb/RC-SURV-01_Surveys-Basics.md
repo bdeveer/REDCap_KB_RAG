@@ -356,7 +356,7 @@ Additional survey-related settings that administrators control in the Control Ce
 
 ---
 
-# 12. Version & Change Notes
+# 13. Version & Change Notes
 
 | REDCap Version | Note |
 | --- | --- |

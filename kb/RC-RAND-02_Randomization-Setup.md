@@ -14,7 +14,7 @@ RC-RAND-02
 
 ---
 
-# 2. Overview
+# 1. Overview
 
 ## What is this?
 
@@ -42,7 +42,9 @@ through 12 of the Setup Procedure for each additional model. Each model
 requires its own randomization variable and allocation table;
 stratification variables can be shared.
 
-# 3. Learning Objectives
+---
+
+# 2. Learning Objectives
 
 After completing this guide, the user will be able to:
 
@@ -63,7 +65,9 @@ After completing this guide, the user will be able to:
 
 - Move a randomized project to production status correctly
 
-# 4. Pre-flight Checklist
+---
+
+# 3. Pre-flight Checklist
 
 Complete every applicable item below before opening the REDCap
 randomization setup interface. Items skipped prematurely are the leading
@@ -84,12 +88,14 @@ cause of model rebuilds.
   ☐       Confirm your allocation table is ready (or a plan is in place to obtain it)                                       *Never — required before going to production*
   ------- ----------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------
 
-# 5. Setup Procedure
+---
+
+# 4. Setup Procedure
 
 Follow these 14 steps in order. Steps marked as optional can be skipped
 if they do not apply to your project design.
 
-## 5.1 Variable and framework setup (Steps 1--4)
+## 4.1 Variable and framework setup (Steps 1--4)
 
 +-------+-------------------------------------------------------------+
 | **1** | **Create your randomization variable**                      |
@@ -125,7 +131,7 @@ if they do not apply to your project design.
 |       | longitudinal mode.*                                         |
 +-------+-------------------------------------------------------------+
 
-## 5.2 Enable the module (Steps 5--7)
+## 4.2 Enable the module (Steps 5--7)
 
 +-------+-------------------------------------------------------------+
 | **5** | **Confirm user rights — Part 1**                          |
@@ -152,7 +158,7 @@ if they do not apply to your project design.
 |       | project builders.*                                          |
 +-------+-------------------------------------------------------------+
 
-## 5.3 Define the randomization model (Step 8)
+## 4.3 Define the randomization model (Step 8)
 
 This is the most critical step. Decisions made here are locked once the
 model is saved. Review RC-RAND-01 before proceeding if you have any
@@ -202,7 +208,7 @@ uncertainty about the concepts below.
 > make structural changes, and doing so has major consequences. Test
 > thoroughly before going to production.*
 
-## 5.4 Allocation tables (Steps 9--10)
+## 4.4 Allocation tables (Steps 9--10)
 
 +--------+------------------------------------------------------------+
 | **9**  | **Download the allocation table template**                 |
@@ -224,7 +230,7 @@ uncertainty about the concepts below.
 |        | records when testing a new table.*                         |
 +--------+------------------------------------------------------------+
 
-## 5.5 Trigger options (Step 11)
+## 4.5 Trigger options (Step 11)
 
 Select how randomization is initiated. This is a Randomization 2.0
 feature — verify your REDCap version supports it.
@@ -235,7 +241,7 @@ feature — verify your REDCap version supports it.
 | **Trigger logic — for users with Randomize permission only** | Define trigger logic (similar to branching logic) on a specific instrument/event. Randomization fires automatically when the logic is true AND a user with Randomize rights saves the defined form. Use when randomization should be conditional on data values, but staff-controlled. |
 | **Trigger logic — for all users (including survey respondents)** | Same as above, but fires for any user — including survey respondents completing a form. Randomization rights not required to trigger. Use for automatic randomization based on survey completion or eligibility criteria. |
 
-## 5.6 Test, finalize, and go to production (Steps 12--14)
+## 4.6 Test, finalize, and go to production (Steps 12--14)
 
 +--------+------------------------------------------------------------+
 | **12** | **Test thoroughly in Development mode**                    |
@@ -269,9 +275,13 @@ feature — verify your REDCap version supports it.
 |        | Production.*                                               |
 +--------+------------------------------------------------------------+
 
-# 6. Questions & Answers
+---
 
-# 7. Common Mistakes & Gotchas
+# 5. Questions & Answers
+
+---
+
+# 6. Common Mistakes & Gotchas
 
 **Skipping pre-flight and going straight to setup**
 
@@ -336,13 +346,17 @@ feature — verify your REDCap version supports it.
     \'rand\_group\'). Establish a naming convention before creating any
     randomization-related variables.
 
-# 8. Administrator Configuration
+---
+
+# 7. Administrator Configuration
 
 The Randomization module must be enabled at the system level before it can be enabled in any project. Administrators do this in the Control Center under System Configuration → Modules/Services Configuration. See **RC-CC-06** for details.
 
 > **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
 
-# 9. Related Articles
+---
+
+# 8. Related Articles
 
 - **RC-RAND-01:** Randomization Concepts & Terminology — required
     prerequisite for this guide
@@ -358,7 +372,9 @@ The Randomization module must be enabled at the system level before it can be en
 
 - **RC-CC-06:** Control Center: Modules & Services Configuration — system-level Randomization enable/disable
 
-# 10. Version & Change Notes
+---
+
+# 9. Version & Change Notes
 
 | **REDCap Version** | **Notes** |
 | --- | --- |

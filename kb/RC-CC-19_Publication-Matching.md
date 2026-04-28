@@ -107,6 +107,8 @@ When **P.I. Emailing** is enabled in the Setup tab, matched PIs receive email no
 
 > **Important:** PI emailing is disabled by default and must be explicitly turned on. Enabling it before PI records are complete and verified may result in incorrect or premature notifications.
 
+---
+
 # 7. Common Questions
 
 **Q: Why do some of my research projects not appear in the Publication Matching module?**
@@ -124,6 +126,8 @@ Publication Matching uses the PI's name and affiliated institution to narrow res
 **Q: Can I manually review and reject publication matches before they are shown to PIs?**
 Yes. All matched publications are surfaced for administrator review in the P.I.-Pub Matches and Project-Pub Matches tabs. Administrator review is always required before matches are considered confirmed. You can review, accept, or discard matches. Matches are not automatically sent to PIs — you control which ones are communicated via email.
 
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Enabling PI emailing before completing PI records.** PI emailing is disabled by default. If you enable it before ensuring that all PI records are complete (first name, last name, valid email), PIs may receive emails with incomplete or incorrect information about publication matches. Always complete and verify PI data in the To-Do List and Manage Projects tabs before enabling PI emailing.
@@ -131,6 +135,8 @@ Yes. All matched publications are surfaced for administrator review in the P.I.-
 **Assuming all PubMed matches are correct matches.** Publication Matching uses automated search, which can produce false positives. A publication matched to a PI may have been written by a different author with the same name, or may be only tangentially related to the research project. Always review matched publications critically. Administrators and PIs should verify that a matched publication is genuinely associated with the project before claiming it as output.
 
 **Not updating PI information when investigators change or leave.** If a PI leaves the institution or is replaced, their record in Publication Matching should be updated or removed from active searches. Failing to update PI information can result in continued searches for publications by investigators who are no longer with the institution, and may create confusion about project ownership and authorship.
+
+---
 
 # 9. Related Articles
 

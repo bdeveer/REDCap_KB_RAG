@@ -12,6 +12,8 @@ RC-EXPRT-02
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-01 — Overview & Workflow; RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-04 — De-identification & Formatting Options |
 
+---
+
 # 1. Overview
 
 This article describes the seven export formats available in REDCap\'s
@@ -19,6 +21,8 @@ Data Exports, Reports, and Stats application. It explains what each
 format produces, how many files are generated, and when to use each one.
 Selecting the wrong format — or failing to download all generated
 files — is one of the most common export mistakes.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -52,6 +56,8 @@ data capture (EDC) systems. The CDISC ODM export from REDCap can be
 imported into other EDC tools that support the standard, and can also be
 re-imported back into REDCap.
 
+---
+
 # 3. Export Format Reference
 
 REDCap offers seven export formats. Select the format that matches your
@@ -72,6 +78,8 @@ them which format they prefer before exporting.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Important:** For formats that generate multiple files (SPSS, SAS, R, Stata), all files must be downloaded and kept together. Opening only the data file without its companion syntax file will result in raw, unlabeled output.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 4. Choosing a Format
 
@@ -99,6 +107,8 @@ REDCap using the Data Import Tool.
 R users can also pull data directly from REDCap using the API, bypassing
 the manual export process entirely. See RC-API-01 for details.
 
+---
+
 # 5. Common Questions
 
   ---------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -109,6 +119,8 @@ the manual export process entirely. See RC-API-01 for details.
   *Does the export format affect which data is included?*                                  No. The export format controls how values are represented and how many files are generated — it does not filter which records or variables are included. Report type and user rights determine what data is exported. See RC-EXPRT-03 and RC-EXPRT-05.
   *What is CDISC ODM and when would I use it?*                                             CDISC ODM is a standard XML format for exchanging data between EDC systems. Use it if you need to transfer data to another EDC tool that supports the CDISC standard, or if you want a complete backup that can be re-imported into REDCap along with its metadata.
   ---------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 6. Common Mistakes & Gotchas
 

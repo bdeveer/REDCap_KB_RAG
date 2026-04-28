@@ -79,7 +79,7 @@ Boolean-type fields use `0` (false/no) or `1` (true/yes).
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 PHP
 ```php
@@ -130,16 +130,16 @@ On error, you receive an error message with details about what failed.
 # 6. Common Questions
 
 **Q: Can I update only some project settings, or do I need to include all fields?**
-A: You only need to include the fields you want to change. Fields omitted from the data payload are left untouched.
+**A:** You only need to include the fields you want to change. Fields omitted from the data payload are left untouched.
 
 **Q: What does the return value mean?**
-A: The API returns a count of how many field values were accepted — including fields that already had the submitted value. A return of `3` means 3 fields were processed, not necessarily that 3 things changed.
+**A:** The API returns a count of how many field values were accepted — including fields that already had the submitted value. A return of `3` means 3 fields were processed, not necessarily that 3 things changed.
 
 **Q: Do I need special permissions to use this method?**
-A: Yes. You need both **API Import/Update** privileges and **Project Setup/Design** privileges. Having only one of these is not sufficient.
+**A:** Yes. You need both **API Import/Update** privileges and **Project Setup/Design** privileges. Having only one of these is not sufficient.
 
 **Q: Can I update surveys_enabled after the project is in production?**
-A: Yes. You can enable or disable surveys on a project at any time, even after data collection has begun.
+**A:** Yes. You can enable or disable surveys on a project at any time, even after data collection has begun.
 
 ---
 

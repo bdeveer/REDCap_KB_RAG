@@ -158,19 +158,19 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 # 6. Common Questions
 
 **Q: What is the difference between a survey access code and a survey link?**
-A: A survey link (RC-API-40) is a full URL the participant clicks to go directly to their survey. An access code is a short code the participant types at the REDCap survey login page. Both grant access to the same survey for the same record; the difference is how the participant gets there.
+**A:** A survey link (RC-API-40) is a full URL the participant clicks to go directly to their survey. An access code is a short code the participant types at the REDCap survey login page. Both grant access to the same survey for the same record; the difference is how the participant gets there.
 
 **Q: When would I use an access code instead of a survey link?**
-A: Access codes are useful when a full URL is impractical — for example, printed participant packets, in-person enrollment, SMS with tight character limits, or when participants may have difficulty clicking links.
+**A:** Access codes are useful when a full URL is impractical — for example, printed participant packets, in-person enrollment, SMS with tight character limits, or when participants may have difficulty clicking links.
 
 **Q: Is the access code unique per record?**
-A: Yes. Each access code is tied to a specific record, instrument, and event (if longitudinal), just like a survey link.
+**A:** Yes. Each access code is tied to a specific record, instrument, and event (if longitudinal), just like a survey link.
 
 **Q: Does an access code expire?**
-A: Access codes do not have a built-in expiration. They remain valid until the record is deleted or the instrument is disabled as a survey.
+**A:** Access codes do not have a built-in expiration. They remain valid until the record is deleted or the instrument is disabled as a survey.
 
 **Q: Can I use both a survey link and an access code for the same record?**
-A: Yes. Both methods grant access to the same survey entry for that record. You can generate both and use whichever is appropriate for your distribution channel.
+**A:** Yes. Both methods grant access to the same survey entry for that record. You can generate both and use whichever is appropriate for your distribution channel.
 
 ---
 

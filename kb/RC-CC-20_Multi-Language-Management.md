@@ -158,6 +158,8 @@ Languages can be marked as **active for MyCap** (the mobile companion app). This
 
 **Export/Import General Settings:** The export/import for general settings (tab-level configuration) is separate from language export/import and uses JSON format.
 
+---
+
 # 4. Common Questions
 
 **Q: If I disable Multi-Language Management system-wide, what happens to projects that already use it?**
@@ -175,6 +177,8 @@ Yes. Deleting a system language from the Control Center does not remove translat
 **Q: Can I set a base language that is different from English?**
 Yes. The base language is the fallback language shown to users who have not selected a language preference. Only one language can be designated as the base language at a time. Many institutions set English as the base language, but you can choose any language you have configured. Changing the base language affects the default display for all users.
 
+---
+
 # 5. Common Mistakes & Gotchas
 
 **Disabling MLM system-wide without notifying projects that depend on it.** If you disable Multi-Language Management globally, all projects immediately lose their active translations and revert to the base language. This can disrupt surveys and forms for end users without warning. Always plan ahead and communicate changes to project managers before disabling MLM.
@@ -182,6 +186,8 @@ Yes. The base language is the fallback language shown to users who have not sele
 **Changing the base language without ensuring the new base language is fully translated.** The base language is the fallback when a user has no language preference or when a language has missing translations. If you designate a language with incomplete translations as the base, users will see blank or missing text. Always verify that your chosen base language has good translation coverage (>90%) before making it the base.
 
 **Assuming "Force subscription to system language updates" means projects can never customize translations.** When force subscription is enabled, projects receive updates to system language strings automatically. However, administrators can still provide "selective overrides" for individual items while staying subscribed to the base language. Projects are not locked in completely — they have some flexibility even under forced subscriptions.
+
+---
 
 # 6. Related Articles
 

@@ -12,6 +12,8 @@ RC-EXPRT-04
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-02 — Export Formats |
 
+---
+
 # 1. Overview
 
 This article covers the optional de-identification settings and data
@@ -21,6 +23,8 @@ identifying information before downloading your data. Formatting options
 control how values are represented in the exported file. The
 availability of these options depends on the user\'s Data Export Rights
 level — see RC-EXPRT-03 for details on rights levels.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -63,6 +67,8 @@ delimiter is a comma, but some regional configurations (common in
 Europe) use a semicolon or tab instead. Mismatched delimiters cause CSV
 files to display incorrectly in spreadsheet applications.
 
+---
+
 # 3. De-identification Options
 
 De-identification options appear in the export dialog under a dedicated
@@ -100,6 +106,8 @@ For date de-identification, only one of the two options can be selected.
   **Important:** Date shifting preserves relative time relationships within a record (e.g., days between enrollment and first visit) but makes absolute dates less identifiable. It does not prevent re-identification if the shifted dates are combined with other identifying information.
   --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Advanced Data Formatting Options
 
 These options control how the exported data is structured and formatted.
@@ -121,6 +129,8 @@ Groups are configured in the project, an option appears to export an
 additional variable containing each record\'s DAG assignment. These
 options are contextual and only appear when relevant.
 
+---
+
 # 5. Common Questions
 
   ------------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,6 +141,8 @@ options are contextual and only appear when relevant.
   *Does removing unvalidated text fields also remove validated text fields?*                 No. The Remove unvalidated Text fields option only removes text boxes that have no validation rule applied. Text boxes with date, number, email, or other validation are still included in the export.
   *What does the gray Form Status export option actually affect?*                            It only affects instruments with no data saved (gray dot). Changing this from \'0\' to blank is only relevant if you are using the export as a data import file and your import logic distinguishes between \'incomplete\' (0) and \'no data entered\' (blank). For most analysis purposes, the default is fine.
   ------------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 6. Common Mistakes & Gotchas
 
@@ -154,6 +166,8 @@ dates. Selecting both is not possible; choosing one disables the other.
 collaborators.** Regional CSV delimiter differences are a common source
 of data formatting problems. When sharing exports internationally,
 confirm the expected delimiter with the recipient before exporting.
+
+---
 
 # 7. Related Articles
 

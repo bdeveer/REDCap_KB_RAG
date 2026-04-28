@@ -12,6 +12,8 @@ RC-EXPRT-07
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-06 — Custom Reports: Setup & Field Selection; RC-EXPRT-08 — Custom Reports: Management & Organization; RC-BL-01 — Branching Logic: Overview & Scope; RC-BL-02 — Branching Logic: Syntax & Atomic Statements; RC-DAG-01 — Data Access Groups; RC-LONG-01 — Longitudinal Project Setup |
 
+---
+
 # 1. Overview
 
 This article covers Step 3 (filters) and Step 4 (result ordering) of the REDCap custom report builder. Filters control which records appear in a report; ordering controls the sequence in which results are displayed. Both steps are entirely optional — a report with no filters returns all records in the project, ordered by record ID by default. This is the second article in the Custom Reports series; it assumes familiarity with report creation and field selection covered in RC-EXPRT-06.
@@ -145,25 +147,25 @@ To specify a custom order:
 # 6. Common Questions
 
 **Q: Do I have to set up filters to create a report?**
-A: No. Filters are entirely optional. A report with no filters displays all records in the project for the selected fields.
+**A:** No. Filters are entirely optional. A report with no filters displays all records in the project for the selected fields.
 
 **Q: What is the difference between the Logic Builder and Advanced Logic?**
-A: The Logic Builder is a point-and-click interface that constructs filter logic through dropdowns. Advanced Logic is a free-text syntax box accepting the same branching logic syntax used elsewhere in REDCap. Advanced Logic supports functions (`datediff`, `sum`, `ends_with`, etc.) and smart variables, which the Logic Builder does not support. Use Advanced Logic when you need anything beyond simple comparisons.
+**A:** The Logic Builder is a point-and-click interface that constructs filter logic through dropdowns. Advanced Logic is a free-text syntax box accepting the same branching logic syntax used elsewhere in REDCap. Advanced Logic supports functions (`datediff`, `sum`, `ends_with`, etc.) and smart variables, which the Logic Builder does not support. Use Advanced Logic when you need anything beyond simple comparisons.
 
 **Q: Can I use the same logic syntax I use for branching logic in a report filter?**
-A: Yes, with one important difference in scope: branching logic hides or shows individual fields on an instrument; report filter logic includes or excludes entire records (or events, if the per-event setting is enabled). The syntax, functions, and smart variables are otherwise identical.
+**A:** Yes, with one important difference in scope: branching logic hides or shows individual fields on an instrument; report filter logic includes or excludes entire records (or events, if the per-event setting is enabled). The syntax, functions, and smart variables are otherwise identical.
 
 **Q: What does a live filter do that a regular filter does not?**
-A: A regular filter is fixed — it applies the same condition every time the report is run. A live filter lets users change the filter value directly from the report view page without opening the report editor. Live filters are ideal when the same report needs to be sliced by different values of the same variable.
+**A:** A regular filter is fixed — it applies the same condition every time the report is run. A live filter lets users change the filter value directly from the report view page without opening the report editor. Live filters are ideal when the same report needs to be sliced by different values of the same variable.
 
 **Q: If I set both an event filter and a DAG filter in Additional Filters, how does REDCap combine them?**
-A: With AND logic. A record must belong to a selected DAG AND have data in a selected event to appear in the report. There is no option to combine them with OR logic.
+**A:** With AND logic. A record must belong to a selected DAG AND have data in a selected event to appear in the report. There is no option to combine them with OR logic.
 
 **Q: Can I write advanced logic that references smart variables like [user-dag-name]?**
-A: Yes. Smart variables are supported in report filter logic. However, because reports can be viewed by multiple users, be cautious when using user-specific smart variables — the filter will resolve differently depending on who is viewing the report.
+**A:** Yes. Smart variables are supported in report filter logic. However, because reports can be viewed by multiple users, be cautious when using user-specific smart variables — the filter will resolve differently depending on who is viewing the report.
 
 **Q: Why does switching from Advanced Logic back to the Logic Builder erase my filter?**
-A: The Logic Builder can only represent a subset of possible logic expressions — it has no way to render functions like `datediff` or `sum` as its dropdown controls. REDCap warns you before erasing, so you can cancel and preserve your advanced filter if you clicked the wrong button.
+**A:** The Logic Builder can only represent a subset of possible logic expressions — it has no way to render functions like `datediff` or `sum` as its dropdown controls. REDCap warns you before erasing, so you can cancel and preserve your advanced filter if you clicked the wrong button.
 
 ---
 

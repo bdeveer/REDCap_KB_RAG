@@ -319,7 +319,7 @@ On instances with separate environments (development, test, production), adminis
 
 ---
 
-# 15. Common Questions
+# 1. Common Questions
 
 **Q: Can I recover a deleted user account?**
 Once a user is deleted from the Browse Users page, they are permanently removed from the system. Deletion is not reversible through the REDCap UI. If you need to preserve a user's access but prevent future logins, use the Suspend option instead, which can be reversed later. If a user is truly no longer needed, delete them; if there is any chance they might need access again, suspend them instead.
@@ -338,7 +338,7 @@ The Browse Users interface allows one-at-a-time editing. For bulk operations (e.
 
 ---
 
-# 16. Common Mistakes & Gotchas
+# 2. Common Mistakes & Gotchas
 
 **Deleting a user account instead of suspending it when the account might be needed again.** User deletion is permanent and cannot be undone through the UI. If there is any possibility the user will need access again (leave of absence, temporary contractor, role change), suspend them instead. Only delete users when you are certain they will never need REDCap access.
 
@@ -348,7 +348,7 @@ The Browse Users interface allows one-at-a-time editing. For bulk operations (e.
 
 ---
 
-# 17. Related Articles
+# 3. Related Articles
 
 - RC-CC-03 — Control Center: Security & Authentication (authentication methods affecting user login)
 - RC-CC-04 — Control Center: User Settings & Defaults (system-wide user behavior controls)

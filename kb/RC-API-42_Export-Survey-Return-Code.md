@@ -58,7 +58,7 @@ Project structures where an instrument or event can be repeated multiple times p
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -169,22 +169,22 @@ Retrieve the base survey link separately using the Export Survey Link method (RC
 # 6. Common Questions
 
 **Q: How do I use a return code with a survey link?**
-A: Get the base survey link from RC-API-40, then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
+**A:** Get the base survey link from RC-API-40, then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
 
 **Q: What does the response look like?**
-A: It is a plain text string (just the code itself), not a JSON object or XML document. Don't try to parse it; use the string directly.
+**A:** It is a plain text string (just the code itself), not a JSON object or XML document. Don't try to parse it; use the string directly.
 
 **Q: Does Save & Return Later need to be enabled?**
-A: Yes. If the survey does not have Save & Return Later enabled in its survey settings, this method returns an error. Enable it under Survey Settings → Termination Instruments.
+**A:** Yes. If the survey does not have Save & Return Later enabled in its survey settings, this method returns an error. Enable it under Survey Settings → Termination Instruments.
 
 **Q: Can I get a return code for a survey that hasn't been started yet?**
-A: Yes. Return codes can be retrieved at any time regardless of response status. If the respondent hasn't started yet, using the code opens the survey from the beginning.
+**A:** Yes. Return codes can be retrieved at any time regardless of response status. If the respondent hasn't started yet, using the code opens the survey from the beginning.
 
 **Q: Does a return code expire?**
-A: Return codes do not have a built-in expiration. They remain valid unless the record is deleted or the survey is closed.
+**A:** Return codes do not have a built-in expiration. They remain valid unless the record is deleted or the survey is closed.
 
 **Q: What is the difference between a return code and the survey link itself?**
-A: A survey link takes the respondent to the start of the survey. A return code, appended to that link, resumes from their last saved point.
+**A:** A survey link takes the respondent to the start of the survey. A return code, appended to that link, resumes from their last saved point.
 
 ---
 

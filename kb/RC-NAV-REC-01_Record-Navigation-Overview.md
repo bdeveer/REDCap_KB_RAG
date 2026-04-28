@@ -9,7 +9,7 @@ RC-NAV-REC-01
 | **Prerequisite** | None |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-DE-01 — Record Creation and Record Home Page, RC-DE-02 — Basic Data Entry, RC-LONG-01 — Longitudinal Project Setup, RC-LONG-02 — Repeated Instruments and Events Setup, RC-IMP-01 — Data Import Overview, RC-EXPRT-06 — Custom Reports Setup |
 
 ---
@@ -20,6 +20,8 @@ This article explains how to navigate to records and locate data within
 a REDCap project. It covers the primary navigation paths available to
 any REDCap user and explains how to interpret instrument status
 indicators (colored dots).
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -51,6 +53,8 @@ study.
 
 A data-collection menu page that provides lookup tools for finding and
 opening individual records.
+
+---
 
 # 3. Step-by-Step: Primary Navigation Paths
 
@@ -112,6 +116,8 @@ opening individual records.
 - After opening an instrument, the left-hand menu displays a list of
     all instruments for quick switching.
 
+---
+
 # 4. Instrument Status Dot Colors
 
 Every instrument in REDCap is represented by a colored dot. The color
@@ -143,39 +149,43 @@ encodes the completion status of that instrument for a given record.
   **Technical Note:** Instrument status values are stored as part of the project dataset and can be manipulated in bulk via data import. Grey and red are both coded as 0; yellow = 1; green = 2. Survey statuses (orange checkmark = 1, green checkmark = 2) only appear when the instrument is used as a survey.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 5. Common Questions
 
 **Q: What is the fastest way to find a specific record in a large
 project?**
 
-A: Use Add/Edit Records and the Data Search feature. Searching within a
+**A:** Use Add/Edit Records and the Data Search feature. Searching within a
 specific variable (such as Record ID or email) is faster than searching
 across all variables.
 
 **Q: Can I navigate to an instrument directly without going through the
 Record Home Page?**
 
-A: Yes. Clicking any colored dot in the Record Status Dashboard or in a
+**A:** Yes. Clicking any colored dot in the Record Status Dashboard or in a
 report takes you directly to the corresponding instrument without
 visiting the Record Home Page first.
 
 **Q: What does a red dot mean — is something wrong?**
 
-A: No. A red dot simply means data has been entered but the Form Status
+**A:** No. A red dot simply means data has been entered but the Form Status
 field has not been changed from its default value of Incomplete. It does
 not indicate an error.
 
 **Q: Can I change instrument statuses for many records at once?**
 
-A: Yes. Instrument statuses are stored in the dataset and can be set in
+**A:** Yes. Instrument statuses are stored in the dataset and can be set in
 bulk using REDCap\'s data import tools. Use coded values: 0 =
 incomplete, 1 = unverified, 2 = complete.
 
 **Q: What happens to the dot color if I enter a single data point but
 leave everything else blank?**
 
-A: The dot turns red. Any data saved to an instrument — even a single
+**A:** The dot turns red. Any data saved to an instrument — even a single
 field — changes the dot from grey to red.
+
+---
 
 # 6. Common Mistakes & Gotchas
 
@@ -194,6 +204,8 @@ field — changes the dot from grey to red.
 - Expecting survey statuses on non-survey instruments: orange and
     green-checkmark dots only appear on instruments that are enabled as
     surveys.
+
+---
 
 # 7. Related Articles
 

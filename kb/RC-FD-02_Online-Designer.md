@@ -12,6 +12,8 @@ RC-FD-02
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-FD-03 — Data Dictionary; RC-FD-05 — Codebook; RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
 
+---
+
 # 1. Overview
 
 The Online Designer is REDCap\'s guided, point-and-click instrument
@@ -20,6 +22,8 @@ at a time through an interactive interface, with built-in validation
 that prevents common configuration errors. This article explains what
 the Online Designer does, when to use it, and how its behavior differs
 between Development and Production modes.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -55,6 +59,8 @@ Designer does not validate whether your instrument design is
 scientifically appropriate for your study goals; that judgment belongs
 to the research team.
 
+---
+
 # 3. Accessing the Online Designer
 
 - From the Project Setup page (Development mode): click the Online
@@ -67,6 +73,8 @@ to the research team.
 - The Online Designer opens to a list of all existing instruments in
     the project. From here you can add a new instrument, open an
     existing one to edit it, or reorder instruments.
+
+---
 
 # 4. What the Online Designer Can Do
 
@@ -125,6 +133,8 @@ These project-level buttons are distinct from the per-instrument buttons that ap
 - Bypass the Production mode change queue — all changes in
     Production require review.
 
+---
+
 # 5. Behavior in Development vs. Production Mode
 
 | **Action** | **Development Mode** | **Production Mode** |
@@ -138,6 +148,8 @@ These project-level buttons are distinct from the per-instrument buttons that ap
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Important:** The level of automatic approvals in Production mode is set centrally by your institution\'s REDCap support team. Some institutions allow minor changes (adding a new field) to be auto-approved, while others require administrator review for any change. For this installation\'s specific policy, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 4: Draft Mode Approval Policy**.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 6. When to Use the Online Designer
 
@@ -165,12 +177,14 @@ Consider switching to the Data Dictionary (RC-FD-03) when:
 - You are comfortable with REDCap\'s variable definition schema and
     want faster bulk editing.
 
+---
+
 # 7. Common Questions
 
 **Q: I saved a change in the Online Designer but it isn\'t showing up in
 my data entry forms. Why?**
 
-A: Your project is in Production mode. Changes do not take effect until
+**A:** Your project is in Production mode. Changes do not take effect until
 they pass through the change queue review process. Depending on your
 institution\'s policy, approval may be automatic or may require a REDCap
 administrator. Check the pending change queue to confirm your change was
@@ -178,7 +192,7 @@ submitted.
 
 **Q: Can I delete a variable that already has data in it?**
 
-A: In Production mode, variables with data cannot be deleted through the
+**A:** In Production mode, variables with data cannot be deleted through the
 Online Designer. In Development mode, deleting a variable with test data
 is allowed, but the data is permanently lost. Always confirm whether a
 variable contains real or test data before attempting deletion.
@@ -186,21 +200,21 @@ variable contains real or test data before attempting deletion.
 **Q: Does the Online Designer check whether my branching logic is
 correct?**
 
-A: It checks that the logic is syntactically valid and references
+**A:** It checks that the logic is syntactically valid and references
 existing variables — these are the guardrails. It does not verify
 whether the logic achieves your intended study behavior. Test branching
 logic thoroughly in Development mode before collecting real data.
 
 **Q: Can I reorder instruments after they\'ve been created?**
 
-A: Yes. The Online Designer\'s instrument list supports drag-and-drop
+**A:** Yes. The Online Designer\'s instrument list supports drag-and-drop
 reordering. In longitudinal projects, instrument order also affects how
 they appear in the Record Home Page and Record Status Dashboard.
 
 **Q: Can I use the Online Designer and the Data Dictionary on the same
 project?**
 
-A: Yes. They operate on the same underlying instrument and variable
+**A:** Yes. They operate on the same underlying instrument and variable
 definitions. Changes made in one tool are reflected in the other. It is
 common to use the Online Designer for small edits and the Data
 Dictionary for bulk restructuring on the same project.
@@ -208,12 +222,14 @@ Dictionary for bulk restructuring on the same project.
 **Q: What happens if I make a mistake in Production mode and the change
 is auto-approved before I catch it?**
 
-A: Once an Online Designer change is approved in Production, it cannot
+**A:** Once an Online Designer change is approved in Production, it cannot
 be rolled back through the interface. The recovery path is to re-edit
 the variable manually in the Online Designer, or to re-upload a
 previously saved Data Dictionary snapshot that predates the erroneous
 change. This reinforces why saving a Data Dictionary backup before any
 significant change is critical.
+
+---
 
 # 8. Common Mistakes & Gotchas
 

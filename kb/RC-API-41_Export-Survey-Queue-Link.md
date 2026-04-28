@@ -55,7 +55,7 @@ The identifier sent in API requests specifying which type of resource to export.
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -154,22 +154,22 @@ This URL presents the respondent with all surveys in their queue for the specifi
 # 6. Common Questions
 
 **Q: What is the difference between a survey link and a survey queue link?**
-A: A survey link (RC-API-40) is specific to one instrument. A survey queue link (RC-API-41) presents multiple surveys in a guided workflow on a single page.
+**A:** A survey link (RC-API-40) is specific to one instrument. A survey queue link (RC-API-41) presents multiple surveys in a guided workflow on a single page.
 
 **Q: Which surveys appear in the queue?**
-A: The queue displays all surveys assigned to the record based on your project's Survey Queue configuration. The order and visibility are set in the project design, not via API.
+**A:** The queue displays all surveys assigned to the record based on your project's Survey Queue configuration. The order and visibility are set in the project design, not via API.
 
 **Q: Can I customize which surveys appear in the queue via API?**
-A: No. Survey queue membership is configured in the project design. Use the REDCap interface to specify which instruments are part of the queue.
+**A:** No. Survey queue membership is configured in the project design. Use the REDCap interface to specify which instruments are part of the queue.
 
 **Q: Does this method accept an event parameter for longitudinal projects?**
-A: No. Unlike some other survey API methods, this one takes only `token`, `content`, and `record`. The queue link is record-scoped, not event-scoped.
+**A:** No. Unlike some other survey API methods, this one takes only `token`, `content`, and `record`. The queue link is record-scoped, not event-scoped.
 
 **Q: What does the response look like?**
-A: It is a plain text URL string — not a JSON object or XML document. Don't try to parse it as JSON; just use the string directly.
+**A:** It is a plain text URL string — not a JSON object or XML document. Don't try to parse it as JSON; just use the string directly.
 
 **Q: What happens if the record has no surveys in its queue?**
-A: The API still returns a valid URL, but accessing it will show a message that no surveys are available.
+**A:** The API still returns a valid URL, but accessing it will show a message that no surveys are available.
 
 ---
 

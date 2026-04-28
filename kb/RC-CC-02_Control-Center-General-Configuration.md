@@ -350,7 +350,7 @@ The bottom of the Cron Jobs page shows a log of recent cron executions with time
 
 ---
 
-# 20. Common Questions
+# 2. Common Questions
 
 **Q: What should I do if the Configuration Check reports a cron job failure?**
 A cron job failure means that automated background processes (like survey invitations and alerts) will not execute. On Linux/Unix, verify the crontab entry with `crontab -l` and ensure the path to the PHP executable and REDCap installation are correct. On Windows, verify the Task Scheduler entry and confirm the PHP path exists. If the cron has never been set up, follow the setup instructions for your operating system in the Cron Jobs Setup section.
@@ -369,7 +369,7 @@ Verify that the web server's PHP mail subsystem is functional (the Configuration
 
 ---
 
-# 21. Common Mistakes & Gotchas
+# 3. Common Mistakes & Gotchas
 
 **Forgetting to configure the cron job on initial setup.** A missing cron job is a silent failure — no error message appears on the Control Center, but all time-dependent features (survey invitations, alerts, quality checks, scheduled tasks) will not work. Always run the Configuration Check and verify that the cron job status is "Good" immediately after deployment.
 
@@ -379,7 +379,7 @@ Verify that the web server's PHP mail subsystem is functional (the Configuration
 
 ---
 
-# 22. Related Articles
+# 4. Related Articles
 
 - RC-CC-01 — Control Center: Notifications & Reporting (system health checks, Consortium reporting configuration)
 - RC-CC-03 — Control Center: Security & Authentication (authentication and login security settings)

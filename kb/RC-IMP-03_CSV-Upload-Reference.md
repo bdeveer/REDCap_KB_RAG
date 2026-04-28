@@ -309,27 +309,27 @@ The following are download-only or not file-based:
 
 **Q: Which CSV uploads replace the existing configuration, and which just add to it?**
 
-A: The table in Section 2 lists the behavior for every upload. The critical ones to remember are the two that **replace**: the Data Dictionary (replaces all instruments and fields) and the Instrument–Event Mapping (replaces the entire designation matrix). Every other CSV upload is additive or update-only. For the two replace-type uploads, always download the current version first so you can recover from an unintended change.
+**A:** The table in Section 2 lists the behavior for every upload. The critical ones to remember are the two that **replace**: the Data Dictionary (replaces all instruments and fields) and the Instrument–Event Mapping (replaces the entire designation matrix). Every other CSV upload is additive or update-only. For the two replace-type uploads, always download the current version first so you can recover from an unintended change.
 
 **Q: Can I use these CSV uploads to copy a project setup from one project to another?**
 
-A: For most configuration areas, yes — download the CSV from the source project, then upload it into the target project. This works well for Arms, Events, Instrument–Event Mappings, Alerts, Data Quality Rules, User Roles, and DAG definitions. For the Data Dictionary, you can also download from one project and upload to another, but be aware that branching logic referencing specific event names or variable names will need to be validated after the upload. For a full project copy including all data, use the XML backup feature (Project Setup → Other Functionality → Copy or back up the project).
+**A:** For most configuration areas, yes — download the CSV from the source project, then upload it into the target project. This works well for Arms, Events, Instrument–Event Mappings, Alerts, Data Quality Rules, User Roles, and DAG definitions. For the Data Dictionary, you can also download from one project and upload to another, but be aware that branching logic referencing specific event names or variable names will need to be validated after the upload. For a full project copy including all data, use the XML backup feature (Project Setup → Other Functionality → Copy or back up the project).
 
 **Q: Is there a way to undo a CSV upload?**
 
-A: There is no undo button. For replace-type uploads (Data Dictionary, Instrument–Event Mappings), the recovery path is to re-upload the version you downloaded before making changes — which is why downloading a backup first is essential. For additive uploads (Arms, Events, Users, DAGs), reverting means manually removing the items that were added.
+**A:** There is no undo button. For replace-type uploads (Data Dictionary, Instrument–Event Mappings), the recovery path is to re-upload the version you downloaded before making changes — which is why downloading a backup first is essential. For additive uploads (Arms, Events, Users, DAGs), reverting means manually removing the items that were added.
 
 **Q: Do CSV uploads go through the change review queue in Production mode?**
 
-A: It depends on the feature. Data Dictionary uploads in Production mode go through the same change queue review process as Online Designer changes — they are not live until a project administrator approves them. Most other CSV uploads (Users, DAGs, Alerts, Data Quality Rules, etc.) take effect immediately regardless of project mode, because they do not modify instrument or field definitions.
+**A:** It depends on the feature. Data Dictionary uploads in Production mode go through the same change queue review process as Online Designer changes — they are not live until a project administrator approves them. Most other CSV uploads (Users, DAGs, Alerts, Data Quality Rules, etc.) take effect immediately regardless of project mode, because they do not modify instrument or field definitions.
 
 **Q: What columns do I need in my CSV file for a record data import?**
 
-A: The minimum required column is the Record ID. If your project is longitudinal, you must also include `redcap_event_name`. If you have repeating instruments or events, add `redcap_repeat_instrument` and `redcap_repeat_instance`. If you are assigned to a Data Access Group, add `redcap_data_access_group`. The Data Import Tool provides a download template with the correct column structure for your specific project — use that template as a starting point rather than building a CSV from scratch.
+**A:** The minimum required column is the Record ID. If your project is longitudinal, you must also include `redcap_event_name`. If you have repeating instruments or events, add `redcap_repeat_instrument` and `redcap_repeat_instance`. If you are assigned to a Data Access Group, add `redcap_data_access_group`. The Data Import Tool provides a download template with the correct column structure for your specific project — use that template as a starting point rather than building a CSV from scratch.
 
 **Q: Can I import a file exported from REDCap directly back into the same project without any changes?**
 
-A: Yes. Any CSV file exported from REDCap's data export feature can be re-imported directly into the same project without modification. The column structure will be correct, including all required fields and event names. This is useful for recovering from accidental deletions, sharing participant data with external analysts (who can make edits and return the file), or migrating records between projects with the same structure.
+**A:** Yes. Any CSV file exported from REDCap's data export feature can be re-imported directly into the same project without modification. The column structure will be correct, including all required fields and event names. This is useful for recovering from accidental deletions, sharing participant data with external analysts (who can make edits and return the file), or migrating records between projects with the same structure.
 
 ---
 

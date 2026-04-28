@@ -22,6 +22,8 @@ Both features change what you see when navigating records and what you
 are permitted to access. Understanding them prevents confusion when
 working in projects that use either or both features.
 
+---
+
 # 2. Longitudinal Mode
 
 ## 2.1 What It Is
@@ -69,6 +71,8 @@ When longitudinal mode is active, three areas of the interface change:
   **Note:** Longitudinal mode does not change how data is entered within an individual instrument. The field types, required fields, branching logic, form status, and save options all work identically to a non-longitudinal project.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 3. Data Access Groups (DAGs)
 
 ## 3.1 What They Are
@@ -110,37 +114,39 @@ one DAG and can only see and access records within their own DAG.
   **Troubleshooting:** DAG filtering is not the same as a custom dashboard filter. If a record appears to be missing, check first whether DAGs are enabled and whether the record might belong to a different site.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 4. Common Questions
 
 **Q: In a longitudinal project, does filling in an instrument at
 Baseline affect the same instrument at Week 4?**
 
-A: No. Each instrument-event combination is an independent data entry.
+**A:** No. Each instrument-event combination is an independent data entry.
 Entering Baseline data does not prefill, affect, or overwrite the same
 instrument at any other event.
 
 **Q: How do I know which event I am currently in when entering data?**
 
-A: The current event context is shown at the top of the instrument and
+**A:** The current event context is shown at the top of the instrument and
 in the left-hand navigation menu. In the Record Home Page and Record
 Status Dashboard, the column header shows the event name.
 
 **Q: I cannot find a record I just created. Where did it go?**
 
-A: If DAGs are enabled, the record was automatically assigned to your
+**A:** If DAGs are enabled, the record was automatically assigned to your
 DAG and should appear in your Add/Edit Records dropdown. If it still
 does not appear, check whether you navigated away before the record was
 fully created, or contact your project administrator.
 
 **Q: Can I be assigned to more than one DAG?**
 
-A: No. A user can be assigned to only one DAG at a time. If you need
+**A:** No. A user can be assigned to only one DAG at a time. If you need
 access to records across multiple DAGs, you must be unassigned from any
 DAG — which gives you access to all records in the project.
 
 **Q: A record exists but I cannot access it. What should I check?**
 
-A: First check whether DAGs are enabled in the project. If they are, the
+**A:** First check whether DAGs are enabled in the project. If they are, the
 record may belong to a DAG you are not assigned to. Second, check
 whether your user rights restrict access to certain instruments. Contact
 your project administrator if you need access that your current rights
@@ -148,9 +154,11 @@ do not provide.
 
 **Q: Does longitudinal mode change how I save data?**
 
-A: No. The four save options (Save and Exit Form, Save and Stay, Save
+**A:** No. The four save options (Save and Exit Form, Save and Stay, Save
 and Exit Record, Save and Go to Next Record) work identically in
 longitudinal and non-longitudinal projects.
+
+---
 
 # 5. Common Mistakes & Gotchas
 
@@ -172,6 +180,8 @@ longitudinal and non-longitudinal projects.
     are collections of events for different cohorts. A record belongs to
     one arm, which contains multiple events. See RC-NAV-REC-02 for a full
     explanation.
+
+---
 
 # 6. Related Articles
 

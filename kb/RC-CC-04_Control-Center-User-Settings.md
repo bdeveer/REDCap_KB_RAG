@@ -205,7 +205,7 @@ Custom email text can be configured for the two automated account expiration rem
 
 ---
 
-# 11. Common Questions
+# 2. Common Questions
 
 **Q: Should we allow normal users to create projects or require administrator approval?**
 Allowing users to create projects increases self-sufficiency and agility, but requires oversight to ensure projects comply with institutional standards. Requiring administrator approval provides more control but creates bottlenecks. A middle ground is to allow creation but set a record limit for development projects and use custom project creation surveys to collect required metadata (IRB numbers, data governance approvals, etc.).
@@ -224,7 +224,7 @@ Restricting to institutional domains (e.g., `university.edu`) limits account cre
 
 ---
 
-# 12. Common Mistakes & Gotchas
+# 3. Common Mistakes & Gotchas
 
 **Not configuring custom project creation surveys despite having institutional requirements.** If your institution requires IRB approvals, data governance agreements, or specific PI information before a project goes live, custom creation surveys capture this metadata at the right time. Without them, administrators manually track these requirements, leading to missed compliance steps and inconsistent documentation.
 
@@ -234,7 +234,7 @@ Restricting to institutional domains (e.g., `university.edu`) limits account cre
 
 ---
 
-# 13. Related Articles
+# 4. Related Articles
 
 - RC-CC-02 — Control Center: General Configuration (system-wide settings and email configuration)
 - RC-CC-03 — Control Center: Security & Authentication (authentication and login settings affecting user accounts)

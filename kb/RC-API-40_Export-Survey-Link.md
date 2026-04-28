@@ -58,7 +58,7 @@ A time point in a longitudinal study. Required for longitudinal projects; each e
 
 ---
 
-# 3. Request Examples
+# 4. Request Examples
 
 ## 4.1 Python
 ```python
@@ -166,19 +166,19 @@ The URL is valid immediately and can be distributed via email, text message, or 
 # 6. Common Questions
 
 **Q: Can I regenerate the same survey URL for the same record?**
-A: Yes. Calling the API multiple times for the same record and instrument always returns the same URL, allowing you to resend links as needed.
+**A:** Yes. Calling the API multiple times for the same record and instrument always returns the same URL, allowing you to resend links as needed.
 
 **Q: What happens if I request a survey link for a record that doesn't exist?**
-A: The API will return an error or create the record (depending on instance settings). Best practice: verify the record exists before requesting the link.
+**A:** The API will return an error or create the record (depending on instance settings). Best practice: verify the record exists before requesting the link.
 
 **Q: How long is a survey URL valid?**
-A: Survey URLs do not expire. They remain valid until you delete the record or disable the survey instrument.
+**A:** Survey URLs do not expire. They remain valid until you delete the record or disable the survey instrument.
 
 **Q: Can respondents access the survey without the link?**
-A: No. Survey links are private and non-guessable. Respondents must use the unique URL to access the survey without authentication.
+**A:** No. Survey links are private and non-guessable. Respondents must use the unique URL to access the survey without authentication.
 
 **Q: For longitudinal projects, which event should I specify?**
-A: Specify the event in which you want the respondent to complete the survey. The instrument must be assigned to that event in the project design.
+**A:** Specify the event in which you want the respondent to complete the survey. The instrument must be assigned to that event in the project design.
 
 ---
 

@@ -12,6 +12,8 @@ RC-EXPRT-01
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-02 — Export Formats; RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-04 — De-identification & Formatting Options; RC-EXPRT-05 — Report Types |
 
+---
+
 # 1. Overview
 
 This article explains how to export data from a REDCap project. It
@@ -19,6 +21,8 @@ covers how to navigate to the Data Exports, Reports, and Stats
 application and walks through the standard export workflow from start to
 finish. It is the entry point for the Exports, Reports & Stats knowledge
 base series.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -65,6 +69,8 @@ Optional settings applied during export that remove or transform
 potentially identifying information. Available options vary based on the
 user\'s Data Export Rights level. See RC-EXPRT-04 for full details.
 
+---
+
 # 3. Navigating to the Data Exports, Reports, and Stats Application
 
 The Data Exports, Reports, and Stats application is accessed from within
@@ -82,6 +88,8 @@ the Add/Edit/Organize Reports right is not granted.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **Note:** If Data Exports, Reports, and Stats does not appear in your menu, your account has no Data Export rights and the Add/Edit/Organize Reports right is not enabled. Contact your project administrator to review your user rights.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 4. The Standard Export Workflow
 
@@ -103,6 +111,8 @@ the report type or export format selected.
   **Tip:** If you need to re-download an export you generated previously, navigate to the File Repository application in the left-hand menu. REDCap stores a copy of every export there. You do not need to run the export again.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 5. Common Questions
 
   ---------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +124,8 @@ the report type or export format selected.
   *Can I export data from multiple instruments at once?*                                         Yes. Use the Selected Instruments/Events report to choose which instruments to include. For longitudinal projects, you must also select one or more events. See RC-EXPRT-05 for details on report types.
   *What happens if I close the export dialog before downloading my files?*                       The files are still saved in the File Repository. Navigate there to download them at any time.
   ---------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 6. Common Mistakes & Gotchas
 

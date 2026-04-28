@@ -12,6 +12,8 @@ RC-EXPRT-05
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-EXPRT-01 — Overview & Workflow; RC-EXPRT-03 — User Rights & Export Access; RC-EXPRT-04 — De-identification & Formatting Options |
 
+---
+
 # 1. Overview
 
 This article describes the types of reports available in REDCap\'s Data
@@ -20,6 +22,8 @@ when to use it — as well as the additional bulk export options
 available under the Other Export Options tab. Report type determines
 which records and variables are included in an export. Export format and
 de-identification options are applied after the report is selected.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -59,6 +63,8 @@ that provides bulk export options not available through the standard
 report workflow — including full project XML backup, bulk file
 download, PDF of all records, and Tableau integration.
 
+---
+
 # 3. Built-in Report Types
 
 ## 3.1 All Data
@@ -91,6 +97,8 @@ report does not filter by record.
 - Useful for sharing data from a single instrument with an external
     collaborator without exposing the full dataset.
 
+---
+
 # 4. Custom Reports
 
 ## 4.1 What Custom Reports Can Do
@@ -119,6 +127,8 @@ rights levels.
   **Note:** Detailed guidance on creating and configuring custom reports is covered in a separate training. This article covers report types from an export perspective only.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 5. Other Export Options
 
 The Other Export Options tab at the top of the Data Exports, Reports,
@@ -138,6 +148,8 @@ used but serve specific purposes.
   **Note:** Standard data exports (CSV, SPSS, R, etc.) do not include files uploaded through File Upload fields. If your project uses file upload fields and you need those files, use the ZIP file of uploaded files option under Other Export Options.
   --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---
+
 # 6. Common Questions
 
   ------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,6 +160,8 @@ used but serve specific purposes.
   *My project has many custom reports and the left menu is cluttered. What can I do?*         Organize reports into folders. Folders are created by naming them consistently and grouping reports under each name. Users with the Add/Edit/Organize Reports right can manage folder organization. This is covered in the custom reports training.
   *Does a custom report export all records or only filtered ones?*                            Only filtered ones, if a logic filter is applied. If no filter is set, the custom report exports all records you have access to for the selected variables.
   ------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---
 
 # 7. Common Mistakes & Gotchas
 

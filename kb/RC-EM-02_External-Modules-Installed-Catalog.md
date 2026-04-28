@@ -38,6 +38,8 @@ RC-EM-02
 > 5. Update the **Related Topics** metadata field and cross-references in Sections 1 and 4 in **every existing RC-EM catalog article** to include the new entry.
 > 6. Add the new article to `meta/KB-INDEX.md`.
 
+---
+
 # 1. Overview
 
 This article catalogs the External Modules installed on the **Production** REDCap instance. For modules available on other instances, see RC-EM-03 (Test / Staging) and RC-EM-04 (Development). Module availability may differ between instances — always verify in the Module Manager for your target instance.

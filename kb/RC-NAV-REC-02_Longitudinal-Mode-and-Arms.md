@@ -9,7 +9,7 @@ RC-NAV-REC-02
 | **Prerequisite** | RC-NAV-REC-01 — Record Navigation Overview |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
-| **Author** | REDCap Support |
+| **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-03 — Repeated Instruments & Events, RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation UI, RC-LONG-01 — Longitudinal Project Setup, RC-DE-03 — Longitudinal Projects and DAGs, RC-DE-10 — Longitudinal and Repeated Data Entry |
 
 ---
@@ -20,6 +20,8 @@ This article explains REDCap\'s Longitudinal mode and the concept of
 Arms — two features that allow data collection across multiple
 timepoints and participant cohorts. It describes how these features
 affect record navigation.
+
+---
 
 # 2. Key Concepts & Definitions
 
@@ -43,6 +45,8 @@ can have multiple arms, each with a different set of events and
 instrument assignments. A given record belongs to exactly one arm at a
 time. Arms are typically used to separate participant cohorts (e.g.,
 intervention group vs. placebo group).
+
+---
 
 # 3. How Longitudinal Mode Affects Navigation
 
@@ -74,6 +78,8 @@ intervention group vs. placebo group).
 
 - Records can only be found within the arm they belong to.
 
+---
+
 # 4. Step-by-Step: Working with Events and Arms
 
 ## 4.1 Navigating to a Record in a Specific Event
@@ -96,31 +102,35 @@ intervention group vs. placebo group).
 - A record can only appear under one arm. If you cannot find a record
     in one arm, check another arm.
 
+---
+
 # 5. Common Questions
 
 **Q: What is the difference between an event and an arm?**
 
-A: An event is a single timepoint (e.g., \'Baseline visit\'). An arm is
+**A:** An event is a single timepoint (e.g., \'Baseline visit\'). An arm is
 a collection of events that defines the overall study timeline for a
 particular cohort. Multiple arms let you define different timelines for
 different groups of participants.
 
 **Q: Can a record move from one arm to another?**
 
-A: Not typically during normal data entry. Arm assignment is usually set
+**A:** Not typically during normal data entry. Arm assignment is usually set
 when a record is created. Moving records between arms requires
 administrative intervention.
 
 **Q: Do all instruments appear in every event?**
 
-A: No. The project designer assigns specific instruments to specific
+**A:** No. The project designer assigns specific instruments to specific
 events. An instrument only appears in the events it has been designated
 for.
 
 **Q: I cannot find a record in Add/Edit Records. What should I check?**
 
-A: First confirm you have selected the correct arm from the dropdown.
+**A:** First confirm you have selected the correct arm from the dropdown.
 Records only appear in the arm they belong to.
+
+---
 
 # 6. Common Mistakes & Gotchas
 
@@ -135,6 +145,8 @@ Records only appear in the arm they belong to.
 - Confusing events with arms: events are timepoints within a study
     timeline; arms are parallel timelines for different cohorts. These
     are related but distinct concepts.
+
+---
 
 # 7. Related Articles
 

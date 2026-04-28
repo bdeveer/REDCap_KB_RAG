@@ -18,6 +18,8 @@ RC-CC-17
 
 The Database Query Tool allows REDCap administrators to run read-only SQL queries directly against REDCap's MySQL/MariaDB database from the browser. It is accessible under "Dashboards & Activity" in the Control Center sidebar and is intended for investigative queries, support troubleshooting, and ad-hoc data lookups without requiring command-line database access.
 
+---
+
 # 2. Query Restrictions
 
 Only read-only query types are permitted. Queries must begin with one of:
@@ -28,9 +30,13 @@ Only read-only query types are permitted. Queries must begin with one of:
 
 Any other query type (INSERT, UPDATE, DELETE, DROP, ALTER, etc.) is rejected. This restriction protects the database from accidental or unauthorized modification.
 
+---
+
 # 3. Query Context
 
 A "Use query context" option allows the query to be run in the context of a specific project or scope, which may affect certain query behaviors or variable resolution. This is optional and depends on the nature of your query.
+
+---
 
 # 4. Entering and Running Queries
 
@@ -56,6 +62,8 @@ This query returns all rows from `redcap_error_log`, sorted newest first. The co
 
 Because Recent Errors is just a convenience shortcut into the Database Query Tool, you can modify the query once it loads — for example, adding a `WHERE` clause to filter by error type or a `LIMIT` clause for large logs.
 
+---
+
 # 5. Custom Query Management
 
 The tool supports saving, organizing, and reusing named custom queries, which is helpful for frequently-run investigative queries:
@@ -80,6 +88,8 @@ All imported queries must begin with `SELECT`, `SHOW`, or `EXPLAIN`. Imports con
 - Regularly export your custom query collection for backup
 - Share useful queries with your team via CSV import
 
+---
+
 # 6. Database Table Reference
 
 The right sidebar lists all REDCap database tables, providing a quick reference when composing queries. This reference covers all core REDCap tables, including:
@@ -102,6 +112,8 @@ The right sidebar lists all REDCap database tables, providing a quick reference 
 
 Click any table name in the sidebar to view its column structure and field definitions.
 
+---
+
 # 7. Common Use Cases
 
 The Database Query Tool is helpful in these scenarios:
@@ -115,6 +127,8 @@ The Database Query Tool is helpful in these scenarios:
 - Finding orphaned records or incomplete data structures
 - Analyzing project configurations across multiple projects
 
+---
+
 # 8. Performance Considerations
 
 Because the Database Query Tool provides direct database access, be mindful of performance:
@@ -125,6 +139,8 @@ Because the Database Query Tool provides direct database access, be mindful of p
 - **Avoid joins on large tables** — joining `redcap_data` with `redcap_log_event` without specific filtering can be slow
 - **Run exploratory queries during off-peak hours** if possible
 
+---
+
 # 9. Access and Safety
 
 This tool requires super-user administrator access. Because it provides direct database access:
@@ -134,10 +150,14 @@ This tool requires super-user administrator access. Because it provides direct d
 - Only users with full administrator privileges can access this tool
 - Consider documenting queries used for troubleshooting in case the same issue occurs later
 
+---
+
 # 10. Related Tools
 
 - **Database Activity Monitor (RC-CC-16)** — to see real-time database processes and identify long-running queries
 - **Top Usage Report (RC-CC-15)** — for pre-built usage statistics and analytics
+
+---
 
 # 11. Common Questions
 
@@ -159,6 +179,8 @@ The query context option allows a query to be run within the scope of a specific
 **Q: How do I export the results of my query?**
 The Database Query Tool displays results in a table on the page. You can select the table data and copy it, or take a screenshot. The tool does not have a built-in export button, but you can paste the results into a spreadsheet or text file.
 
+---
+
 # 12. Common Mistakes & Gotchas
 
 **Running very large or unfiltered queries without a LIMIT clause.** A query like `SELECT * FROM redcap_log_event` with no WHERE clause or LIMIT can retrieve millions of rows, which will freeze your browser, consume significant memory, and put load on the database server. Always start with a LIMIT clause (e.g., `LIMIT 100`) when exploring unfamiliar data, and use specific WHERE clauses to narrow results.
@@ -167,9 +189,10 @@ The Database Query Tool displays results in a table on the page. You can select 
 
 **Importing custom queries with non-SELECT statement types in CSV.** When importing custom queries from a CSV file, all queries must begin with SELECT, SHOW, or EXPLAIN. If your import includes UPDATE, DELETE, or other write-type queries, the entire import will be rejected. Verify all queries in your CSV before importing, or test the import in a non-production environment first.
 
+---
+
 # 13. Related Articles
 
 - RC-CC-16 — Database Activity Monitor
 - RC-CC-15 — Top Usage Report
 - RC-CC-21 — Control Center Overview
-

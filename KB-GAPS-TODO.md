@@ -45,16 +45,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ---
 
-### ⚠️ RC-FREP-01 — File Repository
-
-**Why needed:** REDCap's File Repository is a project-level file storage area for documents that are not tied to a specific record/field. It is distinct from file upload fields in instruments and has no KB coverage.
-
-**Domain slug:** FREP (new domain)
-**What to cover:** Accessing the File Repository (project menu); uploading and organizing files (folders); who can access the File Repository (user rights); downloading files; deleting files and audit trail; difference between File Repository and file upload instrument fields; using the File Repository for sharing documents with study staff; storage limits; API access to File Repository (export/import file repository file endpoints)
-
----
-
-
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
 
 **Why needed:** RC-DE-01 calls out the 'Choose action for record' button as out of scope for routine data entry but provides no pointer to a covering article. No existing article covers record-level admin operations.
@@ -217,6 +207,10 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 
 - RC-PROF-01 — My Profile: User Profile Settings ✅
 
+### File Repository (RC-FILE) — new domain
+
+- RC-FILE-01 — File Repository ✅ *(was RC-FREP-01 gap; domain slug changed from FREP to FILE)*
+
 ### Previously tracked (earlier resolved)
 
 - RC-BL-05 — Branching Logic in Longitudinal Projects ✅
@@ -247,4 +241,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-26 — Added Survey Notifications section to RC-SURV-02 and Survey options area documentation to RC-FD-02 (content additions, no new article). Removed RC-NOTIF-01 (feature does not exist); removed RC-CC-22 (article added). Open gaps (6): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01, RC-FREP-01.*
+*Last updated: 2026-04-27 — Added RC-FILE-01 File Repository (resolves RC-FREP-01 gap). Open gaps (5): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01.*

@@ -226,6 +226,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-USER-03 | User Rights: Configuring User Privileges | RC-USER-03_User-Rights-Configuring-User-Privileges.md |
 | RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
 | RC-SENDIT-01 | Send-It: Secure File Transfer | RC-SENDIT-01_Send-It-Secure-File-Transfer.md |
+| RC-FILE-01 | File Repository | RC-FILE-01_File-Repository.md |
 
 ---
 
