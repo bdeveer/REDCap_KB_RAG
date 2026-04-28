@@ -90,6 +90,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 
 **Inbound links (referenced by):**
+- RC-CAL-01 — Calendar
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 **Note:** Dependency-ordered setup checklist covering all phases of project configuration from creation through go-live. Applies to all project types; longitudinal, survey, DAG, and randomization steps are clearly marked as conditional.
@@ -280,6 +281,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-09 — PDF Snapshots of Records
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
+- RC-CAL-01 — Calendar
+
 ---
 
 ### RC-ALERT-02 — Alert Management & Notification Log
@@ -1971,6 +1974,23 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-CAL-01 — Calendar
+
+**Prerequisites:** RC-NAV-UI-02 — Project Menu Reference
+
+**Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-DE-10 — Longitudinal & Repeated Data Entry
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-NAV-UI-02 — Project Menu Reference
+- RC-PROJ-02 — Project Setup Checklist
+- RC-SURV-06 — Automated Survey Invitations
+
+**Inbound links (referenced by):**
+- RC-NAV-UI-02 — Project Menu Reference
+
+---
+
 ### RC-CALC-01 — Special Functions Reference
 
 **Prerequisites:** RC-BL-01 — Branching Logic: Overview & Scope
@@ -3004,6 +3024,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-04 — Survey Link Types & Access Methods
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-07 — Survey Queue
+- RC-CAL-01 — Calendar
 
 ---
 
@@ -3853,6 +3874,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 
 **Inbound links (referenced by):**
+- RC-CAL-01 — Calendar
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
@@ -4400,6 +4422,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-SURV-07 — Survey Queue
 
 **Inbound links (referenced by):**
+- RC-CAL-01 — Calendar
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-07 — Survey Queue

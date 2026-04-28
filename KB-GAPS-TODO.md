@@ -6,15 +6,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Open Gaps
 
-### ⚠️ RC-CAL-01 — Calendar
-
-**Why needed:** REDCap includes a built-in Calendar module accessible from the project menu, but no KB article covers it. Users occasionally ask how to use it or what its limitations are.
-
-**Domain slug:** CAL (new domain)
-**What to cover:** Accessing the Calendar from the project menu, how calendar entries are created (manually vs. from scheduling fields), viewing by day/week/month, filtering by user or instrument, difference between the project calendar and the scheduling module, known limitations (not integrated with external calendars)
-
----
-
 ### ⚠️ RC-FD-11 — Advanced Online Designer Options
 
 **Why needed:** RC-FD-02 and RC-FD-06 cover the core Online Designer and instrument/field management. Advanced or lesser-known designer capabilities have no dedicated coverage.
@@ -42,6 +33,15 @@ These articles are referenced by existing KB articles or skills but do not yet e
 **What to cover:** What REDCap+ is and how it relates to standard REDCap; additional features or modules included; licensing/access model; how to enable or request REDCap+ features; any relevant setup steps in Control Center; differences in user experience compared to standard REDCap
 
 *Note: Content for this article will need to be sourced from institutional documentation or REDCap consortium materials, as REDCap+ specifics may vary by deployment.*
+
+---
+
+### ⚠️ RC-LOG-01 — Logging (Project Audit Trail)
+
+**Why needed:** REDCap's Logging module is a key tool for data integrity and regulatory compliance, but no KB article covers it. The API has a dedicated Export Logging endpoint (RC-API) and logging is referenced in passing in several other articles, but there is no user-facing guide to the Logging page itself.
+
+**Domain slug:** LOG (new domain)
+**What to cover:** What the Logging page records (data changes, user logins, form saves, exports, API calls, etc.); how to access Logging (who has permission — typically users with project design rights or admin access); filter options (by user, event, date range, record, instrument); what each log entry shows (timestamp, user, action, record, field, old/new value); log retention and whether entries can be deleted; difference between project-level logging and the Control Center's User Activity Log (RC-CC-12); using logging for audit trail documentation in regulated environments (GCP, 21 CFR Part 11 context); API Export Logging endpoint as an alternative access method
 
 ---
 
@@ -211,6 +211,12 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 
 - RC-FILE-01 — File Repository ✅ *(was RC-FREP-01 gap; domain slug changed from FREP to FILE)*
 
+### Calendar (RC-CAL) — new domain
+
+- RC-CAL-01 — Calendar ✅
+
+---
+
 ### Previously tracked (earlier resolved)
 
 - RC-BL-05 — Branching Logic in Longitudinal Projects ✅
@@ -241,4 +247,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-27 — Added RC-FILE-01 File Repository (resolves RC-FREP-01 gap). Open gaps (5): RC-DE-13, RC-CAL-01, RC-FD-11, RC-LOCK-01, RC-PLUS-01.*
+*Last updated: 2026-04-28 — Added RC-LOG-01 Logging/Project Audit Trail (new LOG domain). Open gaps (5): RC-DE-13, RC-FD-11, RC-LOCK-01, RC-LOG-01, RC-PLUS-01.*

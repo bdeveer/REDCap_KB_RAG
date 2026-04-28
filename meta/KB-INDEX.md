@@ -125,6 +125,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-BL-03 | Branching Logic: Combining Statements | RC-BL-03_Branching-Logic-Combining-Statements.md |
 | RC-BL-04 | Branching Logic: Structured Fields & Checkboxes | RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md |
 | RC-BL-05 | Branching Logic — Longitudinal Projects | RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md |
+| RC-CAL-01 | Calendar | RC-CAL-01_Calendar.md |
 | RC-CALC-01 | Special Functions Reference | RC-CALC-01_Special-Functions-Reference.md |
 | RC-CALC-02 | Calculated Fields | RC-CALC-02_Calculated-Fields.md |
 | RC-DAG-01 | Data Access Groups | RC-DAG-01_Data-Access-Groups.md |
