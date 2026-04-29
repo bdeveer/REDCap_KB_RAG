@@ -129,6 +129,8 @@ Each entry is `raw_value=limit`. Separate multiple entries with commas.
 
 **Mixing @HIDECHOICE and @SHOWCHOICE without understanding precedence.** If both tags target the same option, `@SHOWCHOICE` wins and the option displays. This can be counterintuitive if you intended `@HIDECHOICE` to hide something universally.
 
+**Assuming @HIDECHOICE removes an option from data exports and reports.** `@HIDECHOICE` is a display-only tag — it hides options from the data entry form and surveys but has no effect on exports or the Custom Reports module. Hidden coded values are still present in the data and will appear in exports as-is. If a record was saved with a now-hidden option, that value shows up in every export and report filter just like any other choice. When building reports on fields that use `@HIDECHOICE`, do not assume the hidden values are absent from the data.
+
 ---
 
 # 8. Related Articles

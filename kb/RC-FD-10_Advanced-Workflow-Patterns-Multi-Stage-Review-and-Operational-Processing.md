@@ -7,16 +7,16 @@ RC-FD-10
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; surveys enabled; Project Design and Setup rights |
 | **Prerequisite** | RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-04-28 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
-| **Related Topics** | RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design; RC-AT-06 — Autofill Action Tags; RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE; RC-PIPE-04 — Piping in Emails and Notifications; RC-PIPE-08 — Smart Variables: Survey; RC-ALERT-01 — Alerts & Notifications: Setup |
+| **Related Topics** | RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design; RC-AT-03 — Radio & Dropdown Action Tags; RC-AT-06 — Autofill Action Tags; RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE; RC-PIPE-04 — Piping in Emails and Notifications; RC-PIPE-08 — Smart Variables: Survey; RC-ALERT-01 — Alerts & Notifications: Setup |
 
 ---
 
 # 1. Overview
 
-This article documents design patterns from two operational demo projects — a **Grant Approval** system and an **Equipment Request** system — that extend the patterns introduced in RC-FD-09. Both projects build on field embedding and piping but add new mechanisms: editable carry-forward of data between instruments, dropdown-driven auto-population of related fields, inline display of uploaded documents, multi-reviewer parallel workflows, a checkbox-gated email preview selector, staff-facing operational instruments, and checkbox-triggered Alerts with self-documenting labels.
+This article documents design patterns from three operational project archetypes — a **Grant Approval** system, an **Equipment Request** system, and a **Support Ticketing** system — that extend the patterns introduced in RC-FD-09. All three projects build on field embedding and piping but add new mechanisms: editable carry-forward of data between instruments, dropdown-driven auto-population of related fields, inline display of uploaded documents, multi-reviewer parallel workflows, a checkbox-gated email preview selector, staff-facing operational instruments, checkbox-triggered Alerts with self-documenting labels, `@USERNAME`-driven assignee defaulting, hidden anchor fields for reliable timestamp calculations, and status-gated close field patterns.
 
 Each pattern is documented with the design goal, how it works, and the specific syntax involved.
 
@@ -468,7 +468,73 @@ The `<br>` tags create line breaks within the choice label, allowing each option
 
 ---
 
-# 11. Common Questions
+# 11. Pattern 9 — Support Queue / Ticketing with @USERNAME, Hidden Anchor Fields, and Status-Gated Close Fields
+
+## 11.1 The Design Goal
+
+Operational support teams sometimes use REDCap as an internal ticketing or request-tracking system. A typical structure: staff enter a ticket by selecting a client, categorizing the request, and assigning it to a team member. The ticket records when it was opened, who is handling it, and when and how it was resolved. Three specific patterns make this workflow reliable: using `@USERNAME` to pre-fill an assignee field while keeping it editable, pairing a hidden validated date field with a visible display field for timestamp capture, and gating close fields behind branching logic driven by a status field.
+
+## 11.2 @USERNAME as an Editable Default for Assignee Fields
+
+A dropdown listing all staff members can use `@USERNAME` as its action tag annotation. This causes the field to pre-fill with the username of whoever opens the form, while remaining fully editable — the user can change it to any other team member.
+
+```
+Field type:  dropdown
+Choices:     netid_a, Staff Member A | netid_b, Staff Member B | ...
+Annotation:  @USERNAME
+```
+
+This creates a sensible default (whoever opened the ticket is probably handling it) while allowing reassignment without any extra steps. Compare this with `@USERNAME @READONLY`, which locks the field to the current user and prevents reassignment entirely.
+
+**Important:** The dropdown's choices must use the REDCap username as the raw coded value for `@USERNAME` to pre-fill correctly. If the logged-in username does not match any coded option, the field loads blank and the user must select manually.
+
+## 11.3 The Hidden Anchor Field Pattern for Reliable Timestamps
+
+A recurring challenge with `@TODAY` and `@NOW` fields is that the visible field often lacks proper date validation — or both tags are applied to the same field, producing inconsistent or ambiguous format. A clean workaround splits the timestamp into two fields:
+
+| Field | Type | Annotation | Validation | Purpose |
+|---|---|---|---|---|
+| `date_display` | Text | `@TODAY @NOW` | None | Visible to staff; shows a human-readable timestamp on form load |
+| `date_anchor` | Text | `@TODAY @HIDDEN @READONLY` | `date_mdy` | Hidden; provides a reliably formatted date value for `datediff()` and other calculations |
+
+The visible `date_display` field gives staff a readable timestamp at the top of the form. The hidden `date_anchor` field, with its `date_mdy` validation, provides a clean date-only value that calculated fields and `datediff()` expressions can reference without worrying about format inconsistency. Because `date_anchor` is hidden and read-only, users cannot overwrite it.
+
+> **Why two fields?** `@NOW` fills a date-time string, but calculated fields and `datediff()` often need a date-only value. The pair trades one display field (for humans) against one locked anchor field (for calculations). See RC-AT-06 for the validation pitfall this pattern avoids.
+
+## 11.4 Status-Gated Close Fields
+
+Tickets move through a lifecycle: open → in progress → resolved or referred. Close-related fields (close date, closing notes) should only appear when the status field reaches a terminal state — both to keep the form clean during active work and to enforce required closure fields only at the right moment.
+
+```
+Field:          close_date
+Validation:     datetime_ymd
+Required:       Yes
+Branching:      [task_status] = '1' or [task_status] = '2'
+
+Field:          close_notes
+Field type:     notes
+Required:       No
+Branching:      [task_status] = '1' or [task_status] = '2'
+```
+
+When `task_status` is "Complete" or "Referred," the close section appears and `close_date` becomes required. When the ticket is still in progress, the entire section is hidden.
+
+**Behavior note:** In REDCap, required fields hidden by branching logic are not validated — hiding a field exempts it from the required check. This means the pattern works as intended: close fields are only enforced when the branching condition makes them visible.
+
+## 11.5 Sub-Service Categorization and the @HIDECHOICE Export Gotcha
+
+When a ticketing form supports multiple high-level categories, sub-service options typically apply only to certain categories. Use branching to show the sub-service field only for the relevant parent:
+
+```
+Field:      service_type
+Branching:  [category] = '2'
+```
+
+A common enhancement is to hide retired or internal-only service codes using `@HIDECHOICE`. This works for the data entry form, but carries an important caveat: **`@HIDECHOICE` is a display-only tag**. Hidden choices remain fully accessible in data exports and the Custom Reports module — any record that previously stored a hidden value will expose that value in exports. When building reports on fields with hidden choices, account for all coded values, not only the visible ones. See RC-AT-03 for the full `@HIDECHOICE` behavior reference.
+
+---
+
+# 12. Common Questions
 
 **Q: What is the difference between @DEFAULT and piping a value into a label?**
 
@@ -500,7 +566,7 @@ The `<br>` tags create line breaks within the choice label, allowing each option
 
 ---
 
-# 12. Common Mistakes & Gotchas
+# 13. Common Mistakes & Gotchas
 
 **Using @DEFAULT when piping was intended.** If a field uses @DEFAULT to carry data from a prior instrument, anyone who opens the form can modify the pre-filled value. If the data should be read-only context (for display only), use a piped descriptive field instead. Reserve @DEFAULT for situations where the downstream user legitimately needs to be able to correct or update the value.
 
@@ -520,10 +586,11 @@ The `<br>` tags create line breaks within the choice label, allowing each option
 
 ---
 
-# 13. Related Articles
+# 14. Related Articles
 
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design (prerequisite; approval workflow patterns, email preview instruments, dual syntax)
-- RC-AT-06 — Autofill Action Tags (@DEFAULT behavior, source/target field interactions)
+- RC-AT-03 — Radio & Dropdown Action Tags (@HIDECHOICE and @SHOWCHOICE behavior; export gotcha)
+- RC-AT-06 — Autofill Action Tags (@DEFAULT behavior; @TODAY/@NOW validation pitfall; hidden anchor field pattern)
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE (@CALCTEXT syntax, nested if() expressions, limitations)
 - RC-PIPE-04 — Piping in Emails and Notifications (piping in Alerts and ASIs; [survey-link:] in email context)
 - RC-PIPE-08 — Smart Variables: Survey ([survey-link:] and [form-link:] full reference)

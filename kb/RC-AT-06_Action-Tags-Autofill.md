@@ -166,6 +166,8 @@ Pre-populates with the current user's username and locks it to prevent manual ed
 
 **Using `@NOW` on a date-only field.** If the field has a date-only validation, use `@TODAY` instead. `@NOW` on a date-only field will still populate the date, but the time component is discarded.
 
+**Applying `@TODAY` or `@NOW` to a field with no date validation.** Both tags will autofill any text field regardless of whether date or datetime validation is set. If the field has no validation, REDCap fills it with a date or datetime string on first load — but does not enforce the format on save. Users can overwrite the autofilled value with free text, and REDCap will accept it. Over time this produces inconsistently formatted data in what was intended to be a timestamp field. For reliable timestamp capture, always set the matching validation type: `date_mdy` (or `date_ymd`, `date_dmy`) for `@TODAY` fields, and `datetime_ymd` (or another datetime variant) for `@NOW` fields. The validation enforces format consistency on every entry, not only the autofilled ones. If you need a reliable date anchor for calculations but want to keep a visible field without format restrictions, see the hidden anchor field pattern in RC-FD-10.
+
 **Expecting autofill tags to populate during data import.** These tags run only when a form is loaded in the browser.
 
 ---
