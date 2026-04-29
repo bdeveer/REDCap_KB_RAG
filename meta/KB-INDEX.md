@@ -166,6 +166,8 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-FD-08 | Data Dictionary: Column Reference & Advanced Techniques | RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md |
 | RC-FD-09 | Field Embedding: Advanced Layout Patterns & Workflow Design | RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md |
 | RC-FD-10 | Advanced Workflow Patterns: Multi-Stage Review and Operational Processing | RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md |
+| RC-FD-11 | Advanced Online Designer Options | *(not yet written — see KB-GAPS-TODO.md)* |
+| RC-FD-12 | Dynamic SQL Field Type | RC-FD-12_Dynamic-SQL-Field-Type.md |
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-IMP-03 | CSV Upload Reference: All Bulk Upload Options in REDCap | RC-IMP-03_CSV-Upload-Reference.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |

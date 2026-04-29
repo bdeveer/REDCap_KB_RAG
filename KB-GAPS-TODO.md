@@ -6,15 +6,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 ## Open Gaps
 
-### ⚠️ RC-FD-12 — SQL Field Type (Admin)
-
-**Why needed:** The SQL field type is used in operational and administrative projects to build dynamic dropdown/autocomplete lookups that query live data from another REDCap project. RC-FD-08 mentions the type briefly and directs non-admins to avoid it, but there is no article explaining how administrators create and maintain SQL fields, what the SELECT query must return, how autocomplete interacts with stored vs. display values, or the architectural risks of cross-project querying.
-
-**Domain slug:** FD (established)
-**What to cover:** What the SQL field type is and how it differs from a static dropdown; the two-column SELECT convention (stored value, display label); the autocomplete parameter; how piping resolves the stored value vs. the display label in downstream fields; how to scope queries to a specific project (project_id in WHERE clause); cross-project dependency risk — if the source project is deleted or its field names change, the SQL field breaks silently with no error visible to users; admin-only creation and editing rights; Data Dictionary behavior (why FD-08 instructs non-admins not to touch existing SQL rows); interaction with exports (stored raw value exported, not display label)
-
----
-
 ### ⚠️ RC-FD-11 — Advanced Online Designer Options
 
 **Why needed:** RC-FD-02 and RC-FD-06 cover the core Online Designer and instrument/field management. Advanced or lesser-known designer capabilities have no dedicated coverage.
@@ -162,6 +153,7 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques ✅ *(was Priority 3)*
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design ✅
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing ✅
+- RC-FD-12 — Dynamic SQL Field Type ✅ *(was ⚠️ RC-FD-12 SQL Field Type gap)*
 
 ### Institution-Specific (RC-INST) — new domain
 
@@ -256,4 +248,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-28 — Added RC-LOG-01 Logging/Project Audit Trail (new LOG domain); added RC-FD-12 SQL Field Type (admin). Open gaps (6): RC-DE-13, RC-FD-11, RC-FD-12, RC-LOCK-01, RC-LOG-01, RC-PLUS-01.*
+*Last updated: 2026-04-28 — Added RC-LOG-01 Logging/Project Audit Trail (new LOG domain); added RC-FD-12 SQL Field Type (admin); RC-FD-12 Dynamic SQL Field Type written and resolved. Open gaps (5): RC-DE-13, RC-FD-11, RC-LOCK-01, RC-LOG-01, RC-PLUS-01.*

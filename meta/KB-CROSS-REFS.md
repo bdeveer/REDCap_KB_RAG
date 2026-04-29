@@ -4,6 +4,23 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 ---
 
+### RC-FD-12 — Dynamic SQL Field Type
+
+**Prerequisites:** RC-FD-01 — Form Design Overview; RC-FD-03 — Data Dictionary
+
+**Outbound links:**
+- RC-FD-01 — Form Design Overview
+- RC-FD-03 — Data Dictionary
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-CC-17 — Control Center: Database Query Tool
+- RC-DE-02 — Basic Data Entry
+- RC-PIPE-03 — Smart Variables Overview
+
+**Inbound links (referenced by):**
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (notes `sql` as admin-only type)
+
+---
+
 ### RC-FILE-01 — File Repository
 
 **Prerequisites:** RC-NAV-UI-01 — Project Navigation UI
@@ -2134,6 +2151,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-10 — Longitudinal & Repeated Data Entry
 - RC-DE-11 — Instrument Save Options
 - RC-DE-12 — Data Resolution Workflow
+- RC-FD-12 — Dynamic SQL Field Type
 - RC-INTG-01 — Data Entry Trigger
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
@@ -2588,6 +2606,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-FD-12 — Dynamic SQL Field Type
 - RC-IMP-01 — Data Import Overview
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
@@ -2682,6 +2701,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-FD-05 — Codebook
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-FD-12 — Dynamic SQL Field Type
 - RC-IMP-01 — Data Import Overview
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
@@ -2808,6 +2828,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CALC-02 — Calculated Fields
 - RC-FD-05 — Codebook
 - RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-FD-12 — Dynamic SQL Field Type
 - RC-SURV-02 — Survey Settings: Basic Options & Design
 
 ---
@@ -3402,6 +3423,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Inbound links (referenced by):**
 - RC-CC-16 — Control Center: Database Activity Monitor
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-FD-12 — Dynamic SQL Field Type
 
 ---
 ### RC-CC-18 — Control Center: Custom Application Links
@@ -3965,6 +3987,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-08 — Smart Variables: Survey
 - RC-PIPE-09 — Smart Variables: Event & Arm
 - RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
+- RC-FD-12 — Dynamic SQL Field Type
 - RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
 - RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
 - RC-PIPE-13 — Smart Variables: Randomization

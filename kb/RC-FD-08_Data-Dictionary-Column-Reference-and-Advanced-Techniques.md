@@ -196,7 +196,7 @@ The Field Type determines how REDCap renders the variable in data entry and surv
 | `yesno` | Built-in Yes/No radio; no choices column needed |
 | `truefalse` | Built-in True/False radio; no choices column needed |
 
-> **Important:** Do not use the `sql` field type. This is reserved for REDCap system administrators. Do not edit existing `sql` rows.
+> **Important:** Do not use the `sql` field type. This is reserved for REDCap system administrators. Do not edit existing `sql` rows. See RC-FD-12 — Dynamic SQL Field Type for full documentation on this field type.
 
 ---
 
@@ -632,3 +632,4 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 - RC-LONG-01 — Longitudinal Project Setup (event setup, which the Data Dictionary does not cover)
 - RC-AT-01 — Action Tags: Overview (complete reference for Column R action tag codes)
 - RC-SURV-02 — Survey Settings: Basic Options & Design (Enhanced Radio Buttons setting and its interaction with Column N alignment codes)
+- RC-FD-12 — Dynamic SQL Field Type (full documentation on the admin-only `sql` field type code)
