@@ -7,7 +7,7 @@ RC-AT-04
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-AT-01 — Action Tags Overview |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Overview; RC-AT-03 — Radio/Dropdown Tags; RC-FD-02 — Online Designer |
@@ -45,7 +45,19 @@ This prevents ambiguous data where a "none of the above" response is combined wi
 
 Use the raw value of the option(s). Multiple designated options are mutually exclusive with each other as well.
 
-**Use case:** Survey questions with a "None of the above" option that should not be combined with other answers.
+**Negative integers as raw values:**
+
+Negative integers (e.g., `-9`, `-99`) are valid raw values and work correctly with `@NONEOFTHEABOVE`. A common convention is to reserve a negative value specifically for "Prefer not to say" or "Not applicable" options, keeping them visually and semantically distinct from substantive answer codes:
+
+```
+@NONEOFTHEABOVE='-9'
+```
+
+Using a consistent negative coding scheme across a project makes it easy to identify and filter these responses in reports and exports.
+
+**Use cases:**
+- Survey questions with a "None of the above" option that should not be combined with other answers.
+- "Prefer not to say" or "Not applicable" responses that must remain mutually exclusive with substantive answers.
 
 ---
 

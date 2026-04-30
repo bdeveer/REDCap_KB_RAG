@@ -3087,6 +3087,26 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-LONG-03 — Longitudinal Clinical Research Design Patterns
+
+**Prerequisites:** RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup
+
+**Outbound links:**
+- RC-BL-05 — Branching Logic — Longitudinal Projects
+- RC-CALC-02 — Calculated Fields
+- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-PROJ-04 — Project Setup: Additional Customizations
+
+**Inbound links (referenced by):**
+*(none yet)*
+
+**Changelog:**
+- v1.0 (2026-04-29): Initial article. Patterns sourced from analysis of a real-world multi-site longitudinal cardiology study (all identifying information removed). Covers: standard clinical trial event architecture, instrument reuse across events, contact log repeating instrument, adjudication instruments, source document checklists, and separate scoring instruments.
+
+---
+
 ### RC-MLM-01 — Multi-Language Management
 
 **Prerequisites:** None

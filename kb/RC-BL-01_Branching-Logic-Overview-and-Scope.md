@@ -7,7 +7,7 @@ RC-BL-01
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-FD-02 — Online Designer |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-02 — Syntax & Atomic Statements; RC-BL-03 — Combining Statements; RC-BL-04 — Structured Fields & Checkboxes; RC-FD-02 — Online Designer |
@@ -148,7 +148,31 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 ---
 
-# 9. Related Articles
+# 9. Design Patterns
+
+## 9.1 Checkbox Gate (Participation / Intent Gate)
+
+A common survey design pattern is to place a single required checkbox at the top of a form — labelled something like "Yes, I would like to participate" or "I confirm I want to proceed" — and then apply `[gate_field(1)]=1` as the branching logic condition on every subsequent field. This has the effect of hiding all questions until the respondent explicitly opts in.
+
+**Why use it:**
+- It provides a clear, visible commitment step before the respondent sees the full form.
+- It cleanly separates "did not opt in" records from "partial response" records — if the checkbox is unchecked, no other data can be captured.
+- Because the gate field is required, the form cannot be saved unless the respondent actively checks it.
+
+**How it works:**
+```
+[join_checkbox(1)] = 1
+```
+
+Apply this expression as the branching logic for every field that should only appear after the respondent confirms. All those fields remain hidden until the checkbox is checked; if the respondent unchecks it, any data they had entered in those fields is cleared automatically.
+
+**Limitation:** This pattern uses branching logic at the field level. It does not prevent a respondent from submitting the form with only the gate checkbox checked and nothing else — if subsequent fields are not individually marked as required, the form can be saved in that state. Consider whether the context warrants making key downstream fields required in addition to the gate.
+
+> **Note:** This pattern uses checkbox field syntax — see RC-BL-04 — Branching Logic for Structured Fields & Checkboxes for the `(option_code)` notation used with checkbox fields.
+
+---
+
+# 10. Related Articles
 
 - RC-BL-02 — Branching Logic Syntax & Atomic Statements (the logic language and writing your first statement)
 - RC-BL-03 — Combining Logic Statements (AND, OR, parentheses)
@@ -156,3 +180,4 @@ The following topics are outside the scope of this series. Each has its own dedi
 - RC-FD-02 — Online Designer (where branching logic is configured)
 - RC-FD-03 — Data Dictionary (alternative location for writing logic in bulk)
 - RC-DE-02 — Basic Data Entry (explains how branching logic appears from the data entry user's perspective)
+- RC-FD-09 — Field Embedding: Advanced Patterns (related pattern: embedding sub-fields inside radio choice labels alongside branching logic)

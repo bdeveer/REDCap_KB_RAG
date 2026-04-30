@@ -7,8 +7,8 @@ RC-PROJ-01
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | None |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-04-23 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-04-29 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-CC-09 — Control Center: To-Do List; RC-INST-01 — Institution-Specific Settings & Policies; RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-NAV-UI-02 — Project Menu Reference; RC-CALC-01 — Special Functions Reference |
 
@@ -326,6 +326,20 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 **Q: Some pages in my project show old data even after I updated records. How do I fix this?**
 
 **A:** This is typically the Rapid Retrieval page cache serving a stored version of the page. Go to **Other Functionality → Clear all record & page caches** (administrators only) to clear the page cache and force REDCap to re-render from the database.
+
+---
+
+**Q: I'm copying a real study project to use as a demonstration or training template. What should I review before sharing it?**
+
+**A:** Projects derived from real studies frequently contain institution-specific content that should be removed or replaced before the project is shared outside your team or used as a generic template. The most common categories to review:
+
+- **Staff and provider names in field choices.** Radio, dropdown, and checkbox fields that let users select an interviewer, clinician, or coordinator often list real names as coded options. Export the Data Dictionary CSV and search for names; replace them with generic placeholders (e.g., "Provider 1," "Staff Member A").
+- **Institution or program names in field labels and field notes.** Descriptive text, section headers, and field notes may reference your site, department, or sponsor. Search the Label and Field Note columns of the exported Data Dictionary.
+- **Protocol- or program-specific identifiers in eligibility or tracking forms.** Eligibility waiver forms, screening logs, or tracking instruments may name a specific protocol, grant, or care program. Replace with a generic study program label.
+- **Contact information.** Phone validation fields, or descriptive fields containing an email address or URL, should be cleared or replaced with placeholder values.
+- **Project title and project notes.** These are visible to anyone with project access. Genericize the title and clear the notes field before sharing.
+
+The safest workflow is: copy the project → erase all data in the copy → export the copy's Data Dictionary as CSV → review and edit the CSV offline → re-upload the sanitized Data Dictionary. Do not rely on the Online Designer alone — searching a CSV for real names is far faster and more reliable than clicking through each field individually. Re-import the metadata while the copy is still in Development so no draft approval is needed.
 
 ---
 

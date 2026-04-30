@@ -78,6 +78,10 @@ data entry trigger, DET, webhook, external system trigger, POST on save, server-
 
 longitudinal, arm, event, visit, timepoint, schedule, event mapping, instrument-event mapping, repeated event, add event, longitudinal setup, multi-arm
 
+### RC-LONG-03 — Longitudinal Clinical Research Design Patterns
+
+clinical trial design, screening event, enrollment event, baseline event, discontinuation, withdrawal event, follow-up event, instrument reuse, reuse instrument across events, same form multiple events, call log, contact log, contact attempts, phone log, outreach tracking, adjudication instrument, adjudication form, source document checklist, source doc, GCP checklist, regulatory checklist, scoring instrument, separate scores, score form, validated instrument, clinical research patterns, study architecture, event architecture, eligibility exception, protocol exception, readmission review, medical record abstraction, parallel abstraction
+
 ## Multi-Language Management — RC-MLM
 
 multilingual, language, translate instrument, translation, non-English, language selector, language pack, multi-language

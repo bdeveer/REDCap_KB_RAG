@@ -7,8 +7,8 @@ RC-LONG-02
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types (repeated instruments); longitudinal projects only (repeated events) |
 | **Prerequisite** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects only) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-04-29 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-CC-04 — Control Center: User Settings & Defaults; RC-LONG-01 — Longitudinal Project Setup; RC-NAV-REC-03 — Repeated Instruments & Repeated Events; RC-BL-01 — Branching Logic Overview & Scope |
 
@@ -179,6 +179,12 @@ When a repeating instrument is also enabled as a survey, there are three ways to
 | **Email required?** | No — web interface only | Yes (or SMS/voice calls) | Yes (or SMS/voice calls) |
 | **Typical use** | Back-to-back entry in one session (e.g., entering multiple medications or family members) | Scheduled recurring surveys (e.g., daily or weekly check-ins sent by email) | Scheduled recurring surveys sent by email or SMS |
 
+**Q: We have an existing project with 15 "Daily Visit 1" through "Daily Visit 15" events, all containing the same instruments. Should we have used a repeating event instead?**
+
+**A:** Yes — this is a known design pattern sometimes called the **"numbered duplicate events" anti-pattern**. It predates REDCap's native repeating instruments and events feature (introduced in REDCap 7.0) and is still found in older projects that were built before that capability existed. Instead of defining 15 separate events with identical instrument assignments, a single event configured as "Repeat Entire Event" achieves the same data model with far less overhead: the event list stays compact, the record home page is easier to navigate, and exports produce a clean `redcap_repeat_instance` column rather than 15 sets of sparse event columns. If you are designing a new project and need to collect the same data for a variable or unknown number of occurrences — hospital days, treatment cycles, weekly check-ins — use a repeating event rather than pre-defining numbered events. Converting an existing project with collected data from this pattern to a repeating event requires API-based data migration and should be done with a full backup and administrator support.
+
+---
+
 **Enabling the "Repeat the survey" button is a two-step process:**
 
 1. Enable the instrument as a repeating instrument in the repeating instruments and events popup (Project Setup → Enable optional modules and customizations).
@@ -201,6 +207,12 @@ The button will not appear on the survey until both steps are complete. The "Rep
 **Q: Can the same instrument be repeatable in some events but not others?**
 
 **A:** Yes, in longitudinal projects. Instrument-level repeatability is configured per event, not per instrument globally. An instrument can be repeatable in Event A and non-repeatable in Event B.
+
+**Q: In a multi-arm project, can different arms have different instruments configured as repeating?**
+
+**A:** Yes. Because repeating instrument setup is configured per event — and each arm has its own set of events — arms can have entirely different repeating instrument configurations. The repeating instruments popup in Project Setup shows all events across all arms as separate rows. Arm 1's Baseline and Arm 2's Baseline appear as independent rows, each configured separately.
+
+This is useful in intervention/control designs: the intervention arm may need visit-specific instruments (e.g., a specialist visit log, a facilitation visit form) to repeat independently, while the control arm's equivalent event has only a subset of those instruments set as repeating. Simply check different instruments for each arm's event rows in the popup — there is no global "this instrument is repeatable" setting that would force the same configuration onto both arms.
 
 **Q: How do I reference a value from a specific instance of a repeated instrument?**
 
@@ -243,6 +255,10 @@ The button will not appear on the survey until both steps are complete. The "Rep
 **Assuming CSV bulk upload covers the repeatable configuration.** The CSV upload options for arms, events, and instrument-event designations do not include the repeatable instrument and event setup. Setting up your entire longitudinal structure via CSV and expecting the repeatable mapping to carry over will leave that configuration blank — you must either set it manually through the UI popup or use the REDCap API.
 
 **Enabling "Repeat the survey" before designating the instrument as repeating.** The "Repeat the survey" setting in Survey Settings depends on the instrument first being designated as a repeating instrument. Enabling the survey setting without completing that step first will not produce the expected behavior. Always configure the instrument as repeating in Project Setup first, then enable the survey termination option.
+
+**Using numbered duplicate events instead of a repeating event.** A common pattern in projects built before REDCap 7.0 is a sequence of identically structured events — for example, "Daily Hospital 1", "Daily Hospital 2", ... "Daily Hospital 19" — where each event carries the same instruments and fields. This inflates the event list, makes the record home page unwieldy, and produces a wide, sparse export where most event columns are empty for any given record. The correct modern approach is to define a single event and configure it as a repeating event. Each occurrence (hospital day, treatment cycle, visit) becomes an instance rather than a separate event. If you encounter this pattern in an existing project that has already collected data, converting to a repeating event requires API-based data migration — do not convert in place without a full backup and administrator support.
+
+**Using manual array fields instead of a repeating instrument.** A related pattern occurs at the field level: collecting a variable number of similar entries by pre-defining a fixed array of numbered fields (e.g., `npo_date_1`, `npo_date_2`, ... `npo_date_6` for NPO episodes; `medication_name_1` through `medication_name_10` for a medication list). This creates empty fields for most records, caps the number of entries at the array size, and makes field-level branching logic verbose. The better approach is to create a dedicated instrument for a single entry (one NPO episode, one medication) and configure it as a repeating instrument. The number of instances can then vary freely per record without pre-specifying a maximum.
 
 **Expecting the "Repeat the survey" button to work with repeating events.** The "Repeat the survey" button is available for repeating instruments only. If your survey instrument lives on a repeating event rather than being designated as a repeating instrument, this option is not available. Use ASIs or Alerts & Notifications to send recurring survey links in that scenario.
 

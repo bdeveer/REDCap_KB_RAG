@@ -7,7 +7,7 @@ RC-PROJ-02
 | **Domain** | Project |
 | **Applies To** | All REDCap projects; requires Project Design and Setup rights |
 | **Prerequisite** | RC-PROJ-01 — Project Lifecycle: Status and Settings |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-01 — Form Design Overview; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-SURV-01 — Surveys – Basics; RC-USER-01 — User Rights Overview; RC-DAG-01 — Data Access Groups; RC-ALERT-01 — Alerts & Notifications: Setup; RC-RAND-02 — Randomization Setup Guide |
@@ -48,6 +48,8 @@ Instruments (forms) are the foundation for every other configuration step. Field
 - [ ] **Add branching logic** to fields that should only appear under certain conditions. In longitudinal projects, cross-event references must include the unique event name (e.g., `[baseline_arm_1][field_name]`). See RC-BL-01 — Branching Logic Overview.
 - [ ] **Add calculated fields** for any derived values (totals, scores, age from date of birth). Calculations reference existing fields and update automatically. See RC-CALC-02 — Calculated Fields.
 - [ ] **Add action tags** to fields that require special behavior (auto-fill, hidden display, read-only, etc.). See RC-AT-01 — Action Tags Overview.
+- [ ] **Set a custom record label** to make individual records identifiable at a glance in the record list. Configure this under Project Setup → Additional Customizations using piping syntax (e.g., `[first_name] [last_name] ([email])`). Without a custom label, records display only by their numeric record ID, which is unhelpful for staff who need to locate a specific participant.
+- [ ] **Set a secondary unique field** if the project needs to prevent duplicate entries based on a respondent-supplied value (e.g., email address, employee ID). Configure this under Project Setup → Additional Customizations. REDCap will warn users when a new record's value in that field matches an existing record. This is particularly useful for public-facing signup surveys where the same person might submit multiple times.
 - [ ] **Review the Codebook** (RC-FD-05) to confirm field types, variable names, and choice codes before proceeding. Errors are much easier to fix now than after data collection has started.
 
 > **Dependency note:** All subsequent phases — longitudinal setup, repeating instruments, survey configuration, user rights, alerts, reports, and randomization — reference fields or instruments by name. Build and review your instruments before configuring anything else.

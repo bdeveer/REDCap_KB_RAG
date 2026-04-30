@@ -7,7 +7,7 @@ RC-FD-09
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; surveys enabled; Project Design and Setup rights |
 | **Prerequisite** | RC-FD-07 — Field Embedding; RC-PIPE-01 — Piping Basics, Syntax & Field Types |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-FD-07 — Field Embedding; RC-PIPE-04 — Piping in Emails and Notifications; RC-PIPE-08 — Smart Variables: Survey; RC-ALERT-01 — Alerts & Notifications: Setup; RC-AT-EM-01 — Action Tags: HIDESUBMIT |
@@ -293,6 +293,68 @@ A common confusion is reaching for `[square]` in a descriptive field and expecti
 
 ---
 
+# 7. Pattern 4 — Cascading Sub-Field Drill-Down in Radio Choice Labels
+
+## 7.1 The Design Goal
+
+Some questions have a natural hierarchy: selecting one answer should immediately reveal a more specific follow-up, and selecting a sub-answer may reveal yet another level. The standard approach is to build each level as a separate field with its own branching logic — which works but places the sub-questions below the parent question in a separate row, visually disconnected from the choice that triggered them. Embedding sub-fields directly inside the parent radio choice label places them inline, adjacent to the option they relate to, creating an intuitive drill-down experience without extra screen real estate.
+
+## 7.2 How It Works
+
+Place `{sub_field_name}` references inside the choice label of the parent radio button. When a respondent selects that option, the embedded sub-field appears inline beside it — and branching logic on the sub-field simultaneously controls whether it is active at all.
+
+**Example — three-level affiliation drill-down:**
+
+```
+affil_top (radio)
+  Choices:
+    1, University  {affil_dept}
+    2, Hospital    {affil_hospital_id}
+
+affil_dept (radio) — branching logic: [affil_top]=1
+  Choices:
+    1, School of Medicine  {affil_dept_med}
+    2, School of Nursing
+    3, Other               {affil_dept_other}
+
+affil_dept_med (radio) — branching logic: [affil_dept]=1
+  Choices:
+    1, Cardiology
+    2, Neurology
+    ...
+
+affil_hospital_id (text, required) — branching logic: [affil_top]=2
+affil_dept_other (text) — branching logic: [affil_dept]=3
+```
+
+Selecting "University" immediately shows the `affil_dept` radio embedded next to that choice. Selecting "School of Medicine" within `affil_dept` immediately shows the `affil_dept_med` radio embedded next to it — three levels of specificity visible in a compact, connected layout.
+
+## 7.3 Role of Branching Logic Alongside Embedding
+
+Field embedding controls **where** a sub-field appears on screen. Branching logic controls **whether** the sub-field is active at all. You need both:
+
+- Embedding alone without branching logic would show the sub-field at the embedding location regardless of which radio option was selected.
+- Branching logic alone without embedding would show the sub-field in its default sequential position below the parent, visually disconnected from the triggering choice.
+
+Together they produce a sub-field that only appears when needed AND appears at the right visual location.
+
+**Important:** Because branching logic clears hidden field values, changing a top-level radio selection after sub-fields have been filled will clear the sub-field data automatically. This is correct behavior for hierarchical data — ensure respondents understand the form is dynamic.
+
+## 7.4 When to Use This Pattern
+
+This pattern is well suited to:
+
+- **Affiliation or department hierarchies** where the correct sub-list depends on the top-level choice
+- **"Other, specify" variants** where one text box needs to appear next to a specific option while other options need different sub-fields
+- **Conditional ID or credential fields** where one affiliation type requires a network ID and another requires a different identifier
+
+**Avoid this pattern when:**
+- The sub-question applies to all choices equally — in that case, a plain sequential field is simpler
+- The parent field is a **dropdown** — field embedding is not supported in dropdown choice labels; use radio buttons instead
+- There are more than three or four levels of nesting — beyond that, consider restructuring into separate instruments or using a table layout instead
+
+---
+
 # 8. Common Mistakes & Gotchas
 
 **Using curly braces in the email-preview descriptive fields.** A `{field_name}` reference in a descriptive field embeds the input element there — which is not what you want in a preview instrument. The input box will appear instead of the stored value. Use `[field_name]` (square brackets) for display in preview instruments.
@@ -311,7 +373,8 @@ A common confusion is reaching for `[square]` in a descriptive field and expecti
 
 # 9. Related Articles
 
-- RC-FD-07 — Field Embedding (mechanics of curly-brace embedding, rules, common mistakes)
+- RC-FD-07 — Field Embedding (mechanics of curly-brace embedding, rules, valid embedding locations including radio choice labels)
+- RC-BL-01 — Branching Logic Overview (companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (extends these patterns with @DEFAULT carry-forward, @CALCTEXT lookup, [file:inline]/[file:link], parallel reviewer instruments, checkbox-gated previews, and [form-link:])
 - RC-PIPE-01 — Piping Basics, Syntax & Field Types (square-bracket piping syntax and field type behavior)
 - RC-PIPE-04 — Piping in Emails and Notifications (piping in alerts, confirmation emails, and ASIs)

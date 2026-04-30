@@ -44,6 +44,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-PROJ-03 | Project Dashboards | RC-PROJ-03_Project-Dashboards.md |
 | RC-PROJ-04 | Project Setup: Additional Customizations | RC-PROJ-04_Project-Setup-Additional-Customizations.md |
 | RC-PROJ-05 | Project Migration: Moving a Project Between REDCap Installations | RC-PROJ-05_Project-Migration.md |
+| RC-OPS-01 | Using REDCap as an Operational Request Management System | RC-OPS-01_REDCap-as-an-Operational-Request-Management-System.md |
 | RC-PROF-01 | My Profile: User Profile Settings | RC-PROF-01_My-Profile-User-Profile-Settings.md |
 | RC-AT-01 | Action Tags: Overview | RC-AT-01_Action-Tags-Overview.md |
 | RC-AT-02 | @HIDDEN & @READONLY — Visibility Control | RC-AT-02_Action-Tags-Hidden-and-Readonly.md |
@@ -175,6 +176,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-DDP-02 | Dynamic Data Pull — Admin Setup & Technical Specs | RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
 | RC-LONG-02 | Repeated Instruments & Events Setup | RC-LONG-02_Repeated-Instruments-and-Events-Setup.md |
+| RC-LONG-03 | Longitudinal Clinical Research Design Patterns | RC-LONG-03_Longitudinal-Clinical-Research-Design-Patterns.md |
 | RC-MLM-01 | Multi-Language Management | RC-MLM-01_Multi-Language-Management.md |
 | RC-MSG-01 | REDCap Messenger | RC-MSG-01_REDCap-Messenger.md |
 | RC-MOB-01 | REDCap Mobile App | RC-MOB-01_REDCap-Mobile-App.md |
