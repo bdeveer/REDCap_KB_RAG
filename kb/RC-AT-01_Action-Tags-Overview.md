@@ -162,7 +162,6 @@ Use this table to quickly find which article covers a specific action tag.
 | `@LANGUAGE-MENU-STATIC` | Language | RC-AT-10 | Keep language menu always visible in survey |
 | `@APPUSERNAME-APP` | Mobile App | RC-AT-11 | Fill with mobile app username |
 | `@BARCODE-APP` | Mobile App | RC-AT-11 | Enable barcode/QR code scanning |
-| `@IMAGEUPLOAD-APP` | Mobile App | RC-AT-11 | Sync images from server to app |
 | `@HIDESUBMIT` | External Module | RC-AT-EM-01 | Hide all save/submit buttons (HIDESUBMIT module) |
 | `@HIDESUBMIT-FORM` | External Module | RC-AT-EM-01 | Hide buttons on data entry forms (HIDESUBMIT module) |
 | `@HIDESUBMIT-SURVEY` | External Module | RC-AT-EM-01 | Hide buttons on surveys (HIDESUBMIT module) |
@@ -188,7 +187,7 @@ The Action Tags knowledge base series is organized by tag category:
 | RC-AT-08 | Conditional | `@IF` |
 | RC-AT-09 | Calculation | `@CALCTEXT`, `@CALCDATE` |
 | RC-AT-10 | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |
-| RC-AT-11 | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP`, `@IMAGEUPLOAD-APP` |
+| RC-AT-11 | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP` |
 | RC-AT-EM-01 | External Module | `@HIDESUBMIT`, `@HIDESAVE` and related variants (HIDESUBMIT module) |
 
 ---
