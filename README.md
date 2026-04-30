@@ -20,8 +20,8 @@ This repo supports an LLM-powered REDCap assistant. Rather than feeding raw docu
 
 ```
 REDCap_KB_RAG/
-├── kb/                               # Markdown KB articles (RAG-ready) — 216 articles
-│   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (216 articles)
+├── kb/                               # Markdown KB articles (RAG-ready) — 224 articles
+│   └── RC-[DOMAIN]-[NN]_...               # Individual KB articles (224 articles)
 ├── meta/                             # Navigation & cross-reference metadata (not for RAG indexing)
 │   ├── KB-INDEX.md                        # Article index: ID → Title → Filename (load for topic lookup)
 │   ├── KB-KEYWORD-MAP.md                  # Keyword/synonym map: user phrasings → domain or article ID
@@ -75,6 +75,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-AT` | Action Tags |
 | `RC-AT-EM` | Action Tags — External Module extensions |
 | `RC-BL` | Branching Logic |
+| `RC-CAL` | Calendar |
 | `RC-CALC` | Calculations & Special Functions |
 | `RC-CC` | Control Center (admin configuration & system management) |
 | `RC-CDIS` | Clinical Data Interoperability Services (FHIR/HL7 integrations) |
@@ -100,6 +101,7 @@ RC-[DOMAIN]-[NN]_Title-With-Hyphens.md
 | `RC-NAV-REC` | Record Navigation |
 | `RC-NAV-UI` | Project Navigation UI |
 | `RC-PIPE` | Piping & Smart Variables |
+| `RC-PLUS` | REDCap+ (premium subscription features) |
 | `RC-PROF` | My Profile (user profile settings) |
 | `RC-PROJ` | Project Lifecycle & Status |
 | `RC-RAND` | Randomization |
