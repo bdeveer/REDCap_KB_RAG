@@ -3092,17 +3092,20 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Outbound links:**
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
 - RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-CALC-02 — Calculated Fields
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-RAND-02 — Randomization Setup Guide
 
 **Inbound links (referenced by):**
 *(none yet)*
 
 **Changelog:**
+- v1.1 (2026-05-01): Added Section 9 (Adverse Event Log as a Repeating Instrument), Section 10 (Multi-Arm Parallel-Group Study Design), new Q&A on safety-flag OR logic, and two new gotchas. Patterns sourced from analysis of a real-world two-arm interventional study (all identifying information removed).
 - v1.0 (2026-04-29): Initial article. Patterns sourced from analysis of a real-world multi-site longitudinal cardiology study (all identifying information removed). Covers: standard clinical trial event architecture, instrument reuse across events, contact log repeating instrument, adjudication instruments, source document checklists, and separate scoring instruments.
 
 ---

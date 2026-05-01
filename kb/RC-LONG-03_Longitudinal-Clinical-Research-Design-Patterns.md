@@ -7,8 +7,8 @@ RC-LONG-03
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | Longitudinal REDCap projects in clinical research contexts |
 | **Prerequisite** | RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-04-29 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-05-01 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-BL-05 — Branching Logic in Longitudinal Projects; RC-CALC-02 — Calculated Fields; RC-PROJ-04 — Project Setup: Additional Customizations; RC-FD-10 — Advanced Workflow Patterns |
 
@@ -257,7 +257,125 @@ If the scoring instrument is assigned to multiple events (the same events as the
 
 ---
 
-# 9. Common Questions
+# 9. Adverse Event Log as a Repeating Instrument
+
+## 9.1 The Problem
+
+Interventional studies must track adverse events (AEs) throughout the study period. Each event is discrete — it has its own onset date, severity grade, relationship to study treatment, and outcome. The number of AEs per participant is unpredictable. Embedding fixed AE fields directly on a visit instrument (e.g., `ae1_date`, `ae2_date`, `ae3_date`) caps the number that can be recorded, creates mostly-blank data, and makes reporting queries awkward.
+
+## 9.2 The Pattern
+
+Create a dedicated **adverse event log** instrument and configure it as a repeating instrument within each follow-up event. Each AE is one instance. Staff open a new instance for each event to report.
+
+A typical AE log instrument contains:
+
+- Onset date (date field, `date_mdy`)
+- Brief description (text field)
+- Severity grade (radio: Mild / Moderate / Severe / Life-threatening)
+- Relationship to study (radio: Unrelated / Unlikely / Possible / Probable / Definite)
+- SAE criteria checklist (checkbox: Hospitalization / Prolonged hospitalization / Permanent disability / Life-threatening / Death) — **display conditionally**, only when severity is Severe or Life-threatening
+- Outcome (radio: Resolved / Resolving / Ongoing / Fatal / Unknown)
+- Date resolved (date field) — display conditionally when outcome = Resolved
+- SAE report submitted to sponsor (yes/no) — display conditionally when SAE criteria are met or severity is Life-threatening
+- Date report submitted (date field) — display conditionally when report submitted = Yes
+- Action taken (notes field)
+
+Set a custom form label that pipes the onset date and a short description (e.g., `[ae_date] — [ae_description]`) so each instance is identifiable on the record status dashboard.
+
+## 9.3 Severity-Gated Branching Logic
+
+The SAE criteria checklist and regulatory reporting fields should only appear when the event meets the threshold for serious classification. Branching logic on those fields follows this pattern:
+
+```
+[ae_severity] = '3' or [ae_severity] = '4'
+```
+
+Where `'3'` = Severe and `'4'` = Life-threatening. This keeps the form clean for routine AEs while surfacing the full SAE workflow only when required.
+
+The resolution date field should appear only when the outcome indicates resolution:
+
+```
+[ae_outcome] = '1'
+```
+
+The reporting date field should appear only after the staff have confirmed a report was submitted:
+
+```
+[ae_report_submitted] = '1'
+```
+
+## 9.4 Assignment to Events
+
+Assign the AE log instrument to every event where adverse events should be captured (typically Baseline through End of Study). Do not assign it to Screening — eligibility assessments occur before the participant is enrolled and exposed to study treatment.
+
+Both arms in a two-arm study should have the AE log assigned to the same corresponding events. Since the instrument is shared across arms, no duplication is needed.
+
+## 9.5 Why Not a Fixed Set of Fields?
+
+| Approach | Limitation |
+|---|---|
+| Fixed fields (`ae1_date`, `ae2_date` …) | Hard cap on recordable events; sparse data; awkward to query |
+| Repeating event | Repeats all instruments in the event together — visit assessments would also repeat, which is not the intent |
+| **Repeating instrument (AE log only)** | Unlimited instances; clean data structure; AE log repeats independently of other visit instruments |
+
+---
+
+# 10. Multi-Arm Parallel-Group Study Design
+
+## 10.1 The Pattern
+
+Parallel-group studies (e.g., randomized controlled trials with a control arm and one or more intervention arms) are supported in REDCap by creating multiple arms with **identical event sequences**. Each arm represents one group in the study; each participant is assigned to exactly one arm at enrollment.
+
+A two-arm RCT with arms "Control" and "Intervention" might define the following events under each arm:
+
+| Event | Day Offset | Notes |
+|---|---|---|
+| Screening | 0 | Eligibility assessment |
+| Baseline | 7 | Pre-intervention assessments |
+| 3 Month | 90 | First follow-up |
+| 6 Month | 180 | Second follow-up |
+| 9 Month | 270 | Third follow-up |
+| End of Study | 365 | Final assessments and study completion |
+
+This sequence is created twice — once under Arm 1 (Control) and once under Arm 2 (Intervention). REDCap generates unique event names for each: `screening_arm_1`, `screening_arm_2`, `3_month_arm_1`, `3_month_arm_2`, and so on.
+
+## 10.2 Instrument Assignment
+
+Assign the same instruments to the corresponding events in both arms. Since REDCap stores data separately per event (including per-arm event), no duplication of instruments is needed:
+
+- The same Screening instrument is assigned to both `screening_arm_1` and `screening_arm_2`
+- The same PHQ-9 is assigned to all follow-up events in both arms
+- The same AE log repeating instrument is assigned to all post-enrollment events in both arms
+
+This mirrors the study protocol: both groups complete the same assessments at the same time points.
+
+## 10.3 Branching Logic and Event References
+
+Branching logic that references a specific event must use the arm-qualified event name. If a field on the End of Study instrument should only display for participants in the intervention arm, the logic references the intervention arm's event:
+
+```
+[redcap_event_name] = 'end_of_study_arm_2'
+```
+
+Conversely, logic that applies equally to both arms should use `or`:
+
+```
+[redcap_event_name] = 'end_of_study_arm_1' or [redcap_event_name] = 'end_of_study_arm_2'
+```
+
+In practice, most instruments in a parallel-group study do not require arm-specific branching logic — both groups complete identical assessments. Reserve event-qualified branching for fields that genuinely differ by group.
+
+## 10.4 Arm Assignment
+
+Participants are assigned to an arm at record creation or via a designated arm-assignment field or randomization module. Once a participant has data entered under an arm, changing their arm is possible but requires care — data entered under the old arm remains attached to those events. For randomized studies, use the REDCap Randomization module (see RC-RAND-02) rather than manual arm assignment.
+
+## 10.5 Record Status Dashboard
+
+In a two-arm project, the record status dashboard displays all events for both arms. For projects with many events and two arms, this produces a wide grid. Consider using custom event labels and grouping related events to keep the dashboard readable. REDCap shows only the arm the record is enrolled in — rows for other arms are greyed out.
+
+---
+
+# 11. Common Questions
 
 **Q: Can I assign an instrument to every event in a project?**
 
@@ -283,13 +401,23 @@ If the scoring instrument is assigned to multiple events (the same events as the
 
 **A:** Use instrument-level user access settings (User Rights → select a user or role → expand instrument permissions). Set the instrument to "No Access" for roles that should not see it, and "View & Edit" or "Edit Only" for authorized roles.
 
+**Q: How do I flag a record for clinical follow-up based on a total score threshold but also on a specific safety item, regardless of total score?**
+
+**A:** Use a `@CALCTEXT` calculated field with an `if()` expression that combines both conditions using `or`:
+
+```
+@CALCTEXT(if([total_score] >= 10 or [safety_item] = '3', 'Yes', 'No'))
+```
+
+This pattern is appropriate for validated screening instruments where a high total score indicates clinical concern, but a specific item (e.g., suicidal ideation, self-harm) should trigger follow-up on its own even when the total score falls below the threshold. The `or` condition ensures neither pathway is missed. Place this field on the scoring instrument or directly on the assessment instrument — it will auto-populate as soon as the relevant items are saved.
+
 **Q: Why would a project have two parallel medical record abstraction instruments?**
 
 **A:** In multi-site studies, sites may have different data elements available in their medical records, or a coordinating center may perform a second-pass abstraction using a standardized form while sites use a site-adapted version. Two instruments assigned to the same event — one per abstraction pass — keeps the site-collected data and the coordinating-center-reviewed data separate, with independent completion statuses.
 
 ---
 
-# 10. Common Mistakes & Gotchas
+# 12. Common Mistakes & Gotchas
 
 **Duplicating instruments instead of reusing them.** A common mistake is creating `phq_baseline` and `phq_followup` as two separate instruments when the same `physician_health_questionnaire` instrument could simply be assigned to both events. Duplicate instruments double the maintenance burden: any field label change or branching logic fix must be applied to both copies. If the data structure at each time point is identical, use one instrument and assign it to multiple events.
 
@@ -299,17 +427,23 @@ If the scoring instrument is assigned to multiple events (the same events as the
 
 **Assuming the scoring instrument auto-populates.** A scoring instrument that contains only calculated fields will not show as "Complete" until all the fields it references have been saved. If a data entry user saves the assessment instrument but does not open the scoring instrument, the scoring instrument will remain "Incomplete" on the record status dashboard. This is expected behavior but can confuse staff. Document it in training materials.
 
+**Not assigning the AE log to all post-enrollment events.** If the AE log repeating instrument is only assigned to some events, adverse events occurring between unassigned visits cannot be logged at the correct time point. Assign the AE log to every event from Baseline (or first post-enrollment visit) through End of Study in all arms.
+
+**Writing arm-specific branching logic for instruments that are identical across arms.** In a parallel-group study, most instruments behave the same way in both arms. Adding `[redcap_event_name] = 'baseline_arm_1'` logic to fields that should display at Baseline in both arms will silently suppress them for Arm 2 participants. Only use arm-qualified event names in branching logic when behavior genuinely differs by arm.
+
 **Using surveys for internal adjudication or source doc checklists.** These instruments are staff-only workflows. Enabling survey mode on them exposes them to public URLs and removes the normal user rights protections. Keep internal operational instruments as standard data entry forms.
 
 **Forgetting to set a custom form label on the call log.** Without a custom form label, all call log instances show as "Instance 1," "Instance 2," etc. with no indication of content. A label that pipes in the date and outcome (e.g., `[contact_date] — [contact_outcome]`) makes the record status dashboard immediately scannable. See RC-LONG-02 Section 6 for setup details.
 
 ---
 
-# 11. Related Articles
+# 13. Related Articles
 
 - RC-LONG-01 — Longitudinal Project Setup (arms, events, and instrument designation — foundational prerequisite)
-- RC-LONG-02 — Repeated Instruments & Events Setup (configuring the call log repeating instrument)
-- RC-BL-05 — Branching Logic in Longitudinal Projects (cross-event references in branching logic and calculated fields)
+- RC-LONG-02 — Repeated Instruments & Events Setup (configuring repeating instruments; custom form labels)
+- RC-BL-05 — Branching Logic in Longitudinal Projects (cross-event and arm-qualified references in branching logic)
 - RC-CALC-02 — Calculated Fields (building scoring instruments and change-score formulas)
+- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE (implementing score-based category labels and clinical flags)
+- RC-RAND-02 — Randomization Setup Guide (using the Randomization module for arm assignment in RCTs)
 - RC-PROJ-04 — Project Setup: Additional Customizations (custom record label using piped patient identifiers)
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (adjudication and multi-stage review patterns)
