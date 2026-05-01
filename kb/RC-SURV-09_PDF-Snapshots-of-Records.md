@@ -262,7 +262,7 @@ If you configured file upload fields for your snapshots, the PDFs are accessible
 ---
 
 
-# Related Articles
+# 10. Related Articles
 
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-01 — Surveys – Basics

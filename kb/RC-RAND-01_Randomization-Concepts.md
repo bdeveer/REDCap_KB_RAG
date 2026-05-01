@@ -308,3 +308,15 @@ Once the module is enabled system-wide, randomization is enabled per project by 
 
 REDCap LLM Knowledge Base \| RC-RAND-01 \| Randomization Concepts &
 Terminology
+
+---
+
+# 9. Related Articles
+
+- RC-RAND-02 — Randomization Setup Guide
+- RC-RAND-03 — Working with & Managing Randomization
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-DAG-01 — Data Access Groups
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-NAV-UI-02 — Project Menu Reference

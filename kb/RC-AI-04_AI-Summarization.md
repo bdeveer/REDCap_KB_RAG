@@ -175,7 +175,7 @@ Processing time depends on the amount of text data in the variable (number of re
 
 ---
 
-## Related Articles
+# 7. Related Articles
 
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools

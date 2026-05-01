@@ -166,3 +166,14 @@ Disabling a module deactivates its functionality but does not delete any data st
 The "Enable a module" button in the Module Manager shows all currently downloaded modules. The REDCap Repo (via "View modules available in the REDCap Repo") shows the full community catalog of available modules.
 
 > See RC-EM-02 for a catalog of modules commonly installed at REDCap installations, with descriptions and use cases.
+
+---
+
+# 10. Related Articles
+
+- RC-EM-02 — External Modules: Installed Catalog
+- RC-EM-03 — External Modules: Test/Staging Catalog
+- RC-EM-04 — External Modules: Development Catalog
+- RC-AT-01 — Action Tags: Overview
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-INST-01 — Institution-Specific Settings & Policies

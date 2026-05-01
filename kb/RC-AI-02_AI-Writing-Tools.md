@@ -173,7 +173,7 @@ Custom prompts support general AI requests, not just text editing. However, prom
 
 ---
 
-## Related Articles
+# 7. Related Articles
 
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-03 — AI Translations

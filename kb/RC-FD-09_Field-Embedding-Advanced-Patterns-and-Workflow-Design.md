@@ -293,13 +293,13 @@ A common confusion is reaching for `[square]` in a descriptive field and expecti
 
 ---
 
-# 7. Pattern 4 — Cascading Sub-Field Drill-Down in Radio Choice Labels
+# 8. Pattern 4 — Cascading Sub-Field Drill-Down in Radio Choice Labels
 
-## 7.1 The Design Goal
+## 8.1 The Design Goal
 
 Some questions have a natural hierarchy: selecting one answer should immediately reveal a more specific follow-up, and selecting a sub-answer may reveal yet another level. The standard approach is to build each level as a separate field with its own branching logic — which works but places the sub-questions below the parent question in a separate row, visually disconnected from the choice that triggered them. Embedding sub-fields directly inside the parent radio choice label places them inline, adjacent to the option they relate to, creating an intuitive drill-down experience without extra screen real estate.
 
-## 7.2 How It Works
+## 8.2 How It Works
 
 Place `{sub_field_name}` references inside the choice label of the parent radio button. When a respondent selects that option, the embedded sub-field appears inline beside it — and branching logic on the sub-field simultaneously controls whether it is active at all.
 
@@ -329,7 +329,7 @@ affil_dept_other (text) — branching logic: [affil_dept]=3
 
 Selecting "University" immediately shows the `affil_dept` radio embedded next to that choice. Selecting "School of Medicine" within `affil_dept` immediately shows the `affil_dept_med` radio embedded next to it — three levels of specificity visible in a compact, connected layout.
 
-## 7.3 Role of Branching Logic Alongside Embedding
+## 8.3 Role of Branching Logic Alongside Embedding
 
 Field embedding controls **where** a sub-field appears on screen. Branching logic controls **whether** the sub-field is active at all. You need both:
 
@@ -340,7 +340,7 @@ Together they produce a sub-field that only appears when needed AND appears at t
 
 **Important:** Because branching logic clears hidden field values, changing a top-level radio selection after sub-fields have been filled will clear the sub-field data automatically. This is correct behavior for hierarchical data — ensure respondents understand the form is dynamic.
 
-## 7.4 When to Use This Pattern
+## 8.4 When to Use This Pattern
 
 This pattern is well suited to:
 
@@ -355,7 +355,7 @@ This pattern is well suited to:
 
 ---
 
-# 8. Common Mistakes & Gotchas
+# 9. Common Mistakes & Gotchas
 
 **Using curly braces in the email-preview descriptive fields.** A `{field_name}` reference in a descriptive field embeds the input element there — which is not what you want in a preview instrument. The input box will appear instead of the stored value. Use `[field_name]` (square brackets) for display in preview instruments.
 
@@ -371,7 +371,7 @@ This pattern is well suited to:
 
 ---
 
-# 9. Related Articles
+# 10. Related Articles
 
 - RC-FD-07 — Field Embedding (mechanics of curly-brace embedding, rules, valid embedding locations including radio choice labels)
 - RC-BL-01 — Branching Logic Overview (companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)

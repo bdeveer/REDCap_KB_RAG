@@ -30,15 +30,9 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ## Housekeeping
 
-- [ ] **Add "Related Articles" section to 21 articles that are missing it as their last section** — The KB format checker flags these because the final section is not "Related Articles". Each either needs the section added or (if it exists mid-article) moved to the end. Grouped by what currently ends the article:
-  - *Ends with "Common Mistakes & Gotchas"*: RC-AI-01, RC-AI-02, RC-AI-03, RC-AI-04, RC-CALC-01, RC-DQ-01, RC-MLM-01, RC-SURV-08, RC-SURV-09
-  - *Ends with "Common Questions"*: RC-EM-01, RC-EM-02, RC-EM-03, RC-EM-04, RC-INST-01, RC-INST-02, RC-INST-03
-  - *Ends with "Version & Change Notes"*: RC-FD-06, RC-RAND-01, RC-RAND-02, RC-RAND-03, RC-SURV-01
+- [x] **Add "Related Articles" section to articles that were missing it as their last section** — All 224 articles now pass the format checker with 0 errors and 0 warnings. Fixed: numbered existing unnumbered sections (RC-DQ-01, RC-MLM-01, RC-SURV-08, RC-SURV-09, RC-AI-01–04, RC-CALC-01); added new sections to RC-EM-01–04, RC-FD-06, RC-INST-01–03, RC-RAND-01–03, RC-SURV-01. Also fixed RC-CAL-01 (wrong file format) and RC-FD-09 (duplicate section number 7).
 
-- [ ] **Fix section 1 naming in 3 articles** — The checker expects section 1 to be called "Overview"; these articles use a different name for their opening section:
-  - RC-CC-07 — section 1 is "Common Questions" (article is missing intro sections entirely)
-  - RC-CC-20 — section 1 is "Page Tabs"
-  - RC-CC-21 — section 1 is "What Is the Control Center?" (intro content is there, just not titled "Overview")
+- [x] **Fix section 1 naming in 3 articles** — RC-CC-07 (body content wrapped under `# 1. Overview`; existing sections renumbered), RC-CC-20 (intro promoted to `# 1. Overview`; Page Tabs renumbered to `# 2.`), RC-CC-21 (renamed from "What Is the Control Center?" to "Overview").
 
 ---
 
@@ -53,4 +47,4 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ---
 
-*Last updated: 2026-04-27 (KB format checker + fixer scripts added; 38 errors resolved across 73 articles; 24 remaining warnings logged above)*
+*Last updated: 2026-04-30 (All format warnings and errors resolved — 224 articles, 0 errors, 0 warnings)*

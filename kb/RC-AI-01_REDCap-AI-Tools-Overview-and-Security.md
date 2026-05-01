@@ -130,7 +130,7 @@ As of version 15.5.3, REDCap provides three main AI features. Additional capabil
 
 ---
 
-## Related Articles
+# 7. Related Articles
 
 - RC-AI-02 — AI Writing Tools
 - RC-AI-03 — AI Translations

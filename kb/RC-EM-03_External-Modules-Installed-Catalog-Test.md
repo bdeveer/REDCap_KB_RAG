@@ -158,3 +158,12 @@ Once a module is installed at the system level, it must also be enabled at the p
 **Q: How do I know which version of a module is currently installed?**
 
 **A:** The installed version number is shown in the Control Center Module Manager. This article reflects the modules installed at the time it was last updated — for current version numbers, always check the Module Manager directly.
+
+---
+
+# 6. Related Articles
+
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-EM-02 — External Modules: Installed Catalog
+- RC-EM-04 — External Modules: Development Catalog
+- RC-CC-06 — Control Center: Modules & Services Configuration

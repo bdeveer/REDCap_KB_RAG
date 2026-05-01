@@ -288,7 +288,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 ---
 
-# Related Articles
+# 12. Related Articles
 
 - RC-BL-01 — Branching Logic: Overview & Scope (custom rules use identical syntax)
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements (syntax reference for writing rules)

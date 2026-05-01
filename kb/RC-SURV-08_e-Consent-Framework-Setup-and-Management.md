@@ -350,7 +350,7 @@ If the e-Consent option is not visible in your project's Online Designer, contac
 
 ---
 
-# Related Articles
+# 10. Related Articles
 
 - RC-SURV-09 — PDF Snapshots of Records
 - RC-SURV-01 — Surveys – Basics

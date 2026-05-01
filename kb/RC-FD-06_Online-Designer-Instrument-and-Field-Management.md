@@ -587,3 +587,19 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 | --- | --- |
 | Modern versions (14.x+) | Floating matrix headers introduced — column headers remain visible when scrolling through long matrices. Prior to this, best practice was to limit matrices to 5–6 rows. |
 | General | The Online Designer interface may display additional buttons (e.g., Survey Settings, Form Display Logic options) when surveys, longitudinal mode, or DAGs are enabled in the project. This article covers the baseline interface with those features disabled. |
+
+---
+
+# 15. Related Articles
+
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-FD-03 — Data Dictionary
+- RC-FD-04 — Instrument Library & Zip Files
+- RC-FD-05 — Codebook
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-CALC-02 — Calculated Fields
+- RC-DE-05 — Field Validations
+- RC-NAV-UI-01 — Project Navigation UI

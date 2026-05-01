@@ -462,3 +462,12 @@ Different instances at this institution may have different data classification a
 **Q: Where do I report a bug or a REDCap problem?**
 
 **A:** Use the **Contact REDCap Administrator** link in the left-hand project menu (or at the bottom of any REDCap page outside a project). This routes directly to the local support team and automatically includes your project context.
+
+---
+
+# 15. Related Articles
+
+- RC-INST-01 — Institution-Specific Settings: Production
+- RC-INST-02 — Institution-Specific Settings: Test/Staging
+- RC-CC-02 — Control Center: General System Configuration
+- RC-CC-06 — Control Center: Modules & Services Configuration

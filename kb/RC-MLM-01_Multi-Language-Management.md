@@ -385,7 +385,7 @@ No. Switching languages in real-time only changes the display. Data already ente
 
 ---
 
-# Related Articles
+# 11. Related Articles
 
 - RC-SURV-01 — Survey Setup *(see for enabling instruments as surveys)*
 - RC-ALERT-01 — Alerts and Notifications Setup *(see for alert configuration; MLM language source is set in the base language Alerts tab)*

@@ -14,7 +14,7 @@ RC-CC-21
 
 ---
 
-# 1. What Is the Control Center?
+# 1. Overview
 
 The Control Center is the administrative hub of a REDCap instance. It is only accessible to REDCap **administrators** (also called super users). Standard project users and project-level admins do not have access to the Control Center. Administrators reach it via the **Control Center** link in the left-hand navigation menu, which is only visible to accounts with administrator privileges.
 

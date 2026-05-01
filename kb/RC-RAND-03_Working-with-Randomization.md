@@ -325,3 +325,14 @@ reason properly**
 
 REDCap LLM Knowledge Base \| RC-RAND-03 \| Working with & Managing
 Randomization
+
+---
+
+# 12. Related Articles
+
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-02 — Randomization Setup Guide
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-PIPE-13 — Smart Variables: Randomization

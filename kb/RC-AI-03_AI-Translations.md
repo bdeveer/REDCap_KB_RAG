@@ -167,7 +167,7 @@ REDCap passes the Language Display Name to the AI as the target language instruc
 
 ---
 
-## Related Articles
+# 7. Related Articles
 
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-AI-02 — AI Writing Tools

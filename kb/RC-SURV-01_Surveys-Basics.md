@@ -362,3 +362,17 @@ Additional survey-related settings that administrators control in the Control Ce
 | --- | --- |
 | General | This article covers the baseline survey setup with longitudinal mode and DAGs disabled. Projects with those features enabled will see additional options in the Online Designer and Survey Distribution Tools. |
 | General | The "Automated Invitations" button visible in the Online Designer's Survey Related Options column is covered in RC-ALERT-01 — Alerts & Notifications Setup. |
+
+---
+
+# 14. Related Articles
+
+- RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-FD-01 — Form Design Overview
+- RC-FD-02 — Online Designer
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-NAV-UI-01 — Project Navigation UI

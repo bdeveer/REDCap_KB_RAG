@@ -382,3 +382,13 @@ The Randomization module must be enabled at the system level before it can be en
 | **Pre-15.x** | Automatic trigger options do not exist. Step 11 is not applicable. Manual-only randomization is the only option. |
 
 REDCap LLM Knowledge Base \| RC-RAND-02 \| Randomization Setup Guide
+
+---
+
+# 10. Related Articles
+
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-03 — Working with & Managing Randomization
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-CC-06 — Control Center: Modules & Services Configuration
