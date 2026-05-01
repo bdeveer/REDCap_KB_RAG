@@ -7,7 +7,7 @@ RC-LONG-03
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | Longitudinal REDCap projects in clinical research contexts |
 | **Prerequisite** | RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-05-01 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-BL-05 — Branching Logic in Longitudinal Projects; RC-CALC-02 — Calculated Fields; RC-PROJ-04 — Project Setup: Additional Customizations; RC-FD-10 — Advanced Workflow Patterns |
@@ -375,7 +375,136 @@ In a two-arm project, the record status dashboard displays all events for both a
 
 ---
 
-# 11. Common Questions
+# 11. Cross-Event Carry-Forward for a Repeating Instrument
+
+## 11.1 The Problem
+
+A repeating medication list collected at every visit requires staff to re-enter the same medications visit after visit unless the prior visit's data is brought forward automatically. REDCap does not have a built-in "copy repeating instances from last event" feature, but the combination of `@IF`, `@DEFAULT`, `[current-instance]`, `[previous-event-name]`, and instance qualifiers can replicate this behaviour.
+
+## 11.2 The Pattern
+
+Place a `@IF` + `@DEFAULT` expression in the **Field Annotation** column of every field on the repeating instrument. The expression checks the current instance number, looks up the matching instance from the previous event, and pre-fills the field if that prior instance had data. If it did not, the field opens blank.
+
+For a medication name field, the annotation for a list that supports up to N instances looks like this (shown here truncated to 3 instances for readability):
+
+```
+@IF([current-instance]=1 AND [previous-event-name][med_name][1]<>'',
+  @DEFAULT='[previous-event-name][med_name][1]',
+  @IF([current-instance]=2 AND [previous-event-name][med_name][2]<>'',
+    @DEFAULT='[previous-event-name][med_name][2]',
+    @IF([current-instance]=3 AND [previous-event-name][med_name][3]<>'',
+      @DEFAULT='[previous-event-name][med_name][3]',
+      @DEFAULT='')))
+```
+
+Extend the nesting as far as the maximum number of instances the project needs to support.
+
+### Smart variables used
+
+| Smart Variable | What it resolves to |
+|---|---|
+| `[current-instance]` | The instance number of the repeating instrument currently open |
+| `[previous-event-name]` | The unique event name of the immediately preceding event in the defined event sequence |
+| `[field][N]` | The value of `field` from the Nth instance of a repeating instrument (at the referenced event) |
+
+## 11.3 Design Details
+
+**The `<> ''` guard** — The condition `[previous-event-name][med_name][N] <> ''` ensures the carry-forward only fires if that instance actually had data at the previous event. Without this guard, REDCap would create empty instances for every instance number up to N, even if the prior visit only had two medications. The guard means REDCap creates only as many pre-filled instances as the previous visit had.
+
+**Defaulting "ongoing" to Yes** — For a field that tracks whether the participant is still taking the medication, the final fallback (when there is no matching prior instance) can default to `@DEFAULT='1'` (Yes/ongoing) rather than blank. This is appropriate for a medication list because any medication that appears at this visit is presumed ongoing unless the staff explicitly changes it.
+
+**Intentionally excluding certain fields** — The end-date field (`med_end_date`) should not carry forward. A discontinuation date from a prior visit is historical; at the current visit, the field should open blank so staff actively record a new end date only if the medication has since been stopped. Omit the `@IF`/`@DEFAULT` annotation entirely from fields that should never carry forward.
+
+**`[previous-event-name]` resolves structurally, not by completion** — The smart variable points to the immediately prior event in the defined event sequence, regardless of whether data was collected at that event. If a participant skipped the 3-month visit, the 6-month carry-forward still looks to the 3-month event — and finds nothing there. Consider whether skipped visits are expected and whether the carry-forward behavior is still acceptable when they occur.
+
+## 11.4 The Workflow This Creates
+
+When a coordinator opens the medication list at a follow-up visit, the instrument automatically creates one pre-filled instance per medication recorded at the previous visit. The coordinator reviews each instance, updates the dose or frequency if anything changed, marks discontinued medications as ended (which triggers the end-date field via branching logic), and adds new medications as fresh instances. Data entry becomes a review-and-update task rather than a full re-entry task.
+
+## 11.5 Caveats
+
+- This pattern applies only when the instrument is a **repeating instrument within a non-repeating event**. It does not work across repeating events.
+- The maximum instance count supported is equal to the nesting depth you build into the `@IF` chain. A medication list designed for up to 10 concurrent medications requires 10 nested `@IF` conditions per field.
+- The annotations for each field are identical in structure — only the field name changes. Build the annotation for one field, verify it, then replicate it across all carry-forward fields, substituting the field name.
+
+---
+
+# 12. HTML Summary Panels in Descriptive Fields
+
+## 12.1 The Pattern
+
+A `descriptive` field type in REDCap renders its `Field Label` content as HTML. This means you can use a descriptive field as a **styled data review panel** — placing a table of key study data pulled from earlier events directly at the top of a late-stage form. Staff see the participant's full history before they start entering data, without navigating away from the form.
+
+A typical summary panel includes:
+
+- Demographic and contact information piped from the baseline event
+- A table of longitudinal outcome scores (one row per follow-up event)
+- Colour-coded rows for threshold flags or milestones
+- A brief note reminding staff to review before proceeding
+
+## 12.2 HTML in Descriptive Fields
+
+REDCap renders HTML markup in the `Field Label` of descriptive field types. The following are supported:
+
+- **Structural tags**: `<div>`, `<table>`, `<tr>`, `<td>`, `<th>`, `<br>`, `<span>`
+- **Inline CSS**: `style="..."` attributes on any element — including colours, padding, font sizes, borders, border-radius, and CSS gradients
+- **Text formatting**: `<b>`, `<i>`, `<em>`, `<strong>`, `<small>`
+
+The following are **not** supported or should be avoided:
+
+- External stylesheets (`<link>`)
+- `<script>` tags — REDCap strips these for security
+- CSS class-based styling unless the class is defined in REDCap's own stylesheet (unreliable — use inline styles only)
+
+Piping syntax within HTML works normally. `[event_name][field_name:modifier]` references inside an HTML attribute or tag body resolve exactly as they would in plain text.
+
+Test descriptive field HTML in both data entry mode and survey mode. Survey mode may strip certain styling for accessibility reasons.
+
+## 12.3 Arm-Agnostic Piping
+
+In a two-arm longitudinal project, a field from the baseline event exists in two namespaces: `[baseline_arm_1][field]` and `[baseline_arm_2][field]`. A given participant has data in exactly one of these — the arm they were enrolled in. The other resolves to blank.
+
+Rather than writing arm-specific branching logic on a descriptive field (which cannot use branching logic to show or hide), the two references can be **concatenated**:
+
+```
+[baseline_arm_1][field:hideunderscore][baseline_arm_2][field:hideunderscore]
+```
+
+For any given participant, one reference resolves to the field value and the other resolves to empty string (suppressed by `:hideunderscore`). The result is always the value, regardless of which arm the participant is in. This technique avoids duplicating the descriptive field or adding instrument-level branching.
+
+The `:hideunderscore` modifier is essential here. Without it, the blank arm's reference renders as `______`, making the output appear as `value______` or `______value`.
+
+This technique works for any element of the panel that must be arm-agnostic: demographic fields, baseline scores, any event-level variable that exists under both arms.
+
+## 12.4 Cross-Event Score Trajectories
+
+A summary table showing all follow-up events in rows and outcome scores in columns is built by piping each event-specific value into the corresponding table cell:
+
+```html
+<tr>
+  <td>Baseline</td>
+  <td>[baseline_arm_1][score_total:hideunderscore][baseline_arm_2][score_total:hideunderscore]</td>
+  <td>[baseline_arm_1][score_category:hideunderscore][baseline_arm_2][score_category:hideunderscore]</td>
+</tr>
+<tr>
+  <td>3 Month</td>
+  <td>[3_month_arm_1][score_total:hideunderscore][3_month_arm_2][score_total:hideunderscore]</td>
+  <td>[3_month_arm_1][score_category:hideunderscore][3_month_arm_2][score_category:hideunderscore]</td>
+</tr>
+```
+
+If a visit has not yet been completed, the cell displays as empty. This is expected and informative — staff can see at a glance which visits have data.
+
+## 12.5 Practical Considerations
+
+- **Display only** — descriptive fields are never exported. The HTML panel is purely a review aid for data entry staff; it does not appear in data exports or reports.
+- **Data dictionary editing** — a descriptive field with hundreds of characters of HTML makes manual DD editing impractical. Use the Online Designer or a template-based approach when building these fields.
+- **Piping resolves at form load** — the values shown in the summary panel reflect whatever was saved at the referenced events at the time the form is opened. If a prior event is edited after the End of Study form is opened and saved, the panel will reflect the updated values on the next load.
+- **Keep the HTML simple and self-contained** — inline styles, a single `<div>` wrapper, and `<table>` are the most reliable elements. Avoid deeply nested CSS that is hard to maintain.
+
+---
+
+# 13. Common Questions
 
 **Q: Can I assign an instrument to every event in a project?**
 
@@ -417,7 +546,7 @@ This pattern is appropriate for validated screening instruments where a high tot
 
 ---
 
-# 12. Common Mistakes & Gotchas
+# 14. Common Mistakes & Gotchas
 
 **Duplicating instruments instead of reusing them.** A common mistake is creating `phq_baseline` and `phq_followup` as two separate instruments when the same `physician_health_questionnaire` instrument could simply be assigned to both events. Duplicate instruments double the maintenance burden: any field label change or branching logic fix must be applied to both copies. If the data structure at each time point is identical, use one instrument and assign it to multiple events.
 
@@ -426,6 +555,12 @@ This pattern is appropriate for validated screening instruments where a high tot
 **Putting contact log fields directly on the assessment instrument.** Projects sometimes add `call_attempt_1_date`, `call_attempt_2_date`, etc. as fixed fields on the interview instrument. This limits the number of trackable attempts and creates sparse data (most fields are blank for records reached on the first try). A repeating call log instrument is more flexible and produces cleaner data.
 
 **Assuming the scoring instrument auto-populates.** A scoring instrument that contains only calculated fields will not show as "Complete" until all the fields it references have been saved. If a data entry user saves the assessment instrument but does not open the scoring instrument, the scoring instrument will remain "Incomplete" on the record status dashboard. This is expected behavior but can confuse staff. Document it in training materials.
+
+**Building the carry-forward annotation without the `<> ''` guard.** Omitting the `[previous-event-name][field][N] <> ''` condition causes REDCap to generate empty pre-filled instances up to the maximum instance count, even when the previous visit had fewer entries. Always include the not-empty check so instances are only created to match what the prior visit actually had.
+
+**Forgetting to omit carry-forward from end-date or stop-date fields.** Fields that record when something ended (a medication, a side effect) should not carry forward — the end date at a prior visit is historical, not a default for the current visit. Review every field in a carry-forward instrument and explicitly decide whether it should carry or open blank.
+
+**Using arm-qualified piping without `:hideunderscore` in HTML panels.** When concatenating `[arm_1][field][arm_2][field]` for arm-agnostic display, the arm without data renders as `______` unless `:hideunderscore` is appended to both references. The result without the modifier looks like `value______` and is confusing to staff.
 
 **Not assigning the AE log to all post-enrollment events.** If the AE log repeating instrument is only assigned to some events, adverse events occurring between unassigned visits cannot be logged at the correct time point. Assign the AE log to every event from Baseline (or first post-enrollment visit) through End of Study in all arms.
 
@@ -437,13 +572,17 @@ This pattern is appropriate for validated screening instruments where a high tot
 
 ---
 
-# 13. Related Articles
+# 15. Related Articles
 
 - RC-LONG-01 — Longitudinal Project Setup (arms, events, and instrument designation — foundational prerequisite)
 - RC-LONG-02 — Repeated Instruments & Events Setup (configuring repeating instruments; custom form labels)
 - RC-BL-05 — Branching Logic in Longitudinal Projects (cross-event and arm-qualified references in branching logic)
 - RC-CALC-02 — Calculated Fields (building scoring instruments and change-score formulas)
+- RC-AT-06 — Autofill Action Tags (@DEFAULT and [previous-event-name] — foundational building blocks for carry-forward)
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE (implementing score-based category labels and clinical flags)
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers (`:hideunderscore` modifier and event-qualified references)
+- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events ([current-instance] and instance qualifier syntax)
 - RC-RAND-02 — Randomization Setup Guide (using the Randomization module for arm assignment in RCTs)
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (HTML in field labels)
 - RC-PROJ-04 — Project Setup: Additional Customizations (custom record label using piped patient identifiers)
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (adjudication and multi-stage review patterns)

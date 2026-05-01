@@ -3092,12 +3092,16 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 **Prerequisites:** RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Outbound links:**
+- RC-AT-06 — Autofill Action Tags
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
 - RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-CALC-02 — Calculated Fields
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-RAND-02 — Randomization Setup Guide
 
@@ -3105,6 +3109,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 *(none yet)*
 
 **Changelog:**
+- v1.2 (2026-05-01): Added Section 11 (Cross-Event Carry-Forward for a Repeating Instrument — @IF/@DEFAULT/[current-instance]/[previous-event-name] chain pattern) and Section 12 (HTML Summary Panels in Descriptive Fields — including arm-agnostic dual-arm piping with :hideunderscore). Three new gotchas. Patterns sourced from analysis of a real-world two-arm interventional study.
 - v1.1 (2026-05-01): Added Section 9 (Adverse Event Log as a Repeating Instrument), Section 10 (Multi-Arm Parallel-Group Study Design), new Q&A on safety-flag OR logic, and two new gotchas. Patterns sourced from analysis of a real-world two-arm interventional study (all identifying information removed).
 - v1.0 (2026-04-29): Initial article. Patterns sourced from analysis of a real-world multi-site longitudinal cardiology study (all identifying information removed). Covers: standard clinical trial event architecture, instrument reuse across events, contact log repeating instrument, adjudication instruments, source document checklists, and separate scoring instruments.
 
