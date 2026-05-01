@@ -7,7 +7,7 @@ RC-API-02
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Prerequisite** | RC-API-01 — REDCap API |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -241,6 +241,10 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 **`exportDataAccessGroups` is silently overridden for DAG members.** If the token belongs to a user who is assigned to a DAG, this parameter is ignored and the column is not included — even if you set it to `true`. Only tokens from users outside any DAG will include the DAG column.
 
 **`exportBlankForGrayFormStatus` matters for round-trip imports.** If you export data and plan to re-import it, set this to `true`. Otherwise, gray-status instruments will export as `0` (Incomplete), and re-importing will convert those gray statuses to explicit Incomplete — changing the project's data.
+
+**Exporting all records from a large project can exhaust server memory.** In projects with a high record count and a large number of fields — particularly projects that use many repeating instrument instances — an unfiltered full-record export can cause REDCap to crash with a PHP memory exhaustion error. The API returns an HTTP 200 response whose body contains an HTML fatal error block followed by a JSON error message: `{"error":"REDCap ran out of server memory. The request cannot be processed. Please try importing/exporting a smaller amount of data."}`. This is not a standard API error response and can confuse clients that parse JSON without first checking for embedded HTML. To avoid this, break large exports into smaller chunks using `records` (a batch of record IDs), `fields` or `forms` (a subset of the data dictionary), or `dateRangeBegin`/`dateRangeEnd` (a time-bounded slice). Operational or administrative tracking projects that accumulate many records over time are especially susceptible.
+
+**Passing `'record_id'` as a field name in the `fields` parameter fails if the primary key has a different variable name.** REDCap auto-numbering projects (and any project where the designer named the primary key something other than `record_id`) will return an API error: `"The following values in the parameter 'fields' are not valid: 'record_id'"`. The primary key field always carries whatever variable name was given to the first field in the data dictionary. To discover the actual primary key variable name before filtering exports, call the Export Field Names API (RC-API-06) — the first entry in the response is always the primary key. Note that the primary key is always included in every export automatically, regardless of which `fields` you specify.
 
 ---
 

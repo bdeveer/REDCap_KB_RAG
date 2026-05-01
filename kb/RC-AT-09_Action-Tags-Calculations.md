@@ -7,7 +7,7 @@ RC-AT-09
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-AT-01 — Action Tags Overview; familiarity with REDCap calculated fields |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-AT-01 — Action Tags Overview; RC-AT-06 — Autofill Action Tags; RC-AT-08 — @IF; RC-DE-05 — Field Validations |
@@ -189,6 +189,16 @@ Use the built-in Calculated Field when you need a numeric result. Use `@CALCTEXT
 **Q: Can I use @CALCTEXT on a field with validation (e.g., integer validation)?**
 
 **A:** The tag works on Text Box fields regardless of validation, but the output must match the validation format. If the computed text does not match the validation rule, the value will be rejected. Use text-only fields (no validation) unless you are certain the output will always conform.
+
+**Q: How do I display the best available value when data may come from multiple sources?**
+
+**A:** Use nested `if()` inside `@CALCTEXT` to build a priority-ordered fallback chain. The expression checks each source in order and returns the first one that is non-blank:
+
+```
+@CALCTEXT(if([source_a]<>'', [source_a], if([source_b]<>'', [source_b], [source_c])))
+```
+
+This pattern is useful in operational or administrative projects where a value might be populated automatically from an integrated external system, manually entered by staff if the integration is unavailable, or carried over from a historical field as a last resort. Each `if()` layer checks whether the higher-priority source has a value; if it does, that value is returned and the remaining layers are skipped. You can chain as many layers as needed. Note that if all sources are blank, the outermost false branch (here `[source_c]`) is returned — which may itself be blank. If you need an explicit fallback label for the all-blank case, wrap the outermost false value in a quoted string: `..., if([source_c]<>'', [source_c], 'Not available')))`.
 
 **Q: What is the difference between @CALCDATE and just using a Calculated Field for dates?**
 
