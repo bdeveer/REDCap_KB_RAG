@@ -7,7 +7,7 @@ RC-SURV-07
 | **Domain** | Surveys |
 | **Applies To** | All projects with surveys enabled |
 | **Prerequisite** | RC-SURV-06 — Automated Survey Invitations |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-06 — Automated Survey Invitations; RC-SURV-05 — Participant List & Manual Survey Invitations; RC-SURV-03 — Survey Settings: Behavior, Access & Termination; RC-BL-01 — Branching Logic: Overview & Scope; RC-LONG-01 — Longitudinal Project Setup; RC-LONG-02 — Repeated Instruments & Events Setup; RC-PIPE-03 — Smart Variables Overview |
@@ -233,6 +233,14 @@ This behavior also applies to completed instances of repeatable instruments.
 
 **A:** Yes. The survey queue link is persistent and does not expire. Participants can return to the same link in a later session and continue where they left off.
 
+**Q: Can a completion trigger in the survey queue reference a survey from a different arm?**
+
+**A:** Yes. In the CSV, the `condition_surveycomplete_event_name` column accepts any valid event name in the project, including events that belong to a different arm than the survey being configured. This is useful in multi-arm longitudinal projects where downstream surveys in one arm should unlock only after a baseline survey in another arm has been completed. Set up the combination trigger (completion + logic, joined by AND) so the arm-specific logic condition also gates which participants see the survey.
+
+**Q: I have a conditional arm where the first survey should only appear when a screening field meets a condition. The survey never shows in the queue. What is wrong?**
+
+**A:** The most common cause is a completion trigger on the first survey in the arm. If there is no prior survey for that arm's participants to complete, a completion trigger will never fire. For the entry-point survey in a conditional arm, leave both `condition_surveycomplete_form_name` and `condition_surveycomplete_event_name` blank and rely solely on the logic trigger. Set `condition_andor` to `AND` (REDCap requires a value even when only one trigger type is active). Subsequent surveys in the arm can then use a combination trigger — the entry-point survey's completion plus the same or a related logic condition.
+
 ---
 
 # 10. Common Mistakes & Gotchas
@@ -246,6 +254,10 @@ This behavior also applies to completed instances of repeatable instruments.
 **Expecting the survey queue icon to appear for anonymous participants.** The survey queue column in the participant list is only clickable in identified mode. Anonymous records show no clickable queue icon. Enable identified mode via participant identifier or a designated email field.
 
 **Omitting the survey queue link from the ASI message for multi-survey time points.** If you use ASIs to kick off each time point and the survey queue to guide participants through subsequent surveys, the ASI message must include `[survey-queue-url]` or `[survey-queue-link:Custom Text]` — not just `[survey-url]`. Sending `[survey-url]` only takes the participant to a single survey, bypassing the queue entirely.
+
+**Adding a completion trigger to the first survey in a conditional arm.** In a multi-arm project where participants are routed by screening logic, the entry-point survey in each conditional arm has no prior survey to complete. Assigning a completion trigger to it means the trigger can never fire and the survey will never appear in the queue. Leave the completion trigger columns blank for any survey that is the first in its arm's flow, and use a logic-only trigger instead.
+
+**In multi-arm routing, surveys that share the same completion trigger all unlock simultaneously.** When several surveys in an arm are all configured to trigger after the same preceding survey completes (and the logic condition is also met), they become available at the same moment. If all of them have `auto_start=1`, REDCap will auto-launch whichever appears first in the instrument list in the Online Designer, then chain to the next in order. If your instrument order in the Online Designer does not match your intended survey flow, participants will be routed through the surveys in the wrong sequence. Review and adjust instrument order before going live with this pattern.
 
 ---
 

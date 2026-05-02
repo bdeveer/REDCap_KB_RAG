@@ -7,7 +7,7 @@ RC-ALERT-01
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-PIPE-03 — Smart Variables Overview; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features; RC-BL-01 — Branching Logic: Overview & Scope; RC-SURV-01 — Surveys – Basics; RC-ALERT-02 — Alert Management & Notification Log; RC-CC-06 — Control Center: Modules & Services Configuration |
@@ -214,7 +214,7 @@ There are three ways to specify recipients:
 
 **User emails** — select any email linked to a current project user from the "select recipients" dropdown. Click the dropdown again to add additional users. Best for alerts sent to study team members.
 
-**Variables** — any text field with email validation in your project appears in the dropdown below user emails. Selecting a variable dynamically resolves to that record's email value at send time. Best for alerts sent to participants.
+**Variables** — any text field with email validation in your project appears in the dropdown below user emails. Selecting a variable dynamically resolves to that record's email value at send time. Best for alerts sent to participants. In longitudinal projects, use event-prefixed piping syntax in the CSV (e.g., `[baseline_arm_1][contact_email]`) to pull the email from a specific event — this is required if the same field appears in multiple events and you need a specific event's value. The GUI recipient dropdown typically handles this automatically based on the triggering event.
 
 **Manual entry** — type one or more email addresses directly into the "Or manually enter emails" field. Separate multiple addresses with a semicolon. Any valid email address is accepted, including addresses not associated with any project user.
 
@@ -242,6 +242,7 @@ Unlike Automated Survey Invitations (which pre-fill the message body with stock 
 | Smart Variable | What It Produces |
 |---|---|
 | `[survey-link:instrument_name]` | A clickable hyperlink to the named survey, using the survey name as link text. Specify the instrument name because alerts are not tied to a default survey. |
+| `[survey-link:instrument_name:Custom text]` | Same as above, but with custom display text. The third colon-delimited segment replaces the default link label (e.g., `[survey-link:phq9:Click here to start]`). |
 | `[survey-url:instrument_name]` | The raw URL to the named survey (not a styled hyperlink). |
 | `[survey-queue-url]` | A clickable hyperlink to the survey queue for the record that triggered the alert. No instrument name needed — each record has one queue. |
 | `[form-link:instrument_name]` | A clickable link that opens the named instrument directly in REDCap's data entry interface (not as a survey). Useful for staff notification alerts. |
@@ -294,6 +295,14 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 **A:** Use the `[survey-link:instrument_name]` smart variable, where `instrument_name` is the REDCap variable name of the instrument (not its display label). Unlike ASIs, alerts are not pre-associated with a specific survey, so you must specify the instrument name explicitly.
 
+**Q: Can I customize the link text for a survey link in an alert?**
+
+**A:** Yes. Add a third colon-delimited segment to the smart variable: `[survey-link:instrument_name:Link text]`. For example, `[survey-link:phq9:Start here]` produces a hyperlink that says "Start here" and opens the PHQ-9 survey. In longitudinal projects, prefix with the event name: `[baseline_arm_1][survey-link:demographics:Start here]`.
+
+**Q: How do I include a survey link that goes to a specific event in a longitudinal project?**
+
+**A:** Prefix the smart variable with the event's unique name in brackets: `[event_name][survey-link:instrument_name]`. For example, `[3_month_arm_1][survey-link:phq9:Start here]` generates a link to the PHQ-9 instrument at the 3-month event. Without the event prefix, REDCap may not resolve the link correctly if the instrument exists at multiple events.
+
 **Q: Will alerts fire when a project is in draft/development mode?**
 
 **A:** No. Alerts only fire once a project has been moved to **Production status**. Projects in draft mode can have fully configured alerts, but they remain inactive and will not trigger or send until the project status is changed to production. This prevents unwanted alert sends during the design and testing phases of project development. To move a project to production, a user with Project Design and Setup rights must access the Project Home page and change the project status.
@@ -311,6 +320,8 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 **Using a personal email address as the "from" address.** If the team member whose email is used leaves the project, the alert may fail or generate confusion for recipients. Use a study-specific or shared team email as the from address whenever possible.
 
 **Leaving the "Prevent piping of identifier fields" checkbox checked when piping identifiers.** When this box is checked (the default), REDCap strips identifier field values from the sent message without warning. The alert sends successfully — but with blank spaces where names or other identifiers should appear. Uncheck the box if identifier piping is intentional, and verify with your IRB that including identifiers in email is appropriate for your study.
+
+**Using `[survey-link:instrument_name]` without an event prefix in a longitudinal project.** If the instrument appears at multiple events, REDCap may not know which event's link to generate, resulting in a broken or incorrect link. In longitudinal alerts, always prefix with the target event: `[event_name][survey-link:instrument_name]`. When constructing this in the CSV, this goes directly in the `alert-message` field as part of the HTML body.
 
 **Scheduling a delayed alert with date-based datediff logic without the "Ensure logic is still true" checkbox.** If the trigger fires and the alert is delayed, the datediff condition may no longer be true at send time (it was only true on one day). Always pair time-based datediff logic with the "Ensure logic is still true" option, and schedule the send for the same day the condition becomes true.
 

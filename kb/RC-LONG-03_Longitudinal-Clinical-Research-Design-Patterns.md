@@ -544,6 +544,20 @@ This pattern is appropriate for validated screening instruments where a high tot
 
 **A:** In multi-site studies, sites may have different data elements available in their medical records, or a coordinating center may perform a second-pass abstraction using a standardized form while sites use a site-adapted version. Two instruments assigned to the same event — one per abstraction pass — keeps the site-collected data and the coordinating-center-reviewed data separate, with independent completion statuses.
 
+**Q: Can arms represent sequential lifecycle phases rather than parallel patient cohorts?**
+
+**A:** Yes. Arms are not limited to patient stratification — they can model sequential workflow phases in operational, process management, or validation projects. A practical example is a UAT/validation tracking project where each arm represents a distinct testing cycle: initial build, round 2 testing, pre-production testing, and post-production changes. Each arm carries its own complete event sequence (e.g., Setup → Testing → Approval), and a record moves from arm to arm as the workflow progresses.
+
+This approach works well when:
+
+- The workflow has a fixed, named set of phases known at design time
+- Each phase follows the same event structure
+- Reporting needs to be segmented cleanly by phase
+
+The key constraint is that records can only be in one arm at a time, and arm reassignment is manual. If the number of phases is variable or unknown at build time, repeating events may be more flexible.
+
+When using arms this way, ensure the repeating instrument configuration is identical across all arms that share the same event structure. A common oversight is configuring a form as repeating in Arms 2–4 but leaving it non-repeating in Arm 1 (which was built first) — this creates inconsistent data collection capacity across phases. See the STYLE-GUIDE §7.2 for the audit procedure.
+
 ---
 
 # 14. Common Mistakes & Gotchas
@@ -565,6 +579,8 @@ This pattern is appropriate for validated screening instruments where a high tot
 **Not assigning the AE log to all post-enrollment events.** If the AE log repeating instrument is only assigned to some events, adverse events occurring between unassigned visits cannot be logged at the correct time point. Assign the AE log to every event from Baseline (or first post-enrollment visit) through End of Study in all arms.
 
 **Writing arm-specific branching logic for instruments that are identical across arms.** In a parallel-group study, most instruments behave the same way in both arms. Adding `[redcap_event_name] = 'baseline_arm_1'` logic to fields that should display at Baseline in both arms will silently suppress them for Arm 2 participants. Only use arm-qualified event names in branching logic when behavior genuinely differs by arm.
+
+**Using arm-hardcoded event names in field labels.** Field labels support piping using `[event_name][field_name]` syntax. When that event name includes a specific arm qualifier (e.g., `[base_information_arm_1][tester_fname]`), the piped value resolves correctly only when the record is in Arm 1. In Arms 2, 3, and 4 the label renders with a blank or underscore in place of the value — the record still holds the data, but the label appears unpopulated, which confuses data entry staff. If a field label needs to display data from a fixed reference event, either restrict the instrument to the intended arm, or build a `@CALCTEXT` field that dynamically selects the correct arm's value. The `:hideunderscore` modifier suppresses the blank underscore display but does not resolve cross-arm data lookup.
 
 **Using surveys for internal adjudication or source doc checklists.** These instruments are staff-only workflows. Enabling survey mode on them exposes them to public URLs and removes the normal user rights protections. Keep internal operational instruments as standard data entry forms.
 

@@ -172,6 +172,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-IMP-01 | Data Import Overview | RC-IMP-01_Data-Import-Overview.md |
 | RC-IMP-03 | CSV Upload Reference: All Bulk Upload Options in REDCap | RC-IMP-03_CSV-Upload-Reference.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
+| RC-LOG-01 | Logging — Project Audit Trail | RC-LOG-01_Logging-Project-Audit-Trail.md |
 | RC-DDP-01 | Dynamic Data Pull — Overview & User Guide | RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md |
 | RC-DDP-02 | Dynamic Data Pull — Admin Setup & Technical Specs | RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md |
 | RC-LONG-01 | Longitudinal Project Setup | RC-LONG-01_Longitudinal-Project-Setup.md |
@@ -232,6 +233,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-USER-04 | User Rights: User Management | RC-USER-04_User-Rights-User-Management.md |
 | RC-SENDIT-01 | Send-It: Secure File Transfer | RC-SENDIT-01_Send-It-Secure-File-Transfer.md |
 | RC-FILE-01 | File Repository | RC-FILE-01_File-Repository.md |
+| RC-PLUS-01 | REDCap+: Overview and Subscription | RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md |
 
 ---
 

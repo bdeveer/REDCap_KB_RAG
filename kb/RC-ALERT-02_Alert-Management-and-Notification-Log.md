@@ -7,7 +7,7 @@ RC-ALERT-02
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | RC-ALERT-01 — Alerts & Notifications: Setup |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-ALERT-01 — Alerts & Notifications: Setup; RC-PIPE-04 — Piping: Emails, Notifications & Logic Features |
@@ -128,6 +128,32 @@ Access this feature via the upload/download dropdown on the management page. Cli
 
 > **Note:** If you import an alert CSV from a different REDCap installation or a copied project, delete the Unique Alert ID values from the CSV before uploading. Importing with existing unique IDs from another installation will cause an error.
 
+### CSV Column Reference
+
+The table below covers the most commonly edited or misunderstood columns. The full column set is documented in the question mark reference on the management page.
+
+**Create vs. update behavior:** The `alert-unique-id` column controls whether an imported row creates a new alert or updates an existing one. Leave it **empty** to create a new alert. Populate it with an existing ID (format `A-XXXX`) to overwrite that alert's configuration. When editing alerts in bulk, download the CSV first so the IDs are pre-filled — never guess or fabricate an ID.
+
+| Column | Valid Values / Notes |
+|---|---|
+| `alert-unique-id` | Empty = create new alert. `A-XXXX` (e.g., `A-2482`) = update that alert. |
+| `alert-title` | Free text. Shown on the management page. |
+| `alert-trigger` | `SUBMIT` = completion or combination trigger (fires on instrument save). `LOGIC` = logic trigger (fires when logic becomes true regardless of save source). |
+| `unique-form-name` | The instrument's variable name (not its display label). Required for `SUBMIT` triggers. |
+| `unique-event-name` | Event unique name (longitudinal projects only). Leave blank for classic projects. |
+| `saved-with-form-status` | `COMPLETE` = fire only when instrument status is Complete. Blank = fire on any save. |
+| `alert-condition` | Branching logic expression. Leave blank if no condition (completion trigger only). |
+| `ensure-logic-still-true` | `Y` / `N`. Re-checks logic immediately before sending. Recommended when a time delay is set. |
+| `alert-stop-type` | `RECORD` = once per record. Other options control per-event or per-instance limits. |
+| `send-on` | `NOW` = immediately. `TIME_LAG` = after a defined delay. `NEXT_DAY` = next occurrence of a day type. `DATE` = specific date/time. |
+| `send-on-time-lag-days` / `send-on-time-lag-hours` / `send-on-time-lag-minutes` | Numeric values defining the delay when `send-on` is `TIME_LAG`. |
+| `alert-send-how-many` | `ONCE` = send a single time. `MULTIPLE` = recurring sends (requires `repeat-for` and `repeat-for-max`). |
+| `alert-type` | `EMAIL` (standard). `SMS` and `VOICE` if enabled on your installation. |
+| `email-from` | Sender email address. Must be associated with a project user account. |
+| `email-to` | Recipient(s). Accepts static addresses, piped variables (e.g., `[contact_email]`), or event-prefixed variables in longitudinal projects (e.g., `[baseline_arm_1][contact_email]`). |
+| `prevent-piping-identifiers` | `Y` = strip identifier field values from the sent message. `N` = allow identifier piping. |
+| `alert-deactivated` | `N` = active. `Y` = deactivated. |
+
 **Pro tip — Mass alert activation after project migration:** When a project is copied or migrated, all alerts are deactivated by default. To re-enable a large number of alerts without clicking through each one individually:
 1. Download the "Alerts (CSV)" file.
 2. In the CSV, find the `alert-deactivated` column. Replace every `Y` with `N` for the alerts you want to activate.
@@ -179,6 +205,10 @@ Both exports can be generated multiple times without restriction.
 ---
 
 # 6. Common Questions
+
+**Q: When I upload an alert CSV, how does REDCap know whether to create a new alert or update an existing one?**
+
+**A:** REDCap uses the `alert-unique-id` column to decide. If that field is empty for a row, REDCap creates a new alert. If it contains a valid ID (in the format `A-XXXX`), REDCap updates the alert with that ID. When bulk-editing, always start by downloading the existing CSV so the IDs are pre-populated — never enter IDs manually, as incorrect IDs will cause import errors.
 
 **Q: How do I re-activate all my alerts after copying or migrating a project?**
 

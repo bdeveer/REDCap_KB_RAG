@@ -25,24 +25,6 @@ These articles are referenced by existing KB articles or skills but do not yet e
 ---
 
 
-### ⚠️ RC-PLUS-01 — REDCap+
-
-**Why needed:** REDCap+ (or REDCap Plus) is an extended offering beyond standard REDCap — no KB article explains what it is, how it differs from standard REDCap, or how to access its features.
-
-**Domain slug:** PLUS (new domain)
-**What to cover:** What REDCap+ is and how it relates to standard REDCap; additional features or modules included; licensing/access model; how to enable or request REDCap+ features; any relevant setup steps in Control Center; differences in user experience compared to standard REDCap
-
-*Note: Content for this article will need to be sourced from institutional documentation or REDCap consortium materials, as REDCap+ specifics may vary by deployment.*
-
----
-
-### ⚠️ RC-LOG-01 — Logging (Project Audit Trail)
-
-**Why needed:** REDCap's Logging module is a key tool for data integrity and regulatory compliance, but no KB article covers it. The API has a dedicated Export Logging endpoint (RC-API) and logging is referenced in passing in several other articles, but there is no user-facing guide to the Logging page itself.
-
-**Domain slug:** LOG (new domain)
-**What to cover:** What the Logging page records (data changes, user logins, form saves, exports, API calls, etc.); how to access Logging (who has permission — typically users with project design rights or admin access); filter options (by user, event, date range, record, instrument); what each log entry shows (timestamp, user, action, record, field, old/new value); log retention and whether entries can be deleted; difference between project-level logging and the Control Center's User Activity Log (RC-CC-12); using logging for audit trail documentation in regulated environments (GCP, 21 CFR Part 11 context); API Export Logging endpoint as an alternative access method
-
 ---
 
 ### ⚠️ RC-DE-13 — Record Administration (Choose Action for Record)
@@ -51,6 +33,15 @@ These articles are referenced by existing KB articles or skills but do not yet e
 
 **Domain slug:** DE (established)
 **What to cover:** Accessing 'Choose action for record' from the Record Home Page, available actions (move record to different DAG, rename/renumber record, delete record, lock/unlock record), who can perform each action (user rights required), consequences and irreversibility of deletion, audit trail behavior after admin actions
+
+---
+
+### ⚠️ RC-NAV-UI-03 — Project Bookmarks
+
+**Why needed:** No existing article covers the project bookmarking feature, which allows users to mark frequently-used projects as bookmarks for quick access from the My Projects page. This is a commonly used navigation convenience feature with no KB coverage.
+
+**Domain slug:** NAV-UI (established)
+**What to cover:** What project bookmarks are and how they differ from the full My Projects list; how to add and remove a bookmark (star/bookmark icon on the My Projects page); where bookmarks appear in the UI (top of My Projects list or dedicated section); behavior when a project is moved to a different status or deleted; whether bookmarks are user-specific or shared; interaction with project search and filtering on the My Projects page; any admin-level considerations
 
 ---
 
@@ -83,6 +74,9 @@ The full RC-CC series is written and on disk:
 - RC-CC-19 — Publication Matching ✅
 - RC-CC-20 — Multi-Language Management ✅
 - RC-CC-21 — Control Center: Overview & Navigation ✅
+- RC-CC-22 — Administrator Project Tools ✅
+- RC-CC-23 — Backup Options ✅
+- RC-CC-24 — Control Center: Edit Project Settings ✅
 
 ### Clinical Data Interoperability Services (RC-CDIS) — new domain
 
@@ -128,7 +122,9 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 ### External Modules (RC-EM) — new domain
 
 - RC-EM-01 — External Modules: Overview & Manager ✅
-- RC-EM-02 — External Modules: Installed Catalog ✅
+- RC-EM-02 — External Modules: Installed Catalog (Production) ✅
+- RC-EM-03 — External Modules: Installed Catalog (Test) ✅
+- RC-EM-04 — External Modules: Installed Catalog (Development) ✅
 
 ### Data Export & Reports (RC-EXPRT) — new domain
 
@@ -157,7 +153,29 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 
 ### Institution-Specific (RC-INST) — new domain
 
-- RC-INST-01 — Institution-Specific Settings & Policies ✅
+- RC-INST-01 — Institution-Specific Settings & Policies (Production) ✅
+- RC-INST-02 — Institution-Specific Settings & Policies (Test) ✅
+- RC-INST-03 — Institution-Specific Settings & Policies (Development) ✅
+
+### Longitudinal (RC-LONG) — expansion
+
+- RC-LONG-03 — Longitudinal Clinical Research Design Patterns ✅
+
+### MCP Server (RC-MCP) — new domain
+
+- RC-MCP-01 — MCP Server Setup and Management ✅
+
+### Operational Use Cases (RC-OPS) — new domain
+
+- RC-OPS-01 — REDCap as an Operational Request Management System ✅
+
+### Send It (RC-SENDIT) — new domain
+
+- RC-SENDIT-01 — Send It: Secure File Transfer ✅
+
+### REDCap Plus (RC-PLUS) — new domain
+
+- RC-PLUS-01 — REDCap+: Overview & Subscription ✅ *(was ⚠️)*
 
 ### Data Import (RC-IMP) — expansion
 
@@ -218,6 +236,12 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 
 ---
 
+### Logging (RC-LOG) — new domain
+
+- RC-LOG-01 — Logging — Project Audit Trail ✅
+
+---
+
 ### Previously tracked (earlier resolved)
 
 - RC-BL-05 — Branching Logic in Longitudinal Projects ✅
@@ -248,4 +272,4 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 - RC-PROJ-02 (ID) is used for "Project Setup Checklist."
 - RC-ALERT-03 was resolved as an alternative alert delivery topic — covered by RC-TXT-01 and RC-TXT-02.
 
-*Last updated: 2026-04-28 — Added RC-LOG-01 Logging/Project Audit Trail (new LOG domain); added RC-FD-12 SQL Field Type (admin); RC-FD-12 Dynamic SQL Field Type written and resolved. Open gaps (5): RC-DE-13, RC-FD-11, RC-LOCK-01, RC-LOG-01, RC-PLUS-01.*
+*Last updated: 2026-05-01 — Full repo audit. RC-PLUS-01 resolved (article exists on disk). New articles logged: RC-CC-22/23/24, RC-EM-03/04, RC-INST-02/03, RC-LONG-03, RC-MCP-01, RC-OPS-01, RC-SENDIT-01. Open gaps (3): RC-DE-13, RC-FD-11, RC-LOCK-01.*

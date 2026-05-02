@@ -188,6 +188,47 @@ This is distinct from relying on REDCap's user rights alone. User rights prevent
 
 **Note:** See Section 5.1 for guidance on what value to check in the reviewer identity field — prefer role-based values over hardcoded personal identifiers.
 
+## 5.4 Always add branching logic to "Other (specify)" free-text fields
+
+**Convention: any free-text field paired with an "Other" choice must have branching logic that hides it when that choice is not selected**
+
+A radio or dropdown field that includes an "Other (specify)" option typically has a companion free-text field for the specified value. Without branching logic on that companion field, it is visible at all times — even when the respondent has not selected "Other." This produces spurious blank fields in the dataset and clutters the form unnecessarily.
+
+The branching logic on the "Other (specify)" field should match the exact code assigned to the "Other" choice in the parent field:
+
+```
+[parent_field] = '666'
+```
+
+Adjust to match whatever code your project assigns to the "Other" choice.
+
+**Do not embed the field name in the choice label as a substitute.** A pattern sometimes seen is writing the companion field name directly in the choice label (e.g., `666, Other — {specify_field}`). REDCap does not parse curly-brace or similar notation in choice labels — the text renders literally and the field remains unconditionally visible. Use standard branching logic on the companion field instead.
+
+**Rationale:** When the free-text field is hidden unless "Other" is selected, a blank value unambiguously means "not applicable." When it is always visible, a blank value is ambiguous — it could mean not applicable, not answered, or overlooked. Branching logic eliminates that ambiguity and keeps forms clean.
+
+## 5.5 Do not mark a field as required when the requirement is conditional
+
+**Convention: if a field is only meaningful based on another field's value, use branching logic to hide it when not applicable — not the "Required" flag**
+
+REDCap's Required flag blocks form completion until the field contains a value. When a required field is always visible but only sometimes relevant, users must enter a placeholder ("N/A", "none", "-") to save the form, which pollutes the dataset and complicates analysis.
+
+Common examples where this pattern causes problems:
+
+- A "Deviation Description" field required on every test case, even when the test result is "Pass" (no deviation exists)
+- A "Modification Approved By" field required on version 1.0 of a document (no modifications have been made)
+- A "Reason for early withdrawal" field required even for participants who completed the study
+
+**Preferred approach:** Use branching logic to show the field only when it is applicable. When a field is hidden by branching logic, REDCap does not enforce the Required constraint — the field is treated as not applicable.
+
+```
+// Show Deviation Description only when the test failed
+[pass_fail] = '0'
+```
+
+If you want to enforce entry without blocking form save, use the inline warning pattern from Section 5.2 instead.
+
+**Rationale:** Required-always fields that are conditionally relevant train users to enter meaningless placeholder values. Branching logic is the correct mechanism for conditional data entry — it keeps the dataset clean and the form free of fields that don't apply in context.
+
 ---
 
 # 6. Repeating Instruments
@@ -217,7 +258,36 @@ Example for a project request instrument:
 
 ---
 
-# 7. Related Articles
+# 7. Field and Form Hygiene
+
+## 7.1 Every field must have a label
+
+**Convention: no field should have a blank field label**
+
+REDCap allows a field to be saved with an empty label, but doing so creates a blank space on the form that gives the respondent no indication of what the field is for. This most commonly happens with companion fields added late in the design process (e.g., a file upload added to hold a generated PDF, or a "specify" text field placed after a radio option).
+
+Check for unlabeled fields before the project goes live. A quick way to audit: export the data dictionary and filter for rows where the `field_label` column is blank (excluding the record ID field, which is legitimately label-free in some configurations).
+
+**Common causes:**
+- Companion "Other (specify)" fields where the designer assumed the parent choice label was sufficient
+- File upload fields added as an afterthought to hold generated outputs or summary documents
+- Descriptive fields used as spacers, left blank intentionally — these should at minimum contain a comment in the Field Annotation documenting their purpose
+
+**Rationale:** Unlabeled fields are confusing to data entry users and future designers alike. They signal an incomplete design and make it hard to distinguish intentional placeholders from accidental omissions.
+
+## 7.2 Audit instrument-event and repeating-instrument settings across all arms
+
+**Convention: when a project has multiple arms, verify that repeating instrument configuration is consistent across all arms that use the same workflow structure**
+
+In a multi-arm project where each arm represents a parallel lifecycle phase or patient cohort with the same event structure, the repeating instrument settings should generally be identical across arms. A common oversight is configuring a repeating instrument in Arms 2–4 while leaving it non-repeating in Arm 1 — because Arm 1 was built first and the repeating configuration was added later without being back-applied.
+
+The result is that one arm has a different data collection capacity than the others: Arm 1 records can only have one instance, while Arms 2–4 records can have many. This inconsistency is difficult to detect from the form UI and only becomes apparent when a user tries to add a second instance in Arm 1 and cannot.
+
+**How to check:** Project Setup → Repeating Instruments and Events → review the list of configured repeating instruments. Each entry shows the event name and arm. Verify that equivalent events in every arm appear in the list if they should repeat.
+
+---
+
+# 8. Related Articles
 
 - RC-FD-08 — Field Alignment and Custom Alignment Codes
 - RC-LONG-01 — Longitudinal Project Setup

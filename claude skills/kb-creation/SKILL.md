@@ -270,5 +270,6 @@ For every article the new article references, find its Per-Article Reference Det
 | PROJ | Project | Covers project lifecycle, setup checklist, and project dashboards |
 | MSG | Messenger | Covers REDCap Messenger: conversations, user roles, notifications, file sharing |
 | CAL | Calendar | Covers the Calendar and Scheduling modules: manual entries, schedule generation, Ad Hoc events, iCal export, visit statuses, logging |
+| LOG | Logging | Project-level audit trail; logging module access, filters, entry anatomy, retention, regulatory compliance context |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.

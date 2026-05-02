@@ -7,7 +7,7 @@ RC-SURV-03
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; some settings (Survey Response PDF Save, Time Limit) require additional project features such as longitudinal mode or the Participant List |
 | **Prerequisite** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-SURV-01 — Surveys – Basics; RC-SURV-02 — Survey Settings: Basic Options & Design; RC-ALERT-01 — Alerts & Notifications: Setup; RC-PIPE-01 — Piping: Basics, Syntax & Field Types; RC-LONG-01 — Longitudinal Project Setup |
@@ -173,6 +173,20 @@ The three submit-related buttons (the mid-survey next/submit button, the final s
 
 > **Note:** If you use the **Multi-Language Module**, custom button text set here only applies to the base language. Labels for other languages must be configured within the Multi-Language Module.
 
+## 3.12 Repeat Survey
+
+When enabled, a **Repeat Survey** button is displayed at the end of the survey, allowing a participant to immediately begin a new, independent completion of the same survey without needing a new link.
+
+Configuration options:
+- **Button text** — customize the label on the repeat button (e.g., "Submit another response"). If left blank, REDCap uses a default label.
+- **Button location** — controls where the button appears:
+  - **Before Submit** — the repeat button is shown on the final survey page, before the participant clicks Submit.
+  - **After Submit** — the repeat button is shown on the completion screen, after the participant has submitted.
+
+Use cases: anonymous polling, suggestion boxes, or any survey designed to collect multiple independent submissions from the same link.
+
+> **Note:** Repeat Survey is distinct from **Modify Completed Response** (Section 4.5). Repeat Survey starts a brand-new response; Modify Completed Response reopens the participant's prior submission for editing. Do not confuse the two — see also Section 7 (Common Mistakes & Gotchas).
+
 ---
 
 # 4. Survey Access
@@ -320,6 +334,9 @@ Survey Expiration sets a single absolute end date and time for the entire survey
 **Q: A participant lost their return code. What are my options?**
 You can look up the return code for a specific record in the Participant List. Alternatively, if lost codes are a recurring support burden, consider disabling the return code requirement — but only do this for non-sensitive surveys.
 
+**Q: Can participants submit the same survey more than once?**
+Yes. Enable **Repeat Survey** in the Survey Customizations section (Section 3.12). A button will appear at the end of the survey allowing the participant to start a new, independent completion immediately. Use **Button Location** to control whether the button appears before or after the participant submits. This is different from **Modify Completed Response** (Section 4.5), which reopens the existing submitted response for editing rather than creating a new one.
+
 **Q: Can I use both a redirect URL and a completion message?**
 No. These two options are mutually exclusive. Configure one or the other.
 
@@ -346,6 +363,10 @@ No — confirmation emails always fire on completion. For conditional emails, us
 
 **Forgetting to set custom numbering after enabling it.** If you enable custom numbering but do not define numbers in the Online Designer or Data Dictionary, the survey will display no question numbers at all. This can surprise participants who expect numbered questions. Define numbers immediately after enabling, or use the auto-numbering option if branching logic has been removed.
 
+**Confusing Repeat Survey with Modify Completed Response.** Both features let a participant "go back to a survey," but they are fundamentally different. Repeat Survey creates a new, independent record response; Modify Completed Response reopens the existing submitted response for editing. For studies where you want one authoritative response per participant that can be updated, use Modify Completed Response. For anonymous or polling surveys where each visit should be a separate submission, use Repeat Survey. Using the wrong one creates either duplicate records or unintended overwrites.
+
+**Child-setting defaults persist in the CSV export even when the parent feature is off.** When you export Survey Settings, fields like `response_limit_include_partials`, `min_responses_view_results`, and `repeat_survey_btn_location` always carry default values regardless of whether their parent feature (response limit, aggregate results, repeat survey) is enabled. If you copy these settings to another project via CSV, those defaults become active if the parent feature is later turned on — without any further configuration needed or expected. This is generally convenient, but verify child settings whenever enabling a feature for the first time on a project that was set up via CSV copy.
+
 ---
 
 ## API Access
@@ -366,3 +387,4 @@ No — confirmation emails always fire on completion. For conditional emails, us
 - RC-PIPE-03 — Smart Variables Overview
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-FD-02 — Online Designer
+- RC-SURV-10 — Survey Login

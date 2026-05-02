@@ -1342,6 +1342,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-API-01 — REDCap API
 - RC-API-42 — Export Survey Return Code API
 - RC-DE-04 — Editing Data & Audit Trail
+- RC-LOG-01 — Logging — Project Audit Trail
 
 ---
 
@@ -2194,6 +2195,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-03 — Longitudinal Projects & DAGs
 - RC-DE-08 — Field Comment Log
 - RC-DE-12 — Data Resolution Workflow
+- RC-LOG-01 — Logging — Project Audit Trail
 
 ---
 
@@ -2997,6 +2999,29 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-LOG-01 — Logging — Project Audit Trail
+
+**Prerequisites:** RC-USER-03 — User Rights: Configuring User Privileges
+
+**Outbound links:**
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-API-39 — Export Logging API
+- RC-CC-12 — Control Center: User Activity Log
+- RC-DE-04 — Editing Data & Audit Trail
+- RC-DE-08 — Field Comment Log
+- RC-DE-12 — Data Resolution Workflow
+- RC-DE-13 — Record Administration ⚠️
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-LOCK-01 — Record Locking & E-Signatures ⚠️
+- RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-USER-03 — User Rights: Configuring User Privileges
+
+**Inbound links (referenced by):**
+- RC-API-39 — Export Logging API
+- RC-DE-04 — Editing Data & Audit Trail
+
+---
+
 ### RC-LONG-01 — Longitudinal Project Setup
 
 **Prerequisites:** RC-FD-01 — Form Design Overview; RC-NAV-UI-01 — Project Navigation UI
@@ -3372,6 +3397,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-15 — Control Center: Top Usage Report
 - RC-CC-16 — Control Center: Database Activity Monitor
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-LOG-01 — Logging — Project Audit Trail
 
 ---
 ### RC-CC-13 — Control Center: User Activity Graphs
@@ -4398,6 +4424,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-PIPE-03 — Smart Variables Overview
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-10 — Survey Login
 
 **Inbound links (referenced by):**
 - RC-API-42 — Export Survey Return Code API
@@ -4569,6 +4596,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-FD-02 — Online Designer
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 
 ---
 
@@ -4708,6 +4736,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
+- RC-LOG-01 — Logging — Project Audit Trail
 
 ---
 
@@ -4925,6 +4954,104 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+
+---
+
+### RC-CC-22 — Administrator Project Tools
+
+**Prerequisites:** RC-CC-21 — Control Center: Overview & Navigation
+
+**Outbound links:**
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-24 — Control Center: Edit Project Settings
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-NAV-UI-02 — Project Menu Reference
+
+**Inbound links (referenced by):**
+*(none)*
+
+---
+
+### RC-OPS-01 — Using REDCap as an Operational Request Management System
+
+**Prerequisites:** RC-FD-01 — Form Design Overview; RC-LONG-02 — Repeated Instruments and Events Setup; RC-SURV-04 — Survey Link Types & Access Methods
+
+**Outbound links:**
+- RC-FD-01 — Form Design Overview
+- RC-LONG-02 — Repeated Instruments and Events Setup
+- RC-SURV-04 — Survey Link Types & Access Methods
+- RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-PROJ-04 — Project Setup: Additional Customizations
+
+**Inbound links (referenced by):**
+*(none)*
+
+---
+
+### RC-PLUS-01 — REDCap+: Overview and Subscription
+
+**Prerequisites:** *(none — entry point article)*
+
+**Outbound links:**
+- RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+
+**Inbound links (referenced by):**
+*(none)*
+
+---
+
+### RC-PROF-01 — My Profile: User Profile Settings
+
+**Prerequisites:** *(none — requires only an active REDCap account)*
+
+**Outbound links:**
+- RC-CC-03 — Control Center: Security & Authentication
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-API-01 — REDCap API
+- RC-MSG-01 — REDCap Messenger
+
+**Inbound links (referenced by):**
+- RC-MSG-01 — REDCap Messenger
+
+---
+
+### RC-PROJ-04 — Project Setup: Additional Customizations
+
+**Prerequisites:** RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Outbound links:**
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-PROJ-02 — Project Setup Checklist
+- RC-DE-08 — Field Comment Log
+- RC-DE-12 — Data Resolution Workflow
+- RC-BL-01 — Branching Logic: Overview & Scope
+- RC-AT-01 — Action Tags: Overview
+- RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-INTG-01 — Data Entry Trigger
+
+**Inbound links (referenced by):**
+- RC-CC-24 — Control Center: Edit Project Settings
+- RC-LOG-01 — Logging & Project Audit Trail
+- RC-LONG-03 — Longitudinal Clinical Research Design Patterns
+- RC-OPS-01 — Using REDCap as an Operational Request Management System
+
+---
+
+### RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+
+**Prerequisites:** RC-PROJ-01 — Project Lifecycle: Status and Settings
+
+**Outbound links:**
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- RC-FD-03 — Data Dictionary
+- RC-IMP-01 — Data Import Overview
+- RC-EXPRT-01 — Data Export: Overview & Workflow
+- RC-SURV-01 — Surveys – Basics
+- RC-USER-01 — User Rights: Overview & Three-Tier Access
+
+**Inbound links (referenced by):**
+*(none)*
 
 ---
 

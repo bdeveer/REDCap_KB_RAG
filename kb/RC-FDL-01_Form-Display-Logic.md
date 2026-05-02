@@ -7,8 +7,8 @@ RC-FDL-01
 | **Domain** | Form Display Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights to configure |
 | **Prerequisite** | RC-BL-02 — Branching Logic: Syntax & Atomic Statements |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-05 |
 | **Author** | See KB-SOURCE-ATTESTATION.md |
 | **Related Topics** | RC-BL-01 — Branching Logic Overview; RC-PIPE-05 — Smart Variables: User; RC-NAV-REC-04 — Record Status Dashboard; RC-SURV-07 — Survey Queue |
 
@@ -217,6 +217,25 @@ The `_complete` field for any instrument is a standard REDCap completion status 
 
 ---
 
+## Example 7: Always-On Baseline (Enroll in FDL Without Restricting)
+
+**Goal:** Include forms in Form Display Logic — for example, to set MyCap task visibility — without actually restricting data entry access. The forms should always be accessible for all saved records.
+
+```
+form_name,event_name,control_condition,apply_to_data_entry,apply_to_survey_autocontinue,apply_to_mycap_tasks
+demographics,,"[record_id]<>""",y,y,n
+contact_info,,"[record_id]<>""",y,y,n
+```
+
+`[record_id]<>""` evaluates to true for every saved record because `record_id` is always populated. This is effectively a permanent-enable condition. It is useful when you want to:
+
+- Enroll a form in Form Display Logic solely to set one flag (here, `apply_to_mycap_tasks=n`) without restricting access in data entry or the survey queue.
+- Establish a baseline entry for a form that you plan to tighten later, without changing the CSV structure at that point.
+
+> **Note:** In the raw CSV export, the empty string literal `""` inside a condition cell is double-escaped to `""""`. Opening the file in Excel or Google Sheets will display it correctly as `[record_id]<>""`, but be aware of this if you are editing the CSV in a plain text editor or scripting against it. See Section 9 for details.
+
+---
+
 # 9. The Form Display Logic CSV
 
 Form Display Logic can be exported as a CSV and re-imported to another project or used for bulk editing. The exported file includes the six columns described in Section 4.
@@ -226,6 +245,8 @@ Form Display Logic can be exported as a CSV and re-imported to another project o
 **Import:** The CSV can be edited in any spreadsheet application and uploaded back into REDCap. This is the fastest way to set up Form Display Logic in a new project that mirrors an existing one.
 
 **One row per form-event-condition combination.** A single form can appear in multiple rows (different events or different conditions). Remember: multiple rows for the same form combine with OR logic — the form is enabled if any condition is true.
+
+**Double-quote escaping in exported CSVs.** REDCap uses `""` (two double-quotes) to represent an empty string in logic conditions, for example `[record_id]<>""`. When REDCap exports this as a CSV, the condition cell is wrapped in outer quotes and the internal `""` is escaped to `""""`, producing: `"[record_id]<>""""`. Spreadsheet applications (Excel, Google Sheets, LibreOffice) handle this transparently and show the correct expression. However, if you open the CSV in a plain text editor or process it with a script, you must account for this escaping — otherwise conditions containing empty string comparisons will appear to have extra quotes or will fail to parse correctly.
 
 ---
 
@@ -274,6 +295,8 @@ Form Display Logic can be exported as a CSV and re-imported to another project o
 **Leaving event_name blank unintentionally.** If `event_name` is blank, the condition applies to all events where the form appears. This is often what you want for a site-wide gate (like consent), but can accidentally disable or enable a form across events you did not intend. Review blank event_name rows carefully.
 
 **Using relative smart variables.** Variables like `[current-instance]`, `[next-event-name]`, or `[previous-event-name]` will not work in Form Display Logic because conditions are evaluated at the record level, not within the context of a specific event or repeating instance.
+
+**Editing the CSV in a plain text editor or script.** Conditions that compare against an empty string (e.g., `[record_id]<>""`) are double-escaped in the raw CSV file: the `""` becomes `""""` inside the quoted cell. If you edit the CSV by hand or process it programmatically, make sure your tool or code handles standard CSV quoting rules. Writing the condition back with the wrong number of quotes will cause the import to fail or the logic to behave unexpectedly.
 
 ---
 
