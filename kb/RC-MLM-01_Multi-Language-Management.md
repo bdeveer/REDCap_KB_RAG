@@ -7,7 +7,7 @@
 | **Domain** | Multi-Language Management |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Prerequisite** | None |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
@@ -87,6 +87,8 @@ The MLM setup page is accessed via **Applications → Multi-Language Management*
 | **From scratch** (not recommended) | No system language or file is available. All translations must be entered manually. Error-prone and time-consuming. |
 
 > **Note:** On some installations, administrators restrict project languages to centrally maintained system languages only. In that case, "Initialize from system languages" will be the only available option.
+
+> **Shared MLM Language Library:** The REDCap Consortium maintains a shared library of community-contributed MLM language files, hosted by Vanderbilt as a REDCap report: [MLM Language Library](https://redcap.vumc.org/surveys/?__report=7LEEXCTLYA7TJDJ3). Download a language's `.json` (or `.csv`/`.ini`) file from there, then load it via the **From a file** initialization method above. This is the fastest way to add a well-translated language without starting from scratch or relying on AI auto-translation.
 
 ### 3.4 Managing Language Settings
 
