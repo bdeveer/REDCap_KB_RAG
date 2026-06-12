@@ -182,6 +182,8 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-IMP-08 | Form Display Logic CSV — Column Reference and Format Guide | RC-IMP-08_Form-Display-Logic-CSV.md |
 | RC-IMP-09 | Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings | RC-IMP-09_Longitudinal-Structure-CSV.md |
 | RC-IMP-10 | Survey Queue CSV — Column Reference and Format Guide | RC-IMP-10_Survey-Queue-CSV.md |
+| RC-INFRA-01 | Self-Hosting a Private REDCap Instance for Development, Testing & Validation | RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md |
+| RC-INFRA-02 | Self-Hosting REDCap on a Synology NAS with Docker Compose | RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md |
 | RC-INTG-01 | Data Entry Trigger | RC-INTG-01_Data-Entry-Trigger.md |
 | RC-LOG-01 | Logging — Project Audit Trail | RC-LOG-01_Logging-Project-Audit-Trail.md |
 | RC-LOCK-01 | Record Locking & E-Signatures | RC-LOCK-01_Record-Locking-and-E-Signatures.md |

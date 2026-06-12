@@ -220,6 +220,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-AI-04 — AI Summarization
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-24 — Control Center: Edit Project Settings
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
 - RC-MCP-01 — REDCap MCP Server: Setup and Management
 
 ---
@@ -3179,6 +3181,39 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 
 ---
 
+### RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
+
+**Prerequisites:** None
+
+**Outbound links:**
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-02 — Control Center: General System Configuration
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-EM-01 — External Modules: Overview & Manager
+- RC-CC-17 — Control Center: Database Query Tool
+
+**Inbound links (referenced by):**
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
+
+---
+
+### RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
+
+**Prerequisites:** RC-INFRA-01 — Self-Hosting a Private REDCap Instance
+
+**Outbound links:**
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-02 — Control Center: General System Configuration
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-CC-17 — Control Center: Database Query Tool
+
+**Inbound links (referenced by):**
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
+
+---
+
 ### RC-INTG-01 — Data Entry Trigger
 
 **Prerequisites:** None
@@ -3430,6 +3465,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-DE-08 — Data Entry: Field Comment Log
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
 - RC-INST-01 — Institution-Specific Settings & Policies
 
 ---
@@ -3524,6 +3561,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DE-06 — Bio-Medical Ontologies
 - RC-DE-07 — Computer Adaptive Tests (CAT)
 - RC-FD-04 — Instrument Library & Zip Files
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
 - RC-INST-01 — Institution-Specific Settings & Policies
 - RC-INTG-01 — Data Entry Trigger
 - RC-MOB-01 — REDCap Mobile App
@@ -3712,6 +3751,8 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-CC-16 — Control Center: Database Activity Monitor
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-FD-12 — Dynamic SQL Field Type
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
 
 ---
 ### RC-CC-18 — Control Center: Custom Application Links
@@ -5153,6 +5194,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-EM-02 — External Modules: Installed Catalog — Production
 - RC-EM-03 — External Modules: Installed Catalog — Test / Staging
 - RC-EM-04 — External Modules: Installed Catalog — Development
+- RC-INFRA-01 — Self-Hosting a Private REDCap Instance
 - RC-INST-01 — Institution-Specific Settings & Policies
 ---
 
