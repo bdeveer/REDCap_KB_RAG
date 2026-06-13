@@ -301,6 +301,9 @@ nav:
     - "Working with Randomization": RC-RAND-03_Working-with-Randomization.md
   - Record Locking & E-Signatures:
     - "Record Locking and E Signatures": RC-LOCK-01_Record-Locking-and-E-Signatures.md
+  - Self-Hosting & Deployment:
+    - "Self-Hosting a Private REDCap Instance": RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md
+    - "Self-Hosting REDCap on a Synology NAS with Docker Compose": RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md
   - Send-It:
     - "Send It Secure File Transfer": RC-SENDIT-01_Send-It-Secure-File-Transfer.md
   - Surveys:
