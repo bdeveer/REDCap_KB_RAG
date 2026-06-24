@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md); [RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md); [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md)|
+| **Synonyms** | control center top usage report; find the most resource-intensive projects; diagnose server performance load by project; which users or pages use the most resources; identify heavy cron jobs or external modules; redcap performance hotspot report; top projects by server load admin; where is server load concentrated |
 
 ---
 

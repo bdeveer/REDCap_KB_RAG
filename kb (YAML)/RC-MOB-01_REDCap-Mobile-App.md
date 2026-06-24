@@ -1,7 +1,34 @@
 ---
 id: RC-MOB-01
 title: REDCap Mobile App
-domain: ''
+domain: Mobile
+applies_to:
+- All REDCap projects
+- requires Mobile App module enabled by administrator
+prerequisites:
+- None
+version: '1.1'
+last_updated: '2026'
+related:
+- id: RC-AT-11
+  title: 'Action Tags: Mobile App Action Tags'
+- id: RC-MYCAP-01
+  title: 'MyCap: Overview & Enabling'
+- id: RC-USER-01
+  title: 'User Rights: Overview & Three-Tier Access'
+- id: RC-CC-06
+  title: 'Control Center: Modules & Services Configuration'
+tags:
+- mobile
+synonyms:
+- how do i enter data offline on a mobile device
+- set up the redcap mobile app for study staff
+- collect data without internet then sync later
+- initialize a project on the mobile app with qr code
+- difference between the redcap mobile app and mycap
+- mobile app api token and initialization code
+- reset a mobile app user pin
+- sync offline records back to the redcap server
 ---
 
 # 1. Overview
@@ -36,7 +63,7 @@ A device-level credential created by the Mobile App Admin. Each user has a uniqu
 
 ## App Username
 
-The username a mobile user enters when logging into the app. This may differ from the user's REDCap server username. The action tag `@APPUSERNAME-APP` captures the app username at the time of data entry (see RC-AT-11).
+The username a mobile user enters when logging into the app. This may differ from the user's REDCap server username. The action tag `@APPUSERNAME-APP` captures the app username at the time of data entry (see [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)).
 
 ## Initialize (a project)
 
@@ -71,7 +98,7 @@ The REDCap Mobile App is one of three primary data collection interfaces in REDC
 | Supports active tasks | No | Yes | No |
 | Longitudinal projects | Yes | Yes | Yes |
 
-Use the REDCap Mobile App when study staff need to collect data in person at a location with unreliable or no internet (e.g., a bedside interview, a field visit, a health fair, a rural community site). Use MyCap when participants will complete assessments on their own devices over time. Use browser-based entry for all other scenarios. See RC-MYCAP-01 — MyCap: Overview & Enabling for a detailed comparison of MyCap and the Mobile App.
+Use the REDCap Mobile App when study staff need to collect data in person at a location with unreliable or no internet (e.g., a bedside interview, a field visit, a health fair, a rural community site). Use MyCap when participants will complete assessments on their own devices over time. Use browser-based entry for all other scenarios. See [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) for a detailed comparison of MyCap and the Mobile App.
 
 ---
 
@@ -87,7 +114,7 @@ The following REDCap features work in the Mobile App:
 - Photo capture via the device camera; photos can be synced to the server
 - File Upload fields (upload only; downloaded file content is limited — see 4.2)
 - Signature fields (downloaded to app for viewing when `@SYNC-APP` is applied)
-- Action tags (including mobile-specific tags — see RC-AT-11)
+- Action tags (including mobile-specific tags — see [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md))
 - Repeating instruments and repeating events
 - Longitudinal projects (arm and event selection during data entry)
 - Multi-device setups (multiple devices can access the same project simultaneously)
@@ -118,7 +145,7 @@ Before any project can use the REDCap Mobile App, a REDCap administrator must en
 
 ## 5.1 Enable the Mobile App Module
 
-A REDCap administrator enables the Mobile App module in the REDCap Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). Once enabled, the module becomes available to all projects on the server.
+A REDCap administrator enables the Mobile App module in the REDCap Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). Once enabled, the module becomes available to all projects on the server.
 
 > **Institution-specific:** Whether the Mobile App module is already enabled and whether projects require administrator approval or a request form before use varies by installation. Contact your REDCap administrator to confirm.
 
@@ -324,7 +351,7 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 
 **Q: What is the difference between the REDCap Mobile App and MyCap?**
 
-**A:** The REDCap Mobile App is for study team members. It requires a REDCap login and API token and is installed on study team–owned devices for offline staff data entry at the point of care. MyCap is for research participants. It is installed on the participant's personal device and designed for repeated, participant-reported data collection over time. They serve different audiences and different workflows. See RC-MYCAP-01 — MyCap: Overview & Enabling for a detailed comparison.
+**A:** The REDCap Mobile App is for study team members. It requires a REDCap login and API token and is installed on study team–owned devices for offline staff data entry at the point of care. MyCap is for research participants. It is installed on the participant's personal device and designed for repeated, participant-reported data collection over time. They serve different audiences and different workflows. See [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) for a detailed comparison.
 
 **Q: How does a user add their project to the app?**
 
@@ -384,11 +411,11 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 
 # 15. Related Articles
 
-- RC-AT-11 — Action Tags: Mobile App Action Tags (`@APPUSERNAME-APP`, `@BARCODE-APP`, `@SYNC-APP`, `@HIDDEN-APP`, `@READONLY-APP`)
-- RC-MYCAP-01 — MyCap: Overview & Enabling (participant-facing mobile app; MyCap vs. REDCap Mobile App comparison)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-USER-02 — User Rights: Adding Users & Managing Roles
-- RC-PROJ-01 — Project Lifecycle: Status and Settings
-- RC-NAV-UI-01 — Project Navigation UI
-- RC-DAG-01 — Data Access Groups (DAG support in the Mobile App mirrors the user's server-side DAG assignment)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level Mobile App enable/disable and server-wide settings)
+- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) (`@APPUSERNAME-APP`, `@BARCODE-APP`, `@SYNC-APP`, `@HIDDEN-APP`, `@READONLY-APP`)
+- [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) (participant-facing mobile app; MyCap vs. REDCap Mobile App comparison)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG support in the Mobile App mirrors the user's server-side DAG assignment)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level Mobile App enable/disable and server-wide settings)

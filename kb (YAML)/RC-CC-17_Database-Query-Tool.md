@@ -10,11 +10,20 @@ version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-CC-16
-  title: Database Activity Monitor
+  title: 'Control Center: Database Activity Monitor'
 - id: RC-CC-15
-  title: Top Usage Report
+  title: 'Control Center: Top Usage Report'
 tags:
 - control center (admin)
+synonyms:
+- control center database query tool
+- run read-only sql against the redcap database
+- query redcap mysql from the browser
+- ad-hoc sql lookups for troubleshooting
+- which sql statements are allowed in the query tool
+- investigate data with a database query
+- admin sql query interface redcap
+- read-only database access without command line
 ---
 
 # 1. Overview
@@ -157,8 +166,8 @@ This tool requires super-user administrator access. Because it provides direct d
 
 # 10. Related Tools
 
-- **Database Activity Monitor (RC-CC-16)** — to see real-time database processes and identify long-running queries
-- **Top Usage Report (RC-CC-15)** — for pre-built usage statistics and analytics
+- **Database Activity Monitor ([RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md))** — to see real-time database processes and identify long-running queries
+- **Top Usage Report ([RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md))** — for pre-built usage statistics and analytics
 
 ---
 
@@ -196,6 +205,6 @@ The Database Query Tool displays results in a table on the page. You can select 
 
 # 13. Related Articles
 
-- RC-CC-16 — Database Activity Monitor
-- RC-CC-15 — Top Usage Report
-- RC-CC-21 — Control Center Overview
+- [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md)
+- [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md)

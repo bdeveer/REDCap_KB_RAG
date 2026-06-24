@@ -21,6 +21,14 @@ related:
   title: Working with & Managing Randomization
 tags:
 - api
+synonyms:
+- randomize record api method
+- how do i randomize a record via the api
+- api call to trigger randomization for a record
+- programmatically randomize an existing record with the api
+- api method to perform randomization through the api
+- randomize a participant by record id using the api
+- assign randomization allocation via the api
 ---
 
 # 1. Overview
@@ -158,7 +166,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -217,7 +225,7 @@ On failure, an error message is returned in the requested `returnFormat`. Common
 
 **Q: Does the record need to already exist before I call this method?**
 
-**A:** Yes. The record must already exist in REDCap and all stratification fields for the selected randomization must be populated. Use the Import Records API (RC-API-03) to create the record first if it does not exist.
+**A:** Yes. The record must already exist in REDCap and all stratification fields for the selected randomization must be populated. Use the Import Records API ([RC-API-03 — Import Records API](RC-API-03_Import-Records.md)) to create the record first if it does not exist.
 
 ---
 
@@ -237,7 +245,7 @@ On failure, an error message is returned in the requested `returnFormat`. Common
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-RAND-01 — Randomization Concepts & Terminology (allocation tables, concealment, stratification)
-- RC-RAND-02 — Randomization Setup Guide (how to configure randomization definitions and find the randomization_id)
-- RC-RAND-03 — Working with & Managing Randomization (manual randomization workflow; reverting randomizations)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) (allocation tables, concealment, stratification)
+- [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) (how to configure randomization definitions and find the randomization_id)
+- [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md) (manual randomization workflow; reverting randomizations)

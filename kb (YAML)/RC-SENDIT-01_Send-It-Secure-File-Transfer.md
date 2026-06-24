@@ -15,6 +15,15 @@ related:
   title: 'Control Center: File Storage & Upload Settings'
 tags:
 - send-it
+synonyms:
+- how do i send a large file securely in redcap
+- share a file too big to email
+- send sensitive files with a password protected link
+- transfer files to people without a redcap account
+- secure file sharing tool in redcap
+- send-it download link expiration
+- email a secure download link
+- how to use send-it
 ---
 
 # 1. Overview
@@ -162,6 +171,6 @@ File upload size limits and blocked file types are configurable at the system le
 
 # 10. Related Articles
 
-- RC-MSG-01 — REDCap Messenger (for secure messaging between REDCap users within the platform)
-- RC-CC-05 — Control Center: File Storage & Upload Settings (for administrator-level file upload configuration)
-- RC-CC-06 — Control Center: Modules & Services Configuration (where Send-It is enabled/disabled)
+- [RC-MSG-01 — REDCap Messenger](RC-MSG-01_REDCap-Messenger.md) (for secure messaging between REDCap users within the platform)
+- [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md) (for administrator-level file upload configuration)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (where Send-It is enabled/disabled)

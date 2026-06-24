@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) |
+| **Synonyms** | how do i import automated survey invitations via csv; bulk edit asi schedules in a spreadsheet; copy automated survey invitation setup to another project; asi csv column reference and format; upload survey invitation configurations csv; form_name and event_name key for asi import; duplicate complex invitation schedules across projects; 32-column asi import file structure |
 
 ---
 

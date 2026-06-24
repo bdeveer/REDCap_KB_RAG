@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) |
+| **Synonyms** | how do i enable texting across the whole installation; connect twilio to redcap as an administrator; system level sms configuration; set texting permission levels for users; control who can use texting in projects; configure mosio in the control center; admin setup for redcap sms; enable texting system-wide |
 
 ---
 

@@ -12,6 +12,7 @@
 | Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Source | REDCap API v16.1.3 official documentation examples |
 | Related Topics | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)|
+| Synonyms | how do i export the list of instruments via the api; export instruments api call; get all form names through the api; api method to list project instruments; discover instrument names programmatically; retrieve the forms in a project via api; api endpoint to export instrument list; list data collection forms using the api |
 
 ---
 

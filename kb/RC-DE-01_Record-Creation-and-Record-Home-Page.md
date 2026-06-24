@@ -11,6 +11,7 @@
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
+| **Synonyms** | how do i create a new record in redcap; add a new participant or record; use the add edit records page; what is the record home page; how does redcap assign a record id; navigate to an existing record; create record data entry; find a record by its id |
 
 ---
 

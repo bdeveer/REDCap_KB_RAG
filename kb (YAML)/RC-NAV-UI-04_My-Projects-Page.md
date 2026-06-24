@@ -19,6 +19,15 @@ related:
   title: Project Bookmarks
 tags:
 - navigation — ui
+synonyms:
+- where is the list of all my projects
+- how to find a project after logging in
+- organize my projects into folders
+- search and sort my project list
+- the landing page after i log into redcap
+- how to access a project i have rights to
+- my projects page features
+- managing many redcap projects
 ---
 
 # 1. Overview
@@ -108,13 +117,13 @@ REDCap includes a built-in special folder called **My Hidden Projects**. Its beh
 
 Projects in **Completed** status are hidden from the main My Projects list. To access them, scroll to the bottom of the My Projects page and click **"Show Completed Projects."** This reveals all projects in Completed status that you were a member of.
 
-Only a REDCap administrator can change a project's status once it reaches Completed. See RC-PROJ-01 — Project Lifecycle: Status and Settings for full details on project statuses and transitions.
+Only a REDCap administrator can change a project's status once it reaches Completed. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details on project statuses and transitions.
 
 ---
 
 # 6. Creating a New Project
 
-The **New Project** link in the top navigation bar (green, with a plus icon) opens the project creation workflow. Depending on your institution's configuration, this may be a direct creation form or a request form that goes to an administrator for approval. See RC-PROJ-01 for how project creation rights are configured.
+The **New Project** link in the top navigation bar (green, with a plus icon) opens the project creation workflow. Depending on your institution's configuration, this may be a direct creation form or a request form that goes to an administrator for approval. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for how project creation rights are configured.
 
 ---
 
@@ -164,7 +173,7 @@ On narrow screens (phones and small tablets), the tabular project grid is replac
 
 # 9. Related Articles
 
-- RC-PROJ-01 — Project Lifecycle: Status and Settings (project statuses, Completed status, creating and deleting projects)
-- RC-NAV-UI-01 — Project Navigation UI (the two-panel layout inside a project)
-- RC-NAV-UI-02 — Project Menu Reference (the left-hand project menu)
-- RC-NAV-UI-03 — Project Bookmarks (bookmarking specific pages within a project)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, Completed status, creating and deleting projects)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (the two-panel layout inside a project)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the left-hand project menu)
+- [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md) (bookmarking specific pages within a project)

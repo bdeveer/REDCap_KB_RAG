@@ -10,11 +10,20 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-MYCAP-02
-  title: Designing Instruments for MyCap
+  title: 'MyCap: Designing Instruments for MyCap'
 - id: RC-MYCAP-04
-  title: Participant Onboarding
+  title: 'MyCap: Participant Onboarding'
 tags:
 - mycap mobile app
+synonyms:
+- how do i customize the mycap app appearance
+- set up about pages contacts and links in mycap
+- change the mycap app theme and notifications
+- track which participants have joined mycap
+- send messages and announcements to mycap participants
+- troubleshoot mycap sync issues
+- mycap participant management hub
+- brand the mycap app for my study
 ---
 
 # 1. Overview
@@ -159,7 +168,7 @@ From Participant Management, you can view whether a participant has joined. For 
 - Copy or resend the App Link from their row.
 - Display or download their QR code.
 
-For automated invitation workflows, see RC-MYCAP-04 — Participant Onboarding.
+For automated invitation workflows, see [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md) — Participant Onboarding.
 
 ## 5.3 Sending Messages
 
@@ -260,8 +269,8 @@ If a participant's data fails to sync correctly, a sync issue flag appears in th
 
 # 8. Related Articles
 
-- RC-MYCAP-01 — MyCap: Overview & Enabling
-- RC-MYCAP-02 — Designing Instruments for MyCap (publishing workflow)
-- RC-MYCAP-04 — Participant Onboarding (invitation and joining methods)
-- RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links
-- RC-MYCAP-08 — Testing MyCap (testing App Settings and notifications)
+- [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md)
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(publishing workflow)
+- [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md)(invitation and joining methods)
+- [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)(testing App Settings and notifications)

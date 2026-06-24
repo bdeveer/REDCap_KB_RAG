@@ -13,13 +13,21 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-55
-  title: Export User-Role Assignments
+  title: Export User-Role Assignments API
 - id: RC-API-25
-  title: Export User Roles
+  title: Export User Roles API
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
 tags:
 - api
+synonyms:
+- import user-role assignments api method
+- how do i assign users to roles via the api
+- api call to map users to user roles
+- bulk assign or remove users from roles through the api
+- programmatically set user-role assignments with the api
+- api method to remove a user from a role
+- import user to role mappings via api
 ---
 
 # 1. Overview
@@ -216,7 +224,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -246,11 +254,11 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 **Q: How do I find the `unique_role_name` for a role?**
 
-**A:** Use the Export User Roles method (RC-API-25) to retrieve all role definitions and their system IDs.
+**A:** Use the Export User Roles method ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) to retrieve all role definitions and their system IDs.
 
 **Q: How do I know what role a user is currently in before modifying their assignment?**
 
-**A:** Use Export User-Role Assignments (RC-API-55) to retrieve the current state before making changes.
+**A:** Use Export User-Role Assignments ([RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)) to retrieve the current state before making changes.
 
 ---
 
@@ -262,7 +270,7 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 **Using `role_label` instead of `unique_role_name`.** The `unique_role_name` is the system ID (e.g., `U-2119C4Y87T`), not the human-readable label (e.g., `'Data Entry Person'`). Export roles first to get the correct IDs.
 
-**Assigning a user to a role they don't have access to.** The user must already exist in the project. This method assigns role templates; it does not add new users. Use Import Users (RC-API-23) first if the user isn't yet in the project.
+**Assigning a user to a role they don't have access to.** The user must already exist in the project. This method assigns role templates; it does not add new users. Use Import Users ([RC-API-23 — Import Users API](RC-API-23_Import-Users.md)) first if the user isn't yet in the project.
 
 **Forgetting the User Rights permission.** This method requires both API Import and User Rights rights. A token with only API Import will fail.
 
@@ -270,10 +278,10 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-API-55 — Export User-Role Assignments (retrieve current assignments before modifying them)
-- RC-API-25 — Export User Roles (get role definitions and their `unique_role_name` IDs)
-- RC-API-26 — Import User Roles (create or update role definitions)
-- RC-API-23 — Import Users (add users to the project before assigning roles)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (conceptual overview of roles and assignments)
-- RC-DAG-01 — Data Access Groups (background on DAGs if using the `data_access_group` field)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)(retrieve current assignments before modifying them)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(get role definitions and their `unique_role_name` IDs)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(create or update role definitions)
+- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md)(add users to the project before assigning roles)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (conceptual overview of roles and assignments)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAGs if using the `data_access_group` field)

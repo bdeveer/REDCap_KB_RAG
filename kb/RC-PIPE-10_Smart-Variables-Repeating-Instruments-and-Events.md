@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) |
+| **Synonyms** | [current-instance] smart variable; how to reference the current repeat instance with [current-instance]; repeating instance smart variables like [first-instance] and [last-instance]; [next-instance] [previous-instance] and [new-instance] piping; [instance-qualifier] for repeating instruments; how to number rows in a repeating instrument or event; pipe a value from a specific repeat instance; smart variables for repeating forms and repeating events |
 
 ---
 

@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
+| **Synonyms** | how do i export field names via the api; export field names api call; get checkbox export field names through the api; api method to list export import variable names; find the field___value names for checkboxes via api; retrieve export-specific field names with the api; map field names for export and import using api; api endpoint for field name list |
 
 ---
 

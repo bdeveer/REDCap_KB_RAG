@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Synonyms** | export logging api method; how do i export the audit trail via the api; api call to get project activity log; retrieve logging records through the api; export redcap audit log using the api; api method to query log entries by type or date; download project logs for compliance via api; programmatically pull the logging history with the api |
 
 ---
 

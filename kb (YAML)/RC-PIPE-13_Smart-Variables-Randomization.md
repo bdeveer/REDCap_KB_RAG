@@ -12,9 +12,18 @@ related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 tags:
 - piping
+synonyms:
+- '[rand-number] smart variable'
+- how to pipe a randomization number with [rand-number]
+- randomization smart variables for the time randomized [rand-time]
+- '[rand-utc-time] randomization timestamp smart variable'
+- show when a record was randomized using [rand-time:value]
+- reference a specific randomization model with [rand-number:n]
+- pipe the randomization assignment time into a field or email
+- randomization-related smart variables
 ---
 
 # 1. Overview
@@ -168,6 +177,6 @@ If a record has not been randomized, all randomization smart variables return bl
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (timestamp formats and modifiers)
-- RC-AT-08 — Action Tags: Conditional IF (using randomization smart variables in conditional logic)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(timestamp formats and modifiers)
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md)(using randomization smart variables in conditional logic)

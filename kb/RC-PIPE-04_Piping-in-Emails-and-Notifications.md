@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
+| **Synonyms** | how to personalize an alert email with piped data; piping participant data into notifications; using piping inside branching logic and action tags; how to pipe a survey link into an email; pre-fill a field using piping; inserting record values into outgoing messages; piping smart variable links into emails; dynamic email content with piping |
 
 ---
 

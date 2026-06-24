@@ -5,18 +5,27 @@ domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
 prerequisites:
-- RC-MYCAP-02 — Designing Instruments for MyCap
+- 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-MYCAP-01
   title: 'MyCap: Overview & Enabling'
 - id: RC-MYCAP-06
-  title: Active Tasks & Mobile Toolbox
+  title: 'MyCap: Active Tasks & Mobile Toolbox'
 - id: RC-LONG-01
   title: Longitudinal Project Setup
 tags:
 - mycap mobile app
+synonyms:
+- how do i set up mycap task scheduling
+- control when tasks appear in the mycap app
+- one-time repeating and fixed schedule types
+- anchor tasks to install date or baseline date
+- delay onset and end conditions for mycap tasks
+- schedule tasks in a longitudinal mycap project
+- why isn't a mycap task showing up on schedule
+- mycap schedule reference date
 ---
 
 # 1. Overview
@@ -29,7 +38,7 @@ This article covers how to configure the schedule that controls when MyCap tasks
 
 **Schedule Reference Date**
 
-The anchor date used to calculate when tasks appear. By default, this is the participant's **install date** (when they first joined the project in the app). If the project uses a baseline date, tasks can be scheduled relative to that date instead. See RC-MYCAP-02 — Designing Instruments for MyCap for baseline date configuration.
+The anchor date used to calculate when tasks appear. By default, this is the participant's **install date** (when they first joined the project in the app). If the project uses a baseline date, tasks can be scheduled relative to that date instead. See [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md) — Designing Instruments for MyCap for baseline date configuration.
 
 **Install Date**
 
@@ -37,7 +46,7 @@ The date and time a participant first joins the MyCap project on their device. T
 
 **Baseline Date**
 
-An optional study-defined reference date (e.g., surgery date, enrollment date). When configured, tasks can be anchored to this date rather than the install date. See RC-MYCAP-02 for setup.
+An optional study-defined reference date (e.g., surgery date, enrollment date). When configured, tasks can be anchored to this date rather than the install date. See [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md) for setup.
 
 **Delay Onset**
 
@@ -49,7 +58,7 @@ A rule that determines when a repeating task stops appearing. Options include: a
 
 **Task Notification**
 
-A push notification sent to the participant's device when a new task becomes available. Notifications are sent at 8:00 AM local device time by default. The notification time can be changed in App Settings (see RC-MYCAP-05).
+A push notification sent to the participant's device when a new task becomes available. Notifications are sent at 8:00 AM local device time by default. The notification time can be changed in App Settings (see [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)).
 
 **Overdue Task**
 
@@ -57,11 +66,11 @@ A task whose scheduled window has closed without being completed. Overdue tasks 
 
 **Active Task**
 
-A sensor-based assessment built into MyCap (e.g., Tapping Speed, Tone Audiometry). Active Tasks are scheduled using the same schedule types as instrument-based tasks but are set up differently. See RC-MYCAP-06 — Active Tasks & Mobile Toolbox.
+A sensor-based assessment built into MyCap (e.g., Tapping Speed, Tone Audiometry). Active Tasks are scheduled using the same schedule types as instrument-based tasks but are set up differently. See [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md) — Active Tasks & Mobile Toolbox.
 
 **Mobile Toolbox (MTB)**
 
-Cognitive assessment tasks provided by the NIH Toolbox, available in MyCap as of REDCap v14.3.8. MTB tasks are scheduled like standard instruments. See RC-MYCAP-06 for details.
+Cognitive assessment tasks provided by the NIH Toolbox, available in MyCap as of REDCap v14.3.8. MTB tasks are scheduled like standard instruments. See [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md) for details.
 
 ---
 
@@ -149,7 +158,7 @@ For Repeating schedules, you must specify when the task stops recurring:
 When a new task instance becomes available (i.e., the schedule window opens), MyCap sends a push notification to the participant's device.
 
 - Notifications are sent at **8:00 AM local device time** by default.
-- The notification time can be changed in App Settings (see RC-MYCAP-05 — App Settings & Participant Management).
+- The notification time can be changed in App Settings (see [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)
 - Notifications are not sent retroactively if the participant has not opened the app — the task will appear the next time they open the app, but no additional notification is sent for overdue tasks.
 - MLM (Multi-Language Management) does not affect notification content independently — notification text is not translated separately.
 
@@ -165,7 +174,7 @@ For standard (non-longitudinal) projects:
 4. Configure the schedule-specific settings (delay, frequency, end condition).
 5. Optionally set whether to schedule relative to the **install date** or **baseline date** (if baseline date is configured on the project).
 6. Click **Save**.
-7. After all schedules are set, **Publish** the project (see RC-MYCAP-02 — Designing Instruments for MyCap, Section 8).
+7. After all schedules are set, **Publish** the project (see [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)
 
 ---
 
@@ -195,7 +204,7 @@ Active Tasks (sensor-based assessments) must be designated to events on the inst
 
 Active Tasks (motor, cognition, speech, hearing assessments) and Mobile Toolbox (MTB) tasks are scheduled using the same four schedule types as instrument-based tasks. The schedule setup for Active Tasks is found in the **Active Tasks** tab within MyCap, not in the instrument schedule table.
 
-For full details on Active Task types and configuration, see RC-MYCAP-06 — Active Tasks & Mobile Toolbox.
+For full details on Active Task types and configuration, see [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md) — Active Tasks & Mobile Toolbox.
 
 For MTB tasks, REDCap v14.3.8 or later is required. MTB tasks appear in the same Active Tasks scheduling interface.
 
@@ -249,10 +258,10 @@ For MTB tasks, REDCap v14.3.8 or later is required. MTB tasks appear in the same
 
 # 12. Related Articles
 
-- RC-MYCAP-02 — Designing Instruments for MyCap (baseline date setup, publishing)
-- RC-MYCAP-05 — App Settings & Participant Management (notification time settings)
-- RC-MYCAP-06 — Active Tasks & Mobile Toolbox
-- RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links (Form Display Logic with scheduling considerations)
-- RC-MYCAP-08 — Testing MyCap (schedule testing workflow)
-- RC-LONG-01 — Longitudinal Project Setup
-- RC-LONG-02 — Repeated Instruments & Events Setup
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(baseline date setup, publishing)
+- [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)(notification time settings)
+- [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md)
+- [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)(Form Display Logic with scheduling considerations)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)(schedule testing workflow)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)

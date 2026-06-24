@@ -13,11 +13,20 @@ related:
   title: 'Texting in REDCap: Setup and Usage'
 tags:
 - texting (sms)
+synonyms:
+- how do i enable texting across the whole installation
+- connect twilio to redcap as an administrator
+- system level sms configuration
+- set texting permission levels for users
+- control who can use texting in projects
+- configure mosio in the control center
+- admin setup for redcap sms
+- enable texting system-wide
 ---
 
 # 1. Overview
 
-This article covers the system-level configuration that a REDCap administrator must complete before any project can use texting. It explains how to connect Twilio or Mosio to the REDCap installation, how to control which users can enable texting in their projects, and how to verify that the required phone validation types are present. Project-level setup (enabling and configuring texting within an individual project) is covered in RC-TXT-01 — Texting in REDCap: Setup and Usage.
+This article covers the system-level configuration that a REDCap administrator must complete before any project can use texting. It explains how to connect Twilio or Mosio to the REDCap installation, how to control which users can enable texting in their projects, and how to verify that the required phone validation types are present. Project-level setup (enabling and configuring texting within an individual project) is covered in [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md).
 
 > **Required permissions:** You must have REDCap administrator access and the ability to "Modify system configuration pages" in the Control Center to perform any steps in this article.
 
@@ -155,4 +164,4 @@ The Test button checks network connectivity to the provider's API only. It does 
 
 # 8. Related Articles
 
-- RC-TXT-01 — Texting in REDCap: Setup and Usage
+- [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md)

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-06 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md) |
+| **Synonyms** | where is the list of all my projects; how to find a project after logging in; organize my projects into folders; search and sort my project list; the landing page after i log into redcap; how to access a project i have rights to; my projects page features; managing many redcap projects |
 
 ---
 

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF |
+| **Synonyms** | how do i hide the save button on a form; hide submit button on a survey; prevent saving unless a condition is met; hidesubmit action tag external module; conditionally disable form submission; stop users from submitting incomplete forms; block save button with branching logic; action tags to hide save and submit buttons |
 
 ---
 

@@ -11,6 +11,7 @@
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) |
+| **Synonyms** | how do i edit data that was already saved; view the change history for a field; audit trail for editing data; who changed this value and when; edit data that came in from a survey; see the full history of data changes; modify previously entered data; field-level audit trail data entry |
 
 ---
 

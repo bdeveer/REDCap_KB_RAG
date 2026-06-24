@@ -16,6 +16,15 @@ related:
     RC-API-01 — REDCap API'
 tags:
 - project navigation
+synonyms:
+- how to add a bookmark to the project menu
+- create a custom link in the left-hand menu
+- how to link to an external website from redcap
+- restrict a bookmark to certain users or dags
+- pass the current record id to a bookmark url
+- adding navigation shortcuts to a project
+- how to link between related redcap projects
+- custom menu links for project managers
 ---
 
 # 1. Overview
@@ -159,10 +168,10 @@ Yes. When setting User Access to "Selected users," you can choose specific users
 
 # 7. Related Articles
 
-- RC-NAV-UI-01 — Project Navigation UI
-- RC-NAV-UI-02 — Project Menu Reference
-- RC-PROJ-01 — Project Lifecycle: Status and Settings
-- RC-PROJ-04 — Project Setup: Additional Customizations
-- RC-DAG-01 — Data Access Groups
-- RC-PIPE-03 — Smart Variables Overview
-- RC-API-01 — REDCap API
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)
+- [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)

@@ -11,6 +11,7 @@
 | Version | 1.0 |
 | Last Updated | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
+| **Synonyms** | which external modules are on the test instance; list of installed modules on test or staging; is this module available for evaluation on test; modules installed on the staging server; test instance module catalog; what modules can i try out before production; modules that differ between test and production; available modules on the staging environment |
 | Related Topics | [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md); [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md)|
 
 ---

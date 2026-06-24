@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md)|
+| **Synonyms** | control center system statistics page; how many projects and users on the instance; redcap usage and infrastructure snapshot; export system statistics to csv; instance configuration and usage counts; where do i see total record or project counts; system-wide statistics dashboard admin; redcap server stats overview |
 
 ---
 

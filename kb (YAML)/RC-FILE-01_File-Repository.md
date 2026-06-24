@@ -11,20 +11,31 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-USER-01
-  title: User Rights Overview
+  title: 'User Rights: Overview & Three-Tier Access'
 - id: RC-USER-03
-  title: Configuring User Privileges
+  title: 'User Rights: Configuring User Privileges'
 - id: RC-DAG-01
   title: Data Access Groups
 - id: RC-SURV-08
-  title: e-Consent Framework
+  title: 'e-Consent Framework: Setup & Management — e-Consent Framework'
 - id: RC-SENDIT-01
-  title: Send-It Secure File Transfer
+  title: 'Send-It: Secure File Transfer'
 - id: RC-EXPRT-01
-  title: Data Export Overview
-- note: RC-API-45 through RC-API-49 — File Repository API
+  title: 'Data Export: Overview & Workflow'
+- id: RC-API-45
+  title: Create Folder (File Repository) API through RC-API-49 — Delete a File (File
+    Repository) API
 tags:
 - file repository
+synonyms:
+- where do i store project files in redcap
+- upload and share files with my team
+- create folders in the file repository
+- restrict file access by dag or role
+- recover a deleted file from the recycle bin
+- file repository vs file upload field
+- find exported data files and econsent pdfs
+- how to use the file repository
 ---
 
 # 1. Overview
@@ -47,8 +58,8 @@ Folders and subfolders created manually by project users or administrators to or
 
 A set of automatically managed folders that REDCap maintains for its own purposes. Files in these folders do not count against the project's storage quota:
 
-- **Data Export Files** — Every data export run from the project is saved here automatically. Users can re-download any previous export without re-running it. See RC-EXPRT-01.
-- **e-Consent PDFs** — Signed consent documents are stored here automatically when the e-Consent Framework is in use. See RC-SURV-08.
+- **Data Export Files** — Every data export run from the project is saved here automatically. Users can re-download any previous export without re-running it. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
+- **e-Consent PDFs** — Signed consent documents are stored here automatically when the e-Consent Framework is in use. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 - **Miscellaneous File Attachments** — Files uploaded via the rich text editor anywhere in the project (field labels, survey invitations, project dashboards, etc.) are auto-stored here with publicly accessible download links. Anyone with the link can download these files without logging in to REDCap — PHI or other sensitive content should never be uploaded through the rich text editor.
 - **Recycle Bin** — Deleted files are held here for up to 30 days, after which they are permanently deleted. Files can be restored during this window.
 
@@ -66,7 +77,7 @@ Projects may have a maximum storage limit set by administrators. The storage met
 
 Navigate to the project and select **File Repository** from the left-hand Applications menu. Users must have the **File Repository** user right to see this item — users without it cannot access the module at all.
 
-> **See also:** RC-USER-03 — Configuring User Privileges for details on granting the File Repository right.
+> **See also:** [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) — Configuring User Privileges for details on granting the File Repository right.
 
 ---
 
@@ -86,7 +97,7 @@ The following actions are available per file:
 | **Rename** | Change the filename. The file extension cannot be changed after upload. |
 | **Edit comment** | Add or update a free-text comment visible in the file listing. |
 | **Move** | Relocate the file to a different folder — individually or in bulk. |
-| **Share** | Generate a secure download link via Send-It. See RC-SENDIT-01. |
+| **Share** | Generate a secure download link via Send-It. See [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md). |
 | **Delete** | Moves the file to the Recycle Bin. If the file is linked elsewhere in the project (field label, survey invitation, dashboard), its download link becomes dead — REDCap warns before confirming. |
 
 **Bulk operations:** Use checkboxes to select multiple files and delete, move, or download them together. Folders cannot be bulk-deleted — they must be deleted individually.
@@ -105,8 +116,8 @@ The following actions are available per file:
 
 When creating a folder, three optional restrictions can be applied:
 
-- **Limit by Data Access Group** — Only users in the specified DAG can see this folder. Useful for multi-site studies where sites should not see each other's files. See RC-DAG-01.
-- **Limit by User Role** — Only users assigned to the specified role can access the folder. Useful for restricting sensitive documents to specific team members. See RC-USER-01 and RC-USER-02.
+- **Limit by Data Access Group** — Only users in the specified DAG can see this folder. Useful for multi-site studies where sites should not see each other's files. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
+- **Limit by User Role** — Only users assigned to the specified role can access the folder. Useful for restricting sensitive documents to specific team members. See [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) and [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md).
 - **Limit to administrators only** — The folder is hidden from all project users and accessible only to REDCap administrators. This option is mutually exclusive with DAG and role restrictions — only one type of restriction can be active at a time.
 
 ---
@@ -121,7 +132,7 @@ Deleted files land in the Recycle Bin and remain recoverable for up to 30 days. 
 
 When the e-Consent Framework is enabled on a survey instrument, REDCap automatically stores a signed PDF of each completed consent here. The listing shows respondent identifier (name/DOB), IP address, survey completion time, file storage time, version, and consent type. This folder is read-only for project users.
 
-> **See also:** RC-SURV-08 — e-Consent Framework: Setup & Management.
+> **See also:** [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 
 ---
 
@@ -133,9 +144,9 @@ When the e-Consent Framework is enabled on a survey instrument, REDCap automatic
 | *Do files in the system folders count toward the project storage limit?* | No. Data Export Files, e-Consent PDFs, Miscellaneous File Attachments, and the Recycle Bin are excluded from the storage quota. Only user-uploaded files in user-created folders count. |
 | *Can I recover a file I accidentally deleted?* | Yes, if within 30 days. Open the Recycle Bin, find the file, and click Restore. After 30 days the file is permanently deleted and cannot be recovered. |
 | *I deleted a file that was linked in a field label — is the link broken?* | Yes. Deleting a file that is embedded elsewhere makes its download link a dead link. REDCap warns before deletion. If this has already happened, re-upload the file and update any links that referenced it. |
-| *Can I restrict a folder so only one DAG can see it?* | Yes. When creating or editing a folder, use the DAG restriction option to limit visibility to users in a specific DAG. See RC-DAG-01. |
+| *Can I restrict a folder so only one DAG can see it?* | Yes. When creating or editing a folder, use the DAG restriction option to limit visibility to users in a specific DAG. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md). |
 | *Where do files I upload in the rich text editor go?* | They are auto-stored in the Miscellaneous File Attachments system folder. These files receive publicly accessible download links — anyone with the link can download them without logging in. Do not upload PHI or sensitive content through the rich text editor. |
-| *Can I access the File Repository via the API?* | Yes. See RC-API-45 through RC-API-49 for creating folders, listing contents, uploading, downloading, and deleting files programmatically. |
+| *Can I access the File Repository via the API?* | Yes. See [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) through [RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md) for creating folders, listing contents, uploading, downloading, and deleting files programmatically. |
 
 ---
 
@@ -153,22 +164,22 @@ When the e-Consent Framework is enabled on a survey instrument, REDCap automatic
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to File Repository operations. API usage requires an API token and familiarity with the REDCap API. See RC-API-01 — REDCap API for authentication and setup.
+> **Note:** The following REDCap API methods provide programmatic access to File Repository operations. API usage requires an API token and familiarity with the REDCap API. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication and setup.
 
-- **RC-API-45** — Create Folder
-- **RC-API-46** — List Files and Folders
-- **RC-API-47** — Export (Download) a File
-- **RC-API-48** — Import (Upload) a File
-- **RC-API-49** — Delete a File
+- **[RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md)** — Create Folder
+- **[RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)** — List Files and Folders
+- **[RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md)** — Export (Download) a File
+- **[RC-API-48 — Import a File (File Repository) API](RC-API-48_Import-File-File-Repository.md)** — Import (Upload) a File
+- **[RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md)** — Delete a File
 
 ---
 
 # 8. Related Articles
 
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (the right required to access the File Repository)
-- RC-USER-03 — User Rights: Configuring User Privileges (how to grant File Repository access)
-- RC-DAG-01 — Data Access Groups (DAG-restricted folder setup)
-- RC-SURV-08 — e-Consent Framework: Setup & Management (the e-Consent PDFs system folder)
-- RC-SENDIT-01 — Send-It: Secure File Transfer (sharing files via secure link from the File Repository)
-- RC-EXPRT-01 — Data Export: Overview & Workflow (Data Export Files system folder; how exports are stored)
-- RC-NAV-UI-01 — Project Navigation UI (prerequisite — left-hand menu and application access)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (the right required to access the File Repository)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (how to grant File Repository access)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG-restricted folder setup)
+- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) (the e-Consent PDFs system folder)
+- [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md) (sharing files via secure link from the File Repository)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (Data Export Files system folder; how exports are stored)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (prerequisite — left-hand menu and application access)

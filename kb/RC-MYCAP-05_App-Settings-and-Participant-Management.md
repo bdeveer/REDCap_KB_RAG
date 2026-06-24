@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md); [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md)|
+| **Synonyms** | how do i customize the mycap app appearance; set up about pages contacts and links in mycap; change the mycap app theme and notifications; track which participants have joined mycap; send messages and announcements to mycap participants; troubleshoot mycap sync issues; mycap participant management hub; brand the mycap app for my study |
 
 ---
 

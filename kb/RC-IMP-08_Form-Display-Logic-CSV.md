@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md); [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)|
+| **Synonyms** | how do i import form display logic via csv; bulk edit fdl rules in a spreadsheet; copy form display logic to another project; upload form display logic csv; enable or disable whole instruments based on field values; fdl vs branching logic difference; empty-string conditions in fdl csv escaping; export and re-import form display logic rules |
 
 ---
 

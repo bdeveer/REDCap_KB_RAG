@@ -11,14 +11,23 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-USER-02
-  title: Adding Users & Managing Roles
+  title: 'User Rights: Adding Users & Managing Roles'
 - id: RC-USER-03
-  title: Configuring User Privileges
+  title: 'User Rights: Configuring User Privileges'
 - id: RC-DAG-01
   title: Data Access Groups
 tags:
 - user rights
 - user management
+synonyms:
+- how do i remove a user from a project
+- suspend a user's access
+- edit an existing user's rights
+- set a user expiration date
+- revoke access to a project
+- difference between project and system suspension
+- manage users after they have been added
+- ways to remove someone's access
 ---
 
 # 1. Overview
@@ -64,7 +73,7 @@ REDCap provides four distinct ways to restrict or remove a user's access. They o
 
 Project-level actions (suspension and removal) are the tools available to project users. Global actions require administrator intervention.
 
-> **Institution-specific:** For this installation's policy on automatic global suspension (e.g., inactivity-based) and the process to request reactivation, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 6: Global User Suspension Policy**.
+> **Institution-specific:** For this installation's policy on automatic global suspension (e.g., inactivity-based) and the process to request reactivation, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 6: Global User Suspension Policy**.
 
 ---
 
@@ -175,18 +184,18 @@ Use the **Delete role** option within the role edit popup. REDCap will block del
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-22 — Export Users API** — retrieve a complete list of project users and their permissions
-- **RC-API-23 — Import Users API** — add users or update user permissions programmatically
-- **RC-API-24 — Delete Users API** — remove a user from the project programmatically
+- **[RC-API-22 — Export Users API](RC-API-22_Export-Users.md)** — retrieve a complete list of project users and their permissions
+- **[RC-API-23 — Import Users API](RC-API-23_Import-Users.md)** — add users or update user permissions programmatically
+- **[RC-API-24 — Delete Users API](RC-API-24_Delete-Users.md)** — remove a user from the project programmatically
 
 ---
 
 
 # 10. Related Articles
 
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (troubleshooting access issues)
-- RC-USER-02 — User Rights: Adding Users & Managing Roles (how to add users and create roles)
-- RC-USER-03 — User Rights: Configuring User Privileges (all rights settings explained)
-- RC-DAG-01 — Data Access Groups (DAG assignment and management)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (troubleshooting access issues)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (how to add users and create roles)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (all rights settings explained)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG assignment and management)

@@ -6,29 +6,38 @@ applies_to:
 - Projects with surveys enabled
 - requires Twilio or Mosio configured at the system level
 prerequisites:
-- 'RC-SURV-01 — Surveys: Basics'
+- RC-SURV-01 — Surveys – Basics
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-SURV-05
-  title: Participant List and Manual Survey Invitations
+  title: Participant List & Manual Survey Invitations
 - id: RC-SURV-06
-  title: Automated Survey Invitations
+  title: Automated Survey Invitations (ASI)
 - id: RC-ALERT-01
-  title: Alerts and Notifications Setup
+  title: 'Alerts & Notifications: Setup'
 - id: RC-TXT-02
   title: 'Texting: Administrator Setup'
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - texting (sms)
+synonyms:
+- how do i send survey invitations by text message
+- set up sms in redcap
+- send alerts as text messages
+- configure twilio or mosio in my project
+- text participants instead of emailing
+- enable texting for survey distribution
+- send survey links via sms
+- how does redcap texting work
 ---
 
 # 1. Overview
 
 REDCap can send survey invitations and alert notifications as text messages (SMS) instead of — or in addition to — email. This is done through one of two third-party providers: **Twilio** or **Mosio**. This article covers everything a project designer needs to know: how texting works conceptually, how to enable and configure a provider in a project, and how texting integrates with survey distribution tools, the participant list, Automated Survey Invitations (ASIs), and Alerts & Notifications.
 
-For system-level setup (enabling Twilio or Mosio across the entire REDCap installation, setting permission levels), see RC-TXT-02 — Texting: Administrator Setup.
+For system-level setup (enabling Twilio or Mosio across the entire REDCap installation, setting permission levels), see [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md).
 
 ---
 
@@ -70,7 +79,7 @@ A condition that occurs when a participant has more than one active survey invit
 
 ## 3.1 Is texting available in your installation?
 
-Texting must be enabled at the system level by a REDCap administrator before any project can use it. Administrators configure Twilio and/or Mosio credentials and set access control in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06** and **RC-TXT-02** for the full admin setup process). Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
+Texting must be enabled at the system level by a REDCap administrator before any project can use it. Administrators configure Twilio and/or Mosio credentials and set access control in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)** and **[RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md)** for the full admin setup process). Navigate to **Project Setup** and look for Twilio or Mosio in the list of optional project features. If neither appears, contact your REDCap support team. Your institution may have texting enabled but restricted to administrator-only setup — in that case, the "Enable" button will be visible but greyed out, or hidden entirely.
 
 > **Institution-specific:** Texting provider availability (Twilio, Mosio, or both) and permission levels vary by installation. Contact your REDCap administrator to confirm which providers are enabled at your institution and what access level is required to enable them on a project.
 
@@ -176,9 +185,10 @@ Next to "Configure settings," the **Analyze surveys for SMS & Voice Calls** butt
 2. Click **Enable**. A credentials popup appears.
 3. Set the **Mosio SMS Services** dropdown to **Enabled**.
 4. Enter your **Mosio API Key** in the corresponding field. This is found in your Mosio account dashboard.
-5. Click **Save**.
+5. Click **Save**.s
 
 > **Note:** Mosio is only available in the US and Canada. If your study contacts participants in other countries, use Twilio instead.
+If you need help with the mosio part specifically, check out their website here: [Mosio](https://www.mosio.com/redcap/)
 
 ## 5.2 Configure Mosio settings
 
@@ -248,7 +258,7 @@ Texting adds an **invitation type** step to the ASI setup wizard. Before setting
 
 The remaining ASI steps work identically to email ASI setup, with minor variations depending on invitation type (e.g., no subject line field for SMS conversation invitations).
 
-For ASI setup beyond invitation type, see RC-SURV-06 — Automated Survey Invitations.
+For ASI setup beyond invitation type, see [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) — Automated Survey Invitations.
 
 ## 6.4 Alerts & Notifications
 
@@ -273,7 +283,7 @@ Two methods are available and can be combined in a single alert:
 
 > **Pro tip:** Combining variable-based and hard-coded recipients in the same alert lets you simultaneously text a participant at their stored number and copy a fixed study team contact.
 
-For alert setup beyond Step 3, see RC-ALERT-01 — Alerts and Notifications Setup.
+For alert setup beyond Step 3, see [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) — Alerts and Notifications Setup.
 
 ---
 
@@ -316,7 +326,7 @@ Not with a single alert. Duplicate the alert, set one copy to SMS (recipient = p
 Yes — piping is supported in ASI and alert message bodies. Use it only for non-sensitive data (e.g., a participant's first name or a scheduled visit date). Never pipe PHI or sensitive identifiers into a text message.
 
 **Q: What if Twilio or Mosio is not visible in my Project Setup page?**
-It has not been enabled for your installation or your administrator has restricted setup to admins only. Contact your REDCap support team. See RC-TXT-02 — Texting: Administrator Setup for how administrators control provider visibility.
+It has not been enabled for your installation or your administrator has restricted setup to admins only. Contact your REDCap support team. See [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md) for how administrators control provider visibility.
 
 **Q: Does voice call work with Mosio?**
 No. Voice calls are a Twilio-exclusive feature. If you need voice call survey delivery, you must use Twilio.
@@ -347,9 +357,9 @@ Overlapping invitations occur when a participant receives a second invitation be
 
 # 10. Related Articles
 
-- RC-SURV-01 — Surveys: Basics
-- RC-SURV-05 — Participant List and Manual Survey Invitations
-- RC-SURV-06 — Automated Survey Invitations
-- RC-ALERT-01 — Alerts and Notifications Setup
-- RC-TXT-02 — Texting: Administrator Setup (full admin setup: credentials, access control, provider configuration)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level Twilio/Mosio enablement and access permissions)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md) (full admin setup: credentials, access control, provider configuration)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level Twilio/Mosio enablement and access permissions)

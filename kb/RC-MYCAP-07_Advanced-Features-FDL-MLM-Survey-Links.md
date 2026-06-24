@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md); [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
+| **Synonyms** | use form display logic in mycap; show or hide mycap tasks conditionally; translate the mycap app with multi-language management; embed a redcap survey link inside a mycap task; mycap advanced features fdl mlm survey links; conditional task display in the mycap app; combine translations and survey links in mycap; enable fdl support for the mycap app |
 
 ---
 

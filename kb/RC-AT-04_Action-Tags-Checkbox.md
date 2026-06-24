@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | @NONEOFTHEABOVE action tag; @MAXCHECKED action tag; how do i make a none of the above checkbox option exclusive; limit how many checkboxes a respondent can select; mutually exclusive checkbox option; action tags for checkbox fields; cap maximum number of checked boxes |
 
 ---
 

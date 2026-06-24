@@ -5,12 +5,12 @@ domain: Surveys
 applies_to:
 - All projects with surveys enabled
 prerequisites:
-- RC-SURV-06 — Automated Survey Invitations
+- RC-SURV-06 — Automated Survey Invitations (ASI)
 version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-SURV-06
-  title: Automated Survey Invitations
+  title: Automated Survey Invitations (ASI)
 - id: RC-SURV-05
   title: Participant List & Manual Survey Invitations
 - id: RC-SURV-03
@@ -25,6 +25,15 @@ related:
   title: Smart Variables Overview
 tags:
 - surveys
+synonyms:
+- how do i chain multiple surveys together
+- set up a survey queue
+- present surveys to participants in sequence
+- auto-start the next survey after one finishes
+- survey queue trigger conditions
+- survey queue vs automated survey invitations
+- give participants one link for all their surveys
+- configure a series of surveys in a session
 ---
 
 # 1. Overview
@@ -53,7 +62,7 @@ A survey that has been turned on in the survey queue interface. Deactivated surv
 
 **Form Display Logic**
 
-A separate Online Designer feature, adjacent to the survey queue, that restricts user (staff) access to forms based on conditional logic. It does not interact with the survey queue but can optionally influence the auto-continue feature. It is covered in RC-FDL-01 — Form Display Logic *(coming soon)*.
+A separate Online Designer feature, adjacent to the survey queue, that restricts user (staff) access to forms based on conditional logic. It does not interact with the survey queue but can optionally influence the auto-continue feature. It is covered in [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md) *(coming soon)*.
 
 ---
 
@@ -88,7 +97,7 @@ The first column of the survey queue table, labeled **Activated?**, shows an **A
 
 ## 4.3 Defining Trigger Conditions
 
-The third column, **"Display survey in the Survey Queue when..."**, is where trigger conditions are defined. This is the most important configuration for any survey in the queue. The three trigger types mirror the ASI trigger structure (see RC-SURV-06 — Automated Survey Invitations):
+The third column, **"Display survey in the Survey Queue when..."**, is where trigger conditions are defined. This is the most important configuration for any survey in the queue. The three trigger types mirror the ASI trigger structure (see [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) — Automated Survey Invitations):
 
 ### Completion Trigger
 
@@ -102,7 +111,7 @@ Check **"When the following logic becomes true:"** and enter a branching logic s
 
 Example: show the "Child Questionnaire" only when `[age] < 18`.
 
-For guidance on writing logic, see RC-BL-01 — Branching Logic: Overview & Scope and RC-BL-02 — Branching Logic: Syntax & Atomic Statements.
+For guidance on writing logic, see [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) and [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md).
 
 > **Note:** All survey queue logic is re-evaluated whenever a participant completes any survey in the queue. This means branching-based routing updates dynamically as participants progress.
 
@@ -147,7 +156,7 @@ The CSV has eight columns:
 
 | Column | Accepted values | Notes |
 |---|---|---|
-| `form_name` | Instrument unique name | Find unique names in the Codebook (RC-FD-05). |
+| `form_name` | Instrument unique name | Find unique names in the Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)). |
 | `event_name` | Event unique name | Required for longitudinal projects. Leave blank for classic (non-longitudinal) projects. |
 | `active` | `1` or `0` | `1` = activated in queue; `0` = deactivated. |
 | `condition_surveycomplete_form_name` | Instrument unique name, or blank | The survey whose completion triggers this survey. Leave blank for a logic-only trigger. |
@@ -185,7 +194,7 @@ Key patterns to note from this example:
 - **Cross-event logic syntax:** The logic condition `[screening_arm_2][screen_currently_pregnant]=1` uses the `[event_name][field_name]` format to reference a field in a specific event. This is the same cross-event reference syntax used in branching logic elsewhere in REDCap.
 - **Filename pattern:** REDCap names downloaded files `{ProjectTitle}_SurveyQueue_{YYYY-MM-DD}_{HHMM}.csv`.
 
-For the full column-by-column reference, accepted values, an annotated example, and common mistakes, see **RC-IMP-10 — Survey Queue CSV**.
+For the full column-by-column reference, accepted values, an annotated example, and common mistakes, see **[RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md) — Survey Queue CSV**.
 
 ---
 
@@ -232,7 +241,7 @@ To enforce a specific completion order, cascade the trigger conditions — each 
 
 A survey can be made repeatable so participants can take it multiple times within the survey queue. Two conditions must both be met:
 
-1. The instrument must be set as a repeatable instrument (configured in Project Setup — see RC-LONG-02 — Repeated Instruments & Events Setup).
+1. The instrument must be set as a repeatable instrument (configured in Project Setup — see [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)).
 2. The **"Repeat the survey"** option must be enabled in that survey's termination settings (Survey Settings → Survey Termination Options).
 
 When both conditions are met, the survey queue overview shows all previously completed instances of that survey and a button to take it again. A repeat button also appears at the end of the survey itself, so repeatable surveys can be taken again even without using the queue overview screen.
@@ -307,21 +316,21 @@ This behavior also applies to completed instances of repeatable instruments.
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-41 — Export Survey Queue Link API** — programmatically retrieve the Survey Queue link for a specific record
+- **[RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md)** — programmatically retrieve the Survey Queue link for a specific record
 
 ---
 
 
 # 11. Related Articles
 
-- RC-SURV-06 — Automated Survey Invitations (email-based automated invitation scheduling; use with survey queue for time-point studies)
-- RC-SURV-05 — Participant List & Manual Survey Invitations (manual invitation workflow; participant list survey queue column)
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination (auto-continue and Save and Return Later settings)
-- RC-BL-01 — Branching Logic: Overview & Scope (logic syntax for queue trigger conditions)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (writing logic conditions)
-- RC-LONG-01 — Longitudinal Project Setup (events and arms)
-- RC-LONG-02 — Repeated Instruments & Events Setup (prerequisite for repeatable surveys in the queue)
-- RC-PIPE-03 — Smart Variables Overview (`[survey-queue-url]`, `[survey-queue-link]`)
-- RC-FD-05 — Codebook (finding instrument unique names for CSV upload)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(email-based automated invitation scheduling; use with survey queue for time-point studies)
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) (manual invitation workflow; participant list survey queue column)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) (auto-continue and Save and Return Later settings)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (logic syntax for queue trigger conditions)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (writing logic conditions)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (events and arms)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (prerequisite for repeatable surveys in the queue)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (`[survey-queue-url]`, `[survey-queue-link]`)
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (finding instrument unique names for CSV upload)

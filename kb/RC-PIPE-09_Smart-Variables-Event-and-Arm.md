@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) |
+| **Synonyms** | [event-name] smart variable; how to reference the current event with [event-name] or [event-label]; event and arm smart variables like [arm-number] and [arm-label]; [next-event-name] and [previous-event-name] piping; pipe the first or last event with [first-event-name] and [last-event-name]; [event-id] and [event-number] longitudinal smart variables; reference the current arm in a longitudinal project; how to show the current timepoint name automatically |
 
 ---
 

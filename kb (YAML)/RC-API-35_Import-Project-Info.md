@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-34
-  title: Export Project Info
+  title: Export Project Info API
 - id: RC-API-37
-  title: Import Project (Create Project)
+  title: Import Project (Create Project) API(Create Project)
 tags:
 - api
+synonyms:
+- how do i import project info via the api
+- import project info api call
+- update project-level settings through the api
+- api method to change project title and configuration
+- set longitudinal or survey settings via api
+- bulk update project attributes programmatically
+- api endpoint to import project information
+- modify project settings via api
 ---
 
 # 1. Overview
@@ -120,7 +129,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `false` for compatibility. Set to `true` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `false` for compatibility. Set to `true` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -162,6 +171,6 @@ On error, you receive an error message with details about what failed.
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-34 — Export Project Info
-- RC-API-37 — Import Project (Create Project)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)

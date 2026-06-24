@@ -18,6 +18,15 @@ related:
   title: Data Entry with Data Access Groups
 tags:
 - api
+synonyms:
+- how do i export dags via the api
+- export data access groups api call
+- get the list of dags through the api
+- api method to retrieve dag names and unique group names
+- pull data access group structure with the api
+- audit dags programmatically
+- api endpoint to export data access groups
+- list data access groups in a project via api
 ---
 
 # 1. Overview
@@ -154,7 +163,7 @@ If the project has no DAGs defined, an empty array `[]` is returned.
 
 **Q: How do I use this to get the list of DAGs before assigning users?**
 
-**A:** Export the DAGs, then store the `unique_group_name` values. Use these values in the Import User-DAG Assignments method (RC-API-32) to assign users to specific groups.
+**A:** Export the DAGs, then store the `unique_group_name` values. Use these values in the Import User-DAG Assignments method ([RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)) to assign users to specific groups.
 
 **Q: What permissions do I need to export DAGs?**
 
@@ -178,7 +187,7 @@ If the project has no DAGs defined, an empty array `[]` is returned.
 
 **Not storing the unique_group_name values for later use.** If you plan to assign users or delete DAGs, cache the exported `unique_group_name` values to avoid repeated exports.
 
-**Confusing DAG exports with user-DAG mapping exports.** This method exports the DAG definitions themselves. To export user-DAG assignments, use the Export User-DAG Assignments method (RC-API-31).
+**Confusing DAG exports with user-DAG mapping exports.** This method exports the DAG definitions themselves. To export user-DAG assignments, use the Export User-DAG Assignments method ([RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)).
 
 **Forgetting to check API permissions.** If your token lacks either API Export or Data Access Groups privileges, the export will fail. Both permissions are required — ensure both are enabled for the token at the project level.
 
@@ -186,11 +195,11 @@ If the project has no DAGs defined, an empty array `[]` is returned.
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-API-29 — Import DAGs (create or update DAG definitions)
-- RC-API-30 — Delete DAGs (remove DAG definitions)
-- RC-API-31 — Export User-DAG Assignments (retrieve user-to-DAG mappings)
-- RC-API-32 — Import User-DAG Assignments (assign users to DAGs)
-- RC-API-33 — Switch DAG (change a user's active DAG context)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)(create or update DAG definitions)
+- [RC-API-30 — Delete DAGs API](RC-API-30_Delete-DAGs.md)(remove DAG definitions)
+- [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)(retrieve user-to-DAG mappings)
+- [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)(assign users to DAGs)
+- [RC-API-33 — Switch DAG API](RC-API-33_Switch-DAG.md)(change a user's active DAG context)

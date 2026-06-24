@@ -6,21 +6,30 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 - familiarity with REDCap calculated fields
 version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Action Tags Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-06
   title: Autofill Action Tags
 - id: RC-AT-08
-  title: '@IF'
+  title: 'Action Tags: @IF — Conditional Logic — @IF'
 - id: RC-DE-05
   title: Field Validations
 tags:
 - action tags
+synonyms:
+- '@CALCTEXT action tag'
+- '@CALCDATE action tag'
+- how do i make a calculated text field
+- calculate a date difference with an action tag
+- turn a text box into a calculated field
+- conditional text output with @CALCTEXT
+- date arithmetic action tag
+- calc field that returns text instead of a number
 ---
 
 # 1. Overview
@@ -29,7 +38,7 @@ tags:
 
 Both tags behave like calculated fields in key ways: the field is not editable by users, the value updates in real time during data entry, and the value can be updated via data import or when Data Quality rule H is run.
 
-> **Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation tags operate in more contexts than `@IF` does (real-time recalculation, imports, Data Quality rules). Nesting them inside `@IF` produces unpredictable results. See RC-AT-08 for guidance on `@IF`.
+> **Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation tags operate in more contexts than `@IF` does (real-time recalculation, imports, Data Quality rules). Nesting them inside `@IF` produces unpredictable results. See [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) for guidance on `@IF`.
 
 ---
 
@@ -45,7 +54,7 @@ A logical function used inside `@CALCTEXT` and `@CALCDATE` expressions. Syntax: 
 
 **Escaping**
 
-When text inside `@CALCTEXT` contains a quote character that matches the surrounding delimiter, a backslash must precede it to prevent a parsing error — e.g., `'The user\'s guide'`.
+When text inside `@CALCTEXT` contains a quote character that matches the surrounding delimiter, a backslash must precede it to prevent a parsing error — e.g., `'The user's guide'`.
 
 ---
 
@@ -151,10 +160,10 @@ Reference a date field from a specific event:
 
 ## 4.4 Using 'now' or 'today' as the Source
 
-The keywords `now` and `today` can be used as the source parameter. They use the **server time**, not the user's local device time:
+The literals `'today'` and `'now'` (in single quotes) can be used as the source parameter. They use the **server time**, not the user's local device time:
 
 ```
-@CALCDATE(today, 14, 'd')
+@CALCDATE('today', 14, 'd')
 ```
 
 This calculates a date 14 days from the current server date. Be aware that if users are in a different timezone from the server, the date may differ from their local today.
@@ -223,19 +232,19 @@ This pattern is useful in operational or administrative projects where a value m
 
 **Source or result field missing date validation for @CALCDATE.** Both fields must have date, datetime, or datetime_seconds validation. Without this, `@CALCDATE` will not function correctly.
 
-**Forgetting that 'now' and 'today' use server time.** If your REDCap server is in a different timezone from your users, `@CALCDATE(today, ...)` may produce a date that is one day off. Use `'d'` offsets cautiously when timezone alignment matters.
+**Forgetting that `'now'` and `'today'` use server time.** If your REDCap server is in a different timezone from your users, `@CALCDATE('today', ...)` may produce a date that is one day off. Use `'d'` offsets cautiously when timezone alignment matters.
 
-**Not escaping apostrophes in text output.** If `@CALCTEXT` output contains an apostrophe and you used apostrophes as delimiters, escape it: `'it\'s'` or switch to double quotes: `"it's"`.
+**Not escaping apostrophes in text output.** If `@CALCTEXT` output contains an apostrophe and you used apostrophes as delimiters, escape it: `'it's'` or switch to double quotes: `"it's"`.
 
 **Cross-event source fields in @CALCDATE breaking silently after schema changes.** When `@CALCDATE` references a field from a different event using the `[event_name][field_name]` syntax — for example, `@CALCDATE([baseline_arm_1][enrol_date], 45, 'd')` — the expression depends on two identifiers that are easy to change accidentally: the event's unique name and the field's variable name. If the baseline event is renamed (which regenerates its unique event name) or the source field is renamed, every `@CALCDATE` field referencing it returns blank with no error or warning. This failure mode is especially consequential when multiple downstream fields all chain from the same source (e.g., a randomisation date used to calculate several visit windows). Before moving a project to production, document all cross-event field references in `@CALCDATE` and `@CALCTEXT` expressions. Treat the referenced event names and field names as frozen — equivalent to a primary key — and apply a branching logic audit whenever either is changed.
 
-**`[previous-instance]` chains may go stale without a recalculate module.** When `@CALCTEXT` fields in a repeating instrument use `[previous-instance]` to build accumulated values (see RC-PIPE-10 §7), REDCap does not automatically recalculate earlier instances when a later one changes, or vice versa. If a user edits instance 2 after instances 3–5 already exist, the accumulated values in those later instances will not update. The `recalculate` external module (if installed on your instance) can force a full recalculation across all instances. When designing accumulator-chain patterns, confirm that `recalculate` is available or plan for the possibility of stale values.
+**`[previous-instance]` chains may go stale without a recalculate module.** When `@CALCTEXT` fields in a repeating instrument use `[previous-instance]` to build accumulated values (see [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) §7), REDCap does not automatically recalculate earlier instances when a later one changes, or vice versa. If a user edits instance 2 after instances 3–5 already exist, the accumulated values in those later instances will not update. The `recalculate` external module (if installed on your instance) can force a full recalculation across all instances. When designing accumulator-chain patterns, confirm that `recalculate` is available or plan for the possibility of stale values.
 
 ---
 
 # 8. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-06 — Autofill Action Tags: `@DEFAULT` and `@SETVALUE` for pre-filling values at page load
-- RC-AT-08 — @IF: conditional action tag logic; note that @CALCTEXT and @CALCDATE cannot be nested inside @IF
-- RC-DE-05 — Field Validations: date and datetime validations required by @CALCDATE
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md): `@DEFAULT` and `@SETVALUE` for pre-filling values at page load
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: conditional action tag logic; note that @CALCTEXT and @CALCDATE cannot be nested inside @IF
+- [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md): date and datetime validations required by @CALCDATE

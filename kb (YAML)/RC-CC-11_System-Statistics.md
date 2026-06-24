@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 - id: RC-CC-12
-  title: User Activity Log
+  title: 'Control Center: User Activity Log'
 - id: RC-CC-13
-  title: User Activity Graphs
+  title: 'Control Center: User Activity Graphs'
 tags:
 - control center (admin)
+synonyms:
+- control center system statistics page
+- how many projects and users on the instance
+- redcap usage and infrastructure snapshot
+- export system statistics to csv
+- instance configuration and usage counts
+- where do i see total record or project counts
+- system-wide statistics dashboard admin
+- redcap server stats overview
 ---
 
 # 1. Overview
@@ -124,7 +133,7 @@ To export:
 
 # 5. Reporting to the Consortium
 
-The statistics displayed on the System Statistics page overlap with (but are not identical to) metrics reported to the REDCap Consortium. For details on consortium reporting, including which statistics are reported, frequency, and any privacy considerations, see RC-CC-01 — Notifications & Reporting.
+The statistics displayed on the System Statistics page overlap with (but are not identical to) metrics reported to the REDCap Consortium. For details on consortium reporting, including which statistics are reported, frequency, and any privacy considerations, see [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) — Notifications & Reporting.
 
 ---
 
@@ -174,6 +183,6 @@ The REDCap version is listed under the Infrastructure section of the System Stat
 
 # 9. Related Articles
 
-- RC-CC-01 — Notifications & Reporting
-- RC-CC-12 — User Activity Log
-- RC-CC-13 — User Activity Graphs
+- [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)
+- [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)
+- [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md)

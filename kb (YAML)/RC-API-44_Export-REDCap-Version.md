@@ -14,6 +14,14 @@ related:
   title: REDCap API
 tags:
 - api
+synonyms:
+- export redcap version api method
+- how do i get the redcap version number via the api
+- api call to check the redcap instance version
+- retrieve the server redcap version through the api
+- api method to verify connectivity and version
+- programmatically read the redcap version with the api
+- get redcap build version using a super or project token
 ---
 
 # 1. Overview
@@ -126,7 +134,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -174,4 +182,4 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)

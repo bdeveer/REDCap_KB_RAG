@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
+| **Synonyms** | [rand-number] smart variable; how to pipe a randomization number with [rand-number]; randomization smart variables for the time randomized [rand-time]; [rand-utc-time] randomization timestamp smart variable; show when a record was randomized using [rand-time:value]; reference a specific randomization model with [rand-number:n]; pipe the randomization assignment time into a field or email; randomization-related smart variables |
 
 ---
 

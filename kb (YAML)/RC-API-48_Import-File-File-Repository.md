@@ -19,18 +19,26 @@ related:
 - id: RC-API-47
   title: Export a File (File Repository) API
 - id: RC-API-13
-  title: Import File
+  title: Import File API
 - id: RC-USER-03
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- import file into file repository api method
+- how do i upload a file to the file repository via the api
+- api call to import a file repository file into a folder
+- upload a document to the file repository through the api
+- programmatically add files to the file repository with the api
+- api method to push a file into a repository folder
+- import file repository file by folder id via api
 ---
 
 # 1. Overview
 
 The Import a File (File Repository) API method uploads a single file into the project's **File Repository** — the project-level file store. The file may be placed in any existing sub-folder by supplying that folder's `folder_id`; if no `folder_id` is provided, the file is placed at the **top level** of the File Repository.
 
-The file is transmitted as **multipart form data** (a file upload), not as a JSON string or base64-encoded text. This is the File Repository counterpart to Import File (RC-API-13), which uploads to a record-level file-upload field. The two endpoints look similar but operate on different storage areas.
+The file is transmitted as **multipart form data** (a file upload), not as a JSON string or base64-encoded text. This is the File Repository counterpart to Import File ([RC-API-13 — Import File API](RC-API-13_Import-File.md)), which uploads to a record-level file-upload field. The two endpoints look similar but operate on different storage areas.
 
 ---
 
@@ -43,7 +51,7 @@ The project-level centralized file storage area, accessible through a folder str
 An HTTP encoding format for file uploads that allows binary file content to be transmitted alongside form fields. Required for uploading files through the API.
 
 ### Folder ID
-A numeric identifier for a specific folder in the File Repository. Obtained from List Files and Folders (RC-API-46) and used to specify where a file should be uploaded.
+A numeric identifier for a specific folder in the File Repository. Obtained from List Files and Folders ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) and used to specify where a file should be uploaded.
 
 ---
 
@@ -194,7 +202,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -202,7 +210,7 @@ print $output;
 
 Unlike other File Repository API methods, Import a File does **not** return a structured payload in the response body. A successful upload is indicated solely by an **HTTP 200** response. No `doc_id`, JSON object, or XML document is returned.
 
-If you need the `doc_id` of the file you just imported (e.g., to download, delete, or reference it later), call List Files and Folders (RC-API-46) on the target folder after the import completes — the newly uploaded file will appear in that listing with its `doc_id`.
+If you need the `doc_id` of the file you just imported (e.g., to download, delete, or reference it later), call List Files and Folders ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) on the target folder after the import completes — the newly uploaded file will appear in that listing with its `doc_id`.
 
 On error, the response body is an error message serialized in the format specified by `returnFormat` (or `xml` by default).
 
@@ -216,15 +224,15 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: How do I find out what `doc_id` was assigned to the file I just imported?**
 
-**A:** The import response itself does not include a `doc_id`. Immediately after import, call List Files and Folders (RC-API-46) on the target folder — the new file will appear as an entry with a `doc_id`. Match it by filename (or by import order) to identify the newly uploaded file.
+**A:** The import response itself does not include a `doc_id`. Immediately after import, call List Files and Folders ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) on the target folder — the new file will appear as an entry with a `doc_id`. Match it by filename (or by import order) to identify the newly uploaded file.
 
-**Q: What's the difference between this method and Import File (RC-API-13)?**
+**Q: What's the difference between this method and Import File ([RC-API-13 — Import File API](RC-API-13_Import-File.md))?**
 
-**A:** RC-API-13 uploads a file to a **record-level file-upload field** — the file becomes attached to a specific record through a field on an instrument. RC-API-48 uploads to the **project-level File Repository**, which is a shared, project-wide file store separate from record data. They use different `content` values (`file` vs `fileRepository`) and different required parameters (RC-API-13 requires `record`/`field`; RC-API-48 requires only `file` and optionally `folder_id`).
+**A:** [RC-API-13 — Import File API](RC-API-13_Import-File.md) uploads a file to a **record-level file-upload field** — the file becomes attached to a specific record through a field on an instrument. [RC-API-48 — Import a File (File Repository) API](RC-API-48_Import-File-File-Repository.md) uploads to the **project-level File Repository**, which is a shared, project-wide file store separate from record data. They use different `content` values (`file` vs `fileRepository`) and different required parameters ([RC-API-13 — Import File API](RC-API-13_Import-File.md) requires `record`/`field`; [RC-API-48 — Import a File (File Repository) API](RC-API-48_Import-File-File-Repository.md) requires only `file` and optionally `folder_id`).
 
 **Q: How do I upload into a specific sub-folder instead of the top level?**
 
-**A:** Pass the target folder's `folder_id` as a parameter. Discover the `folder_id` by calling List Files and Folders (RC-API-46) on the parent folder, or capture it from the response of Create Folder (RC-API-45) if the folder was created programmatically.
+**A:** Pass the target folder's `folder_id` as a parameter. Discover the `folder_id` by calling List Files and Folders ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) on the parent folder, or capture it from the response of Create Folder ([RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md)) if the folder was created programmatically.
 
 **Q: What file types and sizes are allowed?**
 
@@ -244,13 +252,13 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Sending the file as a string or base64-encoded blob.** The `file` parameter must be an actual file upload transmitted as multipart form data. Attempts to send file contents as a plain string, a JSON field, or base64 text will be rejected. Use your HTTP library's file upload mechanism (`files=` in Python requests, `httr::upload_file()` in R, `-F "file=@..."` in cURL).
 
-**Expecting a `doc_id` in the response.** Import a File returns an empty HTTP 200 response on success — no `doc_id`, no JSON, no XML. Code that parses the response body for identifiers will break. Use List Files and Folders (RC-API-46) afterward to discover the new `doc_id`.
+**Expecting a `doc_id` in the response.** Import a File returns an empty HTTP 200 response on success — no `doc_id`, no JSON, no XML. Code that parses the response body for identifiers will break. Use List Files and Folders ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) afterward to discover the new `doc_id`.
 
 **Uploading to a non-existent or inaccessible `folder_id`.** If the `folder_id` does not exist in this project, or if it points to a folder restricted to a DAG or User Role the token owner is not part of, the call will error. List the File Repository first to confirm the `folder_id` is valid for your token before uploading.
 
 **Assuming files with duplicate names are de-duplicated.** The File Repository does not enforce unique filenames within a folder. Uploading a file with the same name as an existing one creates a second entry, each with its own `doc_id`. If you want to "replace" a file, delete the old `doc_id` first (once the Delete File API is covered — see Section 9) and then import the new version.
 
-**Using this method to attach a file to a record.** Record-attached files belong in file-upload fields, not the File Repository. Use RC-API-13 (Import File) for record-level uploads. The two endpoints look superficially similar but write to different storage areas.
+**Using this method to attach a file to a record.** Record-attached files belong in file-upload fields, not the File Repository. Use [RC-API-13 — Import File API](RC-API-13_Import-File.md) (Import File) for record-level uploads. The two endpoints look superficially similar but write to different storage areas.
 
 **Closing the file handle too early in Python.** When using `requests.post(..., files={'file': file_obj})`, keep the file handle open until after the request returns. A `with open(...)` context manager (as shown in Section 5.1) is the safest pattern.
 
@@ -258,11 +266,11 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 # 10. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-45 — Create Folder (File Repository) API (create folders to import into)
-- RC-API-46 — List Files and Folders (File Repository) API (discover `folder_id`s before import; discover the new file's `doc_id` after import)
-- RC-API-47 — Export a File (File Repository) API (download a file from the File Repository)
-- RC-API-13 — Import File (upload files to record-level file-upload fields — distinct from File Repository uploads)
-- RC-API-12 — Export File (download files from record-level file-upload fields)
-- RC-API-14 — Delete File (remove files from record-level file-upload fields)
-- RC-USER-03 — User Rights: Configuring User Privileges (granting API Import/Update and File Repository privileges)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) (create folders to import into)
+- [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md) (discover `folder_id`s before import; discover the new file's `doc_id` after import)
+- [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md) (download a file from the File Repository)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to record-level file-upload fields — distinct from File Repository uploads)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from record-level file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from record-level file-upload fields)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (granting API Import/Update and File Repository privileges)

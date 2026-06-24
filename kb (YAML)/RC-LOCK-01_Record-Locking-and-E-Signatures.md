@@ -21,6 +21,15 @@ related:
   title: 'User Rights: Overview & Three-Tier Access'
 tags:
 - record locking
+synonyms:
+- how do i lock a record or instrument
+- prevent further edits to a completed form
+- set up e-signatures in redcap
+- unlock a locked form
+- who can lock and unlock records
+- e-signature and locking management page
+- make a finalized instrument read-only
+- review and sign workflow for regulated studies
 ---
 
 # 1. Overview
@@ -78,7 +87,7 @@ There are two tiers of Lock/Unlock access:
 | Lock/Unlock Records | Lock and unlock individual instruments for a record; access the Customization and Management pages |
 | Lock/Unlock Records *with record-level locking* | All of the above, plus lock or unlock all instruments in a record simultaneously |
 
-Assign lock/unlock rights through **User Rights** or via a **User Role**. See RC-USER-03 — User Rights: Configuring User Privileges for how to set these.
+Assign lock/unlock rights through **User Rights** or via a **User Role**. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for how to set these.
 
 ### 3.2 Who Can See Locked Forms
 
@@ -246,7 +255,7 @@ Every lock, unlock, and e-signature action is recorded automatically in the proj
 - The user who performed the action
 - The timestamp
 
-See RC-LOG-01 — Logging — Project Audit Trail for details on filtering and exporting audit log entries. See RC-DE-04 — Editing Data & Audit Trail for information on the field-level audit trail.
+See [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md) for details on filtering and exporting audit log entries. See [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) for information on the field-level audit trail.
 
 ---
 
@@ -290,9 +299,9 @@ Yes. Locking is available in classic (single-event) and longitudinal projects al
 
 # 12. Related Articles
 
-- RC-DE-02 — Basic Data Entry
-- RC-DE-04 — Editing Data & Audit Trail
-- RC-DE-12 — Data Resolution Workflow
-- RC-LOG-01 — Logging — Project Audit Trail
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-USER-03 — User Rights: Configuring User Privileges
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md)
+- [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md)
+- [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)

@@ -13,9 +13,18 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-02
-  title: Export Records
+  title: Export Records API
 tags:
 - api
+synonyms:
+- export reports api method
+- how do i pull a report via the api
+- api call to export data from a custom report
+- get report data by report id through the api
+- export redcap report results using the api
+- api method to retrieve a saved report
+- download custom report output via api
+- programmatically extract a report with the api
 ---
 
 # 1. Overview
@@ -152,7 +161,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -222,9 +231,9 @@ The API returns data rows as configured in the report, ordered first by record (
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-02 — Export Records
-- RC-EXPRT-01 — Data Export: Overview & Workflow (manual report export workflow)
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection (how to build the reports exported by this method)
-- RC-EXPRT-07 — Custom Reports: Filtering & Ordering (how report filters affect exported data)
-- RC-EXPRT-08 — Custom Reports: Management & Organization (report IDs and organization)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (manual report export workflow)
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) (how to build the reports exported by this method)
+- [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md) (how report filters affect exported data)
+- [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md) (report IDs and organization)

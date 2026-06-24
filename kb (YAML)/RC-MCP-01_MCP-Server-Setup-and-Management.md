@@ -18,6 +18,15 @@ related:
   title: 'REDCap AI Tools: Overview & Security'
 tags:
 - mcp
+synonyms:
+- how do i set up the redcap mcp server
+- connect claude to redcap
+- register the mcp server with claude desktop
+- model context protocol for redcap api
+- let claude export records and query metadata
+- configure multiple mcp servers for prod test and dev
+- where is the mcp json config file
+- install the redcap mcp python script
 ---
 
 # 1. Overview
@@ -52,8 +61,8 @@ This file is read by the Claude desktop application at startup. Any change to it
 Before running the setup script, confirm the following:
 
 **On the REDCap side:**
-- The REDCap API is enabled system-wide (Control Center → Modules/Services Configuration — see RC-CC-06).
-- You have an API token for at least one project in the target environment. See RC-API-01 Section 3 for how to request a token.
+- The REDCap API is enabled system-wide (Control Center → Modules/Services Configuration — see [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)).
+- You have an API token for at least one project in the target environment. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3 for how to request a token.
 - Your REDCap instance URL ends in `/api/` (e.g., `https://redcap.yourinstitution.edu/api/`).
 
 **On your computer:**
@@ -382,7 +391,7 @@ The token is invalid, belongs to a different project, or has been revoked. Retri
 The token is valid but the user does not have the API Export or API Import right in that project. A project administrator must grant the appropriate right via the User Rights page.
 
 **Connection check succeeds but record exports return no data.**
-Confirm the token belongs to a project that has records. Also check whether the user account is assigned to a Data Access Group — DAG-scoped tokens only see records within their DAG (see RC-DAG-01).
+Confirm the token belongs to a project that has records. Also check whether the user account is assigned to a Data Access Group — DAG-scoped tokens only see records within their DAG (see [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)).
 
 ---
 
@@ -396,14 +405,14 @@ Tokens embedded in the config file are stored in plaintext on your local filesys
 - Do not store tokens for production projects with sensitive research data on shared or multiuser machines. Use per-call token supply instead.
 - If you suspect a token has been compromised, revoke it from the REDCap Control Center (Users → API Tokens) immediately and request a new one.
 
-> **See also:** RC-API-01 Section 3.3 — Token Security for general API token guidance.
+> **See also:** [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.3 — Token Security for general API token guidance.
 
 ---
 
 # 10. Related Articles
 
-- RC-API-01 — REDCap API (API fundamentals, token management, available methods)
-- RC-AI-01 — REDCap AI Tools: Overview & Security (overview of AI capabilities in REDCap)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level API enable/disable)
-- RC-USER-03 — User Rights: Configuring User Privileges (where API Export/Import rights are granted)
-- RC-DAG-01 — Data Access Groups (how DAG membership affects API token scope)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (API fundamentals, token management, available methods)
+- [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) (overview of AI capabilities in REDCap)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level API enable/disable)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (where API Export/Import rights are granted)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (how DAG membership affects API token scope)

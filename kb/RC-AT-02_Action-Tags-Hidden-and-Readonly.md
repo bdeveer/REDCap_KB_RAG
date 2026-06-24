@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
+| **Synonyms** | @HIDDEN action tag; @READONLY action tag; how do i hide a field with an action tag; how do i make a field read only; @HIDDEN-FORM and @HIDDEN-SURVEY tags; @READONLY-FORM and @READONLY-SURVEY tags; hide a field on the survey but not the form; make a field uneditable for data entry |
 
 ---
 

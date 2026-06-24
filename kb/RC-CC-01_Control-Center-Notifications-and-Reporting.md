@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)|
+| **Synonyms** | control center notifications and reporting dashboard; redcap system health warnings page; control center server configuration alerts; where do i see redcap update alerts; consortium reporting tools in control center; main control center landing page; temp directory and web server warnings; admin notifications and warnings section |
 
 ---
 

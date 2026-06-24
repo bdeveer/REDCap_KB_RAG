@@ -5,21 +5,31 @@ domain: Clinical Data Interoperability Services
 applies_to:
 - Institutions using bulk clinical data import for registries and retrospective studies
 prerequisites:
-- RC-CDIS-01 — CDIS Overview and Control Center Setup
+- 'RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center
+  Setup'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CDIS-01
-  title: CDIS Overview
+  title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
 - id: RC-CDIS-02
-  title: Clinical Data Pull
+  title: 'Clinical Data Pull (CDP): Setup and Usage'
 - id: RC-CDIS-04
-  title: CDP vs CDM Comparison
+  title: 'CDP vs CDM: Feature Comparison'
 tags:
 - clinical data interoperability services
+synonyms:
+- how do i bulk import ehr data for many patients
+- set up clinical data mart cdm
+- import clinical data without adjudication
+- pull a cohort of patients from the ehr at once
+- data mart for registries and retrospective studies
+- batch clinical data retrieval in redcap
+- cdm bulk data import
+- difference between data mart and clinical data pull
 ---
 
-> **Prerequisite:** CDIS must be configured at the system level before CDM can be used. See RC-CDIS-01.
+> **Prerequisite:** CDIS must be configured at the system level before CDM can be used. See [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md).
 
 ---
 
@@ -44,7 +54,7 @@ Data Mart is best suited for:
 
 ## 1. CDIS Must Be Enabled
 
-The CDIS infrastructure must be configured and enabled in the Control Center before Data Mart can function. See RC-CDIS-01.
+The CDIS infrastructure must be configured and enabled in the Control Center before Data Mart can function. See [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md).
 
 ## 2. Grant User-Level Data Mart Privileges
 
@@ -172,9 +182,9 @@ Yes, you can delete records from a Data Mart project like any other REDCap proje
 
 # 13. Related Articles
 
-- RC-CDIS-01 — CDIS Overview and Control Center Setup
-- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
-- RC-CDIS-04 — CDP vs CDM: Feature Comparison
-- RC-CC-07 — Control Center: Users & Access Management (for granting Data Mart privileges)
-- RC-CC-09 — To-Do List (for approving configuration change requests)
-- RC-LONG-02 — Repeated Instruments and Events Setup
+- [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)
+- [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md)
+- [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)
+- [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (for granting Data Mart privileges)
+- [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)(for approving configuration change requests)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)

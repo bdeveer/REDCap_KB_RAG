@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)|
+| **Synonyms** | control center url shortener tool; create a short redirect link in redcap; shorten a survey or project url; generate a custom short url alias; random short url for distribution; make a tiny link for a redcap survey; admin url shortening service; shorten a long destination link |
 
 ---
 

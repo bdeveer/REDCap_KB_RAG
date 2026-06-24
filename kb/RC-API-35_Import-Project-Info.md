@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project) |
+| **Synonyms** | how do i import project info via the api; import project info api call; update project-level settings through the api; api method to change project title and configuration; set longitudinal or survey settings via api; bulk update project attributes programmatically; api endpoint to import project information; modify project settings via api |
 
 ---
 

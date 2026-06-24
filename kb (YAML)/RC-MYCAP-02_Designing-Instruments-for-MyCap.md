@@ -10,15 +10,24 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-MYCAP-03
-  title: Task Scheduling
+  title: 'MyCap: Task Scheduling'
 - id: RC-MYCAP-07
-  title: 'Advanced Features: FDL, MLM, and Survey Links'
+  title: 'MyCap: Advanced Features — FDL, MLM, and Survey Links'
 - id: RC-FD-01
   title: Form Design Overview
 - id: RC-AT-11
   title: 'Action Tags: Mobile App Action Tags'
 tags:
 - mycap mobile app
+synonyms:
+- how do i design an instrument for mycap
+- which field types are supported in mycap
+- mycap action tags and annotations
+- enable an instrument for the mycap app
+- configure a baseline date for mycap
+- publish a mycap instrument
+- mycap task metadata fields
+- mobile-specific field constraints for mycap forms
 ---
 
 # 1. Overview
@@ -82,7 +91,7 @@ Not all REDCap field types are supported in MyCap. The following table lists com
 | Section header | Yes |
 | Matrix (Grid of radio buttons) | Yes |
 
-> **Important:** Calculated fields do not evaluate within MyCap. If you need to display a computed value to a participant, use the Survey Links feature to embed a REDCap survey. See RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links.
+> **Important:** Calculated fields do not evaluate within MyCap. If you need to display a computed value to a participant, use the Survey Links feature to embed a REDCap survey. See [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md) — Advanced Features: FDL, MLM, and Survey Links.
 
 ---
 
@@ -160,7 +169,7 @@ Once instruments are designed and form completion status is configured:
 2. Check the box next to each instrument to enable it for MyCap.
 3. For longitudinal projects, instruments must first be designated to at least one event on the instrument–event mapping page before they can be enabled for MyCap.
 
-> **Note:** Enabling an instrument for MyCap does not automatically assign it a schedule. Scheduling is a separate step — see RC-MYCAP-03 — Task Scheduling.
+> **Note:** Enabling an instrument for MyCap does not automatically assign it a schedule. Scheduling is a separate step — see [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md) — Task Scheduling.
 
 ---
 
@@ -222,7 +231,7 @@ Participants receive the updated configuration the next time they open the app w
 
 **Q: Can I use piping inside a MyCap instrument?**
 
-**A:** No. REDCap piping syntax (e.g., `[first_name]`) is not rendered in MyCap — it appears as raw text. Remove piping from instruments intended for MyCap, or use a Survey Link to direct participants to a standard REDCap survey where piping works normally (see RC-MYCAP-07).
+**A:** No. REDCap piping syntax (e.g., `[first_name]`) is not rendered in MyCap — it appears as raw text. Remove piping from instruments intended for MyCap, or use a Survey Link to direct participants to a standard REDCap survey where piping works normally (see [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)).
 
 **Q: How do I capture a participant's photo in MyCap?**
 
@@ -252,7 +261,7 @@ Participants receive the updated configuration the next time they open the app w
 
 # 10. Common Mistakes & Gotchas
 
-**Including calculated fields in MyCap instruments.** Calculated fields are silently skipped — they do not compute and they display blank. Participants may be confused. Remove calculated fields from MyCap instruments. If the calculated value must be shown to participants, use a Survey Link (RC-MYCAP-07).
+**Including calculated fields in MyCap instruments.** Calculated fields are silently skipped — they do not compute and they display blank. Participants may be confused. Remove calculated fields from MyCap instruments. If the calculated value must be shown to participants, use a Survey Link ([RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)).
 
 **Applying standard REDCap action tags expecting them to work in MyCap.** Most standard action tags (e.g., `@NOW`, `@DEFAULT`, `@CHARLIMIT`) are not honored in MyCap. Only `@HIDDEN` and the MyCap-specific annotations listed in Section 4 of this article apply in the app context.
 
@@ -268,11 +277,11 @@ Participants receive the updated configuration the next time they open the app w
 
 # 11. Related Articles
 
-- RC-MYCAP-01 — MyCap: Overview & Enabling
-- RC-MYCAP-03 — Task Scheduling
-- RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links
-- RC-MYCAP-08 — Testing MyCap
-- RC-AT-11 — Action Tags: Mobile App Action Tags
-- RC-FD-01 — Form Design Overview
-- RC-FD-02 — Online Designer
-- RC-FD-03 — Data Dictionary
+- [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md)
+- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)
+- [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)
+- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)

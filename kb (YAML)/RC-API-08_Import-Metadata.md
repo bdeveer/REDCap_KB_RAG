@@ -13,9 +13,18 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-07
-  title: Export Metadata
+  title: Export Metadata (Data Dictionary) API
 tags:
 - api
+synonyms:
+- how do i import the data dictionary via the api
+- import metadata api call
+- upload a data dictionary through the api
+- api method to modify project fields and forms
+- add fields and branching logic programmatically
+- bulk update metadata using the api
+- api endpoint to change project structure
+- load data dictionary into a project via api
 ---
 
 # 1. Overview
@@ -31,7 +40,7 @@ When to use this method: When you need to programmatically create or modify the 
 - **Development status only:** This method is restricted to projects in Development status. Attempting to use it on a Production or Analysis/Cleanup project will fail. This restriction exists because of the method's destructive potential.
 - **Dual permission requirement:** You must have both API Import/Update privileges and Project Design/Setup privileges. Either one alone is not sufficient.
 - **Metadata Validation:** REDCap validates the metadata before import. Invalid field definitions will be rejected with error messages.
-- **Destructive Operation:** This method can overwrite or remove existing field definitions. Always test on a development project, and export a backup of the current metadata (RC-API-07) before importing.
+- **Destructive Operation:** This method can overwrite or remove existing field definitions. Always test on a development project, and export a backup of the current metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) before importing.
 
 ---
 
@@ -137,7 +146,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -169,7 +178,7 @@ The method returns a count of fields that were successfully created or modified,
 
 **Q: Can I import a data dictionary from one project to another?**
 
-**A:** Yes. Export the metadata from the source project (RC-API-07), format it correctly, and import it into the destination project using this method. Be aware that field names and form names must be unique within the destination project.
+**A:** Yes. Export the metadata from the source project ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)), format it correctly, and import it into the destination project using this method. Be aware that field names and form names must be unique within the destination project.
 
 **Q: What happens if I try to import a field that already exists?**
 
@@ -211,8 +220,8 @@ The method returns a count of fields that were successfully created or modified,
 
 # 9. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-07 — Export Metadata (read the data dictionary)
-- RC-FD-02 — Online Designer (the GUI alternative to API-based metadata import)
-- RC-FD-03 — Data Dictionary (format specification for the CSV being imported)
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (column reference for valid values in each field)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(read the data dictionary)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the GUI alternative to API-based metadata import)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (format specification for the CSV being imported)
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (column reference for valid values in each field)

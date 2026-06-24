@@ -14,12 +14,21 @@ related:
 - id: RC-FD-02
   title: Online Designer
 - id: RC-FD-06
-  title: Online Designer Instrument and Field Management
+  title: Online Designer – Instrument and Field Management
 - id: RC-BL-01
-  title: Branching Logic Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - form design
 - instruments
+synonyms:
+- what is field embedding
+- put a field inside another fields label
+- reposition a field on a form
+- embed a text box next to an answer choice
+- arrange fields in a grid or table layout
+- curly brace field references in labels
+- change where a field appears on a survey
+- how to use field embedding in redcap
 ---
 
 # 1. Overview
@@ -54,7 +63,7 @@ The editor available within a descriptive field's label that allows HTML content
 
 An action tag that displays hint text inside an empty text-box field — similar to the grayed-out placeholder text in a web form. When a field is embedded inline (for example, next to a choice label), @PLACEHOLDER helps users understand what to enter without a separate visible label cluttering the layout.
 
-> **Note:** Action tags are special keywords beginning with `@` that modify field behavior. They are entered in the **Action Tags / Field Annotation** section of the field edit dialog. See RC-AT-01 — Action Tags: Overview for a full reference.
+> **Note:** Action tags are special keywords beginning with `@` that modify field behavior. They are entered in the **Action Tags / Field Annotation** section of the field edit dialog. See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) for a full reference.
 
 ---
 
@@ -244,9 +253,9 @@ Large demographics sections are often split across two or more descriptive field
 
 # 8. Related Articles
 
-- RC-FD-02 — Online Designer (the tool used to create fields and configure embedding)
-- RC-FD-06 — Online Designer Instrument and Field Management (managing field order and instrument structure)
-- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design (real-world patterns including approval workflows and email preview instruments)
-- RC-BL-01 — Branching Logic Overview & Scope (frequently used alongside field embedding to control field visibility)
-- RC-BL-02 — Branching Logic Syntax & Atomic Statements (writing the logic conditions used with embedded fields)
-- RC-AT-01 — Action Tags: Overview (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the tool used to create fields and configure embedding)
+- [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)(managing field order and instrument structure)
+- [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md) (real-world patterns including approval workflows and email preview instruments)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(frequently used alongside field embedding to control field visibility)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)(writing the logic conditions used with embedded fields)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)

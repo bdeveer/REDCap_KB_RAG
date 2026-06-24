@@ -14,6 +14,15 @@ related:
   title: REDCap API
 tags:
 - api
+synonyms:
+- how do i export an instrument as a pdf via the api
+- export instruments pdf api call
+- generate a pdf of a form through the api
+- api method to download form pdf
+- get a blank or filled pdf of an instrument via api
+- programmatically create instrument pdfs with the api
+- api endpoint to export instrument pdf
+- download data entry form as pdf using the api
 ---
 
 # 1. Overview
@@ -141,7 +150,7 @@ fputs($fh, $output);
 fclose($fh);
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -199,6 +208,6 @@ The method returns a binary PDF file. The PDF should be written to disk using a 
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-FD-01 — Form Design Overview (instrument design concepts and terminology)
-- RC-SURV-09 — PDF Snapshots of Records (manual PDF export for records; related concept)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument design concepts and terminology)
+- [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md) (manual PDF export for records; related concept)

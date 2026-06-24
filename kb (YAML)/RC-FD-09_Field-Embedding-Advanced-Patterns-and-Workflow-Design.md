@@ -8,28 +8,37 @@ applies_to:
 - Project Design and Setup rights
 prerequisites:
 - RC-FD-07 — Field Embedding
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types
+- 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
 version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-FD-07
   title: Field Embedding
 - id: RC-PIPE-04
-  title: Piping in Emails and Notifications
+  title: 'Piping: Emails, Notifications & Logic Features'
 - id: RC-PIPE-08
   title: 'Smart Variables: Survey'
 - id: RC-ALERT-01
   title: 'Alerts & Notifications: Setup'
 - id: RC-AT-EM-01
-  title: 'Action Tags: HIDESUBMIT'
+  title: 'External Module Action Tags: HIDESUBMIT'
 tags:
 - form design
 - instruments
+synonyms:
+- advanced field embedding layout examples
+- build a document style form with embedded fields
+- live email preview using piped descriptive fields
+- multi instrument approval workflow design
+- embed calculated fields in a table layout
+- real world field embedding patterns
+- route a request to an approver in redcap
+- design an approval routing workflow
 ---
 
 # 1. Overview
 
-This article builds on the field embedding mechanics described in RC-FD-07 and demonstrates how embedding is applied creatively in real project designs. It covers three interconnected patterns that appear frequently in operational REDCap projects: using table-based layouts with embedded calculated fields to create document-style forms; using piped descriptive fields as live email template previews during project design; and assembling a multi-instrument approval workflow that routes a requester's submission to an approver and delivers branched outcome notifications. All three patterns are illustrated using a concrete example — a Full-Time Equivalent (FTE) position request project.
+This article builds on the field embedding mechanics described in [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md) and demonstrates how embedding is applied creatively in real project designs. It covers three interconnected patterns that appear frequently in operational REDCap projects: using table-based layouts with embedded calculated fields to create document-style forms; using piped descriptive fields as live email template previews during project design; and assembling a multi-instrument approval workflow that routes a requester's submission to an approver and delivers branched outcome notifications. All three patterns are illustrated using a concrete example — a Full-Time Equivalent (FTE) position request project.
 
 The running example has four instruments:
 
@@ -199,7 +208,7 @@ In the actual Alert or ASI email body, the same token is copied in verbatim. Whe
 
 Preview instruments are meant to be read, not submitted. The `@HIDESUBMIT-SURVEY` action tag (provided by a REDCap external module; availability varies by institution) is placed on each preview descriptive field. When the instrument is accessed as a survey, the Submit button is hidden, making it clear that this is a review-only view.
 
-> **Institutional note:** Confirm that the HIDESUBMIT external module is enabled at your institution before relying on this tag. See RC-AT-EM-01 — Action Tags: HIDESUBMIT.
+> **Institutional note:** Confirm that the HIDESUBMIT external module is enabled at your institution before relying on this tag. See [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) — Action Tags: HIDESUBMIT.
 
 ---
 
@@ -302,7 +311,7 @@ A common confusion is reaching for `[square]` in a descriptive field and expecti
 
 **Q: Can I use this same pattern (embed for data entry, pipe for preview) on a longitudinal project?**
 
-**A:** Yes. The embedding and piping syntaxes work identically in longitudinal projects. If you need to pipe a value from a different event into the preview or approval form, use the longitudinal piping modifier: `[event_name][field_name]`. See RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers for full coverage.
+**A:** Yes. The embedding and piping syntaxes work identically in longitudinal projects. If you need to pipe a value from a different event into the preview or approval form, use the longitudinal piping modifier: `[event_name][field_name]`. See [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) for full coverage.
 
 ---
 
@@ -386,12 +395,12 @@ This pattern is well suited to:
 
 # 10. Related Articles
 
-- RC-FD-07 — Field Embedding (mechanics of curly-brace embedding, rules, valid embedding locations including radio choice labels)
-- RC-BL-01 — Branching Logic Overview (companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)
-- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (extends these patterns with @DEFAULT carry-forward, @CALCTEXT lookup, [file:inline]/[file:link], parallel reviewer instruments, checkbox-gated previews, and [form-link:])
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types (square-bracket piping syntax and field type behavior)
-- RC-PIPE-04 — Piping in Emails and Notifications (piping in alerts, confirmation emails, and ASIs)
-- RC-PIPE-08 — Smart Variables: Survey (full reference for [survey-link:], [survey-url:], and related survey smart variables)
-- RC-ALERT-01 — Alerts & Notifications: Setup (configuring trigger conditions and email bodies for the approval workflow)
-- RC-AT-EM-01 — Action Tags: HIDESUBMIT (the external module tag used on preview instruments)
-- RC-CALC-02 — Calculated Fields (calc field setup, formula syntax, and behavior)
+- [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md) (mechanics of curly-brace embedding, rules, valid embedding locations including radio choice labels)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)
+- [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md) (extends these patterns with @DEFAULT carry-forward, @CALCTEXT lookup, [file:inline]/[file:link], parallel reviewer instruments, checkbox-gated previews, and [form-link:])
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(square-bracket piping syntax and field type behavior)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(piping in alerts, confirmation emails, and ASIs)
+- [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) (full reference for [survey-link:], [survey-url:], and related survey smart variables)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (configuring trigger conditions and email bodies for the approval workflow)
+- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md)(the external module tag used on preview instruments)
+- [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (calc field setup, formula syntax, and behavior)

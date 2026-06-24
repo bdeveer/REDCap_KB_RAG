@@ -15,6 +15,15 @@ related:
   title: 'Smart Variables: Aggregate Functions, Charts, and Tables'
 tags:
 - piping
+synonyms:
+- '[dashboard-link] smart variable'
+- how to pipe a link to a public project dashboard with [dashboard-url]
+- dashboard smart variables for the access code [dashboard-access-code]
+- link to a named dashboard with [dashboard-link:unique_dash_name]
+- share a public project dashboard link via email
+- '[dashboard-url:unique_dash_name] project dashboard smart variable'
+- create a clickable link to a project dashboard
+- project dashboard link and access code smart variables
 ---
 
 # 1. Overview
@@ -151,7 +160,7 @@ Your access code: [dashboard-access-code:D-557DRCW87L]
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables (creating charts and functions for dashboards)
-- RC-PIPE-04 — Piping in Emails and Notifications (using dashboard links in project emails and alerts)
-- RC-PROJ-03 — Project Dashboards (full guide to creating and configuring project dashboards)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) (creating charts and functions for dashboards)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using dashboard links in project emails and alerts)
+- [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md) (full guide to creating and configuring project dashboards)

@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md)|
+| **Synonyms** | how do i import alerts via csv; bulk edit alerts and notifications in a spreadsheet; copy alert configurations from one project to another; upload alert definitions csv; alert-unique-id column format for import; export and re-import alerts and notifications; duplicate alerts across projects without rebuilding; a&n csv column reference |
 
 ---
 

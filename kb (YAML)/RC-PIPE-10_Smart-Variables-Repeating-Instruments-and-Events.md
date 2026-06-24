@@ -12,11 +12,20 @@ related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 - id: RC-PIPE-09
   title: 'Smart Variables: Event & Arm'
 tags:
 - piping
+synonyms:
+- '[current-instance] smart variable'
+- how to reference the current repeat instance with [current-instance]
+- repeating instance smart variables like [first-instance] and [last-instance]
+- '[next-instance] [previous-instance] and [new-instance] piping'
+- '[instance-qualifier] for repeating instruments'
+- how to number rows in a repeating instrument or event
+- pipe a value from a specific repeat instance
+- smart variables for repeating forms and repeating events
 ---
 
 # 1. Overview
@@ -41,7 +50,7 @@ An entire event (containing multiple instruments) that repeats. Each occurrence 
 
 **Instance Qualifier**
 
-A smart variable used as a suffix or modifier to reference data from a specific instance. Examples: `[current-instance]`, `[last-instance]`, `[field-name][previous-instance]`.
+A smart variable paired with a field variable to reference data from a specific instance. Examples: `[current-instance]`, `[last-instance]`, `[field-name][previous-instance]`. (Note: these are distinct from piping *modifiers* such as `:value` or `:label`, which are colon-prefixed suffixes that change what a field variable returns — see [RC-PIPE-03](RC-PIPE-03_Smart-Variables-Overview.md).)
 
 **New Instance**
 
@@ -55,7 +64,7 @@ A future instance that has not yet been created. The `[new-instance]` smart vari
 |---|---|---|---|
 | Current Instance | `[current-instance]` | The current repeating instance number. Using `[field][current-instance]` is functionally equivalent to using `[field]` alone on the current instance. Can be used standalone or appended to a field variable. `[heart_rate][current-instance]` → 84. | 2 |
 | Previous Instance | `[previous-instance]` | The repeating instance number immediately before the current instance (current minus 1). Can be used standalone or appended to a field variable: `[weight][previous-instance]` → 145. Returns blank if the current instance is 1 (the first instance). | 3 |
-| Next Instance | `[next-instance]` | The repeating instance number immediately after the current instance (current plus 1). Can be used standalone or appended: `[provider][next-instance]` → Harris. Returns blank if this is the last existing instance and no future instances have been created. | 7 |
+| Next Instance | `[next-instance]` | The repeating instance number immediately after the current instance (current plus 1). Can be used standalone or appended: `[provider][next-instance]` → Harris. Returns a calculated number even at the last instance; there may be no data at that instance yet. | 7 |
 | First Instance | `[first-instance]` | The first (lowest numbered) repeating instance number for the current record/event context, which is always 1 unless instances have been deleted. Can be used standalone or appended: `[age][first-instance]` → 24. | 1 |
 | Last Instance | `[last-instance]` | The last (highest numbered) repeating instance number for the current record/event context. Can be used standalone or appended: `[glucose][last-instance]` → 119. | 6 |
 | New Instance | `[new-instance]` | A new, not-yet-created repeating instance (calculated as `[last-instance]` plus 1). Can be used standalone, OR appended ONLY to these smart variables: `[survey-link]`, `[survey-url]`, `[survey-access-code]`, `[form-link]`, `[form-url]`. Example: `[survey-link:repeating_survey:Repeating Survey][new-instance]` → Repeating Survey. Returns a calculated instance number one higher than the current last instance. | 14 |
@@ -64,7 +73,7 @@ A future instance that has not yet been created. The `[new-instance]` smart vari
 
 # 4. Usage Notes
 
-**Instance Qualifiers as Suffix Modifiers**
+**Instance Qualifier Syntax**
 
 Instance smart variables are appended to field variables to retrieve data from a specific instance. The syntax is: `[field-name][instance-qualifier]`. Examples:
 - `[symptom_severity][previous-instance]` — severity from the previous instance
@@ -131,7 +140,7 @@ In longitudinal projects with repeating instruments, instance qualifiers and eve
 
 **Q: How do I create a link to the next instance of a repeating survey?**
 
-**A:** Use `[survey-link:instrument][next-instance]`. For example: `[survey-link:daily_log:Fill out tomorrow's log][next-instance]` generates a link to the next instance of the daily log. If there is no next instance yet, a link to a new instance is still generated.
+**A:** It depends on whether the next instance already exists. To link to an **existing** next instance, use `[survey-link:instrument][next-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][next-instance]`. To link to a **not-yet-created** instance, use `[survey-link:instrument][new-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][new-instance]`. When in doubt, `[new-instance]` is the safer choice for "open the next unfilled instance."
 
 **Q: What happens if I use `[previous-instance]` in the first instance?**
 
@@ -201,8 +210,8 @@ This field always reflects the full accumulated list and can be piped into alert
 
 # 8. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (detailed instance qualifier syntax)
-- RC-PIPE-07 — Smart Variables: Form (form links combined with instance qualifiers)
-- RC-PIPE-08 — Smart Variables: Survey (survey links combined with instance qualifiers)
-- RC-PIPE-09 — Smart Variables: Event & Arm (event smart variables for longitudinal projects)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(detailed instance qualifier syntax)
+- [RC-PIPE-07 — Smart Variables: Form](RC-PIPE-07_Smart-Variables-Form.md) (form links combined with instance qualifiers)
+- [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) (survey links combined with instance qualifiers)
+- [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) (event smart variables for longitudinal projects)

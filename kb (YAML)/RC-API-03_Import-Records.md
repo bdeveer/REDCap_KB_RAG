@@ -13,13 +13,22 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-02
-  title: Export Records
+  title: Export Records API
 - id: RC-API-04
-  title: Delete Records
+  title: Delete Records API
 - id: RC-API-07
-  title: Export Metadata
+  title: Export Metadata (Data Dictionary) API
 tags:
 - api
+synonyms:
+- how do i import records via the api
+- import records api call
+- create or update records through the api
+- push data into redcap programmatically
+- bulk upload record data with the api
+- api method to write json or csv records
+- overwrite behavior for record import api
+- load data into a project via api
 ---
 
 # 1. Overview
@@ -39,10 +48,10 @@ When to use this method: When you need to load data from an external system into
 | `token` | Required | Your project API token. Requires API Import/Update right. |
 | `content` | Required | Always `'record'` for this method. |
 | `format` | Required | Data format: `'json'`, `'csv'`, `'xml'` (default), or `'odm'` (CDISC ODM XML v1.3.1). Must match the structure of the `data` parameter. |
-| `type` | Required | Data structure: `'flat'` (default; one row per record) or `'eav'` (entity-attribute-value; one row per data point). Non-longitudinal EAV has columns `record`, `field_name`, `value`; longitudinal adds `redcap_event_name`. |
-| `overwriteBehavior` | Required | `'normal'` (default; blank/empty values are ignored) or `'overwrite'` (blank/empty values are valid and will overwrite existing data). |
-| `forceAutoNumber` | Required | `false` (default; record names in the request are used as-is) or `true` (REDCap ignores the provided record names and assigns new auto-numbers). When `true`, set `returnContent` to `'auto_ids'` to see how provided names map to new names (e.g., `323,10` means new ID 323 was assigned to provided ID 10). |
-| `backgroundProcess` | Required | `0`/`false` (default; synchronous import) or `1`/`true` (run as background process). When background, the response is `success:true` or `success:false` regardless of `returnContent` or `returnFormat`. |
+| `type` | Optional | Data structure: `'flat'` (default; one row per record) or `'eav'` (entity-attribute-value; one row per data point). Non-longitudinal EAV has columns `record`, `field_name`, `value`; longitudinal adds `redcap_event_name`. |
+| `overwriteBehavior` | Optional | `'normal'` (default; blank/empty values are ignored) or `'overwrite'` (blank/empty values are valid and will overwrite existing data). |
+| `forceAutoNumber` | Optional | `false` (default; record names in the request are used as-is) or `true` (REDCap ignores the provided record names and assigns new auto-numbers). When `true`, set `returnContent` to `'auto_ids'` to see how provided names map to new names (e.g., `323,10` means new ID 323 was assigned to provided ID 10). |
+| `backgroundProcess` | Optional | `0`/`false` (default; synchronous import) or `1`/`true` (run as background process). When background, the response is `success:true` or `success:false` regardless of `returnContent` or `returnFormat`. |
 | `data` | Required | The record data to import as a JSON, CSV, or XML string. For repeating instruments or events, you can auto-number new instances by setting `redcap_repeat_instance` to `'new'` (flat type only — does not work for EAV). For EAV imports, checkbox fields must use `variable___optionCode` as the `field_name` and `'0'` or `'1'` as the value (e.g., `field_name='icecream___4'`, `value='1'` to check the option coded as `4`). |
 | `dateFormat` | Optional | Format for date and datetime field values: `'YMD'` (default; YYYY-MM-DD with dashes), `'MDY'` (MM/DD/YYYY with slashes), or `'DMY'` (DD/MM/YYYY with slashes). |
 | `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. |
@@ -214,7 +223,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -313,11 +322,11 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-02 — Export Records (reading data from REDCap)
-- RC-API-04 — Delete Records (removing records)
-- RC-API-07 — Export Metadata (get the data dictionary to understand field names)
-- RC-INTG-01 — Data Entry Trigger (explains why DET does not fire on API imports)
-- RC-IMP-01 — Data Import Overview (manual import workflow and formatting rules)
-- RC-DAG-01 — Data Access Groups (how DAGs affect imported data)
-- RC-LONG-02 — Repeated Instruments & Events Setup (repeat instance handling in imports)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(reading data from REDCap)
+- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)(removing records)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(get the data dictionary to understand field names)
+- [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (explains why DET does not fire on API imports)
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (manual import workflow and formatting rules)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (how DAGs affect imported data)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (repeat instance handling in imports)

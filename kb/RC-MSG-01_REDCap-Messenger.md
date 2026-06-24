@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
+| **Synonyms** | how do i message another redcap user; built-in chat for redcap; start a group conversation in redcap; send a secure direct message to a colleague; share files with other users inside redcap; is redcap messenger hipaa compliant; archive or delete a conversation; where do i find the messenger chat |
 
 ---
 

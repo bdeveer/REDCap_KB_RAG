@@ -11,19 +11,28 @@ version: '1.0'
 last_updated: '2025'
 related:
 - id: RC-EXPRT-01
-  title: Overview & Workflow
+  title: 'Data Export: Overview & Workflow'
 - id: RC-EXPRT-03
-  title: User Rights & Export Access
+  title: 'Data Export: User Rights & Export Access'
 - id: RC-EXPRT-04
-  title: De-identification & Formatting Options
+  title: 'Data Export: De-identification & Formatting Options'
 tags:
 - exports, reports & stats
 - data
+synonyms:
+- what report types can i export
+- export all data vs selected instruments
+- other export options tab
+- bulk export survey participants or logging
+- export only certain forms or events
+- built-in report options in redcap
+- which records and fields get exported
+- difference between report and export format
 ---
 
 # 1. Overview
 
-This article describes the types of reports available in REDCap\'s Data
+This article describes the types of reports available in REDCap's Data
 Exports, Reports, and Stats application — what each one exports and
 when to use it — as well as the additional bulk export options
 available under the Other Export Options tab. Report type determines
@@ -83,7 +92,7 @@ export format.
 
 - Use when you need a complete snapshot of all project data.
 
-- User\'s Data Export Rights still apply — instruments where the
+- User's Data Export Rights still apply — instruments where the
     user has No Access are excluded.
 
 - DAG membership still limits which records are included.
@@ -113,26 +122,25 @@ report does not filter by record.
 Custom reports extend beyond the built-in options by allowing
 fine-grained control over what is included in an export.
 
-  ------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Capability**                  **Description**
-  **Variable selection**          Choose individual variables to include rather than entire instruments.
-  **Record filtering by logic**   Apply a REDCap logic expression to include only records that meet specific criteria (e.g., only consented participants, only records with a specific diagnosis).
-  **User visibility control**     Restrict the report so it only appears for specific users or user roles.
-  **Left-menu shortcut**          Custom reports automatically appear in the left-hand menu for quick access, in addition to the report list.
-  **Folder organization**         Reports can be organized into named folders in the left-hand menu. Use folders when a project has accumulated many reports to keep navigation manageable.
-  ------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| **Capability** | **Description** |
+| --- | --- |
+| **Variable selection** | Choose individual variables to include rather than entire instruments. |
+| **Record filtering by logic** | Apply a REDCap logic expression to include only records that meet specific criteria (e.g., only consented participants, only records with a specific diagnosis). |
+| **User visibility control** | Restrict the report so it only appears for specific users or user roles. |
+| **Left-menu shortcut** | Custom reports automatically appear in the left-hand menu for quick access, in addition to the report list. |
+| **Folder organization** | Reports can be organized into named folders in the left-hand menu. Use folders when a project has accumulated many reports to keep navigation manageable. |
 
 ## 4.2 Creating and Editing Custom Reports
 
 Creating and editing custom reports requires the Add/Edit/Organize
 Reports user right. This right is independent of Data Export Rights. A
 user can have the ability to create reports without being able to export
-the resulting data, and vice versa. See RC-EXPRT-03 for details on
+the resulting data, and vice versa. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) for details on
 rights levels.
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** Detailed guidance on creating and configuring custom reports is covered in a separate training. This article covers report types from an export perspective only.
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** Detailed guidance on creating and configuring custom reports is covered in a separate training. This article covers report types from an export perspective only.
+
 
 ---
 
@@ -143,37 +151,35 @@ and Stats page provides bulk export options that operate at the project
 level rather than at the report level. These options are infrequently
 used but serve specific purposes.
 
-  ---------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                                                             **What it does & when to use it**
-  **Export entire project as REDCap XML**                                Exports the complete project — instrument definitions, data, and configuration — as a single XML file. This is the most comprehensive backup option available. The resulting file can be used to recreate the entire project in a new REDCap instance. More complete than a Data Dictionary download, which only captures instrument structure.
-  **ZIP file of uploaded files (all records)**                           Downloads all files uploaded through File Upload field types across all records as a single ZIP archive. Standard data exports do not include uploaded files. Use this when you need to bulk-download participant-uploaded documents, images, or other files. May take significant time to generate on large projects.
-  **PDF of data collection instruments with saved data (all records)**   Generates a single PDF containing every record\'s data across all instruments, formatted as filled-in forms. Useful for audits, regulatory submissions, or human-readable archives. File size and generation time can be substantial for large projects. A PDF of a single record can also be downloaded from within the record itself.
-  **Tableau Export**                                                     Connects REDCap directly to Tableau for data visualization. Requires Tableau and uses the REDCap API. Considered an advanced feature — consult your REDCap support team before using.
-  ---------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| **Option** | **What it does & when to use it** |
+| --- | --- |
+| **Export entire project as REDCap XML** | Exports the complete project — instrument definitions, data, and configuration — as a single XML file. This is the most comprehensive backup option available. The resulting file can be used to recreate the entire project in a new REDCap instance. More complete than a Data Dictionary download, which only captures instrument structure. |
+| **ZIP file of uploaded files (all records)** | Downloads all files uploaded through File Upload field types across all records as a single ZIP archive. Standard data exports do not include uploaded files. Use this when you need to bulk-download participant-uploaded documents, images, or other files. May take significant time to generate on large projects. |
+| **PDF of data collection instruments with saved data (all records)** | Generates a single PDF containing every record's data across all instruments, formatted as filled-in forms. Useful for audits, regulatory submissions, or human-readable archives. File size and generation time can be substantial for large projects. A PDF of a single record can also be downloaded from within the record itself. |
+| **Tableau Export** | Connects REDCap directly to Tableau for data visualization. Requires Tableau and uses the REDCap API. Considered an advanced feature — consult your REDCap support team before using. |
 
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** Standard data exports (CSV, SPSS, R, etc.) do not include files uploaded through File Upload fields. If your project uses file upload fields and you need those files, use the ZIP file of uploaded files option under Other Export Options.
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** Standard data exports (CSV, SPSS, R, etc.) do not include files uploaded through File Upload fields. If your project uses file upload fields and you need those files, use the ZIP file of uploaded files option under Other Export Options.
+
 
 ---
 
 # 6. Common Questions
 
-  ------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  *What is the difference between All Data and Selected Instruments?*                         All Data exports every instrument and every variable in the project for all records. Selected Instruments lets you choose specific instruments to include — useful when you only need a subset of the data. Both include all records you have access to.
-  *I need to export data from only consented participants. Which report type should I use?*   A custom report with a logic filter applied (e.g., \[consent\_status\]=\'1\'). The built-in All Data and Selected Instruments reports do not filter by record. You need the Add/Edit/Organize Reports right to create a custom report.
-  *Can I export uploaded files (PDFs, images) through a standard data export?*                No. Standard exports (CSV, SPSS, etc.) do not include files uploaded through File Upload fields. Use the ZIP file of uploaded files option under Other Export Options to bulk-download all uploaded files.
-  *What is the REDCap XML export and how is it different from a Data Dictionary download?*    The REDCap XML export includes the full project — instrument structure, data, and configuration settings. A Data Dictionary download includes only the instrument and variable definitions. Use the XML export for a complete project backup; use the Data Dictionary for instrument structure only.
-  *My project has many custom reports and the left menu is cluttered. What can I do?*         Organize reports into folders. Folders are created by naming them consistently and grouping reports under each name. Users with the Add/Edit/Organize Reports right can manage folder organization. This is covered in the custom reports training.
-  *Does a custom report export all records or only filtered ones?*                            Only filtered ones, if a logic filter is applied. If no filter is set, the custom report exports all records you have access to for the selected variables.
-  ------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| *What is the difference between All Data and Selected Instruments?* | All Data exports every instrument and every variable in the project for all records. Selected Instruments lets you choose specific instruments to include — useful when you only need a subset of the data. Both include all records you have access to. |
+| --- | --- |
+| *I need to export data from only consented participants. Which report type should I use?* | A custom report with a logic filter applied (e.g., [consent_status]='1'). The built-in All Data and Selected Instruments reports do not filter by record. You need the Add/Edit/Organize Reports right to create a custom report. |
+| *Can I export uploaded files (PDFs, images) through a standard data export?* | No. Standard exports (CSV, SPSS, etc.) do not include files uploaded through File Upload fields. Use the ZIP file of uploaded files option under Other Export Options to bulk-download all uploaded files. |
+| *What is the REDCap XML export and how is it different from a Data Dictionary download?* | The REDCap XML export includes the full project — instrument structure, data, and configuration settings. A Data Dictionary download includes only the instrument and variable definitions. Use the XML export for a complete project backup; use the Data Dictionary for instrument structure only. |
+| *My project has many custom reports and the left menu is cluttered. What can I do?* | Organize reports into folders. Folders are created by naming them consistently and grouping reports under each name. Users with the Add/Edit/Organize Reports right can manage folder organization. This is covered in the custom reports training. |
+| *Does a custom report export all records or only filtered ones?* | Only filtered ones, if a logic filter is applied. If no filter is set, the custom report exports all records you have access to for the selected variables. |
 
 ---
 
 # 7. Common Mistakes & Gotchas
 
 **Using All Data when only a subset is needed.** Exporting the full
-dataset when only one instrument\'s data is required shares more data
+dataset when only one instrument's data is required shares more data
 than necessary and produces larger files. Use Selected Instruments or a
 custom report to limit the export scope.
 
@@ -195,25 +201,25 @@ structure management.
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-38 — Export Reports API** — export a saved report programmatically by its numeric report ID
+- **[RC-API-38 — Export Reports API](RC-API-38_Export-Reports.md)** — export a saved report programmatically by its numeric report ID
 
 ---
 
 
 # 8. Related Articles
 
-- RC-EXPRT-01 — Data Export: Overview & Workflow (prerequisite ---
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (prerequisite ---
     the full export process)
 
-- RC-EXPRT-02 — Data Export: Export Formats (format selection after
+- [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) (format selection after
     report type is chosen)
 
-- RC-EXPRT-03 — Data Export: User Rights & Export Access (rights
+- [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) (rights
     required for custom reports and export access)
 
-- RC-EXPRT-04 — Data Export: De-identification & Formatting Options
+- [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md)
 
-- RC-FD-03 — Data Dictionary (the Data Dictionary download vs.
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the Data Dictionary download vs.
     REDCap XML backup)

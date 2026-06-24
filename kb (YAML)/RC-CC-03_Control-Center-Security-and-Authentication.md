@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-INST-01
-  title: Institution-Specific Settings & Policies
+  title: Institution-Specific Settings & Policies — Production
 - id: RC-USER-02
-  title: User Rights
+  title: 'User Rights: Adding Users & Managing Roles'
 - id: RC-USER-04
-  title: User Management
+  title: 'User Rights: User Management'
 tags:
 - control center (admin)
+synonyms:
+- control center authentication settings
+- configure two-factor authentication for redcap
+- set up single sign on shibboleth or saml
+- table-based authentication login settings
+- google oauth2 or microsoft entra id login
+- control center login security policies
+- how do users authenticate to redcap
+- system-wide authentication method configuration
 ---
 
 # 1. Overview
@@ -496,7 +505,7 @@ Yes. The "Shibboleth & Table-based" option (section 2.1) presents a splash page 
 
 # 17. Related Articles
 
-- RC-CC-04 — Control Center: User Settings & Defaults (user creation and account defaults)
-- RC-CC-07 — Control Center: Users & Access Management (user account management and suspension)
-- RC-USER-02 — User Rights: Overview & Three-Tier Access (authentication relationship to project-level permissions)
-- RC-INST-01 — Institution-Specific Settings & Policies (institutional security policies and authentication strategy)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (user creation and account defaults)
+- [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (user account management and suspension)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)(authentication relationship to project-level permissions)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(institutional security policies and authentication strategy)

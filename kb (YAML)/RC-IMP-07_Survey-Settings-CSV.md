@@ -5,13 +5,13 @@ domain: Data Import
 applies_to:
 - REDCap projects with at least one survey-enabled instrument
 prerequisites:
-- RC-IMP-03 — CSV Upload Reference
+- 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
 version: '1.0'
 last_updated: '2026-05-07'
 related:
 - id: RC-IMP-03
-  title: CSV Upload Reference
+  title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
 - id: RC-SURV-02
   title: 'Survey Settings: Basic Options & Design'
 - id: RC-SURV-03
@@ -19,6 +19,15 @@ related:
 tags:
 - data import
 - data
+synonyms:
+- how do i import survey settings via csv
+- bulk edit survey settings in a spreadsheet
+- copy survey configuration across projects
+- upload survey settings csv for all instruments
+- replicate completion text and confirmation emails
+- 62-column survey settings file structure
+- export and re-import survey settings
+- change response limits for many surveys at once
 ---
 
 # 1. Overview
@@ -33,7 +42,7 @@ The Survey Settings CSV allows bulk export and re-import of survey configuration
 
 **Always download first.** The full 62-column header must be exact. Always start from a file downloaded from REDCap rather than building the header from memory.
 
-For full coverage of survey settings through the REDCap UI, see RC-SURV-02 and RC-SURV-03.
+For full coverage of survey settings through the REDCap UI, see [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) and [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
 
 ---
 
@@ -144,7 +153,7 @@ Columns are grouped below by functional area, in the order they appear in the fi
 
 | Column | Required | Accepted Values / Notes |
 |---|---|---|
-| `survey_auth_enabled_single` | No | `Y` / `N`. Require participants to enter a survey access code before viewing the survey. Access codes are generated per-participant via the Participant List. |
+| `survey_auth_enabled_single` | No | `Y` / `N`. Enable Survey Login for this survey. When active, participants must enter a per-participant login code (configured in the Online Designer under Survey Settings) before they can view the survey. This is a password-like gate tied to the individual record — distinct from the Survey Access Code, which is a shorthand alternative to the public survey URL and is unrelated to this setting. |
 | `save_and_return` | No | `Y` / `N`. Allow participants to save a partially completed survey and return later to finish it. |
 | `save_and_return_code_bypass` | No | `Y` / `N`. When `Y`, participants can return to a saved survey without entering a return code (uses a browser cookie instead). |
 | `edit_completed_response` | No | `Y` / `N`. Allow participants to re-open and edit a survey they have already submitted. |
@@ -215,8 +224,8 @@ Key observations from this example:
 
 # 6. Related Articles
 
-- RC-IMP-03 — CSV Upload Reference (index of all CSV upload types in REDCap)
-- RC-SURV-02 — Survey Settings: Basic Options & Design (full UI reference)
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
-- RC-SURV-08 — e-Consent Framework Setup and Management (stop action columns)
-- RC-SURV-06 — Automated Survey Invitations (ASI CSV format — RC-IMP-06)
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)(index of all CSV upload types in REDCap)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (full UI reference)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md)
+- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) — e-Consent Framework Setup and Management (stop action columns)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(ASI CSV format — [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md))

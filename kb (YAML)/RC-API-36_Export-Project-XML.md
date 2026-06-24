@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-34
-  title: Export Project Info
+  title: Export Project Info API
 - id: RC-API-37
-  title: Import Project (Create Project)
+  title: Import Project (Create Project) API(Create Project)
 tags:
 - api
+synonyms:
+- export project xml api method
+- how do i export the whole project as xml via api
+- api call to clone a project as cdisc odm xml
+- export project structure and data as xml through the api
+- download project odm xml file using the api
+- api method to get returnmetadataonly project xml
+- export full project design xml for cloning api
+- get project xml export to recreate project on another server
 ---
 
 # 1. Overview
@@ -163,7 +172,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -178,7 +187,7 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 # 6. Common Questions
 
 **Q: Can I use the exported XML to create a new project?**
-**A:** Yes. Use the Export Project XML API to download your project design, then use RC-API-37 (Import Project / Create Project) with that XML to clone the project.
+**A:** Yes. Use the Export Project XML API to download your project design, then use [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Import Project / Create Project) with that XML to clone the project.
 
 **Q: What is the difference between `returnMetadataOnly` true and false?**
 **A:** `'true'` returns only the project structure — all fields, forms, events, and arms — with no data records. `'false'` (the default) returns both metadata and data, optionally filtered by `records`, `fields`, `events`, or `filterLogic`.
@@ -215,8 +224,8 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-34 — Export Project Info
-- RC-API-37 — Import Project (Create Project)
-- RC-FD-01 — Form Design Overview (instrument structure captured in the project XML)
-- RC-FD-03 — Data Dictionary (the metadata embedded in the exported XML)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument structure captured in the project XML)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the metadata embedded in the exported XML)

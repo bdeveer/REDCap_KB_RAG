@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | what is a computer adaptive test in redcap; why do cat questions change every time; how do cat instruments behave during data entry; promis cat data entry; adaptive questionnaire shows different questions; cat instrument different items each administration; computer adaptive test survey behavior; why does this measure ask different questions |
 
 ---
 

@@ -23,6 +23,15 @@ related:
   title: 'User Rights: Overview & Three-Tier Access'
 tags:
 - project
+synonyms:
+- how do i move a project to another redcap server
+- migrate a project between installations
+- export and re-import a full project backup
+- transfer a project to a different institution
+- copy a project design to a colleague at another site
+- back up and restore a redcap project
+- what is included in a project export
+- project migration pitfalls
 ---
 
 # 1. Overview
@@ -228,7 +237,7 @@ All of the following are tied to the source installation and will break on migra
 
 Note that any alerts, text messages, or survey invitations that were already sent before the migration will still contain links pointing to the old installation. Participants who follow those links will reach the old project — not the new one.
 
-**For this reason, it is strongly recommended to shut down the old project immediately after migration** by moving it to Analysis/Cleanup status or marking it as Completed (see RC-PROJ-01). Leaving the old project open and accepting data after the new project is live creates a split-data situation: records may be updated in both projects simultaneously, resulting in conflicting versions of the same record. Resolving these data collisions is time-consuming and error-prone, and in some cases may not be fully recoverable.
+**For this reason, it is strongly recommended to shut down the old project immediately after migration** by moving it to Analysis/Cleanup status or marking it as Completed (see [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)). Leaving the old project open and accepting data after the new project is live creates a split-data situation: records may be updated in both projects simultaneously, resulting in conflicting versions of the same record. Resolving these data collisions is time-consuming and error-prone, and in some cases may not be fully recoverable.
 
 ---
 
@@ -272,13 +281,13 @@ Note that some features depend on others being in place first. For example, you 
 
 The Data Dictionary (CSV) defines all instruments and fields in a project. Importing a data dictionary into a new project recreates the full instrument structure.
 
-See **RC-FD-03 — Data Dictionary** for full documentation.
+See **[RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)** for full documentation.
 
 ## 7.2 Data Export and Import
 
 If the destination project already has the same instruments and variable definitions, you can export data as CSV from the source project and import it into the destination project.
 
-See **RC-EXPRT-01 — Data Export: Overview & Workflow** and **RC-IMP-01 — Data Import Overview** for details.
+See **[RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)** and **[RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md)** for details.
 
 ## 7.3 Other Feature-Specific Exports
 
@@ -328,7 +337,7 @@ Use these targeted exports when you only need to transfer specific components, o
 
 **Q: Can I use the backup feature to clone a project within the same installation?**
 
-**A:** Yes, that works fine. However, for cloning within the same installation, the dedicated **"Copy the Project"** function (Project Setup → Other Functionality) is generally easier — see **RC-PROJ-01** for details on that feature.
+**A:** Yes, that works fine. However, for cloning within the same installation, the dedicated **"Copy the Project"** function (Project Setup → Other Functionality) is generally easier — see **[RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)** for details on that feature.
 
 ---
 
@@ -346,10 +355,10 @@ Use these targeted exports when you only need to transfer specific components, o
 
 # 9. Related Articles
 
-- RC-PROJ-01 — Project Lifecycle: Status and Settings (project statuses, copy/delete features)
-- RC-PROJ-02 — Project Setup Checklist (post-import checklist for setting up your new project)
-- RC-FD-03 — Data Dictionary (piece-by-piece alternative: instrument/field structure transfer)
-- RC-EXPRT-01 — Data Export: Overview & Workflow (exporting data for partial migration)
-- RC-IMP-01 — Data Import Overview (importing data into the destination project)
-- RC-SURV-01 — Surveys – Basics (survey links, custom links, and survey access after migration)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (re-adding users to the migrated project)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, copy/delete features)
+- [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (post-import checklist for setting up your new project)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (piece-by-piece alternative: instrument/field structure transfer)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (exporting data for partial migration)
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (importing data into the destination project)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey links, custom links, and survey access after migration)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (re-adding users to the migrated project)

@@ -19,11 +19,20 @@ related:
 tags:
 - exports, reports & stats
 - data
+synonyms:
+- how to save and edit a custom report
+- organize reports into folders
+- my reports and exports page
+- find a report id for the api
+- copy delete or rename a report
+- manage existing reports
+- where are my saved reports
+- unique report name for dashboards
 ---
 
 # 1. Overview
 
-This article covers saving custom reports and working with the My Reports & Exports overview — including the options available after saving, the per-report action buttons, report identifiers, and the tools for organizing reports into folders. It is the third article in the Custom Reports series and assumes you have already created a report using RC-EXPRT-06 and optionally configured filters using RC-EXPRT-07.
+This article covers saving custom reports and working with the My Reports & Exports overview — including the options available after saving, the per-report action buttons, report identifiers, and the tools for organizing reports into folders. It is the third article in the Custom Reports series and assumes you have already created a report using [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) and optionally configured filters using [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md).
 
 ---
 
@@ -42,7 +51,7 @@ A longer alphanumeric identifier, also unique across the entire REDCap installat
 A named grouping that organizes custom reports in the My Reports & Exports overview. Reports can be assigned to one or more folders. Folders are visible to all users who have view access to at least one report in the folder.
 
 **Public Link**
-A URL generated for reports that have been made public. Clicking the public link in the overview opens the report in a new browser tab without requiring a login. See RC-EXPRT-06 for the criteria and considerations for making a report public.
+A URL generated for reports that have been made public. Clicking the public link in the overview opens the report in a new browser tab without requiring a login. See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) for the criteria and considerations for making a report public.
 
 ---
 
@@ -100,7 +109,7 @@ Each saved custom report displays two identifiers in the overview:
 
 ## 4.4 Public Link
 
-If a report has been made public (see RC-EXPRT-06, Section 4.2), a blue **Public** link appears in its row in the overview. Clicking this link opens the public report in a new browser tab. This provides a quick way to preview or verify the public report without navigating through the report edit menu.
+If a report has been made public (see [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md), Section 4.2), a blue **Public** link appears in its row in the overview. Clicking this link opens the public report in a new browser tab. This provides a quick way to preview or verify the public report without navigating through the report edit menu.
 
 ---
 
@@ -177,16 +186,16 @@ The report section header also includes two additional navigation links:
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-38 — Export Reports API** — use the numeric report ID (visible in the report URL) to export any report programmatically
+- **[RC-API-38 — Export Reports API](RC-API-38_Export-Reports.md)** — use the numeric report ID (visible in the report URL) to export any report programmatically
 
 ---
 
 
 # 8. Related Articles
 
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection (prerequisite — creating a report and selecting fields)
-- RC-EXPRT-07 — Custom Reports: Filtering & Ordering (configuring filters and result ordering)
-- RC-USER-03 — User Rights: Configuring User Privileges (covers Add/Edit/Organize Reports and export privileges)
-- RC-DAG-01 — Data Access Groups (background on DAG-based report access and filtering)
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) (prerequisite — creating a report and selecting fields)
+- [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md) (configuring filters and result ordering)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (covers Add/Edit/Organize Reports and export privileges)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAG-based report access and filtering)

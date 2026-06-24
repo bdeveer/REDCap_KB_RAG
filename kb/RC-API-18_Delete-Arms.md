@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md); [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)|
+| **Synonyms** | how do i delete arms via the api; delete arms api call; remove study arms through the api; api method to delete arm numbers; remove an arm and its events and data via api; bulk delete arms with the api; api endpoint to delete arms; delete arms from a multi-arm project programmatically |
 
 ---
 

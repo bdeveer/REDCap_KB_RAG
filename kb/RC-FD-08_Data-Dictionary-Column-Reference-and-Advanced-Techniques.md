@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) |
+| **Synonyms** | what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly |
 
 ---
 

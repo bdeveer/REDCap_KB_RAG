@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md); [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)|
+| **Synonyms** | how do i test a mycap project before launch; mycap testing checklist before go-live; join the app with a test record; verify mycap schedule and notifications work; test mycap on a real device not a simulator; view task details csv to check the schedule; pre-launch mycap testing workflow; publish mycap before enrolling participants |
 
 ---
 

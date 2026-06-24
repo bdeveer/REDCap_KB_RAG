@@ -12,10 +12,19 @@ related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04
     — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project Navigation
-    UI, RC-LONG-02 — Repeated Instruments and Events Setup, RC-DE-10 — Longitudinal
-    and Repeated Data Entry, RC-SURV-01 — Surveys Basics
+    UI, RC-LONG-02 — Repeated Instruments & Events SetupRC-DE-10 — Longitudinal &
+    Repeated Data EntryRC-SURV-01 — Surveys – Basics
 tags:
 - record navigation
+synonyms:
+- how to add another instance of a repeating form
+- navigating repeated instruments and events
+- how to enter multiple medications or adverse events
+- where do i click to add a new instance
+- how repeating instruments show up for a record
+- how to move between repeat instances
+- adding more rows to a repeatable form
+- what is a repeated event
 ---
 
 # 1. Overview
@@ -65,30 +74,28 @@ space.
 
 ## 3.1 Symbols at a Glance
 
-  ----------------------- -------------------------------------------------------------------------
-  **Symbol**              **Meaning**
-  Plus symbol (+)         Repeated instrument with at least one entry. Click to add a new entry.
-  Stacked dot             Repeated instrument with more than one entry. Click to see all entries.
-  Double back arrow       Repeated event with 3+ repetitions. Click to collapse the columns.
-  Down arrow (on table)   Collapse the repeated instrument table on the Record Home Page.
-  ----------------------- -------------------------------------------------------------------------
+| **Symbol** | **Meaning** |
+| --- | --- |
+| Plus symbol (+) | Repeated instrument with at least one entry. Click to add a new entry. |
+| Stacked dot | Repeated instrument with more than one entry. Click to see all entries. |
+| Double back arrow | Repeated event with 3+ repetitions. Click to collapse the columns. |
+| Down arrow (on table) | Collapse the repeated instrument table on the Record Home Page. |
 
 ## 3.2 Stacked Dot Color Codes
 
 The color of a stacked dot summarizes the statuses of all entries for
 that repeated instrument:
 
-  ----------------------- ---------------------------------------------------------------------------------------
-  **Stacked Dot Color**   **Meaning**
-  Red stacked dot         All entries are tagged as Incomplete.
-  Yellow stacked dot      All entries are tagged as Unverified.
-  Green stacked dot       All entries are tagged as Complete.
-  Blue stacked dot        There is a mix of statuses across the entries (e.g., some complete, some incomplete).
-  ----------------------- ---------------------------------------------------------------------------------------
+| **Stacked Dot Color** | **Meaning** |
+| --- | --- |
+| Red stacked dot | All entries are tagged as Incomplete. |
+| Yellow stacked dot | All entries are tagged as Unverified. |
+| Green stacked dot | All entries are tagged as Complete. |
+| Blue stacked dot | There is a mix of statuses across the entries (e.g., some complete, some incomplete). |
 
-  -------------------------------------------------------------------------------------------
-  **Note:** A completed survey entry counts as Complete when determining stacked dot color.
-  -------------------------------------------------------------------------------------------
+
+> **Note:** A completed survey entry counts as Complete when determining stacked dot color.
+
 
 ---
 
@@ -142,17 +149,16 @@ that repeated instrument:
 Repeated instruments and longitudinal mode can be combined in several
 ways:
 
-  ----------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------
-  **Combination**                                                               **Effect on Navigation**
-  Repeated instrument in a single event                                         Stacked dot appears in that event\'s column on the Record Home Page.
-  Same repeated instrument in multiple events                                   Stacked dot appears independently in each designated event\'s column.
-  Entire event made repeatable                                                  New columns appear for each repetition of the event. Double back arrow available at 3+ repetitions.
-  Repeated instrument within a non-repeated event + a separate repeated event   Both behaviors appear simultaneously. Stacked dots and repeated event columns are shown together.
-  ----------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------
+| **Combination** | **Effect on Navigation** |
+| --- | --- |
+| Repeated instrument in a single event | Stacked dot appears in that event's column on the Record Home Page. |
+| Same repeated instrument in multiple events | Stacked dot appears independently in each designated event's column. |
+| Entire event made repeatable | New columns appear for each repetition of the event. Double back arrow available at 3+ repetitions. |
+| Repeated instrument within a non-repeated event + a separate repeated event | Both behaviors appear simultaneously. Stacked dots and repeated event columns are shown together. |
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** A repeated instrument and a repeated event are mutually exclusive within the same event. You cannot have a repeated instrument inside a repeated event. Either the entire event repeats, or individual instruments within a non-repeated event repeat — but not both at once.
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Important:** A repeated instrument and a repeated event are mutually exclusive within the same event. You cannot have a repeated instrument inside a repeated event. Either the entire event repeats, or individual instruments within a non-repeated event repeat — but not both at once.
+
 
 ---
 
@@ -212,27 +218,27 @@ Dashboard that filters or groups the view.
 
 # 8. Related Articles
 
-- RC-NAV-REC-01 — Record Navigation Overview — foundational article
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) — foundational article
     covering navigation paths and instrument status dot colors
 
-- RC-NAV-REC-02 — Longitudinal Mode & Arms — how the Record Home
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) — how the Record Home
     Page grid works in longitudinal projects; context for where
     repeated instrument stacked dots appear
 
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links —
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) —
     how repeated instrument and event indicators appear on the
     dashboard
 
-- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout and
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) — the two-panel layout and
     the menu that leads to records and instruments
 
-- RC-LONG-02 — Repeated Instruments & Events Setup — how to
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) — how to
     configure instruments and events as repeatable; the setup side
     of what this article covers from a navigation perspective
 
-- RC-DE-10 — Longitudinal & Repeated Data Entry — detailed data
+- [RC-DE-10 — Longitudinal & Repeated Data Entry](RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md) — detailed data
     entry procedures for repeated instruments and repeated events
 
-- RC-SURV-01 — Surveys – Basics — repeated instruments can be
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) — repeated instruments can be
     enabled as surveys; survey-completed entries count as complete
     for stacked dot color purposes

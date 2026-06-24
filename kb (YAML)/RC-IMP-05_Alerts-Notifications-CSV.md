@@ -5,20 +5,29 @@ domain: Data Import
 applies_to:
 - All REDCap project types
 prerequisites:
-- RC-IMP-03 — CSV Upload Reference
+- 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - 'RC-ALERT-01 — Alerts & Notifications: Setup'
 version: '1.0'
 last_updated: '2026-05-07'
 related:
 - id: RC-IMP-03
-  title: CSV Upload Reference
+  title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
 - id: RC-ALERT-01
   title: 'Alerts & Notifications: Setup'
 - id: RC-ALERT-02
-  title: Alert Management and Notification Log
+  title: Alert Management & Notification Log
 tags:
 - data import
 - data
+synonyms:
+- how do i import alerts via csv
+- bulk edit alerts and notifications in a spreadsheet
+- copy alert configurations from one project to another
+- upload alert definitions csv
+- alert-unique-id column format for import
+- export and re-import alerts and notifications
+- duplicate alerts across projects without rebuilding
+- a&n csv column reference
 ---
 
 # 1. Overview
@@ -33,7 +42,7 @@ The Alerts & Notifications module supports CSV export and import of alert defini
 
 **Always download first.** Start from a file exported from the source project rather than building from scratch. This guarantees the correct column order and gives you a recovery snapshot.
 
-For general coverage of the Alerts & Notifications module, see RC-ALERT-01 — Alerts & Notifications: Setup.
+For general coverage of the Alerts & Notifications module, see [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md).
 
 ---
 
@@ -121,8 +130,8 @@ A-2483,"Invite 3 months",SUBMIT,screening,,COMPLETE,,N,N,RECORD,TIME_LAG,,,90,0,
 
 # 5. Related Articles
 
-- RC-IMP-03 — CSV Upload Reference (index of all CSV upload types in REDCap)
-- RC-ALERT-01 — Alerts & Notifications: Setup (full module reference)
-- RC-ALERT-02 — Alert Management and Notification Log
-- RC-PIPE-01 — Piping Basics (piping syntax used in `email-to` and `alert-message`)
-- RC-SURV-04 — Survey Link Types and Access Methods (survey link smart variable syntax)
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)(index of all CSV upload types in REDCap)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (full module reference)
+- [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(piping syntax used in `email-to` and `alert-message`)
+- [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md)(survey link smart variable syntax)

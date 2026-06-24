@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-19
-  title: Export Events
+  title: Export Events API
 - id: RC-API-20
-  title: Import Events
+  title: Import Events API
 tags:
 - api
+synonyms:
+- how do i delete events via the api
+- delete events api call
+- remove events from a longitudinal project through the api
+- api method to delete unique event names
+- remove events and their data via api
+- bulk delete events with the api
+- api endpoint to delete events
+- delete timepoints from an arm programmatically
 ---
 
 # 1. Overview
@@ -124,7 +133,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -159,7 +168,7 @@ Example response:
 
 **Q: How do I find the correct `unique_event_name`?**
 
-**A:** Use the Export Events method (RC-API-19) to retrieve the list of events. The response will include the `unique_event_name` for each event. Do not confuse `unique_event_name` with `event_name` (the human-readable label).
+**A:** Use the Export Events method ([RC-API-19 — Export Events API](RC-API-19_Export-Events.md)) to retrieve the list of events. The response will include the `unique_event_name` for each event. Do not confuse `unique_event_name` with `event_name` (the human-readable label).
 
 **Q: How do I specify multiple events to delete?**
 
@@ -183,8 +192,8 @@ Example response:
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-19 — Export Events (retrieve event metadata from a project)
-- RC-API-20 — Import Events (add or modify events in a project)
-- RC-LONG-01 — Longitudinal Project Setup (events overview; context for when deletion is appropriate)
-- RC-LONG-02 — Repeated Instruments & Events Setup (how repeating event setup is affected by deletion)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-19 — Export Events API](RC-API-19_Export-Events.md)(retrieve event metadata from a project)
+- [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)(add or modify events in a project)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (events overview; context for when deletion is appropriate)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeating event setup is affected by deletion)

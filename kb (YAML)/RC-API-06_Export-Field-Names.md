@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-02
-  title: Export Records
+  title: Export Records API
 - id: RC-API-07
-  title: Export Metadata
+  title: Export Metadata (Data Dictionary) API
 tags:
 - api
+synonyms:
+- how do i export field names via the api
+- export field names api call
+- get checkbox export field names through the api
+- api method to list export import variable names
+- find the field___value names for checkboxes via api
+- retrieve export-specific field names with the api
+- map field names for export and import using api
+- api endpoint for field name list
 ---
 
 # 1. Overview
@@ -132,7 +141,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for production use. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for production use. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -194,7 +203,7 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Q: Why would I use this instead of exporting the full data dictionary?**
 
-**A:** This method is lightweight and fast when you only need field names. Exporting the full data dictionary (RC-API-07) returns more information (field labels, validation rules, etc.) but is heavier. Use this method when you only need the list of available fields.
+**A:** This method is lightweight and fast when you only need field names. Exporting the full data dictionary ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) returns more information (field labels, validation rules, etc.) but is heavier. Use this method when you only need the list of available fields.
 
 **Q: Does the field parameter perform validation?**
 
@@ -202,7 +211,7 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Q: Are calculated fields included in the field list?**
 
-**A:** No. The method automatically excludes `calc`, `file`, and `descriptive` field types from the returned list because these fields cannot be used during data import. If you need to see those field names, use Export Metadata (RC-API-07) instead.
+**A:** No. The method automatically excludes `calc`, `file`, and `descriptive` field types from the returned list because these fields cannot be used during data import. If you need to see those field names, use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) instead.
 
 ---
 
@@ -214,16 +223,16 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Forgetting to specify format.** The `format` parameter controls the output format. Always explicitly set it to `'json'`, `'csv'`, or `'xml'` based on your needs.
 
-**Expecting calc, file, or descriptive fields in the response.** These three field types are automatically excluded from the returned list. If your code relies on finding a calculated field's name here, it won't appear — use Export Metadata (RC-API-07) if you need those field names.
+**Expecting calc, file, or descriptive fields in the response.** These three field types are automatically excluded from the returned list. If your code relies on finding a calculated field's name here, it won't appear — use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) if you need those field names.
 
-**Using the response for data export.** This method returns only field names, not field data. To export actual record data, use RC-API-02 (Export Records).
+**Using the response for data export.** This method returns only field names, not field data. To export actual record data, use [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (Export Records).
 
 ---
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-02 — Export Records (reading record data)
-- RC-API-07 — Export Metadata (reading the complete data dictionary)
-- RC-FD-03 — Data Dictionary (the source of field definitions returned by this method)
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (detailed field attribute reference)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(reading record data)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(reading the complete data dictionary)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the source of field definitions returned by this method)
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (detailed field attribute reference)

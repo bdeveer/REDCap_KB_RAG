@@ -17,13 +17,22 @@ related:
   title: 'Smart Variables: Optional Parameters for Aggregate Functions'
 tags:
 - project
+synonyms:
+- how do i create a project dashboard
+- display summary statistics and charts for my project
+- make a dashboard public for stakeholders
+- add charts and tables to a dashboard page
+- build a project summary page with smart variables
+- share project data without a redcap account
+- configure dashboard access
+- project dashboard vs record status dashboard
 ---
 
 # 1. Overview
 
 Project Dashboards are customizable summary pages within a REDCap project that display aggregate statistics, charts, tables, and free text about your project's data. Any user with **Project Design** privileges can create and edit them. A built-in wizard helps you construct Smart Function, Smart Table, and Smart Chart syntax without writing it by hand, and a list of examples is included on the dashboard creation page. Dashboards can be made publicly accessible — allowing stakeholders, sponsors, or participants to view project-level summaries without needing a REDCap account.
 
-This article covers creating and configuring dashboards, adding content blocks, making a dashboard public, and controlling access. For the smart variable syntax used to build the content that appears on dashboards (aggregate functions, charts, tables), see RC-PIPE-11. For embedding dashboard links in emails, surveys, and alerts, see RC-PIPE-14.
+This article covers creating and configuring dashboards, adding content blocks, making a dashboard public, and controlling access. For the smart variable syntax used to build the content that appears on dashboards (aggregate functions, charts, tables), see [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md). For embedding dashboard links in emails, surveys, and alerts, see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md).
 
 ---
 
@@ -31,7 +40,7 @@ This article covers creating and configuring dashboards, adding content blocks, 
 
 **Project Dashboard**
 
-A configurable page within a REDCap project that displays summary information about project data. Each project can have multiple dashboards, each covering a different view or audience. Dashboards are distinct from the Record Status Dashboard (a system-generated table of record completion status), covered in RC-NAV-REC-04.
+A configurable page within a REDCap project that displays summary information about project data. Each project can have multiple dashboards, each covering a different view or audience. Dashboards are distinct from the Record Status Dashboard (a system-generated table of record completion status), covered in [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md).
 
 **Dashboard Widget**
 
@@ -49,7 +58,7 @@ A smart variable that renders a table of descriptive statistics for one or more 
 
 A smart variable that renders a chart (bar, pie, donut, scatter, or line) from project data. Example: `[bar-chart:study_arm]`.
 
-The full syntax reference for all three types is in RC-PIPE-11.
+The full syntax reference for all three types is in [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md).
 
 **Public Dashboard**
 
@@ -57,7 +66,7 @@ A dashboard that has been made accessible via a direct URL to users who do not h
 
 **Dashboard Unique Name**
 
-A system-generated identifier in the format `D-XXXXXXXXXX` assigned to each dashboard. Used in smart variable syntax (see RC-PIPE-14) and found in the dashboard configuration page.
+A system-generated identifier in the format `D-XXXXXXXXXX` assigned to each dashboard. Used in smart variable syntax (see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md)) and found in the dashboard configuration page.
 
 **Dashboard Access Code**
 
@@ -78,7 +87,7 @@ Project Dashboards are managed from the **Other Functionality** tab in the left-
 3. Optionally add a **Description** (internal use only; not displayed on the public dashboard page).
 4. Click **Save** to create the dashboard. The dashboard opens in edit mode, ready for content to be added.
 
-Note the **Dashboard Unique Name** (format `D-XXXXXXXXXX`) displayed on the configuration page — you will need this if you plan to reference the dashboard in piping or smart variables (see RC-PIPE-14).
+Note the **Dashboard Unique Name** (format `D-XXXXXXXXXX`) displayed on the configuration page — you will need this if you plan to reference the dashboard in piping or smart variables (see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md)).
 
 ## 3.3 The Smart Variable Wizard
 
@@ -109,7 +118,7 @@ Each widget is a free-form text box that supports:
 
 - **Plain text** — descriptive headings, instructions, narrative summaries.
 - **HTML** — basic formatting (bold, italic, links, tables) to control layout and emphasis.
-- **Smart variables / aggregate functions / charts / tables** — dynamic content that updates automatically when the dashboard is loaded (see RC-PIPE-11 for full syntax).
+- **Smart variables / aggregate functions / charts / tables** — dynamic content that updates automatically when the dashboard is loaded (see [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) for full syntax).
 - **Piped field values** — standard piping syntax (`[field_name]`) is not meaningful on a dashboard (there is no "current record" context), but smart variables and aggregate functions work fully.
 
 ## 4.3 Adding Charts and Statistics
@@ -122,7 +131,7 @@ To display a chart or aggregate statistic, type or paste the relevant smart vari
 
 Charts and tables render as visual elements when the dashboard is viewed; they appear as raw text in the editor. Always preview the dashboard after editing to verify rendering.
 
-See RC-PIPE-11 for the full chart and table syntax reference.
+See [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) for the full chart and table syntax reference.
 
 ## 4.4 Filtering Dashboard Data
 
@@ -132,7 +141,7 @@ By default, Smart Functions, Smart Tables, and Smart Charts aggregate data from 
 - **By DAG** — limits data to records belonging to one or more specific Data Access Groups. Use the unique DAG name.
 - **By event** (longitudinal projects only) — limits data to a specific event or set of events.
 
-Multiple filter types can be combined. Filters are appended as additional colon-separated parameters in the smart variable syntax. See RC-PIPE-12 for the exact syntax and examples.
+Multiple filter types can be combined. Filters are appended as additional colon-separated parameters in the smart variable syntax. See [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) for the exact syntax and examples.
 
 > **Note:** Unique report names are not the same as report titles. They are system-assigned identifiers visible on the My Reports & Exports page. Use these, not the display titles, in your filter syntax.
 
@@ -176,7 +185,7 @@ Access codes are a convenience control, not a substitute for data governance. Av
 The public URL for a dashboard can be found in two ways:
 
 - In the dashboard configuration page (copy the URL shown there).
-- Using the `[dashboard-url:D-XXXXXXXXXX]` smart variable in a field note, alert, or survey confirmation message — see RC-PIPE-14.
+- Using the `[dashboard-url:D-XXXXXXXXXX]` smart variable in a field note, alert, or survey confirmation message — see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md).
 
 ## 5.4 Who Can View Internal Dashboards
 
@@ -186,7 +195,7 @@ Each dashboard has its own user access privilege settings, configurable in the d
 
 # 6. Sharing Dashboard Links
 
-Dashboard links can be distributed via several mechanisms in REDCap without manually copying and pasting URLs. The `[dashboard-link]` and `[dashboard-url]` smart variables (documented in RC-PIPE-14) generate live links to a specific dashboard using its unique name.
+Dashboard links can be distributed via several mechanisms in REDCap without manually copying and pasting URLs. The `[dashboard-link]` and `[dashboard-url]` smart variables (documented in [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md)) generate live links to a specific dashboard using its unique name.
 
 Common distribution patterns:
 
@@ -195,7 +204,7 @@ Common distribution patterns:
 - **Field note or form instruction** — embed a link to a summary dashboard directly on a data entry form.
 - **External communications** — copy the raw URL from dashboard settings and share via email, QR code, or a study website.
 
-For the full smart variable syntax used in each of these contexts, see RC-PIPE-14.
+For the full smart variable syntax used in each of these contexts, see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md).
 
 ---
 
@@ -203,7 +212,7 @@ For the full smart variable syntax used in each of these contexts, see RC-PIPE-1
 
 **Q: What is the difference between a Project Dashboard and the Record Status Dashboard?**
 
-**A:** The Record Status Dashboard (covered in RC-NAV-REC-04) is a system-generated table showing the completion status of every record and form. Project Dashboards are custom pages you build — they display aggregate statistics, charts, and text that you configure. They serve different purposes: the Record Status Dashboard is for managing data collection; Project Dashboards are for summarizing and sharing results.
+**A:** The Record Status Dashboard (covered in [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)) is a system-generated table showing the completion status of every record and form. Project Dashboards are custom pages you build — they display aggregate statistics, charts, and text that you configure. They serve different purposes: the Record Status Dashboard is for managing data collection; Project Dashboards are for summarizing and sharing results.
 
 **Q: Do I need to be in Draft Mode to create or edit a dashboard in Production?**
 
@@ -249,7 +258,7 @@ For the full smart variable syntax used in each of these contexts, see RC-PIPE-1
 
 **Deleting a widget without saving the content elsewhere.** Widget deletion is immediate and irreversible. If a widget contains complex smart variable syntax, copy it before deleting. The dashboard editor does not have an undo function.
 
-**Sharing a dashboard access code without the URL.** An access code alone does not allow users to reach the dashboard — they also need the URL. Always share both together, or use the `[dashboard-link]` smart variable, which bundles the URL and accepts an optional code prompt. See RC-PIPE-14 for pairing the link and access code in a single communication.
+**Sharing a dashboard access code without the URL.** An access code alone does not allow users to reach the dashboard — they also need the URL. Always share both together, or use the `[dashboard-link]` smart variable, which bundles the URL and accepts an optional code prompt. See [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) for pairing the link and access code in a single communication.
 
 **Smart Functions and charts appearing blank on a public dashboard.** Public dashboards enforce a minimum threshold of 8 data points before rendering any Smart Function, Smart Table, or Smart Chart. If a widget looks correct when viewed inside the project but shows blank externally, the underlying data likely has fewer than 8 data points. This is an intentional privacy safeguard — not a bug. Either wait until sufficient data exists, or reconsider whether the metric is appropriate for public display at this stage of the project.
 
@@ -259,8 +268,8 @@ For the full smart variable syntax used in each of these contexts, see RC-PIPE-1
 
 # 9. Related Articles
 
-- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables (syntax for counts, means, bar charts, pie charts, stats tables)
-- RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions (filtering by DAG, event, or report)
-- RC-PIPE-14 — Smart Variables: Project Dashboards (smart variables for sharing dashboard URLs and links)
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (the system-generated record completion view — distinct from Project Dashboards)
-- RC-PIPE-04 — Piping in Emails and Notifications (using dashboard links in alerts and survey invitations)
+- [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) (syntax for counts, means, bar charts, pie charts, stats tables)
+- [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) (filtering by DAG, event, or report)
+- [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) (smart variables for sharing dashboard URLs and links)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (the system-generated record completion view — distinct from Project Dashboards)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using dashboard links in alerts and survey invitations)

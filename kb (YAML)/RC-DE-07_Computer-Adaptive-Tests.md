@@ -13,11 +13,20 @@ related:
 - id: RC-DE-02
   title: Basic Data Entry
 - id: RC-SURV-01
-  title: 'Surveys: Basics'
+  title: Surveys – Basics
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - data entry
+synonyms:
+- what is a computer adaptive test in redcap
+- why do cat questions change every time
+- how do cat instruments behave during data entry
+- promis cat data entry
+- adaptive questionnaire shows different questions
+- cat instrument different items each administration
+- computer adaptive test survey behavior
+- why does this measure ask different questions
 ---
 
 # 1. Overview
@@ -108,18 +117,18 @@ The CAT instrument determines when enough information has been gathered to produ
 
 CAT instruments require two system-level prerequisites configured by a REDCap administrator:
 
-1. **Computer Adaptive Tests (CATs) and Auto-Scoring Instruments must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, CAT instruments cannot be added to projects and existing ones will not function.
+1. **Computer Adaptive Tests (CATs) and Auto-Scoring Instruments must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). When disabled, CAT instruments cannot be added to projects and existing ones will not function.
 2. **Outbound network access to the Assessment Center API** — The CAT scoring algorithm communicates with a third-party API hosted by Vanderbilt University at `https://www.redcap-cats.org/promis_api/`. The REDCap server must be able to reach this URL. Data sent to the service is de-identified and cannot be linked to individual respondents.
 
 If CAT instruments are unavailable in your instance, or if a CAT fails to load or score correctly, contact your REDCap administrator to verify these system-level settings.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 7. Related Articles
 
-- RC-DE-02 — Basic Data Entry (foundational data entry skills)
-- RC-SURV-01 — Surveys: Basics (relevant if the CAT instrument is administered as a participant-facing survey)
-- RC-DE-08 — Field Comment Log (how to document issues encountered during a CAT administration)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level CAT module enablement)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)(relevant if the CAT instrument is administered as a participant-facing survey)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (how to document issues encountered during a CAT administration)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level CAT module enablement)

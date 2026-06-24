@@ -15,6 +15,15 @@ related:
   title: 'Smart Variables: Optional Parameters for Aggregate Functions'
 tags:
 - piping
+synonyms:
+- '[report-access-code] smart variable'
+- how to pipe a public report access code with [report-access-code]
+- access code for a named public report [report-access-code:unique_report_name]
+- share a public report with an access code via email
+- public report smart variables for access codes
+- how to give someone the code to view a public report
+- reference a specific public report access code
+- public report access code piping
 ---
 
 # 1. Overview
@@ -84,7 +93,7 @@ Report access code smart variables are most useful in emails, invitations, and o
 
 **Difference from Aggregate Functions**
 
-The `[aggregate-*]` smart variables (RC-PIPE-11) can filter results using report names as parameters, but they do not provide access codes. Those are used for creating summary statistics on dashboards. The `[report-access-code]` variable provides the code needed to share access to the actual report export.
+The `[aggregate-*]` smart variables ([RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md)) can filter results using report names as parameters, but they do not provide access codes. Those are used for creating summary statistics on dashboards. The `[report-access-code]` variable provides the code needed to share access to the actual report export.
 
 ---
 
@@ -134,7 +143,7 @@ The `[aggregate-*]` smart variables (RC-PIPE-11) can filter results using report
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables (using reports as filter parameters)
-- RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions (report filtering in aggregate functions)
-- RC-ALERT-01 — Alerts and Notifications Setup (using access codes in automated emails)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) (using reports as filter parameters)
+- [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) (report filtering in aggregate functions)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(using access codes in automated emails)

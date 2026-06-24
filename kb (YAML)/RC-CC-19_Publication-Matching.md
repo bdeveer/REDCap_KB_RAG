@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-21
-  title: Control Center Overview
+  title: 'Control Center: Overview & Navigation'
 - id: RC-CC-06
-  title: Modules & Services Configuration
+  title: 'Control Center: Modules & Services Configuration'
 - id: RC-PROJ-01
-  title: Project Lifecycle
+  title: 'Project Lifecycle: Status and Settings'
 tags:
 - control center (admin)
+synonyms:
+- control center publication matching
+- find pubmed publications linked to projects
+- automatically match papers to redcap projects
+- nightly publication search by principal investigator
+- email pis about matched publications
+- pubmed matching for research projects
+- track publications associated with projects
+- publication matching module admin
 ---
 
 **Publication Matching** (found at **Control Center → Miscellaneous Modules → Publication Matching**) is a module that automatically searches online publication databases to find publications associated with REDCap research projects. As of REDCap 16.x, the only supported database is **PubMed**.
@@ -145,6 +154,6 @@ Yes. All matched publications are surfaced for administrator review in the P.I.-
 
 # 9. Related Articles
 
-- RC-CC-21 — Control Center Overview
-- RC-CC-06 — Modules & Services Configuration
-- RC-PROJ-01 — Project Lifecycle
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)

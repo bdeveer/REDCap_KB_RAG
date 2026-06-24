@@ -20,11 +20,20 @@ related:
 tags:
 - form design
 - instruments
+synonyms:
+- what is the data dictionary
+- build instruments with a spreadsheet
+- upload a data dictionary csv
+- download and edit the data dictionary
+- design forms in excel and upload
+- data dictionary overwrites my project warning
+- bulk edit fields via csv
+- how to use the redcap data dictionary
 ---
 
 # 1. Overview
 
-The Data Dictionary is REDCap\'s spreadsheet-based instrument design
+The Data Dictionary is REDCap's spreadsheet-based instrument design
 tool. It allows you to define or modify every variable and instrument in
 a project by editing a CSV file and uploading it back into REDCap. The
 upload overwrites the existing instrument configuration. This article
@@ -69,7 +78,7 @@ project.
 **Instrument Name (Form Name)**
 
 The internal identifier for an instrument. In the Data Dictionary, each
-row\'s instrument assignment is defined by the form\_name column. Rows
+row's instrument assignment is defined by the form\_name column. Rows
 with the same form\_name belong to the same instrument. Changing the
 form\_name for a group of variables in the Data Dictionary moves them to
 a different instrument — this is how instrument splitting and merging
@@ -132,9 +141,9 @@ works.
 
 # 5. Essential Safety Practices
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Critical:** The Data Dictionary overwrites your existing project configuration on upload. Always download and save a snapshot of the current Data Dictionary before making any significant changes. This is your only reliable recovery path if an upload produces unintended results.
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Critical:** The Data Dictionary overwrites your existing project configuration on upload. Always download and save a snapshot of the current Data Dictionary before making any significant changes. This is your only reliable recovery path if an upload produces unintended results.
+
 
 ## 5.1 Before Uploading
 
@@ -144,7 +153,7 @@ works.
 
 - Make your edits on a copy, not on the only copy.
 
-- Review REDCap\'s validation output before confirming the upload. The
+- Review REDCap's validation output before confirming the upload. The
     summary tells you exactly what will be added, changed, or deleted.
 
 ## 5.2 Recovering from a Bad Upload
@@ -152,7 +161,7 @@ works.
 - If an upload produces unintended results, re-upload the snapshot you
     saved before making changes.
 
-- If no snapshot exists, use the Codebook (RC-FD-05) or the current
+- If no snapshot exists, use the Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) or the current
     Online Designer view to manually reconstruct what was there before
     — a slow and error-prone process.
 
@@ -195,9 +204,9 @@ without first exporting that data.
 
 **Q: Can I use the Data Dictionary to split one instrument into two?**
 
-**A:** Yes. This is one of the Data Dictionary\'s key capabilities. Change
+**A:** Yes. This is one of the Data Dictionary's key capabilities. Change
 the form\_name value for the variables you want to move to a new
-instrument. If the new form\_name doesn\'t yet exist, REDCap creates it.
+instrument. If the new form\_name doesn't yet exist, REDCap creates it.
 If it matches an existing instrument, the variables are merged into it.
 
 **Q: I uploaded a Data Dictionary and now some variables are missing.
@@ -297,21 +306,21 @@ usable in branching logic and calculated fields — for example,
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-07 — Export Metadata (Data Dictionary) API** — export the full data dictionary as JSON or CSV programmatically
-- **RC-API-08 — Import Metadata (Data Dictionary) API** — upload a new or modified data dictionary to the project programmatically
+- **[RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)** — export the full data dictionary as JSON or CSV programmatically
+- **[RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)** — upload a new or modified data dictionary to the project programmatically
 
 ---
 
 
 # 9. Related Articles
 
-- RC-FD-01 — Form Design Overview (prerequisite — tool selection
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (prerequisite — tool selection
     and navigation)
 
-- RC-FD-02 — Online Designer (the guardrailed alternative for
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the guardrailed alternative for
     smaller changes)
 
-- RC-FD-05 — Codebook (useful as a reference when building or
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (useful as a reference when building or
     reviewing the Data Dictionary)

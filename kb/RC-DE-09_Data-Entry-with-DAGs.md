@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
+| **Synonyms** | why can't i see other sites' records; how do data access groups affect what i can see; switch between dags during data entry; record creation when assigned to a dag; how record ids work with data access groups; entering data as a dag user; i'm in a data access group what can i access; data entry within my assigned group |
 
 ---
 

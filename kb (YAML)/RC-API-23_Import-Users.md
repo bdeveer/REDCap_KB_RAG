@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i import users via the api
+- import users api call
+- add users to a project and set permissions through the api
+- api method to assign user rights
+- bulk add existing users with the api
+- provision project access programmatically
+- api endpoint to import users
+- grant users permission flags via api
 ---
 
 # 1. Overview
@@ -191,23 +200,23 @@ record = {
     'data_export':              1,
     'mobile_app':               1,
     'mobile_app_download_data': 1,
-    'lock_record_multiform':    1,
-    'lock_record':              1,
-    'lock_record_customize':    1,
-    'record_delete':            1,
-    'record_rename':            1,
-    'record_create':            1,
-    'api_import':               1,
-    'api_export':               1,
-    'api_modules':              1,
-    'data_quality_execute':     1,
-    'data_quality_design':      1,
-    'file_repository':          1,
-    'data_logging':             1,
-    'data_comparison_tool':     1,
-    'data_import_tool':         1,
-    'calendar':                 1,
-    'graphical':                1,
+    'lock_records_all_forms':      1,
+    'lock_records':                1,
+    'lock_records_customization':  1,
+    'record_delete':               1,
+    'record_rename':               1,
+    'record_create':               1,
+    'api_import':                  1,
+    'api_export':                  1,
+    'api_modules':                 1,
+    'data_quality_execute':        1,
+    'data_quality_create':         1,
+    'file_repository':             1,
+    'logging':                     1,
+    'data_comparison_tool':        1,
+    'data_import_tool':            1,
+    'calendar':                    1,
+    'stats_and_charts':            1,
     'reports':                  1,
     'user_rights':              1,
     'design':                   1,
@@ -242,9 +251,9 @@ record <- c(
 	data_export=1,
 	mobile_app=1,
 	mobile_app_download_data=1,
-	lock_record_multiform=1,
-	lock_record=1,
-	lock_record_customize=1,
+	lock_records_all_forms=1,
+	lock_records=1,
+	lock_records_customization=1,
 	record_delete=1,
 	record_rename=1,
 	record_create=1,
@@ -252,13 +261,13 @@ record <- c(
 	api_export=1,
 	api_modules=1,
 	data_quality_execute=1,
-	data_quality_design=1,
+	data_quality_create=1,
 	file_repository=1,
-	data_logging=1,
+	logging=1,
 	data_comparison_tool=1,
 	data_import_tool=1,
 	calendar=1,
-	graphical=1,
+	stats_and_charts=1,
 	reports=1,
 	user_rights=1,
 	design=1
@@ -282,7 +291,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=user&format=json&data=[{\"username\":\"test_user_47\",\"expiration\":\"\",\"data_access_group\":\"1\",\"data_export\":\"0\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_record_multiform\":\"0\",\"lock_record\":\"0\",\"lock_record_customize\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_design\":\"1\",\"file_repository\":\"1\",\"data_logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"graphical\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
+DATA="token=$API_TOKEN&content=user&format=json&data=[{\"username\":\"test_user_47\",\"expiration\":\"\",\"data_access_group\":\"1\",\"data_export\":\"0\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_records_all_forms\":\"0\",\"lock_records\":\"0\",\"lock_records_customization\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_create\":\"1\",\"file_repository\":\"1\",\"logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"stats_and_charts\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -304,23 +313,23 @@ $record = array(
 	'data_export'              => '1',
 	'mobile_app'               => '1',
 	'mobile_app_download_data' => '1',
-	'lock_record_multiform'    => '1',
-	'lock_record'              => '1',
-	'lock_record_customize'    => '1',
-	'record_delete'            => '1',
-	'record_rename'            => '1',
-	'record_create'            => '1',
-	'api_import'               => '1',
-	'api_export'               => '1',
-	'api_modules'              => '1',
-	'data_quality_execute'     => '1',
-	'data_quality_design'      => '1',
-	'file_repository'          => '1',
-	'data_logging'             => '1',
-	'data_comparison_tool'     => '1',
-	'data_import_tool'         => '1',
-	'calendar'                 => '1',
-	'graphical'                => '1',
+	'lock_records_all_forms'     => '1',
+	'lock_records'               => '1',
+	'lock_records_customization' => '1',
+	'record_delete'              => '1',
+	'record_rename'              => '1',
+	'record_create'              => '1',
+	'api_import'                 => '1',
+	'api_export'                 => '1',
+	'api_modules'                => '1',
+	'data_quality_execute'       => '1',
+	'data_quality_create'        => '1',
+	'file_repository'            => '1',
+	'logging'                    => '1',
+	'data_comparison_tool'       => '1',
+	'data_import_tool'           => '1',
+	'calendar'                   => '1',
+	'stats_and_charts'           => '1',
 	'reports'                  => '1',
 	'user_rights'              => '1',
 	'design'                   => '1',
@@ -352,7 +361,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -400,9 +409,9 @@ On success, the API returns a count of users added or modified. For example: `2`
 
 # 9. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (explains the three access tiers and role-based access)
-- RC-USER-03 — User Rights: Configuring User Privileges (complete reference for all permission names and meanings)
-- RC-API-22 — Export Users (retrieve user list and current permissions)
-- RC-API-24 — Delete Users (remove users from a project)
-- RC-API-26 — Import User Roles (assign users to custom roles)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (explains the three access tiers and role-based access)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (complete reference for all permission names and meanings)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(retrieve user list and current permissions)
+- [RC-API-24 — Delete Users API](RC-API-24_Delete-Users.md)(remove users from a project)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(assign users to custom roles)

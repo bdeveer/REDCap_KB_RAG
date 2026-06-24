@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)|
+| **Synonyms** | how do i rename a record via the api; rename record api call; change a record id programmatically; api method to update a record identifier; renumber records using the api; correct a mistaken record id with the api; change primary key value of a record via api; api endpoint to rename a record id |
 
 ---
 

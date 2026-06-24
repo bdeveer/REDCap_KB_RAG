@@ -19,6 +19,15 @@ related:
   title: Longitudinal Project Setup
 tags:
 - surveys
+synonyms:
+- difference between public and individual survey links
+- how do i find a survey link
+- get the public survey url
+- where is the survey link for a specific record
+- one survey link per participant
+- survey-url and survey-link smart variables
+- reuse a survey link or fill it out multiple times
+- how survey links work in longitudinal projects
 ---
 
 # 1. Overview
@@ -43,11 +52,11 @@ A dropdown menu visible inside an open instrument in a record. It provides quick
 
 **Smart Variable**
 
-A placeholder token that REDCap replaces with dynamic content at runtime. The survey-related smart variables return the URL or clickable link for a specific survey. Full coverage of smart variables is in RC-PIPE-03 — Smart Variables Overview.
+A placeholder token that REDCap replaces with dynamic content at runtime. The survey-related smart variables return the URL or clickable link for a specific survey. Full coverage of smart variables is in [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md).
 
 **Instrument Unique Name**
 
-The internal name REDCap assigns to each instrument. It may differ slightly from the user-defined display name (e.g., display name "Baseline Vital Signs" → unique name `baseline_vital_signs`). Smart variables require the unique name, not the display name. The Codebook (RC-FD-05) lists both.
+The internal name REDCap assigns to each instrument. It may differ slightly from the user-defined display name (e.g., display name "Baseline Vital Signs" → unique name `baseline_vital_signs`). Smart variables require the unique name, not the display name. The Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) lists both.
 
 **Survey Access Code**
 
@@ -67,7 +76,7 @@ REDCap generates a public survey link automatically the moment the first instrum
 
 Each time a participant fully submits the public survey link, REDCap creates a new record. Because it can be submitted repeatedly, the same link can be shared with any number of participants. Common use cases include email campaigns, paper flyers, and embedded website forms.
 
-The public survey link is found in the **Survey Distribution Tools** section of the project menu. See RC-SURV-01 — Surveys – Basics for the full Survey Distribution Tools walkthrough.
+The public survey link is found in the **Survey Distribution Tools** section of the project menu. See [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) for the full Survey Distribution Tools walkthrough.
 
 > **Note:** The public survey link is only available when the **first instrument** in the project is enabled as a survey. If the first instrument is not a survey, REDCap will not generate a public link.
 
@@ -130,7 +139,7 @@ Smart variables can be used anywhere REDCap processes piped content — survey i
 | `[survey-link:instrument]` | Works anywhere piping is supported. The link label is the instrument's display name. |
 | `[survey-link:instrument:Custom Text]` | Same as above, but the link label is the text you define. Example: `[survey-link:baseline_vitals:Take Our Baseline Survey]` |
 
-> **Tip — Finding the Instrument Unique Name:** Smart variables require the unique name of an instrument, not its display name. The easiest way to find it is in the Codebook (under Project Home and Design), where instruments are listed as: `Display Name (unique_name)`. See RC-FD-05 — Codebook.
+> **Tip — Finding the Instrument Unique Name:** Smart variables require the unique name of an instrument, not its display name. The easiest way to find it is in the Codebook (under Project Home and Design), where instruments are listed as: `Display Name (unique_name)`. See [RC-FD-05 — Codebook](RC-FD-05_Codebook.md).
 
 > **Tip — Longitudinal projects:** Always include the event qualifier when using an instrument-specific smart variable in a longitudinal project. Without it, REDCap may not resolve the link correctly if the instrument appears in multiple events.
 
@@ -143,13 +152,13 @@ The participant list in Survey Distribution Tools displays individual survey lin
 
 To locate a specific link: navigate to the participant list, select the correct instrument (and event, in longitudinal projects), find the record or email in the list, and click the link icon in the **Link** column. The link icon is absent for surveys that are already completed.
 
-Full documentation of the participant list is in RC-SURV-05 — Participant List & Manual Survey Invitations.
+Full documentation of the participant list is in [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md).
 
 **Identified vs. anonymous mode in the participant list**
 
 By default, the participant list runs in anonymous mode, which makes it difficult to associate a specific link with a specific person. To switch to identified mode (enabling a clickable Record ID column), either:
 
-- Add a **participant identifier** (name) alongside the email when using **Add Participant**, or
+- Add a **participant identifier** (name) alongside the email when using **Add Participant**. Note: the Participant Identifier feature must first be activated by clicking the **Enable** button in the Participant Identifier column header of the participant list — see [RC-SURV-05 — Participant List and Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md), Section 3.3 for details and an important warning about disabling the feature.
 - Designate an email field for the project in Project Setup → Enable Optional Modules and Customizations.
 
 ---
@@ -170,7 +179,7 @@ By default, the participant list runs in anonymous mode, which makes it difficul
 
 **Q: Where do I find the instrument's unique name for use in smart variables?**
 
-**A:** In the Codebook (Project Home and Design → Codebook). Each instrument is listed with its display name followed by its unique name in parentheses. See RC-FD-05 — Codebook.
+**A:** In the Codebook (Project Home and Design → Codebook). Each instrument is listed with its display name followed by its unique name in parentheses. See [RC-FD-05 — Codebook](RC-FD-05_Codebook.md).
 
 **Q: Can I use `[survey-url]` (without the instrument name) in an Alert & Notification?**
 
@@ -202,19 +211,19 @@ By default, the participant list runs in anonymous mode, which makes it difficul
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-40 — Export Survey Link API** — programmatically retrieve a unique survey link for a specific record and instrument
+- **[RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)** — programmatically retrieve a unique survey link for a specific record and instrument
 
 ---
 
 
 # 7. Related Articles
 
-- RC-SURV-01 — Surveys – Basics (enabling surveys, Survey Distribution Tools, public link walkthrough)
-- RC-SURV-02 — Survey Settings: Basic Options & Design
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination (Save and Return Later setting)
-- RC-SURV-05 — Participant List & Manual Survey Invitations (full participant list documentation)
-- RC-PIPE-03 — Smart Variables Overview (full catalog of smart variables)
-- RC-FD-05 — Codebook (finding instrument unique names)
-- RC-LONG-01 — Longitudinal Project Setup (arms, events)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (enabling surveys, Survey Distribution Tools, public link walkthrough)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) (Save and Return Later setting)
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) (full participant list documentation)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (full catalog of smart variables)
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (finding instrument unique names)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events)

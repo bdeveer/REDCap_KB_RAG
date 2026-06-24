@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
+| **Synonyms** | [mycap-participant-link] smart variable; how to pipe a mycap participant link with [mycap-participant-url]; mycap smart variables for the participant code [mycap-participant-code]; [mycap-project-code] mycap join code smart variable; send a mycap enrollment link or code via email; how to share a mycap participant code; mycap participant and project code smart variables; pipe a mycap app link into a notification |
 
 ---
 

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) |
+| **Synonyms** | [form-link] smart variable; how to build a link to a data entry form with [form-url]; form smart variables for the instrument name [instrument-name]; [instrument-label] and [is-form] smart variables; pipe a link to a specific instrument with [form-link:instrument]; create a direct link to an instrument for a record; form-level smart variables for data entry forms; difference between [form-link] and [form-url] |
 
 ---
 

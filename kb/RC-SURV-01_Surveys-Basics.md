@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04-02 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | how do i enable a survey in redcap; turn an instrument into a survey; let participants enter data without an account; basic survey setup and distribution; survey workflow from creation to responses; survey user rights explained; getting started with surveys; how do surveys work in redcap |
 
 ---
 

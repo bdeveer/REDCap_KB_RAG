@@ -1,7 +1,32 @@
 ---
 id: RC-API-13
 title: Import File API
-domain: ''
+domain: API
+applies_to:
+- REDCap projects with file upload fields
+prerequisites:
+- RC-API-01 — REDCap API
+version: '1.1'
+last_updated: '2026'
+source: REDCap API v16.1.3 official documentation examples
+related:
+- id: RC-API-01
+  title: REDCap API
+- id: RC-API-12
+  title: Export File API
+- id: RC-API-14
+  title: Delete File API
+tags:
+- api
+synonyms:
+- how do i upload a file via the api
+- import file api call
+- attach a file to a record through the api
+- api method to upload to a file-upload field
+- send a file as multipart form data via api
+- programmatically upload files to redcap
+- api endpoint to import a record file
+- automate file uploads with the api
 ---
 
 # 1. Overview
@@ -136,7 +161,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -174,7 +199,7 @@ Example success response (JSON):
 
 **Q: What happens if a file already exists in the target field? Will it be overwritten?**
 
-**A:** Yes. If a file already exists in the target file-upload field, importing a new file replaces it. The previous file is permanently removed. If you need to preserve the original, export it first using RC-API-12 before importing the replacement.
+**A:** Yes. If a file already exists in the target file-upload field, importing a new file replaces it. The previous file is permanently removed. If you need to preserve the original, export it first using [RC-API-12 — Export File API](RC-API-12_Export-File.md) before importing the replacement.
 
 ---
 
@@ -190,6 +215,6 @@ Example success response (JSON):
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-12 — Export File (download files from file-upload fields)
-- RC-API-14 — Delete File (remove files from file-upload fields)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from file-upload fields)

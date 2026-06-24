@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-06 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)|
+| **Synonyms** | edit multiple fields at once; quick modify fields bulk action; jump to a field by variable name; field navigator in the online designer; add custom css to an instrument; style a form or survey with css; bulk apply changes to selected fields; advanced online designer shortcuts |
 
 ---
 

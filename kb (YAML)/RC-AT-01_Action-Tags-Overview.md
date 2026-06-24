@@ -11,13 +11,24 @@ prerequisites:
 version: '1.0'
 last_updated: '2026'
 related:
-- note: RC-AT-02 through RC-AT-07 (category articles)
+- id: RC-AT-02
+  title: '@HIDDEN & @READONLY — Visibility Control through RC-AT-07 — Cosmetic Action
+    Tags (category articles)'
 - id: RC-FD-02
   title: Online Designer
 - id: RC-FD-03
   title: Data Dictionary
 tags:
 - action tags
+synonyms:
+- what are action tags in redcap
+- how do i add an action tag to a field
+- list of available action tags
+- where do i put action tags in the online designer
+- action tags field annotation box
+- intro to redcap action tags
+- how do action tags work
+- '@ tag to change field behavior'
 ---
 
 # 1. Overview
@@ -44,7 +55,7 @@ The internal code assigned to each option in a radio button, dropdown, or checkb
 
 Free-form notes that can be placed in the same *Action Tags / Field Annotation* box alongside any action tag. Annotations are only visible in the Online Designer and the Data Dictionary — they are never shown to data entry users or survey participants, and they have no effect on field behavior. Use annotations for designer-facing notes: design rationale, outstanding questions, variable mapping notes, or reminders about protocol decisions.
 
-> **Do not confuse with the Field Note.** The Field Note (a separate field attribute) is visible to everyone completing the instrument. The Field Annotation is visible to designers only. If you need to communicate something to the person filling in the form — such as units of measure or format instructions — use the Field Note, not the Field Annotation. See RC-FD-06 Section 7.8–7.9 and the project STYLE-GUIDE.md for guidance on which to use when.
+> **Do not confuse with the Field Note.** The Field Note (a separate field attribute) is visible to everyone completing the instrument. The Field Annotation is visible to designers only. If you need to communicate something to the person filling in the form — such as units of measure or format instructions — use the Field Note, not the Field Annotation. See [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) Section 7.8–7.9 and the project STYLE-GUIDE.md for guidance on which to use when.
 
 **External Module Action Tags**
 
@@ -117,64 +128,64 @@ Use this table to quickly find which article covers a specific action tag.
 
 | Action Tag | Category | Article | Purpose |
 |---|---|---|---|
-| `@HIDDEN` | Visibility | RC-AT-02 | Hide a field from view |
-| `@HIDDEN-SURVEY` | Visibility | RC-AT-02 | Hide in survey mode only |
-| `@HIDDEN-FORM` | Visibility | RC-AT-02 | Hide in data entry form only |
-| `@HIDDEN-APP` | Visibility | RC-AT-02 | Hide in Mobile App only |
-| `@HIDDEN-PDF` | Visibility | RC-AT-02 | Hide from PDF exports |
-| `@READONLY` | Visibility | RC-AT-02 | Make a field non-editable |
-| `@READONLY-SURVEY` | Visibility | RC-AT-02 | Read-only in survey mode only |
-| `@READONLY-FORM` | Visibility | RC-AT-02 | Read-only in data entry form only |
-| `@READONLY-APP` | Visibility | RC-AT-02 | Read-only in Mobile App only |
-| `@RANDOMORDER` | Radio/Dropdown | RC-AT-03 | Randomize option display order |
-| `@HIDECHOICE` | Radio/Dropdown | RC-AT-03 | Hide specific options |
-| `@SHOWCHOICE` | Radio/Dropdown | RC-AT-03 | Show only specific options |
-| `@MAXCHOICE` | Radio/Dropdown | RC-AT-03 | Limit selections per option |
-| `@NONEOFTHEABOVE` | Checkbox | RC-AT-04 | Enforce mutually exclusive options |
-| `@MAXCHECKED` | Checkbox | RC-AT-04 | Limit maximum checked boxes |
-| `@PASSWORDMASK` | Free Text | RC-AT-05 | Obscure text entry display |
-| `@FORCE-MINMAX` | Free Text | RC-AT-05 | Enforce min/max bounds hard |
-| `@WORDLIMIT` | Free Text | RC-AT-05 | Cap maximum word count |
-| `@CHARLIMIT` | Free Text | RC-AT-05 | Cap maximum character count |
-| `@RICHTEXT` | Free Text | RC-AT-05 | Enable formatting in notes box |
-| `@PLACEHOLDER` | Free Text | RC-AT-05 | Display hint text in field |
-| `@NOW` | Autofill | RC-AT-06 | Fill with current date/time |
-| `@NOW-SERVER` | Autofill | RC-AT-06 | Fill with server date/time |
-| `@NOW-UTC` | Autofill | RC-AT-06 | Fill with UTC date/time |
-| `@TODAY` | Autofill | RC-AT-06 | Fill with current date |
-| `@TODAY-SERVER` | Autofill | RC-AT-06 | Fill with server date |
-| `@TODAY-UTC` | Autofill | RC-AT-06 | Fill with UTC date |
-| `@LONGITUDE` | Autofill | RC-AT-06 | Fill with device longitude |
-| `@LATITUDE` | Autofill | RC-AT-06 | Fill with device latitude |
-| `@USERNAME` | Autofill | RC-AT-06 | Fill with current username |
-| `@CONSENT-VERSION` | Autofill | RC-AT-06 | Fill with e-consent version |
-| `@DEFAULT` | Autofill | RC-AT-06 | Pre-fill on first load |
-| `@SETVALUE` | Autofill | RC-AT-06 | Pre-fill on every load |
-| `@PREFILL` | Autofill | RC-AT-06 | Deprecated alias for @SETVALUE — use @SETVALUE instead |
-| `@HIDEBUTTON` | Cosmetic | RC-AT-07 | Hide Today/Now button |
-| `@INLINE` | Cosmetic | RC-AT-07 | Display uploaded file inline |
-| `@INLINE-PREVIEW` | Cosmetic | RC-AT-07 | Display with toggle button |
-| `@IF` | Conditional | RC-AT-08 | Apply action tags conditionally based on logic |
-| `@CALCTEXT` | Calculation | RC-AT-09 | Calculate text values from expressions |
-| `@CALCDATE` | Calculation | RC-AT-09 | Calculate date values from expressions |
-| `@LANGUAGE-CURRENT-FORM` | Language | RC-AT-10 | Capture current language in data entry form |
-| `@LANGUAGE-CURRENT-SURVEY` | Language | RC-AT-10 | Capture current language in survey |
-| `@LANGUAGE-SET` | Language | RC-AT-10 | Switch language based on field value |
-| `@LANGUAGE-SET-FORM` | Language | RC-AT-10 | Switch language in data entry form only |
-| `@LANGUAGE-SET-SURVEY` | Language | RC-AT-10 | Switch language in survey only |
-| `@LANGUAGE-FORCE` | Language | RC-AT-10 | Force page to render in specified language |
-| `@LANGUAGE-FORCE-FORM` | Language | RC-AT-10 | Force language in data entry form only |
-| `@LANGUAGE-FORCE-SURVEY` | Language | RC-AT-10 | Force language in survey only |
-| `@LANGUAGE-MENU-STATIC` | Language | RC-AT-10 | Keep language menu always visible in survey |
-| `@APPUSERNAME-APP` | Mobile App | RC-AT-11 | Fill with mobile app username |
-| `@BARCODE-APP` | Mobile App | RC-AT-11 | Enable barcode/QR code scanning |
-| `@HIDESUBMIT` | External Module | RC-AT-EM-01 | Hide all save/submit buttons (HIDESUBMIT module) |
-| `@HIDESUBMIT-FORM` | External Module | RC-AT-EM-01 | Hide buttons on data entry forms (HIDESUBMIT module) |
-| `@HIDESUBMIT-SURVEY` | External Module | RC-AT-EM-01 | Hide buttons on surveys (HIDESUBMIT module) |
-| `@HIDESUBMIT-NEXT` | External Module | RC-AT-EM-01 | Hide Next/Previous buttons (HIDESUBMIT module) |
-| `@HIDESAVE` | External Module | RC-AT-EM-01 | Hide save button only (HIDESUBMIT module) |
-| `@HIDESAVE-FORM` | External Module | RC-AT-EM-01 | Hide save on forms only (HIDESUBMIT module) |
-| `@HIDESAVE-SURVEY` | External Module | RC-AT-EM-01 | Hide save on surveys only (HIDESUBMIT module) |
+| `@HIDDEN` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide a field from view |
+| `@HIDDEN-SURVEY` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in survey mode only |
+| `@HIDDEN-FORM` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in data entry form only |
+| `@HIDDEN-APP` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in Mobile App only |
+| `@HIDDEN-PDF` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide from PDF exports |
+| `@READONLY` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Make a field non-editable |
+| `@READONLY-SURVEY` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Read-only in survey mode only |
+| `@READONLY-FORM` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Read-only in data entry form only |
+| `@READONLY-APP` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Read-only in Mobile App only |
+| `@RANDOMORDER` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Randomize option display order |
+| `@HIDECHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Hide specific options |
+| `@SHOWCHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Show only specific options |
+| `@MAXCHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Limit selections per option |
+| `@NONEOFTHEABOVE` | Checkbox | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Enforce mutually exclusive options |
+| `@MAXCHECKED` | Checkbox | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Limit maximum checked boxes |
+| `@PASSWORDMASK` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Obscure text entry display |
+| `@FORCE-MINMAX` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Enforce min/max bounds hard |
+| `@WORDLIMIT` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Cap maximum word count |
+| `@CHARLIMIT` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Cap maximum character count |
+| `@RICHTEXT` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Enable formatting in notes box |
+| `@PLACEHOLDER` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Display hint text in field |
+| `@NOW` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with current date/time |
+| `@NOW-SERVER` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with server date/time |
+| `@NOW-UTC` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with UTC date/time |
+| `@TODAY` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with current date |
+| `@TODAY-SERVER` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with server date |
+| `@TODAY-UTC` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with UTC date |
+| `@LONGITUDE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with device longitude |
+| `@LATITUDE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with device latitude |
+| `@USERNAME` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with current username |
+| `@CONSENT-VERSION` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Fill with e-consent version |
+| `@DEFAULT` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on first load |
+| `@SETVALUE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on every load |
+| `@PREFILL` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Deprecated alias for @SETVALUE — use @SETVALUE instead |
+| `@HIDEBUTTON` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide Today/Now button |
+| `@INLINE` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display uploaded file inline |
+| `@INLINE-PREVIEW` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display with toggle button |
+| `@IF` | Conditional | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Apply action tags conditionally based on logic |
+| `@CALCTEXT` | Calculation | [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculate text values from expressions |
+| `@CALCDATE` | Calculation | [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculate date values from expressions |
+| `@LANGUAGE-CURRENT-FORM` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Capture current language in data entry form |
+| `@LANGUAGE-CURRENT-SURVEY` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Capture current language in survey |
+| `@LANGUAGE-SET` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Switch language based on field value |
+| `@LANGUAGE-SET-FORM` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Switch language in data entry form only |
+| `@LANGUAGE-SET-SURVEY` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Switch language in survey only |
+| `@LANGUAGE-FORCE` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Force page to render in specified language |
+| `@LANGUAGE-FORCE-FORM` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Force language in data entry form only |
+| `@LANGUAGE-FORCE-SURVEY` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Force language in survey only |
+| `@LANGUAGE-MENU-STATIC` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Keep language menu always visible in survey |
+| `@APPUSERNAME-APP` | Mobile App | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Fill with mobile app username |
+| `@BARCODE-APP` | Mobile App | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Enable barcode/QR code scanning |
+| `@HIDESUBMIT` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide all save/submit buttons (HIDESUBMIT module) |
+| `@HIDESUBMIT-FORM` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide buttons on data entry forms (HIDESUBMIT module) |
+| `@HIDESUBMIT-SURVEY` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide buttons on surveys (HIDESUBMIT module) |
+| `@HIDESUBMIT-NEXT` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide Next/Previous buttons (HIDESUBMIT module) |
+| `@HIDESAVE` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save button only (HIDESUBMIT module) |
+| `@HIDESAVE-FORM` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save on forms only (HIDESUBMIT module) |
+| `@HIDESAVE-SURVEY` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save on surveys only (HIDESUBMIT module) |
 
 ---
 
@@ -184,17 +195,17 @@ The Action Tags knowledge base series is organized by tag category:
 
 | Article | Category | Tags Covered |
 |---|---|---|
-| RC-AT-02 | Visibility | `@HIDDEN`, `@READONLY` and all situational variants |
-| RC-AT-03 | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE` |
-| RC-AT-04 | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
-| RC-AT-05 | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
-| RC-AT-06 | Autofill | `@NOW`, `@TODAY`, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
-| RC-AT-07 | Cosmetic | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW` |
-| RC-AT-08 | Conditional | `@IF` |
-| RC-AT-09 | Calculation | `@CALCTEXT`, `@CALCDATE` |
-| RC-AT-10 | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |
-| RC-AT-11 | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP` |
-| RC-AT-EM-01 | External Module | `@HIDESUBMIT`, `@HIDESAVE` and related variants (HIDESUBMIT module) |
+| [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Visibility | `@HIDDEN`, `@READONLY` and all situational variants |
+| [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE` |
+| [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
+| [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
+| [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Autofill | `@NOW`, `@TODAY`, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
+| [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Cosmetic | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW` |
+| [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Conditional | `@IF` |
+| [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculation | `@CALCTEXT`, `@CALCDATE` |
+| [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |
+| [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP` |
+| [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | External Module | `@HIDESUBMIT`, `@HIDESAVE` and related variants (HIDESUBMIT module) |
 
 ---
 
@@ -206,7 +217,7 @@ The Action Tags knowledge base series is organized by tag category:
 
 **Q: Can action tags interfere with branching logic?**
 
-**A:** Some can. `@HIDDEN` overrides branching logic — a field tagged with `@HIDDEN` is always hidden, regardless of branching logic conditions. See RC-AT-02 for details.
+**A:** Some can. `@HIDDEN` overrides branching logic — a field tagged with `@HIDDEN` is always hidden, regardless of branching logic conditions. See [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) for details.
 
 **Q: Will adding an unsupported action tag to a field cause an error?**
 
@@ -216,16 +227,16 @@ The Action Tags knowledge base series is organized by tag category:
 
 # 9. Related Articles
 
-- RC-AT-02 — @HIDDEN & @READONLY
-- RC-AT-03 — Radio/Dropdown Action Tags
-- RC-AT-04 — Checkbox Action Tags
-- RC-AT-05 — Free Text Action Tags
-- RC-AT-06 — Autofill Action Tags
-- RC-AT-07 — Cosmetic Action Tags
-- RC-AT-08 — @IF: Conditional Logic
-- RC-AT-09 — @CALCTEXT & @CALCDATE: Calculations
-- RC-AT-10 — Language Action Tags
-- RC-AT-11 — Mobile App Action Tags
-- RC-AT-EM-01 — External Module Action Tags (HIDESUBMIT)
-- RC-FD-02 — Online Designer
-- RC-FD-03 — Data Dictionary
+- [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) — @HIDDEN & @READONLY
+- [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md)
+- [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md)
+- [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md)
+- [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md)
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: Conditional Logic
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) — @CALCTEXT & @CALCDATE: Calculations
+- [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md)
+- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)
+- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md)(HIDESUBMIT)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)

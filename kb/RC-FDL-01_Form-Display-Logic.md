@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-PIPE-05 — Smart Variables: User](RC-PIPE-05_Smart-Variables-User.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md); [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) |
+| **Synonyms** | what is form display logic; control which instruments a user can open; gray out or hide a form conditionally; enable a form only when a condition is met; form display logic vs branching logic; data entry equivalent of survey queue; disable forms until prerequisites are met; how to set up form display logic |
 
 ---
 

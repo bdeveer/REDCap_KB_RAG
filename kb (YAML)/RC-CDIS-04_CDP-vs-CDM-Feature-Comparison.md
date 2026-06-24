@@ -5,18 +5,28 @@ domain: Clinical Data Interoperability Services
 applies_to:
 - Administrators deciding between CDP and CDM for their institution
 prerequisites:
-- RC-CDIS-01 — CDIS Overview and Control Center Setup
+- 'RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center
+  Setup'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CDIS-02
-  title: Clinical Data Pull
+  title: 'Clinical Data Pull (CDP): Setup and Usage'
 - id: RC-CDIS-03
-  title: Clinical Data Mart
+  title: 'Clinical Data Mart (CDM): Setup and Usage'
 - id: RC-CDIS-01
-  title: CDIS Overview
+  title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
 tags:
 - clinical data interoperability services
+synonyms:
+- should i use cdp or cdm for my project
+- compare clinical data pull and clinical data mart
+- which cdis module is right for my study
+- cdp vs cdm differences
+- bulk import versus patient-by-patient ehr import
+- choose between data pull and data mart
+- feature comparison clinical data modules
+- when to use clinical data pull or data mart
 ---
 
 # 1. Overview
@@ -135,6 +145,6 @@ CDP pulls only the fields you explicitly map. CDM pulls data for all available f
 
 # 7. Related Articles
 
-- RC-CDIS-01 — CDIS Overview and Control Center Setup
-- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
-- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)
+- [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md)
+- [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md)

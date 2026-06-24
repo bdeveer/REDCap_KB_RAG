@@ -13,11 +13,19 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-40
-  title: Export Survey Link
+  title: Export Survey Link API
 - id: RC-API-41
-  title: Export Survey Queue Link
+  title: Export Survey Queue Link API
 tags:
 - api
+synonyms:
+- export survey return code api method
+- how do i get a survey return code via the api
+- api call to retrieve a save and return later code
+- get the code to resume an incomplete survey through the api
+- export survey return code for a participant using the api
+- api method to fetch a survey resumption code
+- programmatically get the return code with the api
 ---
 
 # 1. Overview
@@ -149,7 +157,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -167,14 +175,14 @@ To let a respondent resume their survey, append the code to the survey link usin
 https://redcap.example.edu/surveys/?s=<survey_link_code>&rc=B3K2M5L1N7P9R4T8X2Y1Z3C5D6E8F1G2
 ```
 
-Retrieve the base survey link separately using the Export Survey Link method (RC-API-40).
+Retrieve the base survey link separately using the Export Survey Link method ([RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)).
 
 ---
 
 # 6. Common Questions
 
 **Q: How do I use a return code with a survey link?**
-**A:** Get the base survey link from RC-API-40, then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
+**A:** Get the base survey link from [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md), then append the return code: `<survey_link_url>&rc=<return_code>`. Note the `&` — not `?` — because the survey URL already contains query parameters.
 
 **Q: What does the response look like?**
 **A:** It is a plain text string (just the code itself), not a JSON object or XML document. Don't try to parse it; use the string directly.
@@ -209,9 +217,9 @@ Retrieve the base survey link separately using the Export Survey Link method (RC
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-40 — Export Survey Link
-- RC-API-41 — Export Survey Queue Link
-- RC-API-43 — Export Survey Participants
-- RC-SURV-01 — Surveys – Basics (survey fundamentals)
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination (return code configuration in survey settings)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)
+- [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md)
+- [RC-API-43 — Export Survey Participants API](RC-API-43_Export-Survey-Participants.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) (return code configuration in survey settings)

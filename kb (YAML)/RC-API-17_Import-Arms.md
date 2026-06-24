@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-16
-  title: Export Arms
+  title: Export Arms API
 - id: RC-API-18
-  title: Delete Arms
+  title: Delete Arms API
 tags:
 - api
+synonyms:
+- how do i import arms via the api
+- import arms api call
+- create or rename study arms through the api
+- api method to add arm numbers and names
+- configure longitudinal arms programmatically
+- bulk update arms with the api
+- api endpoint to import arms
+- add arms to a multi-arm project via api
 ---
 
 # 1. Overview
@@ -26,7 +35,7 @@ The Import Arms API method creates or modifies arms in a longitudinal REDCap pro
 
 The `override` parameter controls behavior: when set to `0`, the method adds or modifies arms without deleting others; when set to `1`, all existing arms are deleted and replaced with the arms you provide.
 
-> **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status.
+> **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status. Note: even if your REDCap administrator has enabled the "Allow Normal Users to Add or Modify Events and Arms in Production" setting, that applies to UI-based editing only — the Import Arms API endpoint remains restricted to Development status regardless.
 
 > **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project.
 
@@ -163,7 +172,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -204,7 +213,7 @@ This number reflects how many arms were created or renamed, not the total number
 
 **Q: Does this method work on a project that is in Production status?**
 
-**A:** No. Import Arms is only available for projects in **Development status**. If your project has been moved to Production, you will need to request a temporary return to Development (if your institution allows it) before you can modify arms via the API.
+**A:** No. Import Arms is only available for projects in **Development status**. If your project has been moved to Production, you will need to request a temporary return to Development (if your institution allows it) before you can modify arms via the API. The administrator setting "Allow Normal Users to Add or Modify Events and Arms in Production" does not change this — it unlocks UI-based editing only, not the API endpoint.
 
 ---
 
@@ -226,7 +235,7 @@ This number reflects how many arms were created or renamed, not the total number
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-16 — Export Arms (retrieve arm metadata from a project)
-- RC-API-18 — Delete Arms (remove arms from a project)
-- RC-LONG-01 — Longitudinal Project Setup (how arms are structured; use case for programmatic import)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)(retrieve arm metadata from a project)
+- [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)(remove arms from a project)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms are structured; use case for programmatic import)

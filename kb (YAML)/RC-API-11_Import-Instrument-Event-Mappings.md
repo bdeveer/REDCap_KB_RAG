@@ -6,7 +6,7 @@ applies_to:
 - Longitudinal REDCap projects only
 prerequisites:
 - RC-API-01 — REDCap API
-- RC-API-10 — Export Instrument-Event Mappings
+- RC-API-10 — Export Instrument-Event Mappings API
 version: '1.1'
 last_updated: '2026'
 source: REDCap API v16.1.3 official documentation examples
@@ -14,13 +14,22 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-09
-  title: Export Instruments
+  title: Export Instruments API
 - id: RC-API-10
-  title: Export Instrument-Event Mappings
+  title: Export Instrument-Event Mappings API
 - id: RC-API-20
-  title: Import Events
+  title: Import Events API
 tags:
 - api
+synonyms:
+- how do i import instrument-event mappings via the api
+- import instrument event mapping api call
+- set which forms appear at each event through the api
+- api method to assign forms to events
+- configure longitudinal instrument event map via api
+- bulk update form-to-event assignments with the api
+- api endpoint to import event form mappings
+- map instruments to events programmatically
 ---
 
 # 1. Overview
@@ -37,8 +46,8 @@ When to use this method: When you need to programmatically assign instruments to
 - **Development Status Only:** This method is only available for projects in Development status. It cannot be used on projects in Production or Analysis status.
 - **Requires API Import/Update AND Project Design/Setup:** You must have both API Import/Update privileges and Project Design/Setup privileges in the project. API Import/Update alone is not sufficient.
 - **Replaces Existing Mappings:** This method replaces the entire mapping structure. All existing mappings are removed and replaced with the provided data.
-- **Instruments Must Exist:** All instruments referenced in the mappings must already exist in the project. Use RC-API-07 (Export Metadata) or RC-API-09 (Export Instruments) to verify.
-- **Events Must Exist:** All events referenced in the mappings must already exist in the project. Create events using RC-API-20 (Import Events) if needed.
+- **Instruments Must Exist:** All instruments referenced in the mappings must already exist in the project. Use [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (Export Metadata) or [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) (Export Instruments) to verify.
+- **Events Must Exist:** All events referenced in the mappings must already exist in the project. Create events using [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (Import Events) if needed.
 
 ---
 
@@ -245,7 +254,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -263,7 +272,7 @@ On success, the method returns the number of instrument-event mappings imported 
 
 **Q: Can I add mappings without removing existing ones?**
 
-**A:** No, this method replaces all mappings. To add new mappings without losing existing ones, first export the current mappings (RC-API-10), add your new mappings to the data, and then import the complete set.
+**A:** No, this method replaces all mappings. To add new mappings without losing existing ones, first export the current mappings ([RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)), add your new mappings to the data, and then import the complete set.
 
 **Q: Do I need to specify all instruments for all events?**
 
@@ -271,7 +280,7 @@ On success, the method returns the number of instrument-event mappings imported 
 
 **Q: What if an instrument or event referenced in the data doesn't exist?**
 
-**A:** The import fails with a validation error. Ensure all instruments and events exist before importing mappings. Create missing instruments using RC-API-08 (Import Metadata) and events using RC-API-20 (Import Events).
+**A:** The import fails with a validation error. Ensure all instruments and events exist before importing mappings. Create missing instruments using [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) (Import Metadata) and events using [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (Import Events).
 
 **Q: Can I use this on a project that's already in Production?**
 
@@ -295,7 +304,7 @@ On success, the method returns the number of instrument-event mappings imported 
 
 **Referencing non-existent instruments.** If you map an instrument that doesn't exist in the project, the import fails. Verify all instrument names exist before importing mappings.
 
-**Failing to back up current mappings.** Since this method replaces all existing mappings, always export the current state (RC-API-10) before importing changes. If something goes wrong, you can restore the previous mappings.
+**Failing to back up current mappings.** Since this method replaces all existing mappings, always export the current state ([RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)) before importing changes. If something goes wrong, you can restore the previous mappings.
 
 **Incomplete mapping data.** If you omit important arms or events, the resulting project structure will be incomplete. Ensure your mapping data covers all arms and events that should exist.
 
@@ -305,10 +314,10 @@ On success, the method returns the number of instrument-event mappings imported 
 
 # 9. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-10 — Export Instrument-Event Mappings (read current mappings)
-- RC-API-09 — Export Instruments (list available instruments)
-- RC-API-20 — Import Events (create or update events)
-- RC-API-08 — Import Metadata (create or update instruments/fields)
-- RC-LONG-01 — Longitudinal Project Setup (how arms and events are structured)
-- RC-LONG-02 — Repeated Instruments & Events Setup (how repeating instruments are configured per event)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)(read current mappings)
+- [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md)(list available instruments)
+- [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)(create or update events)
+- [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)(create or update instruments/fields)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms and events are structured)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeating instruments are configured per event)

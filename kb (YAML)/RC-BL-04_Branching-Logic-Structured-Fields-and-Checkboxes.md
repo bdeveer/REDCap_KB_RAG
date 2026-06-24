@@ -6,20 +6,29 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-BL-02 — Syntax & Atomic Statements
+- 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-BL-02
-  title: Syntax & Atomic Statements
+  title: 'Branching Logic: Syntax & Atomic Statements'
 - id: RC-BL-03
-  title: Combining Statements
+  title: 'Branching Logic: Combining Statements'
 - id: RC-FD-05
   title: Codebook
 - id: RC-DE-02
   title: Basic Data Entry
 tags:
 - branching logic
+synonyms:
+- how do i write branching logic for a checkbox
+- checkbox branching logic syntax
+- reference a single checkbox option in logic
+- branching logic based on dropdown or radio selection
+- what are raw coded values for branching logic
+- checkbox sub-variable syntax
+- show field when a specific checkbox is ticked
+- branching logic for multiple choice fields
 ---
 
 # 1. Overview
@@ -51,12 +60,12 @@ must always compare against raw values, not display labels.
 
 A structured field type that stores exactly one selected value. Radio
 buttons, dropdowns, Yes/No, True/False, and sliders are all
-single-choice fields. The selected option\'s raw value is stored as a
+single-choice fields. The selected option's raw value is stored as a
 single variable.
 
 **Multiple-Choice Field (Checkbox)**
 
-REDCap\'s checkbox field type, which allows multiple options to be
+REDCap's checkbox field type, which allows multiple options to be
 selected simultaneously. Unlike single-choice fields, checkboxes store
 each option as a separate binary sub-variable rather than as a single
 value.
@@ -73,24 +82,24 @@ Each sub-variable has a value of 1 (checked) or 0 (unchecked).
 # 3. Raw Values --- What They Are and How to Find Them
 
 Every option in a radio button, dropdown, or checkbox field is defined
-using a \'raw value, label\' format. The raw value is what REDCap stores
+using a 'raw value, label' format. The raw value is what REDCap stores
 in the database and what you must use in logic statements.
 
 ## 3.1 How REDCap Defines Options
 
 In the Online Designer, options are entered one per line in the format:
 
-+---------------------------------------------------+
-| raw\_value, Display Label                         |
-|                                                   |
-| // Example — a radio button with three options: |
-|                                                   |
-| 1, Strongly Agree                                 |
-|                                                   |
-| 2, Agree                                          |
-|                                                   |
-| 3, Disagree                                       |
-+---------------------------------------------------+
+```
+raw_value, Display Label                        
+                                                 
+// Example — a radio button with three options:
+                                                 
+1, Strongly Agree                                
+                                                 
+2, Agree                                         
+                                                 
+3, Disagree                                      
+```
 
 Raw values are typically integers, but they can be any text string. The
 raw value is **unique within the field** — no two options in the same
@@ -98,19 +107,19 @@ field can share a raw value.
 
 ## 3.2 Where to Look Up Raw Values
 
-- **Codebook (RC-FD-05):** The Codebook displays all options for every
+- **Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)):** The Codebook displays all options for every
     field in human-readable format, including raw values. This is the
     fastest reference when writing logic.
 
-- **Online Designer:** Open the field\'s edit dialog. The choices
+- **Online Designer:** Open the field's edit dialog. The choices
     section shows raw values paired with labels.
 
 - **Data Dictionary:** The Choices, Calculations, OR Slider Labels
     column contains all option definitions in raw value, label format.
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** Always use the raw value in logic statements, never the display label. If the label is \'Strongly Agree\' and the raw value is 1, write \[field\]=\'1\' — not \[field\]=\'Strongly Agree\'. Labels can be changed by the project designer at any time; raw values are stable.
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Important:** Always use the raw value in logic statements, never the display label. If the label is 'Strongly Agree' and the raw value is 1, write [field]='1' — not [field]='Strongly Agree'. Labels can be changed by the project designer at any time; raw values are stable.
+
 
 ---
 
@@ -122,15 +131,14 @@ statement pattern.
 
 ## 4.1 Supported Single-Choice Field Types
 
-  ------------------ --------------------------------------- ---------------------
-  **Field Type**     **Stored Value**                        **Logic Example**
-  Radio button       Raw value of selected option            \[gender\]=\'1\'
-  Dropdown           Raw value of selected option            \[country\]=\'US\'
-  Yes / No           \'1\' = Yes, \'0\' = No                 \[consent\]=\'1\'
-  True / False       \'1\' = True, \'0\' = False             \[eligible\]=\'1\'
-  Slider             The numeric position value selected     \[pain\_score\]\>=7
-  Calculated field   The numeric result of the calculation   \[bmi\]\>=25
-  ------------------ --------------------------------------- ---------------------
+| **Field Type** | **Stored Value** | **Logic Example** |
+| --- | --- | --- |
+| Radio button | Raw value of selected option | [gender]='1' |
+| Dropdown | Raw value of selected option | [country]='US' |
+| Yes / No | '1' = Yes, '0' = No | [consent]='1' |
+| True / False | '1' = True, '0' = False | [eligible]='1' |
+| Slider | The numeric position value selected | [pain_score]>=7 |
+| Calculated field | The numeric result of the calculation | [bmi]>=25 |
 
 ## 4.2 Bonus: File Upload and Signature Fields
 
@@ -138,13 +146,13 @@ File Upload and Signature fields do not store a traditional value, but
 you can use them in logic to check whether a file has been attached or a
 signature captured:
 
-+-------------------------------------------------------------------+
-| \[consent\_form\]\<\>\'\' // True when a file has been uploaded   |
-|                                                                   |
-| \[signature\]\<\>\'\' // True when a signature has been captured  |
-|                                                                   |
-| \[consent\_form\]=\'\' // True when no file has been uploaded yet |
-+-------------------------------------------------------------------+
+```
+[consent_form]<>'' // True when a file has been uploaded  
+                                                                 
+[signature]<>'' // True when a signature has been captured 
+                                                                 
+[consent_form]='' // True when no file has been uploaded yet
+```
 
 You cannot compare the file contents — only the presence or absence of
 the file.
@@ -169,13 +177,13 @@ values:
 
 Example: a checkbox field named \[conditions\] with three options:
 
-+-----------------+
-| 1, Diabetes     |
-|                 |
-| 2, Hypertension |
-|                 |
-| 3, Cancer       |
-+-----------------+
+```
+1, Diabetes    
+               
+2, Hypertension
+               
+3, Cancer      
+```
 
 This creates three sub-variables: \[conditions(1)\], \[conditions(2)\],
 \[conditions(3)\]. Each is independently 0 or 1.
@@ -185,107 +193,106 @@ This creates three sub-variables: \[conditions(1)\], \[conditions(2)\],
 To reference a specific checkbox option in logic, place the raw value of
 that option inside parentheses within the variable name:
 
-+----------------------------------------------------------------+
-| Format: \[variable\_name(raw\_value)\]                         |
-|                                                                |
-| Examples:                                                      |
-|                                                                |
-| \[conditions(1)\]=\'1\' // Is the Diabetes option checked?     |
-|                                                                |
-| \[conditions(2)\]=\'1\' // Is the Hypertension option checked? |
-|                                                                |
-| \[conditions(3)\]=\'0\' // Is the Cancer option NOT checked?   |
-+----------------------------------------------------------------+
+```
+Format: [variable_name(raw_value)]                        
+                                                              
+Examples:                                                     
+                                                              
+[conditions(1)]='1' // Is the Diabetes option checked?    
+                                                              
+[conditions(2)]='1' // Is the Hypertension option checked?
+                                                              
+[conditions(3)]='0' // Is the Cancer option NOT checked?  
+```
 
 ## 5.3 Comparing Radio vs. Checkbox Syntax
 
-  ------------------------------------------ ------------------ -------------------------------------------------------------------------------
-  **Scenario**                               **Radio Button**   **Checkbox**
-  Option with raw value 12 is selected       \[radio\]=12       \[checkbox(12)\]=\'1\'
-  Option with raw value 12 is NOT selected   \[radio\]\<\>12    \[checkbox(12)\]=\'0\'
-  Field has no selection (empty)             \[radio\]=\'\'     Not directly testable as a single expression — check each option separately
-  ------------------------------------------ ------------------ -------------------------------------------------------------------------------
+| **Scenario** | **Radio Button** | **Checkbox** |
+| --- | --- | --- |
+| Option with raw value 12 is selected | [radio]=12 | [checkbox(12)]='1' |
+| Option with raw value 12 is NOT selected | [radio]<>12 | [checkbox(12)]='0' |
+| Field has no selection (empty) | [radio]='' | Not directly testable as a single expression — check each option separately |
 
 ## 5.4 Practical Checkbox Logic Patterns
 
 Show a follow-up field when at least one of several checkbox options is
 checked:
 
-+----------------------------------------------------------------------+
-| \[conditions(1)\]=\'1\' or \[conditions(2)\]=\'1\' or                |
-| \[conditions(3)\]=\'1\'                                              |
-|                                                                      |
-| // True when Diabetes OR Hypertension OR Cancer is checked           |
-+----------------------------------------------------------------------+
+```
+[conditions(1)]='1' or [conditions(2)]='1' or               
+[conditions(3)]='1'                                             
+                                                                    
+// True when Diabetes OR Hypertension OR Cancer is checked          
+```
 
 Show a field only when a specific combination of checkboxes is checked:
 
-+--------------------------------------------------------------+
-| \[conditions(1)\]=\'1\' and \[conditions(2)\]=\'1\'          |
-|                                                              |
-| // True only when BOTH Diabetes AND Hypertension are checked |
-+--------------------------------------------------------------+
+```
+[conditions(1)]='1' and [conditions(2)]='1'         
+                                                            
+// True only when BOTH Diabetes AND Hypertension are checked
+```
 
 Show a field when a specific option is explicitly NOT checked:
 
-+----------------------------------------------------------------------+
-| \[conditions(3)\]=\'0\'                                              |
-|                                                                      |
-| // True when Cancer is NOT checked (i.e., option is unchecked or     |
-| never shown)                                                         |
-+----------------------------------------------------------------------+
+```
+[conditions(3)]='0'                                             
+                                                                    
+// True when Cancer is NOT checked (i.e., option is unchecked or    
+never shown)                                                        
+```
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Warning:** Do not switch a checkbox field to a radio button field (or vice versa) after branching logic has been written that references it. The sub-variable syntax for checkboxes is incompatible with the single-value syntax for radio buttons. Any existing logic referencing that field will break and must be rewritten.
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Warning:** Do not switch a checkbox field to a radio button field (or vice versa) after branching logic has been written that references it. The sub-variable syntax for checkboxes is incompatible with the single-value syntax for radio buttons. Any existing logic referencing that field will break and must be rewritten.
+
 
 ---
 
 # 6. Common Questions
 
-**Q: How do I find the raw values for a field\'s options?**
+**Q: How do I find the raw values for a field's options?**
 
-**A:** Open the Codebook (RC-FD-05) and navigate to the field. The
+**A:** Open the Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) and navigate to the field. The
 Codebook displays all options in raw value, label format. Alternatively,
-open the field in the Online Designer\'s edit dialog and check the
+open the field in the Online Designer's edit dialog and check the
 Choices section.
 
 **Q: Does it matter whether I quote raw values in logic? For example,
-\[gender\]=\'1\' vs \[gender\]=1?**
+\[gender\]='1' vs \[gender\]=1?**
 
 **A:** For numeric raw values, REDCap accepts both quoted and unquoted
-forms. \[gender\]=\'1\' and \[gender\]=1 are functionally equivalent.
+forms. \[gender\]='1' and \[gender\]=1 are functionally equivalent.
 Using single quotes is recommended for consistency, especially when the
 Data Dictionary may be edited in spreadsheet software.
 
 **Q: Can I check whether none of the checkbox options are checked?**
 
 **A:** Not directly with a single expression. You must check each option
-individually: \[field(1)\]=\'0\' and \[field(2)\]=\'0\' and
-\[field(3)\]=\'0\'. This evaluates to true only when all listed options
+individually: \[field(1)\]='0' and \[field(2)\]='0' and
+\[field(3)\]='0'. This evaluates to true only when all listed options
 are unchecked.
 
-**Q: A radio button option has the label \'Yes\' and raw value \'1\'.
-Should I write \[field\]=\'Yes\' or \[field\]=\'1\'?**
+**Q: A radio button option has the label 'Yes' and raw value '1'.
+Should I write \[field\]='Yes' or \[field\]='1'?**
 
-**A:** Always use the raw value: \[field\]=\'1\'. Logic compares against
+**A:** Always use the raw value: \[field\]='1'. Logic compares against
 stored values, not display labels. Display labels can be changed at any
 time; raw values are permanent.
 
-**Q: Why can\'t I check whether a checkbox field has any checked options
-by writing \[field\]\<\>\'\'?**
+**Q: Why can't I check whether a checkbox field has any checked options
+by writing \[field\]\<\>''?**
 
 **A:** Unlike text fields and single-choice fields, checkbox fields do
-not have a single stored value that represents \'something is
-selected\'. Each option is a separate binary sub-variable. To check
+not have a single stored value that represents 'something is
+selected'. Each option is a separate binary sub-variable. To check
 whether any option is selected, you must OR together checks on each
-sub-variable: \[field(1)\]=\'1\' or \[field(2)\]=\'1\' etc.
+sub-variable: \[field(1)\]='1' or \[field(2)\]='1' etc.
 
 **Q: I changed a radio button field to a checkbox. Now my branching
 logic is broken. How do I fix it?**
 
 **A:** Any logic that used radio syntax (e.g., \[field\]=2) must be
-rewritten in checkbox syntax (e.g., \[field(2)\]=\'1\'). Open each
+rewritten in checkbox syntax (e.g., \[field(2)\]='1'). Open each
 affected field in the Online Designer, review the branching logic, and
 update the syntax. The Data Dictionary can speed this up if many fields
 are affected.
@@ -295,23 +302,24 @@ are affected.
 # 7. Common Mistakes & Gotchas
 
 - Using the display label instead of the raw value:
-    \[gender\]=\'Male\' will not work if \'Male\' is a label and \'1\'
+    \[gender\]='Male' will not work if 'Male' is a label and '1'
     is the raw value. Always verify raw values in the Codebook before
     writing logic.
 
 - Forgetting parentheses in checkbox syntax: \[conditions\]=1 is radio
-    button syntax. For checkboxes, it must be \[conditions(1)\]=\'1\'.
-    Without the parentheses and raw value, the logic will not reference
-    any checkbox sub-variable.
+    button syntax. For checkboxes, the correct form uses parentheses —
+    \[conditions(1)\]='1' or equivalently \[conditions(1)\]=1 (both
+    quoted and unquoted values are accepted). Without the parentheses,
+    the logic will not reference any checkbox sub-variable.
 
 - Switching field type after logic is written: changing a field from
     radio to checkbox (or vice versa) breaks all existing logic
     referencing that field. The syntax is incompatible. Plan field types
     carefully before data collection begins.
 
-- Treating checkbox \'unchecked\' as empty: an unchecked checkbox
-    option stores 0, not \'\' (empty). Testing \[field(1)\]=\'\' will
-    not behave as expected. Use \[field(1)\]=\'0\' to test for
+- Treating checkbox 'unchecked' as empty: an unchecked checkbox
+    option stores 0, not '' (empty). Testing \[field(1)\]='' will
+    not behave as expected. Use \[field(1)\]='0' to test for
     unchecked.
 
 - Assuming checkbox logic mirrors radio logic: the most common mistake
@@ -323,16 +331,16 @@ are affected.
 
 # 8. Related Articles
 
-- RC-BL-02 — Syntax & Atomic Statements (prerequisite — covers
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)(prerequisite — covers
     operators, quotes, brackets)
 
-- RC-BL-03 — Combining Logic Statements (AND, OR, parentheses ---
+- [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md)(AND, OR, parentheses ---
     often needed with checkbox logic)
 
-- RC-BL-01 — Branching Logic Overview & Scope
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)
 
-- RC-FD-05 — Codebook (the fastest way to look up raw values for any
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (the fastest way to look up raw values for any
     field)
 
-- RC-DE-02 — Basic Data Entry (explains how branching logic appears
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (explains how branching logic appears
     during data entry)

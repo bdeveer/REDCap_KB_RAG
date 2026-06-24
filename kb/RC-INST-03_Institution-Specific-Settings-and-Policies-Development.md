@@ -12,6 +12,7 @@
 | Last Updated | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Related Topics | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging](RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md)|
+| Synonyms | how do i log in to the development redcap server; dev instance for module developers and it staff; what authentication does the development environment use; development server settings and policies; can i build external modules on the dev instance; redcap url for the development environment; how does dev differ from production; table-based login on the development instance |
 
 ---
 

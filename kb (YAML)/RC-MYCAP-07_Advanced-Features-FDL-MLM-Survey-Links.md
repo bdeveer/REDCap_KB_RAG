@@ -6,7 +6,7 @@ applies_to:
 - Projects with MyCap enabled
 - feature-specific version requirements noted per section
 prerequisites:
-- RC-MYCAP-02 — Designing Instruments for MyCap
+- 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
 version: '1.0'
 last_updated: '2026'
 related:
@@ -15,9 +15,18 @@ related:
 - id: RC-MLM-01
   title: Multi-Language Management
 - id: RC-MYCAP-03
-  title: Task Scheduling
+  title: 'MyCap: Task Scheduling'
 tags:
 - mycap mobile app
+synonyms:
+- use form display logic in mycap
+- show or hide mycap tasks conditionally
+- translate the mycap app with multi-language management
+- embed a redcap survey link inside a mycap task
+- mycap advanced features fdl mlm survey links
+- conditional task display in the mycap app
+- combine translations and survey links in mycap
+- enable fdl support for the mycap app
 ---
 
 # 1. Overview
@@ -74,7 +83,7 @@ FDL behavior in MyCap differs from standard REDCap FDL in the following ways:
 1. Ensure FDL is enabled for the project: **Project Setup > Enable optional modules > Form Display Logic**.
 2. Enable FDL specifically for MyCap: **MyCap > Additional Settings > Enable support for MyCap App**.
 3. Go to **Project Setup > Form Display Logic** and configure the display conditions for each instrument.
-4. For MyCap-specific instruments, test using a test participant record (see RC-MYCAP-08 — Testing MyCap).
+4. For MyCap-specific instruments, test using a test participant record (see [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)
 
 ---
 
@@ -255,9 +264,9 @@ A common pattern for returning results to participants:
 
 # 7. Related Articles
 
-- RC-MYCAP-02 — Designing Instruments for MyCap (field design and annotations)
-- RC-MYCAP-03 — Task Scheduling (schedule types, FDL interaction with Infinite schedule)
-- RC-MYCAP-08 — Testing MyCap (testing FDL, MLM, and Survey Links)
-- RC-FDL-01 — Form Display Logic (full FDL reference for standard REDCap use)
-- RC-MLM-01 — Multi-Language Management (full MLM reference)
-- RC-PIPE-16 — Smart Variables: MyCap (MyCap-specific smart variable reference)
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(field design and annotations)
+- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)(schedule types, FDL interaction with Infinite schedule)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)(testing FDL, MLM, and Survey Links)
+- [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md) (full FDL reference for standard REDCap use)
+- [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) (full MLM reference)
+- [RC-PIPE-16 — Smart Variables: MyCap](RC-PIPE-16_Smart-Variables-MyCap.md) (MyCap-specific smart variable reference)

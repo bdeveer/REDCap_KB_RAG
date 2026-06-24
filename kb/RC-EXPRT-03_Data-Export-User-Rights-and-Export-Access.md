@@ -11,6 +11,7 @@
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)(when available) |
+| **Synonyms** | why cant i export data in redcap; data export rights not working; give a user permission to export; restrict export to de-identified only; export access denied troubleshooting; difference between data viewing and export rights; set export privileges per instrument; user cannot download data |
 
 ---
 

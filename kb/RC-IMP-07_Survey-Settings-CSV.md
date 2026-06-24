@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) |
+| **Synonyms** | how do i import survey settings via csv; bulk edit survey settings in a spreadsheet; copy survey configuration across projects; upload survey settings csv for all instruments; replicate completion text and confirmation emails; 62-column survey settings file structure; export and re-import survey settings; change response limits for many surveys at once |
 
 ---
 

@@ -19,7 +19,7 @@ related:
 - id: RC-SURV-01
   title: Surveys – Basics
 - id: RC-USER-01
-  title: User Rights Overview
+  title: 'User Rights: Overview & Three-Tier Access'
 - id: RC-DAG-01
   title: Data Access Groups
 - id: RC-ALERT-01
@@ -28,6 +28,15 @@ related:
   title: Randomization Setup Guide
 tags:
 - project
+synonyms:
+- how do i set up a new redcap project
+- step by step project setup guide
+- what order to build a project in
+- project setup checklist for beginners
+- prepare a project before launching
+- pre-launch review for a redcap project
+- new project walk-through
+- required steps to set up a project
 ---
 
 # 1. Overview
@@ -49,7 +58,7 @@ These steps happen once and unlock all subsequent configuration.
 - [ ] **[Surveys] Enable surveys** by toggling "Use surveys in this project?" on the Project Setup page. This must be done before any instrument can be designated as a survey.
 - [ ] **[Longitudinal] Enable longitudinal mode** by toggling "Use longitudinal data collection with defined events?" on the Project Setup page. This must be done before arms or events can be defined.
 
-> **Note:** Enabling or disabling longitudinal mode after data has been collected is destructive. Enable it before building instruments if you know your project will be longitudinal. See RC-PROJ-01 §6.4 and RC-LONG-01 §3 for consequences of disabling longitudinal mode with existing data.
+> **Note:** Enabling or disabling longitudinal mode after data has been collected is destructive. Enable it before building instruments if you know your project will be longitudinal. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6.4 and [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §3 for consequences of disabling longitudinal mode with existing data.
 
 ---
 
@@ -57,16 +66,16 @@ These steps happen once and unlock all subsequent configuration.
 
 Instruments (forms) are the foundation for every other configuration step. Fields must exist before you can write branching logic, create calculated fields, configure surveys, set up alerts, or build reports.
 
-- [ ] **[Required] Create instruments** using the Online Designer (RC-FD-02) or by uploading a Data Dictionary CSV (RC-FD-03). Add as many instruments as your data collection plan requires.
+- [ ] **[Required] Create instruments** using the Online Designer ([RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)) or by uploading a Data Dictionary CSV ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)). Add as many instruments as your data collection plan requires.
 - [ ] **[Required] Add fields to each instrument.** Choose the appropriate field type, enter field labels, and assign variable names. Variable names cannot be easily changed after data has been collected — choose them carefully.
-- [ ] **Set field validation** on text fields where applicable (e.g., date, integer, email). See RC-DE-05 — Field Validations.
+- [ ] **Set field validation** on text fields where applicable (e.g., date, integer, email). See [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md).
 - [ ] **Mark required fields** (fields that must be completed before a form can be saved). Use sparingly — over-use of required fields frustrates data entry and survey respondents.
-- [ ] **Add branching logic** to fields that should only appear under certain conditions. In longitudinal projects, cross-event references must include the unique event name (e.g., `[baseline_arm_1][field_name]`). See RC-BL-01 — Branching Logic Overview.
-- [ ] **Add calculated fields** for any derived values (totals, scores, age from date of birth). Calculations reference existing fields and update automatically. See RC-CALC-02 — Calculated Fields.
-- [ ] **Add action tags** to fields that require special behavior (auto-fill, hidden display, read-only, etc.). See RC-AT-01 — Action Tags Overview.
+- [ ] **Add branching logic** to fields that should only appear under certain conditions. In longitudinal projects, cross-event references must include the unique event name (e.g., `[baseline_arm_1][field_name]`). See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)
+- [ ] **Add calculated fields** for any derived values (totals, scores, age from date of birth). Calculations reference existing fields and update automatically. See [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md).
+- [ ] **Add action tags** to fields that require special behavior (auto-fill, hidden display, read-only, etc.). See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
 - [ ] **Set a custom record label** to make individual records identifiable at a glance in the record list. Configure this under Project Setup → Additional Customizations using piping syntax (e.g., `[first_name] [last_name] ([email])`). Without a custom label, records display only by their numeric record ID, which is unhelpful for staff who need to locate a specific participant.
 - [ ] **Set a secondary unique field** if the project needs to prevent duplicate entries based on a respondent-supplied value (e.g., email address, employee ID). Configure this under Project Setup → Additional Customizations. REDCap will warn users when a new record's value in that field matches an existing record. This is particularly useful for public-facing signup surveys where the same person might submit multiple times.
-- [ ] **Review the Codebook** (RC-FD-05) to confirm field types, variable names, and choice codes before proceeding. Errors are much easier to fix now than after data collection has started.
+- [ ] **Review the Codebook** ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) to confirm field types, variable names, and choice codes before proceeding. Errors are much easier to fix now than after data collection has started.
 
 > **Dependency note:** All subsequent phases — longitudinal setup, repeating instruments, survey configuration, user rights, alerts, reports, and randomization — reference fields or instruments by name. Build and review your instruments before configuring anything else.
 
@@ -76,14 +85,14 @@ Instruments (forms) are the foundation for every other configuration step. Field
 
 Complete this phase only if longitudinal mode was enabled in Phase 1. Arms must be defined before the events that belong to them; events must be defined before instruments can be assigned to them.
 
-- [ ] **[Multi-arm only] Define arms** on the Define My Events page. Arms separate participant cohorts that follow different event schedules. Single-arm projects can skip this step — REDCap creates "Arm 1" automatically. See RC-LONG-01 §4.1.
-- [ ] **Define events** within each arm (e.g., Baseline, Month 3, Month 6). Events must exist before instruments can be designated to them. See RC-LONG-01 §4.2–4.3.
+- [ ] **[Multi-arm only] Define arms** on the Define My Events page. Arms separate participant cohorts that follow different event schedules. Single-arm projects can skip this step — REDCap creates "Arm 1" automatically. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §4.1.
+- [ ] **Define events** within each arm (e.g., Baseline, Month 3, Month 6). Events must exist before instruments can be designated to them. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §4.2–4.3.
   - Assign meaningful, consistent event labels — the unique event name REDCap generates from the label is used in all logic references and cannot be manually changed through the UI.
   - If event display order matters and multiple events share the same day offset, assign sequential day offsets (0, 1, 2…) to enforce display order.
-- [ ] **Designate instruments to events** on the Designate Instruments for My Events page. Check every instrument-event combination where data should be collected. See RC-LONG-01 §5.
+- [ ] **Designate instruments to events** on the Designate Instruments for My Events page. Check every instrument-event combination where data should be collected. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §5.
   - **Always designate the first instrument (containing the record ID field) to the first event in every arm.** Omitting this causes records to save incorrectly.
   - An instrument can be designated to multiple events (e.g., a vitals form collected at every visit).
-- [ ] **Review branching logic and calculated fields** that cross event boundaries. All cross-event references must use the unique event name prefix (e.g., `[baseline_arm_1][dob]`). See RC-BL-05 — Branching Logic in Longitudinal Projects.
+- [ ] **Review branching logic and calculated fields** that cross event boundaries. All cross-event references must use the unique event name prefix (e.g., `[baseline_arm_1][dob]`). See [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)
 
 ---
 
@@ -93,10 +102,10 @@ Repeating instruments allow multiple instances of a single form to be collected 
 
 - [ ] **[Repeating instruments] Identify which instruments need to repeat** within a record or event. Repeating instruments are available in both classical and longitudinal projects. Examples: a medication log where each row is a separate drug, or an adverse event form completed once per event.
 - [ ] **[Repeating events — Longitudinal only] Identify which events need to repeat.** Repeating events are only available in longitudinal projects and require events to be defined first (Phase 3). Examples: unscheduled visits, repeated lab draws within a single study phase.
-- [ ] **Configure repeating instruments and/or events** via the "Repeating Instruments and Events" popup accessed from the Project Setup page. For each arm, designate which instruments repeat (within their event) and which events repeat entirely. See RC-LONG-02 — Repeated Instruments & Events Setup.
+- [ ] **Configure repeating instruments and/or events** via the "Repeating Instruments and Events" popup accessed from the Project Setup page. For each arm, designate which instruments repeat (within their event) and which events repeat entirely. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md).
 - [ ] **[Longitudinal] Confirm instrument-event designations include the repeating instruments** in the correct events. An instrument must be designated to an event before it can be set as repeating within that event.
 
-> **Key distinction:** Repeating instruments repeat a single form within a record or event; repeating events repeat an entire collection of instruments together. Choose based on what your data model requires. See RC-LONG-02 for guidance on which to use.
+> **Key distinction:** Repeating instruments repeat a single form within a record or event; repeating events repeat an entire collection of instruments together. Choose based on what your data model requires. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) for guidance on which to use.
 
 ---
 
@@ -105,11 +114,11 @@ Repeating instruments allow multiple instances of a single form to be collected 
 Survey features become available after enabling surveys in Phase 1. Each instrument must be individually enabled as a survey before survey-specific settings or automation can be configured for it.
 
 - [ ] **Enable each instrument as a survey** from the Online Designer by clicking the "Enable" button next to that instrument under the Survey column. This reveals the survey settings panel for that instrument.
-- [ ] **Configure survey settings per instrument:** set the survey title, instructions, completion text, auto-continue behavior, save-and-return options, and any response limit. See RC-SURV-02 — Survey Settings: Basic Options & Design.
-- [ ] **Configure access and termination settings** for each survey: public vs. private link, stop actions, response limits. See RC-SURV-03 — Survey Settings: Behavior, Access & Termination.
-- [ ] **[Survey Queue] Set up the Survey Queue** to chain multiple surveys in sequence. Requires at least two instruments to be enabled as surveys. Define the condition under which each subsequent survey is activated. See RC-SURV-07 — Survey Queue.
-- [ ] **[Automated invitations] Set up Automated Survey Invitations (ASI)** for any survey that should be sent automatically based on a trigger condition or schedule. Requires the survey to be enabled and any trigger fields to already exist. See RC-SURV-06 — Automated Survey Invitations.
-- [ ] **[e-Consent] Set up the e-Consent framework** if the project collects electronic informed consent. Requires a dedicated consent instrument with a signature field. See RC-SURV-08 — e-Consent Framework: Setup & Management.
+- [ ] **Configure survey settings per instrument:** set the survey title, instructions, completion text, auto-continue behavior, save-and-return options, and any response limit. See [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md).
+- [ ] **Configure access and termination settings** for each survey: public vs. private link, stop actions, response limits. See [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
+- [ ] **[Survey Queue] Set up the Survey Queue** to chain multiple surveys in sequence. Requires at least two instruments to be enabled as surveys. Define the condition under which each subsequent survey is activated. See [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md).
+- [ ] **[Automated invitations] Set up Automated Survey Invitations (ASI)** for any survey that should be sent automatically based on a trigger condition or schedule. Requires the survey to be enabled and any trigger fields to already exist. See [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)
+- [ ] **[e-Consent] Set up the e-Consent framework** if the project collects electronic informed consent. Requires a dedicated consent instrument with a signature field. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 
 ---
 
@@ -117,11 +126,11 @@ Survey features become available after enabling surveys in Phase 1. Each instrum
 
 User roles should be defined before individual users are added, so each new user can be placed directly into the correct role. Data Access Groups (if used) should be configured before assigning users, since DAG membership affects what data each user can see and enter.
 
-- [ ] **[DAGs] Create Data Access Groups** via the DAGs page. Define one DAG per site, cohort, or data access boundary. See RC-DAG-01 — Data Access Groups.
-- [ ] **Create User Roles** that match your team's access needs (e.g., Data Entry, Monitor, PI, Administrator). Define the privileges for each role once rather than configuring every user individually. See RC-USER-02 — Adding Users & Managing Roles.
-- [ ] **Add users to the project** and assign each user to the appropriate role. See RC-USER-02.
-- [ ] **[DAGs] Assign users to DAGs** after they have been added to the project. See RC-DAG-01.
-- [ ] **Review each role's instrument-level permissions.** Confirm that each role can see and edit only the instruments it should have access to. See RC-USER-03 — Configuring User Privileges.
+- [ ] **[DAGs] Create Data Access Groups** via the DAGs page. Define one DAG per site, cohort, or data access boundary. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
+- [ ] **Create User Roles** that match your team's access needs (e.g., Data Entry, Monitor, PI, Administrator). Define the privileges for each role once rather than configuring every user individually. See [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)
+- [ ] **Add users to the project** and assign each user to the appropriate role. See [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md).
+- [ ] **[DAGs] Assign users to DAGs** after they have been added to the project. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
+- [ ] **Review each role's instrument-level permissions.** Confirm that each role can see and edit only the instruments it should have access to. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
 
 > **Tip:** Test user access before going live by logging in as a test account with each role and verifying that the correct instruments, records, and menu options are visible.
 
@@ -131,10 +140,10 @@ User roles should be defined before individual users are added, so each new user
 
 Alerts, data quality rules, and randomization all depend on instruments and fields existing. Randomization additionally requires a randomization field and an allocation table.
 
-- [ ] **Set up Alerts & Notifications** for any automated emails or text messages triggered by data entry events. Trigger conditions reference field values, so all relevant fields must exist first. See RC-ALERT-01 — Alerts & Notifications: Setup.
-- [ ] **Configure Data Quality rules** to catch missing or out-of-range values. Rules reference field names and can be run manually or scheduled. See RC-DQ-01 — Data Quality Module.
-- [ ] **[Randomization] Prepare the randomization allocation table** (a CSV of strata and assignments) before configuring the module. The randomization field must already exist in an instrument. See RC-RAND-01 — Randomization Concepts & Terminology and RC-RAND-02 — Randomization Setup Guide.
-- [ ] **[Randomization] Configure the Randomization module** by uploading the allocation table and designating the randomization field and any stratification fields. See RC-RAND-02.
+- [ ] **Set up Alerts & Notifications** for any automated emails or text messages triggered by data entry events. Trigger conditions reference field values, so all relevant fields must exist first. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md).
+- [ ] **Configure Data Quality rules** to catch missing or out-of-range values. Rules reference field names and can be run manually or scheduled. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md).
+- [ ] **[Randomization] Prepare the randomization allocation table** (a CSV of strata and assignments) before configuring the module. The randomization field must already exist in an instrument. See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) and [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md).
+- [ ] **[Randomization] Configure the Randomization module** by uploading the allocation table and designating the randomization field and any stratification fields. See [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md).
 
 ---
 
@@ -142,8 +151,8 @@ Alerts, data quality rules, and randomization all depend on instruments and fiel
 
 Reports reference fields that must already exist. They can be built at any point after instruments are designed, but are most useful to finalize before going live so that the data monitoring and export workflow is ready from the first record.
 
-- [ ] **Create custom reports** for data monitoring, safety reviews, or export workflows. Each report filters by field values and selects specific fields to display. See RC-EXPRT-06 — Custom Reports: Setup & Field Selection.
-- [ ] **Set report sharing and access permissions** to control which users can view or export each report. See RC-EXPRT-08 — Custom Reports: Management & Organization.
+- [ ] **Create custom reports** for data monitoring, safety reviews, or export workflows. Each report filters by field values and selects specific fields to display. See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md).
+- [ ] **Set report sharing and access permissions** to control which users can view or export each report. See [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md).
 
 ---
 
@@ -170,11 +179,11 @@ Before moving to Production, enter test data and verify that every aspect of the
 When the project is fully tested and ready for live data collection, move it to Production. This step enables change-control safeguards and signals that real data collection has begun.
 
 - [ ] **[Required] Delete all test data** before going live. On the Project Setup page, use "Delete all records" (under Other Functionality) or choose to delete test data when prompted during the move-to-Production step.
-- [ ] **[Required] Move the project to Production** by clicking "Move project to Production" at the bottom of the Project Setup page. See RC-PROJ-01 §2.2.
+- [ ] **[Required] Move the project to Production** by clicking "Move project to Production" at the bottom of the Project Setup page. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §2.2.
 - [ ] **Confirm Production protections are active** — verify that the Online Designer now shows the "Enter Draft Mode" button, indicating that design changes require review before taking effect.
 - [ ] **Communicate the go-live to your team.** Ensure all users know the project is live and that any future design change requests must go through the Draft Mode review process.
 
-> **After go-live:** Any structural change (new fields, modified branching logic, new instruments) must be made through Draft Mode and submitted for review. See RC-PROJ-01 §6 — Making Production Changes for the rules that protect existing data.
+> **After go-live:** Any structural change (new fields, modified branching logic, new instruments) must be made through Draft Mode and submitted for review. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6 — Making Production Changes for the rules that protect existing data.
 
 ---
 
@@ -207,39 +216,39 @@ The table below summarizes the key dependencies between setup steps. If a step i
 
 # 13. UI & API Reference
 
-All setup steps can be completed through the REDCap user interface. The table below indicates which steps also have a supported API path. Steps with an API option can be automated or scripted using the REDCap API — see RC-API-01 — REDCap API for authentication and setup.
+All setup steps can be completed through the REDCap user interface. The table below indicates which steps also have a supported API path. Steps with an API option can be automated or scripted using the REDCap API — see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication and setup.
 
 | Step | Phase | UI | API |
 |---|---|---|---|
-| Create the project | 1 | ✓ | ✓ RC-API-37 |
-| Set project purpose / IRB | 1 | ✓ | ✓ RC-API-35 |
-| Enable surveys | 1 | ✓ | ✓ RC-API-35 |
-| Enable longitudinal mode | 1 | ✓ | ✓ RC-API-35 |
-| Create instruments | 2 | ✓ | ✓ RC-API-08 |
-| Add fields | 2 | ✓ | ✓ RC-API-08 |
-| Set field validation | 2 | ✓ | ✓ RC-API-08 |
-| Mark required fields | 2 | ✓ | ✓ RC-API-08 |
-| Add branching logic | 2 | ✓ | ✓ RC-API-08 |
-| Add calculated fields | 2 | ✓ | ✓ RC-API-08 |
-| Add action tags | 2 | ✓ | ✓ RC-API-08 |
+| Create the project | 1 | ✓ | ✓ [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) |
+| Set project purpose / IRB | 1 | ✓ | ✓ [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md) |
+| Enable surveys | 1 | ✓ | ✓ [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md) |
+| Enable longitudinal mode | 1 | ✓ | ✓ [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md) |
+| Create instruments | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Add fields | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Set field validation | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Mark required fields | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Add branching logic | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Add calculated fields | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
+| Add action tags | 2 | ✓ | ✓ [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) |
 | Review Codebook | 2 | ✓ | — |
-| Define arms | 3 | ✓ | ✓ RC-API-17 |
-| Define events | 3 | ✓ | ✓ RC-API-20 |
-| Designate instruments to events | 3 | ✓ | ✓ RC-API-11 |
+| Define arms | 3 | ✓ | ✓ [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md) |
+| Define events | 3 | ✓ | ✓ [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) |
+| Designate instruments to events | 3 | ✓ | ✓ [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md) |
 | Review cross-event logic | 3 | ✓ | — |
-| Configure repeating instruments | 4 | ✓ | ✓ RC-API-53 |
-| Configure repeating events | 4 | ✓ | ✓ RC-API-53 |
+| Configure repeating instruments | 4 | ✓ | ✓ [RC-API-53 — Import Repeating Instruments and Events API](RC-API-53_Import-Repeating-Instruments-and-Events.md) |
+| Configure repeating events | 4 | ✓ | ✓ [RC-API-53 — Import Repeating Instruments and Events API](RC-API-53_Import-Repeating-Instruments-and-Events.md) |
 | Enable instrument as survey | 5 | ✓ | — |
 | Configure survey settings | 5 | ✓ | — |
 | Configure survey access & termination | 5 | ✓ | — |
 | Set up Survey Queue | 5 | ✓ | — |
 | Set up Automated Survey Invitations | 5 | ✓ | — |
 | Set up e-Consent framework | 5 | ✓ | — |
-| Create Data Access Groups | 6 | ✓ | ✓ RC-API-29 |
-| Create User Roles | 6 | ✓ | ✓ RC-API-26 |
-| Add users to project | 6 | ✓ | ✓ RC-API-23 |
-| Assign users to roles | 6 | ✓ | ✓ RC-API-56 |
-| Assign users to DAGs | 6 | ✓ | ✓ RC-API-32 |
+| Create Data Access Groups | 6 | ✓ | ✓ [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md) |
+| Create User Roles | 6 | ✓ | ✓ [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) |
+| Add users to project | 6 | ✓ | ✓ [RC-API-23 — Import Users API](RC-API-23_Import-Users.md) |
+| Assign users to roles | 6 | ✓ | ✓ [RC-API-56 — Import User-Role Assignments API](RC-API-56_Import-User-Role-Assignments.md) |
+| Assign users to DAGs | 6 | ✓ | ✓ [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md) |
 | Review role permissions | 6 | ✓ | — |
 | Set up Alerts & Notifications | 7 | ✓ | — |
 | Configure Data Quality rules | 7 | ✓ | — |
@@ -247,7 +256,7 @@ All setup steps can be completed through the REDCap user interface. The table be
 | Configure Randomization module | 7 | ✓ | — |
 | Create custom reports | 8 | ✓ | — |
 | Set report permissions | 8 | ✓ | — |
-| Create test records | 9 | ✓ | ✓ RC-API-03 |
+| Create test records | 9 | ✓ | ✓ [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) |
 | Verify branching logic | 9 | ✓ | — |
 | Verify calculated fields | 9 | ✓ | — |
 | Test repeating instances | 9 | ✓ | — |
@@ -258,7 +267,7 @@ All setup steps can be completed through the REDCap user interface. The table be
 | Test as each user role | 9 | ✓ | — |
 | Run Data Quality rules | 9 | ✓ | — |
 | Review test reports | 9 | ✓ | — |
-| Delete test data | 10 | ✓ | ✓ RC-API-04 |
+| Delete test data | 10 | ✓ | ✓ [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md) |
 | Move to Production | 10 | ✓ | — |
 | Confirm Production protections | 10 | ✓ | — |
 | Communicate go-live | 10 | — | — |
@@ -267,20 +276,20 @@ All setup steps can be completed through the REDCap user interface. The table be
 
 # 14. Related Articles
 
-- RC-PROJ-01 — Project Lifecycle: Status and Settings (project statuses, moving to Production, Draft Mode)
-- RC-FD-01 — Form Design Overview (instrument design entry point)
-- RC-FD-02 — Online Designer (building and managing instruments)
-- RC-FD-03 — Data Dictionary (CSV-based instrument design)
-- RC-LONG-01 — Longitudinal Project Setup (arms, events, and instrument-event designations)
-- RC-LONG-02 — Repeated Instruments & Events Setup (configuring repeating instruments and events)
-- RC-SURV-01 — Surveys – Basics (survey fundamentals)
-- RC-SURV-06 — Automated Survey Invitations (scheduling and triggering survey sends)
-- RC-SURV-07 — Survey Queue (chaining surveys in sequence)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (access control fundamentals)
-- RC-USER-02 — User Rights: Adding Users & Managing Roles (creating roles and adding users)
-- RC-DAG-01 — Data Access Groups (multi-site access control)
-- RC-ALERT-01 — Alerts & Notifications: Setup (automated messaging)
-- RC-DQ-01 — Data Quality Module (data validation rules)
-- RC-RAND-02 — Randomization Setup Guide (configuring the randomization module)
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection (building data monitoring reports)
-- RC-API-01 — REDCap API (authentication, tokens, and API setup)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, moving to Production, Draft Mode)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument design entry point)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (building and managing instruments)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (CSV-based instrument design)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and instrument-event designations)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments and events)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(scheduling and triggering survey sends)
+- [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) (chaining surveys in sequence)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (access control fundamentals)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (creating roles and adding users)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (multi-site access control)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (automated messaging)
+- [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) (data validation rules)
+- [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) (configuring the randomization module)
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) (building data monitoring reports)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (authentication, tokens, and API setup)

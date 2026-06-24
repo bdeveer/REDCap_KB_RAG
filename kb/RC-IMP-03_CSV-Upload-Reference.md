@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
+| **Synonyms** | what can i upload via csv in redcap; list of all csv upload options; bulk upload settings with a csv file; import users dags or events from csv; which redcap features support csv upload; move configuration between projects via csv; csv upload behavior additive vs replace; comprehensive csv upload reference |
 
 ---
 

@@ -18,6 +18,15 @@ related:
   title: Data Entry with Data Access Groups
 tags:
 - api
+synonyms:
+- how do i import dags via the api
+- import data access groups api call
+- create or update dags through the api
+- api method to add data access group names
+- bulk create dags with the api
+- migrate data access groups programmatically
+- api endpoint to import data access groups
+- add data access groups to a project via api
 ---
 
 # 1. Overview
@@ -234,11 +243,11 @@ Seattle,seattle
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-API-28 — Export DAGs (retrieve existing DAG definitions)
-- RC-API-30 — Delete DAGs (remove DAG definitions)
-- RC-API-31 — Export User-DAG Assignments (retrieve user-to-DAG mappings)
-- RC-API-32 — Import User-DAG Assignments (assign users to DAGs)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for permission types)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)(retrieve existing DAG definitions)
+- [RC-API-30 — Delete DAGs API](RC-API-30_Delete-DAGs.md)(remove DAG definitions)
+- [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)(retrieve user-to-DAG mappings)
+- [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)(assign users to DAGs)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for permission types)

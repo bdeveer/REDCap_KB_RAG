@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-11
-  title: System Statistics
+  title: 'Control Center: System Statistics'
 - id: RC-CC-13
-  title: User Activity Graphs
+  title: 'Control Center: User Activity Graphs'
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 tags:
 - control center (admin)
+synonyms:
+- control center user activity log
+- view user actions across all projects
+- system-wide audit log for admins
+- real-time log of redcap user activity
+- track what users did instance-wide
+- difference between activity log and project logging
+- see all logins and actions across projects
+- admin activity monitoring log
 ---
 
 # 1. Overview
@@ -126,6 +135,6 @@ The User Activity Log displays all events matching your filters in the current v
 
 # 11. Related Articles
 
-- RC-CC-11 — System Statistics
-- RC-CC-13 — User Activity Graphs
-- RC-CC-01 — Notifications & Reporting
+- [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)
+- [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md)
+- [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)

@@ -21,6 +21,15 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - surveys
+synonyms:
+- how do i enable a survey in redcap
+- turn an instrument into a survey
+- let participants enter data without an account
+- basic survey setup and distribution
+- survey workflow from creation to responses
+- survey user rights explained
+- getting started with surveys
+- how do surveys work in redcap
 ---
 
 # 1. Overview
@@ -74,7 +83,7 @@ Enabling a survey for the first time requires three steps in order: enable surve
 
 ## 4.1 Enabling Survey Functionality in the Project
 
-Before any instrument can be used as a survey, surveys must be turned on for the project as a whole. Note that the project-level toggle only appears if surveys have been enabled at the **system level** by a REDCap administrator. If the **Use Surveys in this project** option is not visible under Main Project Settings, contact your REDCap administrator — surveys may be disabled for the entire instance (see **RC-CC-06** — Control Center: Modules & Services Configuration).
+Before any instrument can be used as a survey, surveys must be turned on for the project as a whole. Note that the project-level toggle only appears if surveys have been enabled at the **system level** by a REDCap administrator. If the **Use Surveys in this project** option is not visible under Main Project Settings, contact your REDCap administrator — surveys may be disabled for the entire instance (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)** — Control Center: Modules & Services Configuration).
 
 | 1 | Navigate to the **Project Setup** page from the left-hand menu. |
 | --- | --- |
@@ -91,7 +100,7 @@ The Online Designer now shows additional survey-related columns and buttons:
 
 | Element | Description |
 | --- | --- |
-| **Survey Options** header | Contains advanced survey features. Covered in RC-SURV-02 — Survey Settings: Basic Options & Design. |
+| **Survey Options** header | Contains advanced survey features. Covered in [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md). |
 | **Enabled as Survey** column | The primary column for enabling instruments as surveys. |
 | **Enable** button | Appears behind each instrument that is not yet a survey. Clicking it takes you directly to that instrument's Survey Settings. |
 | **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Clicking it has no action — it is informational only. |
@@ -340,28 +349,28 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 # 11. Administrator Configuration
 
-Survey functionality must be enabled at the system level before any project can use surveys. This is configured in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled system-wide, the **Use Surveys in this project** option does not appear in Project Setup.
+Survey functionality must be enabled at the system level before any project can use surveys. This is configured in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). When disabled system-wide, the **Use Surveys in this project** option does not appear in Project Setup.
 
 Additional survey-related settings that administrators control in the Control Center:
 
-- **Google reCAPTCHA** — Optional bot protection for public surveys; must be configured in RC-CC-06 before the per-project reCAPTCHA option becomes available.
-- **Alerts & Notifications email recipient settings** — Controls whether project users can include project variables or freeform email addresses in survey invitation fields (RC-CC-06).
-- **e-Consent Framework** — Must be enabled in RC-CC-06 before the e-Consent option appears in survey settings (see RC-SURV-08).
-- **URL Shortening Service** — Must be enabled in RC-CC-06 for the "Get Short Survey Link" option to work in Survey Distribution Tools.
+- **Google reCAPTCHA** — Optional bot protection for public surveys; must be configured in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) before the per-project reCAPTCHA option becomes available.
+- **Alerts & Notifications email recipient settings** — Controls whether project users can include project variables or freeform email addresses in survey invitation fields ([RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)).
+- **e-Consent Framework** — Must be enabled in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) before the e-Consent option appears in survey settings (see [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md)).
+- **URL Shortening Service** — Must be enabled in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) for the "Get Short Survey Link" option to work in Survey Distribution Tools.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 12. Related Articles
 
-- RC-FD-02 — Online Designer (navigating to the Online Designer, the instrument list, and the instrument editor — required context for Section 4.2)
-- RC-FD-01 — Form Design Overview (understanding instruments and fields before adding survey functionality)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (full reference for all REDCap user rights, including the three survey-related rights described in Section 7)
-- RC-ALERT-01 — Alerts & Notifications: Setup (advanced feature for triggering survey invitations based on data conditions — referenced in Section 4.2; Automated Survey Invitations are covered in RC-SURV-06)
-- RC-SURV-02 — Survey Settings: Basic Options & Design (covers the advanced settings in Survey Customizations, Survey Access, and Survey Termination Options introduced but not detailed in this article)
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination (see RC-SURV-07 for the Survey Queue feature)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level survey enablement and related settings)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (navigating to the Online Designer, the instrument list, and the instrument editor — required context for Section 4.2)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (understanding instruments and fields before adding survey functionality)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (full reference for all REDCap user rights, including the three survey-related rights described in Section 7)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (advanced feature for triggering survey invitations based on data conditions — referenced in Section 4.2; Automated Survey Invitations are covered in [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md))
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (covers the advanced settings in Survey Customizations, Survey Access, and Survey Termination Options introduced but not detailed in this article)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) (see [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) for the Survey Queue feature)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level survey enablement and related settings)
 
 ---
 
@@ -370,18 +379,18 @@ Additional survey-related settings that administrators control in the Control Ce
 | REDCap Version | Note |
 | --- | --- |
 | General | This article covers the baseline survey setup with longitudinal mode and DAGs disabled. Projects with those features enabled will see additional options in the Online Designer and Survey Distribution Tools. |
-| General | The "Automated Invitations" button visible in the Online Designer's Survey Related Options column is covered in RC-ALERT-01 — Alerts & Notifications Setup. |
+| General | The "Automated Invitations" button visible in the Online Designer's Survey Related Options column is covered in [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)|
 
 ---
 
 # 14. Related Articles
 
-- RC-SURV-02 — Survey Settings: Basic Options & Design
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
-- RC-SURV-08 — e-Consent Framework: Setup & Management
-- RC-FD-01 — Form Design Overview
-- RC-FD-02 — Online Designer
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-CC-06 — Control Center: Modules & Services Configuration
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-NAV-UI-01 — Project Navigation UI
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md)
+- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md)

@@ -23,9 +23,39 @@ OUT_DIR = os.path.join(os.path.dirname(__file__), "kb (YAML)")
 # Files to skip (not articles)
 SKIP_FILES = {"KB-REFERENCE-MAP.md"}
 
-# Regex to pull a value from a markdown table row
-# Matches:  | **Field Name** | value |
-ROW_RE = re.compile(r"^\|\s*\*\*(.+?)\*\*\s*\|\s*(.*?)\s*\|?\s*$")
+# Regex to pull a value from a markdown table row.
+# Matches both bold and non-bold field names (kb/ tables mix the two styles):
+#   | **Field Name** | value |   and   | Field Name | value |
+ROW_RE = re.compile(r"^\|\s*(?:\*\*)?\s*([^|*]+?)\s*(?:\*\*)?\s*\|\s*(.*?)\s*\|?\s*$")
+
+
+def strip_md_links(s: str) -> str:
+    """Turn '[RC-API-01 — REDCap API](file.md)' into 'RC-API-01 — REDCap API'."""
+    return re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", s).strip()
+
+
+def downshift_headers(body: str) -> str:
+    """Reduce every ATX header of level 2+ by one (## → #, ### → ##, ...).
+
+    kb/ source bodies use '## N.' for top-level sections; kb (YAML)/ bodies use
+    '# N.'. Single-'#' headers (if any) are left untouched so we never produce a
+    header with zero hashes. Lines inside fenced code blocks (``` or ~~~) are
+    never altered, so '#' comments in shell/code examples stay intact.
+    """
+    out = []
+    in_fence = False
+    fence_re = re.compile(r"^\s*(```|~~~)")
+    for line in body.split("\n"):
+        if fence_re.match(line):
+            in_fence = not in_fence
+            out.append(line)
+            continue
+        if in_fence:
+            out.append(line)
+            continue
+        m = re.match(r"^(#{2,6})(\s+.*)$", line)
+        out.append(("#" * (len(m.group(1)) - 1)) + m.group(2) if m else line)
+    return "\n".join(out)
 
 
 def parse_related_topics(raw: str) -> list[dict]:
@@ -37,7 +67,7 @@ def parse_related_topics(raw: str) -> list[dict]:
     Falls back to plain string entry if a segment can't be split.
     """
     results = []
-    segments = [s.strip() for s in raw.split(";") if s.strip()]
+    segments = [strip_md_links(s) for s in raw.split(";") if s.strip()]
     for seg in segments:
         # Try splitting on em dash or ' - '
         match = re.match(r"^(RC-[\w-]+)\s+[—\-]\s+(.+)$", seg)
@@ -52,9 +82,9 @@ def parse_related_topics(raw: str) -> list[dict]:
 def parse_prerequisites(raw: str) -> list[str]:
     """
     Store prerequisites as a list of plain strings.
-    Split on ';' if multiple are present.
+    Split on ';' if multiple are present. Markdown links are stripped.
     """
-    return [s.strip() for s in raw.split(";") if s.strip()]
+    return [strip_md_links(s) for s in raw.split(";") if s.strip()]
 
 
 def domain_to_tags(domain: str) -> list[str]:
@@ -95,35 +125,44 @@ def extract_header_block(lines: list[str]) -> tuple[dict, int]:
     Find and parse the metadata table from the top of the file.
     Returns (metadata_dict, index_of_first_line_after_header).
 
-    Expected structure:
-        Line 0: article ID (e.g. "RC-FD-01")
-        Line 1: blank
-        Line 2: **Title**
-        Line 3: blank
-        Lines 4+: | **Field** | Value | rows until "---"
+    Actual structure across the corpus:
+        (optional) a bare article ID line (e.g. "RC-FD-01")
+        a **Bold Title** line
+        a metadata table (| Field | Value | rows, bold or non-bold) until "---"
+
+    The article ID is taken from the "Article ID" table row (the authoritative
+    source); the bold title line supplies the title. Either may be absent, so
+    both are derived defensively.
     """
     meta = {}
     i = 0
 
-    # Article ID — first non-blank line
-    while i < len(lines) and not lines[i].strip():
-        i += 1
-    if i < len(lines):
-        meta["id"] = lines[i].strip()
-        i += 1
-
-    # Skip blank lines
+    # Skip leading blank lines
     while i < len(lines) and not lines[i].strip():
         i += 1
 
-    # Bold title line: **Title**
+    # First non-blank line: a bare RC- ID, or a **Bold Title**, or already the table
     if i < len(lines):
-        title_match = re.match(r"^\*\*(.+?)\*\*\s*$", lines[i].strip())
-        if title_match:
-            meta["title"] = title_match.group(1).strip()
+        first = lines[i].strip()
+        bare_id = re.match(r"^(RC-[A-Z0-9-]+)\s*$", first)
+        bold_title = re.match(r"^\*\*(.+?)\*\*\s*$", first)
+        if bare_id:
+            meta["id"] = bare_id.group(1)
+            i += 1
+        elif bold_title:
+            meta["title"] = bold_title.group(1).strip()
             i += 1
 
-    # Now scan for table rows until we hit the --- separator
+    # Skip blanks, then pick up a bold title if we haven't already
+    while i < len(lines) and not lines[i].strip():
+        i += 1
+    if i < len(lines) and "title" not in meta:
+        bold_title = re.match(r"^\*\*(.+?)\*\*\s*$", lines[i].strip())
+        if bold_title:
+            meta["title"] = bold_title.group(1).strip()
+            i += 1
+
+    # Scan table rows until the "---" separator that ends the metadata block
     table_fields = {}
     while i < len(lines):
         line = lines[i].strip()
@@ -134,12 +173,16 @@ def extract_header_block(lines: list[str]) -> tuple[dict, int]:
         if row_match:
             field = row_match.group(1).strip()
             value = row_match.group(2).strip()
+            # Skip the table separator row (| --- | --- |)
+            if set(field) <= {"-"} or set(value) <= {"-"}:
+                i += 1
+                continue
             table_fields[field] = value
         i += 1
 
     # Map table fields to our schema
     field_map = {
-        "Article ID": "id_confirm",  # confirms the ID we already got
+        "Article ID": "id_confirm",
         "Domain": "domain",
         "Applies To": "applies_to",
         "Prerequisite": "prerequisites",
@@ -149,15 +192,24 @@ def extract_header_block(lines: list[str]) -> tuple[dict, int]:
         "Author": "author",
         "Source": "source",
         "Related Topics": "related_topics_raw",
+        "Synonyms": "synonyms_raw",
     }
     for raw_field, key in field_map.items():
         if raw_field in table_fields:
             meta[key] = table_fields[raw_field]
 
-    # If we didn't get an ID from line 0, try the table
-    if "id_confirm" in meta and "id" not in meta:
-        meta["id"] = meta["id_confirm"]
-    meta.pop("id_confirm", None)
+    # Authoritative ID comes from the Article ID row: extract the RC- token from
+    # its (possibly linked) cell. Fall back to any bare-line ID found above.
+    id_cell = meta.pop("id_confirm", "")
+    if id_cell:
+        id_match = re.search(r"(RC-[A-Z0-9-]+)", id_cell)
+        if id_match:
+            meta["id"] = id_match.group(1)
+        # If no bold title line was present, derive the title from the ID cell
+        if "title" not in meta:
+            cell_txt = strip_md_links(id_cell)
+            if "—" in cell_txt:
+                meta["title"] = cell_txt.split("—", 1)[1].strip()
 
     return meta, i
 
@@ -196,6 +248,13 @@ def build_front_matter(meta: dict) -> dict:
     if meta.get("domain"):
         fm["tags"] = domain_to_tags(meta["domain"])
 
+    # synonyms: semicolon-separated list of alt search phrasings → kb_knowledge.meta
+    synonyms_raw = meta.get("synonyms_raw", "")
+    if synonyms_raw:
+        syns = [s.strip() for s in synonyms_raw.split(";") if s.strip()]
+        if syns:
+            fm["synonyms"] = syns
+
     return fm
 
 
@@ -219,6 +278,21 @@ def convert_file(src_path: str, dst_path: str) -> bool:
 
     fm = build_front_matter(meta)
 
+    # Guard: never destroy synonyms already present in the destination YAML.
+    # If the kb/ source produced no synonyms (e.g. a table format the parser
+    # can't read, or an older article without a Synonyms row) but the existing
+    # kb (YAML)/ file already has them, carry them forward so a full reconvert
+    # cannot wipe curated synonyms.
+    if not fm.get("synonyms") and os.path.exists(dst_path):
+        try:
+            existing = open(dst_path, encoding="utf-8").read()
+            if existing.startswith("---"):
+                existing_fm = yaml.safe_load(existing.split("---", 2)[1]) or {}
+                if existing_fm.get("synonyms"):
+                    fm["synonyms"] = existing_fm["synonyms"]
+        except Exception:
+            pass
+
     # Body is everything after the header block
     body_lines = stripped[body_start:]
 
@@ -226,7 +300,8 @@ def convert_file(src_path: str, dst_path: str) -> bool:
     while body_lines and not body_lines[0].strip():
         body_lines.pop(0)
 
-    body = "\n".join(body_lines)
+    # kb/ bodies use '## N.' section headers; kb (YAML)/ uses '# N.'
+    body = downshift_headers("\n".join(body_lines))
 
     # Render YAML (default_flow_style=False = block style; allow_unicode for em dashes etc.)
     yaml_str = yaml.dump(

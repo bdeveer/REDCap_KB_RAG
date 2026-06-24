@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
+| **Synonyms** | how do i export user-dag assignments via the api; export user dag assignments api call; get which user belongs to which dag through the api; api method to retrieve user to data access group mapping; audit user dag assignments programmatically; pull username and group name pairs with the api; api endpoint to export user dag assignments; find unassigned users via the api |
 
 ---
 

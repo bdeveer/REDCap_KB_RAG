@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) |
+| **Synonyms** | how to filter an aggregate function by a field value; [aggregate-mean:age:site_a] optional parameter syntax; limit aggregate smart variables to one event or arm; [aggregate-mean:weight:baseline_arm_1] event-scoped aggregate; filter aggregate by data access group with [aggregate-mean:age:user-dag-name]; optional parameters for aggregate functions; scope an aggregate to a specific record or event; how to add conditions to aggregate smart variables |
 
 ---
 

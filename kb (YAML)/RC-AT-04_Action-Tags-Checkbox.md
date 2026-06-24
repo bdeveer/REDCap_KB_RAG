@@ -6,18 +6,26 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-03
-  title: Radio/Dropdown Tags
+  title: Radio & Dropdown Action Tags
 - id: RC-FD-02
   title: Online Designer
 tags:
 - action tags
+synonyms:
+- '@NONEOFTHEABOVE action tag'
+- '@MAXCHECKED action tag'
+- how do i make a none of the above checkbox option exclusive
+- limit how many checkboxes a respondent can select
+- mutually exclusive checkbox option
+- action tags for checkbox fields
+- cap maximum number of checked boxes
 ---
 
 # 1. Overview
@@ -39,10 +47,7 @@ This prevents ambiguous data where a "none of the above" response is combined wi
 @NONEOFTHEABOVE='99'
 ```
 
-**Syntax — without quotes (numeric raw value):**
-```
-@NONEOFTHEABOVE=99
-```
+Both quoted and unquoted raw values are accepted (`@NONEOFTHEABOVE=99` is equivalent). Quoting is recommended for consistency with the rest of REDCap logic syntax.
 
 **Syntax — multiple options:**
 ```
@@ -132,6 +137,6 @@ Both operate independently and do not interfere with each other.
 
 # 7. Related Articles
 
-- RC-AT-01 — Action Tags Overview
-- RC-AT-03 — Radio/Dropdown Action Tags
-- RC-FD-02 — Online Designer
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)

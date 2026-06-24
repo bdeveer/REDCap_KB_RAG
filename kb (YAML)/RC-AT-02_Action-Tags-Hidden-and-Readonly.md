@@ -6,20 +6,29 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-03
-  title: Radio/Dropdown Tags
+  title: Radio & Dropdown Action Tags
 - id: RC-FD-02
   title: Online Designer
 - id: RC-BL-01
-  title: Branching Logic Overview
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - action tags
+synonyms:
+- '@HIDDEN action tag'
+- '@READONLY action tag'
+- how do i hide a field with an action tag
+- how do i make a field read only
+- '@HIDDEN-FORM and @HIDDEN-SURVEY tags'
+- '@READONLY-FORM and @READONLY-SURVEY tags'
+- hide a field on the survey but not the form
+- make a field uneditable for data entry
 ---
 
 # 1. Overview
@@ -130,6 +139,6 @@ These two tag families can be mixed to achieve fine-grained control. For example
 
 # 7. Related Articles
 
-- RC-AT-01 — Action Tags Overview
-- RC-FD-02 — Online Designer (where these tags are applied)
-- RC-BL-01 — Branching Logic Overview (understand how @HIDDEN overrides logic)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (where these tags are applied)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(understand how @HIDDEN overrides logic)

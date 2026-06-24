@@ -17,12 +17,21 @@ related:
 - id: RC-FD-03
   title: Data Dictionary
 - id: RC-FD-08
-  title: Data Dictionary Column Reference & Advanced Techniques
+  title: 'Data Dictionary: Column Reference & Advanced Techniques'
 - id: RC-NAV-UI-02
   title: Project Menu Reference
 tags:
 - form design
 - instruments
+synonyms:
+- what is the codebook
+- view all fields and variables at a glance
+- read-only list of project variables
+- where to see all variable names and choices
+- printable reference of project structure
+- codebook vs data dictionary
+- look up a field definition quickly
+- see every instrument and field in one place
 ---
 
 # 1. Overview
@@ -233,9 +242,9 @@ calculated fields using the standard variable name syntax:
 [intake_complete] = '2'
 ```
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** The Codebook always reflects the currently applied state of the project. In Production mode, pending (unapproved) Online Designer changes are not shown — the Codebook shows only what is live.
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** The Codebook always reflects the currently applied state of the project. In Production mode, pending (unapproved) Online Designer changes are not shown — the Codebook shows only what is live.
+
 
 ---
 
@@ -291,13 +300,12 @@ The Codebook is the right tool in these situations:
 
 # 7. Codebook vs. Other Reference Options
 
-  ---------------------------------- ----------------------------------------- ------------------------------- ------------------------------------------------------------------
-  **Reference Tool**                 **Format**                                **Editable?**                   **Best For**
-  Codebook                           Web view, organized by instrument         No (links to editors)           Human-readable review; looking up variable names while designing; getting event names
-  Data Dictionary (downloaded CSV)   Spreadsheet                               Yes (upload to apply changes)   Bulk editing; offline reference; version control
-  Download PDF of All Instruments    PDF                                       No                              Documentation; IRB submissions; stakeholder review
-  Online Designer                    Web interface, one instrument at a time   Yes                             Making edits; previewing form appearance
-  ---------------------------------- ----------------------------------------- ------------------------------- ------------------------------------------------------------------
+| **Reference Tool** | **Format** | **Editable?** | **Best For** |
+| --- | --- | --- | --- |
+| Codebook | Web view, organized by instrument | No (links to editors) | Human-readable review; looking up variable names while designing; getting event names |
+| Data Dictionary (downloaded CSV) | Spreadsheet | Yes (upload to apply changes) | Bulk editing; offline reference; version control |
+| Download PDF of All Instruments | PDF | No | Documentation; IRB submissions; stakeholder review |
+| Online Designer | Web interface, one instrument at a time | Yes | Making edits; previewing form appearance |
 
 > **Note:** The **PDF export of the Codebook** (accessible from the Design Your Data Collection Instruments section) and the
 > **Download PDF of All Instruments** option produce similar outputs but differ in layout. The Codebook PDF follows the
@@ -418,43 +426,43 @@ be different.
 
 # 10. Related Articles
 
-- RC-FD-01 — Form Design Overview (prerequisite)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (prerequisite)
 
-- RC-FD-02 — Online Designer (the editing tool linked from the
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the editing tool linked from the
     Codebook's inline edit links)
 
-- RC-FD-03 — Data Dictionary (the CSV-format alternative reference
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the CSV-format alternative reference
     and design tool)
 
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)
     (deeper reference for what each field attribute means)
 
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (using
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (using
     variable names and choice codes found in the Codebook)
 
-- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes (using
+- [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md) (using
     checkbox option codes found in the Codebook to construct
     `[field(code)]` expressions)
 
-- RC-LONG-01 — Longitudinal Project Setup (background on arms,
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (background on arms,
     events, and instrument-event assignments shown in the Codebook
     summary tables)
 
-- RC-LONG-02 — Repeated Instruments & Events Setup (the repeating
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (the repeating
     instrument and repeating event indicators shown in the Codebook
     summary tables are the only direct UI view of this configuration)
 
-- RC-AT-01 — Action Tags: Overview (action tags are displayed
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (action tags are displayed
     verbatim in the Codebook's Field Attributes column; this article
     explains what they do)
 
-- RC-SURV-01 — Surveys – Basics (the Codebook flags each instrument
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (the Codebook flags each instrument
     that is enabled as a survey)
 
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types (piping
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (piping
     expressions in field labels appear as raw syntax in the Codebook
     rather than resolved values)
 
-- RC-NAV-UI-02 — Project Menu Reference (the Code Book link appears
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Code Book link appears
     in the Project Home and Design menu section; always visible to
     all users regardless of rights)

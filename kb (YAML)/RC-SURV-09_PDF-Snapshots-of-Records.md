@@ -20,13 +20,22 @@ related:
   title: 'Alerts & Notifications: Setup'
 tags:
 - surveys
+synonyms:
+- how do i auto-generate a pdf of a record
+- create a pdf snapshot when a survey is completed
+- save instrument pdfs to the file repository
+- trigger a pdf based on logic
+- capture a pdf copy of completed forms
+- automatically store a record pdf
+- pdf snapshot setup
+- generate pdfs of records at a trigger point
 ---
 
 # 1. Overview
 
 This article covers REDCap's **PDF Snapshots of Records** feature — a mechanism for automatically generating a PDF of one or more instruments at a defined trigger point. Snapshots can be triggered by survey completion or by custom logic, and can capture a single instrument, multiple selected instruments, or all instruments in a record. They are stored in the project's File Repository and optionally in per-record file upload fields.
 
-PDF Snapshots are independent of the e-Consent Framework — they do not require surveys or consent processes to function. However, they are also the mechanism used to capture verification attestations in an e-Consent workflow. For e-Consent setup, see RC-SURV-08 — e-Consent Framework: Setup & Management.
+PDF Snapshots are independent of the e-Consent Framework — they do not require surveys or consent processes to function. However, they are also the mechanism used to capture verification attestations in an e-Consent workflow. For e-Consent setup, see [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 
 ---
 
@@ -148,7 +157,7 @@ Available when Multi-Language Management (MLM) is configured. When enabled, the 
 
 **Specified field** — To also save a copy directly in the record, select a **File Upload** field from the dropdown. This field can be in any instrument. In longitudinal projects, you must also specify the event containing the field.
 
-If managing many records, per-record file upload fields are recommended for easier access. They also enable attaching PDFs to Alerts (e.g., confirmation emails) or displaying them inline. See Section 4.5 of RC-SURV-08 for guidance on setting up a "Documentation" instrument to house these fields.
+If managing many records, per-record file upload fields are recommended for easier access. They also enable attaching PDFs to Alerts (e.g., confirmation emails) or displaying them inline. See Section 4.5 of [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) for guidance on setting up a "Documentation" instrument to house these fields.
 
 ## 5.5 Snapshot File Name
 
@@ -174,7 +183,7 @@ Click **"Save"** to finalize the trigger. REDCap immediately begins monitoring t
 
 A common use of PDF Snapshots in e-Consent workflows is capturing staff attestations of identity verification. The setup follows the same steps as any other snapshot trigger, applied to a verification instrument:
 
-1. Build a verification instrument with a user name field (using `@READONLY @USERNAME`), a date/time field, and an attestation field (checkbox or signature) — as described in RC-SURV-08, Section 4.4.
+1. Build a verification instrument with a user name field (using `@READONLY @USERNAME`), a date/time field, and an attestation field (checkbox or signature) — as described in [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md), Section 4.4.
 2. In the PDF Snapshots tab, create a new trigger.
 3. Set the trigger condition to fire when the attestation field is set (e.g., `[attestation_checkbox___1] = "1"`) or when the verification instrument is marked complete.
 4. Set the scope to include the verification instrument.
@@ -263,20 +272,20 @@ If you configured file upload fields for your snapshots, the PDFs are accessible
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-15 — Export Instruments PDF API** — programmatically export a blank or completed instrument PDF for any record or event
+- **[RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)** — programmatically export a blank or completed instrument PDF for any record or event
 
 ---
 
 
 # 10. Related Articles
 
-- RC-SURV-08 — e-Consent Framework: Setup & Management
-- RC-SURV-01 — Surveys – Basics
-- RC-SURV-06 — Automated Survey Invitations (ASI)
-- RC-BL-01 — Branching Logic: Overview & Scope
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
-- RC-FD-02 — Online Designer
+- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)

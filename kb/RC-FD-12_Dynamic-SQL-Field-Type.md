@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md) |
+| **Synonyms** | what is a dynamic sql field; dropdown populated by a sql query; pull dropdown options from the database; dsql field type in redcap; list records from another project in a dropdown; sql driven dropdown choices; can dynamic sql auto-populate other fields; how to set up a sql field type |
 
 ---
 

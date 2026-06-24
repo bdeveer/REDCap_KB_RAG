@@ -13,9 +13,17 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-40
-  title: Export Survey Link
+  title: Export Survey Link API
 tags:
 - api
+synonyms:
+- export survey participant list api method
+- how do i get the survey participant list via the api
+- api call to retrieve survey participants and invitation status
+- export participant list with response status through the api
+- get per-participant survey links using the api
+- api method to pull survey participant contact info
+- programmatically retrieve the participant list with the api
 ---
 
 # 1. Overview
@@ -147,7 +155,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -193,7 +201,7 @@ Example JSON response:
 ]
 ```
 
-> **Note:** This response does not include `first_name`, `last_name`, `record`, or `optout`. To retrieve record-level data, use the Export Records API (RC-API-02).
+> **Note:** This response does not include `first_name`, `last_name`, `record`, or `optout`. To retrieve record-level data, use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)).
 
 ---
 
@@ -227,7 +235,7 @@ Example JSON response:
 
 **Missing event for longitudinal projects:** The `event` parameter is required for longitudinal projects. Omitting it produces an error.
 
-**Expecting record-level fields in the response:** This API does not return `first_name`, `last_name`, `record`, `optout`, or other data-entry fields. It returns only the eight participant-list fields. Use the Export Records API (RC-API-02) if you need record data.
+**Expecting record-level fields in the response:** This API does not return `first_name`, `last_name`, `record`, `optout`, or other data-entry fields. It returns only the eight participant-list fields. Use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) if you need record data.
 
 **Treating `email` as a unique key:** The same email address can appear multiple times in the participant list. Always use `email` + `email_occurrence` together to uniquely identify a participant row.
 
@@ -235,8 +243,8 @@ Example JSON response:
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-40 — Export Survey Link
-- RC-API-02 — Export Records
-- RC-SURV-01 — Surveys – Basics (survey fundamentals)
-- RC-SURV-05 — Participant List & Manual Survey Invitations (the participant list this method reads from)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals)
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) (the participant list this method reads from)

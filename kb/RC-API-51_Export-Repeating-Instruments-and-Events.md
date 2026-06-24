@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
+| **Synonyms** | export repeating instruments and events api method; how do i list repeating instruments via the api; api call to get repeating instruments and events config; retrieve which instruments are set to repeat through the api; export repeating events setup using the api; api method to read the repeating instruments configuration; programmatically get repeating forms and events with the api |
 
 ---
 

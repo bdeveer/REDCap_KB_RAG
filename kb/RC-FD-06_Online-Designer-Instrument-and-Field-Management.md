@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
+| **Synonyms** | how to add edit move or delete fields; rename copy or reorder instruments; manage fields in the online designer; all redcap field types explained; create a matrix of fields; drag and drop logic builder for branching; delete an instrument in the designer; online designer field management tasks |
 
 ---
 

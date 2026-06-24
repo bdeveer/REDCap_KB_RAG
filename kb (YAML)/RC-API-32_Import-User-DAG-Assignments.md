@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i import user-dag assignments via the api
+- import user dag assignments api call
+- assign users to data access groups through the api
+- api method to map usernames to dags
+- bulk assign users to dags with the api
+- provision user dag membership programmatically
+- api endpoint to import user dag assignments
+- remove a user from all dags via api
 ---
 
 # 1. Overview
@@ -206,7 +215,7 @@ admin_user,
 
 In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG, and `admin_user` is unassigned (all-DAG access).
 
-> **Note:** Unlike the DAGs export, the user-DAG assignments CSV contains only two columns — there is no `data_access_group_id` or display name column in this file. Use Export DAGs (RC-API-28) to look up the correct `unique_group_name` values before building this file.
+> **Note:** Unlike the DAGs export, the user-DAG assignments CSV contains only two columns — there is no `data_access_group_id` or display name column in this file. Use Export DAGs ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) to look up the correct `unique_group_name` values before building this file.
 
 ---
 
@@ -214,7 +223,7 @@ In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG,
 
 **Q: Can I assign a user to multiple DAGs?**
 
-**A:** No. Each user can be assigned to at most one DAG. If you need a user to see data from multiple groups, assign them an empty `redcap_data_access_group` value (or omit it from the import) to grant them all-DAG view permissions.
+**A:** Not through this API endpoint. Each user has one primary DAG assignment, which is what this endpoint manages. The REDCap UI does provide a **DAG Switcher** feature that allows a user to be associated with additional DAGs for read access beyond their primary assignment — but Switcher assignments cannot be managed through this import endpoint. To grant multi-DAG access, use the DAG Switcher on the DAG management page in the UI. If you need a user to access all records across all DAGs without a Switcher configuration, assign them an empty `redcap_data_access_group` value (or omit it from the import).
 
 **Q: How do I remove a user from a DAG assignment?**
 
@@ -222,11 +231,11 @@ In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG,
 
 **Q: What if the user doesn't exist yet?**
 
-**A:** The import will fail if the user account does not exist in the project. Use the Import Users method (RC-API-23) to create the user first, then assign them to a DAG.
+**A:** The import will fail if the user account does not exist in the project. Use the Import Users method ([RC-API-23 — Import Users API](RC-API-23_Import-Users.md)) to create the user first, then assign them to a DAG.
 
 **Q: What if the DAG doesn't exist?**
 
-**A:** The import will fail if the DAG does not exist. Use the Import DAGs method (RC-API-29) to create the DAG first, then assign users to it.
+**A:** The import will fail if the DAG does not exist. Use the Import DAGs method ([RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)) to create the DAG first, then assign users to it.
 
 **Q: Can I assign multiple users to the same DAG in one call?**
 
@@ -244,11 +253,11 @@ In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG,
 
 # 8. Common Mistakes & Gotchas
 
-**Using the DAG display name instead of the unique group name.** The `redcap_data_access_group` field requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method (RC-API-28) to find the correct unique names.
+**Using the DAG display name instead of the unique group name.** The `redcap_data_access_group` field requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) to find the correct unique names.
 
 **Forgetting to check if users exist.** If a user account does not exist in the project, the assignment will fail. Ensure all usernames are valid before attempting assignment.
 
-**Forgetting to check if DAGs exist.** If a DAG does not exist, the assignment will fail. Export DAGs (RC-API-28) first to verify the correct unique group name.
+**Forgetting to check if DAGs exist.** If a DAG does not exist, the assignment will fail. Export DAGs ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) first to verify the correct unique group name.
 
 **Not realizing that empty `redcap_data_access_group` grants all-DAG access.** An empty string or null value means the user sees all data across all DAGs. This is common for administrators, but ensure it is intentional.
 
@@ -258,19 +267,19 @@ In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG,
 
 **Including more than one record per username.** The API requires exactly one record per username in the `data` payload. Submitting duplicate username entries in a single import call will cause an error. If you need to update a user's assignment, include a single record with their new group name.
 
-**Confusing user assignment with role assignment.** DAG assignment controls data access by group, not permissions. If you need to set specific permissions (form access, export rights, etc.), also use the Import User Roles method (RC-API-26) or Import Users method (RC-API-23).
+**Confusing user assignment with role assignment.** DAG assignment controls data access by group, not permissions. If you need to set specific permissions (form access, export rights, etc.), also use the Import User Roles method ([RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)) or Import Users method ([RC-API-23 — Import Users API](RC-API-23_Import-Users.md)).
 
 ---
 
 # 9. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for user permission types)
-- RC-API-22 — Export Users (retrieve user account details)
-- RC-API-23 — Import Users (create or update user accounts)
-- RC-API-28 — Export DAGs (retrieve DAG definitions and unique names)
-- RC-API-29 — Import DAGs (create or update DAG definitions)
-- RC-API-31 — Export User-DAG Assignments (retrieve existing assignments)
-- RC-API-33 — Switch DAG (allow users to change their active DAG context)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for user permission types)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(retrieve user account details)
+- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md)(create or update user accounts)
+- [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)(retrieve DAG definitions and unique names)
+- [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)(create or update DAG definitions)
+- [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)(retrieve existing assignments)
+- [RC-API-33 — Switch DAG API](RC-API-33_Switch-DAG.md)(allow users to change their active DAG context)

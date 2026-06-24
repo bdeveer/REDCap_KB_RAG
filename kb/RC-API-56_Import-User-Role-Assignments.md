@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md); [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
+| **Synonyms** | import user-role assignments api method; how do i assign users to roles via the api; api call to map users to user roles; bulk assign or remove users from roles through the api; programmatically set user-role assignments with the api; api method to remove a user from a role; import user to role mappings via api |
 
 ---
 

@@ -25,11 +25,20 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - surveys
+synonyms:
+- how do i set up electronic consent in redcap
+- e-consent framework setup
+- collect signed consent forms online
+- generate a signed consent pdf
+- manage consent versions over time
+- participant signature and consent workflow
+- electronic informed consent configuration
+- immutable consent pdf record
 ---
 
 # 1. Overview
 
-This article covers REDCap's e-Consent Framework — a feature that enables electronic consent collection by allowing a participant to review a document, sign it, and generate a permanent, immutable PDF record of that consent. It covers the conceptual model behind e-Consent, everything that must be prepared before configuration, step-by-step setup of the e-Consent Framework, and how to manage consent versions over time. PDF Snapshots, which are related but independently usable, are covered in RC-SURV-09 — PDF Snapshots of Records.
+This article covers REDCap's e-Consent Framework — a feature that enables electronic consent collection by allowing a participant to review a document, sign it, and generate a permanent, immutable PDF record of that consent. It covers the conceptual model behind e-Consent, everything that must be prepared before configuration, step-by-step setup of the e-Consent Framework, and how to manage consent versions over time. PDF Snapshots, which are related but independently usable, are covered in [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
 > **Note:** This article covers how to use the e-Consent feature in REDCap. It does not constitute legal guidance on compliant e-consent practice. Requirements vary widely by jurisdiction and institution. Always consult your local compliance office or Institutional Review Board (IRB) to confirm what is required.
 
@@ -51,7 +60,7 @@ A specific instance of consent content (text or PDF) assigned to an e-Consent en
 
 **PDF Snapshot**
 
-A REDCap-generated PDF of instrument data at a specific point in time. e-Consent always produces a snapshot. Snapshots can also be generated independently of e-Consent — see RC-SURV-09.
+A REDCap-generated PDF of instrument data at a specific point in time. e-Consent always produces a snapshot. Snapshots can also be generated independently of e-Consent — see [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
 **Verification / Attestation**
 
@@ -99,7 +108,7 @@ REDCap does not perform automatic identity verification (e.g., background checks
 | Post-validation | A staff member attests they verified the participant's identity *after* the participant has signed. |
 | No validation | No manual identity check is performed. Acceptable when consent is sent to a known, curated list of recipients. |
 
-Attestations by staff are captured separately via a PDF Snapshot triggered on a verification instrument — not through the e-Consent Framework itself. See Section 5.3 for instrument design guidance, and RC-SURV-09 for snapshot configuration.
+Attestations by staff are captured separately via a PDF Snapshot triggered on a verification instrument — not through the e-Consent Framework itself. See Section 5.3 for instrument design guidance, and [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md) for snapshot configuration.
 
 **Versioning matrix**
 
@@ -127,7 +136,7 @@ Create a dedicated instrument in the Online Designer to serve as the e-Consent s
 
 > **Important:** The descriptive field placeholder does not need any content entered in the Online Designer — it serves purely as a target for the e-Consent Framework's content injection. Without it, you cannot use versioning, DAG-specific content, or language-specific content.
 
-Once the instrument is created, enable it as a survey. Adjust the **Survey Instructions** and **Survey Completion Text** to reflect that participants are completing a consent form, not a generic survey. For detailed survey configuration guidance, see RC-SURV-02.
+Once the instrument is created, enable it as a survey. Adjust the **Survey Instructions** and **Survey Completion Text** to reflect that participants are completing a consent form, not a generic survey. For detailed survey configuration guidance, see [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md).
 
 > **Tip:** Include a note in the Survey Instructions that there will be a second screen after the form. Without this, participants may think they are done after filling in their information and abandon the process before the confirmation step. Example:
 >
@@ -141,7 +150,7 @@ If the consent will be offered in multiple languages, define at least two langua
 
 ## 4.3 Data Access Groups (if applicable)
 
-If the project uses DAGs (e.g., for a multi-site study), ensure DAGs are configured before setting up e-Consent. The e-Consent Framework will display a DAG assignment option when adding consent versions, allowing site-specific consent content. See RC-DAG-01 for DAG setup.
+If the project uses DAGs (e.g., for a multi-site study), ensure DAGs are configured before setting up e-Consent. The e-Consent Framework will display a DAG assignment option when adding consent versions, allowing site-specific consent content. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) for DAG setup.
 
 ## 4.4 Verification Instrument (if using attestation)
 
@@ -149,7 +158,7 @@ If your protocol requires a staff member to attest to identity verification, bui
 
 - **User name field** — to record who performed the verification. Add `@READONLY @USERNAME` action tags to auto-populate this from the logged-in user's account and prevent manual editing.
 - **Date/time field** — to record when verification occurred.
-- **Attestation trigger field** — a checkbox or signature field that signals the attestation is complete. This field will be used as the PDF Snapshot trigger in RC-SURV-09.
+- **Attestation trigger field** — a checkbox or signature field that signals the attestation is complete. This field will be used as the PDF Snapshot trigger in [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
 ## 4.5 File Upload Fields (optional)
 
@@ -174,7 +183,7 @@ Navigate to **Project Setup → Online Designer**, then click the **"e-Consent"*
 
 The main page has two tabs:
 - **e-Consent Framework** — where e-Consents are configured and versions managed
-- **PDF Snapshots of Records** — for configuring standalone PDF snapshots (covered in RC-SURV-09)
+- **PDF Snapshots of Records** — for configuring standalone PDF snapshots (covered in [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md))
 
 ## 5.2 Creating a New e-Consent Entry
 
@@ -345,13 +354,13 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 
 **Reactivating a deactivated version requires re-adding it.** There is no "reactivate" button. If you deactivate a consent version and later need it again, you must re-enter it as a new version. Keep a copy of the consent text in an external document if there is any chance you will need it again.
 
-**Attestation PDFs are not generated by the e-Consent Framework.** Staff verification attestations are captured via PDF Snapshots, not through e-Consent settings. If your protocol requires an attestation PDF, configure a separate PDF Snapshot trigger on the verification instrument. See RC-SURV-09.
+**Attestation PDFs are not generated by the e-Consent Framework.** Staff verification attestations are captured via PDF Snapshots, not through e-Consent settings. If your protocol requires an attestation PDF, configure a separate PDF Snapshot trigger on the verification instrument. See [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
 ---
 
 # Administrator Configuration
 
-The e-Consent Framework requires system-level enablement by a REDCap administrator before it is visible in any project's survey settings. Administrators configure this in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**):
+The e-Consent Framework requires system-level enablement by a REDCap administrator before it is visible in any project's survey settings. Administrators configure this in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**):
 
 - **Display 'e-Consent Framework' Option for All Surveys** — Must be enabled for the e-Consent configuration button to appear in the Online Designer and survey settings.
 - **Capture IP Address of Participants** — Optional setting to store the participant's IP address as part of each e-Consent record.
@@ -359,20 +368,20 @@ The e-Consent Framework requires system-level enablement by a REDCap administrat
 
 If the e-Consent option is not visible in your project's Online Designer, contact your REDCap administrator.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 10. Related Articles
 
-- RC-SURV-09 — PDF Snapshots of Records
-- RC-SURV-01 — Surveys – Basics
-- RC-SURV-02 — Survey Settings: Basic Options & Design
-- RC-SURV-04 — Survey Link Types & Access Methods
-- RC-DAG-01 — Data Access Groups
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-FD-02 — Online Designer
-- RC-AT-01 — Action Tags: Overview
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level e-Consent Framework enablement)
+- [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md)
+- [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level e-Consent Framework enablement)

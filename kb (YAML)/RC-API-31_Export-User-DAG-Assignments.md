@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i export user-dag assignments via the api
+- export user dag assignments api call
+- get which user belongs to which dag through the api
+- api method to retrieve user to data access group mapping
+- audit user dag assignments programmatically
+- pull username and group name pairs with the api
+- api endpoint to export user dag assignments
+- find unassigned users via the api
 ---
 
 # 1. Overview
@@ -182,11 +191,11 @@ If the project has no users, an empty array `[]` is returned. Users with an empt
 
 **Q: Can a user be assigned to multiple DAGs?**
 
-**A:** No. Each user can be assigned to at most one DAG. If a user needs multi-DAG access, they must be assigned no DAG (empty value) to gain all-DAG view permissions.
+**A:** Not through this API endpoint. Each user has one primary DAG assignment, which is what this endpoint exposes. The REDCap UI does provide a **DAG Switcher** feature that allows a user to be associated with additional DAGs for read access beyond their primary assignment — but Switcher assignments are not reflected in the API export. To grant or manage multi-DAG access, use the DAG Switcher on the DAG management page in the UI. If you need a user to access all records across all DAGs without a Switcher configuration, assign them an empty `redcap_data_access_group` value.
 
 **Q: How do I use this export to audit user access?**
 
-**A:** Export the user-DAG mappings and combine it with the Export Users export (RC-API-22) to correlate user roles with DAG assignments. This helps verify that users have appropriate data isolation.
+**A:** Export the user-DAG mappings and combine it with the Export Users export ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) to correlate user roles with DAG assignments. This helps verify that users have appropriate data isolation.
 
 **Q: What permissions do I need?**
 
@@ -200,13 +209,13 @@ If the project has no users, an empty array `[]` is returned. Users with an empt
 
 # 7. Common Mistakes & Gotchas
 
-**Confusing user-DAG mappings with user roles.** This export shows DAG assignments only, not roles or permissions. To see what a user can do, also export user roles (RC-API-25) or users (RC-API-22) and cross-reference with their permissions.
+**Confusing user-DAG mappings with user roles.** This export shows DAG assignments only, not roles or permissions. To see what a user can do, also export user roles ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) or users ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) and cross-reference with their permissions.
 
 **Assuming all users are assigned to a DAG.** Many users may have empty DAG assignments, meaning they have all-DAG access. Do not assume every user is restricted to a single group.
 
 **Not checking the unique group name format.** The `redcap_data_access_group` field contains the unique group name (e.g., `'group_1'`), not the display label (e.g., `'Boston Site'`). Use these values if you plan to delete DAGs or modify assignments.
 
-**Forgetting to export DAGs first.** If you want to understand what each DAG is called, export DAGs (RC-API-28) first to map unique group names to display names.
+**Forgetting to export DAGs first.** If you want to understand what each DAG is called, export DAGs ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) first to map unique group names to display names.
 
 **Not handling users assigned to deleted DAGs.** If a DAG is deleted but users are still assigned to it, they will appear in this export with the deleted DAG's unique group name. Their access may become inconsistent. Clean up assignments before deleting DAGs.
 
@@ -216,12 +225,12 @@ If the project has no users, an empty array `[]` is returned. Users with an empt
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for user permission types)
-- RC-API-22 — Export Users (retrieve user account details and permissions)
-- RC-API-25 — Export User Roles (retrieve role definitions and assignments)
-- RC-API-28 — Export DAGs (retrieve DAG definitions and unique names)
-- RC-API-32 — Import User-DAG Assignments (assign users to DAGs)
-- RC-API-33 — Switch DAG (allow users to change their active DAG context)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for user permission types)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(retrieve user account details and permissions)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(retrieve role definitions and assignments)
+- [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)(retrieve DAG definitions and unique names)
+- [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)(assign users to DAGs)
+- [RC-API-33 — Switch DAG API](RC-API-33_Switch-DAG.md)(allow users to change their active DAG context)

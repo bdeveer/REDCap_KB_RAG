@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md); [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
+| **Synonyms** | how do i set up mycap task scheduling; control when tasks appear in the mycap app; one-time repeating and fixed schedule types; anchor tasks to install date or baseline date; delay onset and end conditions for mycap tasks; schedule tasks in a longitudinal mycap project; why isn't a mycap task showing up on schedule; mycap schedule reference date |
 
 ---
 

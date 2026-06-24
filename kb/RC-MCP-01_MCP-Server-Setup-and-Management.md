@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | MCP server install.sh and redcap_mcp_server.py (internal) |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
+| **Synonyms** | how do i set up the redcap mcp server; connect claude to redcap; register the mcp server with claude desktop; model context protocol for redcap api; let claude export records and query metadata; configure multiple mcp servers for prod test and dev; where is the mcp json config file; install the redcap mcp python script |
 
 ---
 

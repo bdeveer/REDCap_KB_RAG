@@ -13,6 +13,15 @@ related:
   title: Smart Variables Overview
 tags:
 - piping
+synonyms:
+- '[mycap-participant-link] smart variable'
+- how to pipe a mycap participant link with [mycap-participant-url]
+- mycap smart variables for the participant code [mycap-participant-code]
+- '[mycap-project-code] mycap join code smart variable'
+- send a mycap enrollment link or code via email
+- how to share a mycap participant code
+- mycap participant and project code smart variables
+- pipe a mycap app link into a notification
 ---
 
 # 1. Overview
@@ -51,9 +60,11 @@ An HTML link (usually embedded in an email or field note) that directs participa
 |---|---|---|---|
 | MyCap Project Code | `[mycap-project-code]` | The unique system-generated code for the current REDCap project within the MyCap ecosystem. This code identifies the project when users enroll via MyCap. | P-5CLDRMQ28TSJJXD7KA1K |
 | MyCap Participant Code | `[mycap-participant-code]` | The unique system-generated code for the current record (participant). This code associates the participant's mobile app activity with the correct REDCap record. | U-NEXAXSMQZ3YFTZDMMSEX |
-| MyCap Participant URL | `[mycap-participant-url]` | The web address (URL) for the current record that can be used by the participant to join the project on the MyCap mobile app. The URL includes all necessary enrollment parameters. | https://mycap.link/join/... |
+| MyCap Participant URL | `[mycap-participant-url]` | The web address (URL) for the current record that can be used by the participant to join the project on the MyCap mobile app. The URL includes all necessary enrollment parameters. | https://app.projectmycap.org/... |
 | MyCap Participant Link (Default) | `[mycap-participant-link]` | An HTML web link for the current record that allows the participant to join the project on the MyCap mobile app. Uses the URL as the default link text. | [Clickable link with URL text] |
 | MyCap Participant Link (Custom Text) | `[mycap-participant-link:Custom Text]` | An HTML web link for the current record with custom link text instead of the URL. | [Clickable link labeled "Click this MyCap link"] |
+
+> **Note:** The URL domain for MyCap App Links is `app.projectmycap.org` (current, as of REDCap v15.3.3+). The legacy Firebase domain (`mycapplusbeta.page.link`) was deprecated August 25, 2025. See [RC-MYCAP-04](RC-MYCAP-04_Participant-Onboarding.md) for domain migration details.
 
 ---
 
@@ -61,7 +72,7 @@ An HTML link (usually embedded in an email or field note) that directs participa
 
 **MyCap Module Required**
 
-All MyCap smart variables only function if your project has the REDCap MyCap module enabled. Projects without MyCap enabled will return blank values when attempting to use these variables. For the availability of MyCap at this installation and how to request enablement, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.1: MyCap Mobile App**.
+All MyCap smart variables only function if your project has the REDCap MyCap module enabled. Projects without MyCap enabled will return blank values when attempting to use these variables. For the availability of MyCap at this installation and how to request enablement, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 7.1: MyCap Mobile App**.
 
 **Participant-Facing vs. Administrator Context**
 
@@ -143,7 +154,7 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 **Q: What if my project doesn't have MyCap enabled?**
 
-**A:** MyCap smart variables return blank if the MyCap module is not enabled. See **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.1** for whether MyCap is available at this installation and how to request it.
+**A:** MyCap smart variables return blank if the MyCap module is not enabled. Contact your REDCap administrator to request MyCap enablement for your project. See [RC-INST-01 — Institution-Specific Settings & Policies](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for installation-specific availability and request procedures.
 
 **Q: How do participants use the MyCap link?**
 
@@ -171,6 +182,6 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-08 — Smart Variables: Survey (survey-based smart variables for web enrollment)
-- RC-ALERT-01 — Alerts and Notifications Setup (using MyCap links in automated emails)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) (survey-based smart variables for web enrollment)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(using MyCap links in automated emails)

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | how do i use ai writing tools in redcap; fix grammar with redcap ai; redcap purple wizard wand icon for text; ai rewrite text in rich text editor redcap; change tone of survey text with ai; generate field labels using redcap ai; where is the ai writing tool in online designer; ai assist for email body and survey text |
 
 ---
 
