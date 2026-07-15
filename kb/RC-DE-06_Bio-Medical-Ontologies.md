@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | how do i search a medical terminology field; use icd-10 rxnorm or loinc lookup in redcap; bioportal ontology field data entry; enter a diagnosis or medication using a controlled vocabulary; search standardized clinical codes during data entry; ontology field type how to use; pick a coded term from a lookup table; bio-medical ontology autocomplete field |
 
 ---
 

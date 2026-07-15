@@ -13,7 +13,7 @@ related:
 - id: RC-INTG-01
   title: Data Entry Trigger
 - id: RC-EXPRT-01
-  title: Data Export Overview
+  title: 'Data Export: Overview & Workflow'
 - id: RC-IMP-01
   title: Data Import Overview
 - id: RC-USER-03
@@ -22,6 +22,15 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - api
+synonyms:
+- how do i get started with the redcap api
+- what is an api token and how do i get one
+- redcap api overview and authentication
+- connect an external application to redcap programmatically
+- api user rights and token requirements
+- how does the redcap api work over http
+- enable api access for a project
+- introduction to redcap api methods
 ---
 
 # 1. Overview
@@ -76,7 +85,7 @@ A special token required to use the **Create Project** API method. Super tokens 
 
 Before requesting a token:
 
-1. Confirm that API access is enabled at the system level — the REDCap API must be enabled by an administrator in the Control Center (System Configuration → Modules/Services Configuration — see **RC-CC-06**). If the API link is missing from the project menu entirely, the API may be disabled instance-wide.
+1. Confirm that API access is enabled at the system level — the REDCap API must be enabled by an administrator in the Control Center (System Configuration → Modules/Services Configuration — see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). If the API link is missing from the project menu entirely, the API may be disabled instance-wide.
 2. Verify that you have been granted the **API Export** and/or **API Import** user right in the project (User Rights → your user → API section).
 
 ## 3.2 Requesting a Token
@@ -274,7 +283,11 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Q: Can the API trigger the Data Entry Trigger (DET)?**
 
-**A:** No. The DET fires only on interactive data entry — saves made by a user on a REDCap form or survey. Data imported via the API does not trigger the DET. See RC-INTG-01 — Data Entry Trigger for details.
+**A:** No. The DET fires only on interactive data entry — saves made by a user on a REDCap form or survey. Data imported via the API does not trigger the DET. See [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) for details.
+
+**Q: Does the API trigger Alerts & Notifications or Automated Survey Invitations (ASIs)?**
+
+**A:** It depends on the trigger type. Completion triggers and combination triggers require a direct form or survey save — they do not fire on API or data import writes. Logic triggers evaluate against the record on every write, including API imports, so they do fire. If your workflow depends on an alert or ASI firing after an API write, make sure it uses a logic trigger. See [RC-ALERT-01 — Alerts and Notifications Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) for details on trigger types.
 
 **Q: I requested a token but don't see it on the API page. What's wrong?**
 
@@ -308,7 +321,7 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Using an HTTP URL instead of HTTPS.** API tokens are transmitted in the request body. Sending a request to an HTTP URL exposes the token to anyone who can observe the network traffic. Always verify your REDCap instance URL begins with `https://`.
 
-**Expecting the API to fire alerts or ASIs.** Alerts & Notifications and Automated Survey Invitations are triggered by data entry and certain field value conditions — but API imports do not reliably trigger ASIs the same way manual data entry does. Test thoroughly before building a workflow that depends on ASIs firing after an API import. Alerts are also not triggered by API imports in the same way.
+**Expecting the API to fire alerts or ASIs.** Whether an Alert or ASI fires on an API import depends on its trigger type. Completion triggers and combination triggers — which require a specific form or survey save — do not fire when data is written via the API or Data Import tool. Logic triggers, which evaluate a condition against the record regardless of save source, do fire after API writes. If your alert or ASI uses a completion trigger, it will not respond to API-imported data; if it uses a logic trigger, it will. Test with a real API call before building a workflow that depends on this behavior.
 
 **Confusing `instrument` (variable name) with the instrument's label.** API parameters that reference instruments — such as the `forms` parameter in Export Records — require the instrument's unique variable name (e.g., `demographics`), not its display label (e.g., `Demographics`). The variable name is found in the Online Designer or data dictionary. These often match, but not always, especially if an instrument was renamed after creation.
 
@@ -322,16 +335,16 @@ The REDCap API must be enabled at the system level before any project can use it
 
 Administrators can also manage and revoke API tokens for any user from the Control Center under Users → API Tokens. Super tokens (required for the Create Project method) must be granted there as well.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 11. Related Articles
 
-- RC-INTG-01 — Data Entry Trigger (separate mechanism for real-time notification of data changes to external systems; does not fire on API imports)
-- RC-EXPRT-01 — Data Export Overview (manual export workflow; for comparison with API-based export)
-- RC-IMP-01 — Data Import Overview (manual import methods; API import is the programmatic equivalent)
-- RC-USER-03 — User Rights: Configuring User Privileges (where API Export and API Import rights are granted)
-- RC-DAG-01 — Data Access Groups (DAG-scoped access applies equally to API tokens)
-- RC-LONG-02 — Repeated Instruments & Events Setup (essential background for working with repeating data via the API)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level API enable/disable and token management)
+- [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (separate mechanism for real-time notification of data changes to external systems; does not fire on API imports)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)(manual export workflow; for comparison with API-based export)
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (manual import methods; API import is the programmatic equivalent)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (where API Export and API Import rights are granted)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG-scoped access applies equally to API tokens)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (essential background for working with repeating data via the API)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level API enable/disable and token management)

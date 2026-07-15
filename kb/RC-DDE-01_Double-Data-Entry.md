@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) |
+| **Synonyms** | how do i enable double data entry; enter each record twice and compare; catch transcription errors with two data entry users; reconcile and merge discrepant entries; set up dde reviewer role; two independent data entry users workflow; compare two versions of a record; double key data entry for clinical trials |
 
 ---
 

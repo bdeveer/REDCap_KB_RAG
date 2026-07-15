@@ -12,6 +12,7 @@
 | Last Updated | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Related Topics | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-03 — Institution-Specific Settings & Policies — Development](RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md)|
+| Synonyms | how do i log in to the test or staging redcap server; can i put real participant data on the test instance; what is the redcap url for uat testing; how does the staging environment differ from production; user acceptance testing redcap settings; test instance authentication and 2fa requirements; rehearse configuration changes before production; staging server policies and feature availability |
 
 ---
 

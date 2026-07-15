@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | REDCap Support |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) |
+| **Synonyms** | how do i view the project audit trail; who changed this data and when; see a history of all actions in my project; filter and export the logging records; redcap audit log for compliance; track record creation deletion and exports; data history popup clock icon; difference between logging and email logging |
 
 ---
 

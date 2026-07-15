@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
+| **Synonyms** | what is the codebook; view all fields and variables at a glance; read-only list of project variables; where to see all variable names and choices; printable reference of project structure; codebook vs data dictionary; look up a field definition quickly; see every instrument and field in one place |
 
 ---
 

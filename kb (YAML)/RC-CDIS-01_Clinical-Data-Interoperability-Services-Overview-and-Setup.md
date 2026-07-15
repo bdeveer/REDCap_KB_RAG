@@ -11,13 +11,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CDIS-02
-  title: Clinical Data Pull Setup
+  title: 'Clinical Data Pull (CDP): Setup and Usage'
 - id: RC-CDIS-03
-  title: Clinical Data Mart Setup
+  title: 'Clinical Data Mart (CDM): Setup and Usage'
 - id: RC-CDIS-04
-  title: CDP vs CDM Comparison
+  title: 'CDP vs CDM: Feature Comparison'
 tags:
 - clinical data interoperability services
+synonyms:
+- how do i connect redcap to an ehr
+- set up cdis in the control center
+- smart on fhir integration with redcap
+- import clinical data from electronic health records
+- what is the difference between cdp and cdm
+- configure ehr connectivity for redcap
+- fhir hl7 clinical data setup
+- enable clinical data pull and data mart
 ---
 
 > **Administrator access required.** The CDIS Control Center page is only available to REDCap super users.
@@ -92,7 +101,7 @@ The CDIS Control Center page also links to:
 
 - An informational overview page on CDP and CDM (suitable for sharing with users)
 - The setup instructions ZIP file with technical specifications
-- A comparison table of CDP vs CDM differences (see RC-CDIS-04)
+- A comparison table of CDP vs CDM differences (see [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md))
 - A survey for requesting additional FHIR data mappings
 - Reference lists for mappable FHIR data (DSTU2 and R4 versions)
 
@@ -134,8 +143,8 @@ No. After the user completes the initial EHR Launch (which triggers OAuth2 autho
 
 # 9. Related Articles
 
-- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
-- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
-- RC-CDIS-04 — CDP vs CDM: Feature Comparison
-- RC-CC-06 — Control Center: Modules & Services Configuration
-- RC-CC-07 — Control Center: Users & Access Management (for granting Data Mart privileges)
+- [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md)
+- [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md)
+- [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+- [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (for granting Data Mart privileges)

@@ -13,13 +13,22 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-03
-  title: Import Records
+  title: Import Records API
 - id: RC-API-06
-  title: Export Field Names
+  title: Export Field Names API
 - id: RC-API-07
-  title: Export Metadata
+  title: Export Metadata (Data Dictionary) API
 tags:
 - api
+synonyms:
+- how do i export records via the api
+- export records api call
+- pull record data through the api export method
+- api endpoint to download record data
+- programmatically read redcap data as json or csv
+- get all records from a project using the api
+- export raw values or labels via records api
+- api method to retrieve entered data
 ---
 
 # 1. Overview
@@ -52,7 +61,7 @@ When to use this method: When you need to read record data from REDCap in an aut
 | `filterLogic` | Optional | A logic string (e.g., `[age] > 30`) to filter returned records. Only records where the logic evaluates as TRUE are returned. Invalid syntax returns an error. |
 | `dateRangeBegin` | Optional | Return only records created or modified **after** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, no lower bound is applied. |
 | `dateRangeEnd` | Optional | Return only records created or modified **before** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, uses the current server time. |
-| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. |
+| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
 | `decimalCharacter` | Optional | Forces all numeric values (calc fields and number-validated text fields) to use a consistent decimal separator: `','` or `'.'`. If omitted, numbers use their native format. |
 | `exportBlankForGrayFormStatus` | Optional | `true` or `false` (default). If `true`, instrument complete status fields with a gray (unstarted) icon export as blank instead of `0`. Recommended when data will be re-imported into REDCap. |
 | `combineCheckboxOptions` | Optional | `true` or `false` (default). If `true`, all checked options for a checkbox field are combined into a single column instead of exporting as separate `variable___code` columns. |
@@ -148,7 +157,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -251,18 +260,18 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **Exporting all records from a large project can exhaust server memory.** In projects with a high record count and a large number of fields — particularly projects that use many repeating instrument instances — an unfiltered full-record export can cause REDCap to crash with a PHP memory exhaustion error. The API returns an HTTP 200 response whose body contains an HTML fatal error block followed by a JSON error message: `{"error":"REDCap ran out of server memory. The request cannot be processed. Please try importing/exporting a smaller amount of data."}`. This is not a standard API error response and can confuse clients that parse JSON without first checking for embedded HTML. To avoid this, break large exports into smaller chunks using `records` (a batch of record IDs), `fields` or `forms` (a subset of the data dictionary), or `dateRangeBegin`/`dateRangeEnd` (a time-bounded slice). Operational or administrative tracking projects that accumulate many records over time are especially susceptible.
 
-**Passing `'record_id'` as a field name in the `fields` parameter fails if the primary key has a different variable name.** REDCap auto-numbering projects (and any project where the designer named the primary key something other than `record_id`) will return an API error: `"The following values in the parameter 'fields' are not valid: 'record_id'"`. The primary key field always carries whatever variable name was given to the first field in the data dictionary. To discover the actual primary key variable name before filtering exports, call the Export Field Names API (RC-API-06) — the first entry in the response is always the primary key. Note that the primary key is always included in every export automatically, regardless of which `fields` you specify.
+**Passing `'record_id'` as a field name in the `fields` parameter fails if the primary key has a different variable name.** REDCap auto-numbering projects (and any project where the designer named the primary key something other than `record_id`) will return an API error: `"The following values in the parameter 'fields' are not valid: 'record_id'"`. The primary key field always carries whatever variable name was given to the first field in the data dictionary. To discover the actual primary key variable name before filtering exports, call the Export Field Names API ([RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)) — the first entry in the response is always the primary key. Note that the primary key is always included in every export automatically, regardless of which `fields` you specify.
 
 ---
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-03 — Import Records (writing data to REDCap)
-- RC-API-04 — Delete Records (removing records)
-- RC-API-06 — Export Field Names (get metadata about fields)
-- RC-API-07 — Export Metadata (get the data dictionary)
-- RC-EXPRT-01 — Data Export: Overview & Workflow (manual export workflows and format options)
-- RC-EXPRT-02 — Data Export: Export Formats (format reference for CSV, SPSS, SAS, R, Stata)
-- RC-DAG-01 — Data Access Groups (how DAGs filter exported data)
-- RC-LONG-02 — Repeated Instruments & Events Setup (repeat instance handling in exports)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)(writing data to REDCap)
+- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)(removing records)
+- [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)(get metadata about fields)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(get the data dictionary)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (manual export workflows and format options)
+- [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) (format reference for CSV, SPSS, SAS, R, Stata)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (how DAGs filter exported data)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (repeat instance handling in exports)

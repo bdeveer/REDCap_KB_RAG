@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md); [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | how do i set up randomization in redcap; configure a randomization model step by step; upload an allocation table; define randomization fields and strata; enable the randomization module; move a randomized project to production; randomization setup guide; build the randomization scheme for my study |
 
 ---
 

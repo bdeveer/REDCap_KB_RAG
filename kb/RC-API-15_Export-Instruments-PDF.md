@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Synonyms** | how do i export an instrument as a pdf via the api; export instruments pdf api call; generate a pdf of a form through the api; api method to download form pdf; get a blank or filled pdf of an instrument via api; programmatically create instrument pdfs with the api; api endpoint to export instrument pdf; download data entry form as pdf using the api |
 
 ---
 

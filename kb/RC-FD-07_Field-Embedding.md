@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
+| **Synonyms** | what is field embedding; put a field inside another fields label; reposition a field on a form; embed a text box next to an answer choice; arrange fields in a grid or table layout; curly brace field references in labels; change where a field appears on a survey; how to use field embedding in redcap |
 
 ---
 

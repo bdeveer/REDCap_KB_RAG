@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i export users via the api
+- export users api call
+- get the list of project users and permissions through the api
+- api method to retrieve usernames and rights
+- pull user permission flags with the api
+- audit project users programmatically
+- api endpoint to export users
+- list who has access to a project via api
 ---
 
 # 1. Overview
@@ -125,7 +134,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -135,7 +144,9 @@ On success, the method returns an array (JSON, CSV, or XML) of user objects. Eac
 
 ## 5.1 Returned attributes
 
-`username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `design`, `alerts`, `user_rights`, `data_access_groups`, `data_export`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+`username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `data_access_group_id`, `data_access_group_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `data_export`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+> **Note:** `data_access_group_id` (numeric DAG ID) and `data_access_group_label` (human-readable DAG name) are informational fields. REDCap uses `data_access_group` (the unique DAG name) as the functional key for DAG assignment.
 
 ## 5.2 Attribute value key
 
@@ -146,7 +157,7 @@ On success, the method returns an array (JSON, CSV, or XML) of user objects. Eac
 | Form-level rights (REDCap ≥ 15.6) | `128` = No Access, `129` = Read Only, `130` = View & edit records (survey responses read-only); add `8` to also grant Edit Survey Responses; add `16` to also grant Delete |
 | All other permission attributes | `0` = No Access, `1` = Access |
 
-See RC-USER-03 for a full explanation of each permission name.
+See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for a full explanation of each permission name.
 
 ---
 
@@ -166,7 +177,7 @@ See RC-USER-03 for a full explanation of each permission name.
 
 **Q: Can I see which role a user is assigned to?**
 
-**A:** The Export Users method returns each user's individual permission flags, but not the role name if the user is role-based. To see role assignments, use the Export User-DAG Assignments method (RC-API-31) to see DAG assignments, and export the user roles separately using Export User Roles (RC-API-25).
+**A:** The Export Users method returns each user's individual permission flags, but not the role name if the user is role-based. To see role assignments, use the Export User-DAG Assignments method ([RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)) to see DAG assignments, and export the user roles separately using Export User Roles ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)).
 
 ---
 
@@ -182,13 +193,15 @@ See RC-USER-03 for a full explanation of each permission name.
 
 **Attempting to export users from a project where you lack API Export right.** If your API token does not include the API Export right, the method will fail with an authentication error. Verify your token permissions in the API Credentials settings.
 
+**`data_export` vs. `data_export_tool`.** This endpoint uses `data_export` for the export rights field. The sibling Roles endpoints (RC-API-26 / RC-API-27) use `data_export_tool` for the same permission. Using the wrong field name in role import calls will silently fail to set the intended permission.
+
 ---
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (explains the three access tiers and role-based access)
-- RC-USER-03 — User Rights: Configuring User Privileges (complete reference for all permission names and meanings)
-- RC-API-23 — Import Users (create and modify users via API)
-- RC-API-24 — Delete Users (remove users from a project via API)
-- RC-API-25 — Export User Roles (export custom role definitions)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (explains the three access tiers and role-based access)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (complete reference for all permission names and meanings)
+- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md)(create and modify users via API)
+- [RC-API-24 — Delete Users API](RC-API-24_Delete-Users.md)(remove users from a project via API)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(export custom role definitions)

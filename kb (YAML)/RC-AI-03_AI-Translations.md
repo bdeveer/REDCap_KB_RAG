@@ -15,6 +15,15 @@ related:
   title: Multi-Language Management
 tags:
 - ai tools
+synonyms:
+- how do i translate my project with ai in redcap
+- ai translation in multi-language management
+- auto translate instruments and surveys redcap
+- translate redcap interface to another language with ai
+- set up a new language for ai translation
+- keep ai translations updated when project changes
+- redcap mlm ai translate button
+- machine translate survey content redcap
 ---
 
 # 1. Overview
@@ -172,7 +181,7 @@ REDCap passes the Language Display Name to the AI as the target language instruc
 
 # 7. Related Articles
 
-- RC-AI-01 — REDCap AI Tools: Overview & Security
-- RC-AI-02 — AI Writing Tools
-- RC-AI-04 — AI Summarization
-- RC-MLM-01 — Multi-Language Management
+- [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md)
+- [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md)
+- [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md)
+- [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md)

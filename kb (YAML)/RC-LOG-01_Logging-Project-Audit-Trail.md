@@ -17,6 +17,15 @@ related:
   title: 'Control Center: User Activity Log'
 tags:
 - logging
+synonyms:
+- how do i view the project audit trail
+- who changed this data and when
+- see a history of all actions in my project
+- filter and export the logging records
+- redcap audit log for compliance
+- track record creation deletion and exports
+- data history popup clock icon
+- difference between logging and email logging
 ---
 
 # 1. Overview
@@ -42,7 +51,7 @@ A single record in the audit trail. Each entry captures: the timestamp of the ac
 A project-level user permission that grants access to the Logging module. Users without this right do not see the Logging link in the left menu. It is separate from the field-level field history ('H' button), which is available to all users who can open an instrument.
 
 ### Data History Popup
-A project-level setting (enabled under Project Setup → Additional Customizations) that adds a clock icon next to every field on every instrument. Clicking the icon opens a popup showing a chronological history of all values that field has held for that record — including the previous value, who made each change, and the timestamp. This is the per-field complement to the project-level Logging module. The Data History popup must be enabled for the File Version History feature to work. See RC-PROJ-04 — Project Setup: Additional Customizations.
+A project-level setting (enabled under Project Setup → Additional Customizations) that adds a clock icon next to every field on every instrument. Clicking the icon opens a popup showing a chronological history of all values that field has held for that record — including the previous value, who made each change, and the timestamp. This is the per-field complement to the project-level Logging module. The Data History popup must be enabled for the File Version History feature to work. See [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
 ### Server Timestamp
 All log entries record the date and time as reported by the REDCap server, not the user's local browser time. For multi-time-zone teams, confirm the server's timezone with your administrator when reviewing time-sensitive entries.
@@ -73,7 +82,7 @@ A notice at the top of the log confirms this: "By default, only the logged event
 
 The Logging user right is a single checkbox in **User Rights** (left menu → User Rights) labeled "Logging." Granting this right gives the user full read access to the project's audit trail — there is no partial or filtered access at the user-rights level.
 
-To use the API Export Logging endpoint programmatically, the user must also have **API Export** privilege. Both rights are required; neither alone is sufficient for API access. See RC-API-39 — Export Logging API.
+To use the API Export Logging endpoint programmatically, the user must also have **API Export** privilege. Both rights are required; neither alone is sufficient for API access. See [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
 
 > **Institution-specific:** [Note any local policy about who routinely receives the Logging right — leave blank until confirmed with your REDCap support team]
 
@@ -133,7 +142,7 @@ For **repeating instrument** instances, the entry begins with `[instance = N]`:
 
 For **alert modifications**, the full alert configuration is captured in the data column (all parameters, including message body, schedule settings, and recipient addresses).
 
-> **Note:** The data column shows the **values as saved** at the time of the action, not old-vs-new comparisons. To see what a value was before an edit, use the field-level 'H' button on the data entry form. See RC-DE-04 — Editing Data & Audit Trail.
+> **Note:** The data column shows the **values as saved** at the time of the action, not old-vs-new comparisons. To see what a value was before an edit, use the field-level 'H' button on the data entry form. See [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md).
 
 ---
 
@@ -166,6 +175,8 @@ The "Filter by event" dropdown contains these options (internal API values in pa
 | Record deleted (only) | `record_delete` |
 | Record locking & e-signatures | `lock_record` |
 | Page Views | `page_view` |
+
+> **Note:** The API `logtype` parameter also accepts `'record'` (not available as a UI dropdown option), which returns all record-related events — equivalent to combining `record_add`, `record_edit`, and `record_delete`.
 
 > **Important:** Page Views are deliberately excluded from the default "all event types" view. On active projects, page view logging can generate thousands of entries. Select "Page Views" explicitly when you need to trace which pages a specific user accessed and when.
 
@@ -210,7 +221,7 @@ The exported CSV has five columns:
 
 ## 6.3 API Export
 
-The same audit data is accessible programmatically via the Export Logging API endpoint, which supports additional filter parameters and returns JSON, CSV, or XML. See RC-API-39 — Export Logging API.
+The same audit data is accessible programmatically via the Export Logging API endpoint, which supports additional filter parameters and returns JSON, CSV, or XML. See [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
 
 ---
 
@@ -233,7 +244,7 @@ A common workflow for a formal audit or inspection:
 2. Optionally filter by record if reviewing a specific subject.
 3. Export using "All pages using current filters" → CSV.
 4. Repeat with "Record created (only)" and "Record deleted (only)" to capture the full record lifecycle.
-5. Supplement with the record's data export showing final values (see RC-EXPRT-01 — Data Export: Overview & Workflow).
+5. Supplement with the record's data export showing final values (see [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)).
 6. Document user rights in effect during the period (user additions and removals are also in the log under "User or role created-updated-deleted").
 
 ---
@@ -242,7 +253,7 @@ A common workflow for a formal audit or inspection:
 
 ## 8.1 Project Logging vs. Control Center User Activity Log
 
-| Feature | Project Logging (RC-LOG-01) | CC User Activity Log (RC-CC-12) |
+| Feature | Project Logging ([RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md)) | CC User Activity Log ([RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)) |
 |---|---|---|
 | **Scope** | Single project only | All projects on the REDCap instance |
 | **Who can access** | Users with Logging right in the project | REDCap system administrators only |
@@ -252,23 +263,23 @@ A common workflow for a formal audit or inspection:
 
 ## 8.2 Project Logging vs. Data History Popup
 
-The Data History popup (clock icon on each field) shows the complete value history for one specific field in one specific record, including the old value before each change. It requires the "Data History Popup" setting to be enabled under Project Setup → Additional Customizations (see RC-PROJ-04). No Logging user right is required to view field history — any user who can open the instrument can access it.
+The Data History popup (clock icon on each field) shows the complete value history for one specific field in one specific record, including the old value before each change. It requires the "Data History Popup" setting to be enabled under Project Setup → Additional Customizations (see [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md)). No Logging user right is required to view field history — any user who can open the instrument can access it.
 
 The Logging module, by contrast, shows all saved values across all fields and all records but does not show old-vs-new comparisons — it shows the state as saved in each transaction. Use the Data History popup when you need to see what a value was before a specific edit; use the Logging module for cross-record or cross-user investigation.
 
-See RC-DE-04 — Editing Data & Audit Trail for more on field-level history.
+See [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) for more on field-level history.
 
 ## 8.3 Project Logging vs. Data Resolution Workflow Log
 
 The Data Resolution Workflow (DRW) has its own dedicated query and response log showing the history of each data discrepancy note. That log is visible within individual records under the DRW interface and is separate from the main Logging module, although DRW actions do also appear in the project audit trail.
 
-See RC-DE-12 — Data Resolution Workflow.
+See [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md).
 
 ## 8.4 Project Logging vs. Field Comment Log
 
 The Field Comment Log captures structured comments attached to individual fields. These appear in the Logging module as a logged event but are also accessible separately through the comment log interface.
 
-See RC-DE-08 — Field Comment Log.
+See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 ## 8.5 Reason for Change and the Logging Module
 
@@ -276,7 +287,7 @@ The **Require a Reason When Making Changes to Existing Records** setting (Projec
 
 That reason text is stored in the project's Logging and appears in the data column of the relevant log entry — alongside the field values that were changed. Reviewers can see both what changed and why in a single log entry. The prompt fires on UI saves only; data imported via the Data Import Tool or API does not trigger it.
 
-This setting is commonly used in studies with regulatory requirements for audit trails. Enable it under Project Setup → Additional Customizations. See RC-PROJ-04 — Project Setup: Additional Customizations.
+This setting is commonly used in studies with regulatory requirements for audit trails. Enable it under Project Setup → Additional Customizations. See [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
 ---
 
@@ -333,7 +344,7 @@ The `SYSTEM` username indicates an automated REDCap action with no specific logg
 Yes. Every API call is logged under the username of the account whose token was used. The action typically appears as `Manage/Design` with a description like "Export instrument-event mappings (API)" or "Upload data dictionary (API)" in the data column.
 
 **Q: How do I export the full log for an audit?**
-Use the "All pages using current filters" export button (CSV) to download all entries matching your filters. For programmatic access, use the Export Logging API — see RC-API-39 — Export Logging API.
+Use the "All pages using current filters" export button (CSV) to download all entries matching your filters. For programmatic access, use the Export Logging API — see [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
 
 **Q: Alert modifications appear in the log with all their settings. Why is there so much detail?**
 When an alert is created or modified, REDCap logs the full configuration including schedule, recipient addresses, and message body. This ensures a complete audit trail of exactly what each alert was set up to do at any point in time. For complex alerts, this makes the log entry very long — it is by design.
@@ -360,14 +371,14 @@ When an alert is created or modified, REDCap logs the full configuration includi
 
 # 12. Related Articles
 
-- RC-DE-04 — Editing Data & Audit Trail (field-level 'H' button; covers old vs. new value comparison)
-- RC-API-39 — Export Logging API (programmatic access to the same audit trail data)
-- RC-CC-12 — Control Center: User Activity Log (system-wide activity log; admin-only; distinct from project Logging)
-- RC-USER-03 — User Rights: Configuring User Privileges (where the Logging right is granted)
-- RC-DE-12 — Data Resolution Workflow (separate query/response log within records)
-- RC-DE-08 — Field Comment Log (field-level comments, separately accessible)
-- RC-LOCK-01 — Record Locking & E-Signatures *(coming soon)* (lock/unlock events selectable via "Record locking & e-signatures" event type filter)
-- RC-DE-13 — Record Administration *(coming soon)* (record rename, delete, DAG move — all logged under Manage/Design)
-- RC-EXPRT-01 — Data Export: Overview & Workflow (export actions are logged; relevant for compliance packages)
-- RC-ALERT-01 — Alerts & Notifications: Setup (alert create/modify events appear in detail in the Logging module)
-- RC-PROJ-04 — Project Setup: Additional Customizations (Data History Popup and Reason for Change settings)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (field-level 'H' button; covers old vs. new value comparison)
+- [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md) (programmatic access to the same audit trail data)
+- [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) (system-wide activity log; admin-only; distinct from project Logging)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (where the Logging right is granted)
+- [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) (separate query/response log within records)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (field-level comments, separately accessible)
+- [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md) *(coming soon)* (lock/unlock events selectable via "Record locking & e-signatures" event type filter)
+- [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md)(coming soon)* (record rename, delete, DAG move — all logged under Manage/Design)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (export actions are logged; relevant for compliance packages)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alert create/modify events appear in detail in the Logging module)
+- [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (Data History Popup and Reason for Change settings)

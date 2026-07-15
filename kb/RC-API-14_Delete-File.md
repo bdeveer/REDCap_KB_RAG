@@ -12,6 +12,7 @@
 | Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Source | REDCap API v16.1.3 official documentation examples |
 | Related Topics | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-12 — Export File API](RC-API-12_Export-File.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md)|
+| Synonyms | how do i delete a file via the api; delete file api call; remove an uploaded file from a record through the api; api method to clear a file-upload field; delete a signature field file via api; programmatically remove files from redcap; api endpoint to delete a record file; automate file removal with the api |
 
 ---
 

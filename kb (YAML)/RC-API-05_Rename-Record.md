@@ -13,13 +13,22 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-02
-  title: Export Records
+  title: Export Records API
 - id: RC-API-03
-  title: Import Records
+  title: Import Records API
 - id: RC-API-04
-  title: Delete Records
+  title: Delete Records API
 tags:
 - api
+synonyms:
+- how do i rename a record via the api
+- rename record api call
+- change a record id programmatically
+- api method to update a record identifier
+- renumber records using the api
+- correct a mistaken record id with the api
+- change primary key value of a record via api
+- api endpoint to rename a record id
 ---
 
 # 1. Overview
@@ -134,7 +143,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `false` for compatibility. Set it to `true` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `false` for compatibility. Set it to `true` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -187,8 +196,8 @@ On success, the API returns `"1"`. On failure, it returns an error message strin
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-02 — Export Records (reading record data)
-- RC-API-03 — Import Records (creating and updating records)
-- RC-API-04 — Delete Records (removing records)
-- RC-DE-01 — Record Creation & the Record Home Page (how record IDs are assigned and what auto-numbering means)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(reading record data)
+- [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)(creating and updating records)
+- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)(removing records)
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) (how record IDs are assigned and what auto-numbering means)

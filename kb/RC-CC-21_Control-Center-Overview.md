@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md)|
+| **Synonyms** | control center overview and navigation; what is the redcap control center; how do i access the control center; admin hub for system-wide settings; who can access the control center; control center sidebar navigation; super user administrative area redcap; intro to the control center for admins |
 
 ---
 

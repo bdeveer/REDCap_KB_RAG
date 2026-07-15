@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | @NOW and @TODAY action tags; @DEFAULT action tag; @SETVALUE action tag; @USERNAME action tag; how do i auto fill a field with today's date; how do i set a default value on a field; prefill a field value on page load; auto populate the current date and time; capture the username automatically into a field |
 
 ---
 

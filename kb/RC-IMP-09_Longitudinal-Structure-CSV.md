@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md) through [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md)|
+| **Synonyms** | how do i import arms and events via csv; upload instrument-event mappings csv; bulk build longitudinal structure from a spreadsheet; correct order to upload arms events and mappings; copy a longitudinal project's event structure; single-arm project skip the arms upload; why do my event references fail silently; import the schedule of events for a longitudinal project |
 
 ---
 

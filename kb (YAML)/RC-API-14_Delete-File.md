@@ -1,7 +1,32 @@
 ---
 id: RC-API-14
 title: Delete File API
-domain: ''
+domain: API
+applies_to:
+- REDCap projects with file upload fields
+prerequisites:
+- RC-API-01 — REDCap API
+version: '1.1'
+last_updated: '2026'
+source: REDCap API v16.1.3 official documentation examples
+related:
+- id: RC-API-01
+  title: REDCap API
+- id: RC-API-12
+  title: Export File API
+- id: RC-API-13
+  title: Import File API
+tags:
+- api
+synonyms:
+- how do i delete a file via the api
+- delete file api call
+- remove an uploaded file from a record through the api
+- api method to clear a file-upload field
+- delete a signature field file via api
+- programmatically remove files from redcap
+- api endpoint to delete a record file
+- automate file removal with the api
 ---
 
 # 1. Overview
@@ -120,7 +145,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -150,7 +175,7 @@ Example success response (JSON):
 
 **Q: Is there an undo function if I accidentally delete a file?**
 
-**A:** No. The file is permanently deleted. If you need to keep the file, export it (using RC-API-12) before deleting it. REDCap maintains an audit trail, but deleted files cannot be undeleted via the API.
+**A:** No. The file is permanently deleted. If you need to keep the file, export it (using [RC-API-12 — Export File API](RC-API-12_Export-File.md)) before deleting it. REDCap maintains an audit trail, but deleted files cannot be undeleted via the API.
 
 **Q: Do I need the `event` parameter for classic projects?**
 
@@ -174,6 +199,6 @@ Example success response (JSON):
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-12 — Export File (download files from file-upload fields)
-- RC-API-13 — Import File (upload files to file-upload fields)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from file-upload fields)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to file-upload fields)

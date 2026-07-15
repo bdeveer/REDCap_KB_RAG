@@ -23,15 +23,24 @@ related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview
 - id: RC-NAV-REC-04
-  title: Record Status Dashboard
+  title: Record Status Dashboard & Other Record Links
 tags:
 - exports, reports & stats
 - data
+synonyms:
+- how to create a custom report in redcap
+- build a report and choose fields
+- add variables to a report
+- make a reusable report of specific fields
+- report builder step 1 and 2
+- select which fields show in a report
+- set up a new report with public access
+- create a saved view of project data
 ---
 
 # 1. Overview
 
-This article explains how to create a custom report in REDCap and select the variables it displays. Custom reports let you define a persistent, reusable view of specific fields across your project's records — unlike the built-in "All Data" or single-instrument options, which are fixed. This is the first article in the Custom Reports series (RC-EXPRT-06 through RC-EXPRT-08); it covers navigation to the report builder, report-level settings (name, public access, description, user access), and all methods for adding and arranging variables. Filtering and result ordering are covered in RC-EXPRT-07; saving and report management in RC-EXPRT-08.
+This article explains how to create a custom report in REDCap and select the variables it displays. Custom reports let you define a persistent, reusable view of specific fields across your project's records — unlike the built-in "All Data" or single-instrument options, which are fixed. This is the first article in the Custom Reports series ([RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) through [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md)); it covers navigation to the report builder, report-level settings (name, public access, description, user access), and all methods for adding and arranging variables. Filtering and result ordering are covered in [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md); saving and report management in [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md).
 
 ---
 
@@ -50,7 +59,7 @@ The interface used to create or edit a custom report. It is divided into numbere
 A report made accessible via a shareable URL to anyone who has the link, including people who are not REDCap users on the project. Requires meeting three system-enforced criteria before activation.
 
 **Live Filter**
-A variable designated as an on-the-fly filter for a report. Live filters let users narrow report results without editing the report itself. Covered in RC-EXPRT-07.
+A variable designated as an on-the-fly filter for a report. Live filters let users narrow report results without editing the report itself. Covered in [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md).
 
 **Add/Edit/Organize Reports Privilege**
 The user right that controls who can create, edit, copy, and delete custom reports. A user without this right can view reports they have been granted access to, but cannot modify them.
@@ -214,32 +223,32 @@ These options appear below the field list and apply to the full report. The defa
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-38 — Export Reports API** — export the data from any saved custom report programmatically using its report ID
+- **[RC-API-38 — Export Reports API](RC-API-38_Export-Reports.md)** — export the data from any saved custom report programmatically using its report ID
 
 ---
 
 
 # 9. Administrator Configuration
 
-Whether project-level users can make reports publicly accessible is controlled by a system-wide setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Reports to Be Made Public").
+Whether project-level users can make reports publicly accessible is controlled by a system-wide setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Reports to Be Made Public").
 
 Administrators can configure this permission to one of three levels: disabled entirely (no public reports allowed on the instance), allowed with admin approval (the request appears in the administrator's To-Do List before the public URL is activated), or allowed without approval (users can publish reports on their own). In some REDCap instances — particularly those operating under strict data privacy requirements — public reports are disabled entirely.
 
 If the public reports option does not appear in the report builder, the feature has been disabled at the system level. Contact your REDCap administrator to confirm whether public reports are permitted at your institution.
 
-> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+> **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)
 
 ---
 
 # 10. Related Articles
 
-- RC-CC-04 — Control Center: User Settings & Defaults (controls whether public reports are permitted and whether admin approval is required)
-- RC-EXPRT-05 — Data Export: Report Types & Other Export Options (prerequisite — covers the built-in report options this article builds on)
-- RC-EXPRT-07 — Custom Reports: Filtering & Ordering (next article — filters, logic builder, live filters, and result ordering)
-- RC-EXPRT-08 — Custom Reports: Management & Organization (saving, copying, deleting, and organizing reports into folders)
-- RC-DAG-01 — Data Access Groups (background on DAGs referenced in user access configuration)
-- RC-USER-03 — User Rights: Configuring User Privileges (covers Add/Edit/Organize Reports and instrument-level access)
-- RC-NAV-REC-01 — Record Navigation Overview (any Record ID displayed in a report is a clickable link that opens the Record Home Page for that record)
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (reports are one of several locations in REDCap where Record ID links appear; custom dashboards and custom reports serve complementary purposes)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (controls whether public reports are permitted and whether admin approval is required)
+- [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md) (prerequisite — covers the built-in report options this article builds on)
+- [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md) (next article — filters, logic builder, live filters, and result ordering)
+- [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md) (saving, copying, deleting, and organizing reports into folders)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAGs referenced in user access configuration)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (covers Add/Edit/Organize Reports and instrument-level access)
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) (any Record ID displayed in a report is a clickable link that opens the Record Home Page for that record)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (reports are one of several locations in REDCap where Record ID links appear; custom dashboards and custom reports serve complementary purposes)

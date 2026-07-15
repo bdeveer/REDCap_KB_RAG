@@ -21,6 +21,15 @@ related:
 tags:
 - form design
 - instruments
+synonyms:
+- how to import an instrument from the library
+- reuse a prebuilt instrument
+- download an instrument as a zip file
+- share an instrument between projects
+- redcap shared instrument library
+- import instrument zip into my project
+- copy a form without rebuilding it
+- validated instruments from vanderbilt library
 ---
 
 # 1. Overview
@@ -47,7 +56,7 @@ instruments.
 **Zip File (Instrument Export/Import)**
 
 A file format used to export and import individual REDCap instruments. A
-zip file captures the instrument\'s metadata — its variable
+zip file captures the instrument's metadata — its variable
 definitions, field types, labels, choices, and branching logic — but
 not any data collected using that instrument. Zip files are
 project-agnostic and can be imported into any REDCap project.
@@ -115,9 +124,9 @@ library, contact your local REDCap support team. The submission process
 involves committee review by the REDCap consortium before the instrument
 is made publicly available.
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** Always review imported instruments in the Online Designer after import. Variable names from the library may conflict with names already in your project, or the instrument\'s branching logic may reference variables that don\'t exist in your project context.
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Important:** Always review imported instruments in the Online Designer after import. Variable names from the library may conflict with names already in your project, or the instrument's branching logic may reference variables that don't exist in your project context.
+
 
 ---
 
@@ -137,7 +146,7 @@ is made publicly available.
 - Zip file export and import are accessed from within the Online
     Designer — not from the Project Setup page directly.
 
-- In the Online Designer\'s instrument list, each instrument has an
+- In the Online Designer's instrument list, each instrument has an
     Export as zip option.
 
 - The import option (Upload a zip file) is also in the Online Designer
@@ -168,29 +177,28 @@ is made publicly available.
     names do not themselves cause new collisions.
 
 - Confirm the import. The new instrument appears in the Online
-    Designer\'s instrument list.
+    Designer's instrument list.
 
 - Review the imported instrument in the Online Designer to verify the
     import is correct.
 
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** Zip file import does not overwrite existing instruments — it adds the imported instrument as a new one. If you want to replace an existing instrument with a zip file version, you must delete the existing instrument first (only possible if it contains no data).
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** Zip file import does not overwrite existing instruments — it adds the imported instrument as a new one. If you want to replace an existing instrument with a zip file version, you must delete the existing instrument first (only possible if it contains no data).
+
 
 ---
 
 # 5. Library vs. Zip File: When to Use Each
 
-  -------------------- ------------------------------------------------- ----------------------------------------------------------
-  **Factor**           **Instrument Library**                            **Zip File**
-  Source               Centrally curated, Vanderbilt-hosted              Any REDCap user or project
-  Curation             Committee-reviewed before publication             Not curated — quality varies
-  Licensing            Some instruments require a fee                    No licensing constraints
-  Use case             Validated clinical scales; community tools        Reusing your own instruments; sharing with collaborators
-  Backup use           Not applicable                                    Yes — export for safekeeping
-  Access point         Project Setup page or Online Designer             Online Designer only
-  Collision handling   Automatic detection; must resolve before import   Automatic detection with suggested alternatives
-  -------------------- ------------------------------------------------- ----------------------------------------------------------
+| **Factor** | **Instrument Library** | **Zip File** |
+| --- | --- | --- |
+| Source | Centrally curated, Vanderbilt-hosted | Any REDCap user or project |
+| Curation | Committee-reviewed before publication | Not curated — quality varies |
+| Licensing | Some instruments require a fee | No licensing constraints |
+| Use case | Validated clinical scales; community tools | Reusing your own instruments; sharing with collaborators |
+| Backup use | Not applicable | Yes — export for safekeeping |
+| Access point | Project Setup page or Online Designer | Online Designer only |
+| Collision handling | Automatic detection; must resolve before import | Automatic detection with suggested alternatives |
 
 ---
 
@@ -205,14 +213,14 @@ The library copy is unaffected.
 
 **Q: Can I export an instrument that already has data collected in it?**
 
-**A:** Yes. The zip file export captures the instrument\'s metadata only ---
+**A:** Yes. The zip file export captures the instrument's metadata only ---
 it does not include any collected data. The export is safe to perform at
 any time regardless of data collection status.
 
 **Q: What should I do if REDCap flags a variable name collision during
 import?**
 
-**A:** Accept REDCap\'s suggested alternative name, or type your own
+**A:** Accept REDCap's suggested alternative name, or type your own
 alternative — as long as it is unique across the project. After
 import, update any branching logic or other references that used the
 original variable name, since they will now reference the renamed
@@ -239,7 +247,7 @@ license.
 
 **A:** Yes, through your local REDCap support team. The submission goes
 through a committee review process before being published. Contact your
-institution\'s REDCap administrator to start the process.
+institution's REDCap administrator to start the process.
 
 ---
 
@@ -247,7 +255,7 @@ institution\'s REDCap administrator to start the process.
 
 - Not reviewing imported instruments after import: variable name
     conflicts may have been silently renamed, or branching logic may
-    reference variables that don\'t exist in your project. Always open
+    reference variables that don't exist in your project. Always open
     the imported instrument in the Online Designer to verify it.
 
 - Expecting zip file import to replace an existing instrument: zip
@@ -258,7 +266,7 @@ institution\'s REDCap administrator to start the process.
 - Importing a fee-based library instrument without a license: some
     instruments require your institution to hold a license. Using them
     without the appropriate license may have legal implications. Check
-    the instrument\'s licensing status before importing.
+    the instrument's licensing status before importing.
 
 - Losing the zip file and assuming the project is a backup: a zip file
     contains only the instrument metadata. Collected data is not
@@ -268,30 +276,30 @@ institution\'s REDCap administrator to start the process.
 - Overlooking that zip file features are in the Online Designer, not
     the Project Setup page: users often look for import/export on the
     setup page and miss it. The feature is accessed from within the
-    Online Designer\'s instrument list.
+    Online Designer's instrument list.
 
 ---
 
 # 8. Administrator Configuration
 
-Access to the REDCap Shared Library (the consortium's instrument repository) requires a system-level setting to be enabled by a REDCap administrator. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**, "REDCap Shared Library" toggle).
+Access to the REDCap Shared Library (the consortium's instrument repository) requires a system-level setting to be enabled by a REDCap administrator. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**, "REDCap Shared Library" toggle).
 
 When the Shared Library is disabled, the "REDCap Shared Library" button does not appear on the Project Setup page or in the Online Designer. The zip file import/export feature (Section 4) is a local operation and is unaffected by this setting — zip files work regardless of whether the Shared Library is enabled.
 
 Outbound HTTP access to the Consortium's server (`redcap.vumc.org`) is also required for the Shared Library to function. In restricted-network environments, this connection may need to be allowed through a firewall.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 9. Related Articles
 
-- RC-FD-01 — Form Design Overview (prerequisite)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (prerequisite)
 
-- RC-FD-02 — Online Designer (the access point for zip file import
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the access point for zip file import
     and export)
 
-- RC-FD-03 — Data Dictionary (alternative approach for bulk
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (alternative approach for bulk
     instrument management)
 
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level REDCap Shared Library enable/disable)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level REDCap Shared Library enable/disable)

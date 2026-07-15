@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation (Export a Survey Queue Link for a Participant) |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md); [RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)|
+| **Synonyms** | export survey queue link api method; how do i get a survey queue link via the api; api call to generate the survey queue url for a record; retrieve the survey queue link through the api; export survey queue url for a participant using the api; api method to get a guided multi-survey queue link; programmatically fetch the survey queue link with the api |
 
 ---
 

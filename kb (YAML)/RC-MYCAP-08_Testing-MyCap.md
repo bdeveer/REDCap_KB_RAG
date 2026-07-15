@@ -6,17 +6,26 @@ applies_to:
 - Projects with MyCap enabled
 - pre-launch testing phase
 prerequisites:
-- RC-MYCAP-02 — Designing Instruments for MyCap
-- RC-MYCAP-03 — Task Scheduling
+- 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
+- 'RC-MYCAP-03 — MyCap: Task Scheduling'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-MYCAP-04
-  title: Participant Onboarding
+  title: 'MyCap: Participant Onboarding'
 - id: RC-MYCAP-05
-  title: App Settings & Participant Management
+  title: 'MyCap: App Settings & Participant Management'
 tags:
 - mycap mobile app
+synonyms:
+- how do i test a mycap project before launch
+- mycap testing checklist before go-live
+- join the app with a test record
+- verify mycap schedule and notifications work
+- test mycap on a real device not a simulator
+- view task details csv to check the schedule
+- pre-launch mycap testing workflow
+- publish mycap before enrolling participants
 ---
 
 # 1. Overview
@@ -56,7 +65,7 @@ Before beginning the six-step test:
 1. **Create a test record** in the REDCap project (e.g., record ID "TEST-001" or similar).
 2. **Install the current MyCap app** (purple logo) on the test device.
 3. **Enable the test project** in MyCap and publish the initial version.
-4. **Join the project on the test device** using the test record's App Link or QR Code (see RC-MYCAP-04 — Participant Onboarding for joining instructions).
+4. **Join the project on the test device** using the test record's App Link or QR Code (see [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md)
 
 ---
 
@@ -239,8 +248,8 @@ The project is now ready for real participant enrollment.
 
 # 12. Related Articles
 
-- RC-MYCAP-02 — Designing Instruments for MyCap (publishing workflow)
-- RC-MYCAP-03 — Task Scheduling (schedule types, View Task Details CSV)
-- RC-MYCAP-04 — Participant Onboarding (App Link and QR Code joining)
-- RC-MYCAP-05 — App Settings & Participant Management (notification settings, message testing)
-- RC-MYCAP-07 — Advanced Features: FDL, MLM, and Survey Links (testing FDL and Survey Links)
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(publishing workflow)
+- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)(schedule types, View Task Details CSV)
+- [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md)(App Link and QR Code joining)
+- [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)(notification settings, message testing)
+- [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md)(testing FDL and Survey Links)

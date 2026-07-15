@@ -5,20 +5,29 @@ domain: Piping
 applies_to:
 - All REDCap project types
 prerequisites:
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types
+- 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
 version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-PIPE-01
-  title: Piping Basics, Syntax & Field Types
+  title: 'Piping: Basics, Syntax & Field Types'
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 - id: RC-PIPE-04
-  title: Piping in Emails & Notifications
+  title: 'Piping: Emails, Notifications & Logic Features'
 - id: RC-BL-01
-  title: Branching Logic Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - piping
+synonyms:
+- what are smart variables in redcap
+- list of all smart variable categories
+- difference between smart variables and regular piping
+- '[bracket] smart variables overview'
+- where do i find the green smart variables button
+- what context-level data can i pipe
+- categories of smart variables available
+- smart variables vs field piping
 ---
 
 # 1. Overview
@@ -41,7 +50,7 @@ Smart variables return different values depending on who is viewing the form, wh
 
 **Instance Qualifier**
 
-A smart variable used as a prefix to a variable name bracket, directing REDCap to retrieve that variable's value from a specific instance within a repeated instrument or event series. Covered in detail in RC-PIPE-02.
+A smart variable used as a prefix to a variable name bracket, directing REDCap to retrieve that variable's value from a specific instance within a repeated instrument or event series. Covered in detail in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md).
 
 **:hideunderscore Modifier**
 
@@ -81,15 +90,15 @@ These smart variables enable dynamic event and arm references. While it is possi
 
 Examples: the name of the current event, the current arm number, the arm label, and relative event references such as the previous event or next event.
 
-> **Note:** Hard-coded event references (e.g., `[event_1_arm_1][variable_name]`) are covered in RC-PIPE-02. Event smart variables extend that capability by allowing references that do not require knowing the specific event name in advance.
+> **Note:** Hard-coded event references (e.g., `[event_1_arm_1][variable_name]`) are covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md). Event smart variables extend that capability by allowing references that do not require knowing the specific event name in advance.
 
 ## 3.6 Repeating Instruments and Events
 
-These smart variables serve two functions: (1) the instance qualifier smart variables covered in RC-PIPE-02 (`[first-instance]`, `[last-instance]`, `[previous-instance]`, `[next-instance]`), and (2) an additional smart variable that references a new, not-yet-created instance. The latter is useful for generating links or pre-populating default values that will apply to a new instance when it is created.
+These smart variables serve two functions: (1) the instance qualifier smart variables covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (`[first-instance]`, `[last-instance]`, `[previous-instance]`, `[next-instance]`), and (2) an additional smart variable that references a new, not-yet-created instance. The latter is useful for generating links or pre-populating default values that will apply to a new instance when it is created.
 
 ## 3.7 Aggregate Functions, Charts, and Tables
 
-These smart variables are associated with REDCap's Project Dashboard feature. They allow project designers to build custom charts and summary tables on the dashboard using aggregated data from the project.
+These smart variables are associated with REDCap's Project Dashboard feature (REDCap's own UI refers to them as "Smart Functions" and "Smart Charts"). They allow project designers to build custom charts and summary tables on the dashboard using aggregated data from the project.
 
 This category is more advanced and is primarily used by administrators and power users building project-level dashboards. Full documentation is available in REDCap's embedded help text.
 
@@ -195,11 +204,11 @@ The embedded help text lists every available smart variable, its syntax, its cat
 
 # 8. Related Articles
 
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types (core piping syntax and field type behavior)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (instance qualifier smart variables; cross-event piping)
-- RC-PIPE-04 — Piping in Emails & Notifications (using smart variables in confirmation emails, invitations, and alerts)
-- RC-PIPE-06 — Smart Variables: Record (record-level metadata smart variables)
-- RC-PIPE-13 — Smart Variables: Randomization (smart variables for capturing randomization metadata)
-- RC-PIPE-15 — Smart Variables: Public Reports (smart variables for linking to public reports)
-- RC-PIPE-17 — Smart Variables: Miscellaneous (miscellaneous smart variables not covered in other sub-articles)
-- RC-BL-01 — Branching Logic Overview & Scope (using smart variables in logic conditions)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(core piping syntax and field type behavior)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(instance qualifier smart variables; cross-event piping)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using smart variables in confirmation emails, invitations, and alerts)
+- [RC-PIPE-06 — Smart Variables: Record](RC-PIPE-06_Smart-Variables-Record.md) (record-level metadata smart variables)
+- [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md) (smart variables for capturing randomization metadata)
+- [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md) (smart variables for linking to public reports)
+- [RC-PIPE-17 — Smart Variables: Miscellaneous](RC-PIPE-17_Smart-Variables-Miscellaneous.md) (miscellaneous smart variables not covered in other sub-articles)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(using smart variables in logic conditions)

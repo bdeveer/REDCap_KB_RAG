@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
+| **Synonyms** | how do i import the data dictionary via the api; import metadata api call; upload a data dictionary through the api; api method to modify project fields and forms; add fields and branching logic programmatically; bulk update metadata using the api; api endpoint to change project structure; load data dictionary into a project via api |
 | **Important** | **Development status only** — This method only works on projects in Development status. It cannot be used on projects in Production or Analysis/Cleanup status. |
 
 ---

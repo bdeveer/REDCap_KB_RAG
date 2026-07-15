@@ -19,11 +19,20 @@ related:
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
 - id: RC-EXPRT-01
-  title: Data Exports, Reports, and Stats
+  title: 'Data Export: Overview & Workflow'
 - id: RC-ALERT-01
-  title: Alerts & Notifications
+  title: 'Alerts & Notifications: Setup'
 tags:
 - randomization
+synonyms:
+- how do i randomize a participant
+- randomize a record in production
+- monitor randomization progress and allocation
+- who can randomize records
+- manage randomization after going live
+- view randomization assignments
+- troubleshoot randomization in a live project
+- randomize a subject into a treatment arm
 ---
 
 # 1. Overview
@@ -81,7 +90,7 @@ replaced in the UI by a Randomize button.
 | --- | --- |
 | **Record not yet randomized** | A Randomize button appears where the randomization variable field would be. |
 | **User clicks Randomize button** | A confirmation popup appears showing the record and group assignment that will be made. Click the Randomize button in the popup to confirm. |
-| **Record successfully randomized (open)** | The randomization variable shows the assigned group label (e.g., \'Intervention\'). |
+| **Record successfully randomized (open)** | The randomization variable shows the assigned group label (e.g., 'Intervention'). |
 | **Record successfully randomized (blinded)** | The randomization variable shows an opaque code. The study team cannot determine the group from this value. |
 | **Stratification or DAG values missing** | REDCap displays a prompt listing the missing values before allowing randomization. Complete those fields and retry. |
 
@@ -151,8 +160,8 @@ summary table. Requires the Dashboard user right.
 
 > **Note:** *Each row in the dashboard represents a unique combination
 > of cohort, DAG, and stratification values (if applicable). A project
-> with 2 cohorts and 2 stratification levels will have 4 rows per cohort
-> combination, not 2.*
+> with 2 cohorts and 2 stratification levels will have 4 rows total
+> (2 cohorts × 2 strata), not 2.*
 
 ## 5.2 What administrators additionally see
 
@@ -163,12 +172,12 @@ See Section 7 for administrator actions.
 
 ## 5.3 Monitoring best practices
 
-- **Check \'Not Used\' counts regularly:** If a group is approaching
+- **Check 'Not Used' counts regularly:** If a group is approaching
     zero remaining slots, contact your REDCap administrator to append
     more allocations before they run out.
 
 - **Use the green checkmark as an alert:** A checkmark means that
-    group\'s allocations are exhausted. New records matching that
+    group's allocations are exhausted. New records matching that
     combination will not be randomizable until more slots are added.
 
 - **Record IDs are clickable:** Use the dashboard to navigate directly
@@ -203,7 +212,7 @@ the randomization setup should be re-evaluated.
 
 > **⚠ Warning:** *All administrator allocation actions require
 > specifying a reason, which is logged. They also require typing
-> \'confirm\' to execute. This is intentional — these actions can
+> 'confirm' to execute. This is intentional — these actions can
 > affect study data integrity.*
 
 ## 7.1 Appending allocations to a production table
@@ -212,8 +221,8 @@ The most common administrator action. Required when a project runs out
 of allocation slots in production.
 
 - **Location:** Applications → Randomization → Setup icon for the
-    model → Step 3 (Production allocation table) → \'Upload more
-    allocations (Administrators only)\' link
+    model → Step 3 (Production allocation table) → 'Upload more
+    allocations (Administrators only)' link
 
 - **How it works:** Upload a new allocation table file. It appends to
     the existing table rather than replacing it. For example: 100
@@ -232,11 +241,11 @@ up to four action icons; assigned slots have one.
 | **Action** | **What it does**                                                                                                                                                                                                                                         **Available for** |
 | --- | --- |
 | **Remove randomization** | Removes the randomization assignment from a record, freeing that allocation slot for reassignment to another record. The record returns to an un-randomized state.                                                                                       *Assigned slots only* |
-| **Edit target field** | Remaps the allocation to a different cohort group. Requires: reason (logged), new value, and typing \'confirm\'.                                                                                                                                         *Unassigned slots only* |
-| **Edit target alternate** | Remaps the randomization group (alternate number). Mostly relevant for blinded randomizations — affects the \[rand-number\] smart variable but not direct randomization functionality. Requires: reason (logged), new value, and typing \'confirm\'.   *Unassigned slots only* |
-| **Manual randomization** | Manually assigns a specific record to this allocation slot. The record must not already be randomized. Requires: reason (logged), valid record ID, and typing \'confirm\'.                                                                               *Unassigned slots only* |
-| **Make sequence unavailable** | Removes the allocation slot entirely from the pool — it will not be used for any future randomizations. Displayed with a stop symbol. Requires: reason (logged) and typing \'confirm\'.                                                                *Unassigned slots only* |
-| **Restore availability** | Reverses a \'Make sequence unavailable\' action. Only available on slots previously made unavailable. Requires: reason (logged) and typing \'confirm\'.                                                                                                  *Unavailable slots only* |
+| **Edit target field** | Remaps the allocation to a different cohort group. Requires: reason (logged), new value, and typing 'confirm'.                                                                                                                                         *Unassigned slots only* |
+| **Edit target alternate** | Remaps the randomization group (alternate number). Mostly relevant for blinded randomizations — affects the \[rand-number\] smart variable but not direct randomization functionality. Requires: reason (logged), new value, and typing 'confirm'.   *Unassigned slots only* |
+| **Manual randomization** | Manually assigns a specific record to this allocation slot. The record must not already be randomized. Requires: reason (logged), valid record ID, and typing 'confirm'.                                                                               *Unassigned slots only* |
+| **Make sequence unavailable** | Removes the allocation slot entirely from the pool — it will not be used for any future randomizations. Displayed with a stop symbol. Requires: reason (logged) and typing 'confirm'.                                                                *Unassigned slots only* |
+| **Restore availability** | Reverses a 'Make sequence unavailable' action. Only available on slots previously made unavailable. Requires: reason (logged) and typing 'confirm'.                                                                                                  *Unavailable slots only* |
 
 ## 7.3 Redoing a randomization model in production
 
@@ -246,7 +255,7 @@ are limited and all have significant consequences.
 
 > **⚠ Warning:** *Moving a production project back to Development status
 > to erase a randomization model is disabled — even for administrators
-> — through the standard \'Other Functionality\' interface. The only
+> — through the standard 'Other Functionality' interface. The only
 > paths forward involve backend database manipulation or cloning the
 > project and starting over. Neither is straightforward. This reinforces
 > why thorough testing before production is essential.*
@@ -275,8 +284,8 @@ are limited and all have significant consequences.
     cannot be randomized. Study operations are disrupted while an
     administrator locates and appends more allocations.
 
-- **Prevention:** Establish a regular cadence for checking the \'Not
-    Used\' counts in the dashboard. Build an alert or report that flags
+- **Prevention:** Establish a regular cadence for checking the 'Not
+    Used' counts in the dashboard. Build an alert or report that flags
     when a group drops below a defined threshold (e.g., 20 remaining
     slots).
 
@@ -308,22 +317,22 @@ reason properly**
 
 # 10. Related Articles
 
-- **RC-RAND-01:** Randomization Concepts & Terminology ---
+- **[RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md):** Randomization Concepts & Terminology ---
     foundational concepts
 
-- **RC-RAND-02:** Randomization Setup Guide — pre-flight checklist
+- **[RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md):** Randomization Setup Guide — pre-flight checklist
     and setup procedure
 
-- **RC-USER-01:** User Rights: Overview & Three-Tier Access — managing Randomize, Setup,
+- **[RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md):** User Rights: Overview & Three-Tier Access — managing Randomize, Setup,
     and Dashboard rights
 
-- **RC-EXPRT-01:** Data Exports, Reports, and Stats — building
+- **[RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md):** Data Exports, Reports, and Stats — building
     reports that include randomization variable data
 
-- **RC-ALERT-01:** Alerts & Notifications — setting up alerts based
+- **[RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md):** Alerts & Notifications — setting up alerts based
     on randomization events using smart variables
 
-- **RC-PIPE-13:** Smart Variables: Randomization — reference for the
+- **[RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md):** Smart Variables: Randomization — reference for the
     \[rand-time\], \[rand-utc-time\], and \[rand-number\] smart variables
 
 ---
@@ -335,16 +344,16 @@ reason properly**
 | **15.4.4+** | Randomization 2.0: automatic trigger options available. Smart variable behavior and dashboard columns consistent with this document. Verified compatible through REDCap 17. |
 | **Pre-15.x** | Automatic triggers not available. Section 4.2 (automatic trigger behavior) does not apply. Manual-only randomization. Smart variables \[rand-time\], \[rand-utc-time\], \[rand-number\] — verify availability in your version. |
 
-REDCap LLM Knowledge Base \| RC-RAND-03 \| Working with & Managing
+REDCap LLM Knowledge Base \| [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md) \| Working with & Managing
 Randomization
 
 ---
 
 # 12. Related Articles
 
-- RC-RAND-01 — Randomization Concepts & Terminology
-- RC-RAND-02 — Randomization Setup Guide
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-EXPRT-01 — Data Export: Overview & Workflow
-- RC-PIPE-13 — Smart Variables: Randomization
+- [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md)
+- [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
+- [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md)

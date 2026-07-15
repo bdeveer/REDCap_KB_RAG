@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-41
-  title: Export Survey Queue Link
+  title: Export Survey Queue Link API
 - id: RC-API-42
-  title: Export Survey Return Code
+  title: Export Survey Return Code API
 tags:
 - api
+synonyms:
+- export survey link api method
+- how do i get a survey link via the api
+- api call to generate a survey url for a record
+- retrieve a unique survey link through the api
+- export single survey link for a participant using the api
+- api method to get a record-specific survey url
+- programmatically fetch a survey link with the api
+- get clickable survey url for an instrument via api
 ---
 
 # 1. Overview
@@ -152,7 +161,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -203,9 +212,9 @@ The URL is valid immediately and can be distributed via email, text message, or 
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-41 — Export Survey Queue Link
-- RC-API-42 — Export Survey Return Code
-- RC-API-43 — Export Survey Participants
-- RC-SURV-01 — Surveys – Basics (survey fundamentals and how survey links work)
-- RC-SURV-04 — Survey Link Types & Access Methods (the link types this method generates)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md)
+- [RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)
+- [RC-API-43 — Export Survey Participants API](RC-API-43_Export-Survey-Participants.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals and how survey links work)
+- [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md) (the link types this method generates)

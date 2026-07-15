@@ -10,19 +10,28 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-08
-  title: Home Page, Templates & Project Defaults
+  title: 'Control Center: Home Page, Templates & Project Defaults'
 - id: RC-CC-05
-  title: File Storage Settings
+  title: 'Control Center: File Storage & Upload Settings'
 - id: RC-CC-06
-  title: Modules & Services Configuration
+  title: 'Control Center: Modules & Services Configuration'
 - id: RC-PROJ-04
   title: 'Project Setup: Additional Customizations'
 - id: RC-AI-01
-  title: AI Tools Overview
+  title: 'REDCap AI Tools: Overview & Security'
 - id: RC-CDIS-01
-  title: Clinical Data Interoperability Services
+  title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
 tags:
 - control center (admin)
+synonyms:
+- how do i override settings for one project as admin
+- change project status online or offline
+- admin edit project settings page
+- enable twilio or gdpr erasure for a project
+- override file size limit for a project
+- set a per-project ai endpoint
+- difference between default settings and edit project settings
+- admin-only project configuration overrides
 ---
 
 # 1. Overview
@@ -31,8 +40,8 @@ The **Edit Project Settings** page (`ControlCenter/edit_project.php`) is an admi
 
 This page is distinct from two similar-sounding areas:
 
-- **Default Project Settings** (RC-CC-08) — sets system-wide defaults applied when *new* projects are created
-- **Additional Customizations** in Project Setup (RC-PROJ-04) — project-level settings accessible to *project administrators* (users with Design & Setup rights)
+- **Default Project Settings** ([RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)) — sets system-wide defaults applied when *new* projects are created
+- **Additional Customizations** in Project Setup ([RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md)) — project-level settings accessible to *project administrators* (users with Design & Setup rights)
 
 Edit Project Settings exposes a superset of those settings, including ones only REDCap admins can touch (online/offline status, Twilio toggle, GDPR erasure features, per-project AI endpoint override, and system-value overrides like contact name, logo URL, and file size limits).
 
@@ -113,13 +122,13 @@ A text block displayed at the bottom of all survey pages in this specific projec
 - **Link text (optional):** If provided, this text appears as a clickable link at the bottom of every survey page. Clicking it opens the custom text in a modal dialog. If left blank, the custom text is displayed inline instead.
 - **Custom survey footer text:** The actual content. HTML is supported (styled text, links, images).
 
-> **Note:** The system-level default custom survey footer is configured in Default Project Settings (RC-CC-08). This project-level override takes precedence for this project only.
+> **Note:** The system-level default custom survey footer is configured in Default Project Settings ([RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)). This project-level override takes precedence for this project only.
 
 ---
 
 # 6. AI Services — Project-Level Override
 
-If AI Services are enabled globally (configured in **Modules & Services Configuration**, RC-CC-06), this section allows an admin to supply a *project-specific* AI endpoint that replaces the system-level configuration for this project only.
+If AI Services are enabled globally (configured in **Modules & Services Configuration**, [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)), this section allows an admin to supply a *project-specific* AI endpoint that replaces the system-level configuration for this project only.
 
 Three types of AI service are supported:
 
@@ -170,11 +179,11 @@ Date shifting is applied when a user selects the date-shifting de-identification
 
 ## 7.4 DTS (Data Transfer Services)
 
-Cannot be enabled here unless the global DTS setting has first been turned on in **Modules & Services Configuration** (RC-CC-06). If the global setting is off, this control is disabled.
+Cannot be enabled here unless the global DTS setting has first been turned on in **Modules & Services Configuration** ([RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)). If the global setting is off, this control is disabled.
 
 ## 7.5 CDIS: Allow Patient Email Address from EHR
 
-Applies only to the **Clinical Data Mart** and **Clinical Data Pull** services within CDIS (RC-CDIS-01). Controls whether the patient's email address can be imported from the EHR for this project.
+Applies only to the **Clinical Data Mart** and **Clinical Data Pull** services within CDIS ([RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)). Controls whether the patient's email address can be imported from the EHR for this project.
 
 This project-level setting is only active when the global CDIS setting is configured as "Allow individual projects to decide." If the global setting is "Yes" or "No," this field is overridden and becomes read-only.
 
@@ -229,9 +238,11 @@ The fields in this section override system-wide values for this specific project
 | Upload max file size — general attachments | Maximum file size (MB) for Descriptive field attachments and Data Resolution Workflow attachments | 128 MB |
 | File Repository upload max file size | Maximum file size (MB) for files uploaded to the File Repository | 128 MB |
 | File Repository total storage limit | Total MB cap for all files in the project's File Repository; set to 0 or blank to disable the cap | Blank (no limit) |
-| Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default | 0 |
+| Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default (if the global default is itself 0, no limit applies) | 0 |
 
 > **Note:** Changes to any of these fields take effect immediately for this project only. They do not affect other projects or the system-wide default.
+
+> **Note:** The 128 MB defaults above are REDCap application-level defaults, not the PHP server ceiling. The server ceiling (set via `upload_max_filesize` / `post_max_size` in PHP.INI) is typically 1024 MB. Per-context REDCap limits cannot exceed the server ceiling. See [RC-CC-05](RC-CC-05_Control-Center-File-Storage-Settings.md) for server-level configuration.
 
 ---
 
@@ -281,12 +292,12 @@ When a user exports data from the Data Exports, Reports & Stats page and selects
 
 # 12. Related Articles
 
-- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults (system-wide defaults this page can override)
-- RC-CC-05 — Control Center: File Storage Settings (global file size settings)
-- RC-CC-06 — Control Center: Modules & Services Configuration (global AI and Twilio settings)
-- RC-CC-21 — Control Center: Overview & Navigation (CC structure and navigation)
-- RC-PROJ-04 — Project Setup: Additional Customizations (project-level settings accessible to project admins)
-- RC-PROJ-01 — Project Lifecycle: Status and Settings (production/development status; Draft Mode)
-- RC-AI-01 — REDCap AI Tools: Overview and Security (AI features enabled by the AI settings configured here)
-- RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup (FHIR/EHR integration configured here)
-- RC-TXT-02 — Texting: Administrator Setup (Twilio global configuration)
+- [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) (system-wide defaults this page can override)
+- [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md)(global file size settings)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (global AI and Twilio settings)
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) (CC structure and navigation)
+- [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (project-level settings accessible to project admins)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (production/development status; Draft Mode)
+- [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md)(AI features enabled by the AI settings configured here)
+- [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md) (FHIR/EHR integration configured here)
+- [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md) (Twilio global configuration)

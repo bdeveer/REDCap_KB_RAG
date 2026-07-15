@@ -1,14 +1,39 @@
 ---
 id: RC-EM-02
 title: External Modules — Installed Module Catalog — Production Instance
-domain: ''
+domain: External Modules
+applies_to:
+- REDCap administrators
+- project designers on the Production instance
+prerequisites:
+- 'RC-EM-01 — External Modules: Overview & Manager'
+version: '1.0'
+last_updated: '2026'
+related:
+- id: RC-EM-01
+  title: 'External Modules: Overview & Manager'
+- id: RC-EM-03
+  title: 'External Modules: Installed Catalog — Test / Staging'
+- id: RC-EM-04
+  title: 'External Modules: Installed Catalog — Development'
+tags:
+- external modules
+synonyms:
+- which external modules are available on production
+- list of installed modules on the production instance
+- is a particular module installed here
+- what modules can i enable for my project
+- available external modules catalog
+- production redcap module list
+- find out if a module is installed
+- modules approved for production use
 ---
 
 > ## ⚠️ RAG IMPLEMENTATION NOTICE
 >
 > **This article is currently a template for the Production instance module catalog. It does not yet contain actual module information.**
 >
-> RC-EM-02 is the single reference for which External Modules are installed and available on the Production REDCap instance. Every `[FILL IN]` placeholder represents information that users and the RAG system need but cannot currently answer. Module availability questions are among the most common support requests.
+> [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md) is the single reference for which External Modules are installed and available on the Production REDCap instance. Every `[FILL IN]` placeholder represents information that users and the RAG system need but cannot currently answer. Module availability questions are among the most common support requests.
 >
 > **Before going live with this KB, your REDCap administrator should:**
 > 1. Replace every `[FILL IN]` module entry with a real module entry for the Production instance
@@ -17,10 +42,10 @@ domain: ''
 > 4. Fill in Section 4 (Requesting and Enabling Modules) with local policy
 > 5. Delete this notice block once the article is fully populated
 >
-> For module catalogs covering other instances, see RC-EM-03 (Test / Staging) and RC-EM-04 (Development). Module availability commonly differs between instances.
+> For module catalogs covering other instances, see [RC-EM-03 — External Modules: Installed Catalog — Test / Staging](RC-EM-03_External-Modules-Installed-Catalog-Test.md) (Test / Staging) and [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md) (Development). Module availability commonly differs between instances.
 >
 > **Adding more instance articles:** If your organization runs additional REDCap instances beyond Production, Test/Staging, and Development — for example, a 21 CFR Part 11-compliant instance, a FISMA-compliant instance, a GDPR-scoped instance, a dedicated Training environment, or a separate instance for a specific faculty or department — create a new module catalog article for each:
-> 1. Copy RC-EM-02 (Production) as a starting template.
+> 1. Copy [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md) (Production) as a starting template.
 > 2. Assign the next sequential Article ID (`RC-EM-05`, `RC-EM-06`, etc.) and update all metadata fields accordingly.
 > 3. Set the `Instance` metadata field to a short, unambiguous label that the RAG system can use to scope retrieval (e.g., `Part 11 — Production`, `FISMA`, `Training`, `Faculty of Medicine`).
 > 4. Populate the module catalog (Section 2) with modules actually installed on that instance. Part 11 instances may enforce stricter module approval requirements; Training instances may have a limited module set by design.
@@ -31,9 +56,9 @@ domain: ''
 
 # 1. Overview
 
-This article catalogs the External Modules installed on the **Production** REDCap instance. For modules available on other instances, see RC-EM-03 (Test / Staging) and RC-EM-04 (Development). Module availability may differ between instances — always verify in the Module Manager for your target instance.
+This article catalogs the External Modules installed on the **Production** REDCap instance. For modules available on other instances, see [RC-EM-03 — External Modules: Installed Catalog — Test / Staging](RC-EM-03_External-Modules-Installed-Catalog-Test.md) (Test / Staging) and [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md) (Development). Module availability may differ between instances — always verify in the Module Manager for your target instance.
 
-> For instructions on enabling, configuring, and managing modules, see RC-EM-01.
+> For instructions on enabling, configuring, and managing modules, see [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md).
 
 Module entries marked **[Discoverable]** are visible to project users with Design and Setup rights in the Project Module Manager, even before the module is enabled for their project.
 
@@ -61,7 +86,7 @@ Use the template block below for each module. Remove unused lines.
 
 `[FILL IN — 2–4 sentence description of what the module does and when it is useful. Write for a project designer, not just an admin.]`
 
-> `[FILL IN — optional: See also links, e.g., RC-AT-01 — Action Tags Overview]`
+> `[FILL IN — optional: See also links, e.g., [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) — Action Tags Overview]`
 
 > **Local note:** `[FILL IN — optional: any site-specific restriction, configuration step, or contact info]`
 
@@ -89,7 +114,7 @@ Some modules extend REDCap by introducing custom action tags (prefixed with `@`)
 
 **Modules with action tags at this installation:** `[FILL IN — list module names, e.g., Choice Columns, HIDESUBMIT, Instance Table]`
 
-> See also: RC-AT-01 — Action Tags Overview for general guidance on using action tags.
+> See also: [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) — Action Tags Overview for general guidance on using action tags.
 
 ## Modules That Extend the API
 
@@ -121,7 +146,7 @@ Once a module is installed at the system level, it must also be enabled at the p
 
 **How project-level enabling works at this institution:** `[FILL IN — e.g., "Users with Design and Setup rights can enable approved modules themselves from the External Modules section of their project." / "All project-level module activations must be requested from the support team."]`
 
-> See also: RC-EM-01 — External Modules Overview & Manager for step-by-step instructions on enabling modules in a project.
+> See also: [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) — External Modules Overview & Manager for step-by-step instructions on enabling modules in a project.
 
 ---
 
@@ -153,7 +178,7 @@ Once a module is installed at the system level, it must also be enabled at the p
 
 # 6. Related Articles
 
-- RC-EM-01 — External Modules: Overview & Manager
-- RC-EM-03 — External Modules: Test/Staging Catalog
-- RC-EM-04 — External Modules: Development Catalog
-- RC-CC-06 — Control Center: Modules & Services Configuration
+- [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)
+- [RC-EM-03 — External Modules: Installed Catalog — Test / Staging](RC-EM-03_External-Modules-Installed-Catalog-Test.md)
+- [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)

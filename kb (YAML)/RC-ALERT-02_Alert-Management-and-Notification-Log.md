@@ -16,11 +16,20 @@ related:
   title: 'Piping: Emails, Notifications & Logic Features'
 tags:
 - alerts & notifications
+synonyms:
+- how do i manage multiple alerts in redcap
+- where is the notification log
+- cancel a scheduled alert send
+- copy or deactivate an existing alert
+- re-evaluate alerts in redcap
+- view history of sent alerts
+- edit alerts on the management page
+- what is a unique alert id
 ---
 
 # 1. Overview
 
-This article covers how to manage a collection of alerts in an active REDCap project, and how to use the Notification Log to review past and scheduled alert sends. Once a project has multiple alerts, the Alerts & Notifications management page becomes the primary workspace for organizing, editing, copying, deactivating, and re-evaluating alerts. The Notification Log provides a record of every alert instance that has been sent or is scheduled to be sent, and allows you to cancel individual scheduled sends. This article assumes familiarity with alert creation — see RC-ALERT-01 — Alerts & Notifications: Setup for the full setup workflow.
+This article covers how to manage a collection of alerts in an active REDCap project, and how to use the Notification Log to review past and scheduled alert sends. Once a project has multiple alerts, the Alerts & Notifications management page becomes the primary workspace for organizing, editing, copying, deactivating, and re-evaluating alerts. The Notification Log provides a record of every alert instance that has been sent or is scheduled to be sent, and allows you to cancel individual scheduled sends. This article assumes familiarity with alert creation — see [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) for the full setup workflow.
 
 ---
 
@@ -260,7 +269,7 @@ Both exports can be generated multiple times without restriction.
 
 # 8. Related Articles
 
-- RC-ALERT-01 — Alerts & Notifications: Setup (required prerequisite — trigger types, scheduling, message settings)
-- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features (piping and smart variable usage in alert messages)
-- RC-PIPE-03 — Smart Variables Overview (reference for smart variables used in alert message bodies)
-- RC-LONG-02 — Repeated Instruments & Events Setup (context for trigger limits and repeated-instrument alert behavior)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (required prerequisite — trigger types, scheduling, message settings)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (piping and smart variable usage in alert messages)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (reference for smart variables used in alert message bodies)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (context for trigger limits and repeated-instrument alert behavior)

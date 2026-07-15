@@ -23,6 +23,15 @@ related:
   title: Smart Variables Overview
 tags:
 - surveys
+synonyms:
+- how do i send automatic survey invitations
+- schedule survey emails based on logic
+- set up automated survey invitations asi
+- send follow-up surveys without manual work
+- trigger a survey invite when a condition is met
+- add a time delay before sending a survey invite
+- configure survey reminders automatically
+- automated email invitations for surveys
 ---
 
 # 1. Overview
@@ -77,7 +86,7 @@ Every ASI must define four elements before it will function: the message, trigge
 
 ## 4.1 Crafting the Message
 
-The message composer in the ASI setup works similarly to the manual invitation composer (see RC-SURV-05 — Participant List & Manual Survey Invitations). The key fields are:
+The message composer in the ASI setup works similarly to the manual invitation composer (see [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)). The key fields are:
 
 **From Email** — Selected from the dropdown of emails associated with project users (up to three per user, configurable in My Profile). Best practice is to use a study-specific or shared team email rather than a personal address.
 
@@ -91,7 +100,7 @@ The message composer in the ASI setup works similarly to the manual invitation c
 
 **Subject Line** — Free text. Piping variables is supported, though sensitive data in the subject line is not recommended.
 
-**Message Body** — Free text with rich text editor support. Supports HTML, images, and piped variables. REDCap pre-fills the body with placeholder text and the smart variables `[survey-link]` and `[survey-url]`. Keep at least one of these in the message — without a link, recipients cannot reach the survey. For guidance on piping, see RC-PIPE-01 — Piping: Basics, Syntax & Field Types.
+**Message Body** — Free text with rich text editor support. Supports HTML, images, and piped variables. REDCap pre-fills the body with placeholder text and the smart variables `[survey-link]` and `[survey-url]`. Keep at least one of these in the message — without a link, recipients cannot reach the survey. For guidance on piping, see [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md).
 
 > **Tip — Test Emails:** A small **send test email** link appears between the subject and message body. Clicking it sends the current draft to your REDCap account's primary email. Use this to verify formatting, piped values, and smart variables before the ASI goes live.
 
@@ -111,7 +120,7 @@ Check **"When the following logic becomes true:"** and enter a branching logic s
 
 Example use case: only send the follow-up survey if the participant indicated consent (`[consent]="1"`).
 
-For help writing logic statements, see RC-BL-01 — Branching Logic: Overview & Scope and RC-BL-02 — Branching Logic: Syntax & Atomic Statements.
+For help writing logic statements, see [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) and [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md).
 
 **Testing your logic:** Below the logic input box, a **Select a Record** dropdown lets you test the logic against an existing record in the project. REDCap evaluates the logic and returns "True" or "False." This is a practical way to verify trigger logic without waiting for a new submission.
 
@@ -136,6 +145,7 @@ Step 3 defines when the invitation is sent relative to the trigger event. Option
 - **At a specific date and time** — The invitation is sent at an absolute date and time you define.
 - **After a time delay** — The invitation is sent a set number of minutes, hours, days, weeks, or months after the trigger.
 - **Based on a date/time field in the project** — REDCap looks at a specific variable with a date or datetime validation and calculates the send time relative to that value.
+- **On the next matching day at a specific time** — The invitation is sent on the next occurrence of a matching day type (any day, weekday, or weekend day) at a time you specify. For example: "next weekday at 10:30 AM." In the CSV column reference this mode is `NEXT_OCCURRENCE`; see [RC-IMP-06](RC-IMP-06_Automated-Survey-Invitations-CSV.md) for the full column mapping.
 
 This last option enables participant-specific scheduling. For example, if participants have a clinic visit date stored in a field, you can configure the ASI to send a survey one day before that date — customized automatically for each record.
 
@@ -176,7 +186,7 @@ ASI configurations can be modified at any time. However, **edits are not retroac
 
 The Online Designer's **Auto Invitation Options** menu provides options to download and upload ASI configurations as a CSV file. This is useful when setting up or modifying a large number of ASIs simultaneously, since editing the CSV in a spreadsheet application is faster than navigating individual setup screens. This is considered an advanced feature.
 
-Always download the existing configuration first before uploading. The full 32-column format reference — including all accepted values, timing mode details, and CSV gotchas — is documented in RC-IMP-06 — Automated Survey Invitations CSV.
+Always download the existing configuration first before uploading. The full 32-column format reference — including all accepted values, timing mode details, and CSV gotchas — is documented in [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md) — Automated Survey Invitations CSV.
 
 ## 6.3 Re-evaluate Automated Survey Invitations
 
@@ -266,11 +276,11 @@ If texting is enabled for a project, the ASI setup screen gains an additional st
 
 # 9. Related Articles
 
-- RC-SURV-05 — Participant List & Manual Survey Invitations (manual invitation workflow and Survey Invitation Log)
-- RC-SURV-07 — Survey Queue (directing participants through multiple surveys after invitation delivery)
-- RC-BL-01 — Branching Logic: Overview & Scope (logic syntax used in ASI trigger conditions)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (writing logic conditions)
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types (using piped variables in ASI messages)
-- RC-PIPE-03 — Smart Variables Overview (`[survey-link]`, `[survey-url]` in messages)
-- RC-ALERT-01 — Alerts & Notifications: Setup (alternative automated messaging tool)
-- RC-LONG-01 — Longitudinal Project Setup (event-based ASI configuration)
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) (manual invitation workflow and Survey Invitation Log)
+- [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) (directing participants through multiple surveys after invitation delivery)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (logic syntax used in ASI trigger conditions)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (writing logic conditions)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (using piped variables in ASI messages)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (`[survey-link]`, `[survey-url]` in messages)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alternative automated messaging tool)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (event-based ASI configuration)

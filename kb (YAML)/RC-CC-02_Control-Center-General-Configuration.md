@@ -10,19 +10,28 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 - id: RC-CC-03
-  title: Security & Authentication
+  title: 'Control Center: Security & Authentication'
 - id: RC-CC-04
-  title: User Settings & Defaults
+  title: 'Control Center: User Settings & Defaults'
 - id: RC-CC-07
-  title: Users & Access Management
+  title: 'Control Center: Users & Access Management'
 - id: RC-INST-01
-  title: Institution-Specific Settings & Policies
+  title: Institution-Specific Settings & Policies — Production
 - id: RC-PROJ-01
-  title: Project Lifecycle
+  title: 'Project Lifecycle: Status and Settings'
 tags:
 - control center (admin)
+synonyms:
+- control center general configuration settings
+- configure outgoing email server in redcap
+- redcap smtp and mail delivery settings
+- server configuration settings control center
+- configuration check diagnostic tool
+- instance-level system settings page
+- where do i set the redcap base url
+- other system settings control center
 ---
 
 # 1. Overview
@@ -256,7 +265,7 @@ Controls whether the Field Comment Log is enabled by default for all newly creat
 
 ## Record Limit for Development Projects
 
-Sets a maximum number of records that can be created in a project while it is in Development status. A value of `0` means no limit. When the limit is exceeded, users see a warning and cannot create additional records until the project moves to Production. A project-level override is available on the Edit Project Settings page.
+Sets a maximum number of records that can be created in a project while it is in Development status. A value of `0` means no limit. When the limit is exceeded, users see a warning and cannot create additional records until the project moves to Production. A project-level override is available on the Edit Project Settings page. At the project level, `0` means "use this global default" rather than "no limit directly" — see [RC-CC-24](RC-CC-24_Control-Center-Edit-Project-Settings.md) for project-level override behavior.
 
 > This setting is useful for preventing development projects from accumulating large amounts of test data, but use with care — teams occasionally need many test records for complex projects.
 
@@ -392,9 +401,9 @@ Verify that the web server's PHP mail subsystem is functional (the Configuration
 
 # 4. Related Articles
 
-- RC-CC-01 — Control Center: Notifications & Reporting (system health checks, Consortium reporting configuration)
-- RC-CC-03 — Control Center: Security & Authentication (authentication and login security settings)
-- RC-CC-04 — Control Center: User Settings & Defaults (user creation and defaults)
-- RC-CC-05 — Control Center: File Storage & Upload Settings (file storage configuration related to disk space)
-- RC-CC-07 — Control Center: Users & Access Management (user account management)
-- RC-INST-01 — Institution-Specific Settings & Policies (institutional configuration best practices)
+- [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)(system health checks, Consortium reporting configuration)
+- [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) (authentication and login security settings)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (user creation and defaults)
+- [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md) (file storage configuration related to disk space)
+- [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (user account management)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(institutional configuration best practices)

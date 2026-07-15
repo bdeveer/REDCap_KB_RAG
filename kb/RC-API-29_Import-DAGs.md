@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) |
+| **Synonyms** | how do i import dags via the api; import data access groups api call; create or update dags through the api; api method to add data access group names; bulk create dags with the api; migrate data access groups programmatically; api endpoint to import data access groups; add data access groups to a project via api |
 
 ---
 

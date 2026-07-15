@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md); [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)|
+| **Synonyms** | how do i import arms via the api; import arms api call; create or rename study arms through the api; api method to add arm numbers and names; configure longitudinal arms programmatically; bulk update arms with the api; api endpoint to import arms; add arms to a multi-arm project via api |
 
 ---
 

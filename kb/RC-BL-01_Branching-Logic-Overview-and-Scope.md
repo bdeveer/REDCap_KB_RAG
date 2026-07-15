@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | how do i show a field only when another answer is selected; conditional field visibility; what is branching logic in redcap; hide a question based on a previous answer; where do i set up branching logic; make fields appear conditionally; show hide fields on a form; intro to branching logic |
 
 ---
 

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); Style Guide §4.1–4.3, §5.1 |
+| **Synonyms** | how to build a request intake system in redcap; using redcap for administrative workflows; ticketing or request management with redcap; design a form for internal requests and approvals; non-research use of redcap for operations; account administration workflow in redcap; how to set up a review and approval process; redcap as a help desk or intake tool |
 
 ---
 

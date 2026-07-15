@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i delete user roles via the api
+- delete user roles api call
+- remove custom roles from a project through the api
+- api method to delete role definitions by unique role name
+- bulk delete user roles with the api
+- remove role templates programmatically
+- api endpoint to delete user roles
+- delete a role and unassign its users via api
 ---
 
 # 1. Overview
@@ -122,7 +131,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -140,7 +149,7 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 **Q: What is the `unique_role_name`?**
 
-**A:** It's the system-generated alphanumeric ID assigned to the role (e.g., `U-522RX7WM49`). To find this ID, export existing roles using the Export User Roles method (RC-API-25).
+**A:** It's the system-generated alphanumeric ID assigned to the role (e.g., `U-522RX7WM49`). To find this ID, export existing roles using the Export User Roles method ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)).
 
 **Q: What if I try to delete a role that doesn't exist?**
 
@@ -152,7 +161,7 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 **Q: Can I undo a role deletion?**
 
-**A:** No. Role deletion is permanent. To restore a role, you must import it again using the Import User Roles method (RC-API-26) with the same or similar definition.
+**A:** No. Role deletion is permanent. To restore a role, you must import it again using the Import User Roles method ([RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)) with the same or similar definition.
 
 ---
 
@@ -172,10 +181,10 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (explains role-based access)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for permission types)
-- RC-API-25 — Export User Roles (retrieve role definitions and their IDs)
-- RC-API-26 — Import User Roles (create or update roles)
-- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)
-- RC-API-22 — Export Users (identify users and their permissions)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (explains role-based access)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for permission types)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(retrieve role definitions and their IDs)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(create or update roles)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)(see which users are assigned to which roles)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(identify users and their permissions)

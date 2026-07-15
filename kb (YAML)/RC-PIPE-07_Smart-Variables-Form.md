@@ -12,11 +12,20 @@ related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 - id: RC-PIPE-08
   title: 'Smart Variables: Survey'
 tags:
 - piping
+synonyms:
+- '[form-link] smart variable'
+- how to build a link to a data entry form with [form-url]
+- form smart variables for the instrument name [instrument-name]
+- '[instrument-label] and [is-form] smart variables'
+- pipe a link to a specific instrument with [form-link:instrument]
+- create a direct link to an instrument for a record
+- form-level smart variables for data entry forms
+- difference between [form-link] and [form-url]
 ---
 
 # 1. Overview
@@ -41,7 +50,7 @@ The human-readable title of an instrument, also configured in the Online Designe
 
 **Data Entry Form vs. Survey**
 
-The same instrument can be accessed in two ways: as a data entry form (by logged-in REDCap users with permissions) or as a survey (by external participants with a survey link or QR code). Form smart variables are relevant when the instrument is accessed as a data entry form. For survey-specific information, see RC-PIPE-08.
+The same instrument can be accessed in two ways: as a data entry form (by logged-in REDCap users with permissions) or as a survey (by external participants with a survey link or QR code). Form smart variables are relevant when the instrument is accessed as a data entry form. For survey-specific information, see [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md).
 
 ---
 
@@ -73,7 +82,7 @@ In longitudinal projects, you can prepend an event name to a form link to refere
 - `[baseline_arm_1][form-link:demographics]` generates a link to the Demographics form in the Baseline event.
 - `[next-event-name][form-link:visit_data_form]` generates a link to the form in the next event.
 
-See RC-PIPE-02 for detailed information on event prefixes.
+See [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) for detailed information on event prefixes.
 
 **Form Link Customization**
 
@@ -109,7 +118,7 @@ In a survey invitation email, you can use `[form-link]` (without specifying an i
 
 **Q: I need to link to a form in a different event (longitudinal project). How do I do that?**
 
-**A:** Use an event prefix before the form-link. For example: `[next-event-name][form-link:visit_data_form]` links to the Visit Data form in the next event. Or hard-code the event name: `[event_1_arm_2][form-link:demographics]`. See RC-PIPE-02 for more information on event prefixes.
+**A:** Use an event prefix before the form-link. For example: `[next-event-name][form-link:visit_data_form]` links to the Visit Data form in the next event. Or hard-code the event name: `[event_1_arm_2][form-link:demographics]`. See [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) for more information on event prefixes.
 
 **Q: What happens if I use an incorrect instrument name in `[form-link:instrument]`?**
 
@@ -125,7 +134,7 @@ In a survey invitation email, you can use `[form-link]` (without specifying an i
 
 **Using incorrect or typo'd instrument names in form links.** If you type `[form-link:demograhics]` instead of `[form-link:demographics]`, the link will not function. Always copy the exact instrument name from the Online Designer, or test the link thoroughly before deploying to production.
 
-**Confusing form smart variables with survey smart variables.** Form variables like `[form-link]` and `[form-url]` are designed for data entry forms. Survey-specific smart variables (survey links, survey queue links, survey timestamps) are covered in RC-PIPE-08. Using form variables in a survey context may not produce the expected result. Use the appropriate smart variable type for your context.
+**Confusing form smart variables with survey smart variables.** Form variables like `[form-link]` and `[form-url]` are designed for data entry forms. Survey-specific smart variables (survey links, survey queue links, survey timestamps) are covered in [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md). Using form variables in a survey context may not produce the expected result. Use the appropriate smart variable type for your context.
 
 **Assuming `[instrument-name]` and `[instrument-label]` always have values.** These variables return blank if you reference them outside of an instrument context. Do not rely on them in emails, dashboards, or data quality rules. Use them only in field labels, field notes, and descriptive text within the form itself.
 
@@ -137,7 +146,7 @@ In a survey invitation email, you can use `[form-link]` (without specifying an i
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (event prefixes and cross-event linking)
-- RC-PIPE-08 — Smart Variables: Survey (survey-specific smart variables for comparison)
-- RC-PIPE-09 — Smart Variables: Event & Arm (event smart variables for longitudinal projects)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(event prefixes and cross-event linking)
+- [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) (survey-specific smart variables for comparison)
+- [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) (event smart variables for longitudinal projects)

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-16 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-OPS-01 — Using REDCap as an Operational Request Management System](RC-OPS-01_REDCap-as-an-Operational-Request-Management-System.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-PIPE-05 — Smart Variables: User](RC-PIPE-05_Smart-Variables-User.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
+| **Synonyms** | how should i design my redcap project; best practices for building a redcap project; tips for naming variables and instruments; how to structure a project the right way; avoid common redcap design mistakes; project setup recommendations and guidelines; redcap project planning advice; design a clean and maintainable project |
 
 ---
 

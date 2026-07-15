@@ -6,16 +6,25 @@ applies_to:
 - Projects with MyCap enabled
 - Active Tasks availability varies by device OS and app version
 prerequisites:
-- RC-MYCAP-03 — Task Scheduling
+- 'RC-MYCAP-03 — MyCap: Task Scheduling'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-MYCAP-02
-  title: Designing Instruments for MyCap
+  title: 'MyCap: Designing Instruments for MyCap'
 - id: RC-MYCAP-03
-  title: Task Scheduling
+  title: 'MyCap: Task Scheduling'
 tags:
 - mycap mobile app
+synonyms:
+- what are mycap active tasks
+- sensor-based assessments using the phone hardware
+- gait analysis and audio recording in mycap
+- nih toolbox cognitive assessments in mycap
+- mobile toolbox mtb setup
+- which devices support mycap active tasks
+- capture accelerometer or microphone data
+- schedule an active task in mycap
 ---
 
 # 1. Overview
@@ -172,7 +181,7 @@ The Mobile Toolbox provides NIH Toolbox cognitive assessments within MyCap.
 - **REDCap version required:** v14.3.8 or later.
 - MTB tasks measure cognitive domains including processing speed, attention, memory, and executive function — the same domains assessed by standard NIH Toolbox instruments.
 - MTB tasks are added in the MyCap **Active Tasks** tab, separate from standard Active Tasks.
-- MTB tasks use the same four schedule types as other MyCap tasks (One-time, Infinite, Repeating, Fixed). See RC-MYCAP-03 — Task Scheduling.
+- MTB tasks use the same four schedule types as other MyCap tasks (One-time, Infinite, Repeating, Fixed). See [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)
 - Results are stored in REDCap using the same metadata fields as other Active Tasks (`@MC-TASK-SUPPLEMENTALDATA`, `@MC-TASK-SERIALIZEDRESULT`).
 
 ---
@@ -185,7 +194,7 @@ The Mobile Toolbox provides NIH Toolbox cognitive assessments within MyCap.
 2. Click **Add Active Task**.
 3. Select the task type from the list of available tasks.
 4. Configure the task-specific parameters.
-5. Set the schedule (see RC-MYCAP-03 — Task Scheduling for schedule types).
+5. Set the schedule (see [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)
 6. Save the task.
 7. Publish the project.
 
@@ -225,7 +234,7 @@ Add fields with these annotations to the instrument associated with the Active T
 
 **Q: How is Active Task data stored in REDCap?**
 
-**A:** Active Task results are stored in fields annotated with `@MC-TASK-SUPPLEMENTALDATA` (structured JSON) and/or `@MC-TASK-SERIALIZEDRESULT` (full result object). Standard task metadata (start time, end time, schedule date) uses the standard `@MC-TASK-*` annotations described in RC-MYCAP-02.
+**A:** Active Task results are stored in fields annotated with `@MC-TASK-SUPPLEMENTALDATA` (structured JSON) and/or `@MC-TASK-SERIALIZEDRESULT` (full result object). Standard task metadata (start time, end time, schedule date) uses the standard `@MC-TASK-*` annotations described in [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md).
 
 **Q: What is the Mobile Toolbox and how is it different from standard Active Tasks?**
 
@@ -257,6 +266,6 @@ Add fields with these annotations to the instrument associated with the Active T
 
 # 10. Related Articles
 
-- RC-MYCAP-02 — Designing Instruments for MyCap (task metadata annotations)
-- RC-MYCAP-03 — Task Scheduling (scheduling Active Tasks)
-- RC-MYCAP-08 — Testing MyCap (testing Active Task appearance and functionality)
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(task metadata annotations)
+- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)(scheduling Active Tasks)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)(testing Active Task appearance and functionality)

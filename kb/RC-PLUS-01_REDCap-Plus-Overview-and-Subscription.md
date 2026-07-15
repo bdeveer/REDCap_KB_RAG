@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | RC-PLUS-02 — Project Migration Tool *(planned)*; [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)|
+| **Synonyms** | what is redcap plus; redcap+ paid subscription tier; how much does redcap plus cost; difference between redcap core and redcap plus; premium redcap features subscription; do i need redcap+ to use my features; redcap plus vs free redcap; which features require a redcap+ subscription |
 
 ---
 

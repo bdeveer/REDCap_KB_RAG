@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-02
-  title: Export Records
+  title: Export Records API
 - id: RC-API-03
-  title: Import Records
+  title: Import Records API
 tags:
 - api
+synonyms:
+- how do i delete records via the api
+- delete records api call
+- remove records programmatically from redcap
+- api method to delete a whole record
+- delete data for a specific instrument or event via api
+- bulk delete records using the api
+- permanently remove record data through the api
+- api to clear records in an arm
 ---
 
 # 1. Overview
@@ -138,7 +147,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -203,7 +212,7 @@ On error, the API returns an error message describing the problem (e.g., invalid
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-02 — Export Records (reading records)
-- RC-API-03 — Import Records (creating and updating records)
-- RC-DAG-01 — Data Access Groups (DAG membership controls which records a token can delete)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(reading records)
+- [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)(creating and updating records)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG membership controls which records a token can delete)

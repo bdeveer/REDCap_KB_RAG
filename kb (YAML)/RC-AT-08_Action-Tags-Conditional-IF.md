@@ -6,23 +6,31 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 - familiarity with branching logic syntax
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Action Tags Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-02
-  title: '@HIDDEN & @READONLY'
+  title: '@HIDDEN & @READONLY — Visibility Control — @HIDDEN & @READONLY'
 - id: RC-AT-03
-  title: Radio/Dropdown Action Tags
+  title: Radio & Dropdown Action Tags
 - id: RC-AT-06
   title: Autofill Action Tags
 - id: RC-BL-01
-  title: Branching Logic Overview
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - action tags
+synonyms:
+- '@IF action tag'
+- how do i apply an action tag conditionally
+- conditional action tag based on logic
+- use @IF to hide a field for some records but not others
+- apply different action tags by event or user
+- '@IF condition evaluated on page load'
+- make a field behave differently with @IF
 ---
 
 # 1. Overview
@@ -126,7 +134,7 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 **Not evaluated in real time.** The condition is checked once when the page loads. If a user changes a field value that the condition depends on, `@IF` will not re-evaluate until the page is reloaded.
 
-**Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation action tags operate in contexts (real-time recalculation, data import, Data Quality rules) that `@IF` does not. Placing them inside an `@IF` branch produces unexpected results. See RC-AT-09 for guidance on calculation tags.
+**Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation action tags operate in contexts (real-time recalculation, data import, Data Quality rules) that `@IF` does not. Placing them inside an `@IF` branch produces unexpected results. See [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) for guidance on calculation tags.
 
 **Avoid complex nesting.** Deeply nested `@IF` statements are difficult to read and maintain. If logic becomes complex, consider restructuring the project design or using branching logic to control field visibility separately.
 
@@ -166,9 +174,9 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 # 9. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-02 — @HIDDEN & @READONLY: commonly used inside @IF branches
-- RC-AT-03 — Radio/Dropdown Action Tags: `@HIDECHOICE` and `@SHOWCHOICE` support piping and @IF
-- RC-AT-06 — Autofill Action Tags: autofill tags can be applied conditionally via @IF
-- RC-AT-09 — Calculation Action Tags: @CALCTEXT and @CALCDATE; do not nest inside @IF
-- RC-BL-01 — Branching Logic Overview: condition syntax is the same as branching logic
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) — @HIDDEN & @READONLY: commonly used inside @IF branches
+- [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md): autofill tags can be applied conditionally via @IF
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); do not nest inside @IF
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)

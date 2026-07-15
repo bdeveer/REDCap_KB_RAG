@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation (Export a Survey Participant List) |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)|
+| **Synonyms** | export survey participant list api method; how do i get the survey participant list via the api; api call to retrieve survey participants and invitation status; export participant list with response status through the api; get per-participant survey links using the api; api method to pull survey participant contact info; programmatically retrieve the participant list with the api |
 
 ---
 

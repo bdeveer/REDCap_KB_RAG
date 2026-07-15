@@ -6,18 +6,29 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-06
-  title: Autofill Tags
+  title: Autofill Action Tags
 - id: RC-FD-02
   title: Online Designer
 tags:
 - action tags
+synonyms:
+- '@PASSWORDMASK action tag'
+- '@WORDLIMIT action tag'
+- '@CHARLIMIT action tag'
+- '@RICHTEXT action tag'
+- '@PLACEHOLDER action tag'
+- '@FORCE-MINMAX action tag'
+- how do i mask text entry like a password
+- how do i limit characters or words in a text box
+- add placeholder text to a field
+- enable a rich text editor on a notes box
 ---
 
 # 1. Overview
@@ -118,7 +129,7 @@ Displays hint text inside an empty field. The hint appears in grey and disappear
 
 > **Note:** Single and double quotes cannot be used within the placeholder text.
 
-> **Note:** To pre-fill a value that is saved when the field is submitted, use `@DEFAULT` or `@SETVALUE` instead (see RC-AT-06).
+> **Note:** To pre-fill a value that is saved when the field is submitted, use `@DEFAULT` or `@SETVALUE` instead (see [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md)).
 
 **Use case:** Date format reminders, suggested answer formats, or brief instructions visible within the field.
 
@@ -138,6 +149,6 @@ Displays hint text inside an empty field. The hint appears in grey and disappear
 
 # 9. Related Articles
 
-- RC-AT-01 — Action Tags Overview
-- RC-AT-06 — Autofill Action Tags
-- RC-FD-02 — Online Designer
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)

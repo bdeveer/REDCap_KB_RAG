@@ -18,6 +18,14 @@ related:
   title: Rename Record API
 tags:
 - api
+synonyms:
+- generate next record name api method
+- how do i get the next record id via the api
+- api call to predict the next record name
+- find the next available record id through the api
+- api method to return the next auto-number record name
+- programmatically get the next record id before import with the api
+- next record name prediction using the api
 ---
 
 # 1. Overview
@@ -128,7 +136,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -186,6 +194,6 @@ On error, an error message string is returned.
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-03 — Import Records API (creating records; use `forceAutoNumber` to avoid race conditions)
-- RC-API-05 — Rename Record API (changing record IDs after creation)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) (creating records; use `forceAutoNumber` to avoid race conditions)
+- [RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md) (changing record IDs after creation)

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
+| **Synonyms** | control center to-do list task queue; approve draft changes requests admin; pending administrator action items; where do i review user requests in redcap; approve project move to production; admin approval queue control center; list of tasks awaiting administrator review; handle pending requests from users |
 
 ---
 

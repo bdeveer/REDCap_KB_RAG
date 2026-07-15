@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md); [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md); [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)|
+| **Synonyms** | how do i connect redcap to an ehr; set up cdis in the control center; smart on fhir integration with redcap; import clinical data from electronic health records; what is the difference between cdp and cdm; configure ehr connectivity for redcap; fhir hl7 clinical data setup; enable clinical data pull and data mart |
 
 ---
 

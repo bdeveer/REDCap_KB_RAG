@@ -13,11 +13,20 @@ related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
 - id: RC-AT-09
-  title: 'Action Tags: @CALCTEXT & @CALCDATE'
+  title: 'Action Tags: @CALCTEXT & @CALCDATE — Calculations'
 - id: RC-PIPE-03
   title: Smart Variables Overview
 tags:
 - calculations & special functions
+synonyms:
+- list of redcap special functions
+- how do i use datediff in redcap
+- calculate the difference between two dates
+- redcap functions for logic and calculations
+- round sum and if functions in calc fields
+- what functions can i use in calculated fields
+- text and date manipulation functions
+- redcap built-in function reference
 ---
 
 # 1. Overview
@@ -314,9 +323,9 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 # 12. Related Articles
 
-- RC-BL-01 — Branching Logic: Overview & Scope
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
-- RC-BL-03 — Branching Logic: Combining Statements
-- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE
-- RC-PIPE-03 — Smart Variables Overview
-- RC-ALERT-01 — Alerts & Notifications Setup
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)
+- [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md)
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)

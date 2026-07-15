@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | @PASSWORDMASK action tag; @WORDLIMIT action tag; @CHARLIMIT action tag; @RICHTEXT action tag; @PLACEHOLDER action tag; @FORCE-MINMAX action tag; how do i mask text entry like a password; how do i limit characters or words in a text box; add placeholder text to a field; enable a rich text editor on a notes box |
 
 ---
 

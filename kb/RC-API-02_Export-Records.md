@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
+| **Synonyms** | how do i export records via the api; export records api call; pull record data through the api export method; api endpoint to download record data; programmatically read redcap data as json or csv; get all records from a project using the api; export raw values or labels via records api; api method to retrieve entered data |
 
 ---
 

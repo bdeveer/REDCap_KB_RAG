@@ -25,11 +25,20 @@ related:
 tags:
 - form design
 - instruments
+synonyms:
+- how do i design forms in redcap
+- where do i build instruments
+- intro to form and instrument design
+- what is an instrument in redcap
+- tools for designing data collection forms
+- getting started with form design
+- design your data collection instruments area
+- online designer vs data dictionary vs codebook
 ---
 
 # 1. Overview
 
-This article orients users to REDCap\'s instrument design area. It
+This article orients users to REDCap's instrument design area. It
 explains what an instrument is, describes the three primary design
 tools, and covers the supporting features in the Design Your Data
 Collection Instruments section. It is the entry point for the Form
@@ -42,7 +51,7 @@ Design knowledge base series.
 **Instrument**
 
 The primary term in REDCap for any data collection form, survey, or
-grouping of variables. REDCap uses \'instrument\' consistently across
+grouping of variables. REDCap uses 'instrument' consistently across
 its interface. The terms form, survey, and instrument are often used
 interchangeably in practice, but instrument is the canonical REDCap term
 and is used throughout this knowledge base series to prevent confusion.
@@ -52,7 +61,7 @@ and is used throughout this knowledge base series to prevent confusion.
 A single data-collection field within an instrument. Each variable has a
 unique name (variable name), a field type, and optional attributes such
 as validation rules, branching logic, and field labels. Variable names
-are REDCap\'s internal identifiers and appear in data exports.
+are REDCap's internal identifiers and appear in data exports.
 
 **Project Setup Page**
 
@@ -104,12 +113,11 @@ distinct tools for creating and modifying instruments. Each serves
 different use cases and skill levels. Dedicated articles in this series
 cover each tool in detail.
 
-  --------------------------- ----------------------------------------------------------------------------------------- -------------
-  **Tool**                    **Best For**                                                                              **Article**
-  Online Designer             Beginners; making a small number of changes; wanting immediate visual feedback            RC-FD-02
-  Data Dictionary             Advanced users; defining many variables at once; splitting or restructuring instruments   RC-FD-03
-  REDCap Instrument Library   Importing validated or community-contributed instruments (e.g., PHQ-9)                    RC-FD-04
-  --------------------------- ----------------------------------------------------------------------------------------- -------------
+| **Tool** | **Best For** | **Article** |
+| --- | --- | --- |
+| Online Designer | Beginners; making a small number of changes; wanting immediate visual feedback | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| Data Dictionary | Advanced users; defining many variables at once; splitting or restructuring instruments | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
+| REDCap Instrument Library | Importing validated or community-contributed instruments (e.g., PHQ-9) | [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) |
 
 ---
 
@@ -119,13 +127,13 @@ cover each tool in detail.
 
 Generates a PDF document containing the definitions of every variable
 across all instruments in the project. Useful for documentation, IRB
-submissions, and offline review of your project\'s structure.
+submissions, and offline review of your project's structure.
 
 ## 5.2 Download the Current Data Dictionary
 
-Downloads the project\'s current instrument and variable definitions as
+Downloads the project's current instrument and variable definitions as
 a CSV file. This is the same format used by the Data Dictionary upload
-tool (RC-FD-03). Downloading the current Data Dictionary before making
+tool ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)). Downloading the current Data Dictionary before making
 bulk changes is a critical safety practice — it serves as a snapshot
 that can be re-uploaded to undo a bad import.
 
@@ -141,35 +149,35 @@ within the Online Designer.
 
 Instruments can be exported as zip files and re-imported into the same
 or a different REDCap project. This feature is accessed from within the
-Online Designer. See RC-FD-04 for full details.
+Online Designer. See [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) for full details.
 
 ## 5.5 Codebook
 
 A read-only, human-readable summary of all instruments and variables in
 the project. Useful as a reference while designing instruments or
-writing logic. Accessible from the left-hand menu. See RC-FD-05 for full
+writing logic. Accessible from the left-hand menu. See [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) for full
 details.
 
 ## 5.6 Project Setup Progress Indicators
 
-The Design Your Data Collection Instruments section includes a \'Not
-Started\' status indicator and an \'I\'m done!\' button. These are
+The Design Your Data Collection Instruments section includes a 'Not
+Started' status indicator and an 'I'm done!' button. These are
 visual progress trackers for the project setup workflow only — they
 have no functional effect on the project and do not lock or unlock any
 features.
 
 ## 5.7 Advanced Feature Reference Buttons
 
-Five buttons at the bottom of the design section link to REDCap\'s
+Five buttons at the bottom of the design section link to REDCap's
 built-in reference guides for advanced features: Smart Variables,
 Piping, \@Action Tags, Field Embedding, and Special Functions. These
 features extend what instruments can do but require a solid grasp of
 basic instrument design before use. This knowledge base series does not
 cover them in depth.
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** The text and layout of the Design Your Data Collection Instruments section may vary slightly depending on which project features are enabled (e.g., Surveys mode). The core tools and links described here are present in all configurations.
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** The text and layout of the Design Your Data Collection Instruments section may vary slightly depending on which project features are enabled (e.g., Surveys mode). The core tools and links described here are present in all configurations.
+
 
 ---
 
@@ -178,18 +186,17 @@ cover them in depth.
 Use this guide to select the appropriate tool for your task. For full
 details on each tool, see the linked articles.
 
-  ----------------------------------------------------------------------- -------------------------------------------------------------
-  **Task**                                                                **Recommended Tool**
-  Create your first instrument or add a few fields                        Online Designer (RC-FD-02)
-  Build or restructure many variables or instruments at once              Data Dictionary (RC-FD-03)
-  Split one instrument into two                                           Data Dictionary (RC-FD-03)
-  Import a validated clinical scale (e.g., PHQ-9, GAD-7)                  Instrument Library (RC-FD-04)
-  Reuse an instrument from another project                                Zip File import (RC-FD-04)
-  Back up your instrument definitions before a major change               Download Data Dictionary or Zip File export (RC-FD-04)
-  Review all variables and their attributes in a readable format          Codebook (RC-FD-05)
-  Check or update which variables are flagged as identifiers              Check for Identifiers (this article, Section 5.3)
-  Generate a PDF of all instruments for documentation or IRB submission   Download PDF of All Instruments (this article, Section 5.1)
-  ----------------------------------------------------------------------- -------------------------------------------------------------
+| **Task** | **Recommended Tool** |
+| --- | --- |
+| Create your first instrument or add a few fields | Online Designer ([RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)) |
+| Build or restructure many variables or instruments at once | Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)) |
+| Split one instrument into two | Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)) |
+| Import a validated clinical scale (e.g., PHQ-9, GAD-7) | Instrument Library ([RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)) |
+| Reuse an instrument from another project | Zip File import ([RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)) |
+| Back up your instrument definitions before a major change | Download Data Dictionary or Zip File export ([RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)) |
+| Review all variables and their attributes in a readable format | Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) |
+| Check or update which variables are flagged as identifiers | Check for Identifiers (this article, Section 5.3) |
+| Generate a PDF of all instruments for documentation or IRB submission | Download PDF of All Instruments (this article, Section 5.1) |
 
 ---
 
@@ -198,17 +205,17 @@ details on each tool, see the linked articles.
 **Q: What is the difference between an instrument, a form, and a survey
 in REDCap?**
 
-**A:** They refer to the same structural object. REDCap uses \'instrument\'
+**A:** They refer to the same structural object. REDCap uses 'instrument'
 as the canonical term. A form is an instrument used for staff data
 entry. A survey is the same instrument configured to be filled out by a
 participant. The underlying data structure is identical.
 
-**Q: I made a change in the Online Designer but it hasn\'t appeared in
+**Q: I made a change in the Online Designer but it hasn't appeared in
 my project yet. Why?**
 
 **A:** Your project is likely in Production mode. In Production, Online
 Designer changes are queued for review before being applied. Depending
-on your institution\'s REDCap policy, the review may be automatic or may
+on your institution's REDCap policy, the review may be automatic or may
 require administrator approval. Check with your local REDCap support
 team.
 
@@ -227,7 +234,7 @@ Production?**
 Designer in the left-hand menu under Data Collection to reach the
 instrument design area, which includes access to the Online Designer.
 
-**Q: Do the \'Not Started\' and \'I\'m done!\' status indicators affect
+**Q: Do the 'Not Started' and 'I'm done!' status indicators affect
 my project?**
 
 **A:** No. They are visual progress indicators for the project setup
@@ -249,12 +256,12 @@ through those buttons directly.
 
 - **Making changes in Production without expecting a review step.** Design
     changes in Production mode are not applied immediately. If your
-    changes aren\'t showing up, check whether they are pending review in
-    the Online Designer\'s change queue.
+    changes aren't showing up, check whether they are pending review in
+    the Online Designer's change queue.
 
 - **Using inconsistent terminology (form, survey, instrument).** REDCap treats these as one object type.
     Using inconsistent terminology in documentation or training creates
-    confusion. Standardize on \'instrument\' throughout.
+    confusion. Standardize on 'instrument' throughout.
 
 - **Skipping the Data Dictionary download before making bulk changes.** Downloading the current Data Dictionary before a major edit is the
     only reliable way to recover from a bad import. Build this habit
@@ -267,25 +274,25 @@ through those buttons directly.
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-07 — Export Metadata (Data Dictionary) API** — retrieve the full project data dictionary programmatically
-- **RC-API-08 — Import Metadata (Data Dictionary) API** — push a new or updated data dictionary to a project programmatically
-- **RC-API-09 — Export Instruments API** — retrieve the list of instruments (forms) in a project programmatically
+- **[RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)** — retrieve the full project data dictionary programmatically
+- **[RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)** — push a new or updated data dictionary to a project programmatically
+- **[RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md)** — retrieve the list of instruments (forms) in a project programmatically
 
 ---
 
 
 # 9. Related Articles
 
-- RC-FD-02 — Online Designer
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
 
-- RC-FD-03 — Data Dictionary
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)
 
-- RC-FD-04 — Instrument Library & Zip Files
+- [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)
 
-- RC-FD-05 — Codebook
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md)
 
-- RC-NAV-UI-01 — Project Navigation UI (the Designer, Dictionary, and Code Book links are in the Project Home and Design menu section)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (the Designer, Dictionary, and Code Book links are in the Project Home and Design menu section)
 
-- RC-NAV-UI-02 — Project Menu Reference (full reference for the Project Home and Design menu items that lead to these form design tools)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (full reference for the Project Home and Design menu items that lead to these form design tools)

@@ -12,9 +12,18 @@ related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 tags:
 - piping
+synonyms:
+- '[record-name] smart variable'
+- how to pipe the current record id with [record-name]
+- record smart variables for the record data access group
+- '[record-dag-name] and [record-dag-label] piping'
+- pipe the calendar link with [calendar-link] or [calendar-url]
+- reference the current record in a field label or email
+- '[record-dag-id] record-level smart variable'
+- how to show the record id automatically
 ---
 
 # 1. Overview
@@ -133,7 +142,7 @@ The email will contain a clickable link with your custom text. Note that the Cal
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (smart variable syntax and modifiers)
-- RC-PIPE-05 — Smart Variables: User (user-based smart variables for comparison)
-- RC-ALERT-01 — Alerts and Notifications Setup (using record smart variables in alert emails)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(smart variable syntax and modifiers)
+- [RC-PIPE-05 — Smart Variables: User](RC-PIPE-05_Smart-Variables-User.md) (user-based smart variables for comparison)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(using record smart variables in alert emails)

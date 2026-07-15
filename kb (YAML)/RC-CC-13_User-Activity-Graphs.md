@@ -10,20 +10,29 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-11
-  title: System Statistics
+  title: 'Control Center: System Statistics'
 - id: RC-CC-12
-  title: User Activity Log
+  title: 'Control Center: User Activity Log'
 - id: RC-CC-14
-  title: Map of Users
+  title: 'Control Center: Map of Users'
 - id: RC-CC-15
-  title: Top Usage Report
+  title: 'Control Center: Top Usage Report'
 tags:
 - control center (admin)
+synonyms:
+- control center user activity graphs
+- visual charts of redcap usage over time
+- usage trend graphs for administrators
+- chart of logins and activity by date
+- system usage visualization control center
+- graph of active users over time
+- activity trend charts admin dashboard
+- visualize redcap system usage
 ---
 
 # 1. Overview
 
-The User Activity Graphs page displays visual charts summarizing REDCap system usage over time. It is accessible under "Dashboards & Activity" in the Control Center sidebar. The charts provide at-a-glance trend views that complement the raw data available in the User Activity Log (RC-CC-12) and System Statistics (RC-CC-11).
+The User Activity Graphs page displays visual charts summarizing REDCap system usage over time. It is accessible under "Dashboards & Activity" in the Control Center sidebar. The charts provide at-a-glance trend views that complement the raw data available in the User Activity Log ([RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)) and System Statistics ([RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)).
 
 ---
 
@@ -72,10 +81,10 @@ Charts can often be hovered over to view exact values for specific time points.
 
 Activity Graphs provide trend visualization, complementing:
 
-- **User Activity Log** (RC-CC-12) — for raw event-level detail and filtering by project or date
-- **System Statistics** (RC-CC-11) — for aggregate counts and high-level metrics
-- **Map of Users** (RC-CC-14) — for geographic distribution of users
-- **Top Usage Report** (RC-CC-15) — for identifying the most active projects and users
+- **User Activity Log** ([RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)) — for raw event-level detail and filtering by project or date
+- **System Statistics** ([RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)) — for aggregate counts and high-level metrics
+- **Map of Users** ([RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md)) — for geographic distribution of users
+- **Top Usage Report** ([RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)) — for identifying the most active projects and users
 
 ---
 
@@ -123,6 +132,6 @@ Charts are typically near real-time, but may have a slight delay (minutes to hou
 
 # 9. Related Articles
 
-- RC-CC-11 — System Statistics
-- RC-CC-12 — User Activity Log
-- RC-CC-14 — Map of Users
+- [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)
+- [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)
+- [RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md)

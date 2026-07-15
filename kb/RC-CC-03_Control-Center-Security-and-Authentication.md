@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md)|
+| **Synonyms** | control center authentication settings; configure two-factor authentication for redcap; set up single sign on shibboleth or saml; table-based authentication login settings; google oauth2 or microsoft entra id login; control center login security policies; how do users authenticate to redcap; system-wide authentication method configuration |
 
 ---
 

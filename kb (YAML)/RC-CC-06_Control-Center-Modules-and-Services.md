@@ -10,15 +10,15 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-05
-  title: File Storage & Upload Settings
+  title: 'Control Center: File Storage & Upload Settings'
 - id: RC-CC-02
-  title: General Configuration
+  title: 'Control Center: General System Configuration'
 - id: RC-ALERT-01
-  title: Alerts & Notifications
+  title: 'Alerts & Notifications: Setup'
 - id: RC-EM-01
-  title: External Modules Overview
+  title: 'External Modules: Overview & Manager'
 - id: RC-INST-01
-  title: Institution-Specific Settings & Policies
+  title: Institution-Specific Settings & Policies — Production
 - id: RC-AI-01
   title: 'REDCap AI Tools: Overview & Security'
 - id: RC-AI-02
@@ -29,6 +29,15 @@ related:
   title: AI Summarization
 tags:
 - control center (admin)
+synonyms:
+- control center modules and services configuration
+- enable or disable surveys api or randomization
+- configure twilio or mosio sms integration
+- set up sendgrid email delivery
+- enable external modules framework
+- turn redcap features on or off instance-wide
+- configure ai services and third-party integrations
+- module activation request workflow setting
 ---
 
 # 1. Overview
@@ -64,19 +73,19 @@ The following features can be enabled or disabled system-wide. When a feature is
 | --- | --- |
 | **Surveys** | Enables the survey functionality across all projects. A sub-setting controls **Google reCAPTCHA** on public surveys — see the reCAPTCHA section below |
 | **URL Shortening Service** | Enables short link generation for public survey links, public project dashboards, and public report links via the REDCAP.LINK service hosted by Vanderbilt on AWS. Disable if your server cannot make outbound HTTP requests to the public web |
-| **Randomization** | Enables the randomization module; see RC-RAND-01 |
+| **Randomization** | Enables the randomization module; see [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) |
 | **REDCap Shared Library** | Enables access to the Consortium's instrument-sharing library on the Online Designer page |
 | **REDCap Messenger** | Enables the in-platform messaging system between users. A sub-setting controls whether users are allowed to message administrators directly |
-| **REDCap API** | Enables API access for all projects; see RC-API-01 |
-| **REDCap Mobile App** | Enables offline data collection via the mobile app. Users must be explicitly granted mobile app privileges within a project to use it; see RC-MOB-01 |
-| **MyCap Mobile App** | Enables MyCap participant mobile app support. When enabled, a per-project toggle determines whether individual projects use MyCap. A sub-setting controls whether project users can enable MyCap themselves or whether an administrator must do so. See RC-MYCAP-01. **Note on limitations:** MyCap does not support piping, smart variables, field embedding, special functions, calculated fields, or most action tags (@HIDDEN and @MC-prefixed tags *are* supported). Branching logic is partially supported (simple single-statement logic only — no AND, OR, or special functions) |
+| **REDCap API** | Enables API access for all projects; see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **REDCap Mobile App** | Enables offline data collection via the mobile app. Users must be explicitly granted mobile app privileges within a project to use it; see [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md) |
+| **MyCap Mobile App** | Enables MyCap participant mobile app support. When enabled, a per-project toggle determines whether individual projects use MyCap. A sub-setting controls whether project users can enable MyCap themselves or whether an administrator must do so. See [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md). **Note on limitations:** MyCap does not support piping, smart variables, field embedding, special functions, calculated fields, or most action tags (@HIDDEN and @MC-prefixed tags *are* supported). Branching logic is partially supported (simple single-statement logic only — no AND, OR, or special functions) |
 | **External Modules Alternate Directory** | Allows loading external modules from a non-default directory path. Useful for staging or internal module development. Multiple directories can be separated with a pipe \| |
 | **File Version History for 'File Upload' Fields** | When enabled, users can upload a new file to a File Upload field without deleting the current one — previous versions are preserved and accessible from the Data History popup. If disabled, users must delete the current file before uploading a replacement. Can be enabled or disabled per project on the Project Setup page |
 | **Field Bank in the Online Designer** | Enables the 'Import from Field Bank' button in the Online Designer, allowing users to pull fields from standardized instrument catalogs. If disabled, the button is hidden for all users |
 | **Video Embedding on Forms & Surveys** | Allows a video URL to be attached to a Descriptive field, displaying a play button that opens the video in a popup. Compatible with most hosting services; most reliable with YouTube and Vimeo |
 | **Text-to-Speech for Surveys** | Enables text-to-speech on survey pages, reading survey text aloud via the IBM Watson Text-to-Speech API hosted by Vanderbilt University. Requires the REDCap server to be able to make outbound HTTP requests to `https://redcap.vumc.org` |
 | **Auto-Suggest for Biomedical Ontologies** | Enables the BioPortal ontology lookup service for fields on forms and surveys. Requires a valid BioPortal API token and outbound HTTP access to `https://data.bioontology.org/` |
-| **Data Entry Trigger** | Enables the Data Entry Trigger feature for all projects. When enabled, users can configure a URL that REDCap will POST to whenever a record is created or modified via normal data entry or a survey response. **Not triggered by** API imports, data imports via the import tool, or Mobile App imports; see RC-INTG-01 |
+| **Data Entry Trigger** | Enables the Data Entry Trigger feature for all projects. When enabled, users can configure a URL that REDCap will POST to whenever a record is created or modified via normal data entry or a survey response. **Not triggered by** API imports, data imports via the import tool, or Mobile App imports; see [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) |
 | **Project XML Export** | Enables project backup/export as a single XML file in CDISC ODM format, available on the Project Setup page and the Data Exports page. The exported file can optionally include data and be used to clone the project |
 | **Protected Email Mode** | Prevents identifying data (PHI/PII) from being included in the body of outgoing emails for alerts, survey invitations, and survey confirmation emails. When enabled at the system level, project users can activate it per project. In protected mode, recipients receive a surrogate email with a secure link to view the original message on a REDCap-hosted page; a one-time security code is required on first access (or after more than 30 days on the same device). Optionally, protection can be scoped to only emails that pipe identifier fields |
 | **Email Logging** | When enabled, users with User Rights privileges in a project can opt in to the Email Logging page to search all outgoing project emails. **Note:** Outgoing emails are always stored in the backend database regardless of this setting; this toggle controls only whether users can access them through the interface |
@@ -118,7 +127,7 @@ Twilio is a third-party service that enables SMS and voice call delivery for sur
   - *Administrators only* — the setting is hidden from non-admin users entirely
 - **Display Twilio Information to All Users** — Only relevant when "Administrators only" is selected. Controls whether Twilio is advertised on the Project Setup page; set to "No" to keep Twilio invisible to regular users
 
-See RC-TXT-01 and RC-TXT-02 for more on texting workflows and administrator setup.
+See [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) and [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md) for more on texting workflows and administrator setup.
 
 ## Mosio (SMS)
 
@@ -155,7 +164,7 @@ When an e-Consent is certified, the participant's IP address is stored in the Fi
 **Custom Message for e-Consent Framework Settings**
 Optional text shown to project administrators when configuring e-Consent. A good place to link to institutional guidance on electronic consent requirements.
 
-See RC-SURV-08 for detailed e-Consent setup documentation.
+See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) for detailed e-Consent setup documentation.
 
 ---
 
@@ -171,7 +180,7 @@ These settings control what information users can include in alert recipient fie
 - **Allow normal users to use project variables for phone fields** — Allows recipient phone number fields to reference project data fields
 - **Allow normal users to enter freeform phone numbers** — Allows manual phone number entry for SMS alerts
 
-See RC-ALERT-01 for alert setup and RC-TXT-01 for SMS alert configuration.
+See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) for alert setup and [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) for SMS alert configuration.
 
 ---
 
@@ -251,9 +260,9 @@ Once the master toggle is on, individual AI features below become active. System
 
 | Feature | Behavior when enabled |
 | --- | --- |
-| **Feature 1 — Writing Tools** | A magic wand icon appears in the toolbar of all rich text editors throughout REDCap (except the @RICHTEXT action tag). Users can alter and enhance text including changing length, tone, and reading level. See RC-AI-02 |
-| **Feature 2 — Summarize free-form text on reports** | A magic wand icon appears next to free-form text fields on reports, allowing users to have the AI service summarize field values across the report. See RC-AI-04 |
-| **Feature 3 — Auto-translate on MLM setup page** | On the Multi-Language Management page, a button appears that auto-translates all untranslated text in one click. See RC-AI-03 |
+| **Feature 1 — Writing Tools** | A magic wand icon appears in the toolbar of all rich text editors throughout REDCap (except the @RICHTEXT action tag). Users can alter and enhance text including changing length, tone, and reading level. See [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md) |
+| **Feature 2 — Summarize free-form text on reports** | A magic wand icon appears next to free-form text fields on reports, allowing users to have the AI service summarize field values across the report. See [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
+| **Feature 3 — Auto-translate on MLM setup page** | On the Multi-Language Management page, a button appears that auto-translates all untranslated text in one click. See [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md) |
 
 ## OpenAI Configuration
 
@@ -279,7 +288,7 @@ Google Gemini (cloud-hosted) can be used as an alternative to OpenAI. Obtain an 
 - **API Model Name** — The Gemini model to use (e.g., `gemini-1.5-flash`, `gemini-2.0-flash`)
 - **API Version** — The API version (e.g., `v1`, `v1beta`)
 
-See RC-AI-01 for an overview of REDCap's AI tools and security considerations.
+See [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) for an overview of REDCap's AI tools and security considerations.
 
 ---
 
@@ -314,12 +323,12 @@ OpenAI (Azure) and Google Gemini are cloud-hosted, managed services that require
 
 # 4. Related Articles
 
-- RC-AI-01 — REDCap AI Tools: Overview & Security (overview of AI features enabled by this page)
-- RC-CC-02 — Control Center: General System Configuration (related system-wide settings)
-- RC-CC-05 — Control Center: File Storage & Upload Settings (file-related module settings)
-- RC-ALERT-01 — Alerts & Notifications (alert configuration and SendGrid integration)
-- RC-EM-01 — External Modules Overview (external module concepts and management)
-- RC-MOB-01 — REDCap Mobile App (mobile app module configuration)
-- RC-MYCAP-01 — MyCap: Overview & Enabling (MyCap module configuration)
-- RC-RAND-01 — Randomization Concepts & Terminology (randomization module configuration)
-- RC-TXT-01 — SMS Texting: Overview & Workflows (SMS service configuration and usage)
+- [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) (overview of AI features enabled by this page)
+- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (related system-wide settings)
+- [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md) (file-related module settings)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(alert configuration and SendGrid integration)
+- [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)(external module concepts and management)
+- [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md) (mobile app module configuration)
+- [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) (MyCap module configuration)
+- [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) (randomization module configuration)
+- [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md)(SMS service configuration and usage)

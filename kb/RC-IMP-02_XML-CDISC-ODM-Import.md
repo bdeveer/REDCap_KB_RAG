@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-05-13 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) |
+| **Synonyms** | how to import an xml file into redcap; cdisc odm import workflow; transfer data from another redcap installation; import a project xml backup with data; what xml format does redcap accept; odm import handling of existing records; import clinical data from a cdisc compliant system; xml data import reference |
 
 ---
 

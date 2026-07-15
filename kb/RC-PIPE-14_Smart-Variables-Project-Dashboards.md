@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) |
+| **Synonyms** | [dashboard-link] smart variable; how to pipe a link to a public project dashboard with [dashboard-url]; dashboard smart variables for the access code [dashboard-access-code]; link to a named dashboard with [dashboard-link:unique_dash_name]; share a public project dashboard link via email; [dashboard-url:unique_dash_name] project dashboard smart variable; create a clickable link to a project dashboard; project dashboard link and access code smart variables |
 
 ---
 

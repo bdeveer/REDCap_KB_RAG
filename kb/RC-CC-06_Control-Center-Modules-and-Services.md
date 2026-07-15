@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
+| **Synonyms** | control center modules and services configuration; enable or disable surveys api or randomization; configure twilio or mosio sms integration; set up sendgrid email delivery; enable external modules framework; turn redcap features on or off instance-wide; configure ai services and third-party integrations; module activation request workflow setting |
 
 ---
 

@@ -6,22 +6,30 @@ applies_to:
 - REDCap Mobile App only
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 - REDCap Mobile App must be installed and project initialized
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Action Tags Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-02
-  title: '@HIDDEN & @READONLY'
+  title: '@HIDDEN & @READONLY — Visibility Control — @HIDDEN & @READONLY'
 tags:
 - action tags
+synonyms:
+- '@APPUSERNAME-APP action tag'
+- '@BARCODE-APP action tag'
+- redcap mobile app action tags
+- how do i scan a barcode or qr code in the mobile app
+- capture the mobile app username into a field
+- action tags that only work in the mobile app
+- sync uploaded images to the mobile app
 ---
 
 # 1. Overview
 
-REDCap provides three action tags designed exclusively for use in the **REDCap Mobile App**. These tags extend mobile data collection with barcode/QR scanning, automatic capture of the mobile user's identity, and syncing of uploaded images from the server to the app.
+REDCap provides five action tags designed exclusively for use in the **REDCap Mobile App**. This article covers three of them (`@BARCODE-APP`, `@APPUSERNAME-APP`, `@SYNC-APP`), which extend mobile data collection with barcode/QR scanning, automatic capture of the mobile user's identity, and syncing of uploaded images from the server to the app. The remaining two (`@HIDDEN-APP` and `@READONLY-APP`) are documented in [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md).
 
 > **Mobile App only.** All three tags in this article function only within the REDCap Mobile App. They have no effect on browser-based data entry forms or survey pages.
 
@@ -116,6 +124,6 @@ Without this tag, images uploaded via the browser are not automatically pushed t
 
 # 7. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-02 — @HIDDEN-APP and @READONLY-APP: hiding and locking fields specifically in the mobile app
-- RC-AT-06 — Autofill Action Tags: `@USERNAME` for capturing the server username on browser-based forms
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) — @HIDDEN-APP and @READONLY-APP: hiding and locking fields specifically in the mobile app
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md): `@USERNAME` for capturing the server username on browser-based forms

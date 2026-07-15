@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-07 — Smart Variables: Form](RC-PIPE-07_Smart-Variables-Form.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)|
+| **Synonyms** | [survey-link] smart variable; how to pipe a survey link with [survey-link:instrument]; survey smart variables for access code [survey-access-code]; [survey-date-completed] and [survey-date-started] piping; how to show survey completion time with [survey-duration]; [is-survey] smart variable on a survey page; pipe a survey link or access code into an email; survey-level smart variables for links and timestamps |
 
 ---
 

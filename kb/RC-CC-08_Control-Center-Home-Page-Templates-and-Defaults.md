@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | control center home page settings; customize the redcap landing page; create project templates for users; set default project settings instance-wide; configure redcap footer settings; manage available field validation types; change the my projects page appearance; add a new field validation across all projects |
 
 ---
 

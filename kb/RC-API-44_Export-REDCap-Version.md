@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Synonyms** | export redcap version api method; how do i get the redcap version number via the api; api call to check the redcap instance version; retrieve the server redcap version through the api; api method to verify connectivity and version; programmatically read the redcap version with the api; get redcap build version using a super or project token |
 
 ---
 

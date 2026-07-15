@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
+| **Synonyms** | [record-name] smart variable; how to pipe the current record id with [record-name]; record smart variables for the record data access group; [record-dag-name] and [record-dag-label] piping; pipe the calendar link with [calendar-link] or [calendar-url]; reference the current record in a field label or email; [record-dag-id] record-level smart variable; how to show the record id automatically |
 
 ---
 

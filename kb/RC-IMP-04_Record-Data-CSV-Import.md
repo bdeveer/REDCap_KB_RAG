@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) |
+| **Synonyms** | how do i import record data from a csv file; upload participant data with the data import tool; bulk import records into redcap; csv column format for importing data; re-import an exported csv back into the project; overwrite existing data with blank values on import; why is my imported data not saving; partial data import for specific fields or events |
 
 ---
 

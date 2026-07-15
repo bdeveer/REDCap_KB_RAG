@@ -20,17 +20,26 @@ related:
 - id: RC-NAV-REC-03
   title: Repeated Instruments & Repeated Events
 - id: RC-BL-01
-  title: Branching Logic Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - longitudinal & repeated setup
 - longitudinal
+synonyms:
+- how do i set up a longitudinal project
+- collect data across multiple time points and events
+- enable longitudinal mode in redcap
+- define arms and events
+- assign instruments to events
+- multiple visits or timepoints per participant
+- set up study arms for control and intervention groups
+- designate which forms are collected at which event
 ---
 
 # 1. Overview
 
 This article covers how to configure a REDCap project for longitudinal data collection. Longitudinal mode allows you to collect data across multiple time points (events) and, optionally, across distinct participant cohorts (arms). The setup involves enabling longitudinal mode, defining your arms and events, and designating which instruments are collected at which events. This article also describes how a longitudinal setup affects other REDCap features such as branching logic and data exports.
 
-Repeated instruments and repeated events are a separate feature that can be layered on top of a longitudinal project — see RC-LONG-02 — Repeated Instruments & Events Setup for that configuration.
+Repeated instruments and repeated events are a separate feature that can be layered on top of a longitudinal project — see [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) for that configuration.
 
 ---
 
@@ -140,7 +149,7 @@ This page displays a matrix with instruments as rows and events as columns. A se
 2. Check the box for each instrument-event combination you want to enable. Use **Select All** or **Deselect All** at the top of the table to apply changes in bulk.
 3. Click **Save** to confirm your selections.
 
-> **Critical:** Unchecking an instrument-event combination that already contains saved data will permanently delete that data. Always verify the combination is empty before removing a designation.
+> **Critical:** Unchecking an instrument-event combination that already contains saved data will make that data inaccessible — it will no longer appear in the UI. The data is not deleted from the database and can be recovered by re-checking the combination, but treat this as a high-risk action: always verify the combination is empty, or export the data first, before removing a designation. If new data is collected in the same instrument-event combination after it was unchecked and then re-checked, there may be record-level collisions that require backend database intervention to resolve. If you are unsure, contact your local REDCap administrator before proceeding.
 
 > **Important:** Always designate the first instrument in your project (the one containing the record ID field) to the very first event in each arm. REDCap stores the record ID in this instrument-event combination. Omitting it will cause unpredictable behavior and risk data not being saved correctly.
 
@@ -197,12 +206,12 @@ Full column order (scheduling active): `event_name`, `arm_num`, `day_offset`, `o
 | `event_name` | Free text | Display label for the event. **Values containing spaces or special characters are wrapped in double quotes** in the CSV (e.g., `"3 Month"`, `"End of Study"`). |
 | `arm_num` | Positive integer | Must match an existing arm. In multi-arm projects, every event must appear as a separate row for each arm — there is no single row that spans multiple arms. A 2-arm, 6-event project produces 12 rows in the events CSV. |
 | `day_offset` | Integer ≥ 0 | Days from the reference date (e.g., enrollment). REDCap sorts events by `day_offset` ascending. |
-| `offset_min` | Integer ≥ 0 | Early scheduling window (days before the target date). Expressed as a positive number. |
+| `offset_min` | Integer ≥ 0 | Early scheduling window (days before the target date). Expressed as a positive number in the CSV — e.g., `3` means the window opens 3 days before the target date. Note: the API Export Events endpoint returns this value as a negative integer (e.g., `-3`); if building a CSV from API output, convert to its absolute value. |
 | `offset_max` | Integer ≥ 0 | Late scheduling window (days after the target date). Expressed as a positive number. Symmetric windows (e.g., ±14 days) appear as the same value in both columns. |
 | `unique_event_name` | Snake_case string | May be left blank on upload — REDCap auto-generates from the event name and arm number. **Recommended: leave blank and let REDCap generate.** See derivation rule below. |
 | `custom_event_label` | Free text or blank | Piped event label. Leave blank if not used. The column is always present in exports — even when all values are empty. |
 
-**`unique_event_name` derivation rule:** REDCap lowercases the event name, replaces spaces with underscores, removes hyphens (not converts — removes entirely), then appends `_arm_{N}`. Examples: "Screening" → `screening_arm_1`; "3 Month" → `3_month_arm_1`; "End of Study" → `end_of_study_arm_1`; "Follow-up" → `followup_arm_1` (hyphen removed). Hand-typing unique event names that don't match this rule exactly will cause the mapping upload to silently fail.
+**`unique_event_name` derivation rule:** REDCap lowercases the event name, removes hyphens entirely (they do not become underscores), replaces all remaining non-alphanumeric characters with underscores, collapses consecutive underscores into one, and appends `_arm_{N}`. Examples: "Screening" → `screening_arm_1`; "3 Month" → `3_month_arm_1`; "End of Study" → `end_of_study_arm_1`; "Follow-up" → `followup_arm_1` (hyphen removed, not converted); "Ad Hoc (Visit)" → `ad_hoc_visit_arm_1` (parentheses become underscores, consecutive underscores collapsed). Hand-typing unique event names that don't match this rule exactly will cause the mapping upload to silently fail.
 
 - `day_offset`, `offset_min`, and `offset_max` appear in the downloaded events CSV only when the scheduling module is active for the project. Include them in an upload only when scheduling is in use.
 - When multiple events share the same `day_offset`, REDCap breaks the display-order tie by sorting alphabetically by unique event name — which is rarely the intended clinical order. To enforce a specific display order among same-day events, assign sequential `day_offset` values (e.g., 0, 1, 2, 3…) even if the events all occur on the same calendar day.
@@ -268,9 +277,9 @@ arm_num,unique_event_name,form
 ...
 ```
 
-> **Repeatable mapping not covered here:** The bulk CSV workflow described in this section covers arms, events, and instrument-event designations only. The configuration of which instruments or events are repeatable (set up via the repeating instruments and events popup in Project Setup) cannot be exported or imported through the UI. Use the REDCap API for programmatic management of repeatable mappings. See RC-LONG-02 — Repeated Instruments & Events Setup for details.
+> **Repeatable mapping not covered here:** The bulk CSV workflow described in this section covers arms, events, and instrument-event designations only. The configuration of which instruments or events are repeatable (set up via the repeating instruments and events popup in Project Setup) cannot be exported or imported through the UI. Use the REDCap API for programmatic management of repeatable mappings. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) for details.
 
-For the full column-by-column reference, upload order rules, and common mistakes for all three CSV formats, see **RC-IMP-09 — Longitudinal Structure CSV**.
+For the full column-by-column reference, upload order rules, and common mistakes for all three CSV formats, see **[RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) — Longitudinal Structure CSV**.
 
 ---
 
@@ -303,7 +312,7 @@ In a standard (non-longitudinal) project, branching logic references fields by v
 
 References to variables *within the same instrument or event* ("local" references) do not require the event prefix. Cross-event references without the event prefix will not evaluate correctly.
 
-See RC-BL-01 — Branching Logic Overview & Scope for full syntax details.
+See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) — Branching Logic Overview & Scope for full syntax details.
 
 ## 8.2 Piping
 
@@ -389,40 +398,42 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-16 — Export Arms API** — retrieve the list of arms defined in the project
-- **RC-API-17 — Import Arms API** — create or update arm definitions programmatically
-- **RC-API-18 — Delete Arms API** — remove one or more arms from a project programmatically
-- **RC-API-19 — Export Events API** — retrieve the list of events across all arms
-- **RC-API-20 — Import Events API** — create or update event definitions programmatically
-- **RC-API-21 — Delete Events API** — remove events from a project programmatically
-- **RC-API-10 — Export Instrument-Event Mappings API** — retrieve which instruments are assigned to which events
-- **RC-API-11 — Import Instrument-Event Mappings API** — update instrument-to-event assignments programmatically
+- **[RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)** — retrieve the list of arms defined in the project
+- **[RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)** — create or update arm definitions programmatically
+- **[RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)** — remove one or more arms from a project programmatically
+- **[RC-API-19 — Export Events API](RC-API-19_Export-Events.md)** — retrieve the list of events across all arms
+- **[RC-API-20 — Import Events API](RC-API-20_Import-Events.md)** — create or update event definitions programmatically
+- **[RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md)** — remove events from a project programmatically
+- **[RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)** — retrieve which instruments are assigned to which events
+- **[RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md)** — update instrument-to-event assignments programmatically
 
 ---
 
 
 # 11. Administrator Configuration
 
-Whether project-level users can add or modify events and arms on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Normal Users to Add or Modify Events and Arms in Production").
+Whether project-level users can add or modify events and arms on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Normal Users to Add or Modify Events and Arms in Production").
 
 When this setting is disabled — which is the default in most instances — only REDCap administrators can add or modify events and arms on a project in Production status. Users who need this change must submit a request to the REDCap support team.
 
 When the setting is enabled, project-level users with Project Design and Setup rights can add events and modify certain event properties directly on a Production project. Even then, only administrators can delete events in production. Users can designate instruments to events that have not yet been designated, but cannot un-designate instruments that are already designated.
 
-> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+> **Note:** This setting applies to the REDCap UI only. The Import Arms and Import Events API endpoints remain restricted to Development status even when this setting is enabled. To modify arms or events via the API on a Production project, the project must first be returned to Development status.
+
+> **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)
 
 ---
 
 # 12. Related Articles
 
-- RC-CC-04 — Control Center: User Settings & Defaults (controls whether users can modify events/arms in Production)
-- RC-LONG-02 — Repeated Instruments & Events Setup (layering repeated instruments or events onto a longitudinal project)
-- RC-NAV-REC-02 — Longitudinal Mode & Arms (navigating longitudinal records as a data entry user)
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events (navigating repeated instances as a data entry user)
-- RC-FD-01 — Form Design Overview (setting up instruments before longitudinal configuration)
-- RC-FD-02 — Online Designer (building and managing instruments)
-- RC-BL-01 — Branching Logic Overview & Scope (how branching logic is affected by longitudinal setup)
-- RC-DE-03 — Longitudinal Projects & DAGs (data entry in a longitudinal context)
-- RC-NAV-UI-01 — Project Navigation UI (accessing Project Setup)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (controls whether users can modify events/arms in Production)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (layering repeated instruments or events onto a longitudinal project)
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) (navigating longitudinal records as a data entry user)
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) (navigating repeated instances as a data entry user)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (setting up instruments before longitudinal configuration)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (building and managing instruments)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(how branching logic is affected by longitudinal setup)
+- [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (data entry in a longitudinal context)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (accessing Project Setup)

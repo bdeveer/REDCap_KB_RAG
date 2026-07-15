@@ -20,6 +20,15 @@ related:
   title: Form Design Overview
 tags:
 - data entry
+synonyms:
+- how do field validations work during data entry
+- why am i getting a validation error message
+- enforce a date or number format in a field
+- validation popup when entering data
+- valid format for email or phone field
+- out of range value validation
+- field validation data entry
+- understand validation error messages
 ---
 
 # 1. Overview
@@ -135,7 +144,7 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **Q: A validation error popup appeared — what should I do?**
 
-**A:** Read the popup message. It will name the validation type and usually describe the required format. Check any field note or placeholder beneath or inside the field for additional guidance. Correct your entry to match the required format, then save again. If you are unsure of the correct value, leave the field blank and add a field comment explaining the issue (see RC-DE-08 — Field Comment Log).
+**A:** Read the popup message. It will name the validation type and usually describe the required format. Check any field note or placeholder beneath or inside the field for additional guidance. Correct your entry to match the required format, then save again. If you are unsure of the correct value, leave the field blank and add a field comment explaining the issue (see [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
 
 **Q: I entered a valid-looking date but REDCap rejected it — why?**
 
@@ -147,7 +156,7 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **Q: The field I need to fill in has a number validation but I need to enter text explaining an unusual value. What should I do?**
 
-**A:** You cannot override a validation by entering text into a validated text box — REDCap will reject the entry. Instead, leave the field blank (or enter the closest valid numeric value) and use the field comment log to document your explanation. See RC-DE-08 — Field Comment Log.
+**A:** You cannot override a validation by entering text into a validated text box — REDCap will reject the entry. Instead, leave the field blank (or enter the closest valid numeric value) and use the field comment log to document your explanation. See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 **Q: Why does the phone number validation reject a number that looks correct to me?**
 
@@ -169,30 +178,30 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **Assuming contact information validations verify real-world validity.** Email, phone, and zip code validations check format only. A syntactically correct but fictional or wrong contact address will pass without error. Data quality review is a separate process.
 
-**Trying to type text into a number or date field to explain an unusual value.** Validations cannot be bypassed by entering free text. If you need to explain or flag an unusual data point, leave the validated field with a valid value (or blank) and use the field comment log (RC-DE-08).
+**Trying to type text into a number or date field to explain an unusual value.** Validations cannot be bypassed by entering free text. If you need to explain or flag an unusual data point, leave the validated field with a valid value (or blank) and use the field comment log ([RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
 
 **Missing a dynamic minimum or maximum because the referenced field is blank.** If a validation's minimum or maximum is derived from another field and that field has not yet been filled in, the constraint may not apply — which means an otherwise invalid value could be accepted temporarily. Always fill prerequisite fields before dependent fields.
 
-**Assuming a value outside the min/max range was accepted in error.** Min/max constraints are soft by default — REDCap warns you but allows the value if you confirm it. If a field has been configured with @FORCE-MINMAX, the behavior changes: REDCap will not accept values outside the range at all. If you are unsure whether an out-of-range value you entered was appropriate, add a field comment explaining the data point (see RC-DE-08).
+**Assuming a value outside the min/max range was accepted in error.** Min/max constraints are soft by default — REDCap warns you but allows the value if you confirm it. If a field has been configured with @FORCE-MINMAX, the behavior changes: REDCap will not accept values outside the range at all. If you are unsure whether an out-of-range value you entered was appropriate, add a field comment explaining the data point (see [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
 
 ---
 
 # 7. Administrator Configuration
 
-The set of validation types available in the Online Designer is controlled by a REDCap administrator in the Control Center under System Configuration → Home Page, Templates & Project Defaults (see **RC-CC-08**, "Field Validation Types" section). Administrators can enable or disable any built-in validation type and can register custom institution-specific validation types using JavaScript-based pattern matching or range checking.
+The set of validation types available in the Online Designer is controlled by a REDCap administrator in the Control Center under System Configuration → Home Page, Templates & Project Defaults (see **[RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)**, "Field Validation Types" section). Administrators can enable or disable any built-in validation type and can register custom institution-specific validation types using JavaScript-based pattern matching or range checking.
 
 A disabled validation type does not appear in the **Validation** dropdown in the Online Designer or the Add/Edit Field dialog. However, existing fields that already use a disabled type continue to function normally — the disable only prevents new fields from selecting that type via the UI. Disabled types can still be applied by entering them directly in a Data Dictionary CSV upload.
 
 If a validation type you expect to see is missing from the Validation dropdown, contact your REDCap administrator to check whether it has been disabled, or whether a custom validation has been created to replace it.
 
-> **See also:** RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+> **See also:** [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)
 
 ---
 
 # 8. Related Articles
 
-- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults (system-level management of available validation types)
-- RC-DE-02 — Basic Data Entry (foundational data entry skills)
-- RC-DE-06 — Bio-Medical Ontologies (a distinct lookup-based field type often paired with validated fields)
-- RC-DE-08 — Field Comment Log (how to flag problematic validated fields without altering the dataset)
-- RC-FD-01 — Form Design Overview (how instrument designers configure field types and validations)
+- [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) (system-level management of available validation types)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
+- [RC-DE-06 — Bio-Medical Ontologies](RC-DE-06_Bio-Medical-Ontologies.md) (a distinct lookup-based field type often paired with validated fields)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (how to flag problematic validated fields without altering the dataset)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (how instrument designers configure field types and validations)

@@ -12,11 +12,11 @@ version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-BL-01
-  title: Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 - id: RC-BL-02
-  title: Syntax & Atomic Statements
+  title: 'Branching Logic: Syntax & Atomic Statements'
 - id: RC-BL-03
-  title: Combining Statements
+  title: 'Branching Logic: Combining Statements'
 - id: RC-LONG-01
   title: Longitudinal Project Setup
 - id: RC-LONG-02
@@ -25,11 +25,20 @@ related:
   title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 tags:
 - branching logic
+synonyms:
+- branching logic across events
+- how do i reference a field from another event in branching logic
+- cross-event branching logic syntax
+- branching logic in longitudinal projects
+- show a field based on data from a previous visit
+- using event names in branching logic
+- branching logic with arms and repeating instruments
+- reference an earlier event in logic
 ---
 
 # 1. Overview
 
-This article covers how branching logic works in longitudinal REDCap projects — specifically, how to reference fields in other events using the cross-event syntax, how local vs. cross-event references differ, and how arms and repeated instruments interact with branching logic. It is part of the Branching Logic series and assumes familiarity with REDCap logic syntax (RC-BL-02) and longitudinal project setup (RC-LONG-01).
+This article covers how branching logic works in longitudinal REDCap projects — specifically, how to reference fields in other events using the cross-event syntax, how local vs. cross-event references differ, and how arms and repeated instruments interact with branching logic. It is part of the Branching Logic series and assumes familiarity with REDCap logic syntax ([RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)) and longitudinal project setup ([RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)).
 
 ---
 
@@ -92,7 +101,7 @@ The two bracket pairs are written immediately adjacent — no space, no operator
 
 > **Note:** "Same event" means any field in any instrument designated to the current event. If two instruments are both designated to Event A, a field in the first can reference a field in the second using a local reference — no event prefix needed.
 
-> **Tip:** You can also include the current event's unique event name in a cross-event-style reference, and it will work correctly. This is occasionally useful when writing logic in bulk via the Data Dictionary, where you want all references to be explicit. However, omitting the prefix for same-event fields is the standard practice.
+> **Note:** The event-prefix syntax is not restricted to different events — REDCap accepts any valid unique event name in the prefix position, including the current event's own name. The prefix is *required* only when referencing a field from a different event; for same-event fields, the current event is assumed and the prefix may be omitted. Explicitly prefixing same-event references is occasionally useful when editing logic in bulk via the Data Dictionary, where uniform syntax is easier to audit. Omitting the prefix for same-event fields remains the standard practice.
 
 ## 3.2 Finding the Unique Event Name
 
@@ -117,7 +126,7 @@ This means that arm-specific logic can emerge unintentionally from cross-event r
 
 ## 4.2 Writing Arm-Aware Logic
 
-If a field should appear conditionally depending on which arm a record is in, use smart variables to reference the current arm. See RC-PIPE-09 — Smart Variables: Event & Arm for syntax details.
+If a field should appear conditionally depending on which arm a record is in, use smart variables to reference the current arm. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) for syntax details.
 
 For most common patterns — gating later events behind earlier answers — the recommended approach is to write separate, arm-specific logic for each arm's version of the instrument, rather than attempting to write one statement that covers all arms.
 
@@ -143,7 +152,7 @@ This works reliably because the referenced field in the baseline event has exact
 
 ## 5.3 Referencing Specific Instances of a Repeated Instrument
 
-When branching logic needs to evaluate a value from a specific instance of a repeated instrument, REDCap supports two methods — the same syntax used for piping (see RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers, Section 4.2).
+When branching logic needs to evaluate a value from a specific instance of a repeated instrument, REDCap supports two methods — the same syntax used for piping (see [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md), Section 4.2).
 
 ### Method 1: Direct Instance Number
 
@@ -207,7 +216,7 @@ When branching logic runs inside a repeated instrument (i.e., the field being sh
 
 If the current instance is the first, `[previous-instance]` returns blank.
 
-> **See also:** RC-LONG-02 — Repeated Instruments & Events Setup (Section 8.1) for a broader discussion of how repeated setups affect branching logic; RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers (Section 4.2–4.3) for the parallel piping syntax.
+> **See also:** [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (Section 8.1) for a broader discussion of how repeated setups affect branching logic; [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (Section 4.2–4.3) for the parallel piping syntax.
 
 ---
 
@@ -277,7 +286,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Q: Can I write logic that shows a field only in a specific arm?**
 
-**A:** Not with a direct arm-check in branching logic syntax alone. The most practical approach is to use a smart variable that surfaces the current arm, then write logic against it. See RC-PIPE-09 — Smart Variables: Event & Arm.
+**A:** Not with a direct arm-check in branching logic syntax alone. The most practical approach is to use a smart variable that surfaces the current arm, then write logic against it. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md).
 
 **Q: Can I write branching logic that checks a value from a specific instance of a repeated instrument?**
 
@@ -305,12 +314,12 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 # 9. Related Articles
 
-- RC-BL-01 — Branching Logic: Overview & Scope (introduction to the series; lists cross-event logic as a topic)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (prerequisite — logic syntax fundamentals)
-- RC-BL-03 — Branching Logic: Combining Statements (AND, OR, parentheses for multi-condition logic)
-- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes (checkbox and radio field syntax)
-- RC-LONG-01 — Longitudinal Project Setup (unique event names, arms, and events — prerequisite)
-- RC-LONG-02 — Repeated Instruments & Events Setup (how repeated setups affect branching logic)
-- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers (parallel cross-event syntax for piping)
-- RC-PIPE-09 — Smart Variables: Event & Arm (arm and event smart variables for arm-aware logic)
-- RC-FD-03 — Data Dictionary (bulk editing of branching logic — useful for auditing cross-event references after an event rename)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (introduction to the series; lists cross-event logic as a topic)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (prerequisite — logic syntax fundamentals)
+- [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md) (AND, OR, parentheses for multi-condition logic)
+- [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md) (checkbox and radio field syntax)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (unique event names, arms, and events — prerequisite)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeated setups affect branching logic)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (parallel cross-event syntax for piping)
+- [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) (arm and event smart variables for arm-aware logic)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (bulk editing of branching logic — useful for auditing cross-event references after an event rename)

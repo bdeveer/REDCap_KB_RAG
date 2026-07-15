@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MSG-01 — REDCap Messenger](RC-MSG-01_REDCap-Messenger.md); [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md) |
+| **Synonyms** | how do i send a large file securely in redcap; share a file too big to email; send sensitive files with a password protected link; transfer files to people without a redcap account; secure file sharing tool in redcap; send-it download link expiration; email a secure download link; how to use send-it |
 
 ---
 

@@ -14,7 +14,7 @@ related:
 - id: RC-CC-09
   title: 'Control Center: To-Do List'
 - id: RC-INST-01
-  title: Institution-Specific Settings & Policies
+  title: Institution-Specific Settings & Policies — Production
 - id: RC-FD-02
   title: Online Designer
 - id: RC-FD-03
@@ -25,6 +25,15 @@ related:
   title: Special Functions Reference
 tags:
 - project
+synonyms:
+- how do i move my project to production
+- what are the project statuses
+- difference between development and production mode
+- how to copy or delete a project
+- make design changes after going to production
+- enter draft mode to edit a live project
+- project lifecycle stages explained
+- change project status settings
 ---
 
 # 1. Overview
@@ -202,7 +211,7 @@ Once your project is in Production, all instrument design changes must go throug
 3. Review a detailed summary of all drafted changes by clicking the hyperlink at the top of the page.
 4. Click **"Submit Changes for Review."**
 
-Depending on your institution's configuration, some changes are processed automatically while others require REDCap administrator approval. See RC-INST-01 for your institution's specific policy and expected review times.
+Depending on your institution's configuration, some changes are processed automatically while others require REDCap administrator approval. See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for your institution's specific policy and expected review times.
 
 > **The project does not go offline during review.** All functionality — including survey collection and data entry — continues normally while changes await approval.
 
@@ -264,7 +273,7 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 - Form Display Logic is disabled
 - Draft Preview Mode operates only on data entry pages, the Record Status Dashboard, and the Record Home Page — it does not affect other pages and **does not work on survey pages**
 
-> See also: RC-FD-02 — Online Designer; RC-FD-03 — Data Dictionary; RC-LONG-01 — Longitudinal Project Setup
+> See also: [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)
 
 ---
 
@@ -284,7 +293,7 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 
 **Q: My Draft Mode changes haven't appeared after submission. Are they lost?**
 
-**A:** They are not lost. They are most likely in the administrator review queue. See RC-INST-01 for your institution's expected review time. Contact the support team if the wait seems excessive or if the change is urgent.
+**A:** They are not lost. They are most likely in the administrator review queue. See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for your institution's expected review time. Contact the support team if the wait seems excessive or if the change is urgent.
 
 ---
 
@@ -358,26 +367,26 @@ The safest workflow is: copy the project → erase all data in the copy → expo
 
 # 8. Administrator Configuration
 
-Several aspects of the project lifecycle are controlled by system-wide settings in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**):
+Several aspects of the project lifecycle are controlled by system-wide settings in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**):
 
-**Project creation rights** — Administrators configure whether all authenticated users can create new projects, or whether users must submit a request that goes to the administrator for approval. In restricted environments, users see a "Request New Project" button instead of a "New Project" button, and the resulting request appears in the administrator's To-Do List (see **RC-CC-09**).
+**Project creation rights** — Administrators configure whether all authenticated users can create new projects, or whether users must submit a request that goes to the administrator for approval. In restricted environments, users see a "Request New Project" button instead of a "New Project" button, and the resulting request appears in the administrator's To-Do List (see **[RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)**).
 
 **Moving projects to Production** — Administrators control whether project owners can self-approve production moves, or whether an administrator must approve the transition. In environments that require approval, users see a "Request To Move to Production" button and the request enters the administrator's To-Do List.
 
 **Draft Mode auto-approval** — Administrators configure whether certain categories of Draft Mode changes are automatically approved without requiring manual administrator review. Options range from "never auto-approve" (all changes require admin sign-off) to "auto-approve if no critical issues exist." In most production environments, a conservative threshold is used to protect data integrity. Changes that do require review appear in the To-Do List.
 
-> **See also:** RC-CC-04 — Control Center: User Settings & Defaults; RC-CC-09 — Control Center: To-Do List
+> **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)
 
 ---
 
 # 9. Related Articles
 
-- RC-CC-04 — Control Center: User Settings & Defaults (project creation rights, production approval, draft auto-approval)
-- RC-CC-09 — Control Center: To-Do List (where draft approvals and project requests appear)
-- RC-FD-02 — Online Designer (making design changes in Development and Draft Mode)
-- RC-FD-03 — Data Dictionary (alternative approach to making structural changes)
-- RC-INST-01 — Institution-Specific Settings & Policies (institution-level guidance on production approval timelines)
-- RC-PROJ-02 — Project Setup Checklist (dependency-ordered checklist covering all phases of project configuration from creation through go-live)
-- RC-NAV-UI-01 — Project Navigation UI (how project status is displayed in the interface and what changes at each stage)
-- RC-NAV-UI-02 — Project Menu Reference (the Project Home and Design menu section where status is shown and managed)
-- RC-NAV-UI-04 — My Projects Page (project list, folders, search, and how Completed projects appear)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (project creation rights, production approval, draft auto-approval)
+- [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md) (where draft approvals and project requests appear)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (making design changes in Development and Draft Mode)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (alternative approach to making structural changes)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(institution-level guidance on production approval timelines)
+- [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (dependency-ordered checklist covering all phases of project configuration from creation through go-live)
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (how project status is displayed in the interface and what changes at each stage)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Project Home and Design menu section where status is shown and managed)
+- [RC-NAV-UI-04 — My Projects Page](RC-NAV-UI-04_My-Projects-Page.md) (project list, folders, search, and how Completed projects appear)

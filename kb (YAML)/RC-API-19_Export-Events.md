@@ -1,7 +1,32 @@
 ---
 id: RC-API-19
 title: Export Events API
-domain: ''
+domain: API
+applies_to:
+- Longitudinal REDCap projects only
+prerequisites:
+- RC-API-01 — REDCap API
+version: '1.1'
+last_updated: '2026'
+source: REDCap API v16.1.3 official documentation examples
+related:
+- id: RC-API-01
+  title: REDCap API
+- id: RC-API-20
+  title: Import Events API
+- id: RC-API-21
+  title: Delete Events API
+tags:
+- api
+synonyms:
+- how do i export events via the api
+- export events api call
+- get the list of events in a longitudinal project through the api
+- api method to list timepoints and event names
+- retrieve event structure programmatically
+- pull unique event names with the api
+- api endpoint to export events
+- list events for an arm via the api
 ---
 
 # 1. Overview
@@ -20,7 +45,7 @@ This method is useful for discovering the event structure of a project or valida
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'event'` for this method. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'`. Default is `'xml'`. |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'`. Default is `'xml'`. |
 | `arms` | Optional | An array of arm numbers to filter events. If omitted, returns events for all arms. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to whatever `format` is set to. If neither is provided, defaults to `'xml'`. Not applicable when using background processing. |
 
@@ -108,7 +133,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -156,7 +181,7 @@ Example JSON response:
 
 **Q: What do the offset fields mean?**
 
-**A:** The `day_offset` is the expected number of days after enrollment that the event should occur. The `offset_min` and `offset_max` define the acceptable window (e.g., ±3 days). These are used to track visit windows in longitudinal studies.
+**A:** The `day_offset` is the expected number of days after enrollment that the event should occur. The `offset_min` and `offset_max` define the acceptable window around the target date (e.g., ±3 days). These are used to track visit windows in longitudinal studies. Note that the API returns `offset_min` as a **negative integer** (e.g., `-3` for a 3-day early window), while the CSV events upload format uses a **positive number** for both columns. If you are building an upload CSV from API output, convert `offset_min` to its absolute value.
 
 **Q: Can I use the `day_offset` values to calculate expected visit dates for a participant?**
 
@@ -178,8 +203,8 @@ Example JSON response:
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-20 — Import Events (add or modify events in a project)
-- RC-API-21 — Delete Events (remove events from a project)
-- RC-LONG-01 — Longitudinal Project Setup (how events are configured in a longitudinal project)
-- RC-LONG-02 — Repeated Instruments & Events Setup (how repeating events relate to standard events)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)(add or modify events in a project)
+- [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md)(remove events from a project)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how events are configured in a longitudinal project)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeating events relate to standard events)

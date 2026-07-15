@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
+| **Synonyms** | how do i summarize free text responses in redcap; ai summarize open-ended answers in a report; summarize a notes box variable across records; redcap report ai summary wizard wand icon; bulk summarize multiple variables with ai; find themes in free text data redcap; customize the ai summarization prompt; which field types can be summarized by ai |
 
 ---
 

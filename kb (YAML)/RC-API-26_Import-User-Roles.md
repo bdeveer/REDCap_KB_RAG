@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i import user roles via the api
+- import user roles api call
+- create or update custom roles through the api
+- api method to define role permission templates
+- bulk add user roles with the api
+- configure role labels and permissions programmatically
+- api endpoint to import user roles
+- set up role templates in a project via api
 ---
 
 # 1. Overview
@@ -116,7 +125,6 @@ import requests, json
 record = {
     'unique_role_name'           : 'U-527D39JXAC',
     'role_label'                 : 'Project Manager',
-    'data_access_group'          : 1,
     'data_export_tool'           : 1,
     'mobile_app'                 : 1,
     'mobile_app_download_data'   : 1,
@@ -167,7 +175,6 @@ library(jsonlite)
 record <- c(
 	'unique_role_name'='U-527D39JXAC',
     'role_label'='ProjectManager',
-    'data_access_group'=1,
     'data_export_tool'=1,
     'mobile_app'=1,
     'mobile_app_download_data'=1,
@@ -211,7 +218,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=userRole&format=json&data=[{\"unique_role_name\":\"U-2119C4Y87T\",\"role_label\":\"Project Manager\",\"data_access_group\":\"1\",\"data_export\":\"0\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_records_all_forms\":\"0\",\"lock_records\":\"0\",\"lock_records_customization\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_create\":\"1\",\"file_repository\":\"1\",\"logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"stats_and_charts\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
+DATA="token=$API_TOKEN&content=userRole&format=json&data=[{\"unique_role_name\":\"U-2119C4Y87T\",\"role_label\":\"Project Manager\",\"data_export_tool\":\"0\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_records_all_forms\":\"0\",\"lock_records\":\"0\",\"lock_records_customization\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_create\":\"1\",\"file_repository\":\"1\",\"logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"stats_and_charts\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -229,7 +236,6 @@ include 'config.php';
 $record = array(
     'unique_role_name'           => 'U-527D39JXAC',
     'role_label'                 => 'Project Manager',
-    'data_access_group'          => '1',
     'data_export_tool'           => '1',
     'mobile_app'                 => '1',
     'mobile_app_download_data'   => '1',
@@ -281,7 +287,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -317,7 +323,7 @@ On success, the API returns a count of roles created or modified. For example: `
 
 # 6. Common Mistakes & Gotchas
 
-**Confusing field names between role imports and user imports.** User permission fields sometimes differ from role permission fields. For example, roles use `data_export_tool` while users use `data_export`. Consult RC-USER-03 for the exact field names required for each operation.
+**Confusing field names between role imports and user imports.** User permission fields sometimes differ from role permission fields. For example, roles use `data_export_tool` while users use `data_export`. Consult [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for the exact field names required for each operation.
 
 **Omitting `role_label`.** This field is required when creating a new role. If omitted, the import will fail. Ensure every role object in your data includes a label.
 
@@ -331,10 +337,10 @@ On success, the API returns a count of roles created or modified. For example: `
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (explains role-based access)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for permission field names)
-- RC-API-25 — Export User Roles (retrieve existing role definitions)
-- RC-API-27 — Delete User Roles (remove roles from the project)
-- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)
-- RC-API-23 — Import Users (assign individual users to the project)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (explains role-based access)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for permission field names)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(retrieve existing role definitions)
+- [RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md)(remove roles from the project)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)(see which users are assigned to which roles)
+- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md)(assign individual users to the project)

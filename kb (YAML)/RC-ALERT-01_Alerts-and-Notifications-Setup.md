@@ -26,6 +26,18 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - alerts & notifications
+synonyms:
+- how do I send an automated email in REDCap
+- email reminders
+- automatic notifications when a form is saved
+- send an email when a survey is completed
+- staff notification email
+- confirmation email to participant
+- conditional email alert
+- trigger an email based on logic
+- difference between alerts and ASIs
+- set up alerts and notifications
+- SMS or text message notification
 ---
 
 # 1. Overview
@@ -104,7 +116,7 @@ Then select a form status requirement:
 
 **For combination triggers and logic triggers:**
 
-Enter a logic statement in the logic editor. The editor is the same interface used for branching logic. If you are unfamiliar with logic syntax, see RC-BL-01 — Branching Logic: Overview & Scope.
+Enter a logic statement in the logic editor. The editor is the same interface used for branching logic. If you are unfamiliar with logic syntax, see [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md).
 
 The logic evaluates at the record level. You cannot write logic that counts records across the entire project (e.g., "trigger if 20 survey responses have arrived"). All logic must reference variables within a single record.
 
@@ -236,7 +248,7 @@ There are three ways to specify recipients:
 
 ## 5.4 Subject Line
 
-Type a subject directly, or pipe in variable values. Avoid piping sensitive or identifying information into the subject line — email subjects are visible in many clients before the message is opened and may appear in notification previews. See RC-PIPE-01 for piping syntax.
+Type a subject directly, or pipe in variable values. Avoid piping sensitive or identifying information into the subject line — email subjects are visible in many clients before the message is opened and may appear in notification previews. See [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) for piping syntax.
 
 ## 5.5 Message Body
 
@@ -244,7 +256,7 @@ The message body supports:
 
 - **Plain text and rich text formatting** via the built-in rich text editor (comparable to a basic word processor).
 - **HTML and inline images** for custom layout.
-- **Piped variables** — any project variable can be inserted using standard piping syntax. See RC-PIPE-01 and RC-PIPE-04 for full reference.
+- **Piped variables** — any project variable can be inserted using standard piping syntax. See [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) and [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) for full reference.
 - **Smart variables** — REDCap-specific tokens that resolve to dynamic links and values at send time. Access them via the green **Smart Variables** button below the message body.
 
 > **Important:** If you pipe a field designated as an Identifier in the project, you must **uncheck** the "Prevent piping of data for Identifier fields" checkbox that appears in the alert setup. If this box remains checked, REDCap will send the alert but will strip the identifier value from the message, resulting in blank placeholders.
@@ -261,7 +273,7 @@ Unlike Automated Survey Invitations (which pre-fill the message body with stock 
 | `[survey-queue-url]` | A clickable hyperlink to the survey queue for the record that triggered the alert. No instrument name needed — each record has one queue. |
 | `[form-link:instrument_name]` | A clickable link that opens the named instrument directly in REDCap's data entry interface (not as a survey). Useful for staff notification alerts. |
 
-For a complete smart variable reference, see RC-PIPE-03 — Smart Variables Overview.
+For a complete smart variable reference, see [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md).
 
 ## 5.6 Attachments
 
@@ -287,7 +299,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 **Q: Can I use branching logic syntax in an alert trigger?**
 
-**A:** Yes. The alert logic editor uses the same syntax as branching logic. Any valid branching logic expression is valid as an alert trigger condition. If you are new to logic syntax, review RC-BL-01 — Branching Logic: Overview & Scope and RC-BL-02 — Syntax & Atomic Statements.
+**A:** Yes. The alert logic editor uses the same syntax as branching logic. Any valid branching logic expression is valid as an alert trigger condition. If you are new to logic syntax, review [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) and [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)
 
 **Q: What does the "Ensure logic is still true" checkbox do, and when should I use it?**
 
@@ -343,7 +355,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 # 8. Administrator Configuration
 
-Several Alerts & Notifications behaviors are controlled by system-level settings in the Control Center (see **RC-CC-06** — Control Center: Modules & Services Configuration, Alerts & Notifications Settings section):
+Several Alerts & Notifications behaviors are controlled by system-level settings in the Control Center (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)** — Control Center: Modules & Services Configuration, Alerts & Notifications Settings section):
 
 - **Allow normal users to use project variables for email fields** — Controls whether the To/CC/BCC recipient fields can reference project fields containing email addresses. If this is disabled at the system level, dynamic email routing via project fields is unavailable to project users.
 - **Allow normal users to manually enter freeform email addresses** — Controls whether free-text email entry is permitted in recipient fields. Administrators can further restrict this by domain allowlist.
@@ -353,7 +365,7 @@ Several Alerts & Notifications behaviors are controlled by system-level settings
 
 If you find that certain recipient options are unavailable in your alert configuration (e.g., the "enter email address" option is greyed out), a system-level restriction is likely in place. Contact your REDCap administrator.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
@@ -371,19 +383,19 @@ REDCap allows you to export and import all alert definitions for a project as a 
 
 **Starting a file from scratch:** Always start from an exported file rather than building the column headers by hand — the column order and required JSON fields (`sendgrid-template-data`, `sendgrid-mail-send-configuration`) are easy to get wrong. Export even a single placeholder alert to get the correct structure.
 
-For the full column-by-column reference, accepted values, an annotated example, and common mistakes, see **RC-IMP-05 — Alerts & Notifications CSV**.
+For the full column-by-column reference, accepted values, an annotated example, and common mistakes, see **[RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md) — Alerts & Notifications CSV**.
 
 ---
 
 # 10. Related Articles
 
-- RC-ALERT-02 — Alert Management & Notification Log (managing multiple alerts, using the notification log)
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types (piping syntax used in alert subjects and message bodies)
-- RC-PIPE-03 — Smart Variables Overview (full reference for smart variables usable in alert messages)
-- RC-PIPE-04 — Piping: Emails, Notifications & Logic Features (advanced piping in email contexts)
-- RC-BL-01 — Branching Logic: Overview & Scope (prerequisite for writing logic triggers)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (logic syntax reference)
-- RC-SURV-01 — Surveys – Basics (survey fundamentals; alerts can send survey invitations)
-- RC-SURV-02 — Survey Settings: Basic Options & Design (Survey Notifications feature — simple per-survey email alerts without custom logic)
-- RC-LONG-02 — Repeated Instruments & Events Setup (context for trigger limits in Step 1C)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level recipient field permissions for alerts)
+- [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md) (managing multiple alerts, using the notification log)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (piping syntax used in alert subjects and message bodies)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (full reference for smart variables usable in alert messages)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (advanced piping in email contexts)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (prerequisite for writing logic triggers)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (logic syntax reference)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals; alerts can send survey invitations)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (Survey Notifications feature — simple per-survey email alerts without custom logic)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (context for trigger limits in Step 1C)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level recipient field permissions for alerts)

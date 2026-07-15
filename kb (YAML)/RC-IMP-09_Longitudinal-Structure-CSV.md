@@ -5,19 +5,29 @@ domain: Data Import
 applies_to:
 - Longitudinal REDCap projects
 prerequisites:
-- RC-IMP-03 — CSV Upload Reference
+- 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - RC-LONG-01 — Longitudinal Project Setup
 version: '1.0'
 last_updated: '2026-05-07'
 related:
 - id: RC-IMP-03
-  title: CSV Upload Reference
+  title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
 - id: RC-LONG-01
   title: Longitudinal Project Setup
-- note: RC-API-16 through RC-API-21 — Arms and Events API methods
+- id: RC-API-16
+  title: Export Arms API through RC-API-21 — Delete Events API
 tags:
 - data import
 - data
+synonyms:
+- how do i import arms and events via csv
+- upload instrument-event mappings csv
+- bulk build longitudinal structure from a spreadsheet
+- correct order to upload arms events and mappings
+- copy a longitudinal project's event structure
+- single-arm project skip the arms upload
+- why do my event references fail silently
+- import the schedule of events for a longitudinal project
 ---
 
 # 1. Overview
@@ -28,7 +38,7 @@ Three CSV uploads govern the fundamental structure of a longitudinal REDCap proj
 
 > **Single-arm projects:** Arm 1 is created automatically when longitudinal mode is enabled. Skip the arms upload entirely — start directly with the events upload.
 
-For a general overview of longitudinal project setup in the REDCap UI, see RC-LONG-01 — Longitudinal Project Setup.
+For a general overview of longitudinal project setup in the REDCap UI, see [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md).
 
 ---
 
@@ -158,22 +168,22 @@ All three CSV uploads have corresponding API methods.
 
 | **Feature** | **Export** | **Import** | **Delete** |
 |---|---|---|---|
-| Arms | RC-API-16 | RC-API-17 | RC-API-18 |
-| Events | RC-API-19 | RC-API-20 | RC-API-21 |
-| Instrument–Event Mappings | RC-API-10 | RC-API-11 | — |
+| Arms | [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md) | [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md) | [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md) |
+| Events | [RC-API-19 — Export Events API](RC-API-19_Export-Events.md) | [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) | [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md) |
+| Instrument–Event Mappings | [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md) | [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md) | — |
 
-See RC-API-01 — REDCap API for authentication, token management, and setup.
+See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
 ---
 
 # 7. Related Articles
 
-- RC-IMP-03 — CSV Upload Reference (index of all CSV upload types in REDCap)
-- RC-LONG-01 — Longitudinal Project Setup (full UI walkthrough for longitudinal configuration)
-- RC-LONG-02 — Repeated Instruments and Events Setup (repeating instrument and event configuration)
-- RC-API-10 — Export Instrument-Event Mappings API
-- RC-API-11 — Import Instrument-Event Mappings API
-- RC-API-16 — Export Arms API
-- RC-API-17 — Import Arms API
-- RC-API-19 — Export Events API
-- RC-API-20 — Import Events API
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)(index of all CSV upload types in REDCap)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (full UI walkthrough for longitudinal configuration)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)(repeating instrument and event configuration)
+- [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)
+- [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md)
+- [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)
+- [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)
+- [RC-API-19 — Export Events API](RC-API-19_Export-Events.md)
+- [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)

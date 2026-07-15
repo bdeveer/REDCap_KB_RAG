@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
+| **Synonyms** | how do i import user-dag assignments via the api; import user dag assignments api call; assign users to data access groups through the api; api method to map usernames to dags; bulk assign users to dags with the api; provision user dag membership programmatically; api endpoint to import user dag assignments; remove a user from all dags via api |
 
 ---
 

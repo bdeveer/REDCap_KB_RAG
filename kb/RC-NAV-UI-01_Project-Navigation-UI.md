@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md), [RC-NAV-UI-04 — My Projects Page](RC-NAV-UI-04_My-Projects-Page.md), [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)[RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md), [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)[RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)[RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md)[RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md), [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md) |
+| **Synonyms** | how is the redcap project screen laid out; what is the left-hand menu; why do some menu items not show up for me; how to expand the collapsed hamburger menu; understanding the project layout and workspace; where are project features located on screen; why does the menu change between users; redcap two-panel project interface |
 
 ---
 

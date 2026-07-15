@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
+| **Synonyms** | how do i set up a survey in multiple languages; translate my forms and surveys; add a language selector to a survey; multi-language management mlm setup; does redcap translate content automatically; translate alert messages and field labels; enable a second language for data entry; mlm not appearing in my applications menu |
 
 ---
 

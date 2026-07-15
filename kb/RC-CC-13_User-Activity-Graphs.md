@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
+| **Synonyms** | control center user activity graphs; visual charts of redcap usage over time; usage trend graphs for administrators; chart of logins and activity by date; system usage visualization control center; graph of active users over time; activity trend charts admin dashboard; visualize redcap system usage |
 
 ---
 

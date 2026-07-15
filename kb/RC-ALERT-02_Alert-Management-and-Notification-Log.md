@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) |
+| **Synonyms** | how do i manage multiple alerts in redcap; where is the notification log; cancel a scheduled alert send; copy or deactivate an existing alert; re-evaluate alerts in redcap; view history of sent alerts; edit alerts on the management page; what is a unique alert id |
 
 ---
 

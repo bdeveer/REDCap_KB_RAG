@@ -115,6 +115,7 @@ Produce the article using the 8-section structure below. Use the BL series (RC-B
 | Last Updated | [Year] |
 | Author | REDCap Support |
 | Related Topics | [RC-XX-NN — Title; RC-XX-NN — Title] |
+| Synonyms | [phrase 1; phrase 2; phrase 3; ... — see Synonyms section below] |
 
 #### Section 1: Overview
 One paragraph. Plain-language description of what this article covers. Write as if explaining to someone who has never opened REDCap. No jargon without definition. State what series this article belongs to if applicable.
@@ -136,6 +137,28 @@ At least 3 entries. Each entry covers: what the user does wrong, what happens as
 
 #### Final section: Related Articles
 Bullet list of related KB articles with ID and title. Include prerequisites, natural next articles, and adjacent topics.
+
+---
+
+## Synonyms (search findability for ServiceNow / AI search)
+
+Every article must carry a **Synonyms** row in the metadata table. Synonyms are alternate search phrasings that downstream systems index (they flow through `convert_to_yaml_kb.py` into the `synonyms:` YAML key, then into the ServiceNow `kb_knowledge.meta` field). They never appear in the article body — they exist purely to help a user or AI assistant find the article.
+
+**Format:** semicolon-separated phrases in the metadata table row, e.g.
+`| Synonyms | how do i send an automated email; email reminders; conditional email alert; staff notification email |`
+
+**Generation rules:**
+- Write **6–10** phrases per article.
+- Use the language a real REDCap user would type or ask — question forms ("how do i export records via the api"), informal/alternate names, common abbreviations, and task-oriented phrasings. Not formal headings.
+- Make every phrase **specific to this article's actual content**.
+- **Qualify generic phrases so they don't collide with sibling articles** — this is the most important rule. For near-identical article families:
+  - *API method articles*: qualify with the specific method/object — "export records api call", not "get data from api".
+  - *Smart variable / piping articles*: embed the actual tokens for that article — `[user-name]`, `[event-name]`, `[record-name]`.
+  - *Action tag articles*: include the literal tag names (`@HIDDEN`, `@CALCTEXT`) — single-quote them in YAML since they start with `@`.
+  - *Any numbered series* (CC, DE, EXPRT, SURV, USER…): qualify with the subtopic so each article owns a distinct variant.
+- Do **not** duplicate a tag verbatim. Lowercase is preferred.
+
+**Collision check:** after a batch of new articles, run the ServiceNow ETL (`ServiceNow ETL/kb_to_servicenow.py`) — it prints a synonym collision report flagging any phrase claimed by more than one article. Resolve flagged overlaps by qualifying each to its own variant, assigning a canonical owner, or keeping the overlap if both articles are genuinely relevant.
 
 ---
 
@@ -171,6 +194,7 @@ Before finalizing, verify:
 - [ ] Edge cases and gotchas are explicitly surfaced (not buried)
 - [ ] Cross-references use full ID + title format
 - [ ] Terminology is consistent throughout (no synonym drift)
+- [ ] Synonyms row present with 6–10 collision-safe phrases (see Synonyms section)
 - [ ] No institution-specific content in the core sections (see below)
 
 ---

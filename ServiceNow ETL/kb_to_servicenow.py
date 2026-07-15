@@ -68,6 +68,15 @@ def parse_article(path: Path) -> dict:
     else:
         applies_to = str(applies_to_raw)
 
+    # tags + synonyms → ServiceNow "meta" keyword field (search/index terms)
+    tags_raw = front.get("tags", [])
+    if not isinstance(tags_raw, list):
+        tags_raw = [tags_raw] if tags_raw else []
+    synonyms_raw = front.get("synonyms", [])
+    if not isinstance(synonyms_raw, list):
+        synonyms_raw = [synonyms_raw] if synonyms_raw else []
+    meta = "; ".join(str(x) for x in (list(tags_raw) + list(synonyms_raw)) if str(x).strip())
+
     # --- Prerequisites ---
     prereqs_raw = front.get("prerequisites", [])
     if not isinstance(prereqs_raw, list):
@@ -109,6 +118,7 @@ def parse_article(path: Path) -> dict:
         "short_description":  title,
         "category":           domain,
         "applies_to":         applies_to,
+        "meta":               meta,        # tags + synonyms → kb_knowledge.meta
         "version":            version,
         "last_updated":       last_updated,
         "author":             "",          # not present in YAML frontmatter
@@ -119,6 +129,7 @@ def parse_article(path: Path) -> dict:
         "text":               html_body,
         "_prereq_ids":        prereq_ids,
         "_related_ids":       related_ids,
+        "_synonyms":          [str(s) for s in synonyms_raw if str(s).strip()],
         "_path":              str(path.name),
     }
 
@@ -154,6 +165,7 @@ def build_excel(articles: list[dict]):
         "version",
         "last_updated",
         "applies_to",         # maps to kb_knowledge.meta_description or custom field
+        "meta",               # tags + synonyms → kb_knowledge.meta (search keywords)
         "prerequisite_raw",   # human-readable; for reference
         "related_topics_raw", # human-readable; for reference
         "text",               # HTML body → kb_knowledge.text
@@ -169,7 +181,7 @@ def build_excel(articles: list[dict]):
     # Column widths
     widths = {
         "A": 14, "B": 45, "C": 20, "D": 25, "E": 14,
-        "F": 20, "G": 10, "H": 14, "I": 40, "J": 50, "K": 50, "L": 80
+        "F": 20, "G": 10, "H": 14, "I": 40, "J": 50, "K": 50, "L": 50, "M": 80
     }
     for col, w in widths.items():
         ws1.column_dimensions[col].width = w
@@ -177,7 +189,7 @@ def build_excel(articles: list[dict]):
     # Wrap text and top-align data rows
     for row in ws1.iter_rows(min_row=2):
         for cell in row:
-            cell.alignment = Alignment(vertical="top", wrap_text=(cell.column != 12))
+            cell.alignment = Alignment(vertical="top", wrap_text=(cell.column != 13))
             cell.font = Font(name="Arial", size=10)
         ws1.row_dimensions[cell.row].height = 40
 
@@ -282,6 +294,55 @@ def build_excel(articles: list[dict]):
     return OUT_FILE
 
 
+def _normalize_synonym(s: str) -> str:
+    """Lowercase, collapse whitespace, strip surrounding punctuation for comparison."""
+    s = str(s).lower().strip()
+    s = re.sub(r"\s+", " ", s)
+    s = re.sub(r"^[^a-z0-9]+|[^a-z0-9]+$", "", s)
+    return s
+
+
+def check_synonym_collisions(articles: list[dict]) -> dict:
+    """Build an inverted index of normalized synonym -> [article ids] and report
+    any synonym claimed by more than one article. Returns the collision map."""
+    index: dict[str, list] = {}
+    for a in articles:
+        sid = a["source_id"]
+        seen_here = set()
+        for raw in a.get("_synonyms", []):
+            norm = _normalize_synonym(raw)
+            if not norm or norm in seen_here:
+                continue
+            seen_here.add(norm)
+            index.setdefault(norm, []).append((sid, raw))
+
+    collisions = {k: v for k, v in index.items() if len(v) > 1}
+
+    print("\n" + "=" * 70)
+    print("SYNONYM COLLISION REPORT")
+    print("=" * 70)
+    total_syn = sum(len(a.get("_synonyms", [])) for a in articles)
+    print(f"Articles with synonyms : {sum(1 for a in articles if a.get('_synonyms'))}")
+    print(f"Total synonyms         : {total_syn}")
+    print(f"Unique (normalized)    : {len(index)}")
+    print(f"Colliding phrases      : {len(collisions)}")
+
+    if not collisions:
+        print("\nNo collisions found — every synonym maps to exactly one article.")
+    else:
+        print("\nThe following phrases are claimed by more than one article.")
+        print("Resolve by: (a) qualifying each to its own variant, (b) assigning")
+        print("one canonical owner, or (c) keeping if both are genuinely relevant.\n")
+        for norm in sorted(collisions):
+            owners = collisions[norm]
+            print(f'  "{norm}"')
+            for sid, raw in owners:
+                print(f"      - {sid}: \"{raw}\"")
+            print("")
+    print("=" * 70 + "\n")
+    return collisions
+
+
 if __name__ == "__main__":
     md_files = sorted(KB_DIR.glob("RC-*.md"))
     print(f"Found {len(md_files)} KB articles:")
@@ -293,6 +354,8 @@ if __name__ == "__main__":
     print("\nArticle summary:")
     for a in articles:
         print(f"  {a['source_id']:12s} | {a['category']:20s} | prereqs={a['_prereq_ids']} | related={a['_related_ids']}")
+
+    check_synonym_collisions(articles)
 
     build_excel(articles)
     print("Done.")

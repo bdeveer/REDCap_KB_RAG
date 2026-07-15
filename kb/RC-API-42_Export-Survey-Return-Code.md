@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation (Export a Survey Return Code for a Participant) |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md); [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md)|
+| **Synonyms** | export survey return code api method; how do i get a survey return code via the api; api call to retrieve a save and return later code; get the code to resume an incomplete survey through the api; export survey return code for a participant using the api; api method to fetch a survey resumption code; programmatically get the return code with the api |
 
 ---
 

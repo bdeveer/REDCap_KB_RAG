@@ -1,7 +1,46 @@
 ---
-id: '# 1. Overview'
-title: ''
-domain: ''
+id: RC-LONG-03
+title: Longitudinal Clinical Research Design Patterns
+domain: Longitudinal & Repeated Setup
+applies_to:
+- Longitudinal project types
+- requires Project Design and Setup rights
+prerequisites:
+- RC-LONG-01 — Longitudinal Project Setup
+- RC-LONG-02 — Repeated Instruments & Events Setup
+version: '1.0'
+last_updated: '2026'
+related:
+- id: RC-LONG-01
+  title: Longitudinal Project Setup
+- id: RC-LONG-02
+  title: Repeated Instruments & Events Setup
+- id: RC-BL-05
+  title: Branching Logic in Longitudinal Projects
+- id: RC-CALC-02
+  title: Calculated Fields
+- id: RC-RAND-02
+  title: Randomization Setup
+tags:
+- longitudinal & repeated setup
+- longitudinal
+synonyms:
+- best practices for longitudinal clinical trial design in redcap
+- standard event architecture for a cohort study
+- how should i structure events for a clinical trial
+- design patterns for screening through follow-up
+- reuse the same instrument across multiple events
+- call log and adjudication instrument patterns
+- scoring instrument separate from raw responses
+- gcp source document checklist setup
+---
+
+# 1. Overview
+
+This article documents design patterns observed in complex longitudinal clinical research projects — multi-event studies with validated instruments, medical record abstraction, care coordination tracking, and regulatory data management requirements. The patterns here extend the foundational setup covered in [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) and [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) and focus on recurring architectural decisions that arise when REDCap supports a full research protocol lifecycle.
+
+These patterns are drawn from real projects and reflect tested design choices. Each pattern includes the problem it solves, how it is implemented, and the trade-offs involved.
+
 ---
 
 # 2. Key Concepts & Definitions
@@ -59,7 +98,7 @@ This structure separates workflow phases cleanly. Each event has a defined role 
 
 Events are displayed in the order they appear on the Define My Events page, and this order controls the record status dashboard layout. Define events in chronological order so the dashboard reads left-to-right as a timeline.
 
-The unique event name is generated from the event label and cannot be manually changed through the UI after creation. Choose event labels carefully before adding records — renaming an event label changes its unique event name, which breaks any branching logic or piping that references it. See RC-LONG-01 Section 2 for the naming algorithm.
+The unique event name is generated from the event label and cannot be manually changed through the UI after creation. Choose event labels carefully before adding records — renaming an event label changes its unique event name, which breaks any branching logic or piping that references it. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) Section 2 for the naming algorithm.
 
 ## 3.3 Interview Bookend Instruments
 
@@ -127,7 +166,7 @@ When the same instrument appears at multiple events, calculated fields in later 
 [baseline_arm_1][phq_total] - [6_month_followup_arm_1][phq_total]
 ```
 
-See RC-BL-05 for the full syntax rules for cross-event references, and RC-CALC-02 for calculated field behavior.
+See [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) for the full syntax rules for cross-event references, and [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) for calculated field behavior.
 
 ---
 
@@ -156,7 +195,7 @@ The actual follow-up assessment lives on a separate, non-repeating instrument in
 3. Go to Project Setup → Repeating Instruments and Events → enable the call log instrument as a repeating instrument within that event.
 4. Set a custom form label that pipes the date and outcome so instances are identifiable on the record dashboard (e.g., `[contact_date] — [contact_outcome]`).
 
-See RC-LONG-02 Section 6 for repeating instrument setup details and RC-LONG-02 Section 3 for guidance on using a repeating instrument (rather than a repeating event) when only one instrument within an event needs to repeat.
+See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) Section 6 for repeating instrument setup details and [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) Section 3 for guidance on using a repeating instrument (rather than a repeating event) when only one instrument within an event needs to repeat.
 
 ## 5.4 Why Not a Repeating Event?
 
@@ -331,7 +370,7 @@ Create the proxy version as a **separate instrument** alongside the self-report 
 
 # 11. Multi-Arm Parallel-Group Study Design
 
-## 10.1 The Pattern
+## 11.1 The Pattern
 
 Parallel-group studies (e.g., randomized controlled trials with a control arm and one or more intervention arms) are supported in REDCap by creating multiple arms with **identical event sequences**. Each arm represents one group in the study; each participant is assigned to exactly one arm at enrollment.
 
@@ -348,7 +387,7 @@ A two-arm RCT with arms "Control" and "Intervention" might define the following 
 
 This sequence is created twice — once under Arm 1 (Control) and once under Arm 2 (Intervention). REDCap generates unique event names for each: `screening_arm_1`, `screening_arm_2`, `3_month_arm_1`, `3_month_arm_2`, and so on.
 
-## 10.2 Instrument Assignment
+## 11.2 Instrument Assignment
 
 Assign the same instruments to the corresponding events in both arms. Since REDCap stores data separately per event (including per-arm event), no duplication of instruments is needed:
 
@@ -358,7 +397,7 @@ Assign the same instruments to the corresponding events in both arms. Since REDC
 
 This mirrors the study protocol: both groups complete the same assessments at the same time points.
 
-## 10.3 Branching Logic and Event References
+## 11.3 Branching Logic and Event References
 
 Branching logic that references a specific event must use the arm-qualified event name. If a field on the End of Study instrument should only display for participants in the intervention arm, the logic references the intervention arm's event:
 
@@ -374,11 +413,11 @@ Conversely, logic that applies equally to both arms should use `or`:
 
 In practice, most instruments in a parallel-group study do not require arm-specific branching logic — both groups complete identical assessments. Reserve event-qualified branching for fields that genuinely differ by group.
 
-## 10.4 Arm Assignment
+## 11.4 Arm Assignment
 
-Participants are assigned to an arm at record creation or via a designated arm-assignment field or randomization module. Once a participant has data entered under an arm, changing their arm is possible but requires care — data entered under the old arm remains attached to those events. For randomized studies, use the REDCap Randomization module (see RC-RAND-02) rather than manual arm assignment.
+Participants are assigned to an arm at record creation or via a designated arm-assignment field or randomization module. Once a participant has data entered under an arm, changing their arm is possible but requires care — data entered under the old arm remains attached to those events. For randomized studies, use the REDCap Randomization module (see [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md)) rather than manual arm assignment.
 
-## 10.5 Record Status Dashboard
+## 11.5 Record Status Dashboard
 
 In a two-arm project, the record status dashboard displays all events for both arms. For projects with many events and two arms, this produces a wide grid. Consider using custom event labels and grouping related events to keep the dashboard readable. REDCap shows only the arm the record is enrolled in — rows for other arms are greyed out.
 
@@ -440,7 +479,7 @@ When a coordinator opens the medication list at a follow-up visit, the instrumen
 
 # 13. HTML Summary Panels in Descriptive Fields
 
-## 12.1 The Pattern
+## 13.1 The Pattern
 
 A `descriptive` field type in REDCap renders its `Field Label` content as HTML. This means you can use a descriptive field as a **styled data review panel** — placing a table of key study data pulled from earlier events directly at the top of a late-stage form. Staff see the participant's full history before they start entering data, without navigating away from the form.
 
@@ -451,7 +490,7 @@ A typical summary panel includes:
 - Colour-coded rows for threshold flags or milestones
 - A brief note reminding staff to review before proceeding
 
-## 12.2 HTML in Descriptive Fields
+## 13.2 HTML in Descriptive Fields
 
 REDCap renders HTML markup in the `Field Label` of descriptive field types. The following are supported:
 
@@ -469,7 +508,7 @@ Piping syntax within HTML works normally. `[event_name][field_name:modifier]` re
 
 Test descriptive field HTML in both data entry mode and survey mode. Survey mode may strip certain styling for accessibility reasons.
 
-## 12.3 Arm-Agnostic Piping
+## 13.3 Arm-Agnostic Piping
 
 In a two-arm longitudinal project, a field from the baseline event exists in two namespaces: `[baseline_arm_1][field]` and `[baseline_arm_2][field]`. A given participant has data in exactly one of these — the arm they were enrolled in. The other resolves to blank.
 
@@ -485,7 +524,7 @@ The `:hideunderscore` modifier is essential here. Without it, the blank arm's re
 
 This technique works for any element of the panel that must be arm-agnostic: demographic fields, baseline scores, any event-level variable that exists under both arms.
 
-## 12.4 Cross-Event Score Trajectories
+## 13.4 Cross-Event Score Trajectories
 
 A summary table showing all follow-up events in rows and outcome scores in columns is built by piping each event-specific value into the corresponding table cell:
 
@@ -504,7 +543,7 @@ A summary table showing all follow-up events in rows and outcome scores in colum
 
 If a visit has not yet been completed, the cell displays as empty. This is expected and informative — staff can see at a glance which visits have data.
 
-## 12.5 Practical Considerations
+## 13.5 Practical Considerations
 
 - **Display only** — descriptive fields are never exported. The HTML panel is purely a review aid for data entry staff; it does not appear in data exports or reports.
 - **Data dictionary editing** — a descriptive field with hundreds of characters of HTML makes manual DD editing impractical. Use the Online Designer or a template-based approach when building these fields.
@@ -515,11 +554,11 @@ If a visit has not yet been completed, the cell displays as empty. This is expec
 
 # 14. Quality Control Checklist Instruments
 
-## 13.1 The Pattern
+## 14.1 The Pattern
 
 In coordinated or monitored studies, a dedicated **Quality Control Checklist** instrument — completed by coordinating centre staff for each record at each event — is an effective way to enforce data quality standards systematically rather than relying on ad-hoc review.
 
-## 13.2 Structure: Paired Pass/Fail Fields
+## 14.2 Structure: Paired Pass/Fail Fields
 
 The most useful QC checklist design uses a consistent paired-field pattern throughout:
 
@@ -534,15 +573,15 @@ This pattern can be applied across all QC domains: consent documentation complet
 - Any QC field can be used in a report filter to identify records with open issues
 - The instrument's overall completion status provides a clean monitoring signal on the record status dashboard
 
-## 13.3 Event-Specific Items in a Shared Form
+## 14.3 Event-Specific Items in a Shared Form
 
 A single QC checklist instrument can serve multiple events by using `[event-name]` branching to show or hide items that apply only to specific time points — for example, a baseline consent verification section that appears only at the baseline event, or a final status field that appears only at the last follow-up. This reduces the number of instruments to maintain while keeping each event's checklist focused.
 
-## 13.4 When to Split Into Multiple Instruments
+## 14.4 When to Split Into Multiple Instruments
 
 For large studies a single QC checklist can exceed 100 fields. Consider splitting by domain (e.g., Consent QC, Interview QC, Medical Records QC) as separate instruments all assigned to the same event. This also allows different team members to own and complete their respective sections independently.
 
-## 13.5 Design Timing
+## 14.5 Design Timing
 
 Design the QC checklist before data collection begins. The instrument effectively codifies the study operations manual in REDCap. Retrofitting QC structure onto an ongoing project is considerably harder and leaves early records without systematic checks.
 
@@ -568,7 +607,7 @@ Design the QC checklist before data collection begins. The instrument effectivel
 
 **Q: Can calculated fields in a scoring instrument reference items from another event?**
 
-**A:** Yes, using the `[event_name][field_name]` syntax. This is useful for change-score calculations. See RC-BL-05 for cross-event reference syntax.
+**A:** Yes, using the `[event_name][field_name]` syntax. This is useful for change-score calculations. See [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) for cross-event reference syntax.
 
 **Q: What is the best way to restrict who can see the adjudication or source document checklist instruments?**
 
@@ -628,7 +667,7 @@ When using arms this way, ensure the repeating instrument configuration is ident
 
 **Using surveys for internal adjudication or source doc checklists.** These instruments are staff-only workflows. Enabling survey mode on them exposes them to public URLs and removes the normal user rights protections. Keep internal operational instruments as standard data entry forms.
 
-**Forgetting to set a custom form label on the call log.** Without a custom form label, all call log instances show as "Instance 1," "Instance 2," etc. with no indication of content. A label that pipes in the date and outcome (e.g., `[contact_date] — [contact_outcome]`) makes the record status dashboard immediately scannable. See RC-LONG-02 Section 6 for setup details.
+**Forgetting to set a custom form label on the call log.** Without a custom form label, all call log instances show as "Instance 1," "Instance 2," etc. with no indication of content. A label that pipes in the date and outcome (e.g., `[contact_date] — [contact_outcome]`) makes the record status dashboard immediately scannable. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) Section 6 for setup details.
 
 **Omitting custom form labels from safety or adverse event reporting instruments.** The same principle applies to any repeating instrument with regulatory significance. Safety report instances labelled only "Instance 1", "Instance 2" force monitors to open each one individually to identify its content. Set a label that surfaces the report status and date at minimum (e.g., `[ae_status], [ae_date]`) so instances are distinguishable on the record status dashboard without opening them.
 
@@ -640,15 +679,15 @@ When using arms this way, ensure the repeating instrument configuration is ident
 
 # 17. Related Articles
 
-- RC-LONG-01 — Longitudinal Project Setup (arms, events, and instrument designation — foundational prerequisite)
-- RC-LONG-02 — Repeated Instruments & Events Setup (configuring repeating instruments; custom form labels)
-- RC-BL-05 — Branching Logic in Longitudinal Projects (cross-event and arm-qualified references in branching logic)
-- RC-CALC-02 — Calculated Fields (building scoring instruments and change-score formulas)
-- RC-AT-06 — Autofill Action Tags (@DEFAULT and [previous-event-name] — foundational building blocks for carry-forward)
-- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE (implementing score-based category labels and clinical flags)
-- RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers (`:hideunderscore` modifier and event-qualified references)
-- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events ([current-instance] and instance qualifier syntax)
-- RC-RAND-02 — Randomization Setup Guide (using the Randomization module for arm assignment in RCTs)
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (HTML in field labels)
-- RC-PROJ-04 — Project Setup: Additional Customizations (custom record label using piped patient identifiers)
-- RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing (adjudication and multi-stage review patterns)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and instrument designation — foundational prerequisite)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments; custom form labels)
+- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)(cross-event and arm-qualified references in branching logic)
+- [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (building scoring instruments and change-score formulas)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) (@DEFAULT and [previous-event-name] — foundational building blocks for carry-forward)
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(implementing score-based category labels and clinical flags)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (`:hideunderscore` modifier and event-qualified references)
+- [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) ([current-instance] and instance qualifier syntax)
+- [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) (using the Randomization module for arm assignment in RCTs)
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (HTML in field labels)
+- [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (custom record label using piped patient identifiers)
+- [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md) (adjudication and multi-stage review patterns)

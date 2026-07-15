@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) |
+| **Synonyms** | aggregate smart variables like [aggregate-sum] and [aggregate-mean]; how to calculate an average across records with [aggregate-mean]; [aggregate-count] [aggregate-min] and [aggregate-max] smart variables; how to make a bar chart with [bar-chart:field]; [pie-chart] [donut-chart] and [stats-table] smart variables; show summary statistics across all records on a dashboard; [aggregate-median] and [aggregate-stdev] aggregate functions; display charts and tables with smart variables |
 
 ---
 

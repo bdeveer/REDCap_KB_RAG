@@ -1,7 +1,37 @@
 ---
 id: RC-DQ-01
 title: Data Quality Module
-domain: ''
+domain: Data Quality
+applies_to:
+- All REDCap projects
+prerequisites:
+- RC-DE-02 — Basic Data Entry
+version: '1.2'
+last_updated: '2026'
+related:
+- id: RC-BL-01
+  title: 'Branching Logic: Overview & Scope'
+- id: RC-BL-02
+  title: 'Branching Logic: Syntax & Atomic Statements'
+- id: RC-CALC-01
+  title: Special Functions Reference
+- id: RC-CALC-02
+  title: Calculated Fields
+- id: RC-NAV-UI-02
+  title: Project Menu Reference
+- id: RC-NAV-REC-04
+  title: Record Status Dashboard & Other Record Links
+tags:
+- data quality
+synonyms:
+- how do i check my data for errors
+- find blank required fields and out of range values
+- run data quality rules across all records
+- write a custom data quality rule
+- automatically flag discrepancies when a form is saved
+- import and export data quality rules
+- data quality module how to use
+- detect calculated field mismatches and hidden field data
 ---
 
 # 1. Overview
@@ -106,7 +136,7 @@ Custom rule logic uses the same variable reference and operator conventions as b
 - For longitudinal projects, prepend the event name to target a specific event: `[event_name][field_name]`
 - Standard comparison operators apply: `=`, `<>`, `<`, `>`, `<=`, `>=`
 - Logical operators: `and`, `or`, `not`
-- Special functions from RC-CALC-01 — Special Functions Reference may be used (e.g., `datediff`, `if`, `round`)
+- Special functions from [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) may be used (e.g., `datediff`, `if`, `round`)
 
 **Example:** Flag records where a participant is over 65 but the geriatric assessment instrument is blank:
 
@@ -236,7 +266,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 **A:** Yes. A user must have the Data Quality user right assigned in their project role. Users without this right will not see the module in the Applications menu.
 
 **Q: Can I use special functions like `datediff()` in a custom rule?**
-**A:** Yes. All special functions listed in RC-CALC-01 — Special Functions Reference are available in custom rule logic, just as they are in calculated fields.
+**A:** Yes. All special functions listed in [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) are available in custom rule logic, just as they are in calculated fields.
 
 **Q: Why does a real-time execution pop-up appear even after I've excluded the result?**
 **A:** Real-time exclusions are per-record and per-rule. If the exclusion was applied to one record, it will not suppress the same violation on a different record. Verify that the exclusion was applied to the correct record.
@@ -290,13 +320,13 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 # 12. Related Articles
 
-- RC-BL-01 — Branching Logic: Overview & Scope (custom rules use identical syntax)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (syntax reference for writing rules)
-- RC-CALC-01 — Special Functions Reference (special functions available in custom rule logic)
-- RC-CALC-02 — Calculated Fields (context for Rule H and calculated field behavior)
-- RC-DE-02 — Basic Data Entry (context for real-time execution during form saves)
-- RC-DE-04 — Editing Data & Audit Trail (audit trail behavior after Auto-correct)
-- RC-DAG-01 — Data Access Groups (DAG filtering of discrepancy results)
-- RC-USER-01 — User Rights: Overview (Data Quality user right)
-- RC-NAV-UI-02 — Project Menu Reference (the Data Quality module appears in the Applications section of the left menu)
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (Data Quality results include variable-level links that navigate directly to a specific field within a record)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (custom rules use identical syntax)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (syntax reference for writing rules)
+- [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (special functions available in custom rule logic)
+- [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (context for Rule H and calculated field behavior)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (context for real-time execution during form saves)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (audit trail behavior after Auto-correct)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG filtering of discrepancy results)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)(Data Quality user right)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Data Quality module appears in the Applications section of the left menu)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (Data Quality results include variable-level links that navigate directly to a specific field within a record)

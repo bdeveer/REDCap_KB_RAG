@@ -14,9 +14,18 @@ related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview
 - id: RC-NAV-REC-04
-  title: Record Status Dashboard
+  title: Record Status Dashboard & Other Record Links
 tags:
 - data entry
+synonyms:
+- how do i create a new record in redcap
+- add a new participant or record
+- use the add edit records page
+- what is the record home page
+- how does redcap assign a record id
+- navigate to an existing record
+- create record data entry
+- find a record by its id
 ---
 
 # 1. Overview
@@ -88,9 +97,9 @@ single variable for speed in large projects.
 - If the project contains multiple instruments or events, REDCap opens
     the Record Home Page first.
 
-  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** The Record ID is permanent once assigned. It cannot be changed through normal data entry. Treat it as an opaque system identifier — avoid using it as a meaningful clinical or participant identifier.
-  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Important:** The Record ID is permanent once assigned. It cannot be changed through normal data entry. Treat it as an opaque system identifier — avoid using it as a meaningful clinical or participant identifier.
+
 
 ## 3.3 Finding an Existing Record by ID
 
@@ -141,9 +150,9 @@ single variable for speed in large projects.
 - Once inside an instrument, the left-hand menu shows a list of all
     instruments in the project for quick switching.
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Note:** The \'Choose action for record\' button on the Record Home Page provides advanced administrative functions (moving records, deleting records, etc.). These are covered in RC-DE-13 — Record Administration: Choose Action for Record.
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Note:** The 'Choose action for record' button on the Record Home Page provides advanced administrative functions (moving records, deleting records, etc.). These are covered in [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md).
+
 
 ---
 
@@ -165,10 +174,10 @@ saved for the first time. However, once a record ID is assigned and data
 has been entered, changing it requires administrative intervention. For
 most projects, the auto-assigned ID is the recommended approach.
 
-**Q: What happens if I click \'Add new record\' by accident?**
+**Q: What happens if I click 'Add new record' by accident?**
 
 **A:** REDCap creates a record and assigns it a Record ID as soon as you
-save any data. If you clicked \'Add new record\' but have not saved
+save any data. If you clicked 'Add new record' but have not saved
 anything yet, you can navigate away without creating a record. If data
 was already saved, contact your project administrator to delete the test
 record.
@@ -197,7 +206,7 @@ Page entirely.
 
 **Q: How can I bulk create multiple records at once instead of adding them one by one?**
 
-**A:** You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the RC-API-03 — Import Records API to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
+**A:** You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
 
 ---
 
@@ -213,7 +222,7 @@ Page entirely.
     field value. Use Data Search when you know a value but not the
     Record ID.
 
-- Creating duplicate records by accident: if \'Add new record\' is
+- Creating duplicate records by accident: if 'Add new record' is
     clicked more than once, multiple records are created. Check whether
     a record already exists via Data Search before creating a new one.
 
@@ -223,22 +232,22 @@ Page entirely.
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-03 — Import Records API** — create new records programmatically by importing data; a new record is created if the record ID does not exist
-- **RC-API-05 — Rename Record API** — rename an existing record ID to a new value programmatically
+- **[RC-API-03 — Import Records API](RC-API-03_Import-Records.md)** — create new records programmatically by importing data; a new record is created if the record ID does not exist
+- **[RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md)** — rename an existing record ID to a new value programmatically
 
 ---
 
 
 # 6. Related Articles
 
-- RC-DE-02 — Basic Data Entry (field types, saving, form status)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (field types, saving, form status)
 
-- RC-DE-03 — Longitudinal Projects & Data Access Groups (how project
+- [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md)(how project
     structure affects the Record Home Page)
 
-- RC-NAV-REC-01 — Record Navigation Overview (dot colors, navigation
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) (dot colors, navigation
     paths)
 
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)

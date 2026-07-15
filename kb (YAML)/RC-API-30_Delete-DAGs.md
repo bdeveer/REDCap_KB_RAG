@@ -18,6 +18,15 @@ related:
   title: Data Entry with Data Access Groups
 tags:
 - api
+synonyms:
+- how do i delete dags via the api
+- delete data access groups api call
+- remove dags from a project through the api
+- api method to delete data access groups by unique group name
+- bulk delete dags with the api
+- clean up unused data access groups programmatically
+- api endpoint to delete data access groups
+- remove data access groups via api
 ---
 
 # 1. Overview
@@ -142,7 +151,7 @@ Example response: `1`
 
 **Q: What is the `unique_group_name`?**
 
-**A:** It's the system-generated identifier assigned to the DAG (e.g., `'group_1'`, `'boston_site'`). To find this ID, export existing DAGs using the Export DAGs method (RC-API-28).
+**A:** It's the system-generated identifier assigned to the DAG (e.g., `'group_1'`, `'boston_site'`). To find this ID, export existing DAGs using the Export DAGs method ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)).
 
 **Q: What if I try to delete a DAG that doesn't exist?**
 
@@ -154,7 +163,7 @@ Example response: `1`
 
 **Q: Can I undo a DAG deletion?**
 
-**A:** No. DAG deletion is permanent. To restore a DAG, you must import it again using the Import DAGs method (RC-API-29) with the same or similar definition. Records that lost their DAG assignment cannot automatically regain it.
+**A:** No. DAG deletion is permanent. To restore a DAG, you must import it again using the Import DAGs method ([RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)) with the same or similar definition. Records that lost their DAG assignment cannot automatically regain it.
 
 **Q: What permissions do I need?**
 
@@ -180,11 +189,11 @@ Example response: `1`
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-API-28 — Export DAGs (retrieve existing DAG definitions and their unique names)
-- RC-API-29 — Import DAGs (create or update DAG definitions)
-- RC-API-31 — Export User-DAG Assignments (identify which users are assigned to DAGs)
-- RC-API-32 — Import User-DAG Assignments (assign users to DAGs)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for permission types)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)(retrieve existing DAG definitions and their unique names)
+- [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)(create or update DAG definitions)
+- [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)(identify which users are assigned to DAGs)
+- [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)(assign users to DAGs)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for permission types)

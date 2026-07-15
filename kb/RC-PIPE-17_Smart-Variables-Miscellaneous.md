@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
+| **Synonyms** | [project-id] smart variable; how to pipe the project title with [project-title]; project-level smart variables like [project-status] and [project-purpose]; [redcap-version] and [redcap-base-url] smart variables; pipe the project irb number with [project-irb-number]; show the base survey url with [survey-base-url]; miscellaneous project and system smart variables; reference project id title or status in a field or email |
 
 ---
 

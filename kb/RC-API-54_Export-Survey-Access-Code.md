@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md); [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md); [RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)|
+| **Synonyms** | export survey access code api method; how do i get a survey access code via the api; api call to retrieve the short survey access code; get the survey login code for a record through the api; export survey access code for a participant using the api; api method to fetch a short alphanumeric survey code; programmatically get the survey access code with the api |
 
 ---
 

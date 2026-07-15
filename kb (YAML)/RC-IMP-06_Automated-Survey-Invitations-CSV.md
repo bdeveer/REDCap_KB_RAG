@@ -5,20 +5,29 @@ domain: Data Import
 applies_to:
 - All REDCap project types with surveys enabled
 prerequisites:
-- RC-IMP-03 — CSV Upload Reference
-- RC-SURV-06 — Automated Survey Invitations
+- 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
+- RC-SURV-06 — Automated Survey Invitations (ASI)
 version: '1.0'
 last_updated: '2026-05-07'
 related:
 - id: RC-IMP-03
-  title: CSV Upload Reference
+  title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
 - id: RC-SURV-06
-  title: Automated Survey Invitations
+  title: Automated Survey Invitations (ASI)
 - id: RC-SURV-07
   title: Survey Queue
 tags:
 - data import
 - data
+synonyms:
+- how do i import automated survey invitations via csv
+- bulk edit asi schedules in a spreadsheet
+- copy automated survey invitation setup to another project
+- asi csv column reference and format
+- upload survey invitation configurations csv
+- form_name and event_name key for asi import
+- duplicate complex invitation schedules across projects
+- 32-column asi import file structure
 ---
 
 # 1. Overview
@@ -33,7 +42,7 @@ The Automated Survey Invitations (ASI) module supports CSV export and import of 
 
 **Always download first.** Start from an exported file rather than building from scratch, both to get the correct 32-column structure and to have a recovery snapshot.
 
-For full coverage of configuring ASIs through the REDCap UI, see RC-SURV-06 — Automated Survey Invitations.
+For full coverage of configuring ASIs through the REDCap UI, see [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) — Automated Survey Invitations.
 
 ---
 
@@ -103,7 +112,7 @@ For full coverage of configuring ASIs through the REDCap UI, see RC-SURV-06 — 
 
 # 5. Related Articles
 
-- RC-IMP-03 — CSV Upload Reference (index of all CSV upload types in REDCap)
-- RC-SURV-06 — Automated Survey Invitations (full module reference)
-- RC-SURV-07 — Survey Queue (survey queue CSV format — RC-IMP-07)
-- RC-PIPE-01 — Piping Basics (piping syntax used in email content)
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)(index of all CSV upload types in REDCap)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(full module reference)
+- [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) (survey queue CSV format — [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md))
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(piping syntax used in email content)

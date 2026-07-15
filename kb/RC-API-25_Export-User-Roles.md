@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
+| **Synonyms** | how do i export user roles via the api; export user roles api call; get the list of custom roles and permissions through the api; api method to retrieve role definitions; pull role labels and permission flags with the api; audit user roles programmatically; api endpoint to export user roles; list role templates in a project via api |
 
 ---
 

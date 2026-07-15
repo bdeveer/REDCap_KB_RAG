@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)|
+| **Synonyms** | how do i delete events via the api; delete events api call; remove events from a longitudinal project through the api; api method to delete unique event names; remove events and their data via api; bulk delete events with the api; api endpoint to delete events; delete timepoints from an arm programmatically |
 
 ---
 

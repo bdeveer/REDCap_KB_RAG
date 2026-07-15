@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Related Topics | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
+| Synonyms | how do i check my data for errors; find blank required fields and out of range values; run data quality rules across all records; write a custom data quality rule; automatically flag discrepancies when a form is saved; import and export data quality rules; data quality module how to use; detect calculated field mismatches and hidden field data |
 
 ---
 

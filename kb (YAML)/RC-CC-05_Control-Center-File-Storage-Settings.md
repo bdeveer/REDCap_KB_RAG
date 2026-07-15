@@ -10,15 +10,24 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 - id: RC-CC-06
-  title: Modules & Services Configuration
+  title: 'Control Center: Modules & Services Configuration'
 - id: RC-DE-12
   title: Data Resolution Workflow
 - id: RC-INST-01
-  title: Institution-Specific Settings & Policies
+  title: Institution-Specific Settings & Policies — Production
 tags:
 - control center (admin)
+synonyms:
+- control center file storage settings
+- configure where redcap stores uploaded files
+- set up s3 or azure file storage backend
+- file upload size limits in redcap
+- block certain file types from upload
+- file repository and send-it upload limits
+- change the file storage location for the instance
+- file upload blocklist security settings
 ---
 
 # 1. Overview
@@ -104,7 +113,7 @@ This list covers executables, scripts, system files, and installer formats that 
 
 Upload limits and enable/disable controls are set independently for each file upload context in REDCap.
 
-> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The server default is typically 1024 MB unless changed. Per-context limits in REDCap can only be set *lower* than the server default.
+> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The server default is typically 1024 MB unless changed — this is the PHP-level ceiling. REDCap's own application-level upload limits (configured in project settings) default to 128 MB and can be raised up to but not exceeding this ceiling. Per-context limits in REDCap can only be set *lower* than the server default.
 
 ## File Repository
 
@@ -162,7 +171,7 @@ When enabled, users can attach files to open data queries in the Data Resolution
 
 Options: *Disabled* / *Enabled*
 
-> See RC-DE-12 for more on the Data Resolution Workflow.
+> See [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) for more on the Data Resolution Workflow.
 
 ---
 
@@ -197,8 +206,8 @@ Vary them based on context. The File Repository typically allows larger files (e
 
 # 4. Related Articles
 
-- RC-CC-02 — Control Center: General Configuration (system configuration and performance settings)
-- RC-CC-06 — Control Center: Modules & Services (Send-It and other file-related module configuration)
-- RC-FILE-01 — File Repository (file storage user guide and workflows)
+- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)(system configuration and performance settings)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)(Send-It and other file-related module configuration)
+- [RC-FILE-01 — File Repository](RC-FILE-01_File-Repository.md) (file storage user guide and workflows)
 - RC-FILE-02 — File Upload Fields (file upload field configuration and constraints)
-- RC-INST-01 — Institution-Specific Settings & Policies (file storage policy considerations)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(file storage policy considerations)

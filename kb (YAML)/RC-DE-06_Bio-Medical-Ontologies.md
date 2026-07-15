@@ -18,6 +18,15 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - data entry
+synonyms:
+- how do i search a medical terminology field
+- use icd-10 rxnorm or loinc lookup in redcap
+- bioportal ontology field data entry
+- enter a diagnosis or medication using a controlled vocabulary
+- search standardized clinical codes during data entry
+- ontology field type how to use
+- pick a coded term from a lookup table
+- bio-medical ontology autocomplete field
 ---
 
 # 1. Overview
@@ -112,7 +121,7 @@ LOINC is the standard vocabulary for laboratory tests, clinical observations, an
 
 **Q: The ontology lookup shows multiple very similar terms. How do I choose the right one?**
 
-**A:** Select the term that most precisely matches the concept you are recording. For clinical data, prefer the most specific term that is supported by the source documentation. When in doubt, consult the protocol or a clinical team member — and use the field comment log (RC-DE-08) to document your reasoning.
+**A:** Select the term that most precisely matches the concept you are recording. For clinical data, prefer the most specific term that is supported by the source documentation. When in doubt, consult the protocol or a clinical team member — and use the field comment log ([RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)) to document your reasoning.
 
 ---
 
@@ -132,19 +141,19 @@ LOINC is the standard vocabulary for laboratory tests, clinical observations, an
 
 Bio-medical ontology field lookup depends on two system-level requirements that must be configured by a REDCap administrator:
 
-1. **Auto-Suggest for Biomedical Ontologies must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). When disabled, no ontology lookup is available in any project.
+1. **Auto-Suggest for Biomedical Ontologies must be enabled** — This feature toggle is in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). When disabled, no ontology lookup is available in any project.
 2. **A valid BioPortal API key must be entered** — The BioPortal integration requires an API key from [BioPortal](https://bioportal.bioontology.org/). This key is entered in the same Modules/Services Configuration page. Without a valid key, ontology lookups will fail even if the feature is enabled.
 3. **Outbound network access to BioPortal** — The REDCap server must be able to make HTTP requests to `https://data.bioontology.org/`. Servers in restricted-network environments may need a firewall rule added.
 
 If ontology fields are not appearing in your instruments or the lookup returns no results, contact your REDCap administrator to verify all three requirements.
 
-> **See also:** RC-CC-06 — Control Center: Modules & Services Configuration
+> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
 ---
 
 # 8. Related Articles
 
-- RC-DE-05 — Field Validations (standard format-checking validations that accompany or complement ontology fields)
-- RC-DE-02 — Basic Data Entry (foundational data entry skills)
-- RC-DE-08 — Field Comment Log (how to document uncertainty when selecting an ontology term)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level ontology enablement and BioPortal API key)
+- [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) (standard format-checking validations that accompany or complement ontology fields)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (how to document uncertainty when selecting an ontology term)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level ontology enablement and BioPortal API key)

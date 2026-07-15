@@ -12,7 +12,7 @@ related:
 - id: RC-DE-02
   title: Basic Data Entry
 - id: RC-SURV-01
-  title: 'Surveys: Basics'
+  title: Surveys – Basics
 - id: RC-LONG-02
   title: Repeated Instruments & Events Setup
 - id: RC-DAG-01
@@ -21,6 +21,15 @@ related:
   title: 'Control Center: Modules & Services Configuration'
 tags:
 - integration
+synonyms:
+- how do i set up a data entry trigger
+- send an http post when a record is saved
+- notify an external system when data changes in redcap
+- det fires on data entry but not on imports
+- real-time webhook for redcap form submissions
+- trigger an api call when a survey is submitted
+- where do i enter the data entry trigger url
+- redcap det configuration and behavior
 ---
 
 # 1. Overview
@@ -63,7 +72,7 @@ When the DET is triggered by a survey submission (rather than by a staff user en
 
 ## 3.0 System-Level Requirement
 
-The Data Entry Trigger feature must be enabled at the system level by a REDCap administrator before any project can configure it. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **RC-CC-06**). If the Data Entry Trigger field is not visible in Project Setup → Additional Customizations, the feature may be disabled for your installation.
+The Data Entry Trigger feature must be enabled at the system level by a REDCap administrator before any project can configure it. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). If the Data Entry Trigger field is not visible in Project Setup → Additional Customizations, the feature may be disabled for your installation.
 
 ## 3.1 Project-Level Setup
 
@@ -154,8 +163,8 @@ REDCap sends the following parameters in each HTTP POST request. Parameters mark
 
 # 8. Related Articles
 
-- RC-DE-02 — Basic Data Entry (foundational — covers the data entry workflow that triggers the DET)
-- RC-SURV-01 — Surveys: Basics (surveys are a common DET trigger source; explains survey completion status)
-- RC-LONG-02 — Repeated Instruments & Events Setup (required reading if your project uses repeating elements; explains `redcap_repeat_instance` and `redcap_repeat_instrument` context)
-- RC-DAG-01 — Data Access Groups (explains `redcap_data_access_group` and how DAGs are assigned to records)
-- RC-CC-06 — Control Center: Modules & Services Configuration (system-level Data Entry Trigger enable/disable)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational — covers the data entry workflow that triggers the DET)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)(surveys are a common DET trigger source; explains survey completion status)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (required reading if your project uses repeating elements; explains `redcap_repeat_instance` and `redcap_repeat_instrument` context)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains `redcap_data_access_group` and how DAGs are assigned to records)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level Data Entry Trigger enable/disable)

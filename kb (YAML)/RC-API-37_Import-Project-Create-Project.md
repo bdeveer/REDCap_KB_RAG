@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-34
-  title: Export Project Info
+  title: Export Project Info API
 - id: RC-API-36
-  title: Export Project XML
+  title: Export Project XML API
 tags:
 - api
+synonyms:
+- create project api method
+- how do i create a new project via the api
+- import project api with super token
+- api call to provision a new redcap project from xml
+- programmatically create project using super api token
+- bulk create projects through the create project api
+- import project design to make a new project via api
+- api method to clone a project across instances
 ---
 
 # 1. Overview
@@ -58,7 +67,7 @@ A project structure supporting multiple time points (events) and study arms. Req
 | `format` | Optional | Data format: `'json'` (default), `'xml'`, or `'csv'` |
 | `data` | Required | Project definition: JSON object or XML with project settings and structure |
 | `returnFormat` | Optional | Format for error messages: `csv`, `json`, or `xml`. Defaults to the value of `format` if not specified. Not used when `backgroundProcess=true`. |
-| `odm` | Optional | An XML string in CDISC ODM format containing project metadata (fields, forms, events, arms) and optionally record data. When provided, REDCap imports the XML contents into the newly created project — allowing fields, forms, project attributes, events, arms, and records to all be imported in a single API call. The XML can come from a REDCap Project XML export (RC-API-36) or any system that exports in CDISC ODM format. |
+| `odm` | Optional | An XML string in CDISC ODM format containing project metadata (fields, forms, events, arms) and optionally record data. When provided, REDCap imports the XML contents into the newly created project — allowing fields, forms, project attributes, events, arms, and records to all be imported in a single API call. The XML can come from a REDCap Project XML export ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) or any system that exports in CDISC ODM format. |
 
 **Data Field Options (for new project creation):**
 
@@ -209,7 +218,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -242,13 +251,13 @@ On error, you receive an error message:
 **A:** No. Regular project tokens are project-specific and have limited scope. Import Project requires a Super API Token with admin-level privileges.
 
 **Q: How do I clone an entire project with all its instruments?**
-**A:** (1) Export the source project using RC-API-36 (Export Project XML), (2) Use this API (RC-API-37) to create a new project with the exported XML data.
+**A:** (1) Export the source project using [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md) (Export Project XML), (2) Use this API ([RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)) to create a new project with the exported XML data.
 
 **Q: What purpose code should I use for my research study?**
 **A:** Use `2` for Research. Full mapping: `0` = Practice/just for fun, `1` = Other (requires `purpose_other` text), `2` = Research, `3` = Quality Improvement, `4` = Operational Support.
 
 **Q: Can I create a longitudinal project with arms and events via API?**
-**A:** Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from RC-API-36.
+**A:** Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md).
 
 ---
 
@@ -260,7 +269,7 @@ On error, you receive an error message:
 
 **Project title length limits:** Project titles cannot exceed 255 characters. Validation will fail silently if you exceed this length.
 
-**Importing complete XML vs. minimal fields:** To clone a project, provide complete XML from Export Project XML (RC-API-36). To create a simple project quickly, provide only basic fields like `project_title` and `purpose`.
+**Importing complete XML vs. minimal fields:** To clone a project, provide complete XML from Export Project XML ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)). To create a simple project quickly, provide only basic fields like `project_title` and `purpose`.
 
 **Default arm/event not removed when you add your own:** When you create a longitudinal project and then immediately call Import Arms or Import Events, the default arm/event created at project creation is still there. Use `override=1` in the Import Arms or Import Events call to replace the defaults entirely rather than appending to them. Failing to do this results in a stale default arm or event alongside your intended structure.
 
@@ -268,6 +277,6 @@ On error, you receive an error message:
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-34 — Export Project Info
-- RC-API-36 — Export Project XML
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
+- [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)

@@ -18,9 +18,9 @@ related:
 - id: RC-AT-06
   title: Autofill Action Tags
 - id: RC-AT-09
-  title: 'Action Tags: @CALCTEXT & @CALCDATE'
+  title: 'Action Tags: @CALCTEXT & @CALCDATE — Calculations'
 - id: RC-PIPE-04
-  title: Piping in Emails and Notifications
+  title: 'Piping: Emails, Notifications & Logic Features'
 - id: RC-PIPE-08
   title: 'Smart Variables: Survey'
 - id: RC-ALERT-01
@@ -28,11 +28,20 @@ related:
 tags:
 - form design
 - instruments
+synonyms:
+- build a multi stage review workflow
+- design a grant approval or equipment request system
+- support ticketing project pattern in redcap
+- carry forward data between instruments
+- dropdown auto-population of related fields
+- multi reviewer parallel approval design
+- assign tickets with username defaulting
+- operational processing workflow patterns
 ---
 
 # 1. Overview
 
-This article documents design patterns from three operational project archetypes — a **Grant Approval** system, an **Equipment Request** system, and a **Support Ticketing** system — that extend the patterns introduced in RC-FD-09. All three projects build on field embedding and piping but add new mechanisms: editable carry-forward of data between instruments, dropdown-driven auto-population of related fields, inline display of uploaded documents, multi-reviewer parallel workflows, a checkbox-gated email preview selector, staff-facing operational instruments, checkbox-triggered Alerts with self-documenting labels, `@USERNAME`-driven assignee defaulting, hidden anchor fields for reliable timestamp calculations, and status-gated close field patterns.
+This article documents design patterns from three operational project archetypes — a **Grant Approval** system, an **Equipment Request** system, and a **Support Ticketing** system — that extend the patterns introduced in [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md). All three projects build on field embedding and piping but add new mechanisms: editable carry-forward of data between instruments, dropdown-driven auto-population of related fields, inline display of uploaded documents, multi-reviewer parallel workflows, a checkbox-gated email preview selector, staff-facing operational instruments, checkbox-triggered Alerts with self-documenting labels, `@USERNAME`-driven assignee defaulting, hidden anchor fields for reliable timestamp calculations, and status-gated close field patterns.
 
 Each pattern is documented with the design goal, how it works, and the specific syntax involved.
 
@@ -515,7 +524,7 @@ A recurring challenge with `@TODAY` and `@NOW` fields is that the visible field 
 
 The visible `date_display` field gives staff a readable timestamp at the top of the form. The hidden `date_anchor` field, with its `date_mdy` validation, provides a clean date-only value that calculated fields and `datediff()` expressions can reference without worrying about format inconsistency. Because `date_anchor` is hidden and read-only, users cannot overwrite it.
 
-> **Why two fields?** `@NOW` fills a date-time string, but calculated fields and `datediff()` often need a date-only value. The pair trades one display field (for humans) against one locked anchor field (for calculations). See RC-AT-06 for the validation pitfall this pattern avoids.
+> **Why two fields?** `@NOW` fills a date-time string, but calculated fields and `datediff()` often need a date-only value. The pair trades one display field (for humans) against one locked anchor field (for calculations). See [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) for the validation pitfall this pattern avoids.
 
 ## 11.4 Status-Gated Close Fields
 
@@ -546,7 +555,7 @@ Field:      service_type
 Branching:  [category] = '2'
 ```
 
-A common enhancement is to hide retired or internal-only service codes using `@HIDECHOICE`. This works for the data entry form, but carries an important caveat: **`@HIDECHOICE` is a display-only tag**. Hidden choices remain fully accessible in data exports and the Custom Reports module — any record that previously stored a hidden value will expose that value in exports. When building reports on fields with hidden choices, account for all coded values, not only the visible ones. See RC-AT-03 for the full `@HIDECHOICE` behavior reference.
+A common enhancement is to hide retired or internal-only service codes using `@HIDECHOICE`. This works for the data entry form, but carries an important caveat: **`@HIDECHOICE` is a display-only tag**. Hidden choices remain fully accessible in data exports and the Custom Reports module — any record that previously stored a hidden value will expose that value in exports. When building reports on fields with hidden choices, account for all coded values, not only the visible ones. See [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) for the full `@HIDECHOICE` behavior reference.
 
 ---
 
@@ -604,11 +613,11 @@ A common enhancement is to hide retired or internal-only service codes using `@H
 
 # 14. Related Articles
 
-- RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design (prerequisite; approval workflow patterns, email preview instruments, dual syntax)
-- RC-AT-03 — Radio & Dropdown Action Tags (@HIDECHOICE and @SHOWCHOICE behavior; export gotcha)
-- RC-AT-06 — Autofill Action Tags (@DEFAULT behavior; @TODAY/@NOW validation pitfall; hidden anchor field pattern)
-- RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE (@CALCTEXT syntax, nested if() expressions, limitations)
-- RC-PIPE-04 — Piping in Emails and Notifications (piping in Alerts and ASIs; [survey-link:] in email context)
-- RC-PIPE-08 — Smart Variables: Survey ([survey-link:] and [form-link:] full reference)
-- RC-ALERT-01 — Alerts & Notifications: Setup (configuring checkbox-triggered Alerts; trigger conditions)
-- RC-CALC-01 — Special Functions Reference (if() and nested function syntax used in @CALCTEXT)
+- [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md) (prerequisite; approval workflow patterns, email preview instruments, dual syntax)
+- [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) (@HIDECHOICE and @SHOWCHOICE behavior; export gotcha)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) (@DEFAULT behavior; @TODAY/@NOW validation pitfall; hidden anchor field pattern)
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(@CALCTEXT syntax, nested if() expressions, limitations)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(piping in Alerts and ASIs; [survey-link:] in email context)
+- [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) ([survey-link:] and [form-link:] full reference)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (configuring checkbox-triggered Alerts; trigger conditions)
+- [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (if() and nested function syntax used in @CALCTEXT)

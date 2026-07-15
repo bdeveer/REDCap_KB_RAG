@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) — @HIDDEN & @READONLY |
+| **Synonyms** | @APPUSERNAME-APP action tag; @BARCODE-APP action tag; redcap mobile app action tags; how do i scan a barcode or qr code in the mobile app; capture the mobile app username into a field; action tags that only work in the mobile app; sync uploaded images to the mobile app |
 
 ---
 

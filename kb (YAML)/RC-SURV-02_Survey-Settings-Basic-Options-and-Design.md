@@ -20,11 +20,20 @@ related:
   title: 'Alerts & Notifications: Setup'
 tags:
 - surveys
+synonyms:
+- how do i change the look of my survey
+- add a logo and colors to a survey
+- edit survey title and instructions
+- customize survey layout and fonts
+- survey design and theme options
+- basic survey settings page
+- change survey appearance
+- where do i set the survey status
 ---
 
 # 1. Overview
 
-This article is the first of a two-part series on the REDCap Survey Settings page. It covers the **Basic Options** section (survey status, title, and instructions) and the **Survey Design Options** section (layout, logo, typography, and color themes). Together these settings control whether a survey is accessible to participants and how it looks when they open it. The companion article, RC-SURV-03, covers behavioral customizations, access controls, and termination options.
+This article is the first of a two-part series on the REDCap Survey Settings page. It covers the **Basic Options** section (survey status, title, and instructions) and the **Survey Design Options** section (layout, logo, typography, and color themes). Together these settings control whether a survey is accessible to participants and how it looks when they open it. The companion article, [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md), covers behavioral customizations, access controls, and termination options.
 
 To reach Survey Settings, navigate to your project, open the **Online Designer**, locate the instrument you want to configure, and click the **Survey Settings** button. Survey Settings are configured per instrument — each survey in a project has its own independent settings.
 
@@ -124,13 +133,13 @@ Enabling **Enhanced Radios and Checkboxes** replaces the standard controls with 
 
 > **Note:** This setting applies to the entire survey. You cannot enable enhanced buttons for individual questions only.
 
-> **Alignment interaction:** Enhanced buttons still respect the **Custom Alignment** code set on each field (Column N in the Data Dictionary). Fields with a V code (RV, LV) render one button per row (full container width). Fields with an H code (LH, RH) render buttons in a two-column side-by-side grid. The L/R width designation (full-width vs. half-width) is also preserved. See RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques for alignment code details.
+> **Alignment interaction:** Enhanced buttons still respect the **Custom Alignment** code set on each field (Column N in the Data Dictionary). Fields with a V code (RV, LV) render one button per row (full container width). Fields with an H code (LH, RH) render buttons in a two-column side-by-side grid. The L/R width designation (full-width vs. half-width) is also preserved. See [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) for alignment code details.
 
 Consider enabling this setting if you expect participants to complete the survey on a phone or tablet.
 
 ## 4.4 Survey Text Size
 
-The **Survey Text Size** setting sets the default font size for all text in the survey. By default, participants can also adjust the text size themselves using a control displayed on the survey page. To remove the participant-facing resize control, see the **Font Resize Options** setting in RC-SURV-03.
+The **Survey Text Size** setting sets the default font size for all text in the survey. By default, participants can also adjust the text size themselves using a control displayed on the survey page. To remove the participant-facing resize control, see the **Font Resize Options** setting in [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
 
 Tailor the default size to your audience. Surveys targeting older participants or those with low vision may benefit from a larger default.
 
@@ -179,7 +188,7 @@ Survey Notifications is a per-survey feature that sends a brief system-generated
 
 **What the notification contains:** REDCap sends a standard system email. The message is not customizable — it does not include project field values, a custom subject, or any conditional logic. One recipient can be selected per survey.
 
-**When to use something else:** If you need any of the following, use **Alerts & Notifications** (RC-ALERT-01) instead:
+**When to use something else:** If you need any of the following, use **Alerts & Notifications** ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)) instead:
 - Notifying more than one person per survey completion
 - Including participant data or smart variables in the notification message
 - Triggering a notification only when certain conditions are met
@@ -193,7 +202,7 @@ Survey Notifications is best suited for simple, low-volume projects where a sing
 
 
 **Q: Can I notify multiple users when a survey is completed?**
-Survey Notifications supports one recipient per survey. To notify multiple users simultaneously, use Alerts & Notifications (RC-ALERT-01), which supports multiple recipients and allows you to include participant data in the message.
+Survey Notifications supports one recipient per survey. To notify multiple users simultaneously, use Alerts & Notifications ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)), which supports multiple recipients and allows you to include participant data in the message.
 
 **Q: Can I turn a survey off temporarily without losing my settings?**
 Set **Survey Status** to **Survey Offline**. All settings and data are preserved. The survey can be re-activated at any time by switching the status back to **Survey Active**.
@@ -239,10 +248,10 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 # 8. Related Articles
 
-- RC-SURV-01 — Surveys – Basics
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
-- RC-FD-02 — Online Designer
-- RC-FD-06 — Online Designer – Instrument and Field Management
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (Column N alignment codes and how they interact with enhanced buttons)
-- RC-ALERT-01 — Alerts & Notifications: Setup (for customizable or multi-recipient survey completion notifications)
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)
+- [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (Column N alignment codes and how they interact with enhanced buttons)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (for customizable or multi-recipient survey completion notifications)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)

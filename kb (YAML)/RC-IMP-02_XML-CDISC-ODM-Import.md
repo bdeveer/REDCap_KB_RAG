@@ -21,11 +21,20 @@ related:
 tags:
 - data import
 - data
+synonyms:
+- how to import an xml file into redcap
+- cdisc odm import workflow
+- transfer data from another redcap installation
+- import a project xml backup with data
+- what xml format does redcap accept
+- odm import handling of existing records
+- import clinical data from a cdisc compliant system
+- xml data import reference
 ---
 
 # 1. Overview
 
-REDCap's Data Import Tool supports two import formats: CSV and CDISC ODM XML. While CSV is the standard format for most bulk imports, the ODM XML pathway serves a distinct set of use cases — chiefly transferring data from another REDCap installation or from a third-party system that produces CDISC-compliant output. This article covers the ODM import pathway in full: what the format is, when to use it, what files are accepted, how the import process works step by step, and how REDCap handles records that already exist in the project. The brief procedural summary in RC-IMP-01 (§8.4) is the entry point; this article is the complete reference.
+REDCap's Data Import Tool supports two import formats: CSV and CDISC ODM XML. While CSV is the standard format for most bulk imports, the ODM XML pathway serves a distinct set of use cases — chiefly transferring data from another REDCap installation or from a third-party system that produces CDISC-compliant output. This article covers the ODM import pathway in full: what the format is, when to use it, what files are accepted, how the import process works step by step, and how REDCap handles records that already exist in the project. The brief procedural summary in [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (§8.4) is the entry point; this article is the complete reference.
 
 ---
 
@@ -111,11 +120,11 @@ The most reliable ODM source for re-import into REDCap is a file produced by RED
 | 3 | Choose **CDISC ODM (XML)** as the export format. |
 | 4 | Click **Export Data** and download the file. |
 
-See RC-EXPRT-02 — Data Export: Export Formats for full coverage of export format options.
+See [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) for full coverage of export format options.
 
 **From the API:**
 
-The Export Project XML endpoint (RC-API-36) returns a full project ODM export programmatically. The Export Records endpoint (RC-API-02) also supports an `xml` format type that returns record data in ODM structure. API usage requires a token and developer familiarity — see RC-API-36 — Export Project XML API.
+The Export Project XML endpoint ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) returns a full project ODM export programmatically. The Export Records endpoint ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) also supports an `xml` format type that returns record data in ODM structure. API usage requires a token and developer familiarity — see [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md).
 
 ## 4.3 Third-Party ODM Files
 
@@ -136,7 +145,7 @@ The ODM import in the Data Import Tool updates **participant record data only**.
 - User rights or user accounts
 - Alerts, notifications, or other project configuration
 
-If you need to restore or migrate a full project including its metadata, use the project XML backup/restore feature described in RC-IMP-01 (§7) instead.
+If you need to restore or migrate a full project including its metadata, use the project XML backup/restore feature described in [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (§7) instead.
 
 ---
 
@@ -407,7 +416,7 @@ For longitudinal projects, the ODM file encodes event context through the study 
 
 **Q: Can I use ODM import to restore a full project backup, including instruments and settings?**
 
-**A:** No. The Data Import Tool's ODM import updates participant record data only — it does not modify project structure, survey settings, or user rights. To restore a full project from a backup XML file (which includes metadata and data), use the project creation screen: Create New Project → Upload a REDCap project XML file. See RC-IMP-01 §7 for the full backup/restore workflow.
+**A:** No. The Data Import Tool's ODM import updates participant record data only — it does not modify project structure, survey settings, or user rights. To restore a full project from a backup XML file (which includes metadata and data), use the project creation screen: Create New Project → Upload a REDCap project XML file. See [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) §7 for the full backup/restore workflow.
 
 **Q: My ODM file came from another vendor's EDC system and keeps failing. What should I check?**
 
@@ -427,25 +436,25 @@ For longitudinal projects, the ODM file encodes event context through the study 
 
 **Importing from a different ODM version.** REDCap requires ODM 1.3.X. Files produced by older systems (ODM 1.2) or newer ones (ODM 2.0) may not validate correctly. Check the `ODMVersion` attribute in the file's root element before importing.
 
-**Browser timeout on large files.** Because ODM import runs in real time with no background option, very large files can cause the browser to time out before the import completes. If you need to import a large dataset in ODM format, use the API Import Records endpoint (RC-API-03) with `format=xml` instead — it does not have this constraint.
+**Browser timeout on large files.** Because ODM import runs in real time with no background option, very large files can cause the browser to time out before the import completes. If you need to import a large dataset in ODM format, use the API Import Records endpoint ([RC-API-03 — Import Records API](RC-API-03_Import-Records.md)) with `format=xml` instead — it does not have this constraint.
 
 ---
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to import and export functionality related to ODM XML. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to import and export functionality related to ODM XML. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-03 — Import Records API** — supports `format=xml` (CDISC ODM) for programmatic record import; runs asynchronously and is not subject to browser timeout limitations
-- **RC-API-36 — Export Project XML API** — exports the full project (metadata + data) as ODM XML; useful for generating files to re-import into another installation
+- **[RC-API-03 — Import Records API](RC-API-03_Import-Records.md)** — supports `format=xml` (CDISC ODM) for programmatic record import; runs asynchronously and is not subject to browser timeout limitations
+- **[RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)** — exports the full project (metadata + data) as ODM XML; useful for generating files to re-import into another installation
 
 ---
 
 # 10. Related Articles
 
-- RC-IMP-01 — Data Import Overview (prerequisite; §8.4 contains the introductory ODM import summary this article expands)
-- RC-EXPRT-02 — Data Export: Export Formats (covers how to produce a REDCap ODM export file for re-import)
-- RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap (CSV alternative to ODM for most import use cases)
-- RC-IMP-04 — Record Data CSV Import (step-by-step guide to CSV record import)
-- RC-API-03 — Import Records API (programmatic record import; supports XML/ODM format; no browser timeout limitation)
-- RC-API-36 — Export Project XML API (API method for obtaining a full project ODM export)
-- RC-PROJ-05 — Project Migration (full project migration workflow using XML backup/restore; distinct from data-only ODM import)
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (prerequisite; §8.4 contains the introductory ODM import summary this article expands)
+- [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) (covers how to produce a REDCap ODM export file for re-import)
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md) (CSV alternative to ODM for most import use cases)
+- [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md)(step-by-step guide to CSV record import)
+- [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) (programmatic record import; supports XML/ODM format; no browser timeout limitation)
+- [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md) (API method for obtaining a full project ODM export)
+- [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md)(full project migration workflow using XML backup/restore; distinct from data-only ODM import)

@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
+| **Synonyms** | control center map of users; geographic map of where users access redcap; see user locations by ip address; google maps view of redcap users; user distribution by region admin; map showing redcap user activity by location; ip geolocation map of users; where are my redcap users located |
 
 ---
 

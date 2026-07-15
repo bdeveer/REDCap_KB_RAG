@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation |
 | **Related Topics** | [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | how do i get started with the redcap api; what is an api token and how do i get one; redcap api overview and authentication; connect an external application to redcap programmatically; api user rights and token requirements; how does the redcap api work over http; enable api access for a project; introduction to redcap api methods |
 
 ---
 

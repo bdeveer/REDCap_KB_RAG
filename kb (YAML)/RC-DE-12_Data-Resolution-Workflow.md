@@ -19,14 +19,23 @@ related:
 - id: RC-NAV-UI-02
   title: Project Menu Reference
 - id: RC-NAV-REC-04
-  title: Record Status Dashboard
+  title: Record Status Dashboard & Other Record Links
 tags:
 - data entry
+synonyms:
+- how do i open a data query in redcap
+- track and resolve data discrepancies
+- data resolution workflow how to use
+- raise and respond to a data query
+- assign a data issue to another user
+- difference between drw and field comment log
+- query management and issue tracking for data
+- flag and close data problems
 ---
 
 # 1. Overview
 
-This article covers REDCap's Data Resolution Workflow (DRW) — what it is, how it differs from the Field Comment Log, how to enable and configure it, and how to open, respond to, close, and review queries. The DRW is a structured issue-tracking system built directly into REDCap that allows study teams to flag data problems, assign them to specific users, track resolution status, and audit the entire process without leaving REDCap. It is best suited for projects with multiple data entry users, distributed teams, or regulatory requirements around data quality documentation. For simpler annotation needs, see RC-DE-08 — Field Comment Log.
+This article covers REDCap's Data Resolution Workflow (DRW) — what it is, how it differs from the Field Comment Log, how to enable and configure it, and how to open, respond to, close, and review queries. The DRW is a structured issue-tracking system built directly into REDCap that allows study teams to flag data problems, assign them to specific users, track resolution status, and audit the entire process without leaving REDCap. It is best suited for projects with multiple data entry users, distributed teams, or regulatory requirements around data quality documentation. For simpler annotation needs, see [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 > **Note:** The Data Resolution Workflow and the Field Comment Log are mutually exclusive modes. A project runs in one mode at a time. See Section 3 for how to switch between them.
 
@@ -294,10 +303,10 @@ Use Resolution Metrics to identify recurring data entry problems (candidate fiel
 
 # 10. Related Articles
 
-- RC-DE-02 — Basic Data Entry (foundational data entry skills required before using the DRW)
-- RC-DE-04 — Editing Data & Audit Trail (related audit features; the DRW is itself an audit trail for data quality decisions)
-- RC-DE-08 — Field Comment Log (the simpler annotation alternative to the DRW; also covers setup shared between both modes)
-- RC-DE-05 — Field Validations (field validations and DRW queries are often used together to document out-of-range or exceptional values)
-- RC-DAG-01 — Data Access Groups (the DRW dashboard can be filtered by DAG; useful context for multi-site projects)
-- RC-NAV-UI-02 — Project Menu Reference (the Data Resolution Workflow appears in the Applications section as "Resolve Issues"; replaces the Field Comment Log when enabled)
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (the DRW provides variable-level links that navigate directly to a specific field within an instrument)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills required before using the DRW)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (related audit features; the DRW is itself an audit trail for data quality decisions)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (the simpler annotation alternative to the DRW; also covers setup shared between both modes)
+- [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) (field validations and DRW queries are often used together to document out-of-range or exceptional values)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (the DRW dashboard can be filtered by DAG; useful context for multi-site projects)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Data Resolution Workflow appears in the Applications section as "Resolve Issues"; replaces the Field Comment Log when enabled)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (the DRW provides variable-level links that navigate directly to a specific field within an instrument)

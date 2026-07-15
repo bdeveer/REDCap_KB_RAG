@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i switch my dag via the api
+- switch dag api call
+- change my active data access group through the api
+- api method to set the current dag context
+- reassign or unassign my own dag programmatically
+- switch to an all-dags view via the api
+- api endpoint to switch data access group
+- change dag context for multi-site data entry via api
 ---
 
 # 1. Overview
@@ -163,7 +172,7 @@ Example response:
 
 **Q: What is the difference between switching a DAG and being assigned to a DAG?**
 
-**A:** DAG assignment (via RC-API-32) determines which DAG(s) a user can access. DAG switching (this method) changes the user's current active context within their assigned DAG(s). A user can only switch to a DAG they are assigned to or to all-DAGs view if they have that permission.
+**A:** DAG assignment (via [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)) determines which DAG(s) a user can access. DAG switching (this method) changes the user's current active context within their assigned DAG(s). A user can only switch to a DAG they are assigned to or to all-DAGs view if they have that permission.
 
 **Q: How do I switch to all-DAGs view?**
 
@@ -175,7 +184,7 @@ Example response:
 
 **Q: What is the unique group name for this parameter?**
 
-**A:** The `dag` parameter requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label. Use the Export DAGs method (RC-API-28) to find the correct unique names.
+**A:** The `dag` parameter requires the unique group name (e.g., `'group_1'`, `'boston_site'`), not the human-readable label. Use the Export DAGs method ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) to find the correct unique names.
 
 **Q: Do I need special permissions to use this method?**
 
@@ -193,7 +202,7 @@ Example response:
 
 # 7. Common Mistakes & Gotchas
 
-**Using the DAG display name instead of the unique group name.** The `dag` parameter requires the unique group name (e.g., `'group_1'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method (RC-API-28) to find the correct unique names.
+**Using the DAG display name instead of the unique group name.** The `dag` parameter requires the unique group name (e.g., `'group_1'`), not the human-readable label (e.g., `'Boston Site'`). Use the Export DAGs method ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) to find the correct unique names.
 
 **Trying to switch to a DAG you're not assigned to.** If your user account is assigned to DAG A but you try to switch to DAG B, the operation will fail. Ensure your assignment matches the switch target.
 
@@ -201,22 +210,22 @@ Example response:
 
 **Not realizing switching clears restrictions.** Switching to all-DAGs view (empty string) removes your data isolation and shows data from all groups. This is useful for administrators and managers but should be done intentionally.
 
-**Confusing DAG switching with DAG assignment.** These are separate operations. Assignment (RC-API-32) sets which DAG(s) you can access. Switching (this method) changes your current active view. You cannot switch to DAGs you are not assigned to.
+**Confusing DAG switching with DAG assignment.** These are separate operations. Assignment ([RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)) sets which DAG(s) you can access. Switching (this method) changes your current active view. You cannot switch to DAGs you are not assigned to.
 
 **Expecting the switch to affect other sessions or users.** DAG switching is specific to your current API session or the calling user's context. It does not affect other users or open sessions.
 
-**Not checking if the DAG exists before switching.** If you try to switch to a non-existent DAG, the operation will fail. Export DAGs (RC-API-28) first to verify the DAG exists.
+**Not checking if the DAG exists before switching.** If you try to switch to a non-existent DAG, the operation will fail. Export DAGs ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) first to verify the DAG exists.
 
 ---
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-DAG-01 — Data Access Groups (explains DAG concepts, structure, and configuration)
-- RC-DE-09 — Data Entry with Data Access Groups (covers data entry constraints in DAG-enabled projects)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for DAG-switching rights and user permissions)
-- RC-API-28 — Export DAGs (retrieve DAG definitions and unique names)
-- RC-API-29 — Import DAGs (create or update DAG definitions)
-- RC-API-30 — Delete DAGs (remove DAG definitions)
-- RC-API-31 — Export User-DAG Assignments (retrieve which DAGs users are assigned to)
-- RC-API-32 — Import User-DAG Assignments (assign users to DAGs)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (explains DAG concepts, structure, and configuration)
+- [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) (covers data entry constraints in DAG-enabled projects)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for DAG-switching rights and user permissions)
+- [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)(retrieve DAG definitions and unique names)
+- [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md)(create or update DAG definitions)
+- [RC-API-30 — Delete DAGs API](RC-API-30_Delete-DAGs.md)(remove DAG definitions)
+- [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)(retrieve which DAGs users are assigned to)
+- [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)(assign users to DAGs)

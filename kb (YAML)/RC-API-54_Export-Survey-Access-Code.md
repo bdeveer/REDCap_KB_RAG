@@ -13,20 +13,28 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-40
-  title: Export Survey Link
+  title: Export Survey Link API
 - id: RC-API-41
-  title: Export Survey Queue Link
+  title: Export Survey Queue Link API
 - id: RC-API-42
-  title: Export Survey Return Code
+  title: Export Survey Return Code API
 tags:
 - api
+synonyms:
+- export survey access code api method
+- how do i get a survey access code via the api
+- api call to retrieve the short survey access code
+- get the survey login code for a record through the api
+- export survey access code for a participant using the api
+- api method to fetch a short alphanumeric survey code
+- programmatically get the survey access code with the api
 ---
 
 # 1. Overview
 
 The Export Survey Access Code API returns a short alphanumeric access code for a specific record and survey instrument. Participants can enter this code on the REDCap survey login page instead of clicking a full survey URL — useful when distributing surveys via channels where long URLs are impractical (e.g., printed materials, verbal instructions, SMS with character limits).
 
-This is distinct from the survey link (RC-API-40), which returns a full clickable URL, and the return code (RC-API-42), which allows resuming an in-progress survey.
+This is distinct from the survey link ([RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)), which returns a full clickable URL, and the return code ([RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)), which allows resuming an in-progress survey.
 
 > **Permissions required:** API Export privileges AND **Survey Distribution Tools** privileges. If the user lacks Survey Distribution Tools access, the API will return an error even if the token is otherwise valid.
 
@@ -146,7 +154,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See RC-API-01 Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
 ---
 
@@ -165,7 +173,7 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 # 6. Common Questions
 
 **Q: What is the difference between a survey access code and a survey link?**
-**A:** A survey link (RC-API-40) is a full URL the participant clicks to go directly to their survey. An access code is a short code the participant types at the REDCap survey login page. Both grant access to the same survey for the same record; the difference is how the participant gets there.
+**A:** A survey link ([RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)) is a full URL the participant clicks to go directly to their survey. An access code is a short code the participant types at the REDCap survey login page. Both grant access to the same survey for the same record; the difference is how the participant gets there.
 
 **Q: When would I use an access code instead of a survey link?**
 **A:** Access codes are useful when a full URL is impractical — for example, printed participant packets, in-person enrollment, SMS with tight character limits, or when participants may have difficulty clicking links.
@@ -197,9 +205,9 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API
-- RC-API-40 — Export Survey Link
-- RC-API-41 — Export Survey Queue Link
-- RC-API-42 — Export Survey Return Code
-- RC-API-43 — Export Survey Participants
-- RC-SURV-01 — Surveys – Basics (survey fundamentals and access methods)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
+- [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)
+- [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md)
+- [RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)
+- [RC-API-43 — Export Survey Participants API](RC-API-43_Export-Survey-Participants.md)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals and access methods)

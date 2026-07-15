@@ -11,6 +11,7 @@
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Synonyms** | how to import an instrument from the library; reuse a prebuilt instrument; download an instrument as a zip file; share an instrument between projects; redcap shared instrument library; import instrument zip into my project; copy a form without rebuilding it; validated instruments from vanderbilt library |
 
 ---
 

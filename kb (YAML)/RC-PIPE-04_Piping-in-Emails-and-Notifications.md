@@ -6,18 +6,27 @@ applies_to:
 - All REDCap project types with survey or notification features
 - Project Design and Setup rights required
 prerequisites:
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types
+- 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-PIPE-01
-  title: Piping Basics, Syntax & Field Types
+  title: 'Piping: Basics, Syntax & Field Types'
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-BL-01
-  title: Branching Logic Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - piping
+synonyms:
+- how to personalize an alert email with piped data
+- piping participant data into notifications
+- using piping inside branching logic and action tags
+- how to pipe a survey link into an email
+- pre-fill a field using piping
+- inserting record values into outgoing messages
+- piping smart variable links into emails
+- dynamic email content with piping
 ---
 
 # 1. Overview
@@ -110,7 +119,7 @@ The Alerts & Notifications module provides more flexibility than confirmation em
 
 **Alerts vs. ASIs:** Use an ASI when the communication is directly tied to completing a specific survey. Use an Alert when the trigger is a data event (e.g., a value crossing a threshold, a checkbox being checked, a date being reached) or when recipients or conditions are more complex than a single instrument's completion.
 
-> Alerts & Notifications is a large topic covered in its own dedicated training course. This section covers only the piping-specific aspects. See RC-ALERT-01 — Alerts & Notifications: Setup for full coverage.
+> Alerts & Notifications is a large topic covered in its own dedicated training course. This section covers only the piping-specific aspects. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) for full coverage.
 
 ---
 
@@ -131,6 +140,8 @@ A dropdown where option 1 = "Vanilla" behaves differently in each context:
 - Branching logic: `[flavor] = "1"` compares against the raw code "1" (not the label "Vanilla")
 
 Smart variables can also be used in branching logic conditions. A common example is `[is-survey]`, which evaluates to 1 when the instrument is accessed as a survey and 0 when accessed as a data entry form — allowing you to show different fields depending on the access context.
+
+> **Checkbox exception:** Checkboxes behave differently from other field types in both contexts. In piping, `[checkbox(code)]` returns the text "Checked" or "Unchecked" — not a raw coded value. In branching logic, each checkbox option is referenced individually using `[field_name(code)]` and compared to `1` (checked) or `0` (unchecked) — the option's coded value acts as a *selector* identifying which option to test, not as the comparison value itself. See [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) for the full set of checkbox modifiers.
 
 ---
 
@@ -162,7 +173,7 @@ Use case: display a preferred name based on a participant's stated preference.
 
 If `pref` equals 1, the field is pre-filled with the value of `nick_name`; otherwise, it uses `formal_name`.
 
-> **Note:** Action tags as a whole are a separate topic covered in dedicated training. This section covers only the piping-relevant examples. See RC-AT-01 — Action Tags: Overview for a full reference.
+> **Note:** Action tags as a whole are a separate topic covered in dedicated training. This section covers only the piping-relevant examples. See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) for a full reference.
 
 ---
 
@@ -210,8 +221,8 @@ If `pref` equals 1, the field is pre-filled with the value of `nick_name`; other
 
 # 10. Related Articles
 
-- RC-PIPE-01 — Piping Basics, Syntax & Field Types (core piping syntax)
-- RC-PIPE-03 — Smart Variables Overview (smart variables for links, user info, survey metadata)
-- RC-BL-01 — Branching Logic Overview & Scope (using field references and smart variables in logic conditions)
-- RC-SURV-01 — Surveys – Basics (survey settings, confirmation emails, survey distribution)
-- RC-ALERT-01 — Alerts & Notifications: Setup (full coverage of the alerts module)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(core piping syntax)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (smart variables for links, user info, survey metadata)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(using field references and smart variables in logic conditions)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey settings, confirmation emails, survey distribution)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (full coverage of the alerts module)

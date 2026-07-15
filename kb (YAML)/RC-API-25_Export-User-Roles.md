@@ -18,6 +18,15 @@ related:
   title: 'User Rights: Configuring User Privileges'
 tags:
 - api
+synonyms:
+- how do i export user roles via the api
+- export user roles api call
+- get the list of custom roles and permissions through the api
+- api method to retrieve role definitions
+- pull role labels and permission flags with the api
+- audit user roles programmatically
+- api endpoint to export user roles
+- list role templates in a project via api
 ---
 
 # 1. Overview
@@ -117,7 +126,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5.
 
 ---
 
@@ -148,7 +157,7 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 **Q: How do I know which role a user belongs to?**
 
-**A:** The Export User Roles method shows role definitions, but not which users are assigned to which roles. To see user-to-role assignments, export all users (RC-API-22) and check their individual permission flags. Alternatively, examine the project's User Rights settings in the REDCap interface.
+**A:** The Export User Roles method shows role definitions, but not which users are assigned to which roles. To see user-to-role assignments, export all users ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) and check their individual permission flags. Alternatively, examine the project's User Rights settings in the REDCap interface.
 
 **Q: What does the `unique_role_name` look like?**
 
@@ -168,7 +177,7 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 **Confusing role_label with unique_role_name.** The `unique_role_name` is a system ID (e.g., `U-527D39JXAC`); the `role_label` is the human-readable name (e.g., `'Project Manager'`). Use the correct field depending on whether you need the system ID or display name.
 
-**Assuming permission fields match export fields exactly.** Some field names differ slightly between Export Users and Export User Roles. For example, Import User Roles uses `data_export_tool` instead of `data_export`. Consult RC-USER-03 for the exact field names.
+**Assuming permission fields match export fields exactly.** Some field names differ slightly between Export Users and Export User Roles. For example, Import User Roles uses `data_export_tool` instead of `data_export`. Consult [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for the exact field names.
 
 **Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. If your token lacks User Rights, the export will fail with an authentication error.
 
@@ -178,10 +187,10 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (foundational; required reading before using any API method)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (explains role-based access and the three tiers)
-- RC-USER-03 — User Rights: Configuring User Privileges (reference for permission field names and meanings)
-- RC-API-22 — Export Users (export individual user permissions)
-- RC-API-26 — Import User Roles (create or update custom roles)
-- RC-API-27 — Delete User Roles (remove roles from the project)
-- RC-API-55 — Export User-Role Assignments (see which users are assigned to which roles)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (explains role-based access and the three tiers)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (reference for permission field names and meanings)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(export individual user permissions)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(create or update custom roles)
+- [RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md)(remove roles from the project)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)(see which users are assigned to which roles)

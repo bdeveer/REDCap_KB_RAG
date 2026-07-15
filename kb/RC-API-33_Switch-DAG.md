@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
+| **Synonyms** | how do i switch my dag via the api; switch dag api call; change my active data access group through the api; api method to set the current dag context; reassign or unassign my own dag programmatically; switch to an all-dags view via the api; api endpoint to switch data access group; change dag context for multi-site data entry via api |
 
 ---
 

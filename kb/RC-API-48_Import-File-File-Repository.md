@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md); [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md); [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
+| **Synonyms** | import file into file repository api method; how do i upload a file to the file repository via the api; api call to import a file repository file into a folder; upload a document to the file repository through the api; programmatically add files to the file repository with the api; api method to push a file into a repository folder; import file repository file by folder id via api |
 
 ---
 

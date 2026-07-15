@@ -17,6 +17,16 @@ related:
   title: 'Control Center: Overview & Navigation'
 tags:
 - control center (admin)
+synonyms:
+- how do i back up my redcap project
+- export project as xml backup
+- does redcap have automatic backups
+- restore a project from a backup file
+- save project structure before making changes
+- metadata only vs full project export
+- recreate a project on another redcap instance
+- what is and isn't captured in a backup
+- cdisc odm xml export
 ---
 
 # 1. Overview
@@ -59,7 +69,7 @@ By default, the ZIP export includes both metadata and all data records. A metada
 
 ## 3.2 Accessing the Export via API
 
-For automated or programmatic backups, the same export is available via the **Export Project XML API** (see **RC-API-36 — Export Project XML API**). The API provides additional control over what is included:
+For automated or programmatic backups, the same export is available via the **Export Project XML API** (see **[RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)**). The API provides additional control over what is included:
 
 - Set `returnMetadataOnly=true` to export structure only (no data)
 - Use `records`, `fields`, `events`, or `filterLogic` parameters to limit which data records are exported
@@ -119,7 +129,7 @@ Restoring from a project XML backup means creating a new REDCap project using th
 
 ## 4.2 Restore via API
 
-Use **RC-API-37 — Import Project (Create Project) API** to programmatically create a new project from an ODM XML string. This is equivalent to the UI upload but scriptable. The API requires a super API token (a special token that allows project creation) provided by a REDCap administrator.
+Use **[RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)** to programmatically create a new project from an ODM XML string. This is equivalent to the UI upload but scriptable. The API requires a super API token (a special token that allows project creation) provided by a REDCap administrator.
 
 ## 4.3 Cross-Instance Restores
 
@@ -145,7 +155,7 @@ Administrators who need to verify backup schedules or recovery procedures should
 
 ## 5.3 What Administrators Can Monitor
 
-Within the Control Center, the **Cron Jobs** page (under System Configuration) shows the status of REDCap's scheduled background processes. This is not a backup configuration interface, but it confirms that REDCap's internal maintenance tasks are running. See **RC-CC-21 — Control Center: Overview & Navigation** for the Cron Jobs location.
+Within the Control Center, the **Cron Jobs** page (under System Configuration) shows the status of REDCap's scheduled background processes. This is not a backup configuration interface, but it confirms that REDCap's internal maintenance tasks are running. See **[RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md)** for the Cron Jobs location.
 
 ---
 
@@ -169,7 +179,7 @@ Use **Project XML Export** when you need to preserve or restore actual data. Use
 
 REDCap does not provide a native scheduled backup feature accessible from the project interface. Teams that need recurring automated backups have two practical options:
 
-**API-based scripted backups:** Use the Export Project XML API (RC-API-36) in a scheduled script (cron job, task scheduler, etc.) to automatically export the project XML on a defined interval — for example, nightly or weekly. The script can save the resulting XML file to a secure network location with a timestamped filename. This is the most reliable way to achieve project-level automated backups without involving IT infrastructure.
+**API-based scripted backups:** Use the Export Project XML API ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) in a scheduled script (cron job, task scheduler, etc.) to automatically export the project XML on a defined interval — for example, nightly or weekly. The script can save the resulting XML file to a secure network location with a timestamped filename. This is the most reliable way to achieve project-level automated backups without involving IT infrastructure.
 
 **Infrastructure-level backup:** As described in Section 5, the institution's IT team can configure server-level database backups on a scheduled basis. This is the most comprehensive option, but it requires coordination outside of REDCap and recovery requires IT assistance.
 
@@ -178,7 +188,7 @@ REDCap does not provide a native scheduled backup feature accessible from the pr
 # 8. Common Questions
 
 **Q: How do I back up my REDCap project?**
-**A:** Go to Project Setup → Other Functionality and download the project ZIP archive. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API (RC-API-36) in an automated script.
+**A:** Go to Project Setup → Other Functionality and download the project ZIP archive. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) in an automated script.
 
 **Q: Can I restore a project from a backup without losing the original?**
 **A:** Yes. Restoring always creates a new project — REDCap does not overwrite an existing project. Your original project remains unchanged, and the restored backup becomes a separate project that you can compare or rename.
@@ -224,8 +234,8 @@ REDCap does not provide a native scheduled backup feature accessible from the pr
 
 # 10. Related Articles
 
-- RC-API-36 — Export Project XML API
-- RC-API-37 — Import Project (Create Project) API
-- RC-CC-21 — Control Center: Overview & Navigation
-- RC-EXPRT-01 — Data Export: Overview & Workflow
-- RC-EXPRT-02 — Data Export: Export Formats
+- [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
+- [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md)

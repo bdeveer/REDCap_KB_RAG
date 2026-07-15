@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
+| **Synonyms** | [user-name] smart variable; how to pipe the logged-in user full name with [user-fullname]; [user-email] smart variable for current user; pipe the current user data access group with [user-dag-name]; user smart variables for [user-role-name] and [user-role-label]; show who is logged in using user smart variables; [user-dag-label] and [user-dag-id] piping; reference the current redcap user in a form or email |
 
 ---
 

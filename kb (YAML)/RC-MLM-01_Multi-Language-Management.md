@@ -7,28 +7,37 @@ applies_to:
 - requires Project Design and Setup rights
 prerequisites:
 - None
-version: '1.1'
+version: '1.2'
 last_updated: '2026'
 related:
 - id: RC-SURV-01
-  title: Survey Setup
+  title: Surveys – Basics
 - id: RC-ALERT-01
-  title: Alerts and Notifications Setup
+  title: 'Alerts & Notifications: Setup'
 - id: RC-AT-11
-  title: 'Action Tags: Mobile App'
+  title: 'Action Tags: Mobile App Action Tags'
 - id: RC-CC-20
   title: 'Control Center: Multi-Language Management'
 - id: RC-NAV-UI-02
   title: Project Menu Reference
 tags:
 - multi-language management
+synonyms:
+- how do i set up a survey in multiple languages
+- translate my forms and surveys
+- add a language selector to a survey
+- multi-language management mlm setup
+- does redcap translate content automatically
+- translate alert messages and field labels
+- enable a second language for data entry
+- mlm not appearing in my applications menu
 ---
 
 # 1. Overview
 
-Multi-Language Management (MLM) is a built-in REDCap feature that allows data entry forms and surveys to be displayed in multiple languages simultaneously. When MLM is enabled, respondents and data entry users see a language selector and can switch languages in real-time without losing or corrupting stored data. MLM covers field labels, choice labels, survey settings, alert messages, missing data code labels, PDF customizations, MyCap settings, and user interface text — but it does **not** translate content automatically. All translations must be provided by the project team. This article covers the full MLM workflow for project-level users: setting up languages, translating content, managing language selection behavior, and using MLM-specific action tags.
+Multi-Language Management (MLM) is a built-in REDCap feature that allows data entry forms and surveys to be displayed in multiple languages simultaneously. When MLM is enabled, respondents and data entry users see a language selector and can switch languages in real-time without losing or corrupting stored data. MLM covers field labels, choice labels, survey settings, alert messages, missing data code labels, PDF customizations, MyCap settings, and user interface text — but it does **not** translate content automatically by default. Translations must be provided by the project team, or generated using the optional AI-assisted translation feature if enabled by your administrator (see §5.9). This article covers the full MLM workflow for project-level users: setting up languages, translating content, managing language selection behavior, and using MLM-specific action tags.
 
-> **Note:** MLM must be enabled at the system level by a REDCap administrator before it is available to projects. This is configured in the Control Center under Miscellaneous Modules → Multi-Language Management (see **RC-CC-20**). Contact your REDCap administrator if Multi-Language Management does not appear in your Applications menu.
+> **Note:** MLM must be enabled at the system level by a REDCap administrator before it is available to projects. This is configured in the Control Center under Miscellaneous Modules → Multi-Language Management (see **[RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md)**). Contact your REDCap administrator if Multi-Language Management does not appear in your Applications menu.
 
 ---
 
@@ -55,7 +64,7 @@ A designated language used when a translation is missing in the language current
 A unique case-insensitive identifier assigned to each language in a project. The Language ID should correspond to an ISO 639-1 code (e.g., `en` for English, `de` for German, `es` for Spanish), optionally followed by an ISO 3166-1 country code (e.g., `en-US`, `de-DE`). Language IDs must use only letters and hyphens. Using standard ISO codes enables automatic browser language detection for survey respondents and is required for MyCap language matching.
 
 **Active Language**
-A language that has been turned on and is available for selection by users or survey respondents. Languages can be added to a project but remain inactive — only active languages appear in language selectors.
+A language that has been turned on and is available for selection by users or survey respondents. Languages can be added to a project but remain inactive — only active languages can appear in language selectors. Note: at the system level, administrators also control a separate **Visible** toggle; a language must be both active and visible system-wide to appear in the selector for end users. See [RC-CC-20](RC-CC-20_Multi-Language-Management.md) for the system-level Active and Visible settings.
 
 **Language Preference Field**
 An optional project field (radio or dropdown type) whose value stores a participant's preferred language. REDCap uses the value of this field to determine which language to display in server-side processes (ASIs, scheduled alerts, PDF rendering) where no browser session is available. The field behaves like the designated email field — its value is synchronized across all events and repeat instances.
@@ -97,6 +106,8 @@ The MLM setup page is accessed via **Applications → Multi-Language Management*
 | **From scratch** (not recommended) | No system language or file is available. All translations must be entered manually. Error-prone and time-consuming. |
 
 > **Note:** On some installations, administrators restrict project languages to centrally maintained system languages only. In that case, "Initialize from system languages" will be the only available option.
+
+> **Shared MLM Language Library:** The REDCap Consortium maintains a shared library of community-contributed MLM language files, hosted by Vanderbilt as a REDCap report: [MLM Language Library](https://redcap.vumc.org/surveys/?__report=7LEEXCTLYA7TJDJ3). Download a language's `.json` (or `.csv`/`.ini`) file from there, then load it via the **From a file** initialization method above. This is the fastest way to add a well-translated language without starting from scratch or relying on AI auto-translation.
 
 ## 3.4 Managing Language Settings
 
@@ -350,7 +361,7 @@ MLM provides a set of action tags that control language selection behavior durin
 REDCap language files (e.g., `English.ini`) are server-side files that control the language of REDCap's entire user interface — every page, every button, every system message — across the whole installation. They are managed by administrators and set in General Configuration or per-project settings. MLM is a separate, project-level feature that translates a subset of REDCap's data entry and survey UI strings (approximately 570 strings) plus all project-specific content (field labels, alerts, survey settings, etc.), and allows individual respondents to choose their preferred language in real-time. You can have a REDCap instance running in English (via the `.ini` file) while an individual project offers English and Spanish via MLM.
 
 **Q: Does MLM auto-translate my content?**
-No. REDCap's MLM feature does not translate anything automatically. All translations must be provided by the project team, either by typing them directly into the MLM translation screens or by importing a translation file prepared by a professional translator.
+Not by default. All translations must be provided by the project team — either typed directly into the MLM translation screens or imported from a file prepared by a professional translator. However, if your administrator has enabled REDCap AI Services and the "Auto-translate" MLM feature, an **Auto-translate** button will appear in the translation screens and can fill in missing translations automatically. AI-generated translations should always be reviewed by a proficient speaker before going live (see §5.9).
 
 **Q: I added a language and turned it on, but respondents still see English. Why?**
 Two separate activations are required. First, the language must be set to Active on the Languages tab. Second, the language must be toggled on for each specific instrument (for data entry mode, survey mode, or both) on the Forms/Surveys tab. If either step is missing, the language will not appear.
@@ -397,10 +408,10 @@ No. Switching languages in real-time only changes the display. Data already ente
 
 # 11. Related Articles
 
-- RC-SURV-01 — Survey Setup *(see for enabling instruments as surveys)*
-- RC-ALERT-01 — Alerts and Notifications Setup *(see for alert configuration; MLM language source is set in the base language Alerts tab)*
-- RC-AT-09 — Action Tags: Calculations *(see RC-AT series for general action tag guidance)*
-- RC-AT-11 — Action Tags: Mobile App *(MyCap-specific action tags)*
-- RC-AI-03 — AI Translations *(AI-assisted translation integrates with MLM language IDs and display names)*
-- RC-CC-20 — Control Center: Multi-Language Management *(system-level MLM configuration: enabling MLM, managing system languages, setting access restrictions)*
-- RC-NAV-UI-02 — Project Menu Reference *(the Multi-Language Management item appears in the Applications section of the left menu when MLM is enabled)*
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)(see for enabling instruments as surveys)*
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(see for alert configuration; MLM language source is set in the base language Alerts tab)*
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(see RC-AT series for general action tag guidance)*
+- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)(MyCap-specific action tags)*
+- [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md) *(AI-assisted translation integrates with MLM language IDs and display names)*
+- [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md) *(system-level MLM configuration: enabling MLM, managing system languages, setting access restrictions)*
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) *(the Multi-Language Management item appears in the Applications section of the left menu when MLM is enabled)*

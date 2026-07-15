@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Synonyms** | control center custom application links; add a link to the project applications menu; institution-defined links in every project; add a help desk or training portal link; custom menu links across all projects; put a link in the left-hand project menu; admin-configured project menu links; add external links to the redcap sidebar |
 
 ---
 

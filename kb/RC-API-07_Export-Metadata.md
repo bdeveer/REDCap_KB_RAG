@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md); [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)|
+| **Synonyms** | how do i export the data dictionary via the api; export metadata api call; download the data dictionary through the api; api method to get project field definitions; retrieve metadata for all fields and forms via api; pull branching logic and validation rules with the api; api endpoint to export project structure; get the data dictionary programmatically |
 
 ---
 

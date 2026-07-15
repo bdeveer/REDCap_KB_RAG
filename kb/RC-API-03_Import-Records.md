@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
+| **Synonyms** | how do i import records via the api; import records api call; create or update records through the api; push data into redcap programmatically; bulk upload record data with the api; api method to write json or csv records; overwrite behavior for record import api; load data into a project via api |
 
 ---
 

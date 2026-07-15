@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-FD-05 — Codebook](RC-FD-05_Codebook.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
+| **Synonyms** | how do i write branching logic for a checkbox; checkbox branching logic syntax; reference a single checkbox option in logic; branching logic based on dropdown or radio selection; what are raw coded values for branching logic; checkbox sub-variable syntax; show field when a specific checkbox is ticked; branching logic for multiple choice fields |
 
 ---
 

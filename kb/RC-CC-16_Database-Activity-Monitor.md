@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md); [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)|
+| **Synonyms** | control center database activity monitor; view active mysql queries in redcap; real-time database process list; diagnose slow or long-running database queries; see what queries are running on the db server; mariadb process list monitor admin; database performance troubleshooting tool; monitor live database activity |
 
 ---
 

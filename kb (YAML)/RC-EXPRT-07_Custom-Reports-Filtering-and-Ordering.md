@@ -25,11 +25,20 @@ related:
 tags:
 - exports, reports & stats
 - data
+synonyms:
+- how to filter a custom report
+- add filter logic to a report
+- show only records matching a condition in a report
+- sort report results
+- order report by field
+- report builder step 3 and 4
+- limit report to certain events or records
+- filter report by branching logic conditions
 ---
 
 # 1. Overview
 
-This article covers Step 3 (filters) and Step 4 (result ordering) of the REDCap custom report builder. Filters control which records appear in a report; ordering controls the sequence in which results are displayed. Both steps are entirely optional — a report with no filters returns all records in the project, ordered by record ID by default. This is the second article in the Custom Reports series; it assumes familiarity with report creation and field selection covered in RC-EXPRT-06.
+This article covers Step 3 (filters) and Step 4 (result ordering) of the REDCap custom report builder. Filters control which records appear in a report; ordering controls the sequence in which results are displayed. Both steps are entirely optional — a report with no filters returns all records in the project, ordered by record ID by default. This is the second article in the Custom Reports series; it assumes familiarity with report creation and field selection covered in [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md).
 
 ---
 
@@ -198,18 +207,18 @@ To specify a custom order:
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-38 — Export Reports API** — the same filtering and ordering defined in the report are applied when exporting via API
+- **[RC-API-38 — Export Reports API](RC-API-38_Export-Reports.md)** — the same filtering and ordering defined in the report are applied when exporting via API
 
 ---
 
 
 # 8. Related Articles
 
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection (prerequisite — report creation and field selection)
-- RC-EXPRT-08 — Custom Reports: Management & Organization (saving reports, organizing into folders)
-- RC-BL-01 — Branching Logic: Overview & Scope (background on the logic system shared with report filters)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (syntax reference for Advanced Logic)
-- RC-DAG-01 — Data Access Groups (background on DAGs referenced in event/DAG filters and live filters)
-- RC-LONG-01 — Longitudinal Project Setup (background on events referenced in longitudinal filter options)
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) (prerequisite — report creation and field selection)
+- [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md) (saving reports, organizing into folders)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (background on the logic system shared with report filters)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (syntax reference for Advanced Logic)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAGs referenced in event/DAG filters and live filters)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (background on events referenced in longitudinal filter options)

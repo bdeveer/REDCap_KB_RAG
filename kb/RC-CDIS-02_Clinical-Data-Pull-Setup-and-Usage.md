@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md); [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md); [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)|
+| **Synonyms** | how do i pull ehr data one patient at a time; set up clinical data pull cdp; adjudicate imported clinical data before saving; review and approve ehr data in redcap; real-time prospective clinical data collection; map ehr fields to redcap fields cdp; patient-by-patient clinical data import; cdp adjudication workflow |
 
 ---
 

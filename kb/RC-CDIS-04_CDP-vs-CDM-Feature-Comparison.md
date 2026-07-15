@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md); [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md); [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
+| **Synonyms** | should i use cdp or cdm for my project; compare clinical data pull and clinical data mart; which cdis module is right for my study; cdp vs cdm differences; bulk import versus patient-by-patient ehr import; choose between data pull and data mart; feature comparison clinical data modules; when to use clinical data pull or data mart |
 
 ---
 

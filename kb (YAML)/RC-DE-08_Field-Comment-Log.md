@@ -21,9 +21,18 @@ related:
 - id: RC-NAV-UI-02
   title: Project Menu Reference
 - id: RC-NAV-REC-04
-  title: Record Status Dashboard
+  title: Record Status Dashboard & Other Record Links
 tags:
 - data entry
+synonyms:
+- how do i add a comment to a field
+- leave a note on a data value
+- field comment log how to use
+- annotate a field during data entry
+- where do field comments show up
+- add an explanatory note to a record value
+- comment on a specific data point
+- field-level notes and annotations
 ---
 
 # 1. Overview
@@ -91,7 +100,7 @@ The field comment balloon is not displayed in the following situations:
 
 **Feature disabled for the project.** If the project administrator has turned off the field comment log, no balloons will appear anywhere in the project and the field comment log application will not be accessible.
 
-**Embedded variables.** Variables that have been embedded into the body of an instrument (using the field embedding feature) typically lose the balloon because the UI element that hosts the balloon is not rendered in the embedded context. See RC-FD-07 — Field Embedding.
+**Embedded variables.** Variables that have been embedded into the body of an instrument (using the field embedding feature) typically lose the balloon because the UI element that hosts the balloon is not rendered in the embedded context. See [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md).
 
 **Survey mode.** When an instrument is presented as a participant-facing survey, the field comment feature is not available. Comments can only be added when the instrument is accessed by a staff user in data entry mode.
 
@@ -149,7 +158,7 @@ The Field Comment Log is enabled by default for most REDCap projects. To confirm
 5. Confirm **Field Comment Log** is selected, or select it if another mode is active.
 6. Click **Save**.
 
-REDCap projects support three modes: Field Comment Log, Data Resolution Workflow, and None. Only one mode can be active at a time. For more on the differences between modes and guidance on when to use DRW instead of the Field Comment Log, see RC-DE-12 — Data Resolution Workflow.
+REDCap projects support three modes: Field Comment Log, Data Resolution Workflow, and None. Only one mode can be active at a time. For more on the differences between modes and guidance on when to use DRW instead of the Field Comment Log, see [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md).
 
 ### 7.2 Enabling Comment Editing and Deletion
 
@@ -176,7 +185,7 @@ When enabled, a pencil (edit) icon and a red X (delete) icon appear next to each
 
 **Q: I cannot see any comment balloons in my instrument. Why?**
 
-**A:** The most likely reasons are: (1) the field comment log feature has been disabled for this project by an administrator, (2) the variable is embedded within the instrument (see RC-FD-07 — Field Embedding), or (3) you are viewing the instrument in survey mode rather than data entry mode.
+**A:** The most likely reasons are: (1) the field comment log feature has been disabled for this project by an administrator, (2) the variable is embedded within the instrument (see [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md)), or (3) you are viewing the instrument in survey mode rather than data entry mode.
 
 **Q: Who can see the comments I add?**
 
@@ -206,23 +215,23 @@ When enabled, a pencil (edit) icon and a red X (delete) icon appear next to each
 
 # 10. Administrator Configuration
 
-The Field Comment Log is available in all REDCap projects but has a system-level default setting that affects new projects. Administrators can configure whether the Field Comment Log is **enabled by default** for all newly created projects in the Control Center under System Configuration → General Configuration (see **RC-CC-02**, "Field Comment Log Default" setting).
+The Field Comment Log is available in all REDCap projects but has a system-level default setting that affects new projects. Administrators can configure whether the Field Comment Log is **enabled by default** for all newly created projects in the Control Center under System Configuration → General Configuration (see **[RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)**, "Field Comment Log Default" setting).
 
 When set to enabled by default, every new project starts with the Field Comment Log active. Project administrators can change this per project from Project Setup → Additional Customizations.
 
-The Field Comment Log and the Data Resolution Workflow (RC-DE-12) are mutually exclusive — a project runs in one mode at a time. The system-level default affects which mode new projects start in, but the mode can always be changed at the project level.
+The Field Comment Log and the Data Resolution Workflow ([RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md)) are mutually exclusive — a project runs in one mode at a time. The system-level default affects which mode new projects start in, but the mode can always be changed at the project level.
 
-> **See also:** RC-CC-02 — Control Center: General System Configuration
+> **See also:** [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)
 
 ---
 
 # 11. Related Articles
 
-- RC-DE-02 — Basic Data Entry (foundational data entry skills)
-- RC-DE-04 — Editing Data & Audit Trail (related audit and annotation features)
-- RC-DE-05 — Field Validations (the field comment log is often used in conjunction with validation errors to document data issues)
-- RC-DE-12 — Data Resolution Workflow (the structured alternative to the Field Comment Log, with query tracking, assignment, and resolution metrics)
-- RC-FD-07 — Field Embedding (explains why embedded variables may lack a comment balloon)
-- RC-CC-02 — Control Center: General System Configuration (system-level Field Comment Log default for new projects)
-- RC-NAV-UI-02 — Project Menu Reference (the Field Comment Log appears in the Applications section; replaced by the Data Resolution Workflow when that feature is enabled)
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links (Record ID links in the Field Comment Log navigate to the Record Home Page; variable-level links navigate to the specific field)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (related audit and annotation features)
+- [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) (the field comment log is often used in conjunction with validation errors to document data issues)
+- [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) (the structured alternative to the Field Comment Log, with query tracking, assignment, and resolution metrics)
+- [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md) (explains why embedded variables may lack a comment balloon)
+- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (system-level Field Comment Log default for new projects)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Field Comment Log appears in the Applications section; replaced by the Data Resolution Workflow when that feature is enabled)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (Record ID links in the Field Comment Log navigate to the Record Home Page; variable-level links navigate to the specific field)

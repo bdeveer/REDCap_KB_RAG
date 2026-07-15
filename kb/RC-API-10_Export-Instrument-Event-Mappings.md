@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)|
+| **Synonyms** | how do i export instrument-event mappings via the api; export instrument event mapping api call; get which forms appear at each event through the api; api method to retrieve form-to-event assignments; list instrument designations per event via api; pull longitudinal instrument event map with the api; api endpoint to export event form mappings; see which instruments are mapped to events programmatically |
 | **Important** | **Longitudinal projects only** — This method is only available for longitudinal projects (projects with multiple arms and/or repeating events). Classic projects do not have instrument-event mappings. |
 
 ---

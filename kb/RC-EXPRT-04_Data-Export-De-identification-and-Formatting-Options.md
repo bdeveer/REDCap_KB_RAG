@@ -11,6 +11,7 @@
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md); [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md)|
+| **Synonyms** | how to deidentify exported data; remove identifiers from my export; export data without phi; hide free text and dates on export; shift dates for de-identification; export formatting options explained; mask identifying fields when downloading; remove names and mrn from export |
 
 ---
 

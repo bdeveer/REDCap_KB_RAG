@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF; [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) |
+| **Synonyms** | @CALCTEXT action tag; @CALCDATE action tag; how do i make a calculated text field; calculate a date difference with an action tag; turn a text box into a calculated field; conditional text output with @CALCTEXT; date arithmetic action tag; calc field that returns text instead of a number |
 
 ---
 

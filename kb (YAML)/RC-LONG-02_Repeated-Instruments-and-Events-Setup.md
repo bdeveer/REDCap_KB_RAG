@@ -18,10 +18,19 @@ related:
 - id: RC-NAV-REC-03
   title: Repeated Instruments & Repeated Events
 - id: RC-BL-01
-  title: Branching Logic Overview & Scope
+  title: 'Branching Logic: Overview & Scope'
 tags:
 - longitudinal & repeated setup
 - longitudinal
+synonyms:
+- how do i set up a repeating instrument
+- enable repeatable forms or events
+- fill out the same form multiple times per record
+- one-to-many data collection in redcap
+- repeat an entire event as a group
+- numbered instances of an instrument
+- set up a medication log that repeats
+- difference between repeated instruments and repeated events
 ---
 
 # 1. Overview
@@ -30,7 +39,7 @@ This article explains how to configure repeatable instruments and repeatable eve
 
 Repeated instruments can be used in both non-longitudinal and longitudinal projects. Repeated events require a longitudinal setup. The two modes cannot be combined within the same event: an event is either configured for repeated instruments or repeated as a whole, not both.
 
-This article covers setup only. For how repeated instruments and events appear during data entry, see RC-NAV-REC-03 — Repeated Instruments & Repeated Events.
+This article covers setup only. For how repeated instruments and events appear during data entry, see [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md).
 
 ---
 
@@ -50,7 +59,7 @@ An event (with all its designated instruments) configured to be collected multip
 
 **Instance**
 
-A single numbered occurrence of a repeated instrument or repeated event. Instance 1 is the first submission, instance 2 is the second, and so on. Instance numbers are assigned sequentially and do not reset between events.
+A single numbered occurrence of a repeated instrument or repeated event. Instance 1 is the first submission, instance 2 is the second, and so on. Instance numbers are assigned sequentially. For repeated instruments, numbering is independent per instrument per event — each event's instance counter starts at 1.
 
 **Custom Label (Repeated)**
 
@@ -128,7 +137,7 @@ Custom labels attach a descriptive tag to each instance, making it easier to ide
 
 **For repeated instruments:** Define the custom label in the repeating instrument/event configuration menu (the popup in Project Setup). Enter a piping expression in the custom label field next to the instrument's name.
 
-**For repeated events:** The custom label field in the repeating instrument/event popup is greyed out for events configured as "Repeat entire event." Instead, define the custom event label in the **Define My Events** page using the **Custom Event Label** column — see RC-LONG-01 — Longitudinal Project Setup, Section 4.2.
+**For repeated events:** The custom label field in the repeating instrument/event popup is greyed out for events configured as "Repeat entire event." Instead, define the custom event label in the **Define My Events** page using the **Custom Event Label** column — see [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md), Section 4.2.
 
 Both locations use the same piping syntax. Custom labels support combining multiple piped variables with free text between them — for example, `[visit_date], [weight] kg` produces a label like "2026-03-15, 72 kg", and `[version] - [change_type] - RC[redcap_version]` produces a label like "2.1.0 - Bug fix - RC16.1". There is no limit on the number of variables or the amount of free text in the label.
 
@@ -161,9 +170,9 @@ Configuring repeated instruments or events changes behavior in several other are
 
 In standard projects, variables in repeated instruments can generally be referenced within the same instrument using local branching logic (no event prefix needed). However, you cannot reliably reference a variable from a repeated instrument or repeated event in logic that runs outside that repeated context.
 
-REDCap provides a set of smart variables (e.g., `@current-instance`) to reference values within the same set of instances, but cross-instance and cross-event references from within a repeated instrument are not reliably supported. Do not design logic that depends on comparing values across multiple instances of a repeated instrument.
+REDCap supports cross-instance references in branching logic using two methods: a direct instance number (e.g., `[variable_name][1]`, or `[event_name][variable_name][1]` in longitudinal projects) or smart variables such as `[previous-instance]`, `[next-instance]`, `[first-instance]`, and `[last-instance]`. Smart variables are the preferred approach inside a repeated instrument when the target instance is relative to the current one. For the full syntax and examples, see [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md), Section 5.3.
 
-See RC-BL-01 — Branching Logic Overview & Scope for general branching logic guidance.
+See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) for general branching logic guidance.
 
 ## 8.2 Piping
 
@@ -280,33 +289,33 @@ This is useful in intervention/control designs: the intervention arm may need vi
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-10 — Export Instrument-Event Mappings API** — retrieve instrument-event assignments, including repeating configuration
-- **RC-API-11 — Import Instrument-Event Mappings API** — update instrument-event assignments including repeating instrument setup
+- **[RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)** — retrieve instrument-event assignments, including repeating configuration
+- **[RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md)** — update instrument-event assignments including repeating instrument setup
 
 ---
 
 
 # 11. Administrator Configuration
 
-Whether project-level users can modify the repeating instruments and events configuration on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **RC-CC-04**, "Allow Normal Users to Modify Repeating Instruments & Events in Production").
+Whether project-level users can modify the repeating instruments and events configuration on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Normal Users to Modify Repeating Instruments & Events in Production").
 
 When this setting is disabled — which is the default in most instances — only REDCap administrators can change a project's repeating configuration while it is in Production status. Users who need this change must contact the REDCap support team.
 
 When the setting is enabled, users with Project Design and Setup rights can make repeating configuration changes in Production without administrator involvement.
 
-> **See also:** RC-CC-04 — Control Center: User Settings & Defaults
+> **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)
 
 ---
 
 # 12. Related Articles
 
-- RC-CC-04 — Control Center: User Settings & Defaults (controls whether users can modify repeating setup in Production)
-- RC-LONG-01 — Longitudinal Project Setup (setting up arms, events, and instrument designations — prerequisite for longitudinal repeated setups)
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events (how instances appear during data entry)
-- RC-NAV-REC-02 — Longitudinal Mode & Arms (navigating longitudinal records)
-- RC-FD-01 — Form Design Overview (building instruments before configuring repeatability)
-- RC-FD-02 — Online Designer (creating and managing instruments)
-- RC-BL-01 — Branching Logic Overview & Scope (how repeated setups affect branching logic)
-- RC-DE-03 — Longitudinal Projects & DAGs (data entry in a longitudinal and repeated context)
+- [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) (controls whether users can modify repeating setup in Production)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (setting up arms, events, and instrument designations — prerequisite for longitudinal repeated setups)
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) (how instances appear during data entry)
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) (navigating longitudinal records)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (building instruments before configuring repeatability)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (creating and managing instruments)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(how repeated setups affect branching logic)
+- [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (data entry in a longitudinal and repeated context)

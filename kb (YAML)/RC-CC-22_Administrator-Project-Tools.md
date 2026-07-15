@@ -19,6 +19,15 @@ related:
   title: Project Menu Reference
 tags:
 - control center (admin)
+synonyms:
+- how do i view a project as a specific user
+- impersonate a user to troubleshoot their access
+- see what a user sees in a project as admin
+- jump to a project by pid
+- project switcher quick navigation
+- admin troubleshooting tool for user rights
+- reproduce a user issue without their password
+- go directly to a project using project id
 ---
 
 # 1. Overview
@@ -94,7 +103,7 @@ The Project Switcher appears in two places:
 
 Type the PID of the target project into the input field and press Enter. REDCap navigates immediately to that project's home page.
 
-> **Tip:** The Project Switcher also supports shortcuts for common admin destinations. For example, entering a PID followed by `eps` (e.g., `1234 eps`) jumps directly to the Edit Project Settings page for that project in the Control Center. See RC-CC-24 for details.
+> **Tip:** The Project Switcher also supports shortcuts for common admin destinations. For example, entering a PID followed by `eps` (e.g., `1234 eps`) jumps directly to the Edit Project Settings page for that project in the Control Center. See [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md) for details.
 
 ---
 
@@ -136,9 +145,9 @@ The PID appears in the URL when you are inside a project (e.g., `...redcap.php?p
 
 # 6. Related Articles
 
-- RC-CC-07 — Control Center: Users & Access Management (managing user accounts and global access)
-- RC-CC-24 — Control Center: Edit Project Settings (project-level admin configuration; Project Switcher `eps` shortcut)
-- RC-CC-21 — Control Center: Overview & Navigation (CC structure and navigation)
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (how project privileges are configured)
-- RC-USER-02 — User Rights: Adding Users & Managing Roles (assigning roles and rights to project members)
-- RC-NAV-UI-02 — Project Menu Reference (full reference for the project left-hand menu)
+- [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (managing user accounts and global access)
+- [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md) (project-level admin configuration; Project Switcher `eps` shortcut)
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) (CC structure and navigation)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (how project privileges are configured)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (assigning roles and rights to project members)
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (full reference for the project left-hand menu)

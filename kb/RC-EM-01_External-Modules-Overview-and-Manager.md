@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)|
+| **Synonyms** | how do i install an external module; enable a module for my project; download a module from the redcap repo; what are external modules in redcap; module manager in the control center; configure external module settings; add functionality with a plugin module; enable or disable modules system-wide |
 
 ---
 

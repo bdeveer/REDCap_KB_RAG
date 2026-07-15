@@ -5,17 +5,26 @@ domain: Action Tags
 applies_to:
 - REDCap projects with Multi-Language Management (MLM) enabled
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 - Multi-Language Management must be configured in the project
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Action Tags Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-08
-  title: '@IF'
+  title: 'Action Tags: @IF — Conditional Logic — @IF'
 tags:
 - action tags
+synonyms:
+- '@LANGUAGE-SET action tag'
+- '@LANGUAGE-FORCE action tag'
+- '@LANGUAGE-CURRENT-FORM and @LANGUAGE-CURRENT-SURVEY tags'
+- how do i force a survey into a specific language
+- multi-language management action tags
+- capture the current language into a field
+- switch language based on a field value
+- mlm language action tags
 ---
 
 # 1. Overview
@@ -181,5 +190,5 @@ When present on any field of a survey page in a project with MLM active (with at
 
 # 9. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and how to add them
-- RC-AT-08 — @IF: using @LANGUAGE-FORCE conditionally based on other field values
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: using @LANGUAGE-FORCE conditionally based on other field values

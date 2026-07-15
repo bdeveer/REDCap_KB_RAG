@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DDP-01 — Dynamic Data Pull — Overview & User Guide](RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md); [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) |
+| **Synonyms** | how do i configure dynamic data pull as admin; enable ddp in the control center; ddp web service technical specifications; build the web services for dynamic data pull; set up the source system connection for ddp; ddp http post request format; admin setup for external data integration; host web services to support ddp |
 
 ---
 

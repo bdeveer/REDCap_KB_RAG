@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) |
+| **Synonyms** | how do i export dags via the api; export data access groups api call; get the list of dags through the api; api method to retrieve dag names and unique group names; pull data access group structure with the api; audit dags programmatically; api endpoint to export data access groups; list data access groups in a project via api |
 
 ---
 

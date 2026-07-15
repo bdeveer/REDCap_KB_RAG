@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-03
-  title: Security & Authentication
+  title: 'Control Center: Security & Authentication'
 - id: RC-CC-09
-  title: To-Do List
+  title: 'Control Center: To-Do List'
 - id: RC-CC-11
-  title: System Statistics
+  title: 'Control Center: System Statistics'
 tags:
 - control center (admin)
+synonyms:
+- control center notifications and reporting dashboard
+- redcap system health warnings page
+- control center server configuration alerts
+- where do i see redcap update alerts
+- consortium reporting tools in control center
+- main control center landing page
+- temp directory and web server warnings
+- admin notifications and warnings section
 ---
 
 # 1. Overview
@@ -131,7 +140,7 @@ The Notifications & Reporting page displays the date statistics were last succes
 
 # 9. Related Articles
 
-- RC-CC-02 — Control Center: General System Configuration (Consortium reporting settings, Easy Upgrade configuration)
-- RC-CC-03 — Control Center: Security & Authentication (server security recommendations)
-- RC-CC-06 — Control Center: Modules & Services (external module management overview)
-- RC-EM-01 — External Modules Overview (external module concepts and management)
+- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (Consortium reporting settings, Easy Upgrade configuration)
+- [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) (server security recommendations)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)(external module management overview)
+- [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)(external module concepts and management)

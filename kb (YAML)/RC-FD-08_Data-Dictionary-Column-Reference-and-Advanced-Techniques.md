@@ -21,11 +21,20 @@ related:
 tags:
 - form design
 - instruments
+synonyms:
+- what does each data dictionary column mean
+- data dictionary column reference
+- which columns are required in the data dictionary
+- allowed values for choices and validation columns
+- advanced excel tips for large data dictionaries
+- meaning of the 18 data dictionary fields
+- format reference for data dictionary csv
+- how to fill in each dictionary column correctly
 ---
 
 # 1. Overview
 
-This article is a 201-level reference for the REDCap Data Dictionary. It assumes familiarity with the Data Dictionary concept and basic workflow covered in RC-FD-03 — Data Dictionary. The article provides a complete column-by-column reference for all 18 Data Dictionary columns, explains which columns are mandatory versus optional, documents the allowed syntax and codes for each column, and covers advanced Excel techniques that make working with large data dictionaries faster and more reliable. It also addresses best practices specific to mobile data collection and longitudinal project designs.
+This article is a 201-level reference for the REDCap Data Dictionary. It assumes familiarity with the Data Dictionary concept and basic workflow covered in [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md). The article provides a complete column-by-column reference for all 18 Data Dictionary columns, explains which columns are mandatory versus optional, documents the allowed syntax and codes for each column, and covers advanced Excel techniques that make working with large data dictionaries faster and more reliable. It also addresses best practices specific to mobile data collection and longitudinal project designs.
 
 ---
 
@@ -205,7 +214,7 @@ The Field Type determines how REDCap renders the variable in data entry and surv
 | `yesno` | Built-in Yes/No radio; no choices column needed |
 | `truefalse` | Built-in True/False radio; no choices column needed |
 
-> **Important:** Do not use the `sql` field type. This is reserved for REDCap system administrators. Do not edit existing `sql` rows. See RC-FD-12 — Dynamic SQL Field Type for full documentation on this field type.
+> **Important:** Do not use the `sql` field type. This is reserved for REDCap system administrators. Do not edit existing `sql` rows. See [RC-FD-12 — Dynamic SQL Field Type](RC-FD-12_Dynamic-SQL-Field-Type.md) for full documentation on this field type.
 
 ---
 
@@ -321,7 +330,7 @@ Branching logic controls whether a variable is displayed based on the value of o
 
 **Tip:** For bulk logic changes, use Excel's Find & Replace or cell references to craft logic across many rows efficiently. See Section 7 for advanced Excel techniques.
 
-> **Cross-reference:** See RC-BL-01 — RC-BL-04 for comprehensive branching logic syntax documentation.
+> **Cross-reference:** See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) — [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md) for comprehensive branching logic syntax documentation.
 
 ---
 
@@ -377,7 +386,7 @@ For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`, `slider`
 
 **Interaction with Enhanced Radio Buttons and Checkboxes**
 
-When the Enhanced Radios and Checkboxes survey setting is active (see RC-SURV-02), standard choice rendering is replaced with large block-style buttons. The alignment code continues to apply in enhanced mode:
+When the Enhanced Radios and Checkboxes survey setting is active (see [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md)), standard choice rendering is replaced with large block-style buttons. The alignment code continues to apply in enhanced mode:
 
 - **V codes (RV, LV):** Enhanced buttons each fill the full container width, stacking one per row.
 - **H codes (LH, RH):** Enhanced buttons are rendered in a two-column grid (approximately 50% width each), producing a side-by-side layout on medium and larger screens.
@@ -392,7 +401,7 @@ When the Enhanced Radios and Checkboxes survey setting is active (see RC-SURV-02
 
 > **Important:** Use only these four codes exactly as written. Any other value will cause the upload to fail.
 
-> **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices. See RC-SURV-02 — Survey Settings: Basic Options & Design for documentation of the Enhanced Radio Buttons and Checkboxes survey setting.
+> **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices. See [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) for documentation of the Enhanced Radio Buttons and Checkboxes survey setting.
 
 ---
 
@@ -464,7 +473,7 @@ The Field Annotation column serves two purposes: it stores designer notes visibl
 
 > **Important:** Format the cell as plain text before typing an action tag in Excel. If the cell is formatted as General and you type `@`, Excel may interpret it as a formula prefix and flag an error.
 
-> **Cross-reference:** See RC-AT-01 — Action Tags: Overview for a complete action tag reference.
+> **Cross-reference:** See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) for a complete action tag reference.
 
 ---
 
@@ -708,24 +717,24 @@ This nesting must be repeated for each instance you wish to pre-populate (typica
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-06 — Export Field Names API** — retrieve field variable names, export field names, and choice labels programmatically
-- **RC-API-07 — Export Metadata (Data Dictionary) API** — export the full data dictionary (all columns described in this article) programmatically
-- **RC-API-08 — Import Metadata (Data Dictionary) API** — import a CSV matching the column structure described in this article to update the project design
+- **[RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)** — retrieve field variable names, export field names, and choice labels programmatically
+- **[RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)** — export the full data dictionary (all columns described in this article) programmatically
+- **[RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)** — import a CSV matching the column structure described in this article to update the project design
 
 ---
 
 
 # 12. Related Articles
 
-- RC-FD-01 — Form Design Overview (concept overview and tool selection)
-- RC-FD-02 — Online Designer (guardrailed alternative; use alongside the Data Dictionary)
-- RC-FD-03 — Data Dictionary (prerequisite; covers workflow, safety practices, and when to use the Data Dictionary)
-- RC-FD-05 — Codebook (reference for reviewing variable definitions without editing)
-- RC-BL-01 — Branching Logic: Overview & Scope (required for Column L)
-- RC-BL-02 — Branching Logic: Syntax & Atomic Statements (Column L syntax reference)
-- RC-LONG-01 — Longitudinal Project Setup (event setup, which the Data Dictionary does not cover)
-- RC-AT-01 — Action Tags: Overview (complete reference for Column R action tag codes)
-- RC-SURV-02 — Survey Settings: Basic Options & Design (Enhanced Radio Buttons setting and its interaction with Column N alignment codes)
-- RC-FD-12 — Dynamic SQL Field Type (full documentation on the admin-only `sql` field type code)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (concept overview and tool selection)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (guardrailed alternative; use alongside the Data Dictionary)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (prerequisite; covers workflow, safety practices, and when to use the Data Dictionary)
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (reference for reviewing variable definitions without editing)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (required for Column L)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (Column L syntax reference)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (event setup, which the Data Dictionary does not cover)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (complete reference for Column R action tag codes)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (Enhanced Radio Buttons setting and its interaction with Column N alignment codes)
+- [RC-FD-12 — Dynamic SQL Field Type](RC-FD-12_Dynamic-SQL-Field-Type.md) (full documentation on the admin-only `sql` field type code)

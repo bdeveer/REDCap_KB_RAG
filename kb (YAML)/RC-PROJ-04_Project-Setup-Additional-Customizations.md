@@ -28,13 +28,22 @@ related:
   title: Data Entry Trigger
 tags:
 - project
+synonyms:
+- how do i add a custom record label
+- change how record names are displayed
+- additional customizations project setup
+- configure pdf formatting and missing data codes
+- control data entry behaviors at the project level
+- show field values next to record id
+- project level display and annotation settings
+- where are the extra project setup options
 ---
 
 # 1. Overview
 
 The **Additional Customizations** section of the Project Setup page contains a collection of project-level settings that control how records are displayed, how data quality annotation works, how PDFs are formatted, how missing data is handled, and how various data entry behaviors are enforced. These settings are independent of one another and can be configured in any order. Most take effect immediately upon saving; none require Draft Mode.
 
-This article covers all settings available in that section. For settings related to project status, moving to Production, or design changes via Draft Mode, see RC-PROJ-01.
+This article covers all settings available in that section. For settings related to project status, moving to Production, or design changes via Draft Mode, see [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md).
 
 ---
 
@@ -102,9 +111,9 @@ REDCap provides two mutually exclusive annotation modes for tracking data questi
 
 **None** — Annotation is disabled. The balloon icon does not appear next to fields on data entry forms.
 
-**Field Comment Log** — The default mode. Users can click the balloon icon next to any field to leave a free-text comment. Comments are timestamped and attributed to the user who wrote them. All comments across the project can be viewed, searched, and downloaded from the Field Comment Log page. See RC-DE-08 for full details.
+**Field Comment Log** — The default mode. Users can click the balloon icon next to any field to leave a free-text comment. Comments are timestamped and attributed to the user who wrote them. All comments across the project can be viewed, searched, and downloaded from the Field Comment Log page. See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) for full details.
 
-**Data Resolution Workflow** — A structured query management system suited for clinical trials and studies with formal data quality requirements. Each annotation becomes a tracked query with an open/closed status and a full audit trail. Queries can be opened, responded to, and closed by users with appropriate privileges, and are accessible from both the data entry form and the Data Quality module. See RC-DE-12 for full details.
+**Data Resolution Workflow** — A structured query management system suited for clinical trials and studies with formal data quality requirements. Each annotation becomes a tracked query with an open/closed status and a full audit trail. Queries can be opened, responded to, and closed by users with appropriate privileges, and are accessible from both the data entry form and the Data Quality module. See [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) for full details.
 
 **Additional options for Field Comments:**
 - **Allow users to edit or delete Field Comments** — When enabled, users who posted a comment may edit or delete it. This option is not available for Data Resolution Workflow comments, which are always immutable once posted.
@@ -200,7 +209,7 @@ This returns TRUE if `age` is empty or if it contains any configured missing dat
 
 ## 7.6 Disabling per Field: @NOMISSING
 
-The missing data code feature is enabled for all fields by default. To disable it on a specific field — hiding the M icon for that field and preventing missing code entry — add the `@NOMISSING` action tag to that field's action tags column. See RC-AT-01 — Action Tags: Overview.
+The missing data code feature is enabled for all fields by default. To disable it on a specific field — hiding the M icon for that field and preventing missing code entry — add the `@NOMISSING` action tag to that field's action tags column. See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md).
 
 ## 7.7 Export Considerations
 
@@ -299,7 +308,7 @@ These branding options are useful for maintaining a consistent organizational id
 
 The **Data Entry Trigger (DET)** field allows a project to notify an external system every time a record is saved in REDCap. Enter a URL in this field and REDCap will send an HTTP POST request to that URL each time data is submitted via a data entry form or survey page — in real time.
 
-The DET is an advanced integration feature intended for technical users or developers who need to connect REDCap to an external application or script. Full documentation on the POST parameters sent, trigger conditions, and implementation guidance is covered in RC-INTG-01 — Data Entry Trigger.
+The DET is an advanced integration feature intended for technical users or developers who need to connect REDCap to an external application or script. Full documentation on the POST parameters sent, trigger conditions, and implementation guidance is covered in [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md).
 
 **Key points:**
 - Only one URL can be configured per project.
@@ -354,13 +363,13 @@ The DET is an advanced integration feature intended for technical users or devel
 
 # 16. Related Articles
 
-- RC-PROJ-01 — Project Lifecycle: Status and Settings (project statuses, moving to Production, Draft Mode)
-- RC-PROJ-02 — Project Setup Checklist (dependency-ordered walkthrough of full project configuration)
-- RC-DE-08 — Field Comment Log (full documentation for the FCL annotation mode)
-- RC-DE-12 — Data Resolution Workflow (full documentation for the DRW query management mode)
-- RC-DQ-01 — Data Quality Module (data quality rules; includes the Resolve Issues tab when DRW is enabled)
-- RC-AT-01 — Action Tags: Overview (action tags including @NOMISSING)
-- RC-BL-01 — Branching Logic: Overview & Scope (branching logic fundamentals relevant to the field-hiding behavior setting)
-- RC-ALERT-01 — Alerts & Notifications: Setup (alert configuration relevant to Protected Email Mode)
-- RC-CALC-01 — Special Functions Reference (includes isblankormissingcode() function documentation)
-- RC-INTG-01 — Data Entry Trigger (full documentation for the DET feature configured from this page)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, moving to Production, Draft Mode)
+- [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (dependency-ordered walkthrough of full project configuration)
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (full documentation for the FCL annotation mode)
+- [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) (full documentation for the DRW query management mode)
+- [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) (data quality rules; includes the Resolve Issues tab when DRW is enabled)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (action tags including @NOMISSING)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (branching logic fundamentals relevant to the field-hiding behavior setting)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alert configuration relevant to Protected Email Mode)
+- [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (includes isblankormissingcode() function documentation)
+- [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (full documentation for the DET feature configured from this page)

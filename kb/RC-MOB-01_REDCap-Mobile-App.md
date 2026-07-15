@@ -12,6 +12,7 @@
 | Last Updated | 2026 |
 | Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | Related Topics | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| Synonyms | how do i enter data offline on a mobile device; set up the redcap mobile app for study staff; collect data without internet then sync later; initialize a project on the mobile app with qr code; difference between the redcap mobile app and mycap; mobile app api token and initialization code; reset a mobile app user pin; sync offline records back to the redcap server |
 
 ---
 

@@ -12,9 +12,18 @@ related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
 - id: RC-PIPE-02
-  title: Piping in Longitudinal, Repeated Instruments & Modifiers
+  title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
 tags:
 - piping
+synonyms:
+- '[user-name] smart variable'
+- how to pipe the logged-in user full name with [user-fullname]
+- '[user-email] smart variable for current user'
+- pipe the current user data access group with [user-dag-name]
+- user smart variables for [user-role-name] and [user-role-label]
+- show who is logged in using user smart variables
+- '[user-dag-label] and [user-dag-id] piping'
+- reference the current redcap user in a form or email
 ---
 
 # 1. Overview
@@ -138,7 +147,7 @@ User smart variables in survey invitations and confirmation emails resolve based
 
 # 7. Related Articles
 
-- RC-PIPE-03 — Smart Variables Overview (overview of all smart variable categories)
-- RC-PIPE-02 — Piping in Longitudinal, Repeated Instruments & Modifiers (smart variable syntax and modifiers)
-- RC-AT-06 — Action Tags: Autofill (using user smart variables with @DEFAULT and @CALCTEXT)
-- RC-ALERT-01 — Alerts and Notifications Setup (using user smart variables in email alerts and notifications)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(smart variable syntax and modifiers)
+- [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md)(using user smart variables with @DEFAULT and @CALCTEXT)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(using user smart variables in email alerts and notifications)

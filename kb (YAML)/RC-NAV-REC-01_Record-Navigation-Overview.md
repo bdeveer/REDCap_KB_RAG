@@ -10,14 +10,23 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-NAV-REC-02
-  title: Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Events,
-    RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project
-    Navigation UI, RC-DE-01 — Record Creation and Record Home Page, RC-DE-02 — Basic
-    Data Entry, RC-LONG-01 — Longitudinal Project Setup, RC-LONG-02 — Repeated Instruments
-    and Events Setup, RC-IMP-01 — Data Import Overview, RC-EXPRT-06 — Custom Reports
-    Setup
+  title: 'Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Repeated
+    EventsRC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01
+    — Project Navigation UI, RC-DE-01 — Record Creation & the Record Home PageRC-DE-02
+    — Basic Data Entry, RC-LONG-01 — Longitudinal Project Setup, RC-LONG-02 — Repeated
+    Instruments & Events SetupRC-IMP-01 — Data Import Overview, RC-EXPRT-06 — Custom
+    Reports: Setup & Field Selection'
 tags:
 - record navigation
+synonyms:
+- how do i find a record in redcap
+- how to navigate to a participant record
+- what do the colored status dots mean
+- ways to open a record in a project
+- how to locate data for a subject
+- where do i go to enter data for a record
+- understanding instrument status indicators
+- how to search for a record id
 ---
 
 # 1. Overview
@@ -129,15 +138,14 @@ opening individual records.
 Every instrument in REDCap is represented by a colored dot. The color
 encodes the completion status of that instrument for a given record.
 
-  ----------------------------- -----------------------------------------------------------------------------------------------------------------------
-  **Dot Appearance**            **Meaning**
-  Grey                          Incomplete — no data has been entered. This is the default state.
-  Red                           Data has been saved, but the Form Status field is still set to Incomplete.
-  Yellow                        Form Status field is set to Unverified by a user.
-  Green                         Form Status field is set to Complete by a user.
-  Orange with white checkmark   The instrument was opened as a survey but only partially completed (e.g., participant closed the browser mid-survey).
-  Green with white checkmark    The instrument was completed in full as a survey.
-  ----------------------------- -----------------------------------------------------------------------------------------------------------------------
+| **Dot Appearance** | **Meaning** |
+| --- | --- |
+| Grey | Not started — no data has been entered. This is the default state. |
+| Red | Data has been saved, but the Form Status field is still set to Incomplete. |
+| Yellow | Form Status field is set to Unverified by a user. |
+| Green | Form Status field is set to Complete by a user. |
+| Orange with white checkmark | The instrument was opened as a survey but only partially completed (e.g., participant closed the browser mid-survey). |
+| Green with white checkmark | The instrument was completed in full as a survey. |
 
 **Important distinctions:**
 
@@ -151,9 +159,9 @@ encodes the completion status of that instrument for a given record.
 - Survey statuses (orange and green with checkmarks) are set
     automatically when a survey is submitted or partially completed.
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Technical Note:** Instrument status values are stored as part of the project dataset and can be manipulated in bulk via data import. Grey and red are both coded as 0; yellow = 1; green = 2. Survey statuses (orange checkmark = 1, green checkmark = 2) only appear when the instrument is used as a survey.
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Technical Note:** Form completion status is stored in `[instrument_complete]` with three coded values: 0 = Incomplete (covers both grey/not-started and red/data-saved-but-incomplete), 1 = Unverified, 2 = Complete. Survey completion status is stored in a separate field and also uses coded values: 1 = partial completion (orange checkmark), 2 = full completion (green checkmark). These are distinct fields — codes 1 and 2 mean different things in each system. Both can be set or exported via the API and data import/export.
+
 
 ---
 
@@ -182,7 +190,7 @@ not indicate an error.
 **Q: Can I change instrument statuses for many records at once?**
 
 **A:** Yes. Instrument statuses are stored in the dataset and can be set in
-bulk using REDCap\'s data import tools. Use coded values: 0 =
+bulk using REDCap's data import tools. Use coded values: 0 =
 incomplete, 1 = unverified, 2 = complete.
 
 **Q: What happens to the dot color if I enter a single data point but
@@ -215,34 +223,34 @@ field — changes the dot from grey to red.
 
 # 7. Related Articles
 
-- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout and
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) — the two-panel layout and
     how to navigate to a project from the REDCap home page
 
-- RC-NAV-REC-02 — Longitudinal Mode & Arms — how events and arms
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) — how events and arms
     change the Record Home Page and dashboard layout
 
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events — visual
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) — visual
     indicators and navigation for repeated entries
 
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links —
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) —
     detailed guide to the dashboard and all locations that link to
     records
 
-- RC-DE-01 — Record Creation & the Record Home Page — creating new
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) — creating new
     records and the full anatomy of the Record Home Page
 
-- RC-DE-02 — Basic Data Entry — step-by-step data entry on
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) — step-by-step data entry on
     instruments reached via the navigation paths described here
 
-- RC-LONG-01 — Longitudinal Project Setup — how events and arms are
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) — how events and arms are
     configured; prerequisite for understanding longitudinal navigation
 
-- RC-LONG-02 — Repeated Instruments & Events Setup — how repeated
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) — how repeated
     instruments and events are configured; prerequisite for
     understanding repeated-entry navigation
 
-- RC-IMP-01 — Data Import Overview — bulk-updating instrument
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) — bulk-updating instrument
     status values (the colored dots) via data import
 
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection — Record IDs
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)
     in custom reports are clickable links back to the Record Home Page

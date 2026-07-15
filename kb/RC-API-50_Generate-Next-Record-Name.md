@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md) |
+| **Synonyms** | generate next record name api method; how do i get the next record id via the api; api call to predict the next record name; find the next available record id through the api; api method to return the next auto-number record name; programmatically get the next record id before import with the api; next record name prediction using the api |
 
 ---
 

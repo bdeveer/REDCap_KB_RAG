@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md); [RC-DE-06 — Bio-Medical Ontologies](RC-DE-06_Bio-Medical-Ontologies.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
+| **Synonyms** | how do field validations work during data entry; why am i getting a validation error message; enforce a date or number format in a field; validation popup when entering data; valid format for email or phone field; out of range value validation; field validation data entry; understand validation error messages |
 
 ---
 

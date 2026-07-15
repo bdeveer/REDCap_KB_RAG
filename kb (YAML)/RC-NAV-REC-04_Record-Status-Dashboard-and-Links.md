@@ -10,15 +10,25 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-NAV-REC-01
-  title: Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03
-    — Repeated Instruments & Events, RC-NAV-UI-01 — Project Navigation UI, RC-NAV-UI-02
-    — Project Menu Reference, RC-USER-01 — User Rights Overview, RC-USER-03 — Configuring
-    User Privileges, RC-DAG-01 — Data Access Groups, RC-PROJ-03 — Project Dashboards,
-    RC-EXPRT-06 — Custom Reports Setup, RC-SURV-05 — Participant List and Survey Invitations,
-    RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 —
-    Data Quality Module
+  title: 'Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03
+    — Repeated Instruments & Repeated EventsRC-NAV-UI-01 — Project Navigation UI,
+    RC-NAV-UI-02 — Project Menu Reference, RC-USER-01 — User Rights: Overview & Three-Tier
+    AccessRC-USER-03 — User Rights: Configuring User PrivilegesRC-DAG-01 — Data Access
+    Groups, RC-PROJ-03 — Project Dashboards, RC-EXPRT-06 — Custom Reports: Setup &
+    Field SelectionRC-SURV-05 — Participant List & Manual Survey InvitationsRC-DE-08
+    — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-DQ-01 — Data Quality
+    Module'
 tags:
 - record navigation
+synonyms:
+- what is the record status dashboard
+- how to create a custom record dashboard
+- where to see all records and their completion status
+- how to make a custom dashboard filtered by criteria
+- clicking links to open records from the dashboard
+- view of all records as rows and instruments as columns
+- how to find record links throughout redcap
+- record status dashboard colored dots
 ---
 
 # 1. Overview
@@ -83,9 +93,9 @@ REDCap automatically filters the dashboard based on your access level:
 - Data Access Group (DAG) membership: if you are in a DAG, you only
     see records that belong to your DAG.
 
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Troubleshooting:** If instruments seem to be missing from the dashboard, the most likely cause is either a custom dashboard filter or your access level. Check whether you are viewing a custom dashboard vs. the default dashboard.
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Troubleshooting:** If instruments seem to be missing from the dashboard, the most likely cause is either a custom dashboard filter or your access level. Check whether you are viewing a custom dashboard vs. the default dashboard.
+
 
 ---
 
@@ -96,15 +106,14 @@ REDCap automatically filters the dashboard based on your access level:
 A user with Project Design rights can create custom dashboards with the
 following options:
 
-  ------------------------------ ------------------------------------------------------------------------------------------------------------------------------------------------
-  **Customization Option**       **What It Does**
-  Show a selection of events     Hides unused or less-relevant events to condense the view.
-  Filter by arm                  Shows records from one specific arm, or all arms.
-  Filter by logic                Applies a REDCap logic expression to show only matching records (e.g., only consented participants).
-  Group by event or instrument   Reorganizes the grid to group all instances of one instrument or event together — useful for reviewing adverse events across all timepoints.
-  Vertical header orientation    Rotates column headers to vertical text, narrowing columns when instrument or event names are long.
-  Custom sorting                 Sorts records by a variable other than Record ID (e.g., by date of birth or visit date).
-  ------------------------------ ------------------------------------------------------------------------------------------------------------------------------------------------
+| **Customization Option** | **What It Does** |
+| --- | --- |
+| Show a selection of events | Hides unused or less-relevant events to condense the view. |
+| Filter by arm | Shows records from one specific arm, or all arms. |
+| Filter by logic | Applies a REDCap logic expression to show only matching records (e.g., only consented participants). |
+| Group by event or instrument | Reorganizes the grid to group all instances of one instrument or event together — useful for reviewing adverse events across all timepoints. |
+| Vertical header orientation | Rotates column headers to vertical text, narrowing columns when instrument or event names are long. |
+| Custom sorting | Sorts records by a variable other than Record ID (e.g., by date of birth or visit date). |
 
 ## 4.2 Accessing Custom Dashboards
 
@@ -138,9 +147,9 @@ to the Record Home Page:
 
 - Calendars
 
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Important:** Survey invitation logs and the participant list only contain working Record ID links when the survey is in identified mode. In anonymous mode, the links are deactivated to protect respondent anonymity.
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> **Important:** Survey invitation logs and the participant list only contain working Record ID links when the survey is in identified mode. In anonymous mode, the links are deactivated to protect respondent anonymity.
+
 
 ## 5.2 Variable Links (to a Specific Instrument and Field)
 
@@ -217,47 +226,47 @@ project.
 
 # 8. Related Articles
 
-- RC-NAV-REC-01 — Record Navigation Overview — foundational article
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) — foundational article
     covering Add/Edit Records, the Record Home Page, and dot color
     meanings
 
-- RC-NAV-REC-02 — Longitudinal Mode & Arms — how arm tabs and
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) — how arm tabs and
     event columns appear on the dashboard in longitudinal projects
 
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events — stacked
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) — stacked
     dot indicators shown on the dashboard for repeated instruments
 
-- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) — the two-panel layout
     and how to reach the Record Status Dashboard from the menu
 
-- RC-NAV-UI-02 — Project Menu Reference — full reference for the
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) — full reference for the
     Data Collection menu section where the dashboard lives
 
-- RC-USER-01 — User Rights: Overview & Three-Tier Access — how
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) — how
     user permissions control which instruments appear on the dashboard
 
-- RC-USER-03 — User Rights: Configuring User Privileges — instrument-
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) — instrument-
     level access settings that filter dashboard visibility
 
-- RC-DAG-01 — Data Access Groups — DAG membership restricts which
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)
     records appear on the dashboard; key troubleshooting context
 
-- RC-PROJ-03 — Project Dashboards — creating custom dashboards that
+- [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md) — creating custom dashboards that
     filter, sort, or group the default dashboard view
 
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection — Report
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)
     Record IDs are clickable links to the Record Home Page; custom
     dashboards and reports are complementary tools
 
-- RC-SURV-05 — Participant List & Manual Survey Invitations — survey
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) — survey
     invitation logs contain Record ID links, but only in identified
     (non-anonymous) survey mode
 
-- RC-DE-08 — Field Comment Log — Record IDs in the comment log link
+- [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)
     to the Record Home Page; variable-level links also available
 
-- RC-DE-12 — Data Resolution Workflow — deep variable links to
+- [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) — deep variable links to
     specific instruments are available from this tool
 
-- RC-DQ-01 — Data Quality Module — variable-level links to specific
+- [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) — variable-level links to specific
     instruments and fields are available from data quality results

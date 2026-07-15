@@ -15,3 +15,6 @@ __pycache__/
 tools/
 
 site/
+
+# Local infra reference — personal sandbox, not for the KB
+LOCAL_REDCAP_SETUP.md

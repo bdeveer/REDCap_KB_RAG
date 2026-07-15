@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
+| **Synonyms** | how do i import data into redcap; ways to bulk import records and metadata; overview of import features; import data file formats supported; where is the data import tool; import project structure vs participant data; get started with importing into redcap; what can i upload into a project |
 
 ---
 

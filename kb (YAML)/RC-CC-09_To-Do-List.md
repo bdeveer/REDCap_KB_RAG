@@ -10,11 +10,20 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 - id: RC-PROJ-01
   title: 'Project Lifecycle: Status and Settings'
 tags:
 - control center (admin)
+synonyms:
+- control center to-do list task queue
+- approve draft changes requests admin
+- pending administrator action items
+- where do i review user requests in redcap
+- approve project move to production
+- admin approval queue control center
+- list of tasks awaiting administrator review
+- handle pending requests from users
 ---
 
 # 1. Overview
@@ -91,7 +100,7 @@ The To-Do List is tightly integrated with REDCap's Production mode workflow.
 5. The administrator reviews and approves or rejects the changes
 6. The changes take effect (if approved) or are returned for revision (if rejected)
 
-This workflow ensures that production projects remain stable and that all design modifications are intentionally reviewed and approved before implementation. See RC-PROJ-01 for detailed information on Production mode and the draft change process.
+This workflow ensures that production projects remain stable and that all design modifications are intentionally reviewed and approved before implementation. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for detailed information on Production mode and the draft change process.
 
 ---
 
@@ -131,5 +140,5 @@ Tasks are generated automatically by REDCap when specific actions occur (such as
 
 # 9. Related Articles
 
-- RC-CC-01 — Notifications & Reporting
-- RC-PROJ-01 — Project Lifecycle: Status and Settings
+- [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)

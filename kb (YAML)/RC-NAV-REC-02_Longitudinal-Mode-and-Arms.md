@@ -10,17 +10,26 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-NAV-REC-01
-  title: Record Navigation Overview, RC-NAV-REC-03 — Repeated Instruments & Events,
-    RC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01 — Project
-    Navigation UI, RC-LONG-01 — Longitudinal Project Setup, RC-DE-03 — Longitudinal
-    Projects and DAGs, RC-DE-10 — Longitudinal and Repeated Data Entry
+  title: Record Navigation Overview, RC-NAV-REC-03 — Repeated Instruments & Repeated
+    EventsRC-NAV-REC-04 — Record Status Dashboard & Other Record Links, RC-NAV-UI-01
+    — Project Navigation UI, RC-LONG-01 — Longitudinal Project Setup, RC-DE-03 — Longitudinal
+    Projects & DAGsRC-DE-10 — Longitudinal & Repeated Data Entry
 tags:
 - record navigation
+synonyms:
+- how do arms work in a longitudinal project
+- navigating events and timepoints in redcap
+- what is longitudinal mode
+- how to switch between arms for a record
+- how to move between baseline week 4 and month 6 events
+- difference between arms and events
+- collecting data across multiple timepoints
+- how to navigate the event grid
 ---
 
 # 1. Overview
 
-This article explains REDCap\'s Longitudinal mode and the concept of
+This article explains REDCap's Longitudinal mode and the concept of
 Arms — two features that allow data collection across multiple
 timepoints and participant cohorts. It describes how these features
 affect record navigation.
@@ -39,7 +48,7 @@ assigns instruments to each event.
 **Event**
 
 A named timepoint within a longitudinal project. Each event can have any
-subset of the project\'s instruments assigned to it. When viewing a
+subset of the project's instruments assigned to it. When viewing a
 record, each event appears as a separate column on the Record Home Page.
 
 **Arm**
@@ -112,7 +121,7 @@ intervention group vs. placebo group).
 
 **Q: What is the difference between an event and an arm?**
 
-**A:** An event is a single timepoint (e.g., \'Baseline visit\'). An arm is
+**A:** An event is a single timepoint (e.g., 'Baseline visit'). An arm is
 a collection of events that defines the overall study timeline for a
 particular cohort. Multiple arms let you define different timelines for
 different groups of participants.
@@ -144,7 +153,7 @@ Records only appear in the arm they belong to.
 
 - Expecting all instruments in every event: instruments are assigned
     to events individually. An instrument that is not assigned to a
-    given event will not appear in that event\'s column.
+    given event will not appear in that event's column.
 
 - Confusing events with arms: events are timepoints within a study
     timeline; arms are parallel timelines for different cohorts. These
@@ -154,24 +163,24 @@ Records only appear in the arm they belong to.
 
 # 7. Related Articles
 
-- RC-NAV-REC-01 — Record Navigation Overview — foundational article
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) — foundational article
     covering navigation paths and instrument status dots
 
-- RC-NAV-REC-03 — Repeated Instruments & Repeated Events — how
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) — how
     stacked dots and repeated columns work alongside longitudinal mode
 
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links —
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) —
     the arm tabs and event grid on the dashboard
 
-- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) — the two-panel layout
     and menu that contains the longitudinal navigation entry points
 
-- RC-LONG-01 — Longitudinal Project Setup — how to configure events,
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) — how to configure events,
     arms, and instrument-event mappings; the setup side of what this
     article covers from a navigation perspective
 
-- RC-DE-03 — Longitudinal Projects and DAGs — data entry workflow
+- [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md)
     specific to longitudinal projects with events and arms
 
-- RC-DE-10 — Longitudinal & Repeated Data Entry — detailed data
+- [RC-DE-10 — Longitudinal & Repeated Data Entry](RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md) — detailed data
     entry procedures for events and repeated instruments

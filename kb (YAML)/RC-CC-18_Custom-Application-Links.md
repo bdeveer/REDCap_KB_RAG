@@ -10,13 +10,22 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-21
-  title: Control Center Overview
+  title: 'Control Center: Overview & Navigation'
 - id: RC-CC-06
-  title: Modules & Services Configuration
+  title: 'Control Center: Modules & Services Configuration'
 - id: RC-API-01
   title: REDCap API
 tags:
 - control center (admin)
+synonyms:
+- control center custom application links
+- add a link to the project applications menu
+- institution-defined links in every project
+- add a help desk or training portal link
+- custom menu links across all projects
+- put a link in the left-hand project menu
+- admin-configured project menu links
+- add external links to the redcap sidebar
 ---
 
 **Custom Application Links** (found at **Control Center → Miscellaneous Modules → Custom Application Links**) allows administrators to add institution-defined links to the left-hand Applications menu of every project on the instance. These links can point to external websites, other REDCap projects, or internal resources such as a help desk form or training portal.
@@ -168,6 +177,6 @@ No. The external site can be anywhere, as long as it is accessible over the inte
 
 # 8. Related Articles
 
-- RC-CC-21 — Control Center Overview
-- RC-CC-06 — Modules & Services Configuration
-- RC-API-01 — REDCap API
+- [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)

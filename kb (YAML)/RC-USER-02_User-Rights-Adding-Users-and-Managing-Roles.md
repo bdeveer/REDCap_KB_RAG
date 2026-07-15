@@ -11,21 +11,32 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-USER-01
-  title: Overview & Three-Tier Access
+  title: 'User Rights: Overview & Three-Tier Access'
 - id: RC-USER-03
-  title: Configuring User Privileges
+  title: 'User Rights: Configuring User Privileges'
 - id: RC-USER-04
-  title: User Management
+  title: 'User Rights: User Management'
 - id: RC-DAG-01
   title: Data Access Groups
+- id: RC-CC-25
+  title: 'Control Center: Access Control Groups'
 tags:
 - user rights
 - user management
+synonyms:
+- how do i add a user to my project
+- give someone access to my redcap project
+- create a user role
+- apply the same rights to multiple users
+- assign a role to a user
+- manage roles in user rights
+- invite a colleague to a project
+- set up user roles for a team
 ---
 
 # 1. Overview
 
-This article covers how to add users to a REDCap project, how to use roles to apply pre-configured rights to multiple users at once, and how to manage roles. It is part of the User Rights series. Before a user can be added to a project, they must already have an active account in the REDCap installation — see RC-USER-01 for an explanation of the three-tier access model.
+This article covers how to add users to a REDCap project, how to use roles to apply pre-configured rights to multiple users at once, and how to manage roles. It is part of the User Rights series. Before a user can be added to a project, they must already have an active account in the REDCap installation — see [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) for an explanation of the three-tier access model.
 
 ---
 
@@ -49,7 +60,7 @@ An entry in the user list that looks like a real user but is not tied to an actu
 
 **DAG (Data Access Group)**
 
-A project-level grouping that restricts which records a user can see or interact with. A user can be assigned to a DAG at the time they are added to a project. See RC-DAG-01 — Data Access Groups for full details.
+A project-level grouping that restricts which records a user can see or interact with. A user can be assigned to a DAG at the time they are added to a project. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) for full details.
 
 **Bulk User Management**
 
@@ -80,7 +91,7 @@ Use this method when you want to configure a user's rights specifically, without
 2. In the section labeled "Add new user," enter the user's name, email address, or username in the search box.
 3. Select the correct user from the dropdown list of search results that appears.
 4. Click **+ Add with custom rights**.
-5. Configure the user's rights in the popup. See RC-USER-03 — Configuring User Privileges for details on each setting.
+5. Configure the user's rights in the popup. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
 6. Click **Add user** in the bottom right of the popup.
 
 If successful, the project will appear in the user's My Projects page.
@@ -96,7 +107,7 @@ Use this method when you want to add a user with a predefined set of rights (a r
 3. Select the correct user from the dropdown list of search results.
 4. Click **Assign to role**.
 5. In the popup, select the desired role from the **Select role** dropdown.
-6. Optionally, assign the user to a Data Access Group using the **Assign to DAG** dropdown. See RC-DAG-01 for more on DAGs.
+6. Optionally, assign the user to a Data Access Group using the **Assign to DAG** dropdown. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) for more on DAGs.
 7. The **Notify user via email** checkbox is checked by default. This sends the user an automated email confirming they have been added to a new project. This email is a useful way to confirm you selected the right user.
 8. Click **Assign** in the bottom right of the popup.
 
@@ -115,10 +126,10 @@ Roles are most valuable when multiple users need identical access — for exampl
 1. On the User Rights page, find the "Enter new role name" text box.
 2. Type a descriptive name for the role.
 3. Click **Create role**.
-4. Configure the desired user rights in the popup. See RC-USER-03 — Configuring User Privileges for details.
+4. Configure the desired user rights in the popup. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
 5. Click **Create role** in the bottom right of the popup.
 
-> **Note:** Roles cannot have a pre-assigned Data Access Group or a default expiration date. Both of those settings are configured per user, not per role. See RC-DAG-01 for DAG assignment options, and RC-USER-03 for expiration date configuration.
+> **Note:** Roles cannot have a pre-assigned Data Access Group or a default expiration date. Both of those settings are configured per user, not per role. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) for DAG assignment options, and [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for expiration date configuration.
 
 ## 5.3 Editing a Role
 
@@ -139,7 +150,7 @@ A ghost user is an entry in the user list that is not tied to a real REDCap acco
 
 Ghost users can look nearly identical to legitimate users in the list. The way to distinguish them is to look for the user's real name in parentheses after their username. A properly added user will have this (e.g., `jsmith123 (Jane Smith)`). A ghost user will not.
 
-Ghost users have no real account attached and are harmless in terms of data access, but they clutter the user list and should be cleaned up. Remove a ghost user the same way you would remove a real user — see RC-USER-04 — User Management.
+Ghost users have no real account attached and are harmless in terms of data access, but they clutter the user list and should be cleaned up. Remove a ghost user the same way you would remove a real user — see [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) — User Management.
 
 ---
 
@@ -233,7 +244,7 @@ All project users appear in this file, including those without a role assignment
 
 **Q: I entered a user's name but they didn't appear in the search results — what's wrong?**
 
-**A:** The user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added to any project. See **RC-INST-01 — Institution-Specific Settings & Policies, Section 5: User Account Creation** for the process at this installation.
+**A:** The user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added to any project. See **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
 
 **Q: Can I add someone to multiple projects at once?**
 
@@ -273,19 +284,20 @@ All project users appear in this file, including those without a role assignment
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-23 — Import Users API** — add users or update user permissions programmatically
-- **RC-API-25 — Export User Roles API** — retrieve all custom role definitions
-- **RC-API-26 — Import User Roles API** — create or modify custom user roles programmatically
-- **RC-API-27 — Delete User Roles API** — remove a role from the project programmatically
+- **[RC-API-23 — Import Users API](RC-API-23_Import-Users.md)** — add users or update user permissions programmatically
+- **[RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)** — retrieve all custom role definitions
+- **[RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)** — create or modify custom user roles programmatically
+- **[RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md)** — remove a role from the project programmatically
 
 ---
 
 
 # 10. Related Articles
 
-- RC-USER-01 — User Rights: Overview & Three-Tier Access (prerequisites and the three-tier model)
-- RC-USER-03 — User Rights: Configuring User Privileges (all individual right settings explained)
-- RC-USER-04 — User Rights: User Management (editing, suspending, and removing users)
-- RC-DAG-01 — Data Access Groups (assigning users to DAGs)
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (prerequisites and the three-tier model)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (all individual right settings explained)
+- [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) (editing, suspending, and removing users)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (assigning users to DAGs)
+- [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) (system-level ceiling on what privileges can be assigned; enforced at the point of user addition and privilege modification)

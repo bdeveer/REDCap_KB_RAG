@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md); [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) |
+| **Synonyms** | how do i back up my redcap project; export project as xml backup; does redcap have automatic backups; restore a project from a backup file; save project structure before making changes; metadata only vs full project export; recreate a project on another redcap instance; what is and isn't captured in a backup; cdisc odm xml export |
 
 ---
 

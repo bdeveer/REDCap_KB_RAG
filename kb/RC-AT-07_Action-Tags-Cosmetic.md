@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | @HIDEBUTTON action tag; @INLINE action tag; @INLINE-PREVIEW action tag; how do i remove the today now button from a date field; how do i show an uploaded file inline on the form; display image or pdf inline instead of a download link; cosmetic action tags for field display |
 
 ---
 

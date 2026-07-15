@@ -13,11 +13,20 @@ related:
 - id: RC-API-01
   title: REDCap API
 - id: RC-API-16
-  title: Export Arms
+  title: Export Arms API
 - id: RC-API-17
-  title: Import Arms
+  title: Import Arms API
 tags:
 - api
+synonyms:
+- how do i delete arms via the api
+- delete arms api call
+- remove study arms through the api
+- api method to delete arm numbers
+- remove an arm and its events and data via api
+- bulk delete arms with the api
+- api endpoint to delete arms
+- delete arms from a multi-arm project programmatically
 ---
 
 # 1. Overview
@@ -125,7 +134,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -182,7 +191,7 @@ Example response:
 
 # 7. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-16 — Export Arms (retrieve arm metadata from a project)
-- RC-API-17 — Import Arms (add or modify arms in a project)
-- RC-LONG-01 — Longitudinal Project Setup (arms overview; context for when deletion is appropriate)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)(retrieve arm metadata from a project)
+- [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)(add or modify arms in a project)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms overview; context for when deletion is appropriate)

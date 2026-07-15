@@ -18,6 +18,15 @@ related:
   title: 'Custom Reports: Setup & Field Selection'
 tags:
 - ai tools
+synonyms:
+- how do i summarize free text responses in redcap
+- ai summarize open-ended answers in a report
+- summarize a notes box variable across records
+- redcap report ai summary wizard wand icon
+- bulk summarize multiple variables with ai
+- find themes in free text data redcap
+- customize the ai summarization prompt
+- which field types can be summarized by ai
 ---
 
 # 1. Overview
@@ -183,9 +192,9 @@ Processing time depends on the amount of text data in the variable (number of re
 
 # 7. Related Articles
 
-- RC-AI-01 — REDCap AI Tools: Overview & Security
-- RC-AI-02 — AI Writing Tools
-- RC-AI-03 — AI Translations
-- RC-EXPRT-01 — Data Export: Overview & Workflow
-- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
-- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
+- [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md)
+- [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md)
+- [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
+- [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)
+- [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md)

@@ -19,9 +19,18 @@ related:
   title: Logging — Project Audit Trail
 tags:
 - data entry
+synonyms:
+- how do i delete a record
+- lock or unlock an entire record
+- rename a record id
+- download a pdf of a record
+- assign a record to a data access group
+- choose action for record menu options
+- record-level administrative actions
+- what does the choose action button do
 ---
 
-# RC-DE-13 — Record Administration: Choose Action for Record
+# [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md)
 
 ## Section 1: Overview
 
@@ -35,16 +44,16 @@ The **Choose action for record** button on the Record Home Page is the central c
 A dropdown button on the Record Home Page that exposes record-level administrative functions. It is distinct from instrument-level save options and from the data-editing actions available inside individual instruments. The button only displays actions the current user is permitted to perform; options requiring rights the user does not hold are omitted from the menu.
 
 ### Record Home Page
-The page that opens when a specific record is selected. It shows the instrument-event grid (in longitudinal projects) or the instrument list (in classic projects), the completion status of each instrument, and the **Choose action for record** button. See RC-DE-01 — Record Creation & the Record Home Page.
+The page that opens when a specific record is selected. It shows the instrument-event grid (in longitudinal projects) or the instrument list (in classic projects), the completion status of each instrument, and the **Choose action for record** button. See [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md).
 
 ### Current Arm (Longitudinal Projects)
 In longitudinal projects, several record-level actions — rename and delete — apply only to the arm currently being viewed. REDCap treats each arm as a semi-independent context for these operations. Navigating to a different arm and performing the same action affects that arm's data independently.
 
 ### Lock/Unlock Entire Record
-A setting that prevents any user from editing any instrument in the record until the lock is removed. This is distinct from locking an individual instrument. Locking an entire record requires the **Lock/Unlock entire records** user right. See RC-LOCK-01 — Record Locking & E-Signatures.
+A setting that prevents any user from editing any instrument in the record until the lock is removed. This is distinct from locking an individual instrument. Locking an entire record requires the **Lock/Unlock entire records** user right. See [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md).
 
 ### Data Access Group (DAG)
-A project-level grouping that restricts which records a user can see and edit. Assigning a record to a DAG means only users in that group (and those with no DAG assignment) can access it. See RC-DAG-01 — Data Access Groups.
+A project-level grouping that restricts which records a user can see and edit. Assigning a record to a DAG means only users in that group (and those with no DAG assignment) can access it. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 
 ---
 
@@ -105,7 +114,7 @@ After confirming:
 - The lock is visible in the instrument grid as a lock icon on each instrument.
 - Only a user with **Lock/Unlock entire records** rights can reverse it by selecting **Unlock entire record** from the same menu.
 
-The action is logged in the project's Logging module. For e-signature functionality and instrument-level locking, see RC-LOCK-01 — Record Locking & E-Signatures.
+The action is logged in the project's Logging module. For e-signature functionality and instrument-level locking, see [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md).
 
 ### 5.3 Assign to Data Access Group
 
@@ -116,7 +125,7 @@ After selecting a group and confirming:
 - If the performing user belongs to a DAG themselves, they may lose visibility of the record after assignment (if assigning to a different DAG).
 - The assignment change is logged.
 
-For full context on how DAGs affect data access, see RC-DAG-01 — Data Access Groups.
+For full context on how DAGs affect data access, see [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 
 ### 5.4 Rename Record
 
@@ -131,7 +140,7 @@ Behavior:
 
 > **Important:** Renaming a record does not retroactively update any piped or Smart Variable references that may have captured the old name in saved data. Calculated fields and piping that reference `[record-name]` will reflect the new name on next evaluation, but previously saved text values are not updated.
 
-For the API equivalent, see RC-API-05 — Rename Record API.
+For the API equivalent, see [RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md).
 
 ### 5.5 Delete Record (All Forms/Events)
 
@@ -150,7 +159,7 @@ Key behaviors:
 
 A separate delete operation — **Delete all data on event** — is available as a row of X icons at the bottom of the instrument-event grid on the Record Home Page. This deletes all instrument data for a single event (or a single repeating event instance) without deleting the record itself. It is governed by the same **Delete Records** right.
 
-For the API equivalent, see RC-API-04 — Delete Records API.
+For the API equivalent, see [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md).
 
 ### 5.6 Admin Diagnostic Links
 
@@ -175,7 +184,7 @@ All record-level administrative actions performed through the **Choose action fo
 - The record identifier (before any rename)
 - A description of the action performed
 
-For deletion specifically, the log retains a record that the entry existed and was removed, even though the data itself is gone. This provides a permanent evidence trail that satisfies audit and regulatory requirements. For more on the logging module, see RC-LOG-01 — Logging — Project Audit Trail.
+For deletion specifically, the log retains a record that the entry existed and was removed, even though the data itself is gone. This provides a permanent evidence trail that satisfies audit and regulatory requirements. For more on the logging module, see [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md).
 
 ---
 
@@ -215,7 +224,7 @@ Yes. If you belong to a specific DAG and reassign the record to a different DAG,
 
 **Granting Delete Records as a permanent right.** Because deletion is irreversible, the Delete Records right should be granted only temporarily for specific deletion tasks and then removed. Projects where this right is permanently assigned to multiple users are at elevated risk of accidental data loss.
 
-**Lock entire record vs. lock individual instruments.** Locking the entire record from this menu is an all-or-nothing action. It prevents editing of every instrument. If only one instrument needs to be locked (e.g., to freeze a baseline form while keeping follow-up forms editable), use instrument-level locking instead. See RC-LOCK-01 — Record Locking & E-Signatures.
+**Lock entire record vs. lock individual instruments.** Locking the entire record from this menu is an all-or-nothing action. It prevents editing of every instrument. If only one instrument needs to be locked (e.g., to freeze a baseline form while keeping follow-up forms editable), use instrument-level locking instead. See [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md).
 
 **Assuming the rename updates saved pipe/calculation values.** Renaming a record does not retroactively update saved text values that previously captured the old record name via piping. Fields that dynamically display `[record-name]` will update, but any text field that was saved with the old name embedded will retain the old name.
 
@@ -225,12 +234,12 @@ Yes. If you belong to a specific DAG and reassign the record to a different DAG,
 
 ## Related Articles
 
-- RC-DE-01 — Record Creation & the Record Home Page *(prerequisite — covers the Record Home Page layout and context)*
-- RC-DE-02 — Basic Data Entry
-- RC-DE-04 — Editing Data & Audit Trail
-- RC-LOCK-01 — Record Locking & E-Signatures *(instrument-level locking, e-signatures)*
-- RC-DAG-01 — Data Access Groups *(DAG setup and access control)*
-- RC-USER-03 — User Rights: Configuring User Privileges *(Delete Records, Lock/Unlock, and other relevant rights)*
-- RC-LOG-01 — Logging — Project Audit Trail *(what the audit trail captures)*
-- RC-API-04 — Delete Records API *(programmatic record deletion)*
-- RC-API-05 — Rename Record API *(programmatic record renaming)*
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) *(prerequisite — covers the Record Home Page layout and context)*
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md)
+- [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md) *(instrument-level locking, e-signatures)*
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) *(DAG setup and access control)*
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) *(Delete Records, Lock/Unlock, and other relevant rights)*
+- [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md) *(what the audit trail captures)*
+- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md) *(programmatic record deletion)*
+- [RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md) *(programmatic record renaming)*

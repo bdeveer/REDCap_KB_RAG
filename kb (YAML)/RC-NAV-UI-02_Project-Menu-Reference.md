@@ -10,18 +10,28 @@ version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-NAV-UI-01
-  title: Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04
-    — Record Status Dashboard, RC-USER-01 — User Rights Overview, RC-DE-02 — Basic
-    Data Entry, RC-PROJ-01 — Project Lifecycle, RC-FD-01 — Form Design Overview, RC-FD-05
-    — Codebook, RC-EXPRT-01 — Data Export Overview, RC-MLM-01 — Multi-Language Management,
-    RC-IMP-01 — Data Import Overview, RC-DQ-01 — Data Quality Module, RC-DAG-01 —
-    Data Access Groups, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow,
-    RC-LONG-01 — Longitudinal Project Setup, RC-SURV-01 — Surveys Basics, RC-SURV-05
-    — Participant List and Survey Invitations, RC-ALERT-01 — Alerts and Notifications,
-    RC-RAND-01 — Randomization Concepts, RC-PROJ-03 — Project Dashboards, RC-API-01
-    — REDCap API, RC-MOB-01 — REDCap Mobile App, RC-MYCAP-01 — MyCap Overview
+  title: 'Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04
+    — Record Status Dashboard & Other Record LinksRC-USER-01 — User Rights: Overview
+    & Three-Tier AccessRC-DE-02 — Basic Data Entry, RC-PROJ-01 — Project Lifecycle:
+    Status and SettingsRC-FD-01 — Form Design Overview, RC-FD-05 — Codebook, RC-EXPRT-01
+    — Data Export: Overview & WorkflowRC-MLM-01 — Multi-Language Management, RC-IMP-01
+    — Data Import Overview, RC-DQ-01 — Data Quality Module, RC-DAG-01 — Data Access
+    Groups, RC-DE-08 — Field Comment Log, RC-DE-12 — Data Resolution Workflow, RC-LONG-01
+    — Longitudinal Project Setup, RC-SURV-01 — Surveys – BasicsRC-SURV-05 — Participant
+    List & Manual Survey InvitationsRC-ALERT-01 — Alerts & Notifications: SetupRC-RAND-01
+    — Randomization Concepts & TerminologyRC-PROJ-03 — Project Dashboards, RC-API-01
+    — REDCap API, RC-MOB-01 — REDCap Mobile App, RC-MYCAP-01 — MyCap: Overview & Enabling'
 tags:
 - project navigation
+synonyms:
+- what does each project menu item do
+- reference list of all left-hand menu sections
+- where do i find a specific feature in the menu
+- explanation of project menu sections and items
+- what menu items appear and who can see them
+- redcap menu item glossary
+- which menu option opens reports or codebook
+- list of every section in the project sidebar
 ---
 
 # 1. Overview
@@ -40,7 +50,7 @@ This article is a structured reference for every section and item that can appea
 
 **External Module** — A community-developed add-on that extends REDCap functionality. Must be enabled by a REDCap administrator. Enabled modules may add their own entries to the left menu.
 
-**Project Bookmarks** — Custom links added by a project manager that appear in the left menu. Can point to internal REDCap pages, other REDCap projects, or external websites. Configurable per user or Data Access Group. See RC-NAV-UI-03 — Project Bookmarks.
+**Project Bookmarks** — Custom links added by a project manager that appear in the left menu. Can point to internal REDCap pages, other REDCap projects, or external websites. Configurable per user or Data Access Group. See [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md).
 
 ---
 
@@ -58,7 +68,7 @@ project.
 | **My Projects** | Always           Returns to the My Projects page. Same destination as clicking the logo. |
 | **Logged in as \[username\] / Log out** | Always           Displays the current username. The Log Out link ends the session completely. |
 | **REDCap Messenger** | Always\*         A HIPAA-compliant in-project messaging tool for user-to-user communication. Cannot send external email, texts, or messages to other REDCap installations. (\*Availability depends on whether your institution has enabled this feature.) |
-| **Contact REDCap Administrator** | Always           Links to your institution\'s REDCap support channel (email, website, or survey). Configured by your local admin team. See RC-INST-01 for what this link opens at this installation. |
+| **Contact REDCap Administrator** | Always           Links to your institution's REDCap support channel (email, website, or survey). Configured by your local admin team. See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for what this link opens at this installation. |
 
 ## 3.2 Project Home and Design
 
@@ -114,7 +124,7 @@ core items.
 | **Add / Edit Records** | Always           Create new records or look up and edit existing ones. Primary data entry entry point. |
 | **Survey Distribution Tools** | Conditional      Appears when surveys are enabled in the project. Manage survey links, send email/SMS invitations, and view the invitation log. |
 | **MyCap Participant Management** | Conditional      Manage participants using the MyCap mobile app. Requires MyCap to be enabled. As of MyCap 2.0 (September 2023, REDCap v13.10.0+), longitudinal projects are supported. Consult your support team before using. |
-| **Record shortcuts** | Conditional      When a user is actively viewing a record, shortcuts to that record\'s instruments and record home page appear dynamically in this section. |
+| **Record shortcuts** | Conditional      When a user is actively viewing a record, shortcuts to that record's instruments and record home page appear dynamically in this section. |
 
 ## 3.4 Applications
 
@@ -143,7 +153,7 @@ Each application is self-contained.
 | **API** | Conditional      Generate or request an API token to allow external programs to interact with the project programmatically. Advanced feature requiring programming skills. |
 | **API Playground** | Conditional      Explore and test available API methods with built-in documentation and code examples in multiple languages (PHP, Python, R, Java, etc.). |
 | **REDCap Mobile App** | Conditional      Manage device connections for the REDCap Mobile App. Used for offline data collection by study staff in the field. See note below on Mobile App vs. MyCap. |
-| **Custom Links** | Conditional      Links added by your local REDCap admin team pointing to institution-specific support resources (ticketing systems, training calendars, LMS portals, etc.). See RC-INST-01 for the specific links available at this installation. |
+| **Custom Links** | Conditional      Links added by your local REDCap admin team pointing to institution-specific support resources (ticketing systems, training calendars, LMS portals, etc.). See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for the specific links available at this installation. |
 
 > **Note:** *REDCap Mobile App vs. MyCap: These are two separate apps
 > with different purposes. REDCap Mobile App is for study staff to
@@ -168,12 +178,12 @@ or dashboard has been created and the user has access to it.
 
 ## 3.6 External Modules
 
-External modules are community-developed add-ons that extend REDCap\'s
+External modules are community-developed add-ons that extend REDCap's
 functionality. They must be downloaded and enabled by your local REDCap
 admin team. This menu section only appears if at least one module is
 active in the project and has a dedicated page. For the list of modules
 available at this installation and the local policy on enabling them, see
-**RC-INST-01 — Institution-Specific Settings & Policies, Section 8**.
+**[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
 
 - Click Manage in the External Modules section header to see available
     modules and enable/disable them (depending on your permissions and
@@ -195,9 +205,9 @@ Support and documentation resources. Always visible to all users.
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
 | **Help & FAQ** | Always           Links to the Help & FAQ section on the REDCap home page. Good first stop for common questions. |
-| **Video Tutorials** | Always           Links to Vanderbilt\'s official REDCap training videos. These are generic and do not reflect institution-specific configurations. |
+| **Video Tutorials** | Always           Links to Vanderbilt's official REDCap training videos. These are generic and do not reflect institution-specific configurations. |
 | **Suggest a New Feature** | Always           Submits a feature idea to the Vanderbilt REDCap development team. Not a support channel — no direct response is given. Suggestions may influence the development roadmap over time. |
-| **Contact REDCap Administrator** | Always           Connects to your institution\'s support team. Includes project metadata automatically so the support team knows which project you are asking about. This is the correct channel for immediate assistance. |
+| **Contact REDCap Administrator** | Always           Connects to your institution's support team. Includes project metadata automatically so the support team knows which project you are asking about. This is the correct channel for immediate assistance. |
 
 ---
 
@@ -210,7 +220,7 @@ Two conditions must both be true for a menu item to appear: the user's rights fo
 User rights are set per project, not globally. A user may have full rights in one project and read-only access in another, resulting in different visible menus.
 
 **Q: What is the difference between "Custom Links" and "Project Bookmarks"?**
-Custom Links are added by the local REDCap administrator and point to institution-wide resources (support portals, training calendars, etc.). Project Bookmarks are added by a project manager within a specific project and point to project-relevant resources. Both appear in the left menu but are configured in different places. See RC-NAV-UI-03 — Project Bookmarks.
+Custom Links are added by the local REDCap administrator and point to institution-wide resources (support portals, training calendars, etc.). Project Bookmarks are added by a project manager within a specific project and point to project-relevant resources. Both appear in the left menu but are configured in different places. See [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md).
 
 **Q: Can I add items to the left menu?**
 Project managers can add Project Bookmarks (custom links visible to project users) via the Project Bookmarks section. REDCap administrators can add Custom Links visible across all projects. End users cannot add items to the menu.
@@ -219,7 +229,7 @@ Project managers can add Project Bookmarks (custom links visible to project user
 
 # 5. Common Mistakes & Gotchas
 
-**Using \'Suggest a New Feature\' for support requests**
+**Using 'Suggest a New Feature' for support requests**
 
 - **What happens:** User submits a support request through the feature
     suggestion tool and never receives a response. The Vanderbilt team
@@ -272,63 +282,63 @@ Project managers can add Project Bookmarks (custom links visible to project user
 
 # 6. Related Articles
 
-- RC-NAV-UI-01 — Project Navigation UI — the two-panel layout, hamburger mode, and project status overview
-- RC-NAV-UI-03 — Project Bookmarks — creating custom links on the left-hand project menu
-- RC-NAV-REC-01 — Record Navigation Overview — navigating to records and instruments from the Data Collection section
-- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links — detailed guide to the dashboard, custom dashboards, and all locations that link to records
-- RC-USER-01 — User Rights: Overview & Three-Tier Access — how to configure permissions that control which menu items a user can see
-- RC-PROJ-01 — Project Lifecycle: Status and Settings — detailed guide to the four project status stages shown in the Project Home and Design section
-- RC-FD-01 — Form Design Overview — background for the Designer, Dictionary, and Code Book menu items
-- RC-FD-05 — Codebook — the read-only instrument/field reference listed under Project Home and Design
-- RC-DE-02 — Basic Data Entry — covers Record Status Dashboard and Add/Edit Records in depth
+- [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) — the two-panel layout, hamburger mode, and project status overview
+- [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md) — creating custom links on the left-hand project menu
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) — navigating to records and instruments from the Data Collection section
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) — detailed guide to the dashboard, custom dashboards, and all locations that link to records
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) — how to configure permissions that control which menu items a user can see
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) — detailed guide to the four project status stages shown in the Project Home and Design section
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) — background for the Designer, Dictionary, and Code Book menu items
+- [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) — the read-only instrument/field reference listed under Project Home and Design
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) — covers Record Status Dashboard and Add/Edit Records in depth
 
-- **RC-SURV-01:** Surveys – Basics — covers survey enabling and the
+- **[RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md):** Surveys – Basics — covers survey enabling and the
     Survey Distribution Tools menu item
 
-- **RC-SURV-05:** Participant List & Manual Survey Invitations —
+- **[RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md):** Participant List & Manual Survey Invitations —
     detailed guide to the participant list accessible from Survey
     Distribution Tools
 
-- **RC-ALERT-01:** Alerts & Notifications: Setup — detailed
+- **[RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md):** Alerts & Notifications: Setup — detailed
     configuration guide for the Alerts & Notifications menu item
 
-- **RC-MLM-01:** Multi-Language Management — detailed guide to the
+- **[RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md):** Multi-Language Management — detailed guide to the
     MLM application listed under Applications
 
-- **RC-EXPRT-01:** Data Export: Overview & Workflow — detailed
+- **[RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md):** Data Export: Overview & Workflow — detailed
     guide to the Data Exports, Reports, and Stats menu item
 
-- **RC-IMP-01:** Data Import Overview — detailed guide to the Data
+- **[RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md):** Data Import Overview — detailed guide to the Data
     Import Tool menu item
 
-- **RC-DQ-01:** Data Quality Module — detailed guide to the Data
+- **[RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md):** Data Quality Module — detailed guide to the Data
     Quality menu item
 
-- **RC-DAG-01:** Data Access Groups — detailed guide to the DAGs
+- **[RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md):** Data Access Groups — detailed guide to the DAGs
     menu item
 
-- **RC-DE-08:** Field Comment Log — detailed guide to the Field
+- **[RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md):** Field Comment Log — detailed guide to the Field
     Comment Log menu item under Applications
 
-- **RC-DE-12:** Data Resolution Workflow — detailed guide to the
+- **[RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md):** Data Resolution Workflow — detailed guide to the
     Data Resolution Workflow (Resolve Issues) menu item
 
-- **RC-LONG-01:** Longitudinal Project Setup — background for the
+- **[RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md):** Longitudinal Project Setup — background for the
     Calendar application, which is designed for longitudinal
     follow-up tracking
 
-- **RC-RAND-01:** Randomization Concepts — background for the
+- **[RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md):** Randomization Concepts — background for the
     Randomization application (appears when randomization is enabled)
 
-- **RC-PROJ-03:** Project Dashboards — creating and configuring
+- **[RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md):** Project Dashboards — creating and configuring
     custom project dashboards (Custom Reports & Project Dashboards
     menu section)
 
-- **RC-API-01:** REDCap API — introduction to the API and API
+- **[RC-API-01 — REDCap API](RC-API-01_REDCap-API.md):** REDCap API — introduction to the API and API
     Playground menu items
 
-- **RC-MOB-01:** REDCap Mobile App — detailed guide to the REDCap
+- **[RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md):** REDCap Mobile App — detailed guide to the REDCap
     Mobile App menu item for offline data collection
 
-- **RC-MYCAP-01:** MyCap: Overview & Enabling — detailed guide to
+- **[RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md):** MyCap: Overview & Enabling — detailed guide to
     the MyCap Participant Management menu item

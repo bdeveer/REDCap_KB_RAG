@@ -12,20 +12,29 @@ related:
 - id: RC-MLM-01
   title: Multi-Language Management
 - id: RC-CC-06
-  title: Modules & Services Configuration
+  title: 'Control Center: Modules & Services Configuration'
 - id: RC-AI-03
   title: AI Translations
 - id: RC-AT-10
-  title: 'Action Tags: Language'
+  title: 'Action Tags: Language Action Tags'
 tags:
 - control center (admin)
+synonyms:
+- control center multi-language management
+- define system-level languages for projects
+- mlm administrator settings instance-wide
+- add a new ui language for redcap projects
+- manage available languages admin
+- system language management for translations
+- enable languages projects can adopt
+- instance-wide multi-language configuration
 ---
 
 # 1. Overview
 
 **Multi-Language Management (MLM)** (**Control Center → Miscellaneous Modules → Multi-Language Management**) is where administrators define system-level languages that projects can adopt for UI translation. This article covers the administrator view — system language management, page tabs, and instance-wide settings.
 
-For a full explanation of what MLM is, how translations work, and the project-level workflow, see **RC-MLM-01 — Multi-Language Management**.
+For a full explanation of what MLM is, how translations work, and the project-level workflow, see **[RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md)**.
 
 MLM can be turned on or off system-wide. When off, surveys and data entry forms are not translated in any project, and the MLM menu is not visible to project users.
 
@@ -46,7 +55,7 @@ The main tab where system languages are listed and managed. Each language entry 
 | **%** | Approximate percentage of UI items that have been translated |
 | **Active** | Whether the language is active for use in projects |
 | **Visible** | Whether the language appears in language selectors |
-| **Base Language** | Whether this is the fallback language |
+| **Base Language** | Whether this is the system source language — the final step in the translation chain when the active language and any project-level fallback language both lack a translation |
 | **Initial** | Language used to initialize new project languages |
 | **RTL** | Whether this is a right-to-left language |
 | **Actions** | Edit, export, delete |
@@ -84,7 +93,7 @@ This tab is where the actual translation strings are entered and managed for eac
 **Filtering and tools:**
 - **Hide translated items** — filter to show only untranslated items, making it easier to find gaps.
 - **Highlight untranslated text** — enabled from the Settings tab; highlights untranslated items across the page as a visual audit tool.
-- **Translate using AI** — available per category; uses the AI translation feature to auto-fill untranslated strings (requires the AI features to be enabled; see RC-AI-03).
+- **Translate using AI** — available per category; uses the AI translation feature to auto-fill untranslated strings (requires the AI features to be enabled; see [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md)).
 
 **Subscribed system languages:** If a language is designated as a "subscribed" system language, its UI items cannot be edited directly. However, administrators can still provide **selective overrides** for individual items while leaving the rest managed by the subscription.
 
@@ -173,7 +182,7 @@ Yes. Deleting a system language from the Control Center does not remove translat
 "Active" means the language is available for use within projects (projects can import and use it). "Visible" means the language appears in the language selector dropdown presented to users. A language can be active but not visible (users cannot see it to select), or visible but not active (users can select it but it will not work). Typically both are enabled together.
 
 **Q: Can I set a base language that is different from English?**
-Yes. The base language is the fallback language shown to users who have not selected a language preference. Only one language can be designated as the base language at a time. Many institutions set English as the base language, but you can choose any language you have configured. Changing the base language affects the default display for all users.
+Yes. The base language is the system's source language — REDCap's UI text is written in it, and it is the final step in the translation chain (active → project fallback → base). It also serves as the default display for users with no language preference and projects with no fallback language configured. Only one language can be designated as the base language at a time. Many institutions set English as the base language, but you can choose any language you have configured. Changing the base language affects the default display for all users.
 
 ---
 
@@ -181,7 +190,7 @@ Yes. The base language is the fallback language shown to users who have not sele
 
 **Disabling MLM system-wide without notifying projects that depend on it.** If you disable Multi-Language Management globally, all projects immediately lose their active translations and revert to the base language. This can disrupt surveys and forms for end users without warning. Always plan ahead and communicate changes to project managers before disabling MLM.
 
-**Changing the base language without ensuring the new base language is fully translated.** The base language is the fallback when a user has no language preference or when a language has missing translations. If you designate a language with incomplete translations as the base, users will see blank or missing text. Always verify that your chosen base language has good translation coverage (>90%) before making it the base.
+**Changing the base language without ensuring the new base language is fully translated.** The base language is the final fallback in the translation chain: REDCap first tries the user's selected language, then the project-level fallback language (if one is configured), then the base language. If you designate an incompletely translated language as the base and no project fallback is set, users will see untranslated content for missing items. Always verify that your chosen base language has good translation coverage (>90%) before making it the base.
 
 **Assuming "Force subscription to system language updates" means projects can never customize translations.** When force subscription is enabled, projects receive updates to system language strings automatically. However, administrators can still provide "selective overrides" for individual items while staying subscribed to the base language. Projects are not locked in completely — they have some flexibility even under forced subscriptions.
 
@@ -189,7 +198,7 @@ Yes. The base language is the fallback language shown to users who have not sele
 
 # 7. Related Articles
 
-- RC-MLM-01 — Multi-Language Management
-- RC-CC-06 — Modules & Services Configuration
-- RC-AI-03 — AI Translations
-- RC-AT-10 — Action Tags: Language
+- [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+- [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md)
+- [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md)

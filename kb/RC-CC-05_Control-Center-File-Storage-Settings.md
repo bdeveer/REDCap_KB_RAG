@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)|
+| **Synonyms** | control center file storage settings; configure where redcap stores uploaded files; set up s3 or azure file storage backend; file upload size limits in redcap; block certain file types from upload; file repository and send-it upload limits; change the file storage location for the instance; file upload blocklist security settings |
 
 ---
 

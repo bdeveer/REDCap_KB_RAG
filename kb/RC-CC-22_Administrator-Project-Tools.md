@@ -11,6 +11,7 @@
 | **Last Updated** | 2026-04-25 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
+| **Synonyms** | how do i view a project as a specific user; impersonate a user to troubleshoot their access; see what a user sees in a project as admin; jump to a project by pid; project switcher quick navigation; admin troubleshooting tool for user rights; reproduce a user issue without their password; go directly to a project using project id |
 
 ---
 

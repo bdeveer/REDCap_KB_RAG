@@ -5,19 +5,28 @@ domain: Integration — Dynamic Data Pull
 applies_to:
 - All REDCap project types (requires administrator enablement)
 prerequisites:
-- RC-DE-01 — Record Creation and Record Home Page
-- RC-NAV-REC-04 — Record Status Dashboard
+- RC-DE-01 — Record Creation & the Record Home Page
+- RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-DDP-02
-  title: DDP Admin Setup & Technical Specs
+  title: Dynamic Data Pull — Admin Setup & Technical Specs
 - id: RC-NAV-REC-04
-  title: Record Status Dashboard
+  title: Record Status Dashboard & Other Record Links
 - id: RC-USER-02
-  title: User Rights
+  title: 'User Rights: Adding Users & Managing Roles'
 tags:
 - integration — dynamic data pull
+synonyms:
+- how do i use dynamic data pull ddp
+- import data from an emr or edw into redcap
+- adjudicate incoming data from an external system
+- map external source fields to redcap fields
+- approve external data before it saves
+- pull data automatically from institutional data repository
+- ddp field mapping and adjudication
+- ongoing connection to external data source
 ---
 
 # 1. Overview
@@ -171,7 +180,7 @@ The user must select a radio button next to each value they wish to import, then
 
 # 9. Related Articles
 
-- RC-DDP-02 — Dynamic Data Pull: Admin Setup & Technical Specs (administrator configuration, web service setup)
-- RC-NAV-REC-04 — Record Status Dashboard (where the adjudication count column appears)
-- RC-DE-01 — Record Creation and Record Home Page (record identifier context)
-- RC-USER-02 — User Rights: Adding Users and Managing Roles (DDP privilege assignment)
+- [RC-DDP-02 — Dynamic Data Pull — Admin Setup & Technical Specs](RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md)(administrator configuration, web service setup)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)(where the adjudication count column appears)
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md)(record identifier context)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)(DDP privilege assignment)

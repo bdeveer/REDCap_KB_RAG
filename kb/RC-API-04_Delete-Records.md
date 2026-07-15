@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)|
+| **Synonyms** | how do i delete records via the api; delete records api call; remove records programmatically from redcap; api method to delete a whole record; delete data for a specific instrument or event via api; bulk delete records using the api; permanently remove record data through the api; api to clear records in an arm |
 
 ---
 

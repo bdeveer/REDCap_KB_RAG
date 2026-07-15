@@ -81,6 +81,7 @@ If the input maps to one or more existing articles, make targeted edits.
 | Adding a Q&A pair | Append to the Common Questions section |
 | Adding a known mistake/gotcha | Append to the Common Mistakes & Gotchas section |
 | New cross-reference | Add to Related Articles; update `meta/KB-CROSS-REFS.md` inbound/outbound links |
+| New procedure/Q&A that changes what users would search for | Add matching phrases to the **Synonyms** metadata row (see Synonyms rule below) |
 | Yale-specific policy | Add or update the Yale-specific callout at the relevant point |
 
 ### Rules for edits
@@ -91,6 +92,7 @@ If the input maps to one or more existing articles, make targeted edits.
 - **Update Last Updated** — set to the current year.
 - **If adding a Q&A**, write the question as a real user would ask it. The answer must be direct and complete.
 - **If adding a gotcha**, follow the pattern: bold lead phrase → what goes wrong → what to do instead.
+- **Keep synonyms current.** Every article carries a **Synonyms** metadata row (semicolon-separated alt search phrasings that flow into the ServiceNow `meta` field via `convert_to_yaml_kb.py`). When an edit adds a new capability, procedure, or Q&A that a user would search for differently, add 1–3 matching phrases to the Synonyms row. Follow the generation and collision-avoidance rules in the kb-creation skill's **Synonyms** section: user-language phrasings, specific to the article, and qualified so they don't collide with sibling articles. If the article predates synonyms and has no Synonyms row, add one (6–10 phrases) as part of the update. After a batch of edits, run `ServiceNow ETL/kb_to_servicenow.py` to check the collision report.
 
 After editing, use `present_files` to share the updated article with the user.
 

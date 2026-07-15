@@ -7,20 +7,29 @@ applies_to:
 - institutions using REDCap for internal administrative workflows
 prerequisites:
 - RC-FD-01 — Form Design Overview
-- RC-LONG-02 — Repeated Instruments and Events Setup
-- RC-SURV-04 — Survey Link Types and Access Methods
+- RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-SURV-04 — Survey Link Types & Access Methods
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-LONG-02
-  title: Repeated Instruments and Events Setup
+  title: Repeated Instruments & Events Setup
 - id: RC-SURV-04
-  title: Survey Link Types and Access Methods
+  title: Survey Link Types & Access Methods
 - id: RC-USER-02
-  title: User Rights
+  title: 'User Rights: Adding Users & Managing Roles'
 - note: Style Guide §4.1–4.3, §5.1
 tags:
 - operational & administrative project design
+synonyms:
+- how to build a request intake system in redcap
+- using redcap for administrative workflows
+- ticketing or request management with redcap
+- design a form for internal requests and approvals
+- non-research use of redcap for operations
+- account administration workflow in redcap
+- how to set up a review and approval process
+- redcap as a help desk or intake tool
 ---
 
 # 1. Overview
@@ -332,12 +341,12 @@ For new projects, Option B (repeating) is recommended. Option A may be acceptabl
 
 # 9. Related Articles
 
-- RC-LONG-02 — Repeated Instruments and Events Setup
-- RC-SURV-04 — Survey Link Types and Access Methods
-- RC-SURV-06 — Automated Survey Invitations (for sending recurring links to requesters)
-- RC-USER-02 — User Rights: Adding Users and Managing Roles
-- RC-USER-03 — User Rights: Configuring User Privileges
-- RC-PROJ-04 — Project Setup: Additional Customizations (custom record label configuration)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)
+- [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(for sending recurring links to requesters)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
+- [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (custom record label configuration)
 - Style Guide §4.1 — Anti-pattern: hardcoded user identifiers in branching logic
 - Style Guide §4.2 — Conditional warning via descriptive field
 - Style Guide §4.3 — Admin-only review sections

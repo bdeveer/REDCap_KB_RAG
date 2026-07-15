@@ -6,17 +6,26 @@ applies_to:
 - Projects on REDCap instances where the HIDESUBMIT Action Tags External Module is
   installed and enabled
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 - HIDESUBMIT Action Tags External Module must be enabled for the project
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Action Tags Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-08
-  title: '@IF'
+  title: 'Action Tags: @IF — Conditional Logic — @IF'
 tags:
 - action tags
+synonyms:
+- how do i hide the save button on a form
+- hide submit button on a survey
+- prevent saving unless a condition is met
+- hidesubmit action tag external module
+- conditionally disable form submission
+- stop users from submitting incomplete forms
+- block save button with branching logic
+- action tags to hide save and submit buttons
 ---
 
 # 1. Overview
@@ -188,6 +197,6 @@ Result: The Submit button is hidden until the agreement checkbox is checked.
 
 # 8. Related Articles
 
-- RC-AT-01 — Action Tags Overview: what action tags are and the distinction between native and External Module tags
-- RC-AT-08 — @IF: native conditional action tag logic (no External Module required)
-- RC-BL-01 — Branching Logic Overview: branching logic controls when HIDESUBMIT tags activate
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: native conditional action tag logic (no External Module required)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)

@@ -1,7 +1,32 @@
 ---
 id: RC-API-09
 title: Export Instruments API
-domain: ''
+domain: API
+applies_to:
+- All REDCap projects
+prerequisites:
+- RC-API-01 — REDCap API
+version: '1.1'
+last_updated: '2026'
+source: REDCap API v16.1.3 official documentation examples
+related:
+- id: RC-API-01
+  title: REDCap API
+- id: RC-API-07
+  title: Export Metadata (Data Dictionary) API
+- id: RC-API-15
+  title: Export Instruments PDF API
+tags:
+- api
+synonyms:
+- how do i export the list of instruments via the api
+- export instruments api call
+- get all form names through the api
+- api method to list project instruments
+- discover instrument names programmatically
+- retrieve the forms in a project via api
+- api endpoint to export instrument list
+- list data collection forms using the api
 ---
 
 # 1. Overview
@@ -124,7 +149,7 @@ print $output;
 ?>
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for why SSL certificate validation matters.
 
 ---
 
@@ -162,7 +187,7 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **Q: Can I use the instrument names returned by this API in other API calls?**
 
-**A:** Yes. The instrument_name returned by this method is the same value you use in the `forms` parameter when exporting records (RC-API-02) or in the form_name column when working with the data dictionary.
+**A:** Yes. The instrument_name returned by this method is the same value you use in the `forms` parameter when exporting records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) or in the form_name column when working with the data dictionary.
 
 **Q: Does this method include disabled or hidden instruments?**
 
@@ -170,7 +195,7 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **Q: In a longitudinal project, are instruments listed per event?**
 
-**A:** No, this method returns only the list of instruments themselves, not their event assignments. To see which instruments are assigned to which events, use RC-API-10 (Export Instrument-Event Mappings).
+**A:** No, this method returns only the list of instruments themselves, not their event assignments. To see which instruments are assigned to which events, use [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md) (Export Instrument-Event Mappings).
 
 **Q: Can I use this to discover system fields like record_id?**
 
@@ -184,7 +209,7 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **Not using the correct name in follow-up calls.** Always use instrument_name (not instrument_label) in API calls that accept form or instrument parameters. Using the label instead of the name causes API errors.
 
-**Expecting detailed instrument properties.** This method returns only the name and label. To get detailed information about fields within an instrument, use RC-API-07 (Export Metadata) and filter by form_name.
+**Expecting detailed instrument properties.** This method returns only the name and label. To get detailed information about fields within an instrument, use [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (Export Metadata) and filter by form_name.
 
 **Forgetting to specify format.** Always explicitly set the `format` parameter. Different formats may be useful for different downstream systems.
 
@@ -192,10 +217,10 @@ The method returns the project's instruments in the requested format, **ordered 
 
 # 9. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-02 — Export Records (use instrument names to export specific forms)
-- RC-API-07 — Export Metadata (get detailed field information within instruments)
-- RC-API-10 — Export Instrument-Event Mappings (see instrument assignments in longitudinal projects)
-- RC-API-15 — Export Instruments PDF (export instrument as PDF files)
-- RC-FD-01 — Form Design Overview (instrument design concepts and terminology)
-- RC-FD-02 — Online Designer (the GUI for creating and managing instruments)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(use instrument names to export specific forms)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(get detailed field information within instruments)
+- [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)(see instrument assignments in longitudinal projects)
+- [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)(export instrument as PDF files)
+- [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument design concepts and terminology)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the GUI for creating and managing instruments)

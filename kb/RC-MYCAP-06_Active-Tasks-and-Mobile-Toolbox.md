@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
+| **Synonyms** | what are mycap active tasks; sensor-based assessments using the phone hardware; gait analysis and audio recording in mycap; nih toolbox cognitive assessments in mycap; mobile toolbox mtb setup; which devices support mycap active tasks; capture accelerometer or microphone data; schedule an active task in mycap |
 
 ---
 

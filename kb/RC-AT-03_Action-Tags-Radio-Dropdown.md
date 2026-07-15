@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Synonyms** | @RANDOMORDER action tag; @HIDECHOICE action tag; @SHOWCHOICE action tag; @MAXCHOICE action tag; how do i randomize the order of radio button choices; how do i hide a dropdown option with an action tag; limit how many times a choice can be selected across records; action tags for radio buttons and dropdowns |
 
 ---
 

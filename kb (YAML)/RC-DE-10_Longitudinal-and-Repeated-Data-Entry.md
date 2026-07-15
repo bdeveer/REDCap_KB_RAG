@@ -9,7 +9,7 @@ prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-DE-02 — Basic Data Entry
 - RC-NAV-REC-02 — Longitudinal Mode & Arms
-- RC-NAV-REC-03 — Repeated Instruments & Events
+- RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 version: '1.0'
 last_updated: '2026'
 related:
@@ -24,14 +24,23 @@ related:
 - id: RC-NAV-REC-02
   title: Longitudinal Mode & Arms
 - id: RC-NAV-REC-03
-  title: Repeated Instruments & Events
+  title: Repeated Instruments & Repeated Events
 tags:
 - data entry
+synonyms:
+- how do i enter data for multiple events
+- add another instance of a repeating instrument
+- enter data across longitudinal events
+- repeat an instrument or event during data entry
+- fill out the same form multiple times
+- data entry for repeated instruments and events
+- add a new visit or timepoint of data
+- longitudinal repeated measures data entry
 ---
 
 # 1. Overview
 
-This article covers the data entry workflows that are specific to longitudinal REDCap projects — projects with multiple timepoints (events), multiple arms, repeated instruments, or repeated events. It explains how to create records correctly in single- and multi-arm projects, how to navigate to the right event and instrument, how prefilled fields work, and how to add new instances of repeated instruments and events. For general data entry procedures that apply to all project types, see RC-DE-02 — Basic Data Entry. For an explanation of how longitudinal mode and arms affect the interface layout, see RC-NAV-REC-02 — Longitudinal Mode & Arms.
+This article covers the data entry workflows that are specific to longitudinal REDCap projects — projects with multiple timepoints (events), multiple arms, repeated instruments, or repeated events. It explains how to create records correctly in single- and multi-arm projects, how to navigate to the right event and instrument, how prefilled fields work, and how to add new instances of repeated instruments and events. For general data entry procedures that apply to all project types, see [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md). For an explanation of how longitudinal mode and arms affect the interface layout, see [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md).
 
 ---
 
@@ -130,7 +139,7 @@ After an instrument's first instance has been saved, REDCap provides several way
 | Record Status Dashboard | **+** icon in the instrument's cell | Always visible for repeated instruments |
 | Data Collection menu | **+** icon next to the instrument name | Always visible for repeated instruments |
 | Within the instrument | **+ Add New** button | In the instance selector dropdown and near the instrument header |
-| Within the instrument | **Save & Add New Instance** button | At the bottom of the instrument; see RC-DE-11 for all save options |
+| Within the instrument | **Save & Add New Instance** button | At the bottom of the instrument; see [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) for all save options |
 
 > **Note:** The **+** icon and the **+ Add New** button are functionally identical — they differ only by the amount of screen space available in that location.
 
@@ -211,11 +220,11 @@ Repeated events support the same prefill behavior as regular events: fields can 
 
 # 9. Related Articles
 
-- RC-DE-01 — Record Creation & the Record Home Page (prerequisite — record creation basics and Record Home Page layout)
-- RC-DE-02 — Basic Data Entry (prerequisite — general data entry workflow)
-- RC-DE-03 — Longitudinal Projects & DAGs (how longitudinal mode and DAGs change the interface)
-- RC-DE-11 — Instrument Save Options (all save button variants, including instance-specific options)
-- RC-NAV-REC-02 — Longitudinal Mode & Arms (prerequisite — how arms and events are structured and navigated)
-- RC-NAV-REC-03 — Repeated Instruments & Events (prerequisite — how repeated instruments and events appear in the interface)
-- RC-LONG-01 — Longitudinal Project Setup (how longitudinal mode, arms, and events are configured)
-- RC-LONG-02 — Repeated Instruments & Events Setup (how repeated instruments and events are configured)
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) (prerequisite — record creation basics and Record Home Page layout)
+- [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (prerequisite — general data entry workflow)
+- [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (how longitudinal mode and DAGs change the interface)
+- [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) (all save button variants, including instance-specific options)
+- [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) (prerequisite — how arms and events are structured and navigated)
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)(prerequisite — how repeated instruments and events appear in the interface)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how longitudinal mode, arms, and events are configured)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeated instruments and events are configured)

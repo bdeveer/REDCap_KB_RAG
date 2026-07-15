@@ -24,11 +24,20 @@ related:
   title: Longitudinal Project Setup
 tags:
 - surveys
+synonyms:
+- how do i set a survey expiration date
+- limit who can access a survey
+- what happens after a participant submits a survey
+- survey termination and redirect options
+- set a survey time limit
+- save and return later setting
+- control survey access and behavior
+- show a custom message when a survey closes
 ---
 
 # 1. Overview
 
-This article is the second of a two-part series on the REDCap Survey Settings page. It covers three sections of the settings page: **Survey Customizations** (behavioral options that affect how participants interact with the survey), **Survey Access** (rules that govern who can access the survey and for how long), and **Survey Termination Options** (what happens after a participant submits or is stopped). The companion article, RC-SURV-02, covers the Basic Options and Design sections.
+This article is the second of a two-part series on the REDCap Survey Settings page. It covers three sections of the settings page: **Survey Customizations** (behavioral options that affect how participants interact with the survey), **Survey Access** (rules that govern who can access the survey and for how long), and **Survey Termination Options** (what happens after a participant submits or is stopped). The companion article, [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md), covers the Basic Options and Design sections.
 
 ---
 
@@ -173,7 +182,7 @@ A **Language Selector** lets you choose the voice and language. This setting con
 
 > **Important:** Text vocalized by this feature is sent to a third-party text-to-speech service. This may raise privacy concerns for surveys collecting sensitive information. Consult your local IRB and REDCap support team before using this feature.
 
-> **Note:** Your institution's REDCap administrator can disable this feature system-wide. If you do not see this option, or if you are unsure whether it is permitted at this installation, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.3: Text-to-Speech in Surveys**.
+> **Note:** Your institution's REDCap administrator can disable this feature system-wide. If you do not see this option, or if you are unsure whether it is permitted at this installation, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 7.3: Text-to-Speech in Surveys**.
 
 ## 3.10 Hiding Submit Buttons
 
@@ -231,7 +240,7 @@ Takes the survey offline at a specific date and time — regardless of how many 
 
 Example: You want registration for an event to close at midnight on the day before the event.
 
-> **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly. For this installation's server time zone, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 3**.
+> **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly. For this installation's server time zone, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 3**.
 
 ## 4.4 Save and Return
 
@@ -283,7 +292,7 @@ Dear Maria,
 Thank you for completing the survey.
 ```
 
-For more on piping syntax, see RC-PIPE-01 — Piping: Basics, Syntax & Field Types.
+For more on piping syntax, see [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md).
 
 > **Note:** Redirect to URL and Survey Completion Text are mutually exclusive — you can configure one or the other, not both.
 
@@ -310,11 +319,9 @@ This setting has three levels:
 
 ### e-Consent Variable Requirements
 
-To use the e-Consent Framework, you must collect the participant's name and signature:
-- First and last name collected as two separate text variables (best practice).
-- Signature collected in a variable using the **Signature** field type.
+To use the e-Consent Framework, you must collect the participant's name (first and last name as two separate text variables is best practice). A Signature field is optional but strongly recommended — it enables automatic clearing if the participant navigates back during the consent flow. See [RC-SURV-08 — e-Consent Framework Setup and Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) for the full field requirements.
 
-> **Important:** Before using the e-Consent Framework for a study, confirm with your local Institutional Review Board that electronic consent collected via REDCap is acceptable at your institution. For this installation's IRB guidance on e-consent, see **RC-INST-01 — Institution-Specific Settings & Policies, Section 7.5: e-Consent Framework**.
+> **Important:** Before using the e-Consent Framework for a study, confirm with your local Institutional Review Board that electronic consent collected via REDCap is acceptable at your institution. For this installation's IRB guidance on e-consent, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 7.5: e-Consent Framework**.
 
 ## 5.6 Confirmation Emails
 
@@ -328,7 +335,7 @@ Sends an email to the participant automatically upon survey completion. When set
 
 Use the **Send Test Email** link in the body field header to send a preview to your own user account email address before going live.
 
-> **Note:** Confirmation emails fire on every survey completion with no conditional logic. If you need conditional emails — for example, different emails for eligible and ineligible participants — use **Alerts & Notifications** instead (RC-ALERT-01). Alerts & Notifications supports trigger conditions, making it more flexible for complex scenarios.
+> **Note:** Confirmation emails fire on every survey completion with no conditional logic. If you need conditional emails — for example, different emails for eligible and ineligible participants — use **Alerts & Notifications** instead ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)). Alerts & Notifications supports trigger conditions, making it more flexible for complex scenarios.
 
 ---
 
@@ -359,13 +366,13 @@ Enable **Confirmation Emails** and check the box to attach a PDF of the survey r
 Your REDCap administrator may have restricted access to e-consent features, or the feature may require additional configuration at the system level. Contact your REDCap support team.
 
 **Q: Can a confirmation email be sent only when a certain condition is met?**
-No — confirmation emails always fire on completion. For conditional emails, use **Alerts & Notifications** (RC-ALERT-01), which supports trigger logic.
+No — confirmation emails always fire on completion. For conditional emails, use **Alerts & Notifications** ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)), which supports trigger logic.
 
 ---
 
 # 7. Common Mistakes & Gotchas
 
-**Setting Survey Expiration in the wrong time zone.** REDCap uses the server's time zone for survey expiration, not the participant's local time. Always check the server time zone (see RC-INST-01, Section 3) and calculate the correct offset before entering an expiration time. For example, if the server is set to UTC and your participants are in Central European Time (UTC+1/+2), a midnight local expiration becomes 23:00 or 22:00 UTC.
+**Setting Survey Expiration in the wrong time zone.** REDCap uses the server's time zone for survey expiration, not the participant's local time. Always check the server time zone (see [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md), Section 3) and calculate the correct offset before entering an expiration time. For example, if the server is set to UTC and your participants are in Central European Time (UTC+1/+2), a midnight local expiration becomes 23:00 or 22:00 UTC.
 
 **Designating a file upload variable in the wrong event for PDF Save.** In longitudinal projects, if the file upload variable you designate for Survey Response PDF Save does not exist in the event where the survey runs, REDCap will throw an error when participants submit. Verify the variable exists in the correct event before enabling this feature.
 
@@ -383,20 +390,20 @@ No — confirmation emails always fire on completion. For conditional emails, us
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-42 — Export Survey Return Code API** — programmatically retrieve the return code for a specific participant, used to re-enter a partially completed survey
+- **[RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)** — programmatically retrieve the return code for a specific participant, used to re-enter a partially completed survey
 
 ---
 
 
 # 8. Related Articles
 
-- RC-SURV-01 — Surveys – Basics
-- RC-SURV-02 — Survey Settings: Basic Options & Design
-- RC-ALERT-01 — Alerts & Notifications: Setup
-- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
-- RC-PIPE-03 — Smart Variables Overview
-- RC-LONG-01 — Longitudinal Project Setup
-- RC-FD-02 — Online Designer
-- RC-SURV-10 — Survey Login
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)
+- [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)
+- [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
+- [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md)

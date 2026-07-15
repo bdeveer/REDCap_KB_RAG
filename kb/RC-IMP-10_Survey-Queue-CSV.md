@@ -12,6 +12,7 @@
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md); [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md)|
+| **Synonyms** | how do i import a survey queue via csv; bulk edit survey queue conditions in a spreadsheet; copy survey queue setup to another project; upload survey queue configuration csv; set the order surveys appear to participants; conditional logic for which survey shows next; export and re-import survey queue settings; survey queue csv column reference |
 
 ---
 

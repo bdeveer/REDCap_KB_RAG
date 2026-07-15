@@ -6,18 +6,26 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 prerequisites:
-- RC-AT-01 — Action Tags Overview
+- 'RC-AT-01 — Action Tags: Overview'
 version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-AT-01
-  title: Overview
+  title: 'Action Tags: Overview'
 - id: RC-AT-05
-  title: Free Text Tags
+  title: Free Text Action Tags
 - id: RC-FD-02
   title: Online Designer
 tags:
 - action tags
+synonyms:
+- '@HIDEBUTTON action tag'
+- '@INLINE action tag'
+- '@INLINE-PREVIEW action tag'
+- how do i remove the today now button from a date field
+- how do i show an uploaded file inline on the form
+- display image or pdf inline instead of a download link
+- cosmetic action tags for field display
 ---
 
 # 1. Overview
@@ -149,6 +157,6 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 # 8. Related Articles
 
-- RC-AT-01 — Action Tags Overview
-- RC-AT-05 — Free Text Action Tags
-- RC-FD-02 — Online Designer
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
+- [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md)
+- [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)

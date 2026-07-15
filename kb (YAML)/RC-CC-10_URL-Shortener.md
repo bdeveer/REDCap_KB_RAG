@@ -10,9 +10,18 @@ version: '1.0'
 last_updated: '2026'
 related:
 - id: RC-CC-01
-  title: Notifications & Reporting
+  title: 'Control Center: Notifications & Reporting (Dashboard)'
 tags:
 - control center (admin)
+synonyms:
+- control center url shortener tool
+- create a short redirect link in redcap
+- shorten a survey or project url
+- generate a custom short url alias
+- random short url for distribution
+- make a tiny link for a redcap survey
+- admin url shortening service
+- shorten a long destination link
 ---
 
 # 1. Overview
@@ -105,4 +114,4 @@ Shortened URLs remain active as long as the external service maintains them. Sin
 
 # 8. Related Articles
 
-- RC-CC-01 — Notifications & Reporting
+- [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)

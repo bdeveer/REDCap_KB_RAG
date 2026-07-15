@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) |
+| **Synonyms** | [report-access-code] smart variable; how to pipe a public report access code with [report-access-code]; access code for a named public report [report-access-code:unique_report_name]; share a public report with an access code via email; public report smart variables for access codes; how to give someone the code to view a public report; reference a specific public report access code; public report access code piping |
 
 ---
 

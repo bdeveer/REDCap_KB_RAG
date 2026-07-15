@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)|
+| **Synonyms** | export reports api method; how do i pull a report via the api; api call to export data from a custom report; get report data by report id through the api; export redcap report results using the api; api method to retrieve a saved report; download custom report output via api; programmatically extract a report with the api |
 
 ---
 

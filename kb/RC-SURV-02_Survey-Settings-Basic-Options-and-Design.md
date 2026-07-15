@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
+| **Synonyms** | how do i change the look of my survey; add a logo and colors to a survey; edit survey title and instructions; customize survey layout and fonts; survey design and theme options; basic survey settings page; change survey appearance; where do i set the survey status |
 
 ---
 

@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)|
+| **Synonyms** | create project api method; how do i create a new project via the api; import project api with super token; api call to provision a new redcap project from xml; programmatically create project using super api token; bulk create projects through the create project api; import project design to make a new project via api; api method to clone a project across instances |
 
 ---
 

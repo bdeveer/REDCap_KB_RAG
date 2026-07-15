@@ -1,7 +1,32 @@
 ---
 id: RC-API-12
 title: Export File API
-domain: ''
+domain: API
+applies_to:
+- REDCap projects with file upload fields
+prerequisites:
+- RC-API-01 — REDCap API
+version: '1.1'
+last_updated: '2026'
+source: REDCap API v16.1.3 official documentation examples
+related:
+- id: RC-API-01
+  title: REDCap API
+- id: RC-API-13
+  title: Import File API
+- id: RC-API-14
+  title: Delete File API
+tags:
+- api
+synonyms:
+- how do i download a file via the api
+- export file api call
+- retrieve an uploaded file from a record through the api
+- api method to get a file-upload field attachment
+- download signature field file via api
+- pull binary file content with the api
+- api endpoint to export a record file
+- get a file attached to a record programmatically
 ---
 
 # 1. Overview
@@ -137,7 +162,7 @@ $output = curl_exec($ch);
 print $output;
 ```
 
-> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See RC-API-01 — Section 3.5 for why SSL certificate validation matters.
+> **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is shown as `FALSE` for compatibility. Set it to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — Section 3.5 for why SSL certificate validation matters.
 
 ---
 
@@ -191,6 +216,6 @@ The `returnFormat` parameter controls the format of error messages only and does
 
 # 8. Related Articles
 
-- RC-API-01 — REDCap API (overview; authentication, tokens, playground)
-- RC-API-13 — Import File (upload files to file-upload fields)
-- RC-API-14 — Delete File (remove files from file-upload fields)
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from file-upload fields)

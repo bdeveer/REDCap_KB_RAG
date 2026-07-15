@@ -11,6 +11,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF |
+| **Synonyms** | @LANGUAGE-SET action tag; @LANGUAGE-FORCE action tag; @LANGUAGE-CURRENT-FORM and @LANGUAGE-CURRENT-SURVEY tags; how do i force a survey into a specific language; multi-language management action tags; capture the current language into a field; switch language based on a field value; mlm language action tags |
 
 ---
 

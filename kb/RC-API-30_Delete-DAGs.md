@@ -12,6 +12,7 @@
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) |
+| **Synonyms** | how do i delete dags via the api; delete data access groups api call; remove dags from a project through the api; api method to delete data access groups by unique group name; bulk delete dags with the api; clean up unused data access groups programmatically; api endpoint to delete data access groups; remove data access groups via api |
 
 ---
 

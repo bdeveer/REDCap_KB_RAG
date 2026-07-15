@@ -11,21 +11,32 @@ version: '1.1'
 last_updated: '2026'
 related:
 - id: RC-USER-02
-  title: Adding Users & Managing Roles
+  title: 'User Rights: Adding Users & Managing Roles'
 - id: RC-USER-04
-  title: User Management
+  title: 'User Rights: User Management'
 - id: RC-DAG-01
   title: Data Access Groups
 - id: RC-EXPRT-01
   title: 'Data Export: Overview & Workflow'
+- id: RC-CC-25
+  title: 'Control Center: Access Control Groups'
 tags:
 - user rights
 - user management
+synonyms:
+- how do i configure user privileges
+- what does each user rights setting do
+- give a user export or import permissions
+- set per-instrument data access
+- restrict a user to view-only access
+- limit who can see reports or dashboards
+- configure permissions in the privileges popup
+- explain basic privileges settings
 ---
 
 # 1. Overview
 
-This article explains every user rights setting available in the user privileges popup in REDCap — both the Basic Privileges panel and the per-instrument data rights settings. It also covers miscellaneous user rights that exist outside the main User Rights page, including report-level and dashboard-level access controls and smart-variable-based restrictions. The rights described here apply to individual users and to roles. See RC-USER-02 — Adding Users & Managing Roles for how to open the privileges popup.
+This article explains every user rights setting available in the user privileges popup in REDCap — both the Basic Privileges panel and the per-instrument data rights settings. It also covers miscellaneous user rights that exist outside the main User Rights page, including report-level and dashboard-level access controls and smart-variable-based restrictions. The rights described here apply to individual users and to roles. See [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) — Adding Users & Managing Roles for how to open the privileges popup.
 
 ---
 
@@ -79,7 +90,7 @@ These three settings give users broad administrative power within the project. B
 
 - **User Rights** — grants access to the User Rights menu. A user with this right can modify any user's rights in the project, including their own. This is effectively a super-admin right for the project and should be assigned with care.
 
-- **Data Access Groups** — grants access to the DAG management page, where the user can create, edit, and delete DAGs and assign users to them. See RC-DAG-01 — Data Access Groups.
+- **Data Access Groups** — grants access to the DAG management page, where the user can create, edit, and delete DAGs and assign users to them. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 
 ## 3.3 Other Basic Privileges
 
@@ -144,7 +155,7 @@ Record locking is useful for larger projects where completed instruments should 
 
 > **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. Plan your locking roles carefully.
 >
-> **Important:** The e-signature option requires password entry for every action and has known compatibility issues with certain SSO authentication methods. Confirm compatibility with your authentication setup before enabling it.
+> **Important:** The e-signature option requires local password re-entry for every action. It is **not compatible** with Shibboleth (SAML) or OAuth2 authentication — those methods delegate credential verification externally, so REDCap cannot perform the required re-entry step. If your institution uses either of these authentication methods, the e-signature option will not be available to your users. Note that certain external modules are available that provide alternative e-signature workflows compatible with federated authentication — contact your REDCap administrator for options.
 
 ## 3.6 Administrator-Granted Rights
 
@@ -190,10 +201,10 @@ There are four export access levels for each instrument:
 |---|---|
 | **No Access** | The user cannot export any data from this instrument. |
 | **De-identified** | The user can export data with all identifier fields removed, all free-text fields removed, and all date/time fields removed. |
-| **Remove Identifier Fields Only** | Similar to De-identified, but only designated identifier fields are stripped. Free-text and date/time fields are included. |
+| **Remove All Identifier Fields** | Similar to De-identified, but only designated identifier fields are stripped. Free-text and date/time fields are included. |
 | **Full Data Set** | The user can export all data from this instrument without restriction. This is the default. The user can optionally apply de-identification settings during the export process. |
 
-See RC-EXPRT-01 — Data Export: Overview & Workflow and RC-EXPRT-03 — Data Export: User Rights & Export Access for how export rights interact with the export workflow.
+See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) and [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) for how export rights interact with the export workflow.
 
 > **Note for longitudinal projects:** Like data viewing rights, export rights apply per instrument across all events and repeating instances.
 
@@ -266,9 +277,9 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **A:** No. API rights are scoped by the user's other rights. If a user doesn't have viewing rights for an instrument, they cannot export it via the API either.
 
-**Q: What is the difference between "De-identified" and "Remove Identifier Fields Only" in export rights?**
+**Q: What is the difference between "De-identified" and "Remove All Identifier Fields" in export rights?**
 
-**A:** "De-identified" removes identifier fields, all free-text fields, and all date/time fields. "Remove Identifier Fields Only" removes just the designated identifier fields but leaves free text and dates intact. The correct choice depends on your data governance requirements.
+**A:** "De-identified" removes identifier fields, all free-text fields, and all date/time fields. "Remove All Identifier Fields" removes just the designated identifier fields but leaves free text and dates intact. The correct choice depends on your data governance requirements.
 
 **Q: Can I use smart variables instead of standard user rights to control data access?**
 
@@ -284,7 +295,7 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **Expecting the API to bypass user rights.** API rights are bounded by the user's other project rights. A user cannot use the API to access data or features their user rights would normally prevent.
 
-**Not testing the e-signature feature before deploying it.** The e-signature option requires password input for every record locking action and has known compatibility issues with SSO authentication. Test thoroughly in Development before enabling on a Production project with real users.
+**Enabling e-signature when your institution uses federated authentication.** The e-signature option requires local password re-entry and is not available to institutions using Shibboleth (SAML) or OAuth2 authentication. Confirm your institution's authentication method before enabling e-signature on a project. If federated authentication is in use, certain external modules provide alternative e-signature workflows — contact your REDCap administrator for options.
 
 **Setting export rights to Full Data Set by default without reviewing.** The default for data export rights is Full Data Set, meaning all users start with unrestricted export access. If your project handles sensitive data, actively review and restrict export rights to De-identified or No Access for users who should not have full export capability.
 
@@ -292,19 +303,20 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic access to this functionality. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
-- **RC-API-22 — Export Users API** — retrieve a full list of users with their current privilege settings
-- **RC-API-23 — Import Users API** — set or update user privileges programmatically using the same field names documented in this article
+- **[RC-API-22 — Export Users API](RC-API-22_Export-Users.md)** — retrieve a full list of users with their current privilege settings
+- **[RC-API-23 — Import Users API](RC-API-23_Import-Users.md)** — set or update user privileges programmatically using the same field names documented in this article
 
 ---
 
 
 # 9. Related Articles
 
-- RC-USER-01 — User Rights: Overview & Three-Tier Access
-- RC-USER-02 — User Rights: Adding Users & Managing Roles
-- RC-USER-04 — User Rights: User Management (editing, suspending, removing users)
-- RC-DAG-01 — Data Access Groups
-- RC-EXPRT-01 — Data Export: Overview & Workflow
-- RC-EXPRT-03 — Data Export: User Rights & Export Access
+- [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)
+- [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) (editing, suspending, removing users)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)
+- [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) (system-level ceiling on the privileges documented in this article; if a right appears unavailable when assigning a user, the user's ACG may be restricting it)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
+- [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md)

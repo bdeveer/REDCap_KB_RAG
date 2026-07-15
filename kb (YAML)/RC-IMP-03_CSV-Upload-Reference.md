@@ -23,6 +23,15 @@ related:
 tags:
 - data import
 - data
+synonyms:
+- what can i upload via csv in redcap
+- list of all csv upload options
+- bulk upload settings with a csv file
+- import users dags or events from csv
+- which redcap features support csv upload
+- move configuration between projects via csv
+- csv upload behavior additive vs replace
+- comprehensive csv upload reference
 ---
 
 # 1. Overview
@@ -31,7 +40,7 @@ REDCap offers CSV-based upload and download for many areas of a project — not 
 
 This article is a comprehensive index of every REDCap setting that supports CSV upload. For each, it describes: where to find the upload option in the UI, what the upload does (additive vs. replace), which rights are required, and which article covers the full details including the column-by-column format reference.
 
-> **CSV vs. other file types:** This article focuses on CSV uploads. REDCap also supports XML (for full project backups and record imports via CDISC ODM format) and ZIP files (for importing individual instruments). See RC-IMP-01 — Data Import Overview for coverage of those formats.
+> **CSV vs. other file types:** This article focuses on CSV uploads. REDCap also supports XML (for full project backups and record imports via CDISC ODM format) and ZIP files (for importing individual instruments). See [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) for coverage of those formats.
 
 ---
 
@@ -39,24 +48,24 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 
 | **What you're uploading** | **Location in REDCap** | **Upload behavior** | **Rights required** | **Format reference** |
 |---|---|---|---|---|
-| Data Dictionary | Project Setup or Online Designer | **Replaces** all instruments and fields | Project Design and Setup | RC-FD-03 |
-| Arms | Define My Events | **Additive** — adds new arms, existing unchanged | Project Design and Setup | RC-IMP-09 |
-| Events | Define My Events | **Additive** — adds new events, existing unchanged | Project Design and Setup | RC-IMP-09 |
-| Instrument–Event Mappings | Designate Instruments for My Events | **Replaces** entire mapping | Project Design and Setup | RC-IMP-09 |
-| Record Data | Applications → Data Import Tool | Additive by default; can overwrite with setting | Data Entry rights | RC-IMP-04 |
-| Users | User Rights | Additive/update | User Rights | RC-USER-02 |
-| User Roles | User Rights | Additive/update | User Rights | RC-USER-02 |
-| User–Role Assignments | User Rights | Additive/update | User Rights | RC-USER-02 |
-| Data Access Groups (DAGs) | DAGs / User Rights | Additive/update | Data Access Groups | RC-DAG-01 |
-| User–DAG Assignments | DAGs / User Rights | Additive/update | Data Access Groups | RC-DAG-01 |
-| Alerts & Notifications | Alerts & Notifications | Additive — imports alert definitions | Project Design and Setup | RC-IMP-05 |
-| Automated Survey Invitations (ASI) | Online Designer → Automated Survey Invitations button | Additive/update | Project Design and Setup | RC-IMP-06 |
-| Survey Queue | Online Designer → Survey Queue button | Additive/update | Project Design and Setup | RC-IMP-10 |
-| Survey Settings | Online Designer → Survey Settings button | Additive/update | Project Design and Setup | RC-IMP-07 |
-| Form Display Logic | Online Designer → Form Display Logic | Additive/update | Project Design and Setup | RC-IMP-08 |
-| Data Quality Rules | Data Quality module | Additive/update | Project Design and Setup | RC-DQ-01 |
-| Language Setups (MLM) | Multi-Language Management | Additive/update | Project Design and Setup | RC-MLM-01 |
-| Randomization Allocation Table | Randomization module | Replaces active allocation table | Randomization Setup rights | RC-RAND-02 |
+| Data Dictionary | Project Setup or Online Designer | **Replaces** all instruments and fields | Project Design and Setup | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
+| Arms | Define My Events | **Additive** — adds new arms, existing unchanged | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
+| Events | Define My Events | **Additive** — adds new events, existing unchanged | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
+| Instrument–Event Mappings | Designate Instruments for My Events | **Replaces** entire mapping | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
+| Record Data | Applications → Data Import Tool | Additive by default; can overwrite with setting | Data Entry rights | [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md) |
+| Users | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| User Roles | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| User–Role Assignments | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| Data Access Groups (DAGs) | DAGs / User Rights | Additive/update | Data Access Groups | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
+| User–DAG Assignments | DAGs / User Rights | Additive/update | Data Access Groups | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
+| Alerts & Notifications | Alerts & Notifications | Additive — imports alert definitions | Project Design and Setup | [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md) |
+| Automated Survey Invitations (ASI) | Online Designer → Automated Survey Invitations button | Additive/update | Project Design and Setup | [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md) |
+| Survey Queue | Online Designer → Survey Queue button | Additive/update | Project Design and Setup | [RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md) |
+| Survey Settings | Online Designer → Survey Settings button | Additive/update | Project Design and Setup | [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md) |
+| Form Display Logic | Online Designer → Form Display Logic | Additive/update | Project Design and Setup | [RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide](RC-IMP-08_Form-Display-Logic-CSV.md) |
+| Data Quality Rules | Data Quality module | Additive/update | Project Design and Setup | [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) |
+| Language Setups (MLM) | Multi-Language Management | Additive/update | Project Design and Setup | [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) |
+| Randomization Allocation Table | Randomization module | Replaces active allocation table | Randomization Setup rights | [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) |
 
 > **Download-only:** The Logging module supports CSV *download* but not upload.
 
@@ -74,7 +83,7 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 
 **Key safety practice:** Always download and save a snapshot of the current Data Dictionary before uploading a modified version. This is your only recovery path if a bad upload needs to be rolled back.
 
-**Full details:** RC-FD-03 — Data Dictionary
+**Full details:** [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)
 
 ---
 
@@ -82,7 +91,7 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 
 Arms, events, and instrument-event mappings are always used together and must be uploaded in sequence. The column reference, upload order, and common mistakes for all three are covered in a single dedicated article.
 
-**Full format reference:** RC-IMP-09 — Longitudinal Structure CSV
+**Full format reference:** [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md)
 
 ---
 
@@ -98,7 +107,7 @@ Arms, events, and instrument-event mappings are always used together and must be
 
 **Rights required:** User Rights privilege.
 
-**Full details:** RC-USER-02 — User Rights: Adding Users & Managing Roles, Section 7
+**Full details:** [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md), Section 7
 
 ---
 
@@ -125,7 +134,7 @@ Arms, events, and instrument-event mappings are always used together and must be
 - `username` — REDCap login name; must match an existing project user.
 - `redcap_data_access_group` — The `unique_group_name` of the target DAG (not the display name). Leave blank to remove the user from all DAGs (grants all-DAG access).
 
-**Full details:** RC-API-29 — Import DAGs; RC-API-32 — Import User-DAG Assignments; RC-DAG-01 — Data Access Groups, Section 7
+**Full details:** [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md); [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md), Section 7
 
 ---
 
@@ -135,7 +144,7 @@ Arms, events, and instrument-event mappings are always used together and must be
 
 The record data CSV has a detailed column-by-column format reference, including handling of longitudinal projects, repeating instruments, checkbox fields, and system columns. See the dedicated article:
 
-**Full format reference:** RC-IMP-04 — Record Data CSV Import
+**Full format reference:** [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md)
 
 ---
 
@@ -151,7 +160,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Project Design and Setup.
 
-**Full format reference:** RC-IMP-05 — Alerts & Notifications CSV
+**Full format reference:** [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md)
 
 ---
 
@@ -165,7 +174,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Project Design and Setup (at least one survey must be enabled in the project).
 
-**Full format reference:** RC-IMP-06 — Automated Survey Invitations CSV
+**Full format reference:** [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md)
 
 ---
 
@@ -179,7 +188,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Project Design and Setup.
 
-**Full format reference:** RC-IMP-10 — Survey Queue CSV
+**Full format reference:** [RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md)
 
 ---
 
@@ -193,7 +202,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Project Design and Setup (at least one instrument must be survey-enabled in the project).
 
-**Full format reference:** RC-IMP-07 — Survey Settings CSV
+**Full format reference:** [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md)
 
 ---
 
@@ -207,7 +216,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Project Design and Setup.
 
-**Full format reference:** RC-IMP-08 — Form Display Logic CSV
+**Full format reference:** [RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide](RC-IMP-08_Form-Display-Logic-CSV.md)
 
 ---
 
@@ -231,7 +240,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 > **CSV escaping:** Any `rule_logic` cell containing `""` (empty-string comparison) must double every `"`. The pattern `[field] <> ""` in REDCap logic becomes `"[field] <> """""` in the CSV (four escaped-quote characters plus one closing delimiter = five trailing `"`). Most spreadsheet apps apply this automatically; apply it manually if building the file in a text editor or code.
 
-**Full format reference:** RC-DQ-01 §6 — Importing and Exporting Custom Rules
+**Full format reference:** [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §6 — Importing and Exporting Custom Rules
 
 ---
 
@@ -334,7 +343,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Contents:** One translation JSON per language in the project plus one settings JSON. Snapshots are created automatically when a project first moves to Production and each time drafted MLM changes are approved. They can also be created manually via the **Create Snapshot** button on the Languages tab. Individual files can be extracted and re-imported to restore a previous state.
 
-**Full details:** RC-MLM-01 — Multi-Language Management (§7 covers export/import workflow; §3.5 covers snapshots)
+**Full details:** [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) (§7 covers export/import workflow; §3.5 covers snapshots)
 
 ---
 
@@ -367,7 +376,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 Each row represents one allocation slot, consumed in order as subjects are randomized. When using stratification, the table must contain rows for every combination of stratification variable levels. The statistician generates a balanced allocation within each stratum cell; rows should be grouped by stratum combination (e.g., all slots for gender=Male/industry=Private, then gender=Male/industry=Academia, and so on across all stratum cells). Two upload slots exist — **Development** (for testing) and **Production** (for live data collection). Upload to the Development slot first and test thoroughly. The Production slot must be populated before the project can move to Production status.
 
-**Full details:** RC-RAND-02 — Randomization Setup Guide
+**Full details:** [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md)
 
 ---
 
@@ -377,7 +386,7 @@ The following are download-only or not file-based:
 
 - **Survey Participant List** — The participant list (Survey Distribution Tool) can be exported to CSV and supports copy-pasting a list of participants to add them, but there is no CSV file upload path for participants.
 - **Logging** — Logging records can be downloaded as CSV for audit purposes, but there is no upload path.
-- **Repeating Instruments/Events configuration** — Which instruments or events are set as repeatable is configured through the UI popup in Project Setup, not via CSV. This configuration can be managed via API (RC-API-51, RC-API-53) but not through a file upload in the UI.
+- **Repeating Instruments/Events configuration** — Which instruments or events are set as repeatable is configured through the UI popup in Project Setup, not via CSV. This configuration can be managed via API ([RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md), [RC-API-53 — Import Repeating Instruments and Events API](RC-API-53_Import-Repeating-Instruments-and-Events.md)) but not through a file upload in the UI.
 - **Report definitions** — Custom reports are created and managed in the UI only. There is no CSV export/import for report configurations.
 
 ---
@@ -406,30 +415,30 @@ The following are download-only or not file-based:
 
 **Uploading a Data Dictionary without a backup.** The Data Dictionary upload replaces your entire instrument configuration. If you accidentally omit rows (e.g., by filtering your spreadsheet), those variables and their data are deleted on upload. Always save a dated snapshot before editing.
 
-**Longitudinal structure upload mistakes (arms, events, instrument-event mappings).** The most common mistakes — wrong upload order, hand-typed unique event names, building the mapping file from scratch — are covered in RC-IMP-09 — Longitudinal Structure CSV.
+**Longitudinal structure upload mistakes (arms, events, instrument-event mappings).** The most common mistakes — wrong upload order, hand-typed unique event names, building the mapping file from scratch — are covered in [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md)
 
 ---
 
 ## API Access
 
-> **Note:** The following REDCap API methods provide programmatic alternatives to the CSV uploads described in this article. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See RC-API-01 — REDCap API for authentication, token management, and setup.
+> **Note:** The following REDCap API methods provide programmatic alternatives to the CSV uploads described in this article. API usage is an advanced feature that requires knowledge of computer programming or access to a developer resource. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, token management, and setup.
 
 Most CSV upload features in REDCap have a corresponding API method that achieves the same result without a file upload. The API is especially useful for automation, scripted project setup, and system-to-system integration.
 
 | **Feature** | **Export** | **Import** | **Delete** |
 |---|---|---|---|
-| Data Dictionary | RC-API-07 | RC-API-08 | — |
-| Arms | RC-API-16 | RC-API-17 | RC-API-18 |
-| Events | RC-API-19 | RC-API-20 | RC-API-21 |
-| Instrument–Event Mappings | RC-API-10 | RC-API-11 | — |
-| Repeating Instruments/Events *(API only — no UI upload)* | RC-API-51 | RC-API-53 | — |
-| Record Data | RC-API-02 | RC-API-03 | RC-API-04 |
-| Users | RC-API-22 | RC-API-23 | RC-API-24 |
-| User Roles | RC-API-25 | RC-API-26 | RC-API-27 |
-| User–Role Assignments | RC-API-55 | RC-API-56 | — |
-| DAGs | RC-API-28 | RC-API-29 | RC-API-30 |
-| User–DAG Assignments | RC-API-31 | RC-API-32 | — |
-| Survey Participants *(export only in UI)* | RC-API-43 | — | — |
+| Data Dictionary | [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) | [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) | — |
+| Arms | [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md) | [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md) | [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md) |
+| Events | [RC-API-19 — Export Events API](RC-API-19_Export-Events.md) | [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) | [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md) |
+| Instrument–Event Mappings | [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md) | [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md) | — |
+| Repeating Instruments/Events *(API only — no UI upload)* | [RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md) | [RC-API-53 — Import Repeating Instruments and Events API](RC-API-53_Import-Repeating-Instruments-and-Events.md) | — |
+| Record Data | [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) | [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) | [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md) |
+| Users | [RC-API-22 — Export Users API](RC-API-22_Export-Users.md) | [RC-API-23 — Import Users API](RC-API-23_Import-Users.md) | [RC-API-24 — Delete Users API](RC-API-24_Delete-Users.md) |
+| User Roles | [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) | [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) | [RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md) |
+| User–Role Assignments | [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md) | [RC-API-56 — Import User-Role Assignments API](RC-API-56_Import-User-Role-Assignments.md) | — |
+| DAGs | [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md) | [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md) | [RC-API-30 — Delete DAGs API](RC-API-30_Delete-DAGs.md) |
+| User–DAG Assignments | [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md) | [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md) | — |
+| Survey Participants *(export only in UI)* | [RC-API-43 — Export Survey Participants API](RC-API-43_Export-Survey-Participants.md) | — | — |
 
 > **No API equivalent:** Alerts & Notifications, Automated Survey Invitations, Survey Queue, Survey Settings, Form Display Logic, Data Quality Rules, Multi-Language Management, and Randomization Allocation Tables do not have dedicated API methods. These must be managed through the REDCap UI or CSV upload/download.
 
@@ -437,20 +446,20 @@ Most CSV upload features in REDCap have a corresponding API method that achieves
 
 # 11. Related Articles
 
-- RC-IMP-01 — Data Import Overview (overview of all import mechanisms including XML and zip files)
-- RC-IMP-04 — Record Data CSV Import (column reference for participant data imports)
-- RC-IMP-05 — Alerts & Notifications CSV (column reference for alert bulk upload)
-- RC-IMP-06 — Automated Survey Invitations CSV (column reference for ASI bulk upload)
-- RC-IMP-07 — Survey Settings CSV (column reference for survey settings bulk upload)
-- RC-IMP-08 — Form Display Logic CSV (column reference for FDL bulk upload)
-- RC-IMP-09 — Longitudinal Structure CSV (arms, events, and instrument-event mapping format reference)
-- RC-IMP-10 — Survey Queue CSV (column reference for survey queue bulk upload)
-- RC-FD-03 — Data Dictionary (complete Data Dictionary reference)
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques (column-by-column DD format reference)
-- RC-LONG-01 — Longitudinal Project Setup (arms, events, and instrument–event mapping uploads)
-- RC-USER-02 — User Rights: Adding Users & Managing Roles (bulk user management)
-- RC-DAG-01 — Data Access Groups (bulk DAG and user–DAG assignment management)
-- RC-ALERT-01 — Alerts & Notifications: Setup (alert configuration and bulk upload)
-- RC-DQ-01 — Data Quality Module (data quality rule upload/download)
-- RC-MLM-01 — Multi-Language Management (language CSV upload workflow)
-- RC-RAND-02 — Randomization Setup Guide (allocation table upload)
+- [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (overview of all import mechanisms including XML and zip files)
+- [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md)(column reference for participant data imports)
+- [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md)(column reference for alert bulk upload)
+- [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md)(column reference for ASI bulk upload)
+- [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md)(column reference for survey settings bulk upload)
+- [RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide](RC-IMP-08_Form-Display-Logic-CSV.md)(column reference for FDL bulk upload)
+- [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md)(arms, events, and instrument-event mapping format reference)
+- [RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md)(column reference for survey queue bulk upload)
+- [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (complete Data Dictionary reference)
+- [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (column-by-column DD format reference)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and instrument–event mapping uploads)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (bulk user management)
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (bulk DAG and user–DAG assignment management)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alert configuration and bulk upload)
+- [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) (data quality rule upload/download)
+- [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) (language CSV upload workflow)
+- [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) (allocation table upload)
