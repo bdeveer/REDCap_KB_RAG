@@ -7,7 +7,7 @@
 | **Domain** | MCP |
 | **Applies To** | REDCap administrators; users of AI tools with Claude (Cowork / Claude desktop) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | MCP server install.sh and redcap_mcp_server.py (internal) |
@@ -37,9 +37,12 @@ The server configuration lives in a single JSON file on your computer. The locat
 | OS | Config file path |
 |---|---|
 | macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+| Windows (standard installer) | `%APPDATA%\Claude\claude_desktop_config.json` |
+| Windows (Microsoft Store / MSIX build) | `%LOCALAPPDATA%\Packages\Claude_<id>\LocalCache\Roaming\Claude\claude_desktop_config.json` |
 
 This file is read by the Claude desktop application at startup. Any change to it takes effect after you fully quit and relaunch Claude.
+
+> **Critical for Windows Store installs:** If you installed Claude from the Microsoft Store (the MSIX/packaged build), the app does **not** read `%APPDATA%\Claude\`. The package sandbox redirects it to a `LocalCache` path under `%LOCALAPPDATA%\Packages\Claude_<id>\...` (the `<id>` is a random-looking string unique to your machine, e.g. `Claude_pzs8sxrjxfjjc`). Writing to `%APPDATA%\Claude\` will appear to succeed but the app will never see it, and Settings → Developer will keep showing "no servers configured." **Do not guess the path — let the app tell you.** Open Settings → Developer and click **Edit Config**; it opens the exact file the app reads. Edit or paste into whatever opens, and you are guaranteed to be editing the right file regardless of install type.
 
 ---
 
@@ -117,27 +120,40 @@ The MCP servers will now be available. You can verify the connection by asking C
 
 ### 4.5 Windows Setup (manual)
 
-The `install.sh` script is a bash script and does not run natively on Windows. Windows users configure the server manually in three steps.
+The `install.sh` script is a bash script and does not run natively on Windows. Windows users configure the server manually. Before starting, read Section 4.6 — the Windows-specific pitfalls below cause the large majority of failed setups, and knowing them up front saves considerable time.
 
-**Step 1 — Install Python dependencies.**
+**Step 1 — Install Python.**
 
-Open Command Prompt or PowerShell and run:
+First confirm Python 3.10+ is actually installed. In PowerShell, run `python --version`. If you see a real version number (e.g. `Python 3.14.6`), skip to Step 2.
 
-```
-pip install "mcp[cli]" requests
-```
+If instead you get **"Python was not found; run without arguments to install from the Microsoft Store,"** that is *not* a real Python — it is a Windows App Execution Alias placeholder. Install Python from [python.org](https://www.python.org/downloads/) using the standard "Windows installer (64-bit)," and on the first installer screen check **"Add python.exe to PATH."** A per-user install (do not check "use admin privileges") is sufficient and avoids needing local administrator rights. After installing, **open a new PowerShell window** (PATH changes do not reach already-open windows) and confirm `python --version`. If the Store placeholder still intercepts, turn off the `python.exe` / `python3.exe` toggles under Settings → Apps → Advanced app settings → App execution aliases.
 
-**Step 2 — Create or edit the Claude config file.**
+**Step 2 — Install Python dependencies.**
 
-The config file lives at:
+In PowerShell or Command Prompt:
 
 ```
-%APPDATA%\Claude\claude_desktop_config.json
+python -m pip install "mcp[cli]" requests
 ```
 
-You can open this path directly by pressing **Win+R**, typing `%APPDATA%\Claude`, and pressing Enter. If the `Claude` folder or `claude_desktop_config.json` file does not exist yet, create them.
+**Step 3 — Find the Python path for the config.**
 
-Open the file in a text editor (Notepad works, but a JSON-aware editor such as VS Code is easier) and add your server entries. Use full Windows paths and double backslashes in all path strings:
+The config needs the full path to `python.exe`. Note that **`where python` does nothing in PowerShell** — `where` is an alias for a different cmdlet there. Use one of these instead:
+
+```
+where.exe python
+```
+```
+(Get-Command python).Source
+```
+
+Use the path under `...\Programs\Python\...` — ignore any path under `...\WindowsApps\...`, which is the Store placeholder, not a working interpreter.
+
+**Step 4 — Open the correct config file.**
+
+Do **not** navigate to `%APPDATA%\Claude` by hand — on the Microsoft Store build that is the wrong location (see Section 2). Instead, open Claude and go to **Settings → Developer → Edit Config**. This opens the exact `claude_desktop_config.json` the app reads, wherever it actually lives. If the file has existing content, **do not overwrite the whole file** — add your server entries inside the existing `mcpServers` object and leave everything else intact.
+
+Add your server entries using full Windows paths and double backslashes in all path strings:
 
 ```json
 {
@@ -164,7 +180,35 @@ Adjust the path in `args` to wherever you saved `redcap_mcp_server.py`. Remove a
 
 > **Note:** JSON requires backslashes to be doubled (`\\`) inside strings. A single backslash will cause a parse error and the server will not load.
 
-**Step 3 — Relaunch Claude** as described in Section 4.4.
+**Step 5 — Relaunch Claude** as described in Section 4.4. On Windows, "fully quit" means the **system tray**, not the window — right-click the Claude icon in the system tray (it may be hidden under the `^` overflow arrow) and choose Quit, or end all Claude processes in Task Manager. Closing the window leaves the app running and it will not re-read the config.
+
+### 4.6 Windows pitfalls and a safe scripted write
+
+Four Windows-specific traps account for most failed setups. All are avoidable:
+
+1. **Wrong config location (Store build).** Covered in Section 2 — the Microsoft Store build ignores `%APPDATA%\Claude\`. Always reach the file via Settings → Developer → Edit Config rather than typing a path.
+2. **The BOM problem.** If you write the config from PowerShell, **do not use `Set-Content -Encoding utf8`** in Windows PowerShell 5.1 — it prepends a byte-order mark (BOM) that makes the app's JSON parser reject the file, and the servers silently fail to load. Either paste into the editor that Edit Config opens, or write the file with a BOM-free method (below).
+3. **`where python` returns nothing.** Use `where.exe python` or `(Get-Command python).Source` (Section 4.5, Step 3).
+4. **The "Python was not found" placeholder.** It is a Store alias, not Python (Section 4.5, Step 1).
+
+If you prefer to write the file from PowerShell rather than pasting into the editor, this writes UTF-8 **without** a BOM and targets whatever path Edit Config revealed:
+
+```powershell
+$config = @'
+{
+  "mcpServers": {
+    "redcap-prod": {
+      "command": "C:\\Users\\you\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+      "args": ["C:\\path\\to\\redcap_mcp_server.py"],
+      "env": { "REDCAP_URL": "https://redcap.yourinstitution.edu/api/" }
+    }
+  }
+}
+'@
+[System.IO.File]::WriteAllText("<PATH FROM EDIT CONFIG>", $config)
+```
+
+> **Note:** The Python version number is baked into the `command` path (e.g. `Python314`). If you later upgrade Python, that folder name changes and every server entry breaks — update the `command` path in each entry after any Python upgrade.
 
 ---
 
@@ -352,6 +396,21 @@ You can also verify which servers are registered by opening `claude_desktop_conf
 
 **Claude does not recognize the server name / says it has no REDCap tools.**
 The most common cause is that Claude was not fully restarted after the config was changed. On macOS, closing the window is not the same as quitting — use Cmd+Q or right-click the Dock icon and select Quit. On Windows, right-click the system tray icon and choose Quit, or end the Claude process in Task Manager. Then relaunch.
+
+**Windows Store build: Settings → Developer shows "no servers configured" even though you edited the config.**
+You edited `%APPDATA%\Claude\claude_desktop_config.json`, but the Microsoft Store (MSIX) build reads from a sandboxed `LocalCache` path instead (see Section 2). The app never saw your file. Fix: open Settings → Developer → Edit Config, which opens the file the app actually reads, and put your `mcpServers` entries there. To confirm the true path, the button reveals something like `...\AppData\Local\Packages\Claude_<id>\LocalCache\Roaming\Claude\claude_desktop_config.json`.
+
+**Windows: config looks correct but servers still don't load (BOM).**
+If you wrote the file with PowerShell's `Set-Content -Encoding utf8` (Windows PowerShell 5.1), it added a byte-order mark that the JSON parser rejects. Rewrite the file BOM-free with `[System.IO.File]::WriteAllText(path, text)` (see Section 4.6), or simply paste the content into the editor that Edit Config opens.
+
+**Windows: you accidentally overwrote the whole config file.**
+Writing the file instead of editing it replaces any existing content. The `claude_desktop_config.json` only holds MCP server entries — your projects, connected folders, login, and history live in separate files (`config.json`, `Local Storage`, `IndexedDB`) in the same folder and are **not** affected. Restore the lost server entries by re-adding them; nothing else needs recovery. To avoid this, always add to the existing `mcpServers` object rather than replacing the file.
+
+**Windows: `where python` prints nothing.**
+`where` is a PowerShell alias, not the path-finder. Use `where.exe python` or `(Get-Command python).Source`.
+
+**Windows: `python` reports "Python was not found … Microsoft Store."**
+That message is a Windows App Execution Alias placeholder, not an installed Python. Install from python.org with "Add python.exe to PATH" checked, open a new terminal, and retry (see Section 4.5, Step 1).
 
 **`ERROR: Python 3.10 or later is required` during install (macOS).**
 Python is either not installed or the version is too old. Install a compatible version (`brew install python@3.11`) and re-run `install.sh`.
