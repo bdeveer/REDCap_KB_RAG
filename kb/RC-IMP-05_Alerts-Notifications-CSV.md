@@ -8,8 +8,8 @@
 | **Applies To** | All REDCap project types |
 | **Prerequisite** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
 | **Skill Level** | Intermediate |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-05-07 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-07-24 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md)|
 | **Synonyms** | how do i import alerts via csv; bulk edit alerts and notifications in a spreadsheet; copy alert configurations from one project to another; upload alert definitions csv; alert-unique-id column format for import; export and re-import alerts and notifications; duplicate alerts across projects without rebuilding; a&n csv column reference |
@@ -111,6 +111,10 @@ A-2483,"Invite 3 months",SUBMIT,screening,,COMPLETE,,N,N,RECORD,TIME_LAG,,,90,0,
 **Specifying only `send-on-time-lag-days` for a TIME_LAG send.** All three lag columns — days, hours, and minutes — must be present. Use `0` for the units you don't need; don't leave them blank.
 
 **Leaving `alert-send-how-many` blank or omitting the repeat cap.** For recurring alerts, always set `repeat-for-max`. Without it, REDCap sends indefinitely.
+
+**Building the import file from scratch instead of from an export.** The exact column set varies by project type — a classic (non-longitudinal) project's export omits `unique-event-name`, so its template has one fewer column than a longitudinal project's. Uploading a file whose columns don't match the destination project's template causes the rows to misalign during parsing and the import to fail, often with a misleading error that points at an unrelated field (for example, an email column) rather than at the column count. Always download an existing alert from the destination project first and edit that file, so the column set matches exactly. This is the same reason Section 1 advises "Always download first."
+
+**Using the wrong capitalization in `email-from`.** REDCap validates the alert sender with a case-sensitive, exact-string match against the addresses on the sending user's profile (primary plus additional emails). An address stored in lowercase (e.g., `redcap@yale.edu`) is rejected with "Alert sender is invalid" if it is entered with different casing (e.g., `REDCap@yale.edu`), even though the address genuinely exists on the profile. Match the stored casing exactly.
 
 ---
 
