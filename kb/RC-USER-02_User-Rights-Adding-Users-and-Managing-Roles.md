@@ -7,8 +7,8 @@
 | **Domain** | User Rights |
 | **Applies To** | All REDCap project types; requires User Rights privilege |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-07-27 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) |
 | **Synonyms** | how do i add a user to my project; give someone access to my redcap project; create a user role; apply the same rights to multiple users; assign a role to a user; manage roles in user rights; invite a colleague to a project; set up user roles for a team |
@@ -260,6 +260,51 @@ All project users appear in this file, including those without a role assignment
 **Not reviewing rights after adding a new instrument.** When a new instrument is added to the project, existing user rights do not automatically update to include it. Review all user rights (or role configurations) after adding instruments to ensure access is set correctly for the new instrument.
 
 **Renaming a role that is referenced in branching logic.** REDCap allows branching logic to reference the current user's role by name using the `[user-role-label]` smart variable — for example, to restrict a sensitive field to a specific reviewer role. This is useful for enforcing role-based access within a form, but it creates a hidden dependency: the role's display name as shown in User Rights becomes a hard-coded string in the data dictionary. If that role is later renamed (even a capitalisation change, e.g., `"data manager"` → `"Data Manager"`), every branching condition referencing the old name silently breaks — the field becomes invisible or permanently visible to everyone in that role, with no error message. Before renaming any role, search the data dictionary for its name in branching logic, calculated fields, and action tags. Treat role names referenced in logic as frozen identifiers for the life of the project, and document them separately from the User Rights configuration so the dependency is visible.
+
+**Querying per-user rights columns directly without accounting for roles.** When pulling user rights from the backend database (rather than the web interface), the per-user permission columns on `redcap_user_rights` are unreliable for users assigned to a role. Resolve effective rights by coalescing with `redcap_user_roles` — see [Querying User Rights in the Backend Database](#querying-user-rights-in-the-backend-database) below. A query that reads only the per-user columns will return the wrong set of users.
+
+---
+
+### Querying User Rights in the Backend Database
+
+> **Scope:** This is a database-administration topic, relevant only when querying REDCap's MySQL/MariaDB tables directly — for example, to build a list of who holds design or user-rights across many projects on an instance. It does **not** apply to the User Rights web interface, which always shows correct effective rights.
+
+**The gotcha.** When a user is assigned to a **role**, their effective permissions come from `redcap_user_roles`, not from the per-user permission columns on `redcap_user_rights`. Those per-user columns (`design`, `user_rights`, and the others) are **not reliable** for role-assigned users — they can retain stale or default values that do not reflect the role. In practice:
+
+- the per-user `user_rights` column is frequently left at `1` for role members regardless of the role's actual setting, so a filter like `rights.user_rights = 1` sweeps in nearly the entire project roster — data-entry staff, site monitors, and external collaborators included; and
+- the per-user `design` column can be `0` for users who are in fact designers **through their role**, so a filter like `rights.design = 1` silently misses them.
+
+A query that reads only the per-user columns is therefore both over- and under-inclusive. In one real cross-instance pull, the naive form returned more than double the correct number of users (~43 → ~98 rows) and included outside-institution email addresses that should never have been in the result.
+
+**The fix.** Join `redcap_user_roles` on `role_id` and resolve each permission with `COALESCE(role_value, per_user_value)` — this uses the role's value when the user is in a role (`role_id` is set) and falls back to the per-user value otherwise:
+
+```sql
+SELECT
+    rights.project_id      AS pid,
+    projects.app_title     AS project_title,
+    projects.status        AS project_status,
+    rights.username,
+    info.user_email,
+    COALESCE(roles.design,      rights.design)      AS effective_design,
+    COALESCE(roles.user_rights, rights.user_rights) AS effective_user_rights,
+    info.user_suspended_time
+FROM redcap_user_rights rights
+    LEFT JOIN redcap_user_information info ON info.username    = rights.username
+    LEFT JOIN redcap_projects       projects ON projects.project_id = rights.project_id
+    LEFT JOIN redcap_user_roles     roles ON roles.role_id    = rights.role_id
+WHERE rights.project_id IN ( /* one or more project_ids */ )
+    AND (
+        COALESCE(roles.design,      rights.design)      = 1
+        OR COALESCE(roles.user_rights, rights.user_rights) = 1
+    )
+ORDER BY pid;
+```
+
+Notes:
+
+- Add `AND info.user_suspended_time IS NULL` to limit the result to accounts that can currently act (suspended users cannot log in).
+- `project_status` distinguishes Development (0), Production (1), and Inactive/Completed (2) if you want to narrow scope.
+- `user_email` can be blank for shared/service accounts — check before using the output for a mailing.
 
 ---
 
