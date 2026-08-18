@@ -134,6 +134,7 @@ nav:
     - "Clinical Data Pull Setup and Usage": RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md
     - "Clinical Data Mart Setup and Usage": RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md
     - "CDP vs CDM Feature Comparison": RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md
+    - "REDCap SHARE Overview and Onboarding": RC-CDIS-05_REDCap-SHARE-Overview-and-Onboarding.md
   - Control Center:
     - "Control Center Overview": RC-CC-21_Control-Center-Overview.md
     - "Control Center Notifications and Reporting": RC-CC-01_Control-Center-Notifications-and-Reporting.md
@@ -160,6 +161,7 @@ nav:
     - "Backup Options": RC-CC-23_Backup-Options.md
     - "Control Center Edit Project Settings": RC-CC-24_Control-Center-Edit-Project-Settings.md
     - "Access Control Groups": RC-CC-25_Access-Control-Groups.md
+    - "Control Center: AI Configuration Settings": RC-CC-26_Control-Center-AI-Configuration-Settings.md
   - Data Access Groups:
     - "Data Access Groups": RC-DAG-01_Data-Access-Groups.md
   - Data Entry:
@@ -295,6 +297,10 @@ nav:
     - "MCP Server Setup and Management": RC-MCP-01_MCP-Server-Setup-and-Management.md
   - REDCap+:
     - "REDCap Plus Overview and Subscription": RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md
+    - "Project Migration Tool": RC-PLUS-02_Project-Migration-Tool.md
+    - "Reward Services": RC-PLUS-03_Reward-Services.md
+    - "Project Administrator Groups (PAGs)": RC-PLUS-04_Project-Administrator-Groups.md
+    - "Email Verification and Unsubscribe": RC-PLUS-05_Email-Verification-and-Unsubscribe.md
   - Randomization:
     - "Randomization Concepts": RC-RAND-01_Randomization-Concepts.md
     - "Randomization Setup": RC-RAND-02_Randomization-Setup.md
@@ -304,6 +310,7 @@ nav:
   - Self-Hosting & Deployment:
     - "Self-Hosting a Private REDCap Instance": RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md
     - "Self-Hosting REDCap on a Synology NAS with Docker Compose": RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md
+    - "REDCap Versions, Release Lines & Patching": RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md
   - Send-It:
     - "Send It Secure File Transfer": RC-SENDIT-01_Send-It-Secure-File-Transfer.md
   - Surveys:
@@ -317,6 +324,7 @@ nav:
     - "e Consent Framework Setup and Management": RC-SURV-08_e-Consent-Framework-Setup-and-Management.md
     - "PDF Snapshots of Records": RC-SURV-09_PDF-Snapshots-of-Records.md
     - "Survey Login": RC-SURV-10_Survey-Login.md
+    - "Accessibility in Surveys & Forms": RC-SURV-11_Accessibility-in-Surveys-and-Forms.md
   - Texting (SMS):
     - "Texting in REDCap Setup and Usage": RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md
     - "Texting Administrator Setup": RC-TXT-02_Texting-Administrator-Setup.md
