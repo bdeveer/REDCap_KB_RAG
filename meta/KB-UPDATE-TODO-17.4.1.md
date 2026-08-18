@@ -57,9 +57,15 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   Also: **17.3.3** added System Statistics counters for the Email Verification/Unsubscribe features when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report).
 
 - [x] **RC-PLUS-04 — Project Administrator Groups (PAGs)** *(17.1.0, REDCap+)* — *written 2026-08-18, awaiting Control Center capture*
-  Written from the 17.1.0 release notes only. **Unlike RC-PLUS-02/03, this gap is closable without a subscription** — the PAG page is in the Control Center, where REDCap+ gating is cosmetic, so a capture will let §4–5 be verified. Only the delegated admin's own experience (§6) is genuinely unobservable here.
+  Written from the 17.1.0 release notes, then revised against a 17.3.6 LTS capture of the Control Center page.
+
+  > **Correction to this report — and to my own prediction.** I stated that this gap was closable without a subscription because "REDCap+ gating in the Control Center is cosmetic". That generalisation was wrong. The Project Administrator Groups page is **hard-gated**: without a subscription its setup container is replaced by *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* — no table, no forms. Gating style varies per page, and the same wrong generalisation had been written into the scope notes of `RC-PLUS-02` and `RC-PLUS-03`; both are now corrected and `RC-PLUS-01` has a new §4a documenting the three gating styles.
+
+  What salvaged the section is that REDCap still emits the page's **language keys** even when it refuses to render the interface — every column, button, dialog and validation message. So §4 is an accurate account of what the page contains, but not of its layout.
   The disambiguation this report asked for is §2, a three-way table: PAG decides *who approves your request*, ACG decides *what rights you can be given*, DAG decides *whose records you can see*. Reciprocal notes added to `RC-CC-25` and `RC-DAG-01`.
   **Key findings:** the admin role is many-to-many but membership is strictly one-to-one — a project belongs to exactly one PAG, which is the constraint that shapes group design. User assignment auto-adds only *future* projects. Project-level admins cannot reach the PAG page itself, so they cannot widen their own delegation.
+  From the capture: **every PAG must always have at least one project-level admin**, enforced on removal as well as creation — so replacing a departing sole admin is add-then-remove, which a revoke-first leavers process will break. There is also **no separate enable switch**; creating a group is the enablement.
+  The "assigned to the DAG" typo is **not** just a release-note error — it is the on-page help text in 17.3.6 LTS.
   **17.3.3** added System Statistics counters for PAGs when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report) — recorded in §7 and cross-linked to `RC-CC-11`.
   No PAG-specific defects appear in either changelog through 17.4.1.
 

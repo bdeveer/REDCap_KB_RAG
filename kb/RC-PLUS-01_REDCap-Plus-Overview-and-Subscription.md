@@ -111,6 +111,22 @@ REDCap+ subscriptions include up to 12 administrator seats on the REDCap Communi
 
 ---
 
+## 4a. What You Can See Without a Subscription
+
+REDCap+ features are visible in the interface on an unsubscribed instance, but **how far you can look varies by page**. This matters when evaluating the subscription, and when documenting or training on features you do not yet have.
+
+| Gating style | Behaviour without a subscription | Example |
+| --- | --- | --- |
+| **Cosmetic** | Settings render normally and are then disabled in the browser. The full set of options and help text is readable | Reward Services on the Modules/Services Configuration page |
+| **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* | Project Administrator Groups |
+| **Open** | The page works, because it is not subscriber-only | Project Migration Dashboard, which any institution may use |
+
+> **Note:** Do not infer one page's behaviour from another's. A REDCap+ section being fully readable in one place does not mean the next one will be.
+
+Separately, features that must be *enabled inside a project* — Reward Services being the clearest case — cannot be previewed at all, because the project-level pages do not exist until the feature is switched on, which requires the subscription.
+
+---
+
 ## 5. Pricing and Tiers
 
 REDCap+ is priced annually based on the number of active user logins on the target installation in the preceding 6 months. Subscriptions begin the day payment is received and are valid for one calendar year.

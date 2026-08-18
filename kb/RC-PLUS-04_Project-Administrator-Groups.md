@@ -7,21 +7,23 @@
 | **Domain** | REDCap+ |
 | **Applies To** | System administrators delegating administrative work; users designated as project-level admins |
 | **Requires** | REDCap v17.1.0+ and a REDCap+ subscription |
-| **Verified Against** | Not yet verified against a live instance — written from the 17.1.0 release notes. See the scope note |
+| **Verified Against** | REDCap 17.3.6 (LTS) — page description and constraints (§3–4) verified from a live capture. The management interface is **hard-gated** without a REDCap+ subscription and could not be observed — see the scope note |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Synonyms** | project administrator groups; PAG redcap; delegate redcap admin tasks; power user admin rights; who approves move to production; project level admin; departmental redcap administration; PAG vs DAG; distribute admin workload redcap |
+| **Synonyms** | project administrator groups; PAG redcap; delegate redcap admin tasks; power user admin rights; who approves move to production; project level admin; departmental redcap administration; PAG vs DAG; distribute admin workload redcap; cannot remove last project-level admin; delete a PAG |
 
 ---
 
-> **Scope note.** This article is written from REDCap's **17.1.0** release notes and has **not** been verified against a live instance. The instance this KB is maintained against does not hold a REDCap+ subscription.
+> **Scope note.** The page description and the constraints in §3 and §4 are taken from a capture of the Control Center page on a live instance running **17.3.6 LTS**. The remainder is from REDCap's **17.1.0** release notes.
 >
-> Unlike the project-level sections of [RC-PLUS-02](RC-PLUS-02_Project-Migration-Tool.md) and [RC-PLUS-03](RC-PLUS-03_Reward-Services.md), this gap **is** closable without a subscription: the *Project Administrator Groups* page lives in the Control Center, where REDCap+ gating is cosmetic — settings render server-side and are only disabled in the browser. A capture of that page would let §4 and §5 be verified. What cannot be observed without a subscription is the delegated admin's own experience (§6).
+> **The management interface itself could not be observed, and this page gates harder than other REDCap+ pages.** On the *Modules/Services Configuration* page, REDCap+ settings render server-side and are merely disabled in the browser, so they can be read without a subscription. The Project Administrator Groups page does **not** behave that way: without an active subscription its setup container is replaced by the message *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* No group table, no forms.
 >
-> Treat everything below as REDCap's description of the feature rather than as observed behaviour, and expect section 4 to gain detail once the Control Center page is captured.
+> What made §4 documentable anyway is that REDCap still emits the page's **language keys** — every column heading, button, dialog and validation message — even when it refuses to render the interface. That gives the vocabulary and the rules with confidence, but not the layout or the flow. Treat §4 as an accurate account of what the page *contains*, not of what it *looks like*.
+>
+> **REDCap+ gating is not uniform across pages.** Do not assume a page is readable without a subscription because another one was.
 
 ---
 
@@ -59,7 +61,9 @@ The short version:
 - An **ACG** decides *what rights you can be given*.
 - A **DAG** decides *whose records you can see*.
 
-> **Note on a typo in REDCap's own release notes.** The 17.1.0 entry describing user assignment ends with the sentence *"any projects that those users create will automatically get assigned to the DAG."* This should read **PAG** — the mechanism described is PAG auto-assignment and has nothing to do with Data Access Groups. Worth knowing if you are reading the release notes alongside this article.
+> **Note on a typo in REDCap's own documentation.** The text describing user assignment ends with the sentence *"any projects that those users create will automatically get assigned to the DAG."* This should read **PAG** — the mechanism described is PAG auto-assignment and has nothing to do with Data Access Groups.
+>
+> This is **not** only a release-note error. The same sentence is the on-page help text on the Project Administrator Groups page itself, confirmed present in 17.3.6 LTS. An administrator reading the product will meet the same confusion.
 
 ---
 
@@ -82,15 +86,61 @@ You may create as many PAGs as you wish, and assign as many projects and users t
 
 ---
 
-## 4. Enabling and Configuring PAGs
+## 4. The Project Administrator Groups Page
 
-**Where:** Control Center → **Project Administrator Groups** (in the **Users** section of the Control Center menu, where it carries a `REDCap+` badge).
+*Page description and constraints verified against 17.3.6 LTS; interface not observable — see the scope note.*
 
-> **Only system-level admins can access that page.** Project-level admins administer projects within their group; they do not gain access to the page that defines the groups themselves. This is what keeps the delegation bounded.
+**Where:** Control Center → **Users** section → **Project Administrator Groups**, which carries a `REDCap+` badge.
 
-From there you create groups and assign projects and users to them.
+> **Only system-level admins can access that page.** Project-level admins administer projects within their group; they do not gain access to the page that defines the groups themselves. This is what keeps the delegation bounded — a delegate cannot widen their own delegation.
 
-> **This section will expand once the Control Center page has been captured.** The release notes describe what the page does but not its individual controls. See the scope note.
+There is **no separate system-level on/off switch** for PAGs. The feature becomes operative by creating a group on this page.
+
+### 4.1 The group list
+
+Groups are listed with these columns:
+
+| Column | Contents |
+| --- | --- |
+| **PAG ID** | System identifier for the group |
+| **Project Administrator Group** | The group name |
+| **Project-level Admins** | Who administers this group's projects |
+| **Projects Assigned to PAG** | Project count / list |
+| **Users Assigned to PAG** | Users whose new projects auto-join the group (§5) |
+| **View & Manage** | Opens the group |
+
+When no groups exist the list reads *"No groups to display"* — which is also the state of a fresh instance, since there is nothing to enable first.
+
+### 4.2 Creating a group
+
+Creating a PAG requires **two** things, not one:
+
+1. A descriptive **group name**
+2. **At least one user designated as its initial project-level admin**
+
+Attempting to create a group without both is rejected: *"You must enter a name for the PAG and select a user to be the project-level admin of that PAG."* Additional admins and projects are assigned after creation.
+
+> **Critical — every PAG must always have at least one project-level admin.** REDCap enforces this on removal as well as on creation: *"Sorry, but you cannot remove all project-level admins from the PAG. Each Project Administrator Group must always have at least one project-level admin. Try adding another user first, after which you can then remove this one."*
+>
+> The practical consequence is a **staffing order of operations**. When the sole admin of a group leaves, you cannot remove them first and appoint a replacement afterwards — you must add the replacement, then remove the departing admin. A leavers process that revokes access before naming a successor will hit this wall.
+
+### 4.3 Managing a group
+
+Within a group, four independent operations are available:
+
+| Operation | Notes |
+| --- | --- |
+| **Edit PAG Name** | Renames the group |
+| **Assign / remove project-level admins** | User search; subject to the at-least-one rule above |
+| **Add project / Remove project** | *"Do you wish to remove the project below from the PAG?"* |
+| **Assign user / Unassign user** | Governs auto-assignment of that user's future projects (§5) |
+| **Delete PAG** | *"Do you wish to delete the Project Administrator Group below?"* |
+
+Projects and users are assigned through separate searchable pickers.
+
+> **Note — a confusing confirmation message.** Unassigning a *user* from a PAG returns *"The project was successfully unassigned from the PAG!"* — it says "project" where it means "user". The action is correct; only the message is wrong. Present in 17.3.6 LTS.
+
+> **Note:** Deleting a PAG and removing a project from a PAG are different operations with different consequences. Removing a project returns it to system-admin handling; deleting the group does so for every project in it at once.
 
 ---
 
@@ -153,6 +203,18 @@ No PAG-specific defects appear in the Standard or LTS changelogs through 17.4.1 
 
 **A:** No, it is optional. Projects can always be assigned to a PAG after creation. User assignment is a scalability convenience for cases where a set of people clearly belongs to one department or functional area.
 
+**Q: Our only project-level admin for a group is leaving. How do we swap them out?**
+
+**A:** Add the replacement as a project-level admin first, then remove the departing one. REDCap will not let you remove the last admin from a PAG — each group must always have at least one.
+
+**Q: Is there a system setting to turn PAGs on?**
+
+**A:** No. The feature becomes operative when you create a group on the Control Center page. Creating one requires a group name *and* at least one initial project-level admin.
+
+**Q: Our Control Center says the Project Administrator Groups page has been disabled. Is it broken?**
+
+**A:** No — that message means no REDCap+ subscription is active. Unlike the Modules/Services Configuration page, which shows its REDCap+ settings in a disabled state, this page replaces the whole interface with the notice.
+
 **Q: Our LTS instance doesn't have this. Why?**
 
 **A:** PAGs shipped in 17.1.0 Standard. An LTS line only picks up features present in the Standard release it was cut from, and patches do not add features. An LTS instance below that point will not gain PAGs until the institution moves to a newer LTS line.
@@ -164,6 +226,8 @@ No PAG-specific defects appear in the Standard or LTS changelogs through 17.4.1 
 **Confusing PAGs with DAGs.** Both are "groups," both are abbreviated to three letters ending in G, and REDCap's own 17.1.0 release notes contain a typo that says "DAG" where it means "PAG". They control completely different things — administrative workflow versus record visibility. See §2.
 
 **Designing PAGs around org charts rather than around projects.** Because a project can only belong to one PAG, a group structure that mirrors a matrixed organisation will produce projects that genuinely belong in two places. Group by who should *approve requests*, which is usually a simpler structure than the org chart.
+
+**Removing a group's only admin before naming a replacement.** REDCap refuses to leave a PAG without at least one project-level admin, so the order is add-then-remove. A standard leavers process that revokes first will fail here.
 
 **Assigning users to a PAG and expecting their existing projects to follow.** Auto-assignment is forward-looking only.
 
