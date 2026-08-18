@@ -4,11 +4,14 @@ title: 'Clinical Data Pull (CDP): Setup and Usage'
 domain: Clinical Data Interoperability Services
 applies_to:
 - Institutions using real-time, prospective clinical data collection from an EHR
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center
   Setup'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CDIS-01
   title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
@@ -96,6 +99,20 @@ When mapping a field for clinical notes:
 
 For the fields **race**, **sex**, and **ethnicity**, CDP requires that answer choices be coded using specific standardized values aligned with FHIR terminology. Contact your REDCap administrator for the required code list if you are setting up these mappings.
 
+### Expanded demographic mappings
+
+The set of demographic data CDIS can retrieve has widened considerably:
+
+| Addition | Version |
+| --- | --- |
+| **FHIR ID** available as a patient identifier, plus personal preferences such as **patient pronouns** | 15.3.3 |
+| **Multi-race mapping** — a new optional "Race (all coded values)" field captures **every** race the EHR sends, without breaking existing single-value mappings | 15.9.0 |
+| **Gender identity** can be mapped **separately** from legal sex, sex assigned at birth, and sex for clinical use, where the EHR supplies those values distinctly | 17.1.3 |
+
+> **Important:** The 15.9.0 and 17.1.3 additions exist because the earlier single-field model silently lost information. A patient recorded in the EHR with several races, or with a gender identity distinct from their legal sex, previously had that collapsed into one value on import. If your project began before these versions and those variables matter analytically, the historical data may be less complete than the current mapping suggests — check before combining old and new records.
+
+> **Note:** Mapping these fields does not create them. The project still needs correctly coded answer choices, and the additional fields must be mapped explicitly.
+
 ---
 
 # 5. Importing Data: Two Access Methods
@@ -133,6 +150,46 @@ On the adjudication screen:
 - For temporal fields with multiple values on the same calendar date as the REDCap date field, the matching value is pre-selected automatically (unless a pre-selection rule like "Minimum value" or "Latest value" is set on the mapping page).
 - The user selects the radio button for each value to import, then clicks **Save** to store the values in the project.
 - Unadjudicated items can be left and returned to later.
+
+## 6.1 Adjudication display options *(17.2.1+)*
+
+The adjudication modal gained controls for narrowing what is shown, which matters on records with many source values:
+
+- show **matching REDCap values first**
+- limit results to the **current instrument**
+- then narrow further to the **current event or instance**
+
+REDCap also validates the record identifier and the mapped temporal reference field **before** fetching source data, so an invalid value produces a clear message rather than an empty or confusing result set.
+
+## 6.2 How adjudication has changed
+
+The adjudication workflow was rebuilt across many releases. If you are working from older notes or training material, expect differences.
+
+| Change | Version |
+| --- | --- |
+| Cleaner layout and easier interaction throughout the CDP adjudication flow | 15.6.0 |
+| Clearer display of adjudication values, and guidance on next steps when the EHR returns **no data** | 15.7.4 |
+| Item counts reflect transformer-adjusted values; the modal always offers **Save** when selections are possible | 15.7.5 |
+| Improved handling of empty clinical data — no more error messages when there is simply nothing to show | 15.9.0 |
+| Pre-fetch validation and the display options above | 17.2.1 |
+
+> **Version caveat (below 16.1.8 Standard / 16.0.19 LTS):** In longitudinal projects with repeating events, CDP and DDP users reviewing source data could see **blank REDCap date/time values**, and adjudicated values could be **saved to the wrong event instance**. This one silently misplaces data rather than failing visibly, so on affected versions it is worth spot-checking that adjudicated values landed in the instance you expected.
+
+> **Version caveat (below 15.7.1 Standard):** In longitudinal projects adjudicating data across multiple events, the system could become confused about which event incoming EHR data belonged to, **possibly saving data to the wrong event**.
+
+## 6.3 Mapping Helper
+
+The **Mapping Helper** supports setup and troubleshooting without needing a live EHR fetch:
+
+| Capability | Version |
+| --- | --- |
+| Review **pasted or uploaded FHIR payloads** to inspect supported resource data, without fetching live data from the EHR | 17.1.3 |
+| **Search for available patient identifiers** by entering patient demographics, to validate patient lookup and mapping setup | 17.1.3 |
+| CDP Mapping Setup reachable directly from the Clinical Data Interoperability Services section of the left-hand project menu, next to Mapping Helper | 17.2.0 |
+
+Both 17.1.3 additions address the same problem: previously, checking whether a mapping was correct meant pulling real patient data. Working from a pasted payload lets you validate the setup without touching live records.
+
+Mapping management itself was also reworked — a form-based workflow with better performance on large mapping sets and event-aware tools for copying mappings across events (16.0.8), a sticky header with select-all and switch-style toggles when copying to multiple events (16.0.9), and validation messages shown under the related field column rather than only in the FHIR column (16.0.9).
 
 ---
 

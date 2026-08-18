@@ -5,10 +5,13 @@ title: 'Clinical Data Interoperability Services (CDIS): Overview and Control Cen
 domain: Clinical Data Interoperability Services
 applies_to:
 - Institutions with FHIR/HL7 integration and EHR connectivity
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CDIS-02
   title: 'Clinical Data Pull (CDP): Setup and Usage'
@@ -61,6 +64,7 @@ Both modules rely on the same CDIS foundation. Once CDIS is configured at the sy
 | **FHIR** | Fast Healthcare Interoperability Resources — standardized data format (pronounced "fire") |
 | **SMART on FHIR** | Technology stack combining SMART (app authorization) with FHIR web services |
 | **OAuth2** | Authorization protocol used by FHIR services to authenticate EHR users |
+| **Break the Glass (BTG)** | Epic's mechanism for restricting access to a protected patient's record, requiring the requester to take a deliberate, logged action to obtain it. See Section 6a |
 
 ---
 
@@ -104,6 +108,74 @@ The CDIS Control Center page also links to:
 - A comparison table of CDP vs CDM differences (see [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md))
 - A survey for requesting additional FHIR data mappings
 - Reference lists for mappable FHIR data (DSTU2 and R4 versions)
+
+## 6.1 Access Token Priority Rules Manager *(15.1.0+)*
+
+An optional feature for CDIS-enabled projects, letting project owners and administrators define **prioritisation rules for selecting which FHIR access token** is used to fetch data from the EHR.
+
+It matters where several users in a project each hold a FHIR access token. Without rules, the token chosen is not necessarily the one you would pick — and tokens differ in what they can reach, so the same fetch can return different results depending on whose token was used.
+
+## 6.2 CDIS Infrastructure Settings
+
+Several changes affect where CDIS puts things and how background work behaves. They rarely need attention until something breaks, at which point they are the first place to look.
+
+| Change | Version |
+| --- | --- |
+| Twig replaces Blade as the templating engine for the EHR authorisation workflow; the enhanced error page lists relevant pages visited | 15.5.0 |
+| Data Mart FHIR fetching runs each MRN and resource — including paginated FHIR results — in **separate subprocesses**, improving performance and isolation | 15.9.0 |
+| A weekly **cron job** prunes expired FHIR tokens, preventing memory issues | 16.0.0 |
+| Administrators may set a **dedicated folder for CDIS temporary files**, and a separate CDIS cache folder, keeping CDIS temp data out of the system temp directory. Improves stability where load balancers or multiple app servers are in play | 16.0.8 |
+| A **fetch reconciler** resets records stuck in a "fetching" state | 16.0.8 |
+| Temporary state moved to temp-data database tables with cron cleanup, so storage does not grow unbounded | 16.1.1 |
+| Data Mart processing follows **record sort order** rather than MRN sort order | 16.1.2 |
+| Grouped diagnostics, suggested next steps, safe callback metadata and sanitized token-endpoint response details on the FHIR launcher error page | 17.2.0 |
+| SMART on FHIR EHR launch better maintains launch context and returns users to the intended REDCap workflow through browser restrictions, Shibboleth or external login handoffs | 17.1.2 |
+| CDP, FHIR and Data Mart workflows report additional progress detail, identifying the affected project and processing stage | 17.3.1 |
+
+> **Note — the dedicated CDIS temp folder (16.0.8) is worth setting on multi-server deployments.** Where CDIS temp files land in a per-server system temp directory, a background job started on one application server may not find state written by another. The dedicated folder makes the location explicit and shared.
+
+> **Version caveats — background fetching.** Two defects left background CDP work silently incomplete rather than visibly failing. Background workflows could **stop before processing all selected data**, leaving records incomplete (fixed 16.1.6 Standard / 16.0.17 LTS), and background jobs could **crash repeatedly** where large fetch histories or stale fetch states exhausted server memory (fixed 17.0.6 Standard / 16.0.28 LTS). If background fetching on an older instance appears to run but leaves gaps, these are the likely cause rather than the mapping.
+
+---
+
+# 6a. Break the Glass (Epic only)
+
+Some patients' records are **protected** in Epic — VIP patients, employees, staff family members, or anyone flagged for restricted access. Retrieving their data requires the requester to deliberately "break the glass": an explicit, logged action acknowledging they are accessing a protected record.
+
+When CDIS encounters such a patient, the data does not simply arrive. REDCap detects the protection, surfaces it, and requires a user to confirm before the pull can proceed.
+
+> **Note:** This is an **Epic-only** feature. It has no equivalent in other EHR systems CDIS connects to.
+
+## 6a.1 The workflow
+
+1. During a data pull, CDIS detects that a patient — or, from 16.0.4, a specific **resource or endpoint** — is protected.
+2. The patient is added to a per-project **protected patient list**.
+3. A user with access opens the **Break the Glass** page and chooses to proceed.
+4. Only at that point does REDCap request a BTG-enabled FHIR token from Epic.
+5. The user completes a **sensitive-data confirmation** step.
+6. Data flows, and the action is logged.
+
+> **Important — the token is requested late, deliberately.** Before 15.8.1, REDCap requested the BTG token as soon as a protected patient was detected. Those tokens could expire before anyone acted on them, so the break would fail when finally attempted. Since 15.8.1 the token is requested only when a user actually chooses to break the glass, guaranteeing it is valid at the moment it is used.
+
+## 6a.2 How the feature has changed
+
+| Change | Version |
+| --- | --- |
+| BTG logging extended to cover failures and no-op cases — not just successful breaks, but also where BTG was deemed unnecessary or errored | 15.0.0 |
+| Data can flow from Epic even when the **Patient (demographics) endpoint is not part of the pull**. Previously, patients could not be evaluated for BTG unless that endpoint was explicitly requested | 15.4.0 |
+| Token requested on user action rather than on detection; protected patients remain listed for **5 days** rather than 1 | 15.8.1 |
+| Clearer feedback when obtaining a FHIR token during the BTG process | 15.8.4 |
+| **Resource/endpoint-level** protection detection, not only patient-level, so BTG can be tracked and re-verified against the specific request that returned partial or limited data | 16.0.4 |
+| Protected-patient list TTL raised from 5 days to **10 days**, and the list consolidated into a single managed location to avoid mismatches between storage paths | 16.0.6 |
+| Candidate lists cached in the REDCap `temp` folder using a `.btg` extension and a filename containing the project PID | 16.0.8 |
+| Temporary state moved into **temp-data database tables** rather than files, removing sensitivity to filesystem timestamp and locking quirks; expired entries cleaned by cron | 16.1.1 |
+| Sensitive-data confirmation accepts **email code, SMS code, Duo push and OTP** in addition to password | 16.1.2 |
+
+The 16.1.2 change matters operationally: on earlier versions, confirmation was password-only, which is awkward for anyone authenticating through SSO who may not have a REDCap password to type.
+
+> **Version caveat (below 17.1.3 Standard):** On institutions whose web server requires explicit page file names in URLs, users could not open the Break the Glass page at all. Fixed in 17.1.3.
+
+> **Version caveat (below 17.4.1 Standard):** When Clinical Data Pull met a BTG-protected patient during a **background** fetch, repeated patient requests could exhaust memory and crash the REDCap background system before any clinical data was retrieved. On affected versions a single protected patient can stall background fetching for the whole instance, so this is worth ruling out when background CDP jobs fail without an obvious cause.
 
 ---
 

@@ -4,11 +4,14 @@ title: 'Clinical Data Mart (CDM): Setup and Usage'
 domain: Clinical Data Interoperability Services
 applies_to:
 - Institutions using bulk clinical data import for registries and retrospective studies
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center
   Setup'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CDIS-01
   title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
