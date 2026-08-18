@@ -5,7 +5,8 @@
 | **Article ID** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
 |---|---|
 | **Domain** | REDCap+ |
-| **Applies To** | REDCap Administrators; REDCap Licensed Institutions; REDCap v17.0.0+ |
+| **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
+| **Requires** | REDCap v17.0.0+ — REDCap+ does not exist below this version. The article itself is informational and useful on any version |
 | **Verified Against** | REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a live unsubscribed instance; feature list from release notes through 17.4.1 Standard |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
 | **Version** | 1.1 |

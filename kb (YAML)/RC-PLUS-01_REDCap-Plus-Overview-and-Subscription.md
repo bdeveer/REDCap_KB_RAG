@@ -5,7 +5,8 @@ domain: REDCap+
 applies_to:
 - REDCap Administrators
 - REDCap Licensed Institutions
-- REDCap v17.0.0+
+requires: REDCap v17.0.0+ — REDCap+ does not exist below this version. The article
+  itself is informational and useful on any version
 verified_against: REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a
   live unsubscribed instance; feature list from release notes through 17.4.1 Standard
 prerequisites:

@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-07-27 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) |
 | **Synonyms** | how do i manage multiple alerts in redcap; where is the notification log; cancel a scheduled alert send; copy or deactivate an existing alert; re-evaluate alerts in redcap; view history of sent alerts; edit alerts on the management page; what is a unique alert id |
@@ -136,6 +136,8 @@ Access this feature via the upload/download dropdown on the management page. Cli
 The table below covers the most commonly edited or misunderstood columns. The full column set is documented in the question mark reference on the management page.
 
 **Create vs. update behavior:** The `alert-unique-id` column controls whether an imported row creates a new alert or updates an existing one. Leave it **empty** to create a new alert. Populate it with an existing ID (format `A-XXXX`) to overwrite that alert's configuration. When editing alerts in bulk, download the CSV first so the IDs are pre-filled — never guess or fabricate an ID.
+
+Reusing an existing ID isn't limited to literal in-place edits — it's also the correct approach when **splitting one alert's scope into several**. For example, if an alert currently fires on either of two conditions and you want to break it into one alert per condition, narrow the original alert's `alert-condition` (and adjust its message if needed) under its existing ID, then add separate row(s) with `alert-unique-id` left blank for the condition(s) being split out into new alerts. Each of those blank-ID rows becomes its own new alert on import.
 
 | Column | Valid Values / Notes |
 |---|---|
