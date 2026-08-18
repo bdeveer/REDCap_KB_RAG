@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Project |
 | **Applies To** | All REDCap projects; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md); [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md); [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) |
 | **Synonyms** | how do i add a custom record label; change how record names are displayed; additional customizations project setup; configure pdf formatting and missing data codes; control data entry behaviors at the project level; show field values next to record id; project level display and annotation settings; where are the extra project setup options |
@@ -68,6 +70,12 @@ REDCap's record ID is always unique, but a project may need a second field — s
 
 ---
 
+> **Best-practice warning added in 15.8.0.** The Secondary Unique Field section now carries a warning discouraging its casual use. It creates a second identifier that REDCap must keep unique across the project, and the uniqueness check has had its own defects — see the concurrency issue below. Prefer designing the record ID correctly over adding a second unique key.
+
+> **Version caveat (below 15.0.13 Standard):** With a Secondary Unique Field enabled, two users or survey participants submitting the **same SUF value at nearly the same time** could both succeed — the uniqueness check did not catch the collision (fixed 15.0.11), and where duplicates already existed from that defect, further handling was corrected in 15.0.13. If a project has relied on SUF uniqueness since before those versions, it is worth checking for duplicates rather than assuming.
+
+---
+
 ## 4. Order Records by Another Field
 
 By default, REDCap sorts records in drop-down lists by their record ID in ascending order. The **Order records by another field** setting allows the project to sort drop-down lists by the values of a different field instead — for example, sorting by last name or by visit date.
@@ -99,6 +107,10 @@ REDCap provides two mutually exclusive annotation modes for tracking data questi
 - **Prevent calc/CALCTEXT fields with closed/verified queries from being fixed by DQ rule H** — Data Quality rule H automatically fixes calculated and @CALCTEXT fields with outdated values. When this option is enabled, fields that have a closed or verified query will be exempt from rule H auto-fixes, preserving the existing value even if REDCap would otherwise correct it.
 
 > **Switching modes:** Switching between Field Comment Log and Data Resolution Workflow is possible at any point. However, existing comments or queries created under the previous mode remain in the system and may not be fully visible under the new mode. Consult your local support team before switching modes on a project that already has annotation data.
+
+---
+
+> **Critical — JavaScript in logic is blocked from 17.0.2.** Administrators can no longer inject JavaScript into branching logic or into calc/CALCTEXT equations. This closes a Remote Code Execution vector that recurred at 15.0.4, 15.0.32 and 16.0.39, all exploited through stored project logic. If any local technique, template or inherited project relies on JavaScript embedded in logic, it stops working on 17.0.2 and must be reworked — the restriction is deliberate hardening, not a bug. See [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) for the supported way to extend REDCap's behaviour.
 
 ---
 

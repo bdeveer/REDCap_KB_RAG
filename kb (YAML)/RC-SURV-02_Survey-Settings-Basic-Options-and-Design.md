@@ -5,10 +5,13 @@ domain: Surveys
 applies_to:
 - All REDCap projects with surveys enabled
 - assumes surveys have been enabled on at least one instrument
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -177,6 +180,14 @@ Use **Manage Saved Themes** to edit or delete your custom themes at any time.
 ### Copying Design Settings to Other Surveys
 
 The **Copy Design to Other Surveys** button (top-right of the Survey Design Options section) lets you apply your design settings to other surveys in the same project. After clicking the button, a popup lets you select which settings to copy and which surveys to copy them to. Use this to keep a consistent look across a project with multiple surveys.
+
+---
+
+> **Descriptive Popups (17.4.0+).** The inline text limit for a Descriptive Popup was raised to **255 characters**, with a maxlength safeguard so text can no longer be entered that would be silently truncated on save. On earlier versions, over-long popup text was accepted and then cut.
+
+> **Note (15.6.0):** Where an image is attached to a Descriptive field and shown inline, and the field label is otherwise empty, REDCap no longer inserts extra blank space before the image.
+
+> **Version caveat (below 15.4.4 Standard):** In projects with many users or surveys, the **Survey Notifications** setup dialog in the Online Designer could grow very large and, in some cases, crash. Fixed in 15.4.4.
 
 ---
 

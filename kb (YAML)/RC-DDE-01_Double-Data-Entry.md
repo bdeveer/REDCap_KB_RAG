@@ -5,10 +5,13 @@ domain: Double Data Entry
 applies_to:
 - All REDCap project types (except survey-only projects
 - see Section 7)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-DE-04
   title: Editing Data & Audit Trail
@@ -58,6 +61,10 @@ The DDE-specific role responsible for comparing the two copies side by side and 
 **Data Comparison Tool**
 
 The REDCap interface used by the reviewer to compare and merge DDE copies. It presents a side-by-side comparison table showing differences between the two copies. Only records where both data entry persons have entered data appear in the tool's record selection list. The Data Comparison Tool is accessible from the left-hand project menu and only appears when DDE is enabled for the project.
+
+---
+
+> **Version caveat (below 15.8.2 Standard):** For users acting as **DDE person 1 or 2**, clicking some form status icons on the Record Status Dashboard or Record Home Page did not open the expected form. Fixed in 15.8.2. Separately, below 17.0.2 a DDE person 1 or 2 attempting to **rename a record** from the Record Home Page saw a confusing error and was blocked; the message was corrected in 17.0.2.
 
 ---
 

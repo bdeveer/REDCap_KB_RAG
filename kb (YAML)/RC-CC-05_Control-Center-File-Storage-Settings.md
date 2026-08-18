@@ -4,10 +4,13 @@ title: 'Control Center: File Storage & Upload Settings'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -90,7 +93,15 @@ Options: *Disabled* / *Enabled*
 
 ---
 
+> **Note (15.2.1):** The **Microsoft Azure Blob Storage** option supports the **Azure Government Cloud** (US only), for institutions required to keep data within that boundary.
+
 # Restricted File Types for Uploaded Files
+
+> **This setting moved in 16.0.1.** "Restricted file types for uploaded files" was previously on the **Security & Authentication** page and now lives here, on File Upload Settings. If older documentation sends you to Security & Authentication, that is why.
+
+> **Enforcement strengthened in 15.8.0.** Earlier versions applied the restriction only to some upload paths. From 15.8.0 it is enforced consistently. If you set this before 15.8.0 and assumed it covered everything, it may not have.
+
+> **Note (16.1.8):** Where this setting is left **unset**, the Configuration Check page now warns that some file types should be blocked to protect the server. See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
 
 A system-level blocklist of file extensions prevents users from uploading potentially dangerous file types into REDCap. This applies to all upload locations across the system (File Repository, file upload fields, Send-It, etc.).
 

@@ -6,14 +6,18 @@
 |---|---|
 | **Domain** | Calculations & Special Functions |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)|
 | **Synonyms** | how do i create a calculated field; redcap calc field formula; auto calculate a value from other fields; calculated field returns blank; difference between calc field and calctext; when does a calculated field update; add or compute a score automatically; set up a calculation in the online designer |
 
 ---
+
+> **Note (15.7.0) — error reporting improved.** Branching logic and calculation errors on a form or survey page are now collected into a **single dialog listing every affected field**, rather than surfacing one at a time. On a form with several broken expressions this turns an iterative fix-reload-repeat cycle into one pass.
 
 ## 1. Overview
 

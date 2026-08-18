@@ -6,10 +6,12 @@
 | --- | --- |
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); familiarity with spreadsheet editing |
 | **Skill Level** | Advanced |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) |
 | **Synonyms** | what is the data dictionary; build instruments with a spreadsheet; upload a data dictionary csv; download and edit the data dictionary; design forms in excel and upload; data dictionary overwrites my project warning; bulk edit fields via csv; how to use the redcap data dictionary |
@@ -121,6 +123,12 @@ works.
 - **What it cannot do:** provide the real-time guardrails that the
     Online Designer offers. Errors in the Data Dictionary are only
     caught at upload time, not as you edit the file.
+
+---
+
+> **Upload validation changes.** From **15.9.2**, uploading a data dictionary containing **multiple-choice fields with no choices defined** returns a **warning** rather than an error, matching the Online Designer's behaviour — the upload proceeds. From **17.0.3**, creating a project from a **Project XML** file **automatically comments out** any syntactically invalid branching logic, calculations or CALCTEXT, so the project is created rather than the import failing outright. The commented-out expressions remain visible in the field for repair, but they are **inactive** — check for them after importing an XML project rather than assuming everything came across live.
+
+> **Note (15.0.1):** The Data Dictionary page interface was simplified to make the edit-and-upload cycle clearer.
 
 ---
 

@@ -4,10 +4,13 @@ title: Surveys — Participant List & Manual Survey Invitations
 domain: Surveys
 applies_to:
 - All projects with surveys enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-SURV-04 — Survey Link Types & Access Methods
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-SURV-04
   title: Survey Link Types & Access Methods
@@ -69,6 +72,12 @@ A workflow within the participant list that allows staff to draft, schedule, and
 **Survey Invitation Log**
 
 A project-wide log of all past and future survey invitations. It covers both manually composed invitations and those scheduled through Automated Survey Invitations (ASIs). Invitations from Alerts & Notifications are not included.
+
+---
+
+> **Note (15.0.0) — performance.** Rapid Retrieval caching was applied to the Participant List page, its CSV export, and the API Export Participant List method. On large participant lists this is the difference between a usable page and a slow one.
+
+> **Version caveat (below 15.2.5 Standard):** In the **Compose Survey Invitations** dialog, selecting a previously sent email left **hardcoded links from the original message** in the template rather than regenerating them. Sending that template to a different participant could therefore include a link belonging to someone else. Fixed in 15.2.5.
 
 ---
 

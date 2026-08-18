@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how to import an instrument from the library; reuse a prebuilt instrument; download an instrument as a zip file; share an instrument between projects; redcap shared instrument library; import instrument zip into my project; copy a form without rebuilding it; validated instruments from vanderbilt library |
@@ -168,6 +170,10 @@ is made publicly available.
 
 > **Note:** Zip file import does not overwrite existing instruments — it adds the imported instrument as a new one. If you want to replace an existing instrument with a zip file version, you must delete the existing instrument first (only possible if it contains no data).
 
+
+---
+
+> **Note (15.3.1) — PROMIS batteries in longitudinal projects.** When a PROMIS battery of instruments is downloaded from the Shared Library and the **first** instrument in the battery has already been designated to an event, REDCap handles the remaining instruments' event designation correctly. On earlier versions the designation step behaved inconsistently for the rest of the battery.
 
 ---
 

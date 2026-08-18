@@ -5,10 +5,13 @@ domain: User Rights
 applies_to:
 - All REDCap project types
 - requires User Rights privilege for project-level actions
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-USER-02
   title: 'User Rights: Adding Users & Managing Roles'
@@ -137,6 +140,23 @@ Within the role edit popup, use the **Copy role** option to create a new role wi
 Use the **Delete role** option within the role edit popup. REDCap will block deletion if any users are currently assigned to the role. Remove all users from the role first.
 
 > **Tip:** When you remove a user from a role without re-assigning them to another, they retain the role's rights as their individual rights. Their rights remain unchanged until you edit them directly. This means deleting a role does not remove users from the project — they simply shift to individual rights.
+
+---
+
+# 7a. Administrator-Side Improvements
+
+Changes to the Control Center pages used for user administration.
+
+| Change | Version |
+| --- | --- |
+| The **"Delete all"** button on the User Allowlist page uses a modern confirmation dialog rather than a browser JavaScript alert, making it harder to dismiss accidentally | 15.6.1 |
+| **Sponsor Dashboard** approval pages show only the users affected by the request, rather than every user the sponsor manages | 15.6.1 |
+| "Password was last reset on X" reworded to **"Password was last reset by an admin on X"** on the Browse Users page, which is a materially different statement | 16.1.1 |
+| "Manage All Project Tokens" indicates when a user is **suspended** | 15.8.2 |
+| The **API Tokens** page has searchable drop-downs for selecting a user and project | 17.1.0 |
+| Adding a table-based user shows an error **as you type the username** if it already exists, rather than on submit | 17.0.6 |
+
+> **Note on the 16.1.1 wording change.** "Password was last reset on X" could be read as the user having changed their own password. The corrected text makes clear it was an **administrator** action — which matters when you are reconstructing who did what to an account.
 
 ---
 

@@ -5,10 +5,13 @@ domain: Form Design
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-01 — Form Design Overview
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-FD-01
   title: Form Design Overview
@@ -185,6 +188,10 @@ is made publicly available.
 
 > **Note:** Zip file import does not overwrite existing instruments — it adds the imported instrument as a new one. If you want to replace an existing instrument with a zip file version, you must delete the existing instrument first (only possible if it contains no data).
 
+
+---
+
+> **Note (15.3.1) — PROMIS batteries in longitudinal projects.** When a PROMIS battery of instruments is downloaded from the Shared Library and the **first** instrument in the battery has already been designated to an event, REDCap handles the remaining instruments' event designation correctly. On earlier versions the designation step behaved inconsistently for the rest of the battery.
 
 ---
 

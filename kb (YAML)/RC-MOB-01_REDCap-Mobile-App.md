@@ -5,10 +5,13 @@ domain: Mobile
 applies_to:
 - All REDCap projects
 - requires Mobile App module enabled by administrator
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-AT-11
   title: 'Action Tags: Mobile App Action Tags'
@@ -80,6 +83,10 @@ When the device has no internet connection, the app operates offline. Data enter
 ## Draft Record
 
 A record edited or created in the Mobile App that has not yet been synchronized to the server. Draft records are visible in the app and flagged as pending until sync completes.
+
+---
+
+> **Note (16.1.8):** The Mobile App **Dashboard** tab now shows the REDCap **username**, the **installation time**, and **latest-activity timestamps**, which makes it considerably easier to establish which device and account a given set of offline data came from.
 
 ---
 

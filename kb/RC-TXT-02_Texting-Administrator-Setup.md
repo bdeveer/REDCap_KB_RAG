@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Texting (SMS) |
 | **Applies To** | REDCap administrators with "Modify system configuration pages" permission |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) |
 | **Synonyms** | how do i enable texting across the whole installation; connect twilio to redcap as an administrator; system level sms configuration; set texting permission levels for users; control who can use texting in projects; configure mosio in the control center; admin setup for redcap sms; enable texting system-wide |
@@ -68,6 +70,10 @@ Both Twilio and Mosio can be enabled simultaneously in the same REDCap installat
 ### 3.4 Configure Twilio system credentials (Twilio only)
 
 Unlike Mosio (which is configured per-project), Twilio credentials at the system level provide a default connection that projects build on. In practice, most institutions configure Twilio credentials in the Control Center and then allow project-level configuration to inherit or override them. Refer to Twilio's documentation for account credentials setup.
+
+---
+
+> **Admin approval workflow (15.6.0+).** The Twilio and Mosio settings on the Modules/Services Configuration page carry an option requiring **administrator approval** before a project can enable texting, rather than letting project designers switch it on themselves. Given that texting incurs per-message cost against an institutional account, this is usually the setting institutions want. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
 
 ---
 

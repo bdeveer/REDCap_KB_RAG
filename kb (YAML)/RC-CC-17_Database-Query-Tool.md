@@ -4,10 +4,13 @@ title: Database Query Tool
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap super-user administrator access
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-CC-16
   title: 'Control Center: Database Activity Monitor'
@@ -99,6 +102,10 @@ All imported queries must begin with `SELECT`, `SHOW`, or `EXPLAIN`. Imports con
 - Include comments in SQL text to document the purpose of complex queries
 - Regularly export your custom query collection for backup
 - Share useful queries with your team via CSV import
+
+---
+
+> **Note (15.2.1):** CSV exports of a saved custom query's results include the **query title in the filename**, so a folder of exports remains identifiable rather than becoming a set of near-identical generic filenames.
 
 ---
 

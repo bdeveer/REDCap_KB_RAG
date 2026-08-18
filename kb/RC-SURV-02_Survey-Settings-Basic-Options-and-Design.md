@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; assumes surveys have been enabled on at least one instrument |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) |
 | **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
 | **Synonyms** | how do i change the look of my survey; add a logo and colors to a survey; edit survey title and instructions; customize survey layout and fonts; survey design and theme options; basic survey settings page; change survey appearance; where do i set the survey status |
@@ -161,6 +163,14 @@ Use **Manage Saved Themes** to edit or delete your custom themes at any time.
 #### Copying Design Settings to Other Surveys
 
 The **Copy Design to Other Surveys** button (top-right of the Survey Design Options section) lets you apply your design settings to other surveys in the same project. After clicking the button, a popup lets you select which settings to copy and which surveys to copy them to. Use this to keep a consistent look across a project with multiple surveys.
+
+---
+
+> **Descriptive Popups (17.4.0+).** The inline text limit for a Descriptive Popup was raised to **255 characters**, with a maxlength safeguard so text can no longer be entered that would be silently truncated on save. On earlier versions, over-long popup text was accepted and then cut.
+
+> **Note (15.6.0):** Where an image is attached to a Descriptive field and shown inline, and the field label is otherwise empty, REDCap no longer inserts extra blank space before the image.
+
+> **Version caveat (below 15.4.4 Standard):** In projects with many users or surveys, the **Survey Notifications** setup dialog in the Online Designer could grow very large and, in some cases, crash. Fixed in 15.4.4.
 
 ---
 

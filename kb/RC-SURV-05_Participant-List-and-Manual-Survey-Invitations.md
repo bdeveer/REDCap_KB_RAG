@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Surveys |
 | **Applies To** | All projects with surveys enabled |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i email survey invitations to participants; upload participant email addresses; send individual survey links manually; track who has responded to a survey; participant list setup; survey invitation log; send a survey invite to one person; review sent and scheduled survey invitations |
@@ -50,6 +52,12 @@ A workflow within the participant list that allows staff to draft, schedule, and
 **Survey Invitation Log**
 
 A project-wide log of all past and future survey invitations. It covers both manually composed invitations and those scheduled through Automated Survey Invitations (ASIs). Invitations from Alerts & Notifications are not included.
+
+---
+
+> **Note (15.0.0) — performance.** Rapid Retrieval caching was applied to the Participant List page, its CSV export, and the API Export Participant List method. On large participant lists this is the difference between a usable page and a slow one.
+
+> **Version caveat (below 15.2.5 Standard):** In the **Compose Survey Invitations** dialog, selecting a previously sent email left **hardcoded links from the original message** in the template rather than regenerating them. Sending that template to a different participant could therefore include a link belonging to someone else. Fixed in 15.2.5.
 
 ---
 

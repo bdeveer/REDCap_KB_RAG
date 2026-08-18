@@ -60,6 +60,10 @@ The Home Page Settings control what users see on the REDCap landing page (before
 
 ---
 
+> **Note (15.0.0) — custom text on the Create New Project page.** Administrators can supply text displayed at the top of the Create New Project page. Useful for stating local policy at the moment someone creates a project — IRB requirements, naming conventions, or who to contact — rather than hoping they read it elsewhere.
+
+---
+
 # 3. Project Templates
 
 Project Templates are pre-configured projects made available to users when they create a new project. When a user creates a project and selects a template, the template's instruments (and optionally events and user roles) are copied into the new project.
@@ -115,6 +119,8 @@ A text block (with optional link) that appears at the bottom of all survey pages
 
 - *Link text (optional)* — If provided, a link with this text appears at the bottom of every survey page; clicking it opens the custom text in a modal popup. If left blank, the custom text is displayed inline at the bottom of the page instead.
 - *Custom survey footer text* — The actual text to display. HTML is supported, so you can include styled text, links, or images.
+
+> **From 15.9.0** this footer can be set here on Default Project Settings, so it is applied automatically to **new** projects rather than configured per project. Existing projects are unaffected — this sets the default, it does not retrospectively apply.
 
 ---
 

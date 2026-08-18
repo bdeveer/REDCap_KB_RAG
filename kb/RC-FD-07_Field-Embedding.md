@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; works on both instruments and surveys; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Version** | 1.3 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | what is field embedding; put a field inside another fields label; reposition a field on a form; embed a text box next to an answer choice; arrange fields in a grid or table layout; curly brace field references in labels; change where a field appears on a survey; how to use field embedding in redcap |
@@ -144,6 +146,10 @@ When a field is embedded inline, its label may not render visibly — the label 
 3. Save.
 
 The text box will display "Please specify" as greyed-out hint text when empty.
+
+---
+
+> **Behaviour change (15.7.3) — pre-embedded text in choice labels.** Where a field is embedded into the **choice label** of a multiple-choice field, the text preceding the embed — for example the `Other` in `Other {other1}` — is **no longer displayed**. Designs built before 15.7.3 that relied on that leading text appearing will render differently after the upgrade. If a choice label looks like it has lost its wording, this is why.
 
 ---
 

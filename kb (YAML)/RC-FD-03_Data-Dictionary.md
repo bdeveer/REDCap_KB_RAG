@@ -5,11 +5,14 @@ domain: Form Design
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - familiarity with spreadsheet editing
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-FD-01
   title: Form Design Overview
@@ -136,6 +139,12 @@ works.
 - **What it cannot do:** provide the real-time guardrails that the
     Online Designer offers. Errors in the Data Dictionary are only
     caught at upload time, not as you edit the file.
+
+---
+
+> **Upload validation changes.** From **15.9.2**, uploading a data dictionary containing **multiple-choice fields with no choices defined** returns a **warning** rather than an error, matching the Online Designer's behaviour — the upload proceeds. From **17.0.3**, creating a project from a **Project XML** file **automatically comments out** any syntactically invalid branching logic, calculations or CALCTEXT, so the project is created rather than the import failing outright. The commented-out expressions remain visible in the field for repair, but they are **inactive** — check for them after importing an XML project rather than assuming everything came across live.
+
+> **Note (15.0.1):** The Data Dictionary page interface was simplified to make the edit-and-upload cycle clearer.
 
 ---
 

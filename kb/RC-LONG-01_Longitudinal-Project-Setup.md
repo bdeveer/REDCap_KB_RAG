@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
 | **Version** | 1.3 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how do i set up a longitudinal project; collect data across multiple time points and events; enable longitudinal mode in redcap; define arms and events; assign instruments to events; multiple visits or timepoints per participant; set up study arms for control and intervention groups; designate which forms are collected at which event |
@@ -114,6 +116,12 @@ Within each arm, events are displayed in a table with the following columns:
 **Adding an event:** Enter an event name in the **Event label** text box at the bottom of the arm's table, optionally fill in a custom event label, and click **Add new event**.
 
 **Deleting an event:** Click the red X icon next to the event. Deleting an event permanently deletes any data recorded in that event for all records in the project.
+
+---
+
+> **Navigation notes.** A direct link to **Define My Events** appears in the "Project Home and Design" section of the left-hand menu from **15.3.3** (repositioned slightly in 15.4.0 for consistency with earlier layouts). From **17.4.1**, **Designate Instruments for My Events** is likewise reachable directly from the left-hand menu and gained a **Print Page** button. From **15.4.5**, icons distinguish repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer.
+
+> **Critical — accented characters in event and DAG names (17.3.0+).** In **newly created** projects, accented characters in Data Access Group or longitudinal event names are transliterated to their unaccented equivalents when REDCap generates the **unique** name. Since unique event names are what branching logic, piping and API calls reference, a project created before 17.3.0 may hold unique names containing accents while a project created after does not — so logic copied between the two can silently fail to match. Check the unique names, not the display labels, when moving expressions between projects.
 
 ---
 

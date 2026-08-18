@@ -6,10 +6,13 @@ applies_to:
 - All REDCap project types
 - works on both instruments and surveys
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 version: '1.3'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-FD-02
   title: Online Designer
@@ -160,6 +163,10 @@ When a field is embedded inline, its label may not render visibly — the label 
 3. Save.
 
 The text box will display "Please specify" as greyed-out hint text when empty.
+
+---
+
+> **Behaviour change (15.7.3) — pre-embedded text in choice labels.** Where a field is embedded into the **choice label** of a multiple-choice field, the text preceding the embed — for example the `Other` in `Other {other1}` — is **no longer displayed**. Designs built before 15.7.3 that relied on that leading text appearing will render differently after the upgrade. If a choice label looks like it has lost its wording, this is why.
 
 ---
 

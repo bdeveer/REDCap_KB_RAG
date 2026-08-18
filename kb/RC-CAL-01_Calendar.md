@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Calendar |
 | **Applies To** | All project types; primarily used in longitudinal projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
 | **Version** | 1.8 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
 | **Synonyms** | how do i schedule participant visits in redcap; redcap calendar and scheduling module; track appointments and study visits; generate a projected visit schedule; add an event to the project calendar; days offset scheduling for longitudinal events; where is the calendar in redcap; plan participant appointment dates |
@@ -40,6 +42,12 @@ A Calendar entry that is tied to a specific record but not to a defined project 
 
 ### Schedule Entry Status
 Each scheduled Calendar entry has a status field that tracks the visit state. Status options are: **Due Date**, **Scheduled**, **Confirmed**, **Cancelled**, and **No Show**. Status is set and updated on the View or Edit Schedule tab or in the event detail view.
+
+---
+
+> **Note (16.0.7):** The calendar table was widened to fill the page, showing more of each entry's text without truncation.
+
+> **Version caveat (below 15.5.38 Standard):** An Insecure Direct Object Reference on the Calendar page allowed a user assigned to a **Data Access Group** to create, modify or view calendar events **outside their DAG** via a crafted request. Fixed in 15.5.38. Relevant when assessing whether DAG separation held historically — see [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 
 ---
 

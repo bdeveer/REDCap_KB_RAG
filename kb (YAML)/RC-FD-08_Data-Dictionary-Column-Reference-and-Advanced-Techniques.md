@@ -5,6 +5,9 @@ domain: Form Design
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-03 — Data Dictionary
 version: '1.2'
@@ -609,6 +612,10 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 **Q: Can I include HTML in the Field Label or Field Note columns?**
 
 **A:** Yes. Both columns support HTML formatting. Common uses include `<b>bold</b>` for emphasis, `<br>` for line breaks, and `<i>italic</i>`. Test HTML rendering in both survey mode and data entry mode, as display may differ slightly.
+
+REDCap has progressively widened the set of permitted tags in user input such as field labels and survey instructions: **`<blockquote>`** from 15.0.1, **`<wbr>`** from 15.4.5, and **`<ruby>`** from 15.5.6. If a tag renders as literal text rather than taking effect, check whether the instance is old enough to predate its support.
+
+> **Important — user-supplied HTML is a recurring attack surface.** Stored XSS vulnerabilities have repeatedly been found in exactly these fields. That is not a reason to avoid HTML in labels, but it is a reason to keep the instance patched and to be wary of pasting markup from untrusted sources into a project. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md).
 
 ---
 

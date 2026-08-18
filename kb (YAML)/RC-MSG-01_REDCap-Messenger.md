@@ -5,10 +5,13 @@ domain: Messenger
 applies_to:
 - All REDCap users
 - no project-specific setup required
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-PROF-01
   title: 'My Profile: User Profile Settings'
@@ -62,6 +65,10 @@ A checkbox available when composing a message that marks it as important or urge
 **System Notification**
 
 A non-message notification that appears in the Messenger panel, sent either by REDCap itself (e.g., new feature announcements) or by a REDCap Administrator (e.g., server downtime notices). System notifications do not generate email alerts.
+
+---
+
+> **Note (15.7.4):** A **"Mark all conversations as read"** link appears at the bottom of the Messenger panel when open — useful where notification badges have accumulated across many conversations.
 
 ---
 

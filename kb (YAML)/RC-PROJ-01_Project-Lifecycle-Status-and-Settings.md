@@ -4,6 +4,9 @@ title: 'Project Lifecycle: Status and Settings'
 domain: Project
 applies_to:
 - All REDCap projects
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
 version: '1.4'
@@ -147,6 +150,16 @@ The resulting XML file can be used to:
 
 ---
 
+> **Record limit and project copying (15.5.5+).** Where the system-level "Record limit for development projects" is enabled, **administrators can bypass the limit when copying a project**, so a legitimate copy of a large project is not blocked by a limit intended to constrain new development work.
+
+> **Project deletion purge delay (15.2.6+).** A system setting defines the number of days between a project being deleted and being **purged** from the system. Until the purge runs, a deleted project is recoverable — which makes this setting the practical answer to "can we get it back?" See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
+
+> **Project Home statistics.** The stats table on the Project Home page shows the **number of instruments**, and for longitudinal projects the **number of events and arms** (16.0.7), plus **when the project was created, moved to production, and moved to analysis/cleanup** (16.0.9). Those timestamps are the quickest way to establish a project's lifecycle history without reading the log.
+
+> **Cache clearing without admin rights (16.1.8+).** Non-admin users holding **Project Design** rights can clear the Record List Cache and the page-level Rapid Retrieval cache from the Other Functionality page. Previously this required an administrator, which made a routine troubleshooting step into a support request.
+
+---
+
 # 5. Data Management
 
 ## 5.1 Deleting a Project
@@ -161,6 +174,12 @@ After an administrator deletes a project:
 - Associated files take an additional 30 days beyond the grace period to be fully removed.
 
 ## 5.2 Erasing All Data
+
+> **Bulk Record Delete.** The page has gained several capabilities: **background deletion** as an alternative to synchronous processing, useful on large record sets (15.6.0); clearer instructional text (15.8.4); a UI rule where unselecting an instrument within a selected event also unselects the event, with improved arm validation in multi-arm projects (17.2.0); and an option to delete **all records from a report**, so a report becomes the selection mechanism for a bulk delete (17.4.0).
+>
+> **Critical — the "all records from a report" option deserves care.** It makes it trivial to delete a large, precisely-specified set of records in one action. Verify the report returns exactly what you expect *before* using it as a delete target, and remember that report filters can behave unexpectedly against form status fields on older versions — see [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md).
+
+> **Version caveat (below 17.1.4 Standard):** Partial record deletion via Bulk Record Delete **ignored record-level locks** — the selected forms had their data deleted inside a locked record. REDCap's own wording: locked records should not be editable in any way. Fixed in 17.1.4, which also clarified that the "Delete entire records" option deliberately deletes regardless of lock status, while **partial** deletes now respect locking. If record locking was part of your data-integrity controls before 17.1.4, it did not cover this path.
 
 **Other Functionality → Erase all data** removes all currently collected data while keeping the project structure (instruments, fields, settings) intact. This is distinct from deleting the project entirely.
 

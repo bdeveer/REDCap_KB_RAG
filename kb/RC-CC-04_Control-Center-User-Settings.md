@@ -6,14 +6,20 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
 | **Synonyms** | control center user settings and defaults; who can create projects in redcap; system-wide default preferences for new accounts; restrict user features across the instance; require approval for user actions; default settings applied to all users; control center user behavior controls; instance-level user permission defaults |
 
 ---
+
+> **Settings governing how users are added to projects (16.1.5+).** Two settings at the bottom of this page control what happens when someone adds a user to a project — via the User Rights page or the API — where that person does **not** yet have a REDCap account. Worth reviewing deliberately: the behaviour determines whether project managers can effectively cause accounts to be created, which is an account-governance decision rather than a project one.
+
+> **Print restriction setting (17.0.4+).** The system-level setting controlling whether users **without Full Data Set export privileges** may print data entry forms also lives on this page. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history, and verify its state after upgrading across 17.0.2–17.0.4.
 
 ## 1. Overview
 

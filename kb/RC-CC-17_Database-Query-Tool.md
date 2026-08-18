@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap super-user administrator access |
 | **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
 | **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line |
@@ -88,6 +90,10 @@ All imported queries must begin with `SELECT`, `SHOW`, or `EXPLAIN`. Imports con
 - Include comments in SQL text to document the purpose of complex queries
 - Regularly export your custom query collection for backup
 - Share useful queries with your team via CSV import
+
+---
+
+> **Note (15.2.1):** CSV exports of a saved custom query's results include the **query title in the filename**, so a folder of exports remains identifiable rather than becoming a set of near-identical generic filenames.
 
 ---
 

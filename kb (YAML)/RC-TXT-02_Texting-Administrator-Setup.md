@@ -4,10 +4,13 @@ title: 'Texting: Administrator Setup'
 domain: Texting (SMS)
 applies_to:
 - REDCap administrators with "Modify system configuration pages" permission
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-TXT-01 — Texting in REDCap: Setup and Usage'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-TXT-01
   title: 'Texting in REDCap: Setup and Usage'
@@ -77,6 +80,10 @@ Both Twilio and Mosio can be enabled simultaneously in the same REDCap installat
 ## 3.4 Configure Twilio system credentials (Twilio only)
 
 Unlike Mosio (which is configured per-project), Twilio credentials at the system level provide a default connection that projects build on. In practice, most institutions configure Twilio credentials in the Control Center and then allow project-level configuration to inherit or override them. Refer to Twilio's documentation for account credentials setup.
+
+---
+
+> **Admin approval workflow (15.6.0+).** The Twilio and Mosio settings on the Modules/Services Configuration page carry an option requiring **administrator approval** before a project can enable texting, rather than letting project designers switch it on themselves. Given that texting incurs per-message cost against an institutional account, this is usually the setting institutions want. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
 
 ---
 

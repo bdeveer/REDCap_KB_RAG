@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Messenger |
 | **Applies To** | All REDCap users; no project-specific setup required |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
 | **Synonyms** | how do i message another redcap user; built-in chat for redcap; start a group conversation in redcap; send a secure direct message to a colleague; share files with other users inside redcap; is redcap messenger hipaa compliant; archive or delete a conversation; where do i find the messenger chat |
@@ -50,6 +52,10 @@ A checkbox available when composing a message that marks it as important or urge
 **System Notification**
 
 A non-message notification that appears in the Messenger panel, sent either by REDCap itself (e.g., new feature announcements) or by a REDCap Administrator (e.g., server downtime notices). System notifications do not generate email alerts.
+
+---
+
+> **Note (15.7.4):** A **"Mark all conversations as read"** link appears at the bottom of the Messenger panel when open — useful where notification badges have accumulated across many conversations.
 
 ---
 

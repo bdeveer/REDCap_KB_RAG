@@ -4,10 +4,13 @@ title: 'Control Center: User Settings & Defaults'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-02
   title: 'Control Center: General System Configuration'
@@ -31,6 +34,10 @@ synonyms:
 - control center user behavior controls
 - instance-level user permission defaults
 ---
+
+> **Settings governing how users are added to projects (16.1.5+).** Two settings at the bottom of this page control what happens when someone adds a user to a project — via the User Rights page or the API — where that person does **not** yet have a REDCap account. Worth reviewing deliberately: the behaviour determines whether project managers can effectively cause accounts to be created, which is an account-governance decision rather than a project one.
+
+> **Print restriction setting (17.0.4+).** The system-level setting controlling whether users **without Full Data Set export privileges** may print data entry forms also lives on this page. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history, and verify its state after upgrading across 17.0.2–17.0.4.
 
 # 1. Overview
 

@@ -189,6 +189,21 @@ This makes a single field portable. Previously, moving one field between project
 
 > **Version caveat (≤17.3.0):** Pasting **section headers alone**, with no fields, did not work as expected (fixed 17.3.0), and min/max validation on integer and number fields was not carried across (fixed 17.3.1). On 17.4.0 a further fix corrected **choice order** not being preserved when pasting multiple-choice fields — so on earlier 17.x versions, verify choice order and validation after pasting rather than assuming a faithful copy.
 
+#### 6.3.2 Other Online Designer Changes
+
+| Change | Version |
+| --- | --- |
+| Methods for editing an instrument's **label** and **unique instrument name** from the field-view page | 15.1.0 |
+| Survey status indicators in the "Enabled as survey" column, including icons for **e-Consent** and **Stop Actions** | 15.1.0 |
+| When bulk-updating branching logic across several fields, the dialog states **how many fields will be updated** | 15.2.2 |
+| In longitudinal projects, a warning appears beside instruments **not designated to any event**, with a link to fix it | 15.2.6 |
+| **Rich text editor** available for Matrix Header Text | 17.0.6 |
+| Users can **opt out** of the "variable names are recommended to be no more than 26 characters" alert, per user per project | 17.1.0 |
+| Extra warning when moving a project into **Draft Mode** where temporary metadata changes already exist | 17.3.0 |
+| **Go to field** reachable via **Ctrl-G / Cmd-G** from the instrument overview page | 17.4.1 |
+
+> **Renamed in 16.0.7 — "Field Bank" is now "Standardized Field (CDE) search".** The feature gained additional categories and classifications at the same time. If you are following older documentation or a training deck that refers to the Field Bank, it is the same feature under a new name.
+
 ### 6.4 Using the CDE Library
 
 The CDE Library lets you search external repositories of Common Data Elements and import standardized field definitions directly into your instrument.

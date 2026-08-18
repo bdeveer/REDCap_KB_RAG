@@ -5,11 +5,14 @@ domain: Calculations & Special Functions
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CALC-01
   title: Special Functions Reference
@@ -31,6 +34,8 @@ synonyms:
 - add or compute a score automatically
 - set up a calculation in the online designer
 ---
+
+> **Note (15.7.0) — error reporting improved.** Branching logic and calculation errors on a form or survey page are now collected into a **single dialog listing every affected field**, rather than surfacing one at a time. On a form with several broken expressions this turns an iterative fix-reload-repeat cycle into one pass.
 
 # 1. Overview
 

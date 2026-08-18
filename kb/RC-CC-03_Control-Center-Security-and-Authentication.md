@@ -173,6 +173,29 @@ Uses the Duo Security service for push notification or app-based verification. R
 
 ---
 
+### 3.8 E-Signature with 2FA — Version Notes
+
+| Change | Version |
+| --- | --- |
+| Users can supply the **6-digit PIN only once per session** when e-signing, rather than for every signature | 15.4.0 |
+| The **Duo push** equivalent of the same behaviour | 16.1.2 |
+| Wording of the E-signature dialog corrected under "X & Table-based" 2FA, excluding "LDAP & Table-based" | 15.2.6 |
+
+---
+
+## 3a. Provider-Specific Notes
+
+| Change | Version |
+| --- | --- |
+| **OIDC scopes** can be specified manually by administrators; earlier versions used a fixed set | 15.4.2 |
+| **OpenID Connect** authentication errors produce a more specific, actionable message rather than a generic failure | 15.7.0 |
+| Custom button text for the **"Local REDCap Login"** button under "OpenID Connect & Table-based" and "Entra ID & Table-based" | 16.1.2 |
+| **Duo** two-factor library updated to its then-current version | 15.9.2 |
+
+> **Note (15.7.2):** With Table-based or "X & Table-based" authentication, REDCap warns the user if **Caps Lock is on** while they type their password. A small change, but it removes one of the more common causes of repeated failed logins — and repeated failures trigger the lockout described in §4.4.
+
+---
+
 ## 4. Login Settings
 
 These settings apply to all authentication methods except Shibboleth (which manages its own session behavior).

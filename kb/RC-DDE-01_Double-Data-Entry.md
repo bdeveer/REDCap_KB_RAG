@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Double Data Entry |
 | **Applies To** | All REDCap project types (except survey-only projects; see Section 7) |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) |
 | **Synonyms** | how do i enable double data entry; enter each record twice and compare; catch transcription errors with two data entry users; reconcile and merge discrepant entries; set up dde reviewer role; two independent data entry users workflow; compare two versions of a record; double key data entry for clinical trials |
@@ -44,6 +46,10 @@ The DDE-specific role responsible for comparing the two copies side by side and 
 **Data Comparison Tool**
 
 The REDCap interface used by the reviewer to compare and merge DDE copies. It presents a side-by-side comparison table showing differences between the two copies. Only records where both data entry persons have entered data appear in the tool's record selection list. The Data Comparison Tool is accessible from the left-hand project menu and only appears when DDE is enabled for the project.
+
+---
+
+> **Version caveat (below 15.8.2 Standard):** For users acting as **DDE person 1 or 2**, clicking some form status icons on the Record Status Dashboard or Record Home Page did not open the expected form. Fixed in 15.8.2. Separately, below 17.0.2 a DDE person 1 or 2 attempting to **rename a record** from the Record Home Page saw a confusing error and was blocked; the message was corrected in 17.0.2.
 
 ---
 

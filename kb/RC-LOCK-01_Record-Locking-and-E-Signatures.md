@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Record Locking |
 | **Applies To** | All REDCap project types; requires Lock/Unlock Records user privilege |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md); [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
 | **Synonyms** | how do i lock a record or instrument; prevent further edits to a completed form; set up e-signatures in redcap; unlock a locked form; who can lock and unlock records; e-signature and locking management page; make a finalized instrument read-only; review and sign workflow for regulated studies |
@@ -54,6 +56,10 @@ The status-overview tab of the Locking/E-signatures application. Displays a tabl
 **Lock/Unlock Privileges**
 
 A user right that controls who can see and use the Lock option on instruments, access the customization and management pages, and unlock locked forms. Without this right, users cannot lock, unlock, view the Lock option, or access the Locking/E-signatures application. The Lock option is invisible to users without this right.
+
+---
+
+> **Note (16.0.7):** The locking and e-signature settings configured on the **Record Locking Customization** page can now be **exported and imported via a Project XML file**, so they travel with the project rather than needing to be reconstructed by hand in a copy or a migrated instance.
 
 ---
 

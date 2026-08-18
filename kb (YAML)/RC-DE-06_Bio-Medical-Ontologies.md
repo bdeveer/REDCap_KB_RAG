@@ -5,10 +5,13 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 - data entry users
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-05 — Field Validations
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-DE-05
   title: Field Validations
@@ -52,6 +55,10 @@ A unique identifier assigned to each term within an ontology (e.g., `E11` for Ty
 **Controlled Vocabulary**
 
 A fixed, curated set of terms. Ontology fields enforce controlled vocabulary — you must select from the lookup results rather than entering arbitrary free text.
+
+---
+
+> **Note (15.6.1):** Where **BioPortal** is the only ontology service configured on the server, it is now **selected automatically** in the Edit Field dialog rather than requiring an explicit choice from a single-item list.
 
 ---
 

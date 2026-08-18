@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | File Repository |
 | **Applies To** | All REDCap project types; requires File Repository user right |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) — e-Consent Framework; [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) through [RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md)|
 | **Synonyms** | where do i store project files in redcap; upload and share files with my team; create folders in the file repository; restrict file access by dag or role; recover a deleted file from the recycle bin; file repository vs file upload field; find exported data files and econsent pdfs; how to use the file repository |
@@ -96,6 +98,23 @@ When creating a folder, three optional restrictions can be applied:
 - **Limit by Data Access Group** — Only users in the specified DAG can see this folder. Useful for multi-site studies where sites should not see each other's files. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 - **Limit by User Role** — Only users assigned to the specified role can access the folder. Useful for restricting sensitive documents to specific team members. See [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) and [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md).
 - **Limit to administrators only** — The folder is hidden from all project users and accessible only to REDCap administrators. This option is mutually exclusive with DAG and role restrictions — only one type of restriction can be active at a time.
+
+---
+
+### 4a. Admin-Restricted Folders *(15.5.0+)*
+
+Administrators with access to all projects can create folders in a project's File Repository that are **visible only to administrators**. Project users do not see them at all.
+
+The intended use is project-level material that belongs with the project but not in the hands of its users — administrative correspondence, review documentation, or configuration notes.
+
+Two consequences worth knowing:
+
+- **They are excluded from the API listing.** The Export a List of Files/Folders method does not return admin-restricted folders, so an API-driven inventory of the File Repository is not a complete one. See [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md).
+- **Visibility depends on all-project access**, not merely on being an administrator with some elevated rights.
+
+> **Project-level upload size override (16.1.0+).** The Edit Project Settings page carries a project-level override for the system-wide "File Repository upload max file size", so one project can be allowed larger uploads without raising the limit everywhere. See [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md).
+
+> **Version caveat (16.1.0–16.1.3 Standard):** That project-level limit was **not respected when files were imported through the API** — it applied correctly in the interface only. Fixed in 16.1.4. On affected versions the API could accept files the project's own setting should have rejected.
 
 ---
 

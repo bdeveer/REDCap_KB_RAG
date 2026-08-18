@@ -5,11 +5,14 @@ domain: Record Locking
 applies_to:
 - All REDCap project types
 - requires Lock/Unlock Records user privilege
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
 - 'RC-USER-03 — User Rights: Configuring User Privileges'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-DE-04
   title: Editing Data & Audit Trail
@@ -71,6 +74,10 @@ The status-overview tab of the Locking/E-signatures application. Displays a tabl
 **Lock/Unlock Privileges**
 
 A user right that controls who can see and use the Lock option on instruments, access the customization and management pages, and unlock locked forms. Without this right, users cannot lock, unlock, view the Lock option, or access the Locking/E-signatures application. The Lock option is invisible to users without this right.
+
+---
+
+> **Note (16.0.7):** The locking and e-signature settings configured on the **Record Locking Customization** page can now be **exported and imported via a Project XML file**, so they travel with the project rather than needing to be reconstructed by hand in a copy or a migrated instance.
 
 ---
 

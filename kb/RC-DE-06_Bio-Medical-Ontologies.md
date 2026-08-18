@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types; data entry users |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how do i search a medical terminology field; use icd-10 rxnorm or loinc lookup in redcap; bioportal ontology field data entry; enter a diagnosis or medication using a controlled vocabulary; search standardized clinical codes during data entry; ontology field type how to use; pick a coded term from a lookup table; bio-medical ontology autocomplete field |
@@ -38,6 +40,10 @@ A unique identifier assigned to each term within an ontology (e.g., `E11` for Ty
 **Controlled Vocabulary**
 
 A fixed, curated set of terms. Ontology fields enforce controlled vocabulary — you must select from the lookup results rather than entering arbitrary free text.
+
+---
+
+> **Note (15.6.1):** Where **BioPortal** is the only ontology service configured on the server, it is now **selected automatically** in the Edit Field dialog rather than requiring an explicit choice from a single-item list.
 
 ---
 
