@@ -5,10 +5,12 @@ domain: AI Tools
 applies_to:
 - All project types
 - feature availability depends on administrator configuration
+requires: REDCap v15.0.0+
+verified_against: REDCap v17.3.6 (LTS)
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-AI-02
   title: AI Writing Tools
@@ -16,6 +18,8 @@ related:
   title: AI Translations
 - id: RC-AI-04
   title: AI Summarization
+- id: RC-CC-26
+  title: 'Control Center: AI Configuration Settings'
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
 tags:
@@ -105,13 +109,18 @@ REDCap's AI tools require both a configured AI server and explicit enablement by
 
 **What must be configured in the Control Center:**
 
-- The AI server URL and credentials must be entered under the AI configuration section of the Control Center (under System Configuration → Modules/Services Configuration — see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**).
+- The AI service URL and credentials must be entered by an administrator. **Where this happens depends on your REDCap version** — see the table below.
 - Each of the three AI features can be enabled or disabled independently.
 - Administrators can restrict availability to specific projects rather than enabling globally.
 
-If you do not see the AI writing tools icon (purple wizard's wand) in the rich text editor, AI translations in MLM, or the AI summarization icon in reports, the feature is either disabled system-wide or not enabled for your specific project. Contact your REDCap administrator.
+| REDCap version | Where AI is configured |
+|---|---|
+| **17.2.0+ Standard, LTS 17.3.x+** | System Configuration → **AI Configuration Settings**, a dedicated page — see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) |
+| **Below 17.2.0, LTS 16.0.x and earlier** | System Configuration → **Modules/Services Configuration**, in the AI Services section — see [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 
-> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+> **Version caveat (17.2.0+):** The AI Services section was **removed** from Modules/Services Configuration when the dedicated page was introduced — not replaced with a link. On a current instance there is nothing at the old location to indicate where the settings went. The change also allows several AI configurations to coexist, each mapped to a different service and to different features, where earlier versions supported exactly one global setup.
+
+If you do not see the AI writing tools icon (purple wizard's wand) in the rich text editor, AI translations in MLM, or the AI summarization icon in reports, the feature is either disabled system-wide or not enabled for your specific project. Contact your REDCap administrator.
 
 ---
 

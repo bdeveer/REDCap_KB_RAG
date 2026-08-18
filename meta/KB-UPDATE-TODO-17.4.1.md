@@ -86,8 +86,11 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### Control Center
 
-- [ ] **`RC-CC-02` + possible new `RC-CC-26` — AI Configuration Settings page. WRONG**
-  17.2.0 moved **all** system-level AI configuration out of General Configuration onto a dedicated "AI Configuration Settings" page in the Control Center, with more flexible controls. Any current instruction that routes admins to General Configuration for AI setup is now wrong. Affects `RC-AI-01` too. Also 15.2.0 added Google Gemini and other cloud-hosted AI engine options; 17.1.4 extended Azure OpenAI to support Azure API Management (APIM) gateway deployments.
+- [x] **New `RC-CC-26` — AI Configuration Settings page. WRONG** — *done 2026-08-18*
+  **Correction to this report:** the affected article was `RC-CC-06` (Modules & Services Configuration), not `RC-CC-02` (General Configuration). `RC-CC-02` contains no AI content at all and never did. The AI settings moved *out of Modules/Services*, and `RC-AI-01` was pointing readers there.
+  Verified against live captures from LTS 16.0.39 and LTS 17.3.6: on 17.3.6 the AI Services section is **absent from Modules/Services entirely** — no heading, no link, no residual fields. Page location confirmed as System Configuration → AI Configuration Settings, directly below Modules/Services Configuration.
+  Applied: new `RC-CC-26` documenting the page, the three enablement scopes (including the easily-missed "all non-project pages"), the configuration table, the project-level selector, and an old→new settings mapping. `RC-CC-06` §AI Services retained for LTS 16.0.x readers behind a version caveat. `RC-AI-01` Administrator Configuration now routes by version.
+  Still open: 15.2.0 Gemini and other engine options (already in `RC-CC-06`); **17.1.4 Azure OpenAI via Azure API Management (APIM) gateways — not yet documented anywhere.**
 
 - [ ] **`RC-CC-02` / `RC-CC-23` — Automatic Version Redirect. GAP**
   17.2.2 added automatic redirection of bookmarks and old survey invitation links pointing at removed version folders. 17.3.0 changed delivery: `redcap_redirect.php` is now embedded directly in the Configuration Check steps rather than downloaded via the non-versioned files workflow. **Not covered.**

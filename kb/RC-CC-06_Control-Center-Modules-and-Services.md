@@ -6,12 +6,14 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.3.6 (LTS) and v16.0.39 (LTS) |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
-| **Synonyms** | control center modules and services configuration; enable or disable surveys api or randomization; configure twilio or mosio sms integration; set up sendgrid email delivery; enable external modules framework; turn redcap features on or off instance-wide; configure ai services and third-party integrations; module activation request workflow setting |
+| **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
+| **Synonyms** | control center modules and services configuration; enable or disable surveys api or randomization; configure twilio or mosio sms integration; set up sendgrid email delivery; enable external modules framework; turn redcap features on or off instance-wide; configure ai services on older redcap versions; module activation request workflow setting |
 
 ---
 
@@ -217,9 +219,11 @@ When the e-Consent Framework is used in Part 11-compliant workflows, this sectio
 
 ---
 
-## AI Services
+## AI Services *(pre-17.2.0 only)*
 
 <!-- PLACEHOLDER: Insert annotated screenshot of AI Services section -->
+
+> **Version caveat (≤17.1.x Standard; LTS 16.0.x and earlier):** This section describes AI configuration **as it exists on the Modules/Services Configuration page**. In REDCap 17.2.0 all system-level AI settings were moved off this page onto a dedicated **AI Configuration Settings** page, and the AI Services section below no longer appears here at all — it is gone, not relocated within the page. If your instance is on 17.2.0 or higher (including LTS 17.3.x), see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) instead. The settings below remain accurate for LTS 16.0.x instances, which is why they are retained here.
 
 REDCap can use Artificial Intelligence (AI) to augment existing features. The AI services connect to an AI provider over a private endpoint that your institution controls, ensuring data security and privacy.
 
@@ -264,6 +268,8 @@ Google Gemini (cloud-hosted) can be used as an alternative to OpenAI. Obtain an 
 - **API Version** — The API version (e.g., `v1`, `v1beta`)
 
 See [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) for an overview of REDCap's AI tools and security considerations.
+
+**Project-level override on this model.** When system-wide AI services are enabled, the values above can be overridden per project on the Edit Project Settings page by entering a *different endpoint URL, API key and model* for that project. Admins who did not want AI enabled everywhere were advised to leave the system-level fields blank and populate the project-level fields only where wanted. From 17.2.0 this works differently — the project picks a named configuration from a drop-down rather than re-entering credentials. See [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md).
 
 ---
 

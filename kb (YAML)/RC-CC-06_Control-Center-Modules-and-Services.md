@@ -4,10 +4,12 @@ title: 'Control Center: Modules & Services Configuration'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.3.6 (LTS) and v16.0.39 (LTS)
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-05
   title: 'Control Center: File Storage & Upload Settings'
@@ -21,6 +23,8 @@ related:
   title: Institution-Specific Settings & Policies — Production
 - id: RC-AI-01
   title: 'REDCap AI Tools: Overview & Security'
+- id: RC-CC-26
+  title: 'Control Center: AI Configuration Settings'
 - id: RC-AI-02
   title: AI Writing Tools
 - id: RC-AI-03
@@ -36,7 +40,7 @@ synonyms:
 - set up sendgrid email delivery
 - enable external modules framework
 - turn redcap features on or off instance-wide
-- configure ai services and third-party integrations
+- configure ai services on older redcap versions
 - module activation request workflow setting
 ---
 
@@ -242,9 +246,11 @@ When the e-Consent Framework is used in Part 11-compliant workflows, this sectio
 
 ---
 
-# AI Services
+# AI Services *(pre-17.2.0 only)*
 
 <!-- PLACEHOLDER: Insert annotated screenshot of AI Services section -->
+
+> **Version caveat (≤17.1.x Standard; LTS 16.0.x and earlier):** This section describes AI configuration **as it exists on the Modules/Services Configuration page**. In REDCap 17.2.0 all system-level AI settings were moved off this page onto a dedicated **AI Configuration Settings** page, and the AI Services section below no longer appears here at all — it is gone, not relocated within the page. If your instance is on 17.2.0 or higher (including LTS 17.3.x), see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) instead. The settings below remain accurate for LTS 16.0.x instances, which is why they are retained here.
 
 REDCap can use Artificial Intelligence (AI) to augment existing features. The AI services connect to an AI provider over a private endpoint that your institution controls, ensuring data security and privacy.
 
@@ -289,6 +295,8 @@ Google Gemini (cloud-hosted) can be used as an alternative to OpenAI. Obtain an 
 - **API Version** — The API version (e.g., `v1`, `v1beta`)
 
 See [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) for an overview of REDCap's AI tools and security considerations.
+
+**Project-level override on this model.** When system-wide AI services are enabled, the values above can be overridden per project on the Edit Project Settings page by entering a *different endpoint URL, API key and model* for that project. Admins who did not want AI enabled everywhere were advised to leave the system-level fields blank and populate the project-level fields only where wanted. From 17.2.0 this works differently — the project picks a named configuration from a drop-down rather than re-entering credentials. See [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md).
 
 ---
 

@@ -6,11 +6,13 @@
 | --- | --- |
 | **Domain** | AI Tools |
 | **Applies To** | All project types; feature availability depends on administrator configuration |
+| **Requires** | REDCap v15.0.0+ |
+| **Verified Against** | REDCap v17.3.6 (LTS) |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Related Topics** | [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md); [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | what ai features does redcap have; is redcap ai safe to use with phi; how does the redcap ai server work; redcap ai data privacy and security; does redcap send data to chatgpt; overview of redcap ai writing translation summarization; enabling ai tools in redcap; redcap ai server architecture explained |
 
 ---
@@ -89,13 +91,18 @@ REDCap's AI tools require both a configured AI server and explicit enablement by
 
 **What must be configured in the Control Center:**
 
-- The AI server URL and credentials must be entered under the AI configuration section of the Control Center (under System Configuration → Modules/Services Configuration — see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**).
+- The AI service URL and credentials must be entered by an administrator. **Where this happens depends on your REDCap version** — see the table below.
 - Each of the three AI features can be enabled or disabled independently.
 - Administrators can restrict availability to specific projects rather than enabling globally.
 
-If you do not see the AI writing tools icon (purple wizard's wand) in the rich text editor, AI translations in MLM, or the AI summarization icon in reports, the feature is either disabled system-wide or not enabled for your specific project. Contact your REDCap administrator.
+| REDCap version | Where AI is configured |
+|---|---|
+| **17.2.0+ Standard, LTS 17.3.x+** | System Configuration → **AI Configuration Settings**, a dedicated page — see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) |
+| **Below 17.2.0, LTS 16.0.x and earlier** | System Configuration → **Modules/Services Configuration**, in the AI Services section — see [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 
-> **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
+> **Version caveat (17.2.0+):** The AI Services section was **removed** from Modules/Services Configuration when the dedicated page was introduced — not replaced with a link. On a current instance there is nothing at the old location to indicate where the settings went. The change also allows several AI configurations to coexist, each mapped to a different service and to different features, where earlier versions supported exactly one global setup.
+
+If you do not see the AI writing tools icon (purple wizard's wand) in the rich text editor, AI translations in MLM, or the AI summarization icon in reports, the feature is either disabled system-wide or not enabled for your specific project. Contact your REDCap administrator.
 
 ---
 
