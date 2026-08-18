@@ -4,10 +4,13 @@ title: Import Records API
 domain: API
 applies_to:
 - All REDCap projects
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +33,8 @@ synonyms:
 - overwrite behavior for record import api
 - load data into a project via api
 ---
+
+> **Version caveat (below 17.4.0 Standard):** Importing records while a project is in **Analysis/Cleanup** status behaved inconsistently between the API and the user interface. No data could be imported via the API in that status even where the project was set to allow editing of existing records — the UI permitted it, the API did not. Fixed in 17.4.0. If an import script fails only on projects in Analysis/Cleanup, this is the likely cause.
 
 # 1. Overview
 

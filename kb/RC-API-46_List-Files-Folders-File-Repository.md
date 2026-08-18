@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | API |
 | **Applies To** | REDCap projects (all types) |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md); [RC-API-12 — Export File API](RC-API-12_Export-File.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -36,6 +38,8 @@ A numeric identifier that uniquely identifies a folder in the File Repository. U
 
 #### Access Restrictions
 Folder-level permissions that limit access to specific users based on their Data Access Group or User Role assignment. Restricted folders include `role` and/or `dag` fields in the response.
+
+> **Admin-restricted folders are excluded from the response.** The File Repository supports folders visible only to administrators with access to all projects (15.5.0+). These are **not** returned by this method — up to 16.0.7 they were mistakenly included, corrected from 16.0.8. Do not treat this listing as a complete inventory of the File Repository; it reflects what the calling user may see. See [RC-FILE-01 — File Repository](RC-FILE-01_File-Repository.md).
 
 ---
 

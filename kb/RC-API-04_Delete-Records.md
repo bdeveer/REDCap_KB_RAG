@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
 | **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)|
@@ -38,6 +40,8 @@ When to use this method: When you need to remove records from the project, clean
 | `repeat_instance` | Optional | The repeating instance number for a repeating instrument or repeating event. If provided, only the data for that specific instance is removed. |
 | `delete_logging` | Optional | `'0'` (keep logging) or `'1'` (delete logging). Only available in projects where an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings. When that setting is enabled, the default is `'1'` (logging deleted with the record); pass `'0'` to preserve the log. If the setting is not enabled in the project, this parameter has no effect and defaults to `'0'`. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. |
+
+> **Critical — match the stored case of the record name exactly (version caveat, below 16.0.0 Standard).** When deleting a specific instrument's data in a **longitudinal** project, supplying the record name in different case to how it is stored — `taylor-101` where the project holds `TAYLOR-101` — could cause **all data in the entire record to be deleted** rather than just the named instrument's data. Fixed in 16.0.0. Deletion is irreversible, so on any earlier version match the stored case exactly, and test against a copy of the project first.
 
 ---
 

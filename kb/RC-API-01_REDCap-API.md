@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
 | **Version** | 1.3 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation |
 | **Related Topics** | [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
@@ -85,6 +87,22 @@ Before requesting a token:
 - **Never include your token in code that is stored in a public repository** (e.g., GitHub). Use environment variables or a secrets manager instead.
 - **Use HTTPS.** Always send API requests to the HTTPS version of your REDCap URL. Sending tokens over plain HTTP exposes them in transit.
 - If you believe a token has been compromised, contact your REDCap administrator to have it revoked and regenerated.
+
+> **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — click the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that `RC-PROF-01` warns separately about API tokens appearing in profile screenshots.
+
+### 3.3a Call the API at the Non-Versioned URL
+
+Always call the API at the instance's stable endpoint:
+
+```
+https://redcap.example.edu/api/index.php
+```
+
+**not** at a path containing the version directory, such as `https://redcap.example.edu/redcap_v17.4.1/API/index.php`.
+
+> **Version caveat (16.1.5 Standard and higher):** REDCap **rejects** survey and API calls whose URL contains a version directory, returning an error. Any integration, script or saved request still using a versioned URL breaks the moment the instance reaches 16.1.5 — and the failure looks like an API fault rather than a URL problem, because the endpoint plainly exists. The change is pre-emptive hardening; REDCap noted no known vulnerabilities at those endpoints at the time. See [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) §4a.4.
+
+A versioned URL also breaks on every upgrade regardless, since the directory name changes. There is no reason to use one.
 
 ### 3.4 Multiple Tokens
 
@@ -182,6 +200,9 @@ The REDCap API organizes its functionality into method groups. The methods avail
 | Export Survey Link | Generate a unique survey link for a specific record |
 | Export Survey Queue Link | Get the survey queue link for a specific record |
 | Export Survey Return Code | Get the return code for a partially completed survey |
+| Export Survey Access Code | Get the survey access code for a record on a specific survey instrument. Requires 15.1.0+ — see [RC-API-54](RC-API-54_Export-Survey-Access-Code.md) |
+
+> **Developer method equivalent (15.1.0+):** `REDCap::getSurveyAccessCode()` provides the same capability inside hooks, plugins and External Modules. It takes the record and instrument, plus the event ID in longitudinal projects, and assumes the record already exists. Note REDCap's own changelog spells it `getSurveyAccesCode` — a typo in the release notes rather than the method name; verify against the External Module Framework documentation before relying on the spelling.
 
 ---
 
@@ -309,6 +330,24 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 **Confusing `instrument` (variable name) with the instrument's label.** API parameters that reference instruments — such as the `forms` parameter in Export Records — require the instrument's unique variable name (e.g., `demographics`), not its display label (e.g., `Demographics`). The variable name is found in the Online Designer or data dictionary. These often match, but not always, especially if an instrument was renamed after creation.
 
 **Not handling repeating instrument data correctly.** When exporting from a project with repeating instruments or events, each instance appears as a separate row identified by `redcap_repeat_instrument` and `redcap_repeat_instance`. Code that assumes one row per record will produce incorrect results. Always inspect the structure of export output from repeating projects before building a processing pipeline.
+
+---
+
+## 9a. Rights Enforcement in API Methods
+
+API access is scoped by the calling user's project rights — the token grants no more than the user already has. That principle has needed enforcing in several specific places, and the fixes matter because each one silently returned data the caller should not have received.
+
+| Issue | Fixed in |
+| --- | --- |
+| **File Export** returned the file even where the user had **No Access** export rights for the instrument holding the File Upload field | 16.0.9 Standard / 15.5.33 LTS |
+| **Export a Survey Link** returned a link for records outside the API user's **Data Access Group** | 16.0.28 LTS |
+| **Export a Survey Access Code**, **Export a Survey Queue Link** and **Export a Survey Return Code** returned codes and links for records outside the caller's DAG | 17.1.0 Standard / 16.0.31 LTS |
+| **Access Control Group** compliance checks could be bypassed by importing user rights or role assignments via the API or the User Rights CSV upload | 16.1.4 Standard |
+| **File Repository listing** returned admin-restricted folders, which it should exclude | 16.0.8 Standard |
+
+> **Important for anyone auditing API access.** These were not permission-configuration errors — the rights were set correctly and the API returned the data anyway. If your institution has relied on DAG separation or instrument-level export rights to constrain API users on an older instance, the boundary was not fully enforced. Reviewing the version history against these fixes is the way to establish whether it applied to you.
+
+Data Access Group behaviour is documented in [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); export rights levels in [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
 
 ---
 

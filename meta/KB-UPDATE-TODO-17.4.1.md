@@ -261,12 +261,13 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### API
 
-- [ ] `RC-API-01` — the project API page now masks the token by default with a click-to-reveal control, and API/API Playground behaviour was improved (17.0.7).
-- [ ] `RC-API-13` — Import File and `REDCap::addFileToField` accept the literal `new` to target a not-yet-created repeating instance (17.4.0).
-- [ ] `RC-API-22` — Export Users returns `data_access_group_label` (16.0.0).
-- [ ] `RC-API-46` — File Repository listing returns `role` and `dag` (16.0.8).
-- [ ] `RC-API-34`/`RC-API-35` — P.I. email address handled correctly on Import/Export Project Info (15.8.2).
-- [ ] `RC-API-01` — developer method `REDCap::getSurveyAccessCode()` (15.1.0), companion to the already-documented `RC-API-54`. Note the changelog's own typo, `getSurveyAccesCode`.
+- [x] `RC-API-01` — token masking, versioned URLs and rights enforcement — *done 2026-08-18.* Token masking (17.0.7) added to §3.3. New **§3.3a** on calling the API at `/api/index.php` and never at a versioned path: from 16.1.5 REDCap **rejects** versioned URLs, so an integration still using one breaks on upgrade and the failure looks like an API fault rather than a URL problem. New **§9a** collecting the rights-enforcement fixes, grouped because each one silently returned data the caller should not have received — File Export ignoring No Access rights, three survey code/link methods ignoring DAG membership, ACG compliance bypassable via API user-rights import, and admin-restricted folders appearing in File Repository listings. `REDCap::getSurveyAccessCode()` documented beside the Export Survey Access Code method, with the changelog's `getSurveyAccesCode` typo flagged so nobody copies it into code.
+  *Original entry: the project API page now masks the token by default with a click-to-reveal control, and API/API Playground behaviour was improved (17.0.7).*
+- [x] `RC-API-13` — Import File accepts `repeat_instance=new` — *done 2026-08-18.* Noted that it removes a race condition as much as a convenience: previously you had to query the highest instance number and add one, which two concurrent processes could collide on. *Original entry:* to target a not-yet-created repeating instance (17.4.0).
+- [x] `RC-API-22` — Export Users returns `data_access_group_label` — *already covered, no change needed.* The field and its explanatory note were already present in the article. *Original entry:*
+- [x] `RC-API-46` — File Repository listing — *done 2026-08-18.* `role` and `dag` were **already documented**. Added the part that was missing: **admin-restricted folders are excluded** from the response (wrongly included up to 16.0.7), so the listing must not be treated as a complete inventory of the File Repository. *Original entry:*
+- [x] `RC-API-34`/`RC-API-35` — P.I. email address — *already covered, no change needed.* `project_pi_email` was already documented in the response field table. *Original entry:*
+- [x] `RC-API-01` — developer method `REDCap::getSurveyAccessCode()` — *done 2026-08-18.* Documented beside the Export Survey Access Code method, with the changelog typo flagged so nobody copies it into code. *Original entry retained above.*
 
 ### External Modules
 

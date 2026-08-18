@@ -4,10 +4,13 @@ title: List Files and Folders (File Repository) API
 domain: API
 applies_to:
 - REDCap projects (all types)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -56,6 +59,8 @@ A numeric identifier that uniquely identifies a folder in the File Repository. U
 
 ### Access Restrictions
 Folder-level permissions that limit access to specific users based on their Data Access Group or User Role assignment. Restricted folders include `role` and/or `dag` fields in the response.
+
+> **Admin-restricted folders are excluded from the response.** The File Repository supports folders visible only to administrators with access to all projects (15.5.0+). These are **not** returned by this method — up to 16.0.7 they were mistakenly included, corrected from 16.0.8. Do not treat this listing as a complete inventory of the File Repository; it reflects what the calling user may see. See [RC-FILE-01 — File Repository](RC-FILE-01_File-Repository.md).
 
 ---
 
