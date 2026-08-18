@@ -47,11 +47,18 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   Also resolves the deferred gotcha: files and signatures silently omitted from longitudinal migrations below 17.0.6, plus records dropped for failing field validation (below 17.0.2) and the Development record limit truncating Production migrations (below 17.1.4).
   `RC-PLUS-01` already cites `RC-PLUS-02` as *(planned)* in three places (lines 13, 94, 206) — those are dangling references today. Migrates structure, metadata, data, files and logs between REDCap instances; both source and destination must participate. **Also reconcile with `RC-PROJ-05` (Project Migration)**, which describes the pre-17.0 manual/XML approach and now needs a pointer plus a scope note saying it covers the non-REDCap+ path.
 
-- [ ] **RC-PLUS-03 — Reward Services** *(17.0.0, REDCap+)*
-  Participant compensation/payment management. Only string match in the KB is the one-line feature list in `RC-PLUS-01`. Note the 17.1.3 admin option letting Rewards-permission managers enter an audit reason without the extra sensitive-action confirmation step, and the 17.3.3 System Statistics counters.
+- [x] **RC-PLUS-03 — Reward Services** *(17.0.0, REDCap+)* — *written 2026-08-18*
+  Written from the 17.0.0 release notes plus a verified 17.3.6 LTS capture of the Modules/Services Configuration page, so §4–5 (all system-level settings and the Tango credential fields) are verified; the project-level interface is not.
+  `RC-CC-06` gained a Reward Services section — the settings live on a page the KB already documented, and it had no coverage of them at all.
+  **Key findings:** REDCap holds no funds (the institution funds a Tango account and REDCap draws against it); compensation is split across four roles, which is the segregation of duties the feature exists for; and **project-level Tango credentials override the system defaults entirely**, so a Control Center change does not reach every project.
+  Seven version caveats collected in §7, including two Critical: historical compensation totals wrong in the Participant Manager, reports *and CSV exports* after editing a reward option mid-study (below 17.4.1 / 17.3.7), and the "Only administrators" enablement setting not actually being enforced (below 17.2.1).
+
+  > **Correction to this report.** The original entry attributed "the 17.3.3 System Statistics counters" to Reward Services. That is wrong — the 17.3.3 change reads *"Added stats for Project Administrator Groups and Email Verification/Unsubscribe Features on the System Statistics page if a REDCap+ subscription is active."* It belongs to **RC-PLUS-04** and **RC-PLUS-05**, not here, and has been noted against those two items.
+  Also: **17.3.3** added System Statistics counters for the Email Verification/Unsubscribe features when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report).
 
 - [ ] **RC-PLUS-04 — Project Administrator Groups (PAGs)** *(17.1.0, REDCap+)*
   Project-level administration delegated to designated group admins instead of system admins. **Zero** matches in `kb/`. Needs a clear disambiguation section against **Access Control Groups** (`RC-CC-25`) and **Data Access Groups** (`RC-DAG-01`) — three similarly-named grouping constructs is a support-ticket generator.
+  Also: **17.3.3** added System Statistics counters for Project Administrator Groups when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report).
 
 - [ ] **RC-PLUS-05 — Email Verification & Unsubscribe** *(17.3.0, REDCap+)*
   New smart variables `[email-verify-link]`, `[email-unsubscribe-link]`, `[email-verified]` and others. **Zero** matches. Requires companion entries in `RC-PIPE-03` (Smart Variables Overview) and `RC-PIPE-08` or `RC-PIPE-17`. 17.3.3 added System Statistics counters for this feature.

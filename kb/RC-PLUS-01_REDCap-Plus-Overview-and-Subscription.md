@@ -97,6 +97,10 @@ A comprehensive tool to move one or more projects — including all settings and
 
 Integrates the Tango Gift Card API with REDCap+ to support participant recruitment incentives in research studies. Includes supporting materials for institutional compliance conversations (Finance, Treasury, etc.).
 
+- REDCap does not hold the funds — the institution funds a Tango account and REDCap draws against it when an order is placed.
+- Compensation is routed through **four separate roles** (Reviewer, Payment Authorizer, Order Manager, Rewards Options Manager), which is the segregation of duties the feature exists to provide.
+- See [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) for configuration, the role workflow and known issues by version.
+
 ### REDCap SHARE
 
 Supports participant-driven sharing of their electronic health record (EHR) data directly with researchers.
@@ -204,5 +208,6 @@ No. REDCap+ subscribers have full discretion over the types of research and oper
 ## 10. Related Articles
 
 - [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) (moving projects between REDCap installations). Note the asymmetry: a subscription is required to migrate projects **to** an instance, but not to migrate them **off** one.
+- [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) (participant compensation via the Tango gift card API)
 - [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) Configuration (system-level admin configuration)
 - [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)(analogous subscription-based add-on model for context)

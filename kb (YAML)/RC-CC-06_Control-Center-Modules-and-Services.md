@@ -220,6 +220,29 @@ Supported external storage methods are identical to those for the File Upload Fi
 
 ---
 
+# Reward Services *(REDCap+, 17.0.0+)*
+
+Participant compensation via electronic gift cards, integrating with the third-party vendor **Tango** through its Card API. Requires a REDCap+ subscription; the section is present on the page but not configurable without one.
+
+Settings hosted here:
+
+| Setting | Options |
+| --- | --- |
+| Enable Reward Services? | Disabled / Enabled |
+| Who can enable Reward Services in a given project? | All users (with Project Design privileges) / Only administrators |
+| Allow normal users to enable this feature on their own, or require a request? | Allow self-enable / Admin must enable via user request. **Only used when the setting above is "All users"** |
+| Custom message when enabling Reward Services in a project | Free text, HTML permitted |
+| Bypass sensitive confirmation when managing Rewards permissions? | Disabled / Enabled *(17.1.3+)* |
+| Tango credentials | Environment (No environment selected / Production / Sandbox) with a Check button, Client ID, Client Secret, Service Account Username, Service Account Password |
+
+> **Note:** The Tango credentials here are **system-level defaults** that projects inherit only when the project selects "Use System Default" on its API settings page. A project holding its own credentials overrides them entirely and will not follow a change made here.
+
+> **Note:** The REDCap web server must be able to make outbound HTTP/HTTPS requests to the rewards provider API. REDCap strongly recommends validating the whole configuration against the Tango **Sandbox** environment before selecting Production — in Production, orders send real gift cards funded from a real institutional balance.
+
+See [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) for the four-role workflow, the project-level experience and the known issues by version.
+
+---
+
 # e-Consent Framework: PDF External Storage Settings
 
 When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location (same options as the File Upload Settings storage configuration). Leave disabled unless required for regulatory compliance.

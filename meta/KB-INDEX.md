@@ -254,6 +254,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-FILE-01 | File Repository | RC-FILE-01_File-Repository.md |
 | RC-PLUS-01 | REDCap+: Overview and Subscription | RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md |
 | RC-PLUS-02 | REDCap+: Project Migration Tool | RC-PLUS-02_Project-Migration-Tool.md |
+| RC-PLUS-03 | REDCap+: Reward Services | RC-PLUS-03_Reward-Services.md |
 
 ---
 
