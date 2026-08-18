@@ -52,6 +52,8 @@ synonyms:
 
 This article explains Data Access Groups (DAGs) — what they are, how they restrict record-level access, how to create and manage them, and how to assign users. DAGs are a feature for projects where different groups of users should only see their own records, such as multi-site studies where each site's staff should be separated from the others.
 
+> **Not to be confused with Project Administrator Groups (PAGs).** DAGs are a **project-level** feature controlling **which records a user can see**. PAGs are a **system-level** REDCap+ feature (17.1.0+) controlling **who handles administrative requests** for a set of projects — project creation approvals, production status changes, draft approvals. The names are similar and REDCap's own 17.1.0 release notes contain a typo saying "DAG" where they mean "PAG". See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
+
 ---
 
 # 2. Key Concepts & Definitions

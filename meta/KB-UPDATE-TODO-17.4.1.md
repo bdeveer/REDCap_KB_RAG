@@ -56,9 +56,14 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   > **Correction to this report.** The original entry attributed "the 17.3.3 System Statistics counters" to Reward Services. That is wrong — the 17.3.3 change reads *"Added stats for Project Administrator Groups and Email Verification/Unsubscribe Features on the System Statistics page if a REDCap+ subscription is active."* It belongs to **RC-PLUS-04** and **RC-PLUS-05**, not here, and has been noted against those two items.
   Also: **17.3.3** added System Statistics counters for the Email Verification/Unsubscribe features when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report).
 
-- [ ] **RC-PLUS-04 — Project Administrator Groups (PAGs)** *(17.1.0, REDCap+)*
-  Project-level administration delegated to designated group admins instead of system admins. **Zero** matches in `kb/`. Needs a clear disambiguation section against **Access Control Groups** (`RC-CC-25`) and **Data Access Groups** (`RC-DAG-01`) — three similarly-named grouping constructs is a support-ticket generator.
-  Also: **17.3.3** added System Statistics counters for Project Administrator Groups when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report).
+- [x] **RC-PLUS-04 — Project Administrator Groups (PAGs)** *(17.1.0, REDCap+)* — *written 2026-08-18, awaiting Control Center capture*
+  Written from the 17.1.0 release notes only. **Unlike RC-PLUS-02/03, this gap is closable without a subscription** — the PAG page is in the Control Center, where REDCap+ gating is cosmetic, so a capture will let §4–5 be verified. Only the delegated admin's own experience (§6) is genuinely unobservable here.
+  The disambiguation this report asked for is §2, a three-way table: PAG decides *who approves your request*, ACG decides *what rights you can be given*, DAG decides *whose records you can see*. Reciprocal notes added to `RC-CC-25` and `RC-DAG-01`.
+  **Key findings:** the admin role is many-to-many but membership is strictly one-to-one — a project belongs to exactly one PAG, which is the constraint that shapes group design. User assignment auto-adds only *future* projects. Project-level admins cannot reach the PAG page itself, so they cannot widen their own delegation.
+  **17.3.3** added System Statistics counters for PAGs when a REDCap+ subscription is active (originally misfiled under RC-PLUS-03 in this report) — recorded in §7 and cross-linked to `RC-CC-11`.
+  No PAG-specific defects appear in either changelog through 17.4.1.
+
+  > **Note on REDCap's release notes.** The 17.1.0 entry ends "...will automatically get assigned to the DAG", where it means **PAG**. Recorded in the article, since anyone reading the official notes next to a DAG article will trip on it.
 
 - [ ] **RC-PLUS-05 — Email Verification & Unsubscribe** *(17.3.0, REDCap+)*
   New smart variables `[email-verify-link]`, `[email-unsubscribe-link]`, `[email-verified]` and others. **Zero** matches. Requires companion entries in `RC-PIPE-03` (Smart Variables Overview) and `RC-PIPE-08` or `RC-PIPE-17`. 17.3.3 added System Statistics counters for this feature.

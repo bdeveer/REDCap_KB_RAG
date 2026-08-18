@@ -132,7 +132,7 @@ REDCap as operational tool, request management, non-research use, workflow autom
 
 ## REDCap Plus — RC-PLUS
 
-REDCap+, REDCap Plus, paid features, premium features, subscription, advanced features, REDCap Plus subscription, Plus features, project migration tool, PMT, migration key, migrate a project to another server, move project between instances, project migration dashboard, instance ID, completion actions, Reward Services, REDCap Rewards, rewards, participant compensation, participant payment, gift card, e-gift card, Tango, Tango Card, incentive, Participant Manager, Payment Authorizer, Order Manager, Rewards Options Manager, reward option, sandbox environment, ProcessScheduledRewardOrders
+REDCap+, REDCap Plus, paid features, premium features, subscription, advanced features, REDCap Plus subscription, Plus features, project migration tool, PMT, migration key, migrate a project to another server, move project between instances, project migration dashboard, instance ID, completion actions, Reward Services, REDCap Rewards, rewards, participant compensation, participant payment, gift card, e-gift card, Tango, Tango Card, incentive, Participant Manager, Payment Authorizer, Order Manager, Rewards Options Manager, reward option, sandbox environment, ProcessScheduledRewardOrders, Project Administrator Groups, PAG, project-level admin, delegate admin tasks, power user, who approves move to production, departmental administration, PAG vs DAG
 
 ## Profile / My Profile — RC-PROF
 

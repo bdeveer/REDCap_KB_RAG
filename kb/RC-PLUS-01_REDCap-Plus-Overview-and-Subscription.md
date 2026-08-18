@@ -209,5 +209,6 @@ No. REDCap+ subscribers have full discretion over the types of research and oper
 
 - [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) (moving projects between REDCap installations). Note the asymmetry: a subscription is required to migrate projects **to** an instance, but not to migrate them **off** one.
 - [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) (participant compensation via the Tango gift card API)
+- [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md) (delegating routine administrative work to trusted project-level admins)
 - [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) Configuration (system-level admin configuration)
 - [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)(analogous subscription-based add-on model for context)

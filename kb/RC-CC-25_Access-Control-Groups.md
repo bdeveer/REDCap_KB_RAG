@@ -21,6 +21,8 @@
 
 **Access Control Groups (ACGs)** are a system-level feature that lets REDCap administrators define the **maximum set of user privileges** that can be granted within projects across the entire instance.
 
+> **Not to be confused with Project Administrator Groups.** ACGs group **users** and cap **what rights they can be given**. **PAGs** group **projects** and determine **who handles administrative requests** for them — project creation approvals, production status changes, draft approvals. Both are administrator-facing and both are "groups"; they are otherwise unrelated. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
+
 ACGs do not directly set what rights a user has in a project. Instead, they define an upper boundary — a ceiling — on the rights that a User Rights manager is permitted to grant. When a user is added to a project or when their privileges are modified, REDCap checks that the privileges being assigned do not exceed what the user's ACG allows. If they do, the assignment is blocked.
 
 This makes ACGs useful in regulated or compliance-sensitive environments where certain capabilities — such as data export, record deletion, or user rights management — should never be grantable to specific user populations, regardless of what an individual project manager might attempt to configure.
