@@ -8,11 +8,11 @@ applies_to:
 requires: REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required
   on the **destination** instance only — see §2
 verified_against: REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against
-  a live instance. The migration workflow itself (§3–4) is written from release notes
-  and is not yet verified
+  a live instance. The migration workflow itself (§3–4) is from release notes only
+  and **cannot be verified without a REDCap+ subscription** — see the scope note
 prerequisites:
 - 'RC-PLUS-01 — REDCap+: Overview and Subscription'
-version: '1.1'
+version: '1.2'
 last_updated: 2026-08
 related:
 - id: RC-PROJ-05
@@ -40,6 +40,10 @@ synonyms:
 ---
 
 > **Scope note.** Section 6.2 (the Project Migration Dashboard) is verified against a live instance running 17.3.6 LTS. The rest of the article is written from REDCap's release notes for 17.0.0 through 17.4.1 and has **not** been verified against an instance with a REDCap+ subscription. The mechanics in Sections 3–5 follow REDCap's own description of the feature; screen labels and the exact placement of controls in those sections should be confirmed before this article is used as a step-by-step guide.
+>
+> **Why the rest cannot currently be verified — a standing limitation.** The instance this KB is maintained against does **not** hold a REDCap+ subscription. The dashboard could still be documented because it is reachable without one, and because REDCap+ gating in the Control Center is cosmetic — settings render server-side and are merely disabled in the browser. The migration workflow is different: generating a migration key and receiving a project require the subscription, so §3–4 cannot be observed from this instance at all.
+>
+> **What would close it:** a walkthrough or page capture from an institution that has run a migration. Until then, treat §3–4 as REDCap's own description of the feature rather than as observed behaviour. The version caveats in §5 are drawn from the release notes and are unaffected.
 
 ---
 

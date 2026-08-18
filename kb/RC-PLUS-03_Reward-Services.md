@@ -7,9 +7,9 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators configuring the service (§3–5); study teams running participant compensation (§6–7) |
 | **Requires** | REDCap v17.0.0+ and a REDCap+ subscription. Also requires a funded institutional account with the third-party gift card provider — see §2 |
-| **Verified Against** | REDCap 17.3.6 (LTS) — Control Center configuration (§4–5) verified against a live instance. The project-level interface (§6) is written from release notes and is not yet verified |
+| **Verified Against** | REDCap 17.3.6 (LTS) — Control Center configuration (§4–5) verified against a live instance. The project-level interface (§6) is from release notes only and **cannot be verified without a REDCap+ subscription** — see the scope note |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
@@ -18,6 +18,10 @@
 ---
 
 > **Scope note.** Sections 4 and 5 are verified against the Control Center of a live instance running 17.3.6 LTS. Sections 1–3 and 6 are written from REDCap's 17.0.0 release notes and have **not** been verified against a subscribed instance with the feature active. Screen labels and workflow details inside a project should be confirmed before this article is used as a step-by-step guide.
+>
+> **Why the project-level sections cannot currently be verified — a standing limitation.** The instance this KB is maintained against does **not** hold a REDCap+ subscription. The Control Center sections could still be documented because REDCap+ gating there is cosmetic: the settings are rendered server-side and merely disabled in the browser, so the page is fully readable without a subscription. The project-level interface is different — Reward Services must actually be *enabled* in a project before the Participant Manager and the reward workflow exist to be looked at, and enabling it requires the subscription. No amount of reading an unsubscribed instance will close that gap.
+>
+> **What would close it:** a page capture or walkthrough from an institution running Reward Services in production. Until then, treat §6 and the role behaviour in §3 as REDCap's own description of the feature rather than as observed behaviour. The version caveats in §7 are drawn from the release notes and are unaffected by this limitation.
 >
 > **This article documents how the REDCap feature works. It is not financial, tax or compliance guidance.** Participant compensation carries institutional obligations — tax reporting thresholds, IRB-approved compensation schedules, treasury and procurement rules — that vary by institution and jurisdiction. Involve your finance and compliance offices before the first order is placed, not after.
 
@@ -143,7 +147,7 @@ REDCap **strongly recommends** validating the configuration in the Tango **Sandb
 
 ## 6. Using Reward Services in a Project
 
-> **Not yet verified against a live instance.** This section reflects REDCap's 17.0.0 release notes.
+> **Not verified against a live instance, and not currently verifiable.** This section reflects REDCap's 17.0.0 release notes. Unlike the Control Center sections above, it cannot be documented from an unsubscribed instance — the pages described here only exist once Reward Services is enabled in a project, which requires the subscription. See the scope note at the top of this article.
 
 ### 6.1 Enabling it in the project
 
