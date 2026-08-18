@@ -57,6 +57,9 @@ VALIDATION_TYPES = {
     "integer", "email", "phone", "phone_australia",
     "zipcode", "mrn_10d", "mrn_generic", "url",
     "alpha_only", "postalcode_canada", "ssn", "time",
+    # Used on "file" fields, not "text": signature marks a classic drawn
+    # signature, enhanced_signature the typed-or-drawn variant (17.1.0+).
+    "signature", "enhanced_signature",
 }
 
 

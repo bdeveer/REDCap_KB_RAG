@@ -284,10 +284,14 @@ For `text` fields, this column sets the validation format. REDCap will only acce
 | `phone` | US phone number format |
 | `zipcode` | US ZIP code format |
 | `mrn_10d` | 10-digit medical record number |
+| `signature` | Marks a `file` field as a classic (drawn) Signature field |
+| `enhanced_signature` | Marks a `file` field as an Enhanced Signature field — typed or drawn *(17.1.0+)* |
 
 For `slider` fields, entering `number` in this column displays the current numeric value next to the slider handle.
 
-> **Important:** Do not populate this column for field types other than `text` or `slider`. REDCap will reject the upload.
+> **Important:** Leave this column empty for field types other than `text`, `slider` and `file`.
+>
+> The `file` case is the one people miss: signature fields are **not** a separate field type. A **classic Signature** is `file` + `signature`, and an **Enhanced Signature** is `file` + `enhanced_signature`. Converting between them is a change to this column alone — the field type stays `file`. See [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) §8.8.
 
 ---
 
