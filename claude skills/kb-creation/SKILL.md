@@ -110,12 +110,33 @@ Produce the article using the 8-section structure below. Use the BL series (RC-B
 | Article ID | RC-[DOMAIN]-[NN] |
 | Domain | [Full domain name, e.g. Branching Logic] |
 | Applies To | [Project types / conditions] |
+| Requires | REDCap v[X.Y.Z]+ *(or "Any supported version")* |
+| Verified Against | REDCap v[X.Y.Z] (Standard) / v[X.Y.Z] (LTS) |
 | Prerequisite | [Article ID — Title, or "None"] |
 | Version | 1.0 |
 | Last Updated | [Year] |
 | Author | REDCap Support |
 | Related Topics | [RC-XX-NN — Title; RC-XX-NN — Title] |
 | Synonyms | [phrase 1; phrase 2; phrase 3; ... — see Synonyms section below] |
+
+##### Version tracking fields
+
+`Requires` and `Verified Against` answer different questions and drift independently. Both are mandatory.
+
+| Field | Question it answers | Changes when |
+|---|---|---|
+| **Requires** | "Can I use this on my instance?" | Never, unless the article's scope changes. It records the REDCap version that first made the documented feature available. Use `Any supported version` for features that predate the KB. |
+| **Verified Against** | "Is this article stale?" | Every time someone checks the article against a live instance or a changelog diff. Always name both release lines, since they are numbered independently. |
+
+Rules:
+
+- **`Applies To` never carries a version.** It describes audience, project type and required user rights only. Version data goes in the two dedicated fields. (Historically a handful of articles put a version in `Applies To` — treat those as legacy and migrate on next edit.)
+- **`Requires` uses the earliest version that supports the feature**, not the newest. If an article documents several features introduced at different times, use the earliest in the header and mark the later ones inline with a version caveat.
+- **`Verified Against` names both lines** — e.g. `REDCap v17.4.1 (Standard) / v17.3.7 (LTS)`. Never write a bare version number; a reader cannot tell which line it refers to.
+- **Never bump `Verified Against` without actually verifying.** An unchecked article with an honest older date is more useful than a current-looking one nobody confirmed.
+- Neither field replaces `Version` (the article's own revision number) or `Last Updated` (when the prose last changed).
+
+See `RC-VER-01 — REDCap Versions, Release Lines & Patching` for what the release lines mean.
 
 #### Section 1: Overview
 One paragraph. Plain-language description of what this article covers. Write as if explaining to someone who has never opened REDCap. No jargon without definition. State what series this article belongs to if applicable.
@@ -137,6 +158,32 @@ At least 3 entries. Each entry covers: what the user does wrong, what happens as
 
 #### Final section: Related Articles
 Bullet list of related KB articles with ID and title. Include prerequisites, natural next articles, and adjacent topics.
+
+---
+
+## Version caveats (behaviour that was wrong for a known range of versions)
+
+When REDCap behaved differently — or incorrectly — across a known version range, mark it inline rather than silently documenting only current behaviour. A reader on an older instance needs to know that the article's advice does not hold for them.
+
+**Format:** a blockquote placed immediately after the content it qualifies, never collected at the end of the article.
+
+```
+> **Version caveat (17.0.6–17.1.1):** `age_at_date()` fails on calc fields
+> when the third parameter is omitted. Pass it explicitly as a workaround,
+> or upgrade to 17.2.0+. Fixed progressively across 17.0.7, 17.0.8, 17.1.2,
+> 17.1.3 and 17.2.0.
+```
+
+**Rules:**
+
+- **State the range in the bold lead**, in parentheses. Use `(17.0.6–17.1.1)` for a closed range, `(≤16.0.4)` for everything up to a fix, `(17.2.0+)` for behaviour that only exists on newer versions.
+- **Only claim a range the changelog supports.** A fix version tells you when something was repaired, not when it broke. Write an open-ended range unless the changelog states "Bug emerged in REDCap X" or "Bug exists in REDCap X and higher."
+- **Name the release line when the two diverge.** "Fixed in 17.4.1 Standard / 17.3.7 LTS" — not "fixed in 17.4.1."
+- **Give the reader an action**: a workaround, an upgrade target, or something to go re-check in their own data. A caveat that only says "this was broken" wastes the reader's attention.
+- **Retire caveats once the range falls out of support.** These are maintenance debt; when no supported version is affected, delete the blockquote.
+- **Do not use this for routine bug fixes.** A caveat earns its place only if it changes what a reader should believe about how the feature behaves, defines a window where documented behaviour did not hold, or silently affected data, rights or delivery in a way the user could not have detected at the time.
+
+Source material for existing caveats: `meta/KB-GOTCHAS-FROM-BUGFIXES-17.4.1.md`.
 
 ---
 
@@ -180,6 +227,7 @@ To check whether a topic is already planned, read `kb/KB-GAPS-TODO.md` before wr
 - **Voice**: Direct, instructional. No filler phrases ("It's important to note that...").
 - **Tables**: Use for reference content with 3+ rows. Don't use tables for 2-item comparisons — prose is cleaner.
 - **Notes and warnings**: Use blockquotes (`> **Note:**`, `> **Important:**`, `> **Critical:**`) for callouts.
+- **Version caveats**: Use a `> **Version caveat:**` blockquote placed immediately after the content it qualifies — see below.
 - **Cross-references**: Always include both the article ID and title: `RC-BL-02 — Syntax & Atomic Statements`
 - **One concept per article**: If you find yourself writing "this article also covers...", that's a signal to split.
 
@@ -296,6 +344,6 @@ For every article the new article references, find its Per-Article Reference Det
 | CAL | Calendar | Covers the Calendar and Scheduling modules: manual entries, schedule generation, Ad Hoc events, iCal export, visit statuses, logging |
 | LOG | Logging | Project-level audit trail; logging module access, filters, entry anatomy, retention, regulatory compliance context |
 | DSGN | Project Design Best Practices | Cross-cutting design conventions: field alignment, project structure, branching logic patterns, repeating instruments, form hygiene |
-| INFRA | Self-Hosting & Deployment | Running a private/non-production REDCap instance: containerized stacks, install/upgrade, mail capture, AI proxy, remote access/HTTPS, backups. Platform-specific guides (e.g. Synology) live here too |
+| INFRA | Self-Hosting, Deployment & Release Management | Running a private/non-production REDCap instance: containerized stacks, install/upgrade, mail capture, AI proxy, remote access/HTTPS, backups. Platform-specific guides (e.g. Synology) live here too. Also covers the REDCap release model itself — Standard vs LTS lines, version numbering, changelog reading and patching practice — which applies to all readers, not only self-hosters |
 
 Slug `RIGHTS` appears in existing cross-references but exceeds the 5-character limit — flag for review before creating articles in that domain.

@@ -185,6 +185,8 @@ def extract_header_block(lines: list[str]) -> tuple[dict, int]:
         "Article ID": "id_confirm",
         "Domain": "domain",
         "Applies To": "applies_to",
+        "Requires": "requires",
+        "Verified Against": "verified_against",
         "Prerequisite": "prerequisites",
         "Prerequisites": "prerequisites",
         "Version": "version",
@@ -227,6 +229,15 @@ def build_front_matter(meta: dict) -> dict:
         # Split on ';' if multiple values, otherwise wrap in list
         parts = [p.strip() for p in applies_raw.split(";") if p.strip()]
         fm["applies_to"] = parts if len(parts) > 1 else [applies_raw.strip()]
+
+    # Version tracking. `requires` = earliest REDCap version supporting the
+    # documented feature; `verified_against` = build the article was last
+    # checked against. See the kb-creation skill, "Version tracking fields".
+    if meta.get("requires"):
+        fm["requires"] = strip_md_links(meta["requires"]).strip()
+
+    if meta.get("verified_against"):
+        fm["verified_against"] = strip_md_links(meta["verified_against"]).strip()
 
     prereq_raw = meta.get("prerequisites", "")
     if prereq_raw:

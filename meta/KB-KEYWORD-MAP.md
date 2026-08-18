@@ -178,6 +178,10 @@ local settings, site policy, institutional policy, custom configuration, environ
 
 Send-It, send it, secure file transfer, secure file sharing, large file transfer, share file, send large file, file too big for email, password protected download, file upload link, send file to recipient, expiring download link, file delivery
 
+## Self-Hosting, Deployment & Release Management — RC-INFRA
+
+self-hosting, self hosted REDCap, private REDCap instance, local REDCap, Docker, Docker Compose, Synology, NAS, install REDCap, installation, deployment, web server, PHP version, MySQL, MariaDB, database charset, utf8mb4, Unicode Transformation, upgrade REDCap, Easy Upgrade, upgrade prerequisites, upgrade failed, install failed, REDCap version, what version am I running, version number, release line, Standard release, LTS, Long Term Support, LTS vs Standard, which version should we run, release schedule, release cadence, changelog, change log, release notes, patching, patch level, security fix, security patch, out of date, unpatched, old version directories, branch point, version comparison
+
 ---
 
-*Last updated: 2026-05-07 — Added RC-API, RC-AT-EM (folded into RC-AT), RC-CAL, RC-FILE, RC-LOG, RC-MCP, RC-MSG, RC-NAV-REC, RC-NAV-UI, RC-OPS, RC-PLUS, RC-PROF domains; RC-FD-11 keywords added in prior session.*
+*Last updated: 2026-08-18 — Added RC-INFRA domain (self-hosting, deployment, versioning & patching). Prior: 2026-05-07 — Added RC-API, RC-AT-EM (folded into RC-AT), RC-CAL, RC-FILE, RC-LOG, RC-MCP, RC-MSG, RC-NAV-REC, RC-NAV-UI, RC-OPS, RC-PLUS, RC-PROF domains; RC-FD-11 keywords added in prior session.*
