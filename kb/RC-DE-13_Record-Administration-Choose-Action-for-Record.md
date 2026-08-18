@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All project types |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | REDCap Support |
 | **Related Topics** | [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md) |
 | **Synonyms** | how do i delete a record; lock or unlock an entire record; rename a record id; download a pdf of a record; assign a record to a data access group; choose action for record menu options; record-level administrative actions; what does the choose action button do |
@@ -68,13 +70,18 @@ The table below lists every option in the **Choose action for record** menu, the
 | Assign to Data Access Group | DAG management (or specific DAG assignment right) | The record's DAG assignment globally |
 | Rename record | Create records (or Rename record right) | Current arm only (longitudinal); all arms (classic) |
 | Delete record (all forms/events) | Delete records | All data for the current arm only (longitudinal) |
+| Survey Queue | Surveys enabled in the project | Opens the record's Survey Queue page. Includes a sub-option to copy the survey queue link to the clipboard |
 | Database Query Tool *(admin only)* | Super User / Admin | Opens Database Query Tool filtered to this record |
-| Logging *(admin only)* | Super User / Admin | Opens project Logging filtered to this record |
-| Notification Log *(admin only)* | Super User / Admin | Opens Alerts & Notifications log filtered to this record |
-| Email Logging *(admin only)* | Super User / Admin | Opens Email Logging filtered to this record |
-| Survey Invitation Log *(admin only)* | Super User / Admin | Opens Survey Invitation Log filtered to this record |
+| Logging | Access to the project Logging page | Opens project Logging filtered to this record |
+| Notification Log | Access to the Notification Log | Opens Alerts & Notifications log filtered to this record |
+| Email Logging | Access to the Email Logging page | Opens Email Logging filtered to this record |
+| Survey Invitation Log | Access to the Survey Invitation Log | Opens Survey Invitation Log filtered to this record |
 
-> **Note:** The admin diagnostic links (Database Query Tool, Logging, Notification Log, Email Logging, Survey Invitation Log) appear only for system administrators. They are separated from the standard actions by a horizontal rule in the menu.
+> **Correction — these diagnostic links are privilege-gated, not admin-only.** The Logging, Notification Log, Email Logging and Survey Invitation Log entries appear for **any user holding the corresponding page privilege**, with the current record pre-selected as a filter. Only the **Database Query Tool** is restricted to system administrators. The links are separated from the standard actions by a horizontal rule in the menu.
+>
+> The four log links were added in **15.0.3**, integrating Luke Stevens' "Record Logging Links" External Module; **Email Logging** was extended to non-admin users with page access in **15.7.2**.
+
+> **Survey Queue behaviour (15.0.6).** The Survey Queue option is now shown **whenever surveys are enabled in the project**, even if the record's queue is currently empty. Previously it appeared only when the queue held at least one item, which made it look as though the feature was unavailable for records that simply had nothing queued yet. The same release stopped the Survey Queue and Survey Invitation Log options appearing at all in projects where surveys are not enabled.
 
 ---
 

@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Record Navigation |
 | **Applies To** | Projects with repeated instruments or events |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md), [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md), [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md), [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)[RC-DE-10 — Longitudinal & Repeated Data Entry](RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md)[RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)|
 | **Synonyms** | how to add another instance of a repeating form; navigating repeated instruments and events; how to enter multiple medications or adverse events; where do i click to add a new instance; how repeating instruments show up for a record; how to move between repeat instances; adding more rows to a repeatable form; what is a repeated event |
@@ -84,6 +86,27 @@ that repeated instrument:
 
 > **Note:** A completed survey entry counts as Complete when determining stacked dot color.
 
+
+---
+
+## 3a. Repeating Instrument Tables
+
+The tables and popups listing repeating instances — at the bottom of the Record Home Page, on the Record Status Dashboard, and at the top of a repeating instrument's data entry form — were rewritten in **15.3.2** and refined repeatedly since. Expect differences from older screenshots and notes.
+
+| Capability | Version |
+| --- | --- |
+| Redesigned tables and popups across Record Status Dashboard, Record Home Page and repeating instrument forms | 15.3.2 |
+| Custom **paging size** for the tables and popups, settable per user | 15.4.3 |
+| **Status filters** set on a repeating table persist as you move around the project (keyword searches do not) | 15.5.5 |
+| **Sort order** of rows persists per user, per project | 15.7.2 |
+| **Previous / Next links** at the top of a repeating *event* instrument, for moving between instances without returning to the record home page | 17.0.7 |
+| Icons distinguishing repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer | 15.4.5 |
+
+> **Note (15.4.1):** The redesign initially rendered the **custom label as a link**, which was reverted because it interfered with selecting and copying parts of the label. If you remember labels being clickable, that behaviour was deliberate and then withdrawn.
+
+> **Version caveat (below 17.3.4 Standard):** A repeating instance could be **omitted from the table entirely** if it originally had an Unverified form status and was then partially completed. An instance missing from the list on an affected version does not mean the data is gone — check the record via a report or export before concluding anything.
+
+> **Version caveat (below 15.3.3 Standard):** Clicking a stacked status icon on the Record Status Dashboard might fail to open the instances popup where the **record name is not an integer**. Projects using alphanumeric record IDs were the ones affected.
 
 ---
 

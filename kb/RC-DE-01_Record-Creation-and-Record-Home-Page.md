@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i create a new record in redcap; add a new participant or record; use the add edit records page; what is the record home page; how does redcap assign a record id; navigate to an existing record; create record data entry; find a record by its id |
@@ -58,6 +60,23 @@ within a single record.
 A search feature on the Add/Edit Records page that allows lookup by any
 variable value across all records in a project. Can be scoped to a
 single variable for speed in large projects.
+
+---
+
+## 2a. Add/Edit Records Page Behaviour
+
+Several changes make the page easier to work with on projects holding many records.
+
+| Change | Version |
+| --- | --- |
+| The **record drop-down** and the **Data Search field drop-down** are both searchable — type to filter rather than scrolling | 17.0.7 |
+| **User preferences** on the page: remember the last search target in the Data Search section, and force searches to open the record's **Record Home Page** rather than a data entry form. In multi-arm projects, arm selection can be maintained with the Record Status Dashboard | 16.1.4 |
+
+> **Note:** The "Maintain arm selection with Record Status Dashboard" preference appears only in projects with **more than one arm**. It was briefly shown on single-arm projects in 16.1.4 and corrected in 16.1.5.
+
+> **Version caveat (below 17.4.1 Standard):** Data Search failed to navigate correctly when the selected record's name contained a **pipe character** (`|`). Relevant only to projects using pipes in record IDs, which is unusual but not unheard of in imported data.
+
+**Save & Go To Next Record** — from **15.7.0**, clicking this on the last record when record auto-numbering is enabled behaves sensibly rather than leaving the user in an undefined state.
 
 ---
 

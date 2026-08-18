@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types; requires the Data Resolution Workflow mode to be enabled |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i open a data query in redcap; track and resolve data discrepancies; data resolution workflow how to use; raise and respond to a data query; assign a data issue to another user; difference between drw and field comment log; query management and issue tracking for data; flag and close data problems |
@@ -93,6 +95,10 @@ Switching modes does not convert existing data. Comments created under the Field
 After enabling DRW, two additional settings become available in the same customization panel:
 
 **Hide closed/verified data queries from Data Quality results.** When checked, any variable that already has a closed or verified query attached to it will be excluded from Data Quality module rule results. This is useful when you want Data Quality to surface only unprocessed issues — for example, finding all records with a missing birth date, but excluding those where the absence has already been verified or handled. Leave unchecked if you want Data Quality to flag all matching records regardless of query status.
+
+> **Version caveat (below 17.0.2 Standard):** with this setting *unchecked*, some closed or verified queries were still excluded from Data Quality results — the opposite of the setting's intent. If a DQ pass on an older instance returned fewer discrepancies than expected, this is a candidate explanation.
+
+**Prevent calc/CALCTEXT fields with closed/verified data queries from being fixed by DQ rule H** *(15.9.0+).* Rule H recalculates calculated fields and corrects stored values that disagree with the calculation — but where a calc field's value has been deliberately investigated and its query closed or verified, an automated correction silently undoes that decision. Enabling this setting excludes those fields from rule H. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
 
 **DRW user rights.** Enabling DRW adds a new user rights setting to every user and user role in the project. The default for new users is View Only — users will not be able to interact with queries until their rights are updated. See Section 4.
 

@@ -4,10 +4,13 @@ title: Data Quality Module
 domain: Data Quality
 applies_to:
 - All REDCap projects
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
 version: '1.2'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-BL-01
   title: 'Branching Logic: Overview & Scope'
@@ -76,6 +79,23 @@ The module displays all available rules in a table — default rules at the top 
 
 - Click **Execute** next to an individual rule to evaluate that rule across all project records.
 - Use one of the bulk execution buttons to run multiple rules at once (see below).
+
+## 3.1 Narrowing What a Rule Checks
+
+Rules can be scoped before running, which matters on large projects where a full run returns more than anyone will work through.
+
+| Control | Effect | Version |
+| --- | --- | --- |
+| **Field selection** | A multi-select drop-down limits default rules **A through I** to the chosen fields, so the rule evaluates only those | 16.0.0 |
+| **Multi-record and multi-DAG filters** | The record and Data Access Group filters accept **several** records or DAGs at once, rather than one at a time | 16.0.7 |
+
+**Deleting rules in bulk** — many or all custom rules can be removed at once (15.9.0), rather than one at a time.
+
+> **Version caveat (below 17.4.0 Standard):** Users could **export the CSV results of a Data Quality rule even without Full Access data export privileges** for some of the fields in the export. From 17.4.0 the export is restricted accordingly. If DQ result exports were part of how data left your projects on an older instance, the export-rights boundary was not applied there. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
+
+> **Version caveat (below 15.8.2 Standard):** Executing **rule E** where the project contains no numeric fields — calcs, sliders or number/integer-validated text — or where the user has no access to them, behaved incorrectly. Fixed in 15.8.2.
+
+> **Note (16.1.8):** Server-side calculation of `age_at_date()` in **rule H** returned blank whenever either date fell on **29 February** in a leap year. If a rule H pass on an older instance reported no discrepancies for date-of-birth calculations, that result is not trustworthy.
 
 After execution, REDCap shows a count of discrepancies found for each rule. Click **View** next to any rule to see the specific records (and event/instance details for longitudinal or repeating projects) that triggered it.
 

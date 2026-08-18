@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-04 |
@@ -106,6 +108,8 @@ instrument** within that event. An instrument can repeat in some events
 but not others, so it's worth checking each event individually in this
 table. Together, the two tables give a complete picture of the project's
 repeating structure at a glance — before you even reach the field definitions.
+
+> **Navigation and export additions.** From **15.0.3** the form names in the Instruments table are **internal links** to that form's section of the field table, so you can jump straight to a form on a long codebook. From **16.1.4** each instrument row carries a **download icon** for downloading that instrument's codebook directly. In longitudinal projects, the Events table shows **event IDs** from **15.4.1**, which is useful when you need the numeric ID for an API call or a smart variable rather than the display name.
 
 ### 4.3 Field Table
 

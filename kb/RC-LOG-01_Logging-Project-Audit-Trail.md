@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Logging |
 | **Applies To** | All REDCap project types |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
 | **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | REDCap Support |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) |
 | **Synonyms** | how do i view the project audit trail; who changed this data and when; see a history of all actions in my project; filter and export the logging records; redcap audit log for compliance; track record creation deletion and exports; data history popup clock icon; difference between logging and email logging |
@@ -72,6 +74,21 @@ The Logging user right is a single checkbox in **User Rights** (left menu → Us
 To use the API Export Logging endpoint programmatically, the user must also have **API Export** privilege. Both rights are required; neither alone is sufficient for API access. See [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
 
 > **Institution-specific:** [Note any local policy about who routinely receives the Logging right — leave blank until confirmed with your REDCap support team]
+
+---
+
+### 3.1 Recent Changes to the Logging Page
+
+| Change | Version |
+| --- | --- |
+| The **timestamp of the last logged activity** for the project is shown at the top right of the page — a quick way to confirm whether anything has happened without scanning the table | 16.1.8 |
+| PDF downloads of single or multiple instruments now log **contextual detail** — instrument, event, instance, and whether the PDF used the "compact" format | 17.0.0 |
+| The **Email Logging** search results table includes an email **Type** column, useful when searching across all types at once | 17.2.0 |
+| The record drop-down on the **Email Logging** page is searchable | 15.7.2 |
+
+The 17.0.0 change is worth noting for anyone using the log as evidence of what left the project: previously a PDF download was recorded without saying *which* instrument or event it covered, so the entry established that an export happened but not what it contained.
+
+> **Version caveat (below 17.0.2 Standard):** Filtering the log by **Page Views** could return entries **not in reverse chronological order**, which is easy to misread as a gap in activity. Fixed in 17.0.2.
 
 ---
 
@@ -142,7 +159,7 @@ All filters are displayed in a blue panel at the top of the Logging page. Every 
 | Filter | Description |
 |---|---|
 | **Filter by event** | Dropdown — select an event type (see Section 5.2). Defaults to "All event types (excluding page views)" |
-| **Filter by user** | Dropdown — lists all users who have activity in the project; includes `SYSTEM` and `[survey respondent]` |
+| **Filter by user** | Dropdown — lists all users who have activity in the project; includes `SYSTEM` and `[survey respondent]`. From 15.9.3, `SYSTEM` is **always** offered rather than appearing only when system activity happens to exist |
 | **Filter by record** | Dropdown — lists all record IDs in the project |
 | **Filter by time range** | Date/time range with quick-select buttons (see Section 5.3) |
 | **DAG filter** | Available via URL parameter (`dag`); filters by Data Access Group |

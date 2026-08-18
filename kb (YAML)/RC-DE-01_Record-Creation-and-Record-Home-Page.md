@@ -4,10 +4,13 @@ title: Record Creation & the Record Home Page
 domain: Data Entry
 applies_to:
 - All REDCap project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-DE-02
   title: Basic Data Entry
@@ -71,6 +74,23 @@ within a single record.
 A search feature on the Add/Edit Records page that allows lookup by any
 variable value across all records in a project. Can be scoped to a
 single variable for speed in large projects.
+
+---
+
+# 2a. Add/Edit Records Page Behaviour
+
+Several changes make the page easier to work with on projects holding many records.
+
+| Change | Version |
+| --- | --- |
+| The **record drop-down** and the **Data Search field drop-down** are both searchable — type to filter rather than scrolling | 17.0.7 |
+| **User preferences** on the page: remember the last search target in the Data Search section, and force searches to open the record's **Record Home Page** rather than a data entry form. In multi-arm projects, arm selection can be maintained with the Record Status Dashboard | 16.1.4 |
+
+> **Note:** The "Maintain arm selection with Record Status Dashboard" preference appears only in projects with **more than one arm**. It was briefly shown on single-arm projects in 16.1.4 and corrected in 16.1.5.
+
+> **Version caveat (below 17.4.1 Standard):** Data Search failed to navigate correctly when the selected record's name contained a **pipe character** (`|`). Relevant only to projects using pipes in record IDs, which is unusual but not unheard of in imported data.
+
+**Save & Go To Next Record** — from **15.7.0**, clicking this on the last record when record auto-numbering is enabled behaves sensibly rather than leaving the user in an undefined state.
 
 ---
 

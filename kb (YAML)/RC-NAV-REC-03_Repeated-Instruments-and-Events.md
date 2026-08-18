@@ -4,10 +4,13 @@ title: Repeated Instruments and Events
 domain: Record Navigation
 applies_to:
 - Projects with repeated instruments or events
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04
@@ -96,6 +99,27 @@ that repeated instrument:
 
 > **Note:** A completed survey entry counts as Complete when determining stacked dot color.
 
+
+---
+
+# 3a. Repeating Instrument Tables
+
+The tables and popups listing repeating instances — at the bottom of the Record Home Page, on the Record Status Dashboard, and at the top of a repeating instrument's data entry form — were rewritten in **15.3.2** and refined repeatedly since. Expect differences from older screenshots and notes.
+
+| Capability | Version |
+| --- | --- |
+| Redesigned tables and popups across Record Status Dashboard, Record Home Page and repeating instrument forms | 15.3.2 |
+| Custom **paging size** for the tables and popups, settable per user | 15.4.3 |
+| **Status filters** set on a repeating table persist as you move around the project (keyword searches do not) | 15.5.5 |
+| **Sort order** of rows persists per user, per project | 15.7.2 |
+| **Previous / Next links** at the top of a repeating *event* instrument, for moving between instances without returning to the record home page | 17.0.7 |
+| Icons distinguishing repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer | 15.4.5 |
+
+> **Note (15.4.1):** The redesign initially rendered the **custom label as a link**, which was reverted because it interfered with selecting and copying parts of the label. If you remember labels being clickable, that behaviour was deliberate and then withdrawn.
+
+> **Version caveat (below 17.3.4 Standard):** A repeating instance could be **omitted from the table entirely** if it originally had an Unverified form status and was then partially completed. An instance missing from the list on an affected version does not mean the data is gone — check the record via a report or export before concluding anything.
+
+> **Version caveat (below 15.3.3 Standard):** Clicking a stacked status icon on the Record Status Dashboard might fail to open the instances popup where the **record name is not an integer**. Projects using alphanumeric record IDs were the ones affected.
 
 ---
 

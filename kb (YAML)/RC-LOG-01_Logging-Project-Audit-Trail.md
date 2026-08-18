@@ -4,10 +4,13 @@ title: Logging — Project Audit Trail
 domain: Logging
 applies_to:
 - All REDCap project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-USER-03 — User Rights: Configuring User Privileges'
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-DE-04
   title: Editing Data & Audit Trail
@@ -88,6 +91,21 @@ To use the API Export Logging endpoint programmatically, the user must also have
 
 ---
 
+## 3.1 Recent Changes to the Logging Page
+
+| Change | Version |
+| --- | --- |
+| The **timestamp of the last logged activity** for the project is shown at the top right of the page — a quick way to confirm whether anything has happened without scanning the table | 16.1.8 |
+| PDF downloads of single or multiple instruments now log **contextual detail** — instrument, event, instance, and whether the PDF used the "compact" format | 17.0.0 |
+| The **Email Logging** search results table includes an email **Type** column, useful when searching across all types at once | 17.2.0 |
+| The record drop-down on the **Email Logging** page is searchable | 15.7.2 |
+
+The 17.0.0 change is worth noting for anyone using the log as evidence of what left the project: previously a PDF download was recorded without saying *which* instrument or event it covered, so the entry established that an export happened but not what it contained.
+
+> **Version caveat (below 17.0.2 Standard):** Filtering the log by **Page Views** could return entries **not in reverse chronological order**, which is easy to misread as a gap in activity. Fixed in 17.0.2.
+
+---
+
 # 4. Reading Log Entries
 
 ## 4.1 Table Columns
@@ -155,7 +173,7 @@ All filters are displayed in a blue panel at the top of the Logging page. Every 
 | Filter | Description |
 |---|---|
 | **Filter by event** | Dropdown — select an event type (see Section 5.2). Defaults to "All event types (excluding page views)" |
-| **Filter by user** | Dropdown — lists all users who have activity in the project; includes `SYSTEM` and `[survey respondent]` |
+| **Filter by user** | Dropdown — lists all users who have activity in the project; includes `SYSTEM` and `[survey respondent]`. From 15.9.3, `SYSTEM` is **always** offered rather than appearing only when system activity happens to exist |
 | **Filter by record** | Dropdown — lists all record IDs in the project |
 | **Filter by time range** | Date/time range with quick-select buttons (see Section 5.3) |
 | **DAG filter** | Available via URL parameter (`dag`); filters by Data Access Group |
