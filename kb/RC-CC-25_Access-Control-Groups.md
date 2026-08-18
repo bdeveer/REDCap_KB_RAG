@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access; familiarity with REDCap user rights |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -38,6 +38,8 @@ Key characteristics:
 The ACG page is located at `ControlCenter/access_control_groups.php`.
 
 > **Note:** Enabling or disabling ACGs does not retroactively modify any existing user rights records in projects. The ceiling is enforced only at the point of the next privilege assignment or modification.
+
+> **Critical — if you use the "Security Access Groups" External Module, read this before upgrading.** Access Control Groups is the productised form of Andrew Poppe's *Security Access Groups* module, introduced in **16.0.0**. Upgrading **does not disable the module and does not migrate its settings**. An instance that had the module enabled ends up running both systems side by side, each with its own configuration, each enforcing a ceiling on user rights, and neither aware of the other. Decide which implementation to keep and disable the other deliberately. See [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) §7a for the other core features absorbed from community modules.
 
 ---
 

@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | External Modules |
 | **Applies To** | REDCap administrators; also relevant to project users when enabling modules at the project level |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | Control Center access for system-level management; Project Design and Setup rights for project-level enabling |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)|
 | **Synonyms** | how do i install an external module; enable a module for my project; download a module from the redcap repo; what are external modules in redcap; module manager in the control center; configure external module settings; add functionality with a plugin module; enable or disable modules system-wide |
@@ -41,6 +43,34 @@ A badge that appears on some modules in the Project Module Manager. A Discoverab
 
 **System-Level vs. Project-Level Enablement**
 A module installed by an administrator is not automatically active in every project. The administrator can choose to enable a module globally (active in all projects by default) or leave it available for project-by-project enablement. Some configuration settings exist at the system level (accessible only to administrators) and others at the project level (accessible to project designers).
+
+**Framework Version**
+The version of the External Module Framework a module is written against, declared in the module's configuration. REDCap supports multiple framework versions simultaneously so that older modules keep working as the framework evolves. The framework reached **Version 17** in REDCap 17.0.1. A module with **no** framework version declared falls back to framework version 1.
+
+---
+
+## 2a. Framework and Module Behaviour Changes
+
+Points that affect module authors, and administrators diagnosing module faults.
+
+| Change | Version |
+| --- | --- |
+| **Twig 3 bundled in REDCap itself**, not only in the EM Framework, making it available to internal REDCap code | 15.5.0 |
+| New **API endpoints** for External Modules — see the EM Framework documentation | 15.5.2 |
+| EM links appear in the left-hand menu while a project is in **Analysis/Cleanup** status. Previously they showed only in Development and Production | 15.6.0 |
+| Framework advanced to **Version 17**, adding **strict variables in Twig** | 17.0.1 |
+| Module file uploads **hash their edoc IDs**; module documentation can link to files inside the module's own directory | 17.3.1 |
+| Two new hooks: **`redcap_module_dashboard_before_render`** and **`redcap_module_dashboard_after_render`**, firing around Project Dashboard rendering | 17.4.1 |
+| Autocomplete drop-downs in module configuration settings | 16.1.8 |
+| Clearer error messaging when a module download fails | 16.1.6 |
+
+> **Important for module authors — Twig 3 (15.5.0).** Bundling Twig 3 in REDCap core means a module using **Twig below 3.9.0** may hit a compatibility problem. If a module that worked previously starts failing after an upgrade across 15.5.0, its Twig version is the first thing to check. The **strict variables** change in 17.0.1 is a second such boundary: templates that silently tolerated undefined variables will now raise errors instead.
+
+> **Version caveat (16.0.0–16.0.3 Standard):** `REDCap::getUserRights()` could exit early and return an **empty array** where the current user lacked User Rights privileges in the calling context. Any module, hook or plugin using that method to make an access decision would have seen no rights rather than the actual rights — which fails open or closed depending on how the calling code is written. Fixed in 16.0.4.
+
+> **Version caveat (16.0.2 Standard only):** The framework could delay EM cron jobs and generate large volumes of email to the administrator address with the subject "REDCap External Module Error". Introduced in 16.0.2 and fixed in 16.0.3, so the exposure was a single release — but a noisy one if you were on it.
+
+> **Version caveat (below 17.4.0 Standard):** Enabling a module whose configuration declared **no framework version** would fail rather than defaulting to version 1, and disabling **all** modules could stop the Control Center loading entirely. Both fixed in 17.4.0.
 
 ---
 
@@ -136,6 +166,23 @@ The Module Manager page includes a **Developer Tools** section with:
 - **Module Security Scanning** — opens a dialog showing the results of automated security scanning for installed modules
 
 These tools are aimed at administrators and developers who maintain or author External Modules, rather than end users.
+
+---
+
+## 7a. Modules Absorbed into REDCap Core
+
+REDCap periodically adopts a widely-used community module as a built-in feature. This is a compliment to the module's author, and a trap for administrators, because **adopting the feature does not remove the module**.
+
+| Core feature | Absorbed from | Version |
+| --- | --- | --- |
+| **Access Control Groups** — see [RC-CC-25](RC-CC-25_Access-Control-Groups.md) | Andrew Poppe's *Security Access Groups* | 16.0.0 |
+| **Editable field validation types** — see [RC-CC-08](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) §6 | Adam Nunez's *Add Validation Types* | 17.4.0 |
+| **Automatic Version Redirect** — see [RC-CC-02](RC-CC-02_Control-Center-General-Configuration.md) | Andy Martin's *REDCap Redirect* | 17.2.2 |
+| **Record logging links** in the Choose action for record menu — see [RC-DE-13](RC-DE-13_Record-Administration-Choose-Action-for-Record.md) | Luke Stevens' *Record Logging Links* | 15.0.3 |
+
+> **Critical — upgrading does not disable the module or migrate its settings.** REDCap states this explicitly for Access Control Groups, and the same pattern applies to the others: after the upgrade you have **both** the core feature and the still-enabled module, configured independently and unaware of each other. Two systems enforcing overlapping rules with different settings is a genuine hazard — particularly for Access Control Groups, where both govern what rights users may hold.
+>
+> After any upgrade that absorbs a module you use, decide deliberately which implementation to keep, then disable the other. Do not assume the upgrade handled it.
 
 ---
 
