@@ -7,17 +7,17 @@
 | **Domain** | REDCap+ |
 | **Applies To** | Users moving a whole project between REDCap instances; REDCap Administrators (Sections 6–7) |
 | **Requires** | REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required on the **destination** instance only — see §2 |
-| **Verified Against** | Not yet verified against a live instance — written from release notes. See the scope note in §1 |
+| **Verified Against** | REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against a live instance. The migration workflow itself (§3–4) is written from release notes and is not yet verified |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
-| **Synonyms** | how do i move a project to another redcap server; project migration tool redcap plus; migrate a whole project including logs and files; migration key redcap; move project between institutions with all data; transfer a redcap project to another instance; does project migration include randomization and logging; project migration dashboard |
+| **Synonyms** | how do i move a project to another redcap server; project migration tool redcap plus; migrate a whole project including logs and files; migration key redcap; move project between institutions with all data; transfer a redcap project to another instance; does project migration include randomization and logging; project migration dashboard; what does the project migration tool actually copy |
 
 ---
 
-> **Scope note.** This article is written from REDCap's release notes for 17.0.0 through 17.4.1. It has **not** been verified against a live instance with a REDCap+ subscription. The mechanics in Sections 3–5 follow REDCap's own description of the feature; screen labels and the exact placement of controls should be confirmed before this article is used as a step-by-step guide.
+> **Scope note.** Section 6.2 (the Project Migration Dashboard) is verified against a live instance running 17.3.6 LTS. The rest of the article is written from REDCap's release notes for 17.0.0 through 17.4.1 and has **not** been verified against an instance with a REDCap+ subscription. The mechanics in Sections 3–5 follow REDCap's own description of the feature; screen labels and the exact placement of controls in those sections should be confirmed before this article is used as a step-by-step guide.
 
 ---
 
@@ -28,13 +28,18 @@ The **Project Migration Tool (PMT)** moves a project *in its entirety* from one 
 The distinction from the long-standing Project XML approach is what it carries. A Project XML export moves the project's design and, optionally, its data. The PMT additionally migrates things that previously could not be moved at all:
 
 - **Record locking statuses and timestamps**
-- **Survey participants and timestamps**
-- **File Repository folders and files**, including PDF Snapshots
+- **Survey participants and survey timestamps**
+- **Field Comment Log**
+- **Data Resolution Workflow**, including its files
+- **Calendar events**, including record scheduling
 - **Randomization assignments and allocation tables**
-- **Logging**
-- **Email Logging**
+- **Logging** and **Email Logging**
+- **File Repository** folders and files, and the **PDF Snapshot Archive**
+- **External Module configuration settings**
 
-For a regulated study, that list is the point. A project moved by XML arrives with no audit trail and no randomization history; a project moved by PMT arrives with both.
+For a regulated study, that list is the point. A project moved by XML arrives with no audit trail, no randomization history and no query history; a project moved by PMT arrives with all three.
+
+The authoritative list of what the tool tracks is the **column set of the Project Migration Dashboard** — see §6.2, which enumerates all fifteen components individually.
 
 For the XML-based approach — which remains the right tool when the destination is not on 17.0.0+, or when you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
 
@@ -141,9 +146,63 @@ There is also a system-level setting **"Allow users to use the Project Migration
 
 ### 6.2 Project Migration Dashboard
 
-A Control Center page showing the **progress of all projects being migrated to this instance**. Because migrations run through cron rather than interactively, this is where an administrator checks whether a migration is progressing, stalled or complete.
+*Verified against 17.3.6 LTS.*
 
-> **Note:** The dashboard is intended to be usable by **any** REDCap institution, not only REDCap+ subscribers — see the version caveat in §2.2.
+**Where:** Control Center → **Projects** section → **Project Migration Dashboard**. The menu entry carries a `REDCap+` badge and sits directly below *Edit Project Settings* and *Link Lookup*.
+
+The page's stated purpose is to *"monitor the progress of all projects being migrated to this REDCap server instance using the Project Migration Tool."* Because migrations run through cron rather than interactively, this is where an administrator checks whether a migration is progressing, stalled or complete.
+
+> **The dashboard is reachable without a subscription.** This was confirmed on a 17.3.6 LTS instance whose Control Center menu showed *"REDCap Plus Not Active"* — the page still loaded and rendered normally. That is the intended behaviour: any institution may use it, since any institution may be a migration *destination's* counterpart. See the version caveat in §2.2 for the two releases where the link's display was wrong.
+
+#### 6.2.1 Per-migration identification columns
+
+Each row is one migration into this instance:
+
+| Column | What it tells you |
+| --- | --- |
+| Status | Overall state of this migration |
+| PID | The project ID assigned **on this instance** |
+| Start Date / End Date | When the migration began and finished. A start date with no end date is a migration still in progress — or stalled |
+| Source REDCap URL | The instance the project came from |
+| **Source REDCap Version** | The version the source was running. Read this against §5 — it is how you tell whether a completed migration is subject to one of the silent-omission defects |
+| Source PID | The project ID on the source instance |
+| Source Title | The project's title on the source instance |
+| Source Project Status | Development / Production / Analysis-Cleanup / Completed at the source |
+| Source Completion Action | Which of the five §4 actions was chosen for the source project |
+
+#### 6.2.2 Per-component status columns
+
+The remaining fifteen columns each report the migration status of **one component**. This column set is the most precise available statement of what the tool moves:
+
+| # | Component |
+| --- | --- |
+| 1 | Records |
+| 2 | Files uploaded for File Upload fields (including signatures) |
+| 3 | Record-locking statuses and timestamps |
+| 4 | Survey participants and survey timestamps |
+| 5 | Field Comment Log |
+| 6 | Data Resolution Workflow |
+| 7 | Data Resolution Workflow Files |
+| 8 | Calendar events (including record scheduling) |
+| 9 | Randomization assignments and allocation tables |
+| 10 | Logging |
+| 11 | Email Logging |
+| 12 | File Repository folders (and seeding of files) |
+| 13 | File Repository files (all folders and user-uploaded files) |
+| 14 | PDF Snapshot Archive files |
+| 15 | External Module configuration settings |
+
+Three of these are worth calling out because they are easy to assume *would not* move:
+
+- **Field Comment Log and Data Resolution Workflow (5–7)** — the query and resolution history travels with the project, files included. For a study that has been running data queries for years, this is the difference between a migration and a re-creation.
+- **Calendar events (8)** — including record scheduling, so a longitudinal project's schedule survives the move.
+- **External Module configuration settings (15)** — module *settings* migrate. The modules themselves are a separate matter: an EM that is not installed and enabled on the destination has nothing for those settings to attach to. Confirm the destination instance has the same modules available before migrating. See [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md).
+
+#### 6.2.3 Using it to verify a migration
+
+The per-component breakdown is what makes §5's silent-failure problem tractable. Rather than comparing the source and destination project by hand, read the row: if a component's status column does not report success, that component did not fully arrive — regardless of whether the migration as a whole reported completion.
+
+The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defaulting to 25) and is **unsorted by default**, so rows appear in the order REDCap returns them rather than newest-first.
 
 ---
 
@@ -173,6 +232,18 @@ A Control Center page showing the **progress of all projects being migrated to t
 
 **A:** The destination pulls components through backend API processes driven by the cron job, so a migration progresses over time rather than completing on submission. Administrators can check progress on the Project Migration Dashboard. If a project's cron is not running, migrations will not progress — see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
 
+**Q: How do I check whether everything actually arrived?**
+
+**A:** Use the **Project Migration Dashboard** in the Control Center. It reports a separate status for each of fifteen components — records, file-field uploads, locking, survey participants, Field Comment Log, Data Resolution Workflow and its files, calendar events, randomization, Logging, Email Logging, File Repository folders and files, PDF Snapshot Archive, and External Module settings. Read the row rather than comparing projects by hand. The **Source REDCap Version** column tells you whether the migration was exposed to one of the defects in §5.
+
+**Q: Do External Module settings come across?**
+
+**A:** The *settings* do — the dashboard tracks them as a component. The *modules* do not. Settings for a module that is not installed and enabled on the destination have nothing to attach to, so confirm the destination has the same modules available before migrating.
+
+**Q: Does the Data Resolution Workflow / query history survive?**
+
+**A:** Yes. The Field Comment Log, the Data Resolution Workflow and its files are all migrated components. So are Calendar events including record scheduling. This is a substantial difference from the Project XML route, which carries none of them.
+
 **Q: A colleague ran the migration and the logs did not come across. Why?**
 
 **A:** A user can only migrate components they have privileges for. Someone without Logging rights in the source project cannot migrate the log. Have the migration initiated by a user with full rights in the source project.
@@ -181,7 +252,9 @@ A Control Center page showing the **progress of all projects being migrated to t
 
 ## 8. Common Mistakes & Gotchas
 
-**Assuming a completed migration is a verified migration.** On versions below 17.2.0, several defects caused records, files, signatures and locking statuses to be omitted without any error. Compare record counts, file counts and locking status between source and destination before treating the move as done — and certainly before choosing a completion action that deletes the source.
+**Assuming a completed migration is a verified migration.** On versions below 17.2.0, several defects caused records, files, signatures and locking statuses to be omitted without any error. Check the **per-component status columns on the Project Migration Dashboard** (§6.2) before treating the move as done — and certainly before choosing a completion action that deletes the source. The dashboard reports each component separately precisely because the overall result can look fine while a component did not arrive.
+
+**Migrating a project whose External Modules are not present on the destination.** Module configuration settings migrate; the modules do not. Settings arriving for a module the destination does not have are settings with nothing to attach to.
 
 **Choosing "Delete project" before checking the destination.** The source is recoverable for 30 days by an administrator, which is a safety net rather than a plan. Verify first, delete afterwards.
 
@@ -201,5 +274,6 @@ A Control Center page showing the **progress of all projects being migrated to t
 - [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) — what the subscription covers
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) — API Export privileges and tokens, which the tool depends on
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) — administrator controls over inbound migration
+- [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) — module settings migrate, but the modules themselves must already exist on the destination
 - [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) — project statuses referenced by the completion actions
 - [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) — why an LTS instance may not be on 17.0.0 yet
