@@ -394,6 +394,8 @@ Both are stored as an image, exactly as a classic Signature field is.
 
 > **Note — converting is safe.** An existing Signature field can be converted to an Enhanced Signature **with no data loss**. Signatures already captured remain intact.
 
+> **Accessibility — this is the reason to convert.** A scribble-only signature requires a pointing device, which excludes keyboard-only and many motor-impaired participants. On an e-consent instrument that is a consent-validity problem, not merely a usability one. See [RC-SURV-11 — Accessibility in REDCap Surveys & Forms](RC-SURV-11_Accessibility-in-Surveys-and-Forms.md).
+
 The "Type signature" option is the reason this exists: drawing a recognisable signature with a mouse is difficult, and on a touch device it is awkward for anyone with limited motor control. Typing removes that barrier while still producing a signature image.
 
 > **Version caveat (17.1.0–17.1.0):** Two defects affected the initial release. Signature images **did not appear in downloaded instrument PDFs or PDF Snapshots** — a serious problem for a consent workflow, since the signature was captured but absent from the archived document — and the saved image background was not transparent. Both fixed in **17.1.1**. If Enhanced Signature was used on 17.1.0, re-check any PDFs archived from that period.

@@ -86,8 +86,13 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   *Original entry below, retained for context.*
   Participants connect to supported EHR patient portals and authorise transfer of clinical data into a project. Distinct from CDIS: not institution-specific, works across supported healthcare orgs. **Not covered** — the apparent grep hits are all "REDCap Shared Library" false positives. Subsequent 17.3.1 refinements: public searchable directory of published healthcare organisations in the Control Center, patient-identifier selection by FHIR system/type (exact or regex), authorised-EHR fetching prioritised ahead of retained-payload processing with Job Diagnostics staging, provider-specific CarePlan searches for Epic and SMART Health IT, and SHARE totals split from project participants on System Statistics. Needs cross-refs to and from `RC-CDIS-01`/`RC-CDIS-04`.
 
-- [ ] **RC-ACCESS-01 — Accessibility in REDCap Surveys & Forms** *(16.0.6 → 17.3.0)*
-  Roughly a dozen accessibility improvements landed with no home article: screen-reader page-change announcements on surveys, language-selector expand/collapse state, keyboard focus highlighting on survey fields and buttons, slider focus highlighting, keyboard access to date/time pickers, `BR`-tag handling in field labels, accessible Descriptive Popups, auto-scroll-and-focus to the first incomplete required field, login-error association and announcement, and survey navigation button hover/focus glow. Worth one article that consolidates the accessibility posture rather than scattering a sentence across ten articles.
+- [x] **RC-SURV-11 — Accessibility in REDCap Surveys & Forms** *(16.0.6 → 17.3.0)* — *written 2026-08-18*
+  Filed as **RC-SURV-11**, not the `RC-ACCESS-01` this report proposed — a new domain slug for one article was not justified.
+  Thirteen platform improvements consolidated and grouped by what they actually help with (screen readers / keyboard and visible focus / visual presentation) rather than listed chronologically.
+  **Two things the report did not anticipate.** First, the 16.0.9 datepicker accessibility work **introduced a regression** — erratic datepicker flashing in ASI and alert contexts, fixed in 16.1.2; documented as a version caveat. Second, the article needed a §4 on what REDCap *cannot* fix, because the common failures are instrument-level (labels, colour-only meaning, contrast, text in images) and no upgrade touches them.
+  Also added §5 on answering institutional accessibility questions: REDCap publishes **no** conformance level, so the article states none, and points VPAT/ACR requests at the Consortium.
+  Cross-links added from `RC-SURV-02` (text size/font/theme), `RC-SURV-03` (text-to-speech is **not** screen-reader support) and `RC-FD-06` (Enhanced Signature is the accessible choice on consent instruments).
+  **Version thresholds worth knowing:** below **16.0.9** the date/time picker is unreachable by keyboard; below **17.1.3** survey fields have no visible keyboard focus indicator.
 
 ---
 

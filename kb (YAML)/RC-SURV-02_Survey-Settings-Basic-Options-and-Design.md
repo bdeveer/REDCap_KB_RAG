@@ -146,6 +146,8 @@ The **Survey Text Size** setting sets the default font size for all text in the 
 
 Tailor the default size to your audience. Surveys targeting older participants or those with low vision may benefit from a larger default.
 
+> **Note:** Text size, font and theme are the three design settings with the largest accessibility impact — themes in particular are where contrast problems get introduced. See [RC-SURV-11 — Accessibility in REDCap Surveys & Forms](RC-SURV-11_Accessibility-in-Surveys-and-Forms.md).
+
 ## 4.5 Survey Text Font
 
 The **Survey Text Font** setting applies a single typeface to all survey text. The default font, **Open Sans**, is a clean, neutral choice appropriate for most surveys.

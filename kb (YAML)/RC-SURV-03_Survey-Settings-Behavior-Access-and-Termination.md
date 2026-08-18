@@ -176,6 +176,8 @@ Two privacy safeguards are built in:
 
 An accessibility feature that reads survey text aloud to participants. Designed for participants with visual impairments or literacy challenges.
 
+> **Note — this is not screen-reader support.** Text-to-speech is a convenience for participants who do not use assistive technology of their own. A participant running their own screen reader is not helped by it, and the two can compete. It also does nothing for keyboard navigation, contrast or label quality. See [RC-SURV-11 — Accessibility in REDCap Surveys & Forms](RC-SURV-11_Accessibility-in-Surveys-and-Forms.md).
+
 Options:
 - **Disabled**
 - **Enabled, but turned off by default** — participants can activate it manually. Choose this if only a subset of your participants may need the feature.
