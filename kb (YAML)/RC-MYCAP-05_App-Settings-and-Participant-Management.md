@@ -4,10 +4,13 @@ title: 'MyCap: App Settings & Participant Management'
 domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-MYCAP-01 — MyCap: Overview & Enabling'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-MYCAP-02
   title: 'MyCap: Designing Instruments for MyCap'
@@ -95,6 +98,10 @@ About pages provide participants with information about the study. They appear i
 
 > **Note:** About pages are static image-based pages. They cannot include interactive elements or dynamic content.
 
+> **From 16.0.8:** the About page content can be composed in a **rich text editor**, so formatted content appears in the app rather than plain text.
+
+> **From 15.4.2 — Contacts, Links and About pages are Data Access Group specific.** Different DAGs can be given different content, and a participant assigned to a DAG sees their group's version. Content not assigned to any DAG acts as the fallback. Useful for multi-site studies where each site needs its own contact details.
+
 ## 3.2 Contacts
 
 The Contacts section allows the study team to provide participant-facing contact information.
@@ -119,6 +126,8 @@ The Theme setting allows customization of the app's primary color using Material
 
 - Available on **iOS only**. Android does not support MyCap theme customization.
 - The selected theme color is applied to the app's interface elements (buttons, highlights) for the project.
+
+> **From 15.8.4:** the **Purple** theme is the default for newly created projects, whether created from a project template or by enabling MyCap on an existing project. The same release corrected the Purple swatch shown on the App Settings page so it matches what actually renders in the app — on earlier versions the preview and the app disagreed.
 
 ## 3.5 Notification Settings
 
@@ -159,7 +168,26 @@ The Participant Management table shows a row for each record in the project with
 | Last Sync | Date and time of the participant's most recent data sync |
 | App Link / QR Code | Access to joining methods for this participant |
 | Messages | Number of sent messages |
-| Sync Issues | Flag if sync errors are present |
+| Sync Issues | Flag if sync errors are present. From 15.4.1 this list and its detail popup include a **Record ID** column linked to the record |
+| Last accessed *(16.0.6+)* | The last time the participant opened the project in the MyCap app |
+| App Version *(17.0.1+)* | The MyCap app version the participant used to access the project |
+| Device Info *(17.2.2+)* | Information about the device the participant accessed the project from |
+
+The three newer columns exist for diagnosing "it isn't working on my phone" reports. **Last accessed** distinguishes a participant who has stopped using the app from one whose data is failing to sync; **App Version** and **Device Info** identify participants on an old app build or an unusual device before you start investigating the project configuration.
+
+> **Note (15.5.5+):** The Participant List page was optimised for performance and loads substantially faster on projects with many records. If you are on an earlier version and the page is slow, that is a known characteristic rather than a configuration problem.
+
+### Disabling and enabling participants
+
+A participant can be **disabled** and later **enabled** from this page.
+
+> **Terminology changed in 15.3.3.** This action was previously labelled **Delete/Undelete** and is now **Disable/Enable**. The rename reflects what actually happens — the participant's record and data are not deleted. The same release added the ability to notify the participant with a custom message when they are disabled or enabled.
+
+Disabling is enforced in the app, not merely in REDCap: from 15.3.3 a flag in the MyCap configuration JSON tells the app that a participant is disabled or deleted, so they **cannot rejoin using an existing QR code or dynamic link** and no longer see tasks to complete.
+
+## 5.1a Custom Participant Label
+
+The **Custom Participant Label** on the Participant List page controls how participants are identified in the table. From **15.8.4** the field suggests valid variable names and smart variables as you type, which removes most of the guesswork about what is available to reference.
 
 ## 5.2 Invitations
 
@@ -186,6 +214,26 @@ Messages are direct communications to specific participants. They appear in the 
 3. Enter the message and send.
 
 The participant receives a push notification and the message appears in the MyCap app's messages section.
+
+### Composing and scheduling
+
+| Capability | Version |
+| --- | --- |
+| **Rich text editor** for messages and announcements, allowing limited formatting and clickable links | 15.0.3 |
+| **Search within a message thread**, from the Message history popup | 15.8.4 |
+| **Search on the Announcements tab**, matching the Inbox and Outbox tabs, plus text filtering on all three | 16.0.6 |
+| **Schedule at a certain date/time** — send a message or announcement later rather than immediately | 16.0.9 |
+| **Download all messages as CSV**, covering Inbox, Outbox and auto-generated messages such as Joined, Rejoined and Deleted | 16.1.4 |
+
+The CSV download is the practical route to an audit trail of participant communication, since it captures the automatic system messages alongside the ones staff sent.
+
+### Email notifications on incoming messages *(15.7.0+)*
+
+A tab under **Messages** lets you compose **email notifications sent to specified addresses whenever a MyCap participant sends a message** into the project.
+
+This closes a real gap: without it, a participant's message sits in the MyCap inbox until somebody thinks to look. Study teams that check the app irregularly can miss a participant question for days.
+
+Where **Data Access Groups** are in use, the notification configuration is DAG-aware, so each group's staff can be notified about their own participants rather than everyone's.
 
 ## 5.4 Sending Announcements
 

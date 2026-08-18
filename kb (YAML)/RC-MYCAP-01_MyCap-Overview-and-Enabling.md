@@ -5,10 +5,13 @@ domain: MyCap Mobile App
 applies_to:
 - All project types
 - MyCap module must be enabled at the institutional level
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-MYCAP-02
   title: 'MyCap: Designing Instruments for MyCap'
@@ -141,6 +144,28 @@ MyCap uses the following security controls for data protection in transit and at
 These controls meet common institutional and IRB requirements for mHealth data collection. Consult your institution's IRB for the approved language describing MyCap's security posture. Template IRB language is available on the MyCap website.
 
 > **Institution-specific:** Some IRBs have pre-approved MyCap security language for use in consent documents. Contact your IRB or REDCap administrator to determine whether pre-approved language is available at your institution.
+
+## 5.1 Keeping the App-to-Server Channel Patched
+
+The channel between the MyCap app and REDCap has needed several rounds of security fixes, which is worth knowing when describing MyCap's security posture to an IRB — the architecture above is sound, but it depends on the instance being current.
+
+| Issue | Fixed in |
+| --- | --- |
+| **Participant impersonation via a shared signing key** in the internally-used MyCap API, allowing data to be sent as, or read from, another participant | 16.1.8 Standard, then again 17.2.0 Standard |
+| Unauthenticated **enumeration of project/study codes** through the `displayParticipantQrCode` action. The study code is not sensitive alone, but the leak was closed | 17.2.3 Standard |
+| **SQL injection** on a MyCap-related page, exploitable by authenticated users holding Project Design rights | 17.2.3 Standard |
+| **Stored and reflected XSS** on MyCap pages, exploitable by users with Manage MyCap Participants rights | 17.0.1 and 17.0.3 Standard |
+
+The impersonation flaw is the one to note: it was addressed twice, in 16.1.8 and again in 17.2.0, so an instance between those releases was still exposed. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md).
+
+> **Version caveat (17.2.0 Standard):** A change in that release **broke app-to-server communication for participants who had already joined a project**. Fixed in 17.2.1. REDCap issued specific guidance for institutions that had upgraded but could not immediately upgrade again, so if you were on 17.2.0 and participants reported the app failing to sync, this was the cause rather than device or network problems.
+
+## 5.2 Configuration JSON
+
+The MyCap app pulls a **configuration JSON** from REDCap when refreshing project configuration on the device. Two additions are worth knowing because they change app-side behaviour without any visible change in REDCap:
+
+- **Disabled/deleted participant flag (15.3.3)** — prevents a disabled participant rejoining with an existing QR code or dynamic link.
+- **Server-side maximum file upload limit (16.1.2)** — stored on the device and used to **block oversized task uploads before they are attempted**, rather than letting them fail at the server.
 
 ---
 

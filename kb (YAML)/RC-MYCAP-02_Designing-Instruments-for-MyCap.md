@@ -8,7 +8,7 @@ requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - 'RC-MYCAP-01 — MyCap: Overview & Enabling'
-version: '1.1'
+version: '1.2'
 last_updated: 2026-08
 related:
 - id: RC-MYCAP-03
@@ -88,7 +88,7 @@ Not all REDCap field types are supported in MyCap. The following table lists com
 | File upload (generic) | No |
 | File upload (image capture) | Yes — use `@MC-FIELD-FILE-IMAGECAPTURE` |
 | File upload (video capture) | Yes — use `@MC-FIELD-FILE-VIDEOCAPTURE` |
-| Signature | No |
+| Signature | **Yes** — from 15.4.1. Earlier versions could not receive Signature field data from the app |
 | Descriptive text | Yes |
 | Section header | Yes |
 | Matrix (Grid of radio buttons) | Yes |
@@ -128,6 +128,8 @@ Slider fields need no annotation. They render in MyCap using the choice range de
 
 The `@LONGITUDE` and `@LATITUDE` annotations require the participant to grant location permissions to the MyCap app on their device.
 
+> **Requires 15.4.5 or higher.** Support for latitude and longitude fields inside MyCap tasks was added in that release. On earlier versions these annotations have no effect in the app.
+
 ## 4.4 Task Metadata Annotations
 
 These annotations are applied to hidden fields to capture MyCap-generated information about each task instance. Add them to fields not visible to the participant (`@MC-FIELD-HIDDEN` or placed on a hidden section).
@@ -143,6 +145,19 @@ These annotations are applied to hidden fields to capture MyCap-generated inform
 | `@MC-TASK-SERIALIZEDRESULT` | Serialized result data from Active Tasks |
 
 `@MC-TASK-SUPPLEMENTALDATA` and `@MC-TASK-SERIALIZEDRESULT` are primarily used with Active Tasks (sensor-based assessments). For standard instrument-based tasks, `@MC-TASK-STARTDATE`, `@MC-TASK-ENDDATE`, and `@MC-TASK-SCHEDULEDATE` are the most commonly useful metadata fields.
+
+## 4.5 Other Design Behaviours
+
+| Behaviour | Version |
+| --- | --- |
+| The **field validation drop-down is disabled** on MyCap-specific fields in the Edit Field dialog. Changing validation on these fields could cause sync issues when the app saves task results | 15.4.5 |
+| The `[survey-link]` smart variable can be used **in a field label inside a MyCap task**, rendering as a hyperlink in the app. Tapping it opens the device's default browser | 15.8.4 |
+| **Rich text editor** available for MyCap task Intro page and Capture page instructions, for the Audio Recording and Selfie Capture active tasks | 16.1.5 |
+| Where a task's selected **chart field is not marked Required**, the task settings now warn that it should be, so the chart renders correctly in the app | 15.7.5 |
+| A notice appears in the Online Designer for projects with MyCap enabled for **more than 30 days but no MyCap tasks enabled** | 15.7.5 |
+| MTB Active Tasks show their **version — English or Spanish** — in the instrument label on the instrument-level Online Designer view | 15.0.3 |
+
+> **Note — "Allow retroactive completion" gained a day limit (17.3.1).** Selecting that option now reveals a field for the **exact number of days past the scheduled date** a participant may still complete the task. On earlier versions retroactive completion was open-ended, so a participant could complete a long-overdue task with no bound on how late.
 
 ---
 
@@ -185,6 +200,8 @@ The baseline date is an optional project-level feature that allows tasks to be s
 
 - The baseline date field must reside in a **non-MyCap instrument** (an instrument not enabled for MyCap). Participants cannot set their own baseline date through a MyCap task.
 - The baseline date field must be a **date field** (Date validation type).
+
+> **From 15.5.6 REDCap warns you if you break it.** Renaming the baseline date field's variable, or changing its validation to a non-date/datetime type, now raises an error in the **MyCap errors popup** in the Online Designer. On earlier versions either change would silently break scheduling for every task tied to the baseline date.
 
 ## 7.2 Enabling Baseline Date
 

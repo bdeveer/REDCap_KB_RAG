@@ -5,10 +5,13 @@ domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
 - feature-specific version requirements noted per section
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-FDL-01
   title: Form Display Logic
@@ -124,6 +127,8 @@ Multi-Language Management (MLM) allows projects to present MyCap content in mult
 
 > **Note:** Language IDs must match the codes in this table exactly. Mismatched language IDs will cause the language to fail to appear in the app.
 
+> **Three languages added in 17.0.4:** **Zulu** (`zu-ZA`), **Afrikaans** (`af-ZA`) and **Czech** (`cs-CZ`) joined the "Language supported by the MyCap app" list and can be used in the app. If your instance predates 17.0.4, these will not appear as options.
+
 ### 3.3 All-or-Nothing Language Enabling for MyCap
 
 In the standard REDCap MLM interface, you can enable different languages for different instruments. For MyCap, language enabling is **all-or-nothing**: when you enable a language for MyCap, it applies to all MyCap-enabled instruments in the project. You cannot enable a language for some MyCap tasks but not others.
@@ -151,6 +156,8 @@ When a participant joins a MyCap project that has MLM enabled:
 3. All translated content (instruments, App Settings content) is displayed in the chosen language.
 
 The participant's language selection is stored in their record and persists across sessions. The participant can change their language from the app's settings.
+
+> **Preventing language switching (15.6.0+).** A MyCap setting can **stop participants switching languages in the app**. It applies where MLM is active and MTB measures are available in both English and Spanish. The reason is measure comparability: a participant who completes some Mobile Toolbox measures in one language and some in another produces results that may not be directly comparable, so a study can lock the choice made at join time.
 
 ### 3.6 MLM Publishing Behavior
 

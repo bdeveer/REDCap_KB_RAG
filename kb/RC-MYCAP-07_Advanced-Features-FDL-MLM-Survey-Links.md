@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | MyCap Mobile App |
 | **Applies To** | Projects with MyCap enabled; feature-specific version requirements noted per section |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md); [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
 | **Synonyms** | use form display logic in mycap; show or hide mycap tasks conditionally; translate the mycap app with multi-language management; embed a redcap survey link inside a mycap task; mycap advanced features fdl mlm survey links; conditional task display in the mycap app; combine translations and survey links in mycap; enable fdl support for the mycap app |
@@ -110,6 +112,8 @@ Multi-Language Management (MLM) allows projects to present MyCap content in mult
 
 > **Note:** Language IDs must match the codes in this table exactly. Mismatched language IDs will cause the language to fail to appear in the app.
 
+> **Three languages added in 17.0.4:** **Zulu** (`zu-ZA`), **Afrikaans** (`af-ZA`) and **Czech** (`cs-CZ`) joined the "Language supported by the MyCap app" list and can be used in the app. If your instance predates 17.0.4, these will not appear as options.
+
 #### 3.3 All-or-Nothing Language Enabling for MyCap
 
 In the standard REDCap MLM interface, you can enable different languages for different instruments. For MyCap, language enabling is **all-or-nothing**: when you enable a language for MyCap, it applies to all MyCap-enabled instruments in the project. You cannot enable a language for some MyCap tasks but not others.
@@ -137,6 +141,8 @@ When a participant joins a MyCap project that has MLM enabled:
 3. All translated content (instruments, App Settings content) is displayed in the chosen language.
 
 The participant's language selection is stored in their record and persists across sessions. The participant can change their language from the app's settings.
+
+> **Preventing language switching (15.6.0+).** A MyCap setting can **stop participants switching languages in the app**. It applies where MLM is active and MTB measures are available in both English and Spanish. The reason is measure comparability: a participant who completes some Mobile Toolbox measures in one language and some in another produces results that may not be directly comparable, so a study can lock the choice made at join time.
 
 #### 3.6 MLM Publishing Behavior
 
