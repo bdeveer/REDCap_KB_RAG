@@ -135,7 +135,7 @@ Explain the stakes before asking for a decision.
 
 Show what REDCap received and list the valid alternatives.
 
-> `[variable_name]` has field type `[invalid_type]`, which REDCap doesn't recognise. The valid types are: `text`, `notes`, `dropdown`, `radio`, `checkbox`, `calc`, `file`, `descriptive`, `slider`, `yesno`, `truefalse`. Which type did you intend?
+> `[variable_name]` has field type `[invalid_type]`, which REDCap doesn't recognise. The valid types are: `text`, `notes`, `dropdown`, `radio`, `checkbox`, `calc`, `file`, `descriptive`, `slider`, `yesno`, `truefalse`, `enhanced_signature`. Which type did you intend?
 
 ### Invalid variable name characters (ERROR — may block upload or cause issues)
 

@@ -390,9 +390,16 @@ REDCap 17.1.0 added an **Enhanced Signature** field type, a more accessible alte
 
 Both are stored as an image, exactly as a classic Signature field is.
 
-**Defining it in the Data Dictionary:** set the field type to `file` with the field validation type `enhanced_signature`. There is no separate field type value.
+**Defining it in the Data Dictionary.** Enhanced Signature is a **field type in its own right**, not a variant of the file-upload type:
 
-> **Note — converting is safe.** An existing Signature field can be converted to an Enhanced Signature **with no data loss**. Signatures already captured remain intact.
+| Field | `field_type` | `text_validation_type_or_show_slider_number` |
+| --- | --- | --- |
+| Classic Signature | `file` | `signature` |
+| **Enhanced Signature** | **`enhanced_signature`** | *(not used)* |
+
+> **Careful — REDCap's own 17.1.0 release note says otherwise, and it is wrong.** That note states *"the field type should be 'file' with the field validation type as 'enhanced_signature'."* In practice the shorthand code `enhanced_signature` is the **field type**. Anyone building a data dictionary from the release note will produce a file-upload field with an unrecognised validation type rather than an Enhanced Signature field.
+
+> **Note — converting is safe.** An existing Signature field can be converted to an Enhanced Signature **with no data loss**. Signatures already captured remain intact. Because the two are separate field types, converting means changing `field_type` from `file` to `enhanced_signature` and clearing the `signature` validation — not just editing the validation column.
 
 > **Accessibility — this is the reason to convert.** A scribble-only signature requires a pointing device, which excludes keyboard-only and many motor-impaired participants. On an e-consent instrument that is a consent-validity problem, not merely a usability one. See [RC-SURV-11 — Accessibility in REDCap Surveys & Forms](RC-SURV-11_Accessibility-in-Surveys-and-Forms.md).
 

@@ -198,6 +198,9 @@ The Field Type determines how REDCap renders the variable in data entry and surv
 | `slider` | Visual analog scale (0–100); supports optional numeric display |
 | `yesno` | Built-in Yes/No radio; no choices column needed |
 | `truefalse` | Built-in True/False radio; no choices column needed |
+| `enhanced_signature` | Typed or drawn signature, stored as an image *(17.1.0+)* |
+
+> **Note — signature fields use two different encodings.** A **classic Signature** field is `file` with the validation type `signature`. An **Enhanced Signature** field is its own field type, `enhanced_signature`, and takes no validation type. They are not the same field. REDCap's 17.1.0 release note describes Enhanced Signature as `file` + validation `enhanced_signature`, which does not match what the Data Dictionary actually uses — see [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) §8.8.1.
 
 > **Important:** Do not use the `sql` field type. This is reserved for REDCap system administrators. Do not edit existing `sql` rows. See [RC-FD-12 — Dynamic SQL Field Type](RC-FD-12_Dynamic-SQL-Field-Type.md) for full documentation on this field type.
 
