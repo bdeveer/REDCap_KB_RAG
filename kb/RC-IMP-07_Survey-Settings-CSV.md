@@ -6,15 +6,19 @@
 |---|---|
 | **Domain** | Data Import |
 | **Applies To** | REDCap projects with at least one survey-enabled instrument |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
 | **Skill Level** | Intermediate |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026-05-07 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) |
 | **Synonyms** | how do i import survey settings via csv; bulk edit survey settings in a spreadsheet; copy survey configuration across projects; upload survey settings csv for all instruments; replicate completion text and confirmation emails; 62-column survey settings file structure; export and re-import survey settings; change response limits for many surveys at once |
 
 ---
+
+> **Critical — version caveat (below 16.0.8 Standard).** Uploading a survey settings CSV in the Online Designer could **disconnect survey attributes from their surveys** — specifically public survey links and survey queue settings — where those surveys were modified via the CSV import. A public survey link that stops resolving after a settings import is the symptom. Fixed in 16.0.8. Export a fresh copy and verify public links and queue settings after any settings import on an earlier version.
 
 ## 1. Overview
 

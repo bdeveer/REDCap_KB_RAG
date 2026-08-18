@@ -5,10 +5,13 @@ domain: Data Access Groups
 applies_to:
 - All REDCap project types
 - requires Data Access Groups privilege to manage
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
@@ -40,6 +43,10 @@ synonyms:
 - hide records from other study sites
 - what is a dag and how does it work
 ---
+
+> **Important — DAG isolation is an application-layer control that has needed patching.** DAGs are presented throughout this article as a data-separation boundary, and on a current instance they are. But the boundary has leaked in five separate places, each fixed individually: a DAG user could **modify data outside their DAG** on data entry forms via a crafted request (fixed 15.5.37); **calendar events** were reachable across DAGs (15.5.38); and three groups of API methods returned survey links, access codes, queue links and return codes for records **outside the caller's DAG** (16.0.28, and 17.1.0 Standard / 16.0.31 LTS). The User Rights page also misbehaved for DAG-assigned users holding User Rights privileges (16.0.18).
+>
+> None of these were misconfigurations — the DAG assignment was correct and REDCap returned the data anyway. If your institution relies on DAG separation for a compliance argument, that argument is only as strong as the patch level. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) and [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a.
 
 # 1. Overview
 

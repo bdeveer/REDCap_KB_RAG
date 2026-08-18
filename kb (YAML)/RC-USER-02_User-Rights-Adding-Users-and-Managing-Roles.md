@@ -5,10 +5,13 @@ domain: User Rights
 applies_to:
 - All REDCap project types
 - requires User Rights privilege
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
@@ -33,6 +36,10 @@ synonyms:
 - invite a colleague to a project
 - set up user roles for a team
 ---
+
+> **Critical — version caveat: roles imported via CSV or API got the wrong form-level rights.** Creating a user role by **CSV import or API** could fail to set the role's **form-level data viewing rights** correctly (below 15.9.1 Standard), and separately, adding a user or role to a project did not save data viewing rights correctly between 15.7.0 and 15.7.2. Both produce roles whose actual permissions differ from what was submitted — in a direction nobody verifies, because the import reports success. If roles were provisioned in bulk on those versions, audit the resulting per-instrument rights rather than trusting the source file.
+>
+> A related defect: importing user roles from a **Project XML** file failed to create them at all until 16.0.26.
 
 # 1. Overview
 

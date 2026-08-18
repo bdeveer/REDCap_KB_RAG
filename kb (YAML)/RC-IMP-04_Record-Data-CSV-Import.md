@@ -4,10 +4,13 @@ title: Record Data CSV Import — Column Reference and Format Guide
 domain: Data Import
 applies_to:
 - All REDCap project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-IMP-01 — Data Import Overview
 - 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
-version: '1.0'
+version: '1.1'
 last_updated: '2026-05-07'
 related:
 - id: RC-IMP-01
@@ -98,6 +101,28 @@ Two methods reliably produce the correct column layout for your project:
 - **Export existing data** from Applications → Data Exports, Reports & Stats. The export uses the same header structure and, if records already exist, provides real examples of correctly formatted values.
 
 Building the header row manually is error-prone. Always start from one of these two sources.
+
+---
+
+# 4a. Version Caveats — Silent Data Loss on Import
+
+Several defects caused imports to **report success while dropping data**. There is no error to notice, which makes these worth knowing when reconciling an import that appears complete but is not.
+
+> **Critical — rows with extra columns were silently ignored (below 15.0.17 Standard).** In a CSV import via the Data Import Tool, the API, or `REDCap::saveData()`, any row after the first containing **more columns than the header** was skipped **with no error reported**. Ragged CSVs are a common artefact of Excel exports, so this is not an exotic failure mode. Fixed in 15.0.17, which also fixed rows being silently dropped generally (15.0.16).
+
+> **Critical — background imports dropped data when rows were not grouped by record (below 15.5.10 Standard).** Importing via the background process, whether through the API or the Data Import Tool, could **quietly fail to import some data, with no error**, where rows for the same record were not adjacent in the file.
+>
+> **Sorting an import file by record ID remains good practice regardless of version** — it costs nothing and removes the entire class of problem.
+
+> **Version caveat — `redcap_repeat_instance = "new"` (15.0.13 and 15.0.17 Standard).** Two separate defects: an unexpected error or a value of `0` saved as the instance number (fixed 15.0.13), and **all repeating instances for a record-instrument failing to import except the last one** (fixed 15.0.17). Both were regressions within the 15.0.x line.
+
+> **Version caveat (below 15.5.9 Standard):** CSV files containing data for **more than one repeating form** failed to import outright.
+
+> **Version caveat (below 15.0.15 Standard):** Imports failed where the file's delimiter did not match the delimiter set in the **importing user's own profile** — a per-user failure mode that explains "it works for me but not for my colleague". A first fix in 15.0.14 did not take; 15.0.15 resolved it.
+
+> **Version caveat (below 16.0.35 Standard):** Importing a **blank value into an already-blank form status field** left the field in an incorrect state, as did importing all-blank values for a fresh non-repeating instrument. Three releases were needed to settle this (16.0.30, 16.0.31, 16.0.35).
+
+> **Version caveat (below 15.5.10 Standard):** Imports in **EAV format** via the Import Records API or `REDCap::saveData()` misbehaved where the payload included a blank `redcap_event_name` column on a **non-longitudinal** project.
 
 ---
 

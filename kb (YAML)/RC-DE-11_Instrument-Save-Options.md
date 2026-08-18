@@ -5,10 +5,13 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 - some options appear only in longitudinal projects or projects with repeated instruments
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-DE-01
   title: Record Creation & the Record Home Page
@@ -81,6 +84,20 @@ The table below lists every save option, what it does after saving, and when it 
 | Save & Go To Next Instance | The next instance of the current repeated instrument | Only when editing a non-final existing instance of a repeated instrument (e.g., viewing instance 5 of 10) |
 | Save & Add New Instance | A newly created next instance of the current repeated instrument | Only when editing the last instance of a repeated instrument |
 | Cancel | Record Home Page of the current record (no data saved) | Always available |
+
+---
+
+# 4a. Version Caveats Affecting Form Status
+
+Form status drives completion reporting, so a wrong status is a wrong number in every summary built on it.
+
+> **Critical — required-field bypass left statuses in "limbo" (16.0.13 LTS / 16.1.1 Standard).** A defect in those releases let participants **submit a survey while bypassing one or more required fields**, and the resulting Form Status values ended up in a confused state. A repair shipped in 16.0.17 LTS to clean up the affected values. Two things follow: an exposure window where required fields were not actually enforced, and a set of statuses that were corrected after the fact. Completion figures drawn from a project that ran on those versions should be re-derived rather than trusted from memory.
+
+> **Version caveat (below 15.0.21 Standard):** When a participant clicked **Start Over** on a survey, their responses were correctly erased **but the survey status remained "complete" or "partially complete"**. Any completion count taken from an affected version over-counts by the number of participants who restarted.
+
+> **Version caveat (below 16.0.17 Standard):** A calc or CALCTEXT field referencing a **survey instrument's Form Status field** did not always retrigger when data was entered on that survey — so a calculation keyed to completion could remain stale.
+
+> **Version caveat (below 16.0.14 Standard):** A survey submitted with empty required fields was not always redisplayed with the Required Fields warning, so the participant received no prompt to complete them.
 
 ---
 

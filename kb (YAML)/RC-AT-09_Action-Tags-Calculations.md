@@ -5,11 +5,14 @@ domain: Action Tags
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - familiarity with REDCap calculated fields
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-08
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -175,6 +178,10 @@ The source can be a logical expression that resolves to a date value:
 ```
 @CALCDATE(if([use_alt_date]='1', [alt_date], [primary_date]), 30, 'd')
 ```
+
+---
+
+> **Critical — version caveat (below 15.0.18 Standard): displayed value could disagree with stored value.** A date or datetime field using `@CALCDATE` could produce a value **off by several hours**, and — the part that makes this dangerous — the form or survey **displayed the incorrect value while the stored value differed**. A discrepancy between what a user sees and what is saved undermines trust in every calculated field on the instrument, and would not be caught by reviewing the screen. Fixed in 15.0.18. If `@CALCDATE` values were captured on an earlier version and precision matters, verify the stored data rather than the display.
 
 ---
 

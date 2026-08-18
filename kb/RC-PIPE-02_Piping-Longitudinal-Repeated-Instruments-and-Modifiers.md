@@ -6,14 +6,18 @@
 |---|---|
 | **Domain** | Piping |
 | **Applies To** | Longitudinal projects; projects with repeated instruments or repeated events; all projects using piping modifiers |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)|
-| **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
 | **Synonyms** | how to pipe a value from another event; piping across events in a longitudinal project; how to pipe from a repeating instrument instance; using piping modifiers to control returned value; [event-name][field] cross-event piping syntax; pipe a specific repeat instance value; piping with event prefixes and instance qualifiers; how to reference a field from a different timepoint |
 
 ---
+
+> **Version caveat (below 15.0.20 Standard):** Piping a field value **into a repeating context** — a repeating form or repeating event — from a source in a **non-repeating** context could produce a **blank value, or a value attached to the wrong instance**. Fixed in 15.0.20. Piped content that appears empty or mismatched on an older instance is worth checking against this rather than assumed to be a syntax error.
 
 ## 1. Overview
 

@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Surveys |
 | **Applies To** | Projects with surveys enabled; requires Project Design and Setup, User Rights, and Data Access Groups rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how do i set up electronic consent in redcap; e-consent framework setup; collect signed consent forms online; generate a signed consent pdf; manage consent versions over time; participant signature and consent workflow; electronic informed consent configuration; immutable consent pdf record |
@@ -205,6 +207,20 @@ An optional **Notes** field is available for internal documentation. It is not u
 > **Institution-specific:** Local policies on e-consent file storage location, naming conventions, or required document content (such as footer or header language) vary by institution. Contact your REDCap administrator or IRB office to confirm any applicable requirements.
 
 Click **"Save Settings"** to finalize. Click **Cancel** to discard all entries.
+
+---
+
+## 5a. Version Caveats Affecting Consent Integrity
+
+Three defects affected e-Consent in ways that matter for a compliance-relevant workflow.
+
+> **Critical — the "erase signature on Previous Page" setting did nothing (below 15.5.17 Standard).** Where **"Force signature field(s) to be erased if participant clicks Previous Page button while on the certification page?"** was enabled, the signature fields were **not** erased. The control was configured, displayed as enabled, and silently had no effect — so a participant could amend responses after signing while the signature remained in place. Fixed in 15.5.17.
+
+> **Critical — concurrent editing could bypass the edit-prevention setting (below 16.0.28 Standard).** Where a survey had e-Consent enabled *and* the option to prevent users editing e-Consent responses, a user sitting on the data entry form **at the same time as a respondent was consenting via the survey** could edit responses the setting was meant to protect. Fixed in 16.0.28.
+
+> **Version caveat (below 15.0.16 Standard):** An inline PDF rendered into a REDCap-generated PDF — for example a consent form attached to a Descriptive field at the end of an e-Consent survey — could display with **horizontal artefacts** where the source PDF used a particular alpha-channel type, producing a corrupted archived consent document. Fixed in 15.0.16. Related inline-PDF display issues were addressed in 15.0.29 (`.mjs` MIME type) and 16.0.36 (PDF viewer toolbar buttons disabled).
+
+If consents were captured on any of these versions, the archived PDFs and the signature fields are worth spot-checking against what the workflow was configured to produce.
 
 ---
 

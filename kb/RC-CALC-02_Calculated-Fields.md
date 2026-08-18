@@ -9,13 +9,19 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)|
 | **Synonyms** | how do i create a calculated field; redcap calc field formula; auto calculate a value from other fields; calculated field returns blank; difference between calc field and calctext; when does a calculated field update; add or compute a score automatically; set up a calculation in the online designer |
 
 ---
+
+> **Critical — Data Quality rule H and import-triggered calcs skipped fields in longitudinal projects (below 15.5.8 Standard).** Rule H and the auto-calculations performed during data imports **did not run at all** for calc and CALCTEXT fields in longitudinal projects **unless those fields sat on a repeating instrument or repeating event**. REDCap classified this as "major/near-critical".
+>
+> The consequence is that a data-cleaning pass on an affected version could return a clean result while leaving stale calculated values untouched. A clean rule H run from that period is not evidence the calculations were correct. Fixed across 15.0.37 and 15.5.8. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
+
+> **Version caveat (below 15.0.31 Standard):** In longitudinal projects with repeating events, calc and CALCTEXT fields **referencing a field on a repeating event that currently held no data** failed server-side.
 
 > **Note (15.7.0) — error reporting improved.** Branching logic and calculation errors on a form or survey page are now collected into a **single dialog listing every affected field**, rather than surfacing one at a time. On a form with several broken expressions this turns an iterative fix-reload-repeat cycle into one pass.
 

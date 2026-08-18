@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); familiarity with REDCap calculated fields |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF; [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) |
 | **Synonyms** | @CALCTEXT action tag; @CALCDATE action tag; how do i make a calculated text field; calculate a date difference with an action tag; turn a text box into a calculated field; conditional text output with @CALCTEXT; date arithmetic action tag; calc field that returns text instead of a number |
@@ -158,6 +160,10 @@ The source can be a logical expression that resolves to a date value:
 ```
 @CALCDATE(if([use_alt_date]='1', [alt_date], [primary_date]), 30, 'd')
 ```
+
+---
+
+> **Critical — version caveat (below 15.0.18 Standard): displayed value could disagree with stored value.** A date or datetime field using `@CALCDATE` could produce a value **off by several hours**, and — the part that makes this dangerous — the form or survey **displayed the incorrect value while the stored value differed**. A discrepancy between what a user sees and what is saved undermines trust in every calculated field on the instrument, and would not be caught by reviewing the screen. Fixed in 15.0.18. If `@CALCDATE` values were captured on an earlier version and precision matters, verify the stored data rather than the display.
 
 ---
 

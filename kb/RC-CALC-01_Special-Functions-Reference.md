@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
@@ -114,6 +114,18 @@ You may use the literal `'today'` or `'now'` as either date parameter.
 
 Calculates a person's age in years using their date of birth and another specified date. Returns an integer by default. To get a decimal value (e.g., 0.24 years for a newborn), add `true` as the third parameter. If datetime fields are provided, the time component is ignored — only the date portion is used.
 
+> **Critical — version caveat (17.0.6 to 17.2.0 Standard).** The date-related special functions were unreliable across five consecutive releases, and the failures were silent: the calculation produced nothing rather than an error.
+>
+> | Symptom | Fixed in |
+> | --- | --- |
+> | `age_at_date()`, `year()`, `month()` and `day()` failed "in many cases" | 17.0.7 |
+> | Same functions failed when referencing a field on another instrument where that instrument is repeating | 17.0.8 |
+> | **`age_at_date()` failed on a calc field whenever the third parameter was omitted** — directly contradicting the "optional third parameter" guidance above | 17.1.2 |
+> | Date functions failed on a calc field where the referenced field was in another event **and not in YMD format** | 17.1.3 |
+> | Further date-function failures on calc fields | 17.2.0 |
+>
+> **On 17.0.6–17.1.1, pass the third parameter explicitly** as a workaround. Treat `age_at_date()` as requiring **17.2.0 or later** for full correctness. If age calculations were populated on an affected version, they may be blank or absent rather than wrong — check before relying on them.
+
 ### 5.3 dayoftheweek()
 
 **Syntax:** `dayoftheweek([date])`
@@ -134,6 +146,18 @@ Extract individual components from a date or datetime field:
 | `day([date])` | The day of the month (1–31) | `day([visit_date])` → 15 |
 
 You may use `'now'` or `'today'` (in quotes) instead of a field variable in any of these functions.
+
+---
+
+### 5.5 Comparing Against Blank Values — Version Caveats
+
+Comparisons involving blank or null values have been a recurring source of **silently wrong results** — the calculation returns a plausible number rather than failing.
+
+> **Version caveat (below 15.0.28 Standard):** Calculations comparing a field to a number or another field using `<` or `<=` where the referenced value is **blank/null** could return an incorrect result. REDCap's own example: `if([v1] < 5, [v1], 0)`.
+
+> **Version caveat (16.0.42 and below, Standard):** Various special functions used with fields compared to a blank value — `[field1]=""` or `[field2]<>""` — could produce incorrect results. Two consecutive releases were needed to resolve it (16.0.43 and 16.0.44), so treat anything at or below 16.0.42 as suspect.
+
+Blank-comparison patterns are common in branching logic and calculated fields, so this is worth checking if historical calculated values on an older instance look wrong in ways nobody can explain. See also [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md).
 
 ---
 

@@ -6,10 +6,13 @@ applies_to:
 - Longitudinal projects
 - projects with repeated instruments or repeated events
 - all projects using piping modifiers
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
-version: '1.2'
-last_updated: '2026'
+version: '1.3'
+last_updated: 2026-08
 related:
 - id: RC-PIPE-01
   title: 'Piping: Basics, Syntax & Field Types'
@@ -31,6 +34,8 @@ synonyms:
 - piping with event prefixes and instance qualifiers
 - how to reference a field from a different timepoint
 ---
+
+> **Version caveat (below 15.0.20 Standard):** Piping a field value **into a repeating context** — a repeating form or repeating event — from a source in a **non-repeating** context could produce a **blank value, or a value attached to the wrong instance**. Fixed in 15.0.20. Piped content that appears empty or mismatched on an older instance is worth checking against this rather than assumed to be a syntax error.
 
 # 1. Overview
 

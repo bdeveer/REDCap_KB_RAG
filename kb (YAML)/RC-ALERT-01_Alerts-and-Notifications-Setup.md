@@ -10,7 +10,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
-version: '1.2'
+version: '1.3'
 last_updated: 2026-08
 related:
 - id: RC-PIPE-01
@@ -203,6 +203,10 @@ The second step of alert setup defines when the alert is sent after the trigger 
 - **Send up to...** — the total number of sends, including the first. If left blank, REDCap will continue sending indefinitely. Always set a cap.
 
 > **Important:** Recurring alerts multiply quickly in projects with repeated instruments. An alert set to send 5 times for a repeated instrument with 5 instances will generate 25 total alert sends. Plan repeat counts carefully before enabling.
+
+> **Critical — alerts and ASIs could silently fail to trigger (15.0.35 LTS / 15.5.5 Standard through 15.5.9).** An internal data-caching issue during logic evaluation meant some alerts and ASIs were **not triggered as expected** when a form or survey page was submitted. Fixed in 15.5.10.
+>
+> This is the hardest class of alert failure to notice: an alert that never fires produces no error, no log entry and no bounce. Nobody reports the email they didn't receive. If an affected version was in use and a study depended on alert delivery, the Notification Log is the place to reconcile expected sends against actual ones — see [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md).
 
 ### Pausing Recurrences *(15.4.0+)*
 

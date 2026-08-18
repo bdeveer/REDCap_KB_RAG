@@ -6,14 +6,20 @@
 |---|---|
 | **Domain** | User Rights |
 | **Applies To** | All REDCap project types; requires User Rights privilege |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) |
 | **Synonyms** | how do i add a user to my project; give someone access to my redcap project; create a user role; apply the same rights to multiple users; assign a role to a user; manage roles in user rights; invite a colleague to a project; set up user roles for a team |
 
 ---
+
+> **Critical — version caveat: roles imported via CSV or API got the wrong form-level rights.** Creating a user role by **CSV import or API** could fail to set the role's **form-level data viewing rights** correctly (below 15.9.1 Standard), and separately, adding a user or role to a project did not save data viewing rights correctly between 15.7.0 and 15.7.2. Both produce roles whose actual permissions differ from what was submitted — in a direction nobody verifies, because the import reports success. If roles were provisioned in bulk on those versions, audit the resulting per-instrument rights rather than trusting the source file.
+>
+> A related defect: importing user roles from a **Project XML** file failed to create them at all until 16.0.26.
 
 ## 1. Overview
 

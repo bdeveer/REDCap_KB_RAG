@@ -6,10 +6,13 @@ applies_to:
 - Study Coordinators and data entry staff (Sections 4–6)
 - REDCap Administrators (Section 7)
 - requires project in Production with a configured randomization model
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
-version: '1.1'
+version: '1.2'
 last_updated: '2026-05-11'
 related:
 - id: RC-RAND-01
@@ -121,6 +124,24 @@ the randomization variable as a greyed-out, non-interactive field ---
 for both open and blinded randomization types. They cannot click the
 Randomize button or interact with the field in any way. This is by
 design and is not a bug.
+
+---
+
+# 3a. Version Caveats Affecting Allocation Integrity
+
+Four defects affected randomization itself. For a randomised trial these matter more than most, because the allocation table is the auditable record of assignment.
+
+> **Critical — deleted records did not free their allocation (below 15.0.26 Standard; present since 14.7.0).** In a longitudinal project with multiple arms, deleting a record **after it had been randomized** left its allocation in place in the allocation table. The slot was never returned to the pool.
+>
+> The consequence accumulates silently: a long-running trial that has deleted any randomized records on an affected version may have **fewer usable allocations remaining than the table appears to show**, and the discrepancy grows with each deletion. This is worth checking directly against the allocation table if your project began before 15.0.26 and records have ever been deleted post-randomization.
+
+> **Version caveat (below 15.0.23 Standard; present since 14.7.0):** Where the instrument containing the randomization field is also enabled as a survey, randomizing a record **on the data entry form while a participant was completing that same instrument as a survey** could corrupt the result.
+
+> **Version caveat (below 15.5.23 Standard):** Triggering randomization by submitting a form **at the same moment as locking that form** produced a **partial randomization** — the record was logged as randomized but the assignment was not fully applied. A record in this state looks randomized in the log while not being properly allocated.
+
+> **Version caveat (below 16.0.23 Standard):** In the randomization dialog on a data entry form, clicking the **choice label** of a strata field — rather than the radio button itself — did not register the selection. A user could believe they had set a stratum and randomize against a different value than intended. Fixed in 16.0.23.
+
+If your project randomized records on any of these versions, the allocation table and the randomization log are the two places to reconcile against each other.
 
 ---
 

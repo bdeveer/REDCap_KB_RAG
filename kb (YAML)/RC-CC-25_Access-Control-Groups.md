@@ -10,7 +10,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - REDCap administrator access
 - familiarity with REDCap user rights
-version: '1.2'
+version: '1.3'
 last_updated: 2026-08
 related:
 - id: RC-CC-07
@@ -72,6 +72,10 @@ Before enabling, read the warning carefully. When ACGs are first turned on:
 - If you have not yet created a custom Default ACG, User Rights managers in every project will be unable to add users or modify user privileges until you have created ACGs and assigned users to them. This can cause an immediate operational disruption if done without preparation.
 
 > **Recommended sequence:** Create your ACGs first → assign users to them via CSV import → then enable the feature.
+
+> **Version caveat — the first weeks of ACGs were rough (16.0.0 to 16.1.8).** Two blocking defects shipped with or shortly after the feature: with ACGs enabled, **non-admin users could not access any project at all** — every page failed with a fatal PHP error (fixed 16.1.9 Standard / 16.0.20 LTS) — and **uploading a Data Dictionary** with ACGs enabled could fail fatally (fixed 17.0.2). Several further fixes followed for report loading, compliance evaluation and CSV import. If you are enabling ACGs, do it on a current version rather than an older one that happens to include the feature.
+
+> **Version caveat (below 16.1.4 Standard):** ACG compliance checks could be **bypassed entirely** by uploading user rights or role assignments via the User Rights CSV import or the API. The ceiling held in the interface but not through those paths. Fixed in 16.1.4 — see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a.
 
 ## Disabling ACGs
 

@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access; familiarity with REDCap user rights |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -55,6 +55,10 @@ Before enabling, read the warning carefully. When ACGs are first turned on:
 - If you have not yet created a custom Default ACG, User Rights managers in every project will be unable to add users or modify user privileges until you have created ACGs and assigned users to them. This can cause an immediate operational disruption if done without preparation.
 
 > **Recommended sequence:** Create your ACGs first → assign users to them via CSV import → then enable the feature.
+
+> **Version caveat — the first weeks of ACGs were rough (16.0.0 to 16.1.8).** Two blocking defects shipped with or shortly after the feature: with ACGs enabled, **non-admin users could not access any project at all** — every page failed with a fatal PHP error (fixed 16.1.9 Standard / 16.0.20 LTS) — and **uploading a Data Dictionary** with ACGs enabled could fail fatally (fixed 17.0.2). Several further fixes followed for report loading, compliance evaluation and CSV import. If you are enabling ACGs, do it on a current version rather than an older one that happens to include the feature.
+
+> **Version caveat (below 16.1.4 Standard):** ACG compliance checks could be **bypassed entirely** by uploading user rights or role assignments via the User Rights CSV import or the API. The ceiling held in the interface but not through those paths. Fixed in 16.1.4 — see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a.
 
 ### Disabling ACGs
 

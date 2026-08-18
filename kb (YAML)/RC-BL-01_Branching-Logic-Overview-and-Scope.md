@@ -5,10 +5,13 @@ domain: Branching Logic
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-08
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -86,6 +89,22 @@ The same logic syntax that powers branching logic is also used in several other 
 | Action Tags (selected) | Drive dynamic behavior such as default values or date comparisons | Varies by action tag |
 
 > **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Calculated fields are covered in [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md). Action tags that use logic syntax are covered in the RC-AT series — start with [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) — Action Tags Overview.
+
+---
+
+# 4a. Version Caveats Affecting Branching Logic
+
+Three defects are worth knowing because each produced a **wrong result rather than a visible failure**.
+
+> **Critical — fields that should have been hidden were not (below 16.0.27 Standard).** Some forms and surveys displayed a branching logic error popup where no real problem existed, **and in some cases fields that branching logic should have hidden were shown**. The second half is a data-exposure concern: a participant or user could see a question intended to be hidden from them. Fixed in 16.0.27.
+
+> **Version caveat (below 16.0.40 Standard):** Branching logic or calculated fields containing a **`$` character** stopped working entirely and could display an error on the page. Fixed in 16.0.40.
+
+> **Version caveat (below 15.4.5 Standard):** Form Display Logic rules containing a **comment at the end of the logic** might not be interpreted correctly. Fixed in 15.4.5 — see [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md).
+
+Comparisons against blank values have their own history of returning wrong results — see [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §5.5.
+
+> **Note — JavaScript is no longer permitted in logic.** From 17.0.2, administrators cannot inject JavaScript into branching logic or calc/CALCTEXT equations. This closed a Remote Code Execution vector that recurred across three releases. If an inherited project relies on it, the logic stops working on 17.0.2 — see [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
 ---
 

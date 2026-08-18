@@ -6,14 +6,20 @@
 |---|---|
 | **Domain** | Data Access Groups |
 | **Applies To** | All REDCap project types; requires Data Access Groups privilege to manage |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md); [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i set up data access groups; restrict users to only see their own records; separate sites in a multi-site study; create and manage dags in redcap; assign users to a data access group; partition records by group; hide records from other study sites; what is a dag and how does it work |
 
 ---
+
+> **Important — DAG isolation is an application-layer control that has needed patching.** DAGs are presented throughout this article as a data-separation boundary, and on a current instance they are. But the boundary has leaked in five separate places, each fixed individually: a DAG user could **modify data outside their DAG** on data entry forms via a crafted request (fixed 15.5.37); **calendar events** were reachable across DAGs (15.5.38); and three groups of API methods returned survey links, access codes, queue links and return codes for records **outside the caller's DAG** (16.0.28, and 17.1.0 Standard / 16.0.31 LTS). The User Rights page also misbehaved for DAG-assigned users holding User Rights privileges (16.0.18).
+>
+> None of these were misconfigurations — the DAG assignment was correct and REDCap returned the data anyway. If your institution relies on DAG separation for a compliance argument, that argument is only as strong as the patch level. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) and [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a.
 
 ## 1. Overview
 
