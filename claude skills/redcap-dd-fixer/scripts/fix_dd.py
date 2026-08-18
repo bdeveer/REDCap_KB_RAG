@@ -72,7 +72,6 @@ VALID_FIELD_TYPES = {
     "text", "notes", "dropdown", "radio", "checkbox",
     "calc", "file", "descriptive", "slider", "yesno",
     "truefalse", "sql",
-    "enhanced_signature",  # 17.1.0+ - a field type in its own right, not a "file" variant
 }
 
 VALID_VARIABLE_RE = re.compile(r'^[a-z][a-z0-9_]*$')

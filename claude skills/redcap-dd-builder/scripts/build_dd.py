@@ -81,7 +81,6 @@ COLUMNS = [
 VALID_FIELD_TYPES = {
     "text", "notes", "dropdown", "radio", "checkbox",
     "calc", "file", "descriptive", "slider", "yesno", "truefalse",
-    "enhanced_signature",  # 17.1.0+ - a field type in its own right, not a "file" variant
 }
 
 CHOICE_TYPES = {"dropdown", "radio", "checkbox"}

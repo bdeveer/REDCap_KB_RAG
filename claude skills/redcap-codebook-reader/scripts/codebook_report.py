@@ -37,7 +37,6 @@ VALID_FIELD_TYPES = {
     "text", "notes", "dropdown", "radio", "checkbox",
     "calc", "file", "descriptive", "slider", "yesno",
     "truefalse", "sql",
-    "enhanced_signature",  # 17.1.0+ — a field type in its own right, not a "file" variant
 }
 
 _CLINICAL_KW = [
@@ -614,7 +613,7 @@ def _parse_pdf_attributes(f: dict, attr_text: str) -> None:
 
     # Field type — match known types at the start of the line
     type_m = re.match(
-        r"^(enhanced_signature|text|notes|dropdown|radio|checkbox|calc|file|descriptive|slider|yesno|truefalse|sql)",
+        r"^(text|notes|dropdown|radio|checkbox|calc|file|descriptive|slider|yesno|truefalse|sql)",
         type_line.lower()
     )
     if type_m:
