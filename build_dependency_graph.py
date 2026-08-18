@@ -14,6 +14,7 @@ duplicates collapsed. This matches how the original graph was built.
 Usage:  python3 build_dependency_graph.py
 """
 
+import hashlib
 import json
 import os
 import re
@@ -200,6 +201,29 @@ def splice(path, data):
     open(path, "w", encoding="utf-8").write(html)
 
 
+def stamp_iframe(page, path):
+    """Cache-bust the iframe.
+
+    GitHub Pages serves the graph with a long-lived cache header, and a hard
+    refresh of the wrapper page does not necessarily re-fetch the framed
+    document — so an updated graph can keep showing the old one for a while.
+    Appending a content hash to the src makes the URL change whenever the graph
+    does, which browsers treat as a different resource.
+    """
+    if not os.path.exists(page):
+        print(f"  ! missing, skipped: {page}", file=sys.stderr)
+        return
+    digest = hashlib.sha1(open(path, "rb").read()).hexdigest()[:8]
+    md = open(page, encoding="utf-8").read()
+    md, n = re.subn(r'(<iframe src="\.\./kb_dependency_graph\.html)(\?v=[0-9a-f]+)?(")',
+                    lambda m: f"{m.group(1)}?v={digest}{m.group(3)}", md, count=1)
+    if not n:
+        print(f"  ! iframe src not found in {page}", file=sys.stderr)
+        return
+    open(page, "w", encoding="utf-8").write(md)
+    print(f"  stamped {page} with ?v={digest}")
+
+
 if __name__ == "__main__":
     data, ind = build()
     for path in TARGETS:
@@ -208,6 +232,7 @@ if __name__ == "__main__":
             print(f"  updated {path}")
         else:
             print(f"  ! missing, skipped: {path}", file=sys.stderr)
+    stamp_iframe("kb/KB-Dependency-Graph.md", TARGETS[0])
     cats = Counter(n["category"] for n in data["nodes"])
     top = ", ".join(f"{a} ({c})" for a, c in ind.most_common(5))
     print(f"\n{len(data['nodes'])} nodes, {len(data['edges'])} edges, {len(cats)} categories")
