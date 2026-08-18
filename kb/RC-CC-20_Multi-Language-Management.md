@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md)|
 | **Synonyms** | control center multi-language management; define system-level languages for projects; mlm administrator settings instance-wide; add a new ui language for redcap projects; manage available languages admin; system language management for translations; enable languages projects can adopt; instance-wide multi-language configuration |
@@ -23,7 +25,7 @@ For a full explanation of what MLM is, how translations work, and the project-le
 
 MLM can be turned on or off system-wide. When off, surveys and data entry forms are not translated in any project, and the MLM menu is not visible to project users.
 
-> **Note:** A PDF manual for MLM is available from the REDCap Language Library (linked from the Control Center sidebar under Administrator Resources).
+> **Note — MLM manuals.** A PDF manual for MLM is available from the REDCap Language Library (linked from the Control Center sidebar under Administrator Resources). **From 15.5.1** separate PDF manuals for administrators and for end users also ship with REDCap and can be downloaded directly, without going to the Language Library.
 
 ---
 

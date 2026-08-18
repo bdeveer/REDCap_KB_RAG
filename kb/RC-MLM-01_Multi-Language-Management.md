@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Multi-Language Management |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
 | **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
 | **Synonyms** | how do i set up a survey in multiple languages; translate my forms and surveys; add a language selector to a survey; multi-language management mlm setup; does redcap translate content automatically; translate alert messages and field labels; enable a second language for data entry; mlm not appearing in my applications menu |
@@ -111,6 +113,8 @@ Use the **Update** (sync/arrow) button to import updated translations — either
 
 The **Create Snapshot** button saves a ZIP archive of all current language exports as a backup. Snapshots are created automatically when a project is first moved to Production and each time drafted changes are approved. Snapshots reflect the saved state — unsaved changes are not captured. In Production mode, snapshots do not include drafted (unapproved) changes. Individual files from a snapshot can be re-imported to restore a previous state.
 
+> **Moved in 15.4.5.** The Snapshot facility used to live on the **Settings** tab and is now on the **Languages** tab, with revised explanatory text. If you are following older instructions, look on Languages. The Create Snapshot button is also correctly disabled when no languages have been saved.
+
 ### 3.6 Settings Tab
 
 The Settings tab controls three project-level MLM behaviors:
@@ -118,6 +122,9 @@ The Settings tab controls three project-level MLM behaviors:
 1. **Highlight untranslated text** — Visually marks items missing a translation on data entry forms and survey pages. Useful during development. Recommended off in Production.
 2. **Attempt to match the initially displayed language to the browser's preferred language** — When enabled, REDCap tries to match a first-time visitor's browser language setting to one of the project's active languages. Requires Language IDs to be valid ISO codes. Only triggers for users who have not yet selected a language.
 3. **Disable multi-language support for this project** — Turns off MLM for the project. Useful for troubleshooting to rule out MLM as the cause of a display issue.
+4. **Discourage browser-based translation of survey pages** *(17.1.0+)* — Adds "do not translate" markers to survey pages so browser translation tools are less likely to translate over your MLM translations.
+
+> **Important — "discourage" is the accurate word.** REDCap states plainly that browsers and translation tools **may or may not honour** these markers, so browser translation cannot be reliably prevented. Treat the setting as a nudge, not a control. It exists because a browser auto-translating a page that MLM has already translated produces a double-translated result, often visibly wrong in a way participants notice but staff do not.
 
 ---
 
@@ -144,6 +151,13 @@ Translation is organized by content type. Navigate to each tab or use the action
 Before translating field content, each language must be enabled for each instrument separately — in data entry mode, survey mode, or both. This is done on the **Forms/Surveys** tab by selecting a language and toggling the Data Entry and Survey switches for each instrument.
 
 > **Common pitfall:** Adding a language to the project and providing translations does not automatically make those translations visible. The language must also be toggled on for each instrument where it should appear.
+
+### 5.1a What Cannot Be Translated Per Field
+
+Two limits are worth knowing before you start, because both look like bugs otherwise:
+
+- **True/False and Yes/No choice labels are fixed** and cannot be translated on a per-field basis — they come from the language's UI strings instead. From **15.0.1** the MLM setup page shows a hint saying so, rather than leaving you to discover it.
+- **Embedded fields must be preserved in the translation.** Where the default text contains an embedded field, the translated text must keep it, or the embed breaks. From **15.2.4** the setup page displays a reminder at the point of translation.
 
 ### 5.2 Translating Fields
 
@@ -189,6 +203,10 @@ The **MyCap** tab (only shown when MyCap is active in the project) translates My
 
 The **User Interface** tab allows project-level overrides of UI strings (buttons, system messages) for a given language, unless the administrator has restricted this. If a language is subscribed to a system language, UI items cannot be edited and the tab displays a notice.
 
+**REDCap's cookie policy text is translatable from 15.8.1** — both the cookie link text and the dialog text, found under this tab.
+
+> **Version caveat (below 16.1.6 Standard):** User Interface translation overrides for **subscribed system languages** were not saved at all — you could enter them, but they did not persist. A related case where the language was the system's base language was fixed in 16.1.8. Separately, UI overrides set for the base language stopped being displayed between 15.6.0 and 15.7.1 Standard (15.5.9 LTS). If UI overrides on an older instance appear not to take effect, the version is the likely explanation rather than the configuration.
+
 ### 5.9 AI-Assisted Translation
 
 When both REDCap AI Services and the "Auto-translate text on the MLM setup page" feature are enabled by an administrator, all MLM translation screens display an **Auto-translate** widget with a **Translate using AI** button.
@@ -200,7 +218,42 @@ Clicking the button sends all not-yet-translated items visible on the current pa
 - Only the default (source) text for each item is sent; no surrounding context (field type, instrument purpose, etc.) is included.
 - The AI service is instructed to translate into the language specified by the **Language Display Name**. A display name like "de" or "lang1" produces poor results — use a meaningful name such as "Deutsch" or "Español."
 - AI-generated translations are a starting point, not a finished product. Always have a person sufficiently proficient in the target language review and correct any AI-generated translations before going live.
-- For complex or high-volume projects, better results may be obtained by exporting the MLM JSON file and submitting it to an external AI translation service that supports structured JSON output, then importing the result.
+- For complex or high-volume projects, better results may be obtained by exporting the MLM JSON file and submitting it to an external AI translation service that supports structured JSON output, then importing the result — see §7.1a, which REDCap has explicitly built around this workflow.
+
+**Behaviour and version notes:**
+
+| Note | Version |
+| --- | --- |
+| The prompt sent to the AI service includes the **language ID** alongside the display name — a language set up as `es-AR`, Spanish, produces "Translate to Spanish (es-AR)…", which disambiguates regional variants | 15.5.1 |
+| The Auto-translate button might translate only some text on an instrument in certain cases | fixed 16.1.1 |
+| Auto-translation could **fail completely if any text being translated contained a comma** | fixed 17.3.1 |
+| Newer OpenAI models failed for MLM Auto-Translate because REDCap sent the retired `max_tokens` parameter; now sends `max_completion_tokens` | fixed 17.3.0 |
+| A failed auto-translation displayed **no error at all** — the process simply produced nothing | fixed 17.4.0 |
+
+> **Version caveat (below 17.4.0 Standard):** the silent-failure behaviour is the one to watch. On affected versions a failed AI translation looked identical to having nothing to translate, so it is worth confirming that translations actually appeared rather than assuming the run succeeded.
+
+---
+
+### 5.10 Piping and Language Interaction
+
+Piping and MLM overlap in ways that have needed repeated fixing, so a few capabilities are version-dependent:
+
+| Capability | Version |
+| --- | --- |
+| **On-the-fly swapping of calc and CALCTEXT fields** acting as piping sources is supported under MLM | 17.0.0 |
+| **Field label piping** via the `:field-label` option is supported under MLM | 17.0.4 |
+| **Enhanced Signature** strings — "Sign Here" and "Please type your signature before saving." — are translatable | 17.3.0 |
+
+> **Version caveat (15.8.4 to 17.3.2 Standard):** values for **piped fields that exist only in MLM translations** could show as empty under specific circumstances. Fixed in 17.3.3. If piped content is inexplicably blank in a translated language but fine in the base language, this is the first thing to check.
+
+### 5.11 The `lang` HTML Attribute
+
+For accessibility, the page's `<html lang="…">` attribute should reflect the language actually displayed — screen readers use it to select pronunciation rules.
+
+- From **16.0.6**, MLM sets the `lang` attribute on survey pages when the MLM language code corresponds to an ISO 639-1 code.
+- From **17.1.0**, the attribute is re-evaluated **when the participant switches language**, not only on initial page load. Before that, switching language left the attribute describing the previous one, so a screen reader continued using the wrong pronunciation rules for the rest of the session.
+
+This is a reason to use valid ISO language codes as Language IDs rather than arbitrary labels — the accessibility behaviour depends on it, as does the browser-language matching setting in §3.6.
 
 ---
 
@@ -234,6 +287,7 @@ For survey respondents visiting for the first time, the initially displayed lang
 
 1. **`@LANGUAGE-SET` on a radio field** populated with `@DEFAULT` containing the desired language ID — sets and synchronizes the language menu with the field value.
 2. **The `__lang` URL parameter** (note: two underscores) appended to the survey URL — e.g., `https://redcap.server.tld/surveys/?s=ABCD1234&__lang=es`. This overrides both the cookie and the language preference field. The `@LANGUAGE-FORCE` action tag takes precedence over `__lang`.
+   From **15.0.1** the same parameter also presets the language for a participant's **Survey Queue** — e.g. `[survey-queue-url]&__lang=es`. The value must be a valid *active* language ID and is **case-sensitive**.
 3. **`@LANGUAGE-FORCE`** — forces a language and hides the language selector entirely.
 
 > **Testing tip:** Always test language switching in a fresh private/incognito browser window to avoid "tainted" cookies from previous sessions affecting the displayed language.
@@ -254,6 +308,19 @@ Click the **Export** button in a language's row on the Languages tab (or the per
 - File format: JSON or CSV (CSV supports comma, semicolon, or tab delimiters).
 
 Exports reflect the **saved** state only — unsaved changes are not included.
+
+### 7.1a Round-Tripping Translations Through an LLM *(17.1.3+)*
+
+From REDCap **17.1.3**, the instructions at the top of the JSON export are written to be **LLM-friendly**, making the export file usable as a prompt in its own right. REDCap describes the intended workflow as four steps:
+
+1. **Export** the JSON, including translation prompts and defaults.
+2. **Feed it to an LLM.**
+3. **Re-import** the returned file.
+4. Done.
+
+This is a better route than the in-page Auto-translate button for anything large. The whole file goes at once rather than page by page, the model sees the surrounding items as context — which the in-page button explicitly does not provide — and you keep the intermediate file for review before it touches the project.
+
+> **Important:** The review obligation does not change. Machine translation of participant-facing research material still needs checking by someone proficient in the target language before it goes live, whichever route produced it.
 
 ### 7.2 Importing Translations
 
