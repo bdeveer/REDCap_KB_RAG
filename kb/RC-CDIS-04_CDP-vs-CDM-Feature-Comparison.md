@@ -21,6 +21,8 @@ Clinical Data Pull (CDP) and Clinical Data Mart (CDM) are two distinct modules b
 
 ---
 
+> **Note — a third option exists from 17.3.0.** This article compares the two *institution-side* integrations, both of which reach only patients seen within your own health system. **REDCap SHARE** is participant-mediated and can retrieve data from supported healthcare organizations anywhere, including providers your institution has no relationship with. It requires a REDCap+ subscription and separate institutional onboarding. If neither CDP nor CDM fits because your participants are treated elsewhere, see [RC-CDIS-05 — REDCap SHARE: Overview & Onboarding](RC-CDIS-05_REDCap-SHARE-Overview-and-Onboarding.md).
+
 ## 2. When to Use Each
 
 | Use Case | CDP | CDM |

@@ -38,6 +38,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-CDIS-02 | Clinical Data Pull (CDP): Setup and Usage | RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md |
 | RC-CDIS-03 | Clinical Data Mart (CDM): Setup and Usage | RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md |
 | RC-CDIS-04 | CDP vs CDM: Feature Comparison | RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md |
+| RC-CDIS-05 | REDCap SHARE: Overview & Onboarding | RC-CDIS-05_REDCap-SHARE-Overview-and-Onboarding.md |
 | RC-INST-01 | Institution-Specific Settings & Policies — Production | RC-INST-01_Institution-Specific-Settings-and-Policies.md |
 | RC-INST-02 | Institution-Specific Settings & Policies — Test / Staging | RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md |
 | RC-INST-03 | Institution-Specific Settings & Policies — Development | RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md |

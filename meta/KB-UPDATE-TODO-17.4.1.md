@@ -52,7 +52,11 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 - [ ] **RC-PLUS-05 — Email Verification & Unsubscribe** *(17.3.0, REDCap+)*
   New smart variables `[email-verify-link]`, `[email-unsubscribe-link]`, `[email-verified]` and others. **Zero** matches. Requires companion entries in `RC-PIPE-03` (Smart Variables Overview) and `RC-PIPE-08` or `RC-PIPE-17`. 17.3.3 added System Statistics counters for this feature.
 
-- [ ] **RC-SHARE-01 — REDCap SHARE** *(17.3.0, REDCap+)*
+- [x] **REDCap SHARE — filed as `RC-CDIS-05`, not a new SHARE domain** *(17.3.0, REDCap+)* — *done 2026-08-18*
+  Written from a live Control Center capture (LTS 17.3.6, no subscription) plus release notes. **Filed in the CDIS series**: every language key on the page is prefixed `cdis_pm_`, the feature is implemented in the CDIS codebase, and readers comparing SHARE against CDP/CDM will look there. No new slug needed.
+  Covered: participant-mediated retrieval and how it differs from CDP/CDM, the fact that REDCap never receives portal credentials, the setup-survey and allow-list onboarding chain, the REDCap SHARE user right, the public organization directory and participant info page, and the 17.3.1 refinements. `RC-CDIS-04` gained a pointer noting a third option now exists.
+  **Still pending:** the Projects tab and all in-project setup, dashboards and mapping UI — flagged in-article as unverified, needs a capture from a subscribed instance.
+  *Original entry below, retained for context.*
   Participants connect to supported EHR patient portals and authorise transfer of clinical data into a project. Distinct from CDIS: not institution-specific, works across supported healthcare orgs. **Not covered** — the apparent grep hits are all "REDCap Shared Library" false positives. Subsequent 17.3.1 refinements: public searchable directory of published healthcare organisations in the Control Center, patient-identifier selection by FHIR system/type (exact or regex), authorised-EHR fetching prioritised ahead of retained-payload processing with Job Diagnostics staging, provider-specific CarePlan searches for Epic and SMART Health IT, and SHARE totals split from project participants on System Statistics. Needs cross-refs to and from `RC-CDIS-01`/`RC-CDIS-04`.
 
 - [ ] **RC-ACCESS-01 — Accessibility in REDCap Surveys & Forms** *(16.0.6 → 17.3.0)*

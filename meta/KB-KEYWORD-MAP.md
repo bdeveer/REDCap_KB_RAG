@@ -178,6 +178,10 @@ local settings, site policy, institutional policy, custom configuration, environ
 
 Send-It, send it, secure file transfer, secure file sharing, large file transfer, share file, send large file, file too big for email, password protected download, file upload link, send file to recipient, expiring download link, file delivery
 
+## Clinical Data Interoperability Services — RC-CDIS
+
+CDIS, clinical data interoperability, Clinical Data Pull, CDP, Clinical Data Mart, CDM, EHR integration, electronic health record, FHIR, SMART on FHIR, Epic, Oracle Health, Cerner, patient portal, MRN, adjudication, Mapping Helper, Break the Glass, BTG, pull clinical data into REDCap, EHR to REDCap, REDCap SHARE, SHARE, participant-mediated EHR data, healthcare organization catalog, onboarding survey, allow list, dynamic client registration, Job Diagnostics, multisite EHR data
+
 ## Self-Hosting, Deployment & Release Management — RC-INFRA
 
 self-hosting, self hosted REDCap, private REDCap instance, local REDCap, Docker, Docker Compose, Synology, NAS, install REDCap, installation, deployment, web server, PHP version, MySQL, MariaDB, database charset, utf8mb4, Unicode Transformation, upgrade REDCap, Easy Upgrade, upgrade prerequisites, upgrade failed, install failed, REDCap version, what version am I running, version number, release line, Standard release, LTS, Long Term Support, LTS vs Standard, which version should we run, release schedule, release cadence, changelog, change log, release notes, patching, patch level, security fix, security patch, out of date, unpatched, old version directories, branch point, version comparison
