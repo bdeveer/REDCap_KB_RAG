@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types; requires Data Export user rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md); [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md)|
 | **Synonyms** | what report types can i export; export all data vs selected instruments; other export options tab; bulk export survey participants or logging; export only certain forms or events; built-in report options in redcap; which records and fields get exported; difference between report and export format |
@@ -145,6 +147,15 @@ used but serve specific purposes.
 
 
 > **Note:** Standard data exports (CSV, SPSS, R, etc.) do not include files uploaded through File Upload fields. If your project uses file upload fields and you need those files, use the ZIP file of uploaded files option under Other Export Options.
+
+### 5.1 Citation Prompts in the Export Dialog *(15.5.0+)*
+
+The data export dialog now surfaces publications that may need citing in manuscripts arising from the project:
+
+- Where **Randomization** is enabled and fully set up, the dialog cites the REDCap randomization publication.
+- Where one or more **External Modules** are enabled, it cites the External Module Framework publication.
+
+These appear at the point of export rather than in project setup, on the reasoning that the person pulling data for analysis is the one who needs them. Worth capturing when you export rather than reconstructing at manuscript stage — check your institution's or journal's citation requirements alongside them.
 
 
 ---

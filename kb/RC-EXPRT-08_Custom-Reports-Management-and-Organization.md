@@ -6,14 +6,18 @@
 | --- | --- |
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; requires Add/Edit/Organize Reports privilege for most actions |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md); [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
 | **Synonyms** | how to save and edit a custom report; organize reports into folders; my reports and exports page; find a report id for the api; copy delete or rename a report; manage existing reports; where are my saved reports; unique report name for dashboards |
 
 ---
+
+> **Public report access codes (16.0.5+).** A public report can be protected with an access code, set manually or auto-generated, and retrievable via `[report-access-code:unique_report_name]`. Configuration is covered in [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) §4.2; the smart variable in [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md). The **unique report name** needed for the smart variable appears in the far-right column of the reports list on this page.
 
 ## 1. Overview
 

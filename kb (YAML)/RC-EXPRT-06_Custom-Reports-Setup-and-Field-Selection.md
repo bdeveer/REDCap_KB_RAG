@@ -5,10 +5,13 @@ domain: Exports, Reports & Stats
 applies_to:
 - All project types
 - requires Add/Edit/Organize Reports privilege
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-EXPRT-05 — Data Export: Report Types & Other Export Options'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -102,6 +105,16 @@ If any criterion is not met, REDCap blocks activation. When all three pass, REDC
 
 Once public, you can optionally create a custom short link to make the URL easier to share.
 
+### Access Code Protection *(16.0.5+)*
+
+A public report can be protected with a single **access code**. Once set, the report cannot be viewed without entering it. You may define your own code or have REDCap generate one.
+
+The code can be retrieved programmatically with the `[report-access-code:unique_report_name]` smart variable — for example `[report-access-code:R-2554F4TCNT]`. The unique report name appears in the far-right column of the reports list. See [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md).
+
+> **Important — an access code is a convenience control, not access control.** It gates a URL; it does not authenticate anyone, produce an audit trail of who viewed the report, or allow revocation for one recipient. The rule above still governs: do not make a report public if it contains sensitive or identifiable data. Treat the access code as protection against a link being casually forwarded, nothing more.
+
+> **Note (16.1.7):** `[report-access-code]` is now always shown in the smart variable documentation, because administrators can make reports public even where the system setting "Allow reports to be made public?" is set to No. The parallel `[dashboard-access-code]` is correctly **hidden** in that situation, since nobody — including admins — can use it. If the two appear to behave inconsistently in the documentation, that is why.
+
 > **Important:** Never make a report public if it contains sensitive, identifiable, or protected information. Some REDCap installations have disabled the public report feature entirely to comply with data privacy requirements.
 
 > **Institution-specific:** Whether public reports are enabled varies by installation. Contact your REDCap administrator to confirm availability and any applicable data governance requirements before sharing report links externally.
@@ -148,6 +161,13 @@ Step 2 is where you choose which variables the report displays. REDCap provides 
 
 **Choose Instrument method**
 Select an instrument from the dropdown in the top-right of the field section. REDCap adds every variable in that instrument to the report at once. Useful for quickly adding all fields from a known instrument. Note that adding a large instrument may cause a brief slowdown as REDCap loads all variables into the list.
+
+**Quick Set method** *(15.5.0+)*
+Step 2 of the Edit Report page offers a **Quick Set** control that adds or **replaces** the report's fields from a pasted or typed list of field names. This is the fastest route when you already know the fields — from a data dictionary, a colleague's report, or a previous export — and it avoids clicking through a long variable list.
+
+A companion link copies the field names of all fields currently in the report to your clipboard (15.5.1), which makes replicating a report in another project a copy-and-paste operation rather than a manual rebuild. The **Quick Add** popup gained equivalent links to copy all or selected field names (15.5.0).
+
+> **Version caveat (below 15.5.5 Standard):** Quick Set **ignored checkbox field names** pasted in the `checkbox_field___code` notation, and gave no visual feedback while a long add operation was running — so pasting a large list appeared to hang and silently dropped checkbox entries. Fixed in 15.5.5. If you built reports this way on an earlier version, check that checkbox fields actually made it in.
 
 **+ Quick Add method**
 Click the **+ Quick Add** button to open a popup listing all variables in the project, organized by instrument. Check the box next to each variable you want to add. Use the **Select all** or **Deselect all** links in each instrument header to add or remove an entire instrument's variables in one click.

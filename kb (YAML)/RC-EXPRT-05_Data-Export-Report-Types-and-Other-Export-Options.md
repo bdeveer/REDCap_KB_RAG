@@ -5,10 +5,13 @@ domain: Exports, Reports & Stats
 applies_to:
 - All REDCap project types
 - requires Data Export user rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-EXPRT-01 — Data Export: Overview & Workflow'
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: '2026-08-08'
 related:
 - id: RC-EXPRT-01
   title: 'Data Export: Overview & Workflow'
@@ -160,6 +163,15 @@ used but serve specific purposes.
 
 
 > **Note:** Standard data exports (CSV, SPSS, R, etc.) do not include files uploaded through File Upload fields. If your project uses file upload fields and you need those files, use the ZIP file of uploaded files option under Other Export Options.
+
+## 5.1 Citation Prompts in the Export Dialog *(15.5.0+)*
+
+The data export dialog now surfaces publications that may need citing in manuscripts arising from the project:
+
+- Where **Randomization** is enabled and fully set up, the dialog cites the REDCap randomization publication.
+- Where one or more **External Modules** are enabled, it cites the External Module Framework publication.
+
+These appear at the point of export rather than in project setup, on the reasoning that the person pulling data for analysis is the one who needs them. Worth capturing when you export rather than reconstructing at manuscript stage — check your institution's or journal's citation requirements alongside them.
 
 
 ---

@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Record Navigation |
 | **Applies To** | All project types |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md), [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)[RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md), [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md), [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)[RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)[RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md), [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md), [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)[RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)[RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md), [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md), [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) |
 | **Synonyms** | what is the record status dashboard; how to create a custom record dashboard; where to see all records and their completion status; how to make a custom dashboard filtered by criteria; clicking links to open records from the dashboard; view of all records as rows and instruments as columns; how to find record links throughout redcap; record status dashboard colored dots |
@@ -98,6 +100,14 @@ following options:
 | Group by event or instrument | Reorganizes the grid to group all instances of one instrument or event together — useful for reviewing adverse events across all timepoints. |
 | Vertical header orientation | Rotates column headers to vertical text, narrowing columns when instrument or event names are long. |
 | Custom sorting | Sorts records by a variable other than Record ID (e.g., by date of birth or visit date). |
+
+**Description and instructions** — from **15.7.2**, the description/instructions text on a Custom Record Status Dashboard supports **aggregate smart variables** and miscellaneous **project-level smart variables**. This allows a dashboard to open with a live summary — a record count, a project status, or a computed total — rather than static prose. See [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) and [RC-PIPE-17 — Smart Variables: Miscellaneous](RC-PIPE-17_Smart-Variables-Miscellaneous.md).
+
+From **16.1.1**, rows on the Record Status Dashboard highlight on hover and on keyboard focus, which makes tracking a row across a wide grid considerably easier.
+
+> **Version caveat (below 15.6.1 Standard):** Filter logic on a report **or** a Custom Record Status Dashboard that tested a form status field against a blank value — `[form1_complete] = ""` — could return **incorrect filtered results**. The underlying inconsistency in how blank and incomplete form statuses were compared was addressed across 15.5.1 and 15.6.1. Dashboards built on this pattern before then should be re-checked, because the failure was silent: a plausible-looking but wrong record set.
+
+> **Version caveat (below 15.0.3 Standard):** A custom dashboard sorted by the record ID field in **descending** order displayed records in the wrong order where the project's first instrument was a repeating instrument or sat on a repeating event.
 
 ### 4.2 Accessing Custom Dashboards
 

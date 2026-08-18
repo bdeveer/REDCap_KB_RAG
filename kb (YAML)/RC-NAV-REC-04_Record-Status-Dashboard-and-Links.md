@@ -4,10 +4,13 @@ title: Record Status Dashboard and Links
 domain: Record Navigation
 applies_to:
 - All project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-NAV-REC-01
   title: 'Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03
@@ -114,6 +117,14 @@ following options:
 | Group by event or instrument | Reorganizes the grid to group all instances of one instrument or event together — useful for reviewing adverse events across all timepoints. |
 | Vertical header orientation | Rotates column headers to vertical text, narrowing columns when instrument or event names are long. |
 | Custom sorting | Sorts records by a variable other than Record ID (e.g., by date of birth or visit date). |
+
+**Description and instructions** — from **15.7.2**, the description/instructions text on a Custom Record Status Dashboard supports **aggregate smart variables** and miscellaneous **project-level smart variables**. This allows a dashboard to open with a live summary — a record count, a project status, or a computed total — rather than static prose. See [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) and [RC-PIPE-17 — Smart Variables: Miscellaneous](RC-PIPE-17_Smart-Variables-Miscellaneous.md).
+
+From **16.1.1**, rows on the Record Status Dashboard highlight on hover and on keyboard focus, which makes tracking a row across a wide grid considerably easier.
+
+> **Version caveat (below 15.6.1 Standard):** Filter logic on a report **or** a Custom Record Status Dashboard that tested a form status field against a blank value — `[form1_complete] = ""` — could return **incorrect filtered results**. The underlying inconsistency in how blank and incomplete form statuses were compared was addressed across 15.5.1 and 15.6.1. Dashboards built on this pattern before then should be re-checked, because the failure was silent: a plausible-looking but wrong record set.
+
+> **Version caveat (below 15.0.3 Standard):** A custom dashboard sorted by the record ID field in **descending** order displayed records in the wrong order where the project's first instrument was a repeating instrument or sat on a repeating event.
 
 ## 4.2 Accessing Custom Dashboards
 
