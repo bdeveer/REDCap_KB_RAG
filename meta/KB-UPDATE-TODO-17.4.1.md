@@ -40,7 +40,11 @@
 
 These are whole features with **zero** coverage in the KB. Four of the six are REDCap+ features, which `RC-PLUS-01` currently only names in passing.
 
-- [ ] **RC-PLUS-02 — Project Migration Tool** *(17.0.0, REDCap+)*
+- [x] **RC-PLUS-02 — Project Migration Tool** *(17.0.0, REDCap+)* — *written 2026-08-18, pending verification*
+  Written from release notes; **not yet verified against a live subscribed instance**, and the article says so in a scope note.
+  The three dangling `RC-PLUS-02 *(planned)*` references in `RC-PLUS-01` are now resolved. `RC-PROJ-05` gained a scope note and a routing table — the XML route is **not** deprecated and remains correct where either instance is below 17.0.0, where the destination has no subscription, or where only the design is needed.
+  **Key finding:** the subscription requirement is **asymmetric** — none needed to move a project *off* an instance, required to move one *to* an instance. Institutions consolidating instances need it on the target, not the ones being retired.
+  Also resolves the deferred gotcha: files and signatures silently omitted from longitudinal migrations below 17.0.6, plus records dropped for failing field validation (below 17.0.2) and the Development record limit truncating Production migrations (below 17.1.4).
   `RC-PLUS-01` already cites `RC-PLUS-02` as *(planned)* in three places (lines 13, 94, 206) — those are dangling references today. Migrates structure, metadata, data, files and logs between REDCap instances; both source and destination must participate. **Also reconcile with `RC-PROJ-05` (Project Migration)**, which describes the pre-17.0 manual/XML approach and now needs a pointer plus a scope note saying it covers the non-REDCap+ path.
 
 - [ ] **RC-PLUS-03 — Reward Services** *(17.0.0, REDCap+)*

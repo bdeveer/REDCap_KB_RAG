@@ -21,6 +21,19 @@
 
 There are many reasons to move a REDCap project from one installation to another: changing institutions, consolidating multiple REDCap installations, or sharing a project design with a colleague at a different site. Whatever the reason, REDCap provides a built-in mechanism to export a full project backup and re-import it elsewhere.
 
+> **Scope — this article covers the Project XML approach. There is now a second option.** From **17.0.0**, REDCap+ subscribers can use the **Project Migration Tool**, which moves a project as a whole — including things the XML route cannot carry at all: **record locking statuses, survey participants and timestamps, File Repository contents, randomization assignments and allocation tables, Logging and Email Logging**. See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md).
+>
+> **Which to use:**
+>
+> | Situation | Route |
+> | --- | --- |
+> | Either instance is below 17.0.0 | Project XML — this article |
+> | The destination instance has no REDCap+ subscription | Project XML — this article |
+> | You only need the project **design**, not its history | Project XML — this article |
+> | You need the audit trail, randomization history or locking statuses to survive the move | Project Migration Tool |
+>
+> The XML route remains fully supported and is the right tool in the first three cases. It is not deprecated.
+
 This article covers:
 
 - What to check before migrating

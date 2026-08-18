@@ -132,7 +132,7 @@ REDCap as operational tool, request management, non-research use, workflow autom
 
 ## REDCap Plus — RC-PLUS
 
-REDCap+, REDCap Plus, paid features, premium features, subscription, advanced features, REDCap Plus subscription, Plus features
+REDCap+, REDCap Plus, paid features, premium features, subscription, advanced features, REDCap Plus subscription, Plus features, project migration tool, PMT, migration key, migrate a project to another server, move project between instances, project migration dashboard, instance ID, completion actions
 
 ## Profile / My Profile — RC-PROF
 

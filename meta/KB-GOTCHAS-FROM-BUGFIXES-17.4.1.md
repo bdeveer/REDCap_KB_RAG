@@ -283,8 +283,8 @@ Useful for setting expectations about adopting new features early — and direct
 
 - [x] **Access Control Groups (16.0.0) had two blocking bugs in its first weeks.** **16.0.20** — with ACGs enabled, non-admin users could not access **any** project (fatal PHP error on every page). **16.0.23** — uploading a Data Dictionary with ACGs enabled failed fatally. Target `RC-CC-25`.
   *Applied 2026-08-18 → `RC-CC-25` §2.*
-- [ ] **Project Migration Tool (17.0.0) lost files in longitudinal projects.** **17.0.6** — migrating a longitudinal project with File Upload and/or Signature field files silently omitted some files and signatures. Anyone who migrated on 17.0.0–17.0.5 should re-verify file completeness. Target the proposed `RC-PLUS-02`.
-  *Not applied — deferred to **`RC-PLUS-02`** (Project Migration Tool) — one of the five outstanding P0 articles.*
+- [x] **Project Migration Tool (17.0.0) lost files in longitudinal projects.** **17.0.6** — migrating a longitudinal project with File Upload and/or Signature field files silently omitted some files and signatures. Anyone who migrated on 17.0.0–17.0.5 should re-verify file completeness. Target the proposed `RC-PLUS-02`.
+  *Applied 2026-08-18 → `RC-PLUS-02` §5, alongside two further silent-omission defects the original entry did not capture: records dropped for failing field validation (below 17.0.2) and the Development record limit truncating migrations of Production projects (below 17.1.4).*
 - [x] **Enhanced Signature (17.1.0) signatures were missing from PDFs.** **17.1.1** — the signature image did not appear in downloaded instrument PDFs or PDF Snapshots. Target `RC-SURV-09` and the Enhanced Signature content proposed for `RC-FD-06`.
   *Applied 2026-08-18 → `RC-FD-06` §8.8.1.*
 - [ ] **Rewards (17.0.0) cron crashed repeatedly.** **15.5.5** references `ProcessScheduledRewardOrders` crashing — note the version, which suggests reward plumbing predates the 17.0.0 announcement. Worth confirming before writing the proposed `RC-PLUS-03`.
