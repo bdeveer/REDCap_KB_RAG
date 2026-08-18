@@ -182,6 +182,21 @@ def splice(path, data):
     html, n2 = re.subn(r"const CAT_COLORS\s*=\s*\{.*?\};", lambda _: new_colors, html, count=1, flags=re.S)
     if not (n1 and n2):
         raise SystemExit(f"ERROR: could not locate GRAPH_DATA ({n1}) / CAT_COLORS ({n2}) in {path}")
+
+    # The header subtitle and the stats bar hold literal counts that the page's
+    # own JS never rewrites on load, so refresh them here or they go stale.
+    nodes, edges = f"{len(data['nodes']):,}", f"{len(data['edges']):,}"
+    html, n3 = re.subn(
+        r'(<p id="subtitle">).*?(</p>)',
+        lambda m: f"{m.group(1)}{nodes} articles &middot; {edges} dependencies{m.group(2)}",
+        html, count=1, flags=re.S)
+    html, n4 = re.subn(
+        r'(<div id="stats-bar">).*?(</div>)',
+        lambda m: (f'{m.group(1)}Showing <span id="visible-count">{nodes}</span> nodes '
+                   f'&middot; <span id="visible-edges">{edges}</span> edges{m.group(2)}'),
+        html, count=1, flags=re.S)
+    if not (n3 and n4):
+        print(f"  ! subtitle ({n3}) / stats-bar ({n4}) not found in {path} — counts may be stale", file=sys.stderr)
     open(path, "w", encoding="utf-8").write(html)
 
 
