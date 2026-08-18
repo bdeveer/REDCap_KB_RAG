@@ -76,17 +76,19 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   **Correction to this report:** the drop happened in **15.6.0**, not 16.0.0 as originally stated. The changelog is explicit: administrators cannot upgrade to **15.6.0 or higher** until the Unicode Transformation has been performed. Getting this wrong by four minor versions would have sent readers looking in the wrong place.
   Applied: `RC-INFRA-01` §3.2 as a Critical callout with the remediation paths (13.2.0+ via Configuration Check; below 13.2.0 upgrade to 15.5.0 first; 15.5.40 as the safe staging version when a transformation is merely suspected). Database row in §3 now specifies `utf8mb4`. Two new gotchas. `RC-INFRA-02` §9 gained a pre-upgrade prerequisites list and §9.1 a known-bad versions table.
 
-- [ ] **`RC-INFRA-01`, `RC-CC-03` — Content Security Policy header. GAP**
-  15.5.1 added a CSP header. Also 15.4.5 added `includeSubDomains` to the HSTS header. Neither string appears in the KB; both matter for reverse-proxy and External Module troubleshooting.
+- [x] **`RC-INFRA-01`, `RC-CC-03` — Content Security Policy header. GAP** — *done 2026-08-18*
+  CSP added 15.5.1, HSTS `includeSubDomains` 15.4.5. **The detail that matters was missing from this report:** REDCap deliberately **does not override a CSP header already set by the web server**, so a proxy-level CSP replaces rather than supplements REDCap's — and a stricter policy breaks External Modules in ways that look like module faults. Applied to `RC-INFRA-01` §4a.1 and `RC-CC-03` §12.3.
 
-- [ ] **`RC-INFRA-01`, `RC-CC-03` — session cookie renamed. GAP**
-  15.7.0 changed the authenticated-session cookie from `PHPSESSID` to an installation-specific name derived from the directory path. Relevant to load balancers, SSO and anything inspecting cookies.
+- [x] **`RC-INFRA-01`, `RC-CC-03` — session cookie renamed. GAP** — *done 2026-08-18*
+  15.7.0. **Report understated the reason:** this is not cosmetic. Before 15.7.0, two REDCap installations on one server and domain shared the `PHPSESSID` name, so logging into the second destroyed the session in the first — running production and test on one host was actively broken. Applied to `RC-INFRA-01` §4a.2 and `RC-CC-03` §12.4, with a caveat for anything pinning the cookie by name.
 
-- [ ] **`RC-INFRA-01`, `RC-CC-23` — old version directories are now a stated security risk. GAP**
-  15.5.36 flags that leaving old REDCap version directories on the server keeps known vulnerabilities reachable. Pairs with the **Automatic Version Redirect** feature below.
+- [x] **`RC-INFRA-01`, `RC-CC-02` — old version directories are a stated security risk. GAP** — *done 2026-08-18*
+  **Two corrections.** The Standard version is **16.1.4**, not 15.5.36 (that was the LTS number). And the report omitted REDCap's own qualifier: it is *not* necessary to remove all old version directories at every future upgrade — the Configuration Check names the specific versions of concern.
+  **Retargeted:** originally assigned to `RC-CC-23` (Backup Options), which is the wrong home — version-directory lifecycle is not a backup topic. Went to `RC-CC-02` (Configuration Check) and `RC-INFRA-01` §4a.4 instead.
+  Folded in as one story: 16.1.5 blocks version-directory URLs for survey and API endpoints (`/api/index.php`, not `/redcap_vXX/API/index.php` — breaks hardcoded integrations), 17.2.2 adds Automatic Version Redirect, 17.3.0 and 17.4.0 fix it, and 16.1.7 warns that Rapid Retrieval caches can 404 once a version directory is removed.
 
-- [ ] **`RC-INFRA-01`, `RC-CC-02` — temp directory must not be web-accessible. GAP**
-  15.3.2 security improvement (REDCap now attempts to auto-protect under IIS/Apache), warning text clarified in 15.4.0, and 17.0.2 extended the Configuration Check to verify the user-uploaded file directory is not under webroot when using Local file storage.
+- [x] **`RC-INFRA-01`, `RC-CC-02` — temp directory must not be web-accessible. GAP** — *done 2026-08-18*
+  15.3.2, wording clarified 15.4.0, webroot check for uploaded files 17.0.2, subfolder-creation check 15.1.1. **Key detail the report missed:** REDCap auto-writes `web.config` and `.htaccess`, which protects IIS and Apache and does **nothing on NGINX** — those admins must block access themselves. Applied to `RC-INFRA-01` §4a.3 and `RC-CC-02` Directory Security Checks.
 
 ### Control Center
 
@@ -96,8 +98,8 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   Applied: new `RC-CC-26` documenting the page, the three enablement scopes (including the easily-missed "all non-project pages"), the configuration table, the project-level selector, and an old→new settings mapping. `RC-CC-06` §AI Services retained for LTS 16.0.x readers behind a version caveat. `RC-AI-01` Administrator Configuration now routes by version.
   Still open: 15.2.0 Gemini and other engine options (already in `RC-CC-06`); **17.1.4 Azure OpenAI via Azure API Management (APIM) gateways — not yet documented anywhere.**
 
-- [ ] **`RC-CC-02` / `RC-CC-23` — Automatic Version Redirect. GAP**
-  17.2.2 added automatic redirection of bookmarks and old survey invitation links pointing at removed version folders. 17.3.0 changed delivery: `redcap_redirect.php` is now embedded directly in the Configuration Check steps rather than downloaded via the non-versioned files workflow. **Not covered.**
+- [x] **`RC-CC-02` — Automatic Version Redirect. GAP** — *done 2026-08-18*
+  Covered as part of the old-version-directory story above rather than separately, since 16.1.4, 16.1.5, 17.2.2, 17.3.0 and 17.4.0 are one continuous thread. Added: instructions cover Apache, NGINX and IIS only and require web server changes; a version caveat that 17.2.2–17.2.3 instructions named the **wrong directory** (version folder instead of REDCap root, fixed 17.3.0), and that 17.4.0 moved the redirect's own config check to client-side JavaScript after server-side URL testing proved unreliable.
 
 - [ ] **`RC-CC-24` / `RC-DE-05` — admins can now add and edit custom field validation types. GAP**
   17.4.0 made the Field Validation Types page editable in the Control Center (absorbing the "Add Validation Types" External Module). `RC-DE-05` should note that the validation list is now site-extensible. Related: 16.0.7 allows custom validations with `email` datatype to be used for the Designated Email Field and survey invitations.

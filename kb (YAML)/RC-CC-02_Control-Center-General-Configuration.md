@@ -4,10 +4,13 @@ title: 'Control Center: General System Configuration'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -64,7 +67,7 @@ Six tests run automatically when the page loads. All six must pass for REDCap to
 These are passive indicator checks shown as pass/warn/fail icons. They do not stop REDCap from loading but indicate configuration gaps:
 
 - **SSL** — REDCap should always be served over HTTPS.
-- **PHP 8.1.0 or higher** — Minimum supported PHP version.
+- **PHP 8.1.0 or higher** — Minimum supported PHP version from REDCap 16.0.5 onward; PHP 8.5 is officially supported. See [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) Section 3.1 for the full version table.
 - **MySQL/MariaDB 5.5.5 or higher** — Minimum supported database version.
 - **GD library (version 2+)** — Required for image processing features.
 - **Imagick PHP extension** *(Recommended, not required)* — If not installed, inline PDF attachments on **Descriptive Text** fields will not display inside PDF exports of forms or surveys. Recommended for full PDF functionality.
@@ -88,6 +91,34 @@ The page confirms that the following directories are writable by the web server 
 - **`modules/` directory** — Required for External Module installation and updates.
 
 If any directory is not writable, the relevant feature will fail (e.g., module installs, file exports).
+
+The check also confirms that **subdirectories can be created** under REDCap's `temp/` directory, not merely that files can be written there — several features create subfolders under it. Added in 15.1.1.
+
+## Directory Security Checks
+
+Beyond writability, the Configuration Check verifies that directories which should not be reachable from the web are in fact not reachable.
+
+| Check | Detail | Introduced |
+| --- | --- | --- |
+| **REDCap `temp/` directory not publicly accessible** | REDCap attempts to protect it automatically by writing a `web.config` (IIS) or `.htaccess` (Apache) file into the directory. Where it cannot — **notably NGINX, where neither file has any effect** — the Control Center provides a recommendation to implement the block in the server configuration | 15.3.2 |
+| **Uploaded-files directory not under the webroot** | When using Local file storage, verifies the directory holding all user-uploaded files does not sit beneath the web server's document root | 17.0.2 |
+
+> **Note:** The warning text for the `temp/` directory check was reworded in 15.4.0 because administrators found the original confusing. If you are working from older notes, the wording will differ but the requirement has not changed.
+
+## Old Version Directory Recommendations
+
+From **16.1.4** the Configuration Check page recommends removing specific old `redcap_vXX.X.X/` directories left behind by past upgrades, and **names the versions concerned**. The rationale is that known vulnerabilities in those versions remain executable for as long as their directories exist on the server.
+
+REDCap's stated position is that it is *not* necessary to remove all older version directories at every future upgrade, though you may choose to. In practice that means treating the flagged versions as the actionable list, and deciding separately whether to purge the rest.
+
+Two related changes:
+
+- From **16.1.5**, REDCap rejects survey and API calls whose URL contains a version directory. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`. REDCap noted no known vulnerabilities in those endpoints at the time — this is pre-emptive.
+- From **17.2.2**, the **Automatic Version Redirect** feature can redirect stale bookmarks and old survey invitation links to the current version rather than returning a 404. The Configuration Check page carries setup instructions for Apache, NGINX and IIS. It requires web server configuration changes and should be implemented by whoever administers that layer.
+
+> **Version caveat (17.2.2–17.2.3):** The Automatic Version Redirect instructions initially specified placing files in the **version folder** instead of the REDCap root directory. Corrected in 17.3.0, which also embedded `redcap_redirect.php` into the Configuration Check steps rather than the separate non-versioned-files workflow. 17.4.0 moved the redirect's own check to client-side JavaScript, because server-side URL testing produced inaccurate results on some server configurations. A redirect configured on 17.2.2 or 17.2.3 that never worked most likely has its files in the wrong directory.
+
+> **Note — clear the Rapid Retrieval cache after removing old version directories.** Cached pages written while REDCap was on a previous version can reference images and links under that version's path, and will 404 once the directory is gone.
 
 ## Internal Service Check
 

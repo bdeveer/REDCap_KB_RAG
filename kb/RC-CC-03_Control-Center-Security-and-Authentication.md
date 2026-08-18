@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md)|
 | **Synonyms** | control center authentication settings; configure two-factor authentication for redcap; set up single sign on shibboleth or saml; table-based authentication login settings; google oauth2 or microsoft entra id login; control center login security policies; how do users authenticate to redcap; system-wide authentication method configuration |
@@ -430,6 +432,25 @@ Controls whether REDCap pages can be embedded inside `<iframe>` elements on exte
 The "Prevent clickjacking" option is selected by default and is the recommended setting. It allows REDCap pages to be embedded only within the same domain, preventing malicious actors from overlaying REDCap pages on external sites to trick users into unintended clicks.
 
 > Note: Enabling clickjacking prevention may affect legitimate use cases such as embedding surveys in external websites. Evaluate this trade-off based on your institution's security requirements.
+
+### 12.3 Security Headers Set by REDCap
+
+Two HTTP security headers are applied by REDCap itself rather than configured on this page. They are listed here because they are frequently investigated alongside the settings above.
+
+| Header | Behaviour | Introduced |
+| --- | --- | --- |
+| **Content-Security-Policy (CSP)** | REDCap sets a CSP header meeting minimum security requirements while remaining permissive enough not to break External Modules and legacy code in REDCap's own codebase | 15.5.1 |
+| **Strict-Transport-Security (HSTS)** | Includes the `includeSubDomains` attribute | 15.4.5 |
+
+> **Important — REDCap does not override an existing CSP header.** If the web server already sets `Content-Security-Policy`, REDCap leaves it alone. This is deliberate, so an institution can impose a stricter policy than REDCap ships with. The consequence is that a CSP set at the proxy or web server *replaces* REDCap's rather than supplementing it, and a policy stricter than REDCap expects can break External Modules in ways that present as module faults rather than header problems.
+
+### 12.4 Session Cookie Name
+
+From REDCap **15.7.0** the authenticated user session cookie is no longer named `PHPSESSID`. REDCap generates an installation-specific name derived from the installation's directory path on the web server.
+
+This was introduced to allow a user to hold sessions in **multiple REDCap installations on the same server and domain simultaneously**. On earlier versions the shared cookie name meant logging into a second installation silently destroyed the session in the first — a recurring annoyance for anyone running production and test on one host.
+
+> **Version caveat (upgrading across 15.7.0):** Anything that references the session cookie by name — load balancer session affinity, an SSO or reverse-proxy integration, a monitoring probe — must be updated. The failure mode is users being logged out unpredictably or bounced between application servers, which does not obviously implicate a cookie name.
 
 ---
 

@@ -4,10 +4,13 @@ title: 'Control Center: Security & Authentication Configuration'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-INST-01
   title: Institution-Specific Settings & Policies — Production
@@ -443,6 +446,25 @@ Controls whether REDCap pages can be embedded inside `<iframe>` elements on exte
 The "Prevent clickjacking" option is selected by default and is the recommended setting. It allows REDCap pages to be embedded only within the same domain, preventing malicious actors from overlaying REDCap pages on external sites to trick users into unintended clicks.
 
 > Note: Enabling clickjacking prevention may affect legitimate use cases such as embedding surveys in external websites. Evaluate this trade-off based on your institution's security requirements.
+
+## 12.3 Security Headers Set by REDCap
+
+Two HTTP security headers are applied by REDCap itself rather than configured on this page. They are listed here because they are frequently investigated alongside the settings above.
+
+| Header | Behaviour | Introduced |
+| --- | --- | --- |
+| **Content-Security-Policy (CSP)** | REDCap sets a CSP header meeting minimum security requirements while remaining permissive enough not to break External Modules and legacy code in REDCap's own codebase | 15.5.1 |
+| **Strict-Transport-Security (HSTS)** | Includes the `includeSubDomains` attribute | 15.4.5 |
+
+> **Important — REDCap does not override an existing CSP header.** If the web server already sets `Content-Security-Policy`, REDCap leaves it alone. This is deliberate, so an institution can impose a stricter policy than REDCap ships with. The consequence is that a CSP set at the proxy or web server *replaces* REDCap's rather than supplementing it, and a policy stricter than REDCap expects can break External Modules in ways that present as module faults rather than header problems.
+
+## 12.4 Session Cookie Name
+
+From REDCap **15.7.0** the authenticated user session cookie is no longer named `PHPSESSID`. REDCap generates an installation-specific name derived from the installation's directory path on the web server.
+
+This was introduced to allow a user to hold sessions in **multiple REDCap installations on the same server and domain simultaneously**. On earlier versions the shared cookie name meant logging into a second installation silently destroyed the session in the first — a recurring annoyance for anyone running production and test on one host.
+
+> **Version caveat (upgrading across 15.7.0):** Anything that references the session cookie by name — load balancer session affinity, an SSO or reverse-proxy integration, a monitoring probe — must be updated. The failure mode is users being logged out unpredictably or bounced between application servers, which does not obviously implicate a cookie name.
 
 ---
 

@@ -9,7 +9,7 @@ requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - None
-version: '1.1'
+version: '1.2'
 last_updated: 2026-08
 related:
 - id: RC-INFRA-02
@@ -132,6 +132,52 @@ The container images provide the *runtime*; REDCap's *source* is mounted in from
 
 ---
 
+# 4a. Server Hardening
+
+REDCap sets several protections itself, but each has a case where the server operator has to act. These matter on a sandbox mainly because they are where a private instance diverges from production and stops being a faithful test of it.
+
+## 4a.1 Security headers
+
+| Header | Behaviour | Introduced |
+|---|---|---|
+| **Content-Security-Policy** | REDCap sets a CSP header deliberately kept permissive enough not to break External Modules and legacy code. **If the web server already sets a CSP header, REDCap will not override it** — this is intentional, so an institution can impose a stricter policy | 15.5.1 |
+| **Strict-Transport-Security** | The `includeSubDomains` attribute is included | 15.4.5 |
+| **X-Frame-Options** | `SAMEORIGIN` when clickjacking prevention is enabled, which is the default — see [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) | — |
+
+The CSP override rule is the one to remember. If your reverse proxy sets a CSP header, that header wins and REDCap's is never applied — so a policy that is stricter than REDCap expects can break External Modules in ways that look like module bugs.
+
+## 4a.2 Session cookie naming
+
+Since **15.7.0** the authenticated session cookie is no longer `PHPSESSID`. It is an installation-specific name derived from the REDCap installation's directory path on the web server.
+
+This exists to solve a real problem: on earlier versions, two REDCap installations on the same server and domain shared a cookie name, so logging into the second installation destroyed the session in the first. Running production and a test instance on one host was actively hostile. Since 15.7.0 both sessions coexist.
+
+Relevant if anything in your stack inspects or pins the cookie by name — load balancer session affinity, an SSO integration, or a monitoring check. Those break on upgrade across 15.7.0 unless updated.
+
+## 4a.3 The `temp` directory
+
+REDCap's `temp/` directory sits inside the web root and must **not** be publicly reachable.
+
+- From **15.3.2** REDCap attempts to protect it automatically by writing a `web.config` (IIS) or `.htaccess` (Apache) file into the directory.
+- **If you run NGINX, this does not happen** — neither file means anything to NGINX. You must block access in the server configuration yourself. The Control Center will tell you so, and the warning text was reworded in 15.4.0 because the original was widely misread.
+- The directory must also allow **subdirectory creation**, not merely file writes; several REDCap features create subfolders under `temp/`. A Configuration Check test for this was added in 15.1.1.
+
+> **Note:** A containerized stack makes this easy to get wrong, because the web image's server may differ from production's. A sandbox on NGINX will not reproduce a production Apache instance's automatic protection.
+
+## 4a.4 Old version directories
+
+REDCap upgrades leave the previous `redcap_vXX.X.X/` directories in place, and they remain reachable.
+
+- From **16.1.4** the Configuration Check page **names the specific old versions** it recommends removing, on the basis that known vulnerabilities in those versions stay executable while the directories exist. REDCap's stated position is that it is not necessary to remove all older version directories at every future upgrade, though you may choose to — so treat the flagged versions as the actionable list.
+- From **16.1.5** REDCap **refuses survey and API calls whose URL contains a version directory**. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`, or it returns an error. Any integration, script or bookmark using a versioned URL breaks on upgrade to 16.1.5 or later. REDCap noted no known vulnerabilities in those endpoints at the time; this is pre-emptive hardening.
+- From **17.2.2** the **Automatic Version Redirect** feature can send stale bookmarks and old survey invitation links to the current version instead of a 404. The Configuration Check page carries setup instructions for Apache, NGINX and IIS. It changes web server configuration, so it is work for whoever owns that layer.
+
+> **Version caveat (17.2.2–17.2.3):** The Automatic Version Redirect instructions initially told you to place files in the **version folder** rather than the REDCap root directory. Corrected in 17.3.0, which also embedded `redcap_redirect.php` directly into the Configuration Check steps rather than serving it through the separate non-versioned-files workflow. 17.4.0 then moved the redirect's own configuration check to client-side JavaScript, because server-side URL testing was giving false results on some configurations. If you set this up on 17.2.2 or 17.2.3 and it never worked, the file is probably in the wrong directory.
+
+> **Note — removing old version directories can break cached pages.** Rapid Retrieval caches written while REDCap was on a previous version may reference images and links under that version's directory. Remove the directory and those cached pages can 404 until the cache is cleared. Clear the Rapid Retrieval cache after removing old version directories.
+
+---
+
 # 5. Email, File Storage & Other Sandbox Hygiene
 
 **Email → mail catcher.** REDCap has no generic "SMTP server / port" field in its UI; it sends through the server's PHP mail subsystem (see [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md), which covers only Universal FROM/DO-NOT-REPLY addresses and third-party API providers). To route mail to a catcher, configure the *web container's* mail transport — install a lightweight sendmail shim (e.g., `msmtp`) and point PHP's `sendmail_path` at the mail-catcher container. REDCap's "Send test email" then lands in the catcher's inbox with no UI change.
@@ -208,6 +254,12 @@ No. A personal sandbox is not validated, backed up, or secured to institutional 
 **Creating the database with a legacy charset.** A database built as `UTF8` / `UTF8-MB3` rather than `utf8mb4` will block any upgrade to REDCap 15.6.0 or higher until the Unicode Transformation is performed, and the block appears only when you attempt the upgrade — not when you install. Create the database as `utf8mb4` at the outset; retrofitting it later is far more work than getting it right on day one. See Section 3.2.
 
 **Assuming a successful Easy Upgrade means the database was transformed.** On affected versions, Easy Upgrade would carry an instance past 15.6.0 without performing the Unicode Transformation and without complaining. The instance appears fine until a later traditional upgrade sticks on the upgrade page. If an instance was Easy Upgraded from v15 to v16, verify the transformation actually ran rather than assuming it did.
+
+**Pinning anything to the session cookie name.** Since 15.7.0 the authenticated session cookie is installation-specific rather than `PHPSESSID`. Load balancer affinity rules, SSO integrations or monitoring checks that name the cookie explicitly stop working on upgrade across that boundary, and the symptom — users randomly logged out or bounced between app servers — does not obviously point at a cookie name.
+
+**Assuming REDCap protected the `temp` directory for you.** It writes `.htaccess` and `web.config` automatically, which covers Apache and IIS and does nothing at all on NGINX. If your sandbox runs a different web server than production, this is one of the places the two silently diverge.
+
+**Leaving versioned URLs in scripts and integrations.** From 16.1.5 REDCap rejects survey and API calls whose URL contains a version directory, so an API client hardcoded to `/redcap_vXX.X.X/API/index.php` fails after an upgrade even though the endpoint plainly exists. Call the API at `/api/index.php`.
 
 **Planning a multi-version jump without reading the intermediate changelogs.** Upgrade prerequisites accumulate — PHP minimums and the charset requirement both changed inside the 15.x–16.x range — and several releases shipped fixes for upgrade SQL scripts that failed on particular MySQL and MariaDB versions and configurations. Read the changelog between your current version and your target, not just the target's entry. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md).
 
