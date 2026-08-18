@@ -256,6 +256,7 @@ A complete index of all KB articles by ID, title, and filename. Use this file fo
 | RC-PLUS-02 | REDCap+: Project Migration Tool | RC-PLUS-02_Project-Migration-Tool.md |
 | RC-PLUS-03 | REDCap+: Reward Services | RC-PLUS-03_Reward-Services.md |
 | RC-PLUS-04 | REDCap+: Project Administrator Groups (PAGs) | RC-PLUS-04_Project-Administrator-Groups.md |
+| RC-PLUS-05 | REDCap+: Email Verification & Unsubscribe | RC-PLUS-05_Email-Verification-and-Unsubscribe.md |
 
 ---
 

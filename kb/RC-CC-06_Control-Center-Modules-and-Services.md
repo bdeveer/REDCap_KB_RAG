@@ -193,6 +193,20 @@ Supported external storage methods are identical to those for the File Upload Fi
 
 ---
 
+## Email Verification and Email Unsubscribe Features *(REDCap+, 17.3.0+)*
+
+| Setting | Options | Default |
+| --- | --- | --- |
+| Email Verification and Email Unsubscribe Features | Disabled / Enabled | **Enabled** |
+
+When enabled, a suite of four Smart Variables and a per-project **Verified & Unsubscribed Emails** dashboard page become available, letting participants verify their email address or unsubscribe from all emails from a project.
+
+> **Note:** Disabling this hides the dashboard page from every project **and** removes the related Smart Variables from the Smart Variable documentation. Because the setting is Enabled by default, projects may already be relying on it — audit usage before disabling, since live alert and ASI trigger logic can depend on these variables.
+
+See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
+---
+
 ## Reward Services *(REDCap+, 17.0.0+)*
 
 Participant compensation via electronic gift cards, integrating with the third-party vendor **Tango** through its Card API. Requires a REDCap+ subscription; the section is present on the page but not configurable without one.

@@ -7,10 +7,10 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions; REDCap v17.0.0+ |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-04 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)|
+| **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
 | **Synonyms** | what is redcap plus; redcap+ paid subscription tier; how much does redcap plus cost; difference between redcap core and redcap plus; premium redcap features subscription; do i need redcap+ to use my features; redcap plus vs free redcap; which features require a redcap+ subscription |
 
 ---
@@ -78,7 +78,7 @@ Choosing REDCap+ does not grant access to enhanced or priority support. Administ
 
 ---
 
-## 4. Initial REDCap+ Features (2026)
+## 4. REDCap+ Features (2026)
 
 > **⚠️ REDCap+ Feature Tag**
 > All features listed in this section are REDCap+ exclusive and require a REDCap+ subscription on the target installation.
@@ -104,6 +104,14 @@ Integrates the Tango Gift Card API with REDCap+ to support participant recruitme
 ### REDCap SHARE
 
 Supports participant-driven sharing of their electronic health record (EHR) data directly with researchers.
+
+### Project Administrator Groups (PAGs) *(17.1.0)*
+
+Delegates routine administrative work — project creation approvals, production status changes, draft approvals — from system administrators to designated project-level admins for a group of projects. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
+
+### Email Verification & Email Unsubscribe *(17.3.0)*
+
+Lets participants verify their email address and opt out of all emails from a project, via four Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
 
 ### Additional Community Portal Seats
 
@@ -226,5 +234,6 @@ No. REDCap+ subscribers have full discretion over the types of research and oper
 - [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) (moving projects between REDCap installations). Note the asymmetry: a subscription is required to migrate projects **to** an instance, but not to migrate them **off** one.
 - [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) (participant compensation via the Tango gift card API)
 - [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md) (delegating routine administrative work to trusted project-level admins)
+- [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md) (participant email verification and per-project opt-out)
 - [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) Configuration (system-level admin configuration)
 - [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)(analogous subscription-based add-on model for context)

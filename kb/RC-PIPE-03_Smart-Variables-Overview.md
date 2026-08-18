@@ -111,7 +111,13 @@ If a project has published public reports with access codes, this category provi
 
 If a project uses REDCap's MyCap mobile application for participant data collection, this category provides smart variables specific to the MyCap context — such as participant-facing links and MyCap-specific metadata.
 
-### 3.13 Miscellaneous
+### 3.13 Email Verification & Unsubscribe *(REDCap+, 17.3.0+)*
+
+Four Smart Variables supporting participant email verification and opt-out: `[email-verify-link]` and `[email-verified]`, `[email-unsubscribe-link]` and `[email-unsubscribed]`. Each pair is a link to place in an email plus a flag to use in alert or ASI trigger logic.
+
+> **Note:** These appear only on instances with an active REDCap+ subscription running 17.3.0+, and only while the feature is enabled in the Control Center. If it is disabled there, REDCap hides them from the Smart Variable documentation as well as from use. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
+### 3.14 Miscellaneous
 
 The Miscellaneous category is primarily relevant for REDCap administrators rather than project designers. These smart variables expose information about the REDCap installation and the project itself.
 

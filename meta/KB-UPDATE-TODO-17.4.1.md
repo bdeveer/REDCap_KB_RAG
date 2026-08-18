@@ -71,8 +71,13 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
   > **Note on REDCap's release notes.** The 17.1.0 entry ends "...will automatically get assigned to the DAG", where it means **PAG**. Recorded in the article, since anyone reading the official notes next to a DAG article will trip on it.
 
-- [ ] **RC-PLUS-05 — Email Verification & Unsubscribe** *(17.3.0, REDCap+)*
-  New smart variables `[email-verify-link]`, `[email-unsubscribe-link]`, `[email-verified]` and others. **Zero** matches. Requires companion entries in `RC-PIPE-03` (Smart Variables Overview) and `RC-PIPE-08` or `RC-PIPE-17`. 17.3.3 added System Statistics counters for this feature.
+- [x] **RC-PLUS-05 — Email Verification & Unsubscribe** *(17.3.0, REDCap+)* — *written 2026-08-18*
+  Written from the 17.3.0 release notes; the system-level setting is verified against the 17.3.6 LTS Modules/Services capture (`email_verify_unsubscribe_enabled_global`, cosmetic gating, so it was readable).
+  There are **four** Smart Variables, not "and others": `[email-verify-link]` / `[email-verified]` and `[email-unsubscribe-link]` / `[email-unsubscribed]` — a link to place in an email plus a flag to use in trigger logic, in each pair. Added as a new category §3.13 in `RC-PIPE-03`; the report's suggested `RC-PIPE-08`/`RC-PIPE-17` were not the right homes (survey-context and non-existent respectively).
+  **Key findings:** unsubscribing blocks the **send, not the schedule** — alerts and ASIs keep being scheduled for unsubscribed participants and then silently fail to send, so `[email-unsubscribed] = "0"` belongs in trigger logic. Noted in `RC-ALERT-01` §4 as well. The opt-out is **per project**, not instance-wide. The feature is **Enabled by default**, so disabling it system-wide can break live alert logic in projects already using it — flagged in `RC-CC-06`.
+  Also: verifying or unsubscribing is a data event that **can trigger calculations, alerts and ASIs**, at a moment the participant chooses.
+  Dashboard page access is limited to users with Survey Distribution Tools *or* Alerts & Notifications privileges.
+  **17.3.3** System Statistics counters recorded in §8 (originally misfiled under RC-PLUS-03 in this report).
 
 - [x] **REDCap SHARE — filed as `RC-CDIS-05`, not a new SHARE domain** *(17.3.0, REDCap+)* — *done 2026-08-18*
   Written from a live Control Center capture (LTS 17.3.6, no subscription) plus release notes. **Filed in the CDIS series**: every language key on the page is prefixed `cdis_pm_`, the feature is implemented in the CDIS codebase, and readers comparing SHARE against CDP/CDM will look there. No new slug needed.

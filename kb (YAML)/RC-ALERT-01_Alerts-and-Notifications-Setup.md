@@ -182,6 +182,8 @@ Step 1C appears only when a project uses longitudinal mode or repeated instrumen
 
 # 4. Alert Schedule
 
+> **Note — unsubscribed participants (REDCap+, 17.3.0+).** Where a project uses the Email Unsubscribe feature, a participant who has unsubscribed will **still have alerts scheduled** for them; REDCap refuses the email at send time instead. The schedule therefore shows sends that will never happen. To prevent scheduling in the first place, add `[email-unsubscribed] = "0"` to the alert's trigger logic. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
 The second step of alert setup defines when the alert is sent after the trigger fires, and how many times it can be sent per trigger.
 
 ## 4.1 When to Send the Alert
