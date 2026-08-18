@@ -152,8 +152,10 @@ Collectively these justify a line in `RC-EXPRT-03` noting that export-rights enf
 
 These pair with the UTF8MB3 and PHP-version items already in the feature report, and are the most operationally expensive items in this document.
 
-- [ ] **Easy Upgrade allowed admins to skip the required Unicode Transformation — unfixable after the fact. WRONG/CRITICAL**
-  **15.5.40** and again **16.0.25**: "Unfortunately, this cannot be fixed in the version in which someone is upgrading from." Admins who upgraded through an affected version may have a database that skipped a required transformation, with remediation guidance differing by path. **"Unicode Transformation" appears nowhere in the KB.** Combined with the 16.0.0 UTF8/UTF8-MB3 drop, this is the single highest-value addition to `RC-INFRA-01`.
+- [x] **Easy Upgrade allowed admins to skip the required Unicode Transformation. WRONG/CRITICAL** — *done 2026-08-18*
+  **15.5.40 LTS** and **17.0.3 Standard**: "Unfortunately, this cannot be fixed in the version in which someone is upgrading from."
+  **Two corrections to this report.** First, the charset drop was **15.6.0**, not 16.0.0. Second, and more consequentially, the situation is **not unfixable** — the "cannot be fixed" quote refers only to the version being upgraded *from*. **17.0.3 restored `ControlCenter/fixdb.php`**, reachable from the Configuration Check page, specifically so admins who upgraded to 16.0.0+ without transforming can complete it after the fact. **17.0.4** separately fixed the resulting stuck-on-upgrade-page symptom. Treating this as unrecoverable would have been actively unhelpful to anyone in that state.
+  Applied: `RC-INFRA-01` §3.2 and `RC-INFRA-02` §9 now carry the full picture — the block, the three remediation paths, the Easy Upgrade bypass, the `fixdb.php` remedy, and 15.5.40 as the safe staging version.
 
 - [ ] **LTS 15.5.10 was mis-released and was actually 15.0.38. WRONG**
   **15.5.11** — anyone who upgraded to 15.5.10 from a 15.0.x version was instructed to run a manual `UPDATE redcap_config SET value = '15.0.XX' WHERE field_n…` correction. If any local runbook references 15.5.10 as an LTS target, it is wrong.

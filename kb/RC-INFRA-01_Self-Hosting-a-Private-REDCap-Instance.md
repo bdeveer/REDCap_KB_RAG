@@ -5,14 +5,16 @@
 | Field | Value |
 |---|---|
 | **Article ID** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) |
-| **Domain** | Self-Hosting & Deployment |
+| **Domain** | Self-Hosting, Deployment & Release Management |
 | **Applies To** | Administrators and developers running a non-production REDCap instance off the main institutional server |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | REDCap Support |
-| **Related Topics** | [RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose](RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) |
-| Synonyms | how do i set up my own private redcap test server; run a private redcap sandbox for development; self-host redcap for external module development; stand up a non-production redcap instance; install redcap in docker containers; personal redcap instance for testing upgrades; redcap licensing for a private sandbox; test redcap configuration changes safely off production |
+| **Related Topics** | [RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose](RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) |
+| Synonyms | how do i set up my own private redcap test server; run a private redcap sandbox for development; self-host redcap for external module development; stand up a non-production redcap instance; install redcap in docker containers; personal redcap instance for testing upgrades; redcap licensing for a private sandbox; test redcap configuration changes safely off production; what php version does redcap require; unicode transformation before upgrading redcap; utf8mb4 charset requirement for redcap database |
 
 ---
 
@@ -56,14 +58,43 @@ A minimal REDCap sandbox is three containers; a fuller one adds convenience serv
 | Container | Role | Required? |
 |---|---|---|
 | **Web** | A web server (Apache or nginx) with PHP and the extensions REDCap needs (mysqli, gd, curl, zip, mbstring, intl, openssl; optionally ldap, imagick). Serves the REDCap application files. | Yes |
-| **Database** | MySQL 8 (or MariaDB / Percona). Holds the entire REDCap schema and all project data. | Yes |
+| **Database** | MySQL 8 (or MariaDB / Percona), configured for **full Unicode** — `utf8mb4` charset and collation. Holds the entire REDCap schema and all project data. | Yes |
 | **Mail catcher** | Captures all outbound email into a web inbox so the sandbox never sends real mail. | Strongly recommended |
 | **Database GUI** | A web tool such as Adminer or phpMyAdmin for read/write SQL access (REDCap's built-in Query Tool is read-only by design — see [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md)). | Optional |
 | **AI proxy** | An OpenAI-compatible proxy that backs REDCap's AI features (Section 6). | Optional |
 
 The containers reach each other by service name on the internal network — REDCap's database host is simply `db`, its mail relay is `mailpit:1025`, its AI endpoint is `http://litellm:4000`. None of those need to be published to the host; only the web UI (and any admin tools you want in a browser) need published ports.
 
-> **Note — PHP version.** Match the PHP version to your REDCap version. Current REDCap (16.x/17.x) requires PHP 8.1 or higher; PHP 8.3 is a safe, well-supported choice. An older PHP will fail the install or the Configuration Check.
+### 3.1 PHP version
+
+Match the PHP version to your REDCap version. An unsupported PHP will fail the install or the Configuration Check.
+
+| REDCap version | Minimum PHP | Notes |
+|---|---|---|
+| 15.0.8 and higher | 8.0.2 | PHP 7 support dropped. PHP 8.0 through 8.4 supported |
+| 16.0.5 and higher | **8.1.0** | PHP 8.0 support dropped. PHP 8.5 officially supported from this version |
+
+PHP 8.3 remains a safe, well-supported middle choice. If you want the newest runtime, 8.5 is supported from REDCap 16.0.5 onward.
+
+> **Version caveat (≤16.0.10 LTS / ≤16.0.9 Standard):** On PHP 8.4 or 8.5 the REDCap **upgrade page** fails to load with a fatal PHP error, so you cannot upgrade *out of* an affected version while running one of those PHP releases. Fixed in 16.1.0 Standard / 16.0.11 LTS. If you hit a blank upgrade page on a new PHP, temporarily drop the container back to PHP 8.3, complete the upgrade, then move forward again.
+
+### 3.2 Database charset — a hard upgrade prerequisite
+
+Build the database with the `utf8mb4` charset and a `utf8mb4` collation from the start. This is not a preference; on current REDCap it is a precondition for the application running at all.
+
+> **Critical — Unicode Transformation (REDCap 15.6.0+).** REDCap dropped support for the legacy `UTF8` / `UTF8-MB3` charset and collation, following their deprecation in MySQL and MariaDB. **You cannot upgrade to REDCap 15.6.0 or higher until the Unicode Transformation has been performed on the REDCap database tables.** On a fresh sandbox this is a non-issue provided you create the database as `utf8mb4`. On an instance carrying forward an older database, it is the single most likely thing to block an upgrade.
+
+**If you need to perform the transformation:**
+
+| Your current REDCap version | Path |
+|---|---|
+| 13.2.0 or higher | The **Configuration Check** page carries the instructions and the transformation utility |
+| Below 13.2.0 | Upgrade to **15.5.0** first, perform the Unicode Transformation, then continue upward |
+| Transformation suspected but unconfirmed | Upgrade to **15.5.40** first. That version correctly refuses to let you move to 16.0.0+ until the transformation is done — which is the behaviour you want |
+
+> **Version caveat (Easy Upgrade, ≤15.5.39 LTS / ≤17.0.2 Standard):** The Easy Upgrade feature mistakenly allowed admins to **bypass** the Unicode Transformation entirely, producing an instance on 16.0.0+ whose tables were never transformed. The bypass could not be fixed retroactively in the version being upgraded *from*. Two consequences: a later traditional upgrade gets **stuck on the upgrade page** (fixed 17.0.4), and the database is in a state REDCap no longer expects. From **17.0.3** the remedy page `ControlCenter/fixdb.php` has been restored and is reachable from the Configuration Check page, so the transformation can be completed after the fact. If you suspect an instance was upgraded past 15.6.0 via Easy Upgrade without transforming, check there.
+
+> **Note — MySQL 8.4 foreign-key setting.** REDCap 15.6.1 added a Configuration Check recommendation to set `restrict_fk_on_non_standard_key` to `OFF` on MySQL 8.4.0+. That check was **removed again in 15.8.4** as misleading and incorrect. If you saw the recommendation on an older version, no action is needed. It never applied to MariaDB or to MySQL below 8.4.0.
 
 ---
 
@@ -152,7 +183,13 @@ No. A personal sandbox is not validated, backed up, or secured to institutional 
 
 **Putting real or identifiable data in a sandbox.** A self-hosted instance lacks the compliance controls, backups, and security of a production server. Loading PHI or real research data — even "just to test" — creates real risk. Keep the sandbox to synthetic/test data only.
 
-**Mismatching the PHP version to the REDCap version.** Installing a current REDCap on an older PHP (below 8.1 for 16.x/17.x) causes install failures or Configuration Check errors. Pick a web image whose PHP version satisfies your REDCap version before building.
+**Mismatching the PHP version to the REDCap version.** Installing a current REDCap on an older PHP (below 8.1.0 from REDCap 16.0.5 onward) causes install failures or Configuration Check errors. Pick a web image whose PHP version satisfies your REDCap version before building — see Section 3.1 for the version table.
+
+**Creating the database with a legacy charset.** A database built as `UTF8` / `UTF8-MB3` rather than `utf8mb4` will block any upgrade to REDCap 15.6.0 or higher until the Unicode Transformation is performed, and the block appears only when you attempt the upgrade — not when you install. Create the database as `utf8mb4` at the outset; retrofitting it later is far more work than getting it right on day one. See Section 3.2.
+
+**Assuming a successful Easy Upgrade means the database was transformed.** On affected versions, Easy Upgrade would carry an instance past 15.6.0 without performing the Unicode Transformation and without complaining. The instance appears fine until a later traditional upgrade sticks on the upgrade page. If an instance was Easy Upgraded from v15 to v16, verify the transformation actually ran rather than assuming it did.
+
+**Planning a multi-version jump without reading the intermediate changelogs.** Upgrade prerequisites accumulate — PHP minimums and the charset requirement both changed inside the 15.x–16.x range — and several releases shipped fixes for upgrade SQL scripts that failed on particular MySQL and MariaDB versions and configurations. Read the changelog between your current version and your target, not just the target's entry. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md).
 
 **Forgetting the cron job.** Without a per-minute `cron.php` runner, survey invitations, alerts, and scheduled tasks silently never fire — with no error on screen. Set up the cron from the host immediately after install and confirm it's "Good" on the Cron Jobs page.
 
@@ -165,6 +202,7 @@ No. A personal sandbox is not validated, backed up, or secured to institutional 
 ## 10. Related Articles
 
 - [RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose](RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md) (concrete end-to-end build of this pattern)
+- [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) (Standard vs LTS, reading the changelog before an upgrade)
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (where AI services and email providers are configured)
 - [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (Configuration Check, cron jobs, base URL, SSL)
 - [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) (what the AI features are and how the AI server is meant to work)

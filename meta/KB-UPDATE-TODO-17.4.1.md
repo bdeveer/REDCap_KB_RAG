@@ -64,11 +64,13 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### Infrastructure & upgrade blockers
 
-- [ ] **`RC-INFRA-01`, `RC-INFRA-02`, `RC-CC-02` — PHP minimum is stale. WRONG**
-  15.0.8 dropped PHP 7 (min 8.0.2); **16.0.5 dropped PHP 8.0 — minimum is now PHP 8.1.0**, and PHP 8.5 is officially supported. `RC-INFRA-01` and `RC-CC-02` mention PHP 8.1 but there is **no mention of PHP 8.5 anywhere in the KB**. Anyone provisioning from the current articles may pick an unsupported runtime.
+- [x] **`RC-INFRA-01`, `RC-INFRA-02` — PHP version coverage incomplete. GAP** — *done 2026-08-18*
+  **Correction to this report:** originally tagged WRONG on the grounds that the PHP minimum was stale. It was not — `RC-INFRA-01` already said PHP 8.1, which is correct for 16.0.5+. The real gaps were the **PHP 8.5 support** added in 16.0.5 and the **upgrade-page fatal under PHP 8.4/8.5** on versions at or below 16.0.9 Standard / 16.0.10 LTS, which can strand an instance because it blocks the upgrade *out of* the affected version.
+  Applied: version table in `RC-INFRA-01` §3.1 covering both the 15.0.8 and 16.0.5 thresholds, with a version caveat for the upgrade-page fatal and the drop-to-8.3 workaround. `RC-CC-02` still to check separately.
 
-- [ ] **`RC-INFRA-01`, `RC-INFRA-02` — legacy UTF8/UTF8-MB3 charset support dropped. WRONG/NEW**
-  16.0.0's "Important Change": REDCap dropped database support for legacy UTF8/UTF8-MB3 charset and collation (MySQL/MariaDB deprecation). **Admins cannot upgrade until the database is converted.** `utf8mb4` appears **nowhere** in the KB. This is the single most likely cause of a blocked upgrade and deserves prominent treatment in both infra articles.
+- [x] **`RC-INFRA-01`, `RC-INFRA-02` — legacy UTF8/UTF8-MB3 charset support dropped. WRONG** — *done 2026-08-18*
+  **Correction to this report:** the drop happened in **15.6.0**, not 16.0.0 as originally stated. The changelog is explicit: administrators cannot upgrade to **15.6.0 or higher** until the Unicode Transformation has been performed. Getting this wrong by four minor versions would have sent readers looking in the wrong place.
+  Applied: `RC-INFRA-01` §3.2 as a Critical callout with the remediation paths (13.2.0+ via Configuration Check; below 13.2.0 upgrade to 15.5.0 first; 15.5.40 as the safe staging version when a transformation is merely suspected). Database row in §3 now specifies `utf8mb4`. Two new gotchas. `RC-INFRA-02` §9 gained a pre-upgrade prerequisites list and §9.1 a known-bad versions table.
 
 - [ ] **`RC-INFRA-01`, `RC-CC-03` — Content Security Policy header. GAP**
   15.5.1 added a CSP header. Also 15.4.5 added `includeSubDomains` to the HSTS header. Neither string appears in the KB; both matter for reverse-proxy and External Module troubleshooting.

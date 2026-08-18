@@ -1,18 +1,22 @@
 ---
 id: RC-INFRA-02
 title: Self-Hosting REDCap on a Synology NAS with Docker Compose
-domain: Self-Hosting & Deployment
+domain: Self-Hosting, Deployment & Release Management
 applies_to:
 - Synology NAS (DSM 7.2+) with Container Manager
 - non-production REDCap
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing &
   Validation
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-INFRA-01
   title: Self-Hosting a Private REDCap Instance
+- id: RC-INFRA-03
+  title: REDCap Versions, Release Lines & Patching
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
 - id: RC-CC-02
@@ -20,7 +24,7 @@ related:
 - id: RC-AI-01
   title: 'REDCap AI Tools: Overview & Security'
 tags:
-- self-hosting & deployment
+- self-hosting, deployment & release management
 synonyms:
 - how to run redcap on a synology nas
 - redcap docker compose setup on synology container manager
@@ -30,6 +34,8 @@ synonyms:
 - wire redcap ai features to a provider in docker
 - step by step redcap nas deployment
 - build a redcap sandbox on a ds220 synology box
+- my redcap install page is blank
+- which redcap versions are known bad to install
 ---
 
 # 1. Overview
@@ -88,7 +94,7 @@ Key points the Compose file encodes:
 6. **Build and start:** Container Manager → Project → Create (point at the Compose file), or `sudo docker compose up -d --build`. The first build takes a few minutes while PHP extensions compile.
 7. **Run the install wizard** at `http://NAS-IP:8088/redcap/install.php`; create the admin account; set the **REDCap Base URL** (Section 8).
 
-> **Critical — REDCap 17.1.2 install bug on PHP 8 (fixed in 17.1.3).** A fresh `install.php` on REDCap **17.1.2** blanks out with an uncaught fatal: `Undefined constant "VANDERBILT_SERVER"`. The constant is referenced by the REDCap+ licensing code before it is defined, and PHP 8 turns the resulting undefined-constant *warning* (harmless on PHP 7) into a fatal error. **Use REDCap 17.1.3 or newer**, where it is fixed. If you must run 17.1.2, the workaround is to pre-define the Vanderbilt constants early (in `database.php`) by replicating `System::defineFixedConstants()`.
+> **Critical — REDCap 17.1.2 install bug on PHP 8 (fixed in 17.1.3).** A fresh `install.php` on REDCap **17.1.2** blanks out with an uncaught fatal: `Undefined constant "VANDERBILT_SERVER"`. The constant is referenced by the REDCap+ licensing code before it is defined, and PHP 8 turns the resulting undefined-constant *warning* (harmless on PHP 7) into a fatal error. **Use REDCap 17.1.3 or newer**, where it is fixed. If you must run 17.1.2, the workaround is to pre-define the Vanderbilt constants early (in `database.php`) by replicating `System::defineFixedConstants()`. For other versions known to break install or upgrade, see Section 9.1.
 
 ---
 
@@ -174,6 +180,24 @@ This makes the whole app (including the admin login) public — keep the admin p
 **Adminer** (`http://NAS-IP:8089`) gives read/write SQL access that REDCap's built-in Query Tool (read-only by design — [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md)) does not. Log in with System **MySQL**, Server **db**, Username **root**, the password from `.env`, Database **redcap**.
 
 **Upgrades** are a file drop plus a browser-driven migration: back up first, unzip the *Upgrade* package into the app folder beside the current `redcap_vXX.X.X/`, then load REDCap — the Control Center detects the new files and runs the database migration. No container rebuild is needed unless a new version requires a new PHP extension (then add it to the Dockerfile and `docker compose up -d --build web`).
+
+Before a version jump, check three prerequisites — any of them will stop the migration:
+
+1. **PHP version.** The minimum is PHP 8.1.0 from REDCap 16.0.5 onward; PHP 8.5 is supported from that version too. The `php:8.3-apache` base used in this build satisfies current REDCap. See [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) Section 3.1.
+2. **Database charset.** REDCap 15.6.0 and higher refuse to upgrade until the Unicode Transformation has been performed, because support for the legacy `UTF8` / `UTF8-MB3` charset was dropped. A stack built as described here starts from a fresh `mysql:8.0` database, so create it as `utf8mb4` and this never arises. See `RC-INFRA-01` Section 3.2.
+3. **Target version.** Some versions are known-bad for install or upgrade — see the table below.
+
+> **Note — sandbox upgrades are the point.** Validating an upgrade here before it reaches production is one of the main reasons to run this instance. Restore a copy of production's database into the sandbox first; an upgrade that succeeds against an empty schema proves much less than one that succeeds against real structure.
+
+## 9.1 Known-bad install and upgrade versions
+
+| Version | Symptom | Action |
+|---|---|---|
+| **17.1.2** | Fresh `install.php` blanks out with an uncaught fatal: `Undefined constant "VANDERBILT_SERVER"`. The constant is referenced by REDCap+ licensing code before it is defined, and PHP 8 turns the resulting warning into a fatal. REDCap's own changelog records the same symptom as the install page crashing silently and preventing new installations | Use **17.1.3 or newer**, where it is fixed. If you must run 17.1.2, pre-define the Vanderbilt constants early in `database.php` by replicating `System::defineFixedConstants()` |
+| **16.0.9 and below (LTS 16.0.10 and below)** | The **upgrade page** fails with a fatal PHP error when running PHP 8.4 or 8.5, so you cannot upgrade out of the version | Fixed in 16.1.0 Standard / 16.0.11 LTS. Temporarily run PHP 8.3, complete the upgrade, then move forward |
+| **15.5.10 (LTS)** | Mis-released — the package was actually identical to 15.0.38 | Avoid. If already applied from a 15.0.x version, REDCap's guidance was to correct `redcap_config` manually; use a later LTS patch instead |
+
+> **Critical — Easy Upgrade and the Unicode Transformation.** On affected versions, Easy Upgrade would carry an instance past 15.6.0 **without** performing the Unicode Transformation and without reporting a problem. The result is an instance on 16.0.0+ whose tables were never transformed, which later sticks on the upgrade page during a traditional upgrade (fixed 17.0.4). From **17.0.3**, the remedy page `ControlCenter/fixdb.php` is restored and reachable from the Configuration Check page so the transformation can be completed after the fact. If it is even suspected that a transformation is outstanding, upgrade to **15.5.40** first — that version correctly blocks the move to 16.0.0+ until the transformation is done.
 
 ---
 
