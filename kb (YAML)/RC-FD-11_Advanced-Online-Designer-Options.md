@@ -6,10 +6,13 @@ domain: Form Design
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
-version: '1.0'
+version: '1.1'
 last_updated: '2026-05-06'
 related:
 - id: RC-FD-03
@@ -147,6 +150,26 @@ Type a variable name or part of a label into the Go to field search box. REDCap 
 Each instrument in the Online Designer has an optional **Custom CSS** editor. CSS entered here is injected into the rendered data entry form and survey page for that instrument only. This allows designers to apply visual styling — hiding elements, changing font sizes, adding spacing, colorizing section headers — beyond what REDCap's built-in alignment and section header settings provide.
 
 Custom CSS is **instrument-scoped**: CSS saved on one instrument does not affect other instruments in the project.
+
+> **Important — there are two separate Custom CSS controls, not one.** From **15.5.0** REDCap has both:
+>
+> - **Form-level CSS** — set on the field-level Online Designer page, described in this section. Applies to the **data entry form** only.
+> - **Survey-level CSS** — set on the **Survey Settings** page for an individual survey. Applies to the **survey page** only.
+>
+> They are independent. CSS entered in one does **not** apply to the other, so an instrument used both as a form and as a survey needs both if you want consistent styling in each context.
+
+Two consequences of that split are easy to be caught by:
+
+| Behaviour | Form-level CSS | Survey-level CSS |
+| --- | --- | --- |
+| Subject to **Draft Mode** in production | **Yes** — changes require approval, and the draft review page shows a side-by-side comparison | **No** — changes take effect immediately |
+| Copyable to other instruments | No | **Yes** — via **"Copy design to other surveys"** on the Survey Settings page |
+
+The draft-mode asymmetry is the one that surprises people: in a production project, editing form CSS goes through review while editing survey CSS is live immediately.
+
+> **Critical — REDCap does not guarantee its own selectors.** Both CSS settings carry this warning verbatim: *"Use with caution. Please note that targeting internal REDCap elements (e.g., specific classes or IDs) may break without notice, as updates to REDCap can change or remove these elements at any time. Stability of these selectors across versions is not guaranteed, and any changes to them will not be announced in advance."*
+>
+> Given REDCap ships roughly weekly, treat custom CSS that targets internal classes as something to re-check after upgrades — it will fail silently and visually, not with an error. See [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md).
 
 ## 4.2 Accessing the CSS Editor
 

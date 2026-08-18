@@ -103,8 +103,8 @@ The right sidebar lists all REDCap database tables, providing a quick reference 
 
 - `redcap_projects` — project metadata (title, status, dates)
 - `redcap_metadata` — field/instrument definitions (data dictionary)
-- `redcap_data` — stored data entry values
-- `redcap_log_event` — system audit log and activity records
+- `redcap_dataX` — stored data entry values. **Numbered, not singular** — a project's data lives in a specific table such as `redcap_data8`
+- `redcap_log_eventX` — system audit log and activity records, likewise **numbered**, e.g. `redcap_log_event10`
 - `redcap_user_information` — user accounts and profile data
 - `redcap_alerts` — alert configurations and definitions
 - `redcap_data_access_groups` — DAG (Data Access Group) definitions
@@ -116,6 +116,10 @@ The right sidebar lists all REDCap database tables, providing a quick reference 
 - `redcap_arms` — arms in longitudinal projects
 - `redcap_instruments` — instrument/form definitions
 - And many others covering every aspect of REDCap's data model
+
+> **Critical — data and logging tables are numbered, and which one a project uses varies.** REDCap distributes projects across several `redcap_dataX` and `redcap_log_eventX` tables for performance. A query written against `redcap_data` alone will return nothing or the wrong project's rows. To find the tables a given project actually uses, open **Control Center → Edit Project Settings** for that project — the data table and logging table are named at the top of the page, alongside a **Move Project Data** tool. See [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md).
+>
+> The set grows over time: **16.0.0 added two further data tables and three further log_event tables**. A query that enumerated the tables correctly before an upgrade may miss projects created afterwards, so do not hard-code the list.
 
 Click any table name in the sidebar to view its column structure and field definitions.
 

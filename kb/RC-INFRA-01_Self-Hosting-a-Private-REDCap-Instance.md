@@ -144,6 +144,12 @@ REDCap's `temp/` directory sits inside the web root and must **not** be publicly
 
 > **Note:** A containerized stack makes this easy to get wrong, because the web image's server may differ from production's. A sandbox on NGINX will not reproduce a production Apache instance's automatic protection.
 
+### 4a.3a Fatal-Error Reports
+
+From **17.3.1**, a REDCap fatal-error report includes a small, **privacy-safe snapshot of what REDCap was doing** when the failure occurred. This makes a fatal error considerably easier to trace on a sandbox, where the usual response — reproduce it — is often the hard part.
+
+> **Note:** REDCap describes the snapshot as privacy-safe, but error reports still warrant the same handling as any diagnostic output from a system holding participant data. Confirm what your instance does with them before routing them anywhere automated.
+
 ### 4a.4 Old version directories
 
 REDCap upgrades leave the previous `redcap_vXX.X.X/` directories in place, and they remain reachable.

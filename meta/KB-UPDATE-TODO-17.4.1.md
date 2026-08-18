@@ -309,13 +309,28 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ---
 
-## P3 — Minor / cosmetic
+## P3 — Minor / cosmetic — *re-triaged 2026-08-18*
 
-Roughly 90 entries are pure styling, wording, performance or internal-plumbing changes with no instructional consequence: button styling on the randomization setup page (15.0.1), Font Awesome 6.7.2 → 7.0.0 (15.5.5), My Projects page widened (15.9.2), `redcap_new_record_cache` table pruning (15.7.0), session-storage column widening (15.5.0), new data and log_event tables (16.0.0), cron-job management improvements (16.1.2), assorted logic-evaluation and CDP dashboard optimisations, and ESC-key dialog handling (15.4.1). Fold these in opportunistically; none justifies a dedicated edit.
+The original P3 classification was made in a fast first pass. It was re-checked against the changelog after the P1 and P2 work, on the reasoning that a quick triage of ~90 entries is exactly where errors hide.
 
-Two are worth a line **if** the relevant article is already open:
-- Fatal-error reports now include a privacy-safe snapshot of in-flight work (17.3.1) → `RC-INFRA-01`.
-- MLM admin and end-user PDF manuals ship with REDCap (15.5.1) → `RC-MLM-01`.
+**Method.** An automated coverage check (does any distinctive term from the entry now appear in `kb/`?) proved unreliable — it reported 78 entries as uncovered, but a 20-item spot check found **19 were false positives**, flagged only because the article wording differs from the changelog wording. The check was discarded and the candidate set was re-read by hand instead.
+
+**Result: three entries were misclassified and have now been applied.**
+
+- [x] **`RC-FD-11` — Custom CSS: the article documented only half the feature. WRONG** — *done 2026-08-18*
+  15.5.0 introduced **two separate** Custom CSS controls: form-level on the Online Designer page, and **survey-level on the Survey Settings page**. The article described only the form-level control and stated CSS is "instrument-scoped", which reads as though one setting covers both contexts. It does not — an instrument used as both a form and a survey needs both. Two behavioural differences added: **form-level CSS is subject to Draft Mode in production while survey-level is not** (so in a production project one goes through review and the other is live immediately), and survey CSS can be copied via "Copy design to other surveys". Also carried REDCap's own warning verbatim: internal selectors "may break without notice… will not be announced in advance" — which given roughly weekly releases makes custom CSS something to re-check after upgrades, since it fails visually rather than with an error.
+
+- [x] **`RC-CC-17` — the Database Table Reference named singular tables that do not exist. WRONG** — *done 2026-08-18*
+  The reference listed `redcap_data` and `redcap_log_event`. REDCap distributes projects across **numbered** tables — `redcap_data8`, `redcap_log_event10` — as `RC-CC-24` already documents. A query written against the singular name returns nothing or the wrong project's rows. Corrected, with a pointer to Edit Project Settings where a given project's tables are named, and a note that **16.0.0 added two further data tables and three further log_event tables**, so an enumerated list will silently go stale.
+
+- [x] **`RC-INFRA-01` — fatal-error reports include a work snapshot (17.3.1)** — *done 2026-08-18*
+  Flagged in the original triage as "worth a line if the article is open". Applied, with a note that a privacy-safe snapshot is still diagnostic output from a system holding participant data.
+
+Already applied during the P2 work: **MLM admin and end-user PDF manuals ship with REDCap** (15.5.1) → `RC-MLM-01`.
+
+**The remaining ~85 entries stay undocumented, deliberately.** They are styling, wording, performance and internal-plumbing changes: button styling on the randomization setup page (15.0.1), Font Awesome 6.7.2 → 7.0.0 (15.5.5), My Projects page widened (15.9.2), `redcap_new_record_cache` pruning (15.7.0), session-storage column widening (15.5.0), cron-job management (16.1.2), MyCap QR code sizing (15.4.2), ESC-key dialog handling (15.4.1), and assorted logic-evaluation and CDP dashboard optimisations.
+
+Documenting them would add length without making any reader more capable, and would dilute retrieval — the same reasoning that keeps images out of the KB. The bar applied is the one recorded in the kb-creation skill: an entry earns a place only if it **changes what a reader should believe**, **defines a version window where documented behaviour did not hold**, or **silently affected data, rights or delivery**. These do none of those things.
 
 ---
 
