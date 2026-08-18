@@ -230,6 +230,36 @@ To check whether a topic is already planned, read `kb/KB-GAPS-TODO.md` before wr
 - **Version caveats**: Use a `> **Version caveat:**` blockquote placed immediately after the content it qualifies — see below.
 - **Cross-references**: Always include both the article ID and title: `RC-BL-02 — Syntax & Atomic Statements`
 - **One concept per article**: If you find yourself writing "this article also covers...", that's a signal to split.
+- **Text only — no images.** See below.
+
+---
+
+## No images: describe the UI in words
+
+**The KB is text-only. Never add an image, a screenshot, or a placeholder for a future one.** This includes markdown images (`![...](...)`), `<img>` tags, and `<!-- PLACEHOLDER: Insert screenshot ... -->` comments.
+
+Two reasons, both of which matter more than the convenience of a screenshot:
+
+1. **Retrieval.** These articles are chunked and embedded for RAG. An image contributes nothing retrievable — a screenshot of a settings page is invisible to the system that has to answer a question about that page. Anything an image would convey has to exist as text or it effectively does not exist.
+2. **Staleness.** REDCap ships releases roughly weekly and moves UI regularly. A screenshot silently goes wrong at the next redesign, and unlike prose nobody notices, because the words around it still read correctly.
+
+**What to do instead:** describe the interface in words a reader can act on — the exact on-screen label in bold, where it sits on the page, the options in a table, and what each one does. Quote UI strings verbatim so a reader can match them against what they see, and so search finds them.
+
+```
+Wrong:  <!-- PLACEHOLDER: Insert annotated screenshot of AI Services section -->
+
+Right:  **Control Center → System Configuration → AI Configuration Settings.**
+        It sits directly beneath **Modules/Services Configuration** in the
+        left-hand menu.
+
+        | Setting | What it controls |
+        |---|---|
+        | **AI config enabled for all non-project pages** | ... |
+```
+
+If a UI is genuinely too complex to describe, that usually means the article is trying to cover too much — split it rather than reaching for a picture.
+
+> **Note:** `@PLACEHOLDER` is a REDCap action tag and legitimate article content. Do not confuse it with the image placeholder comments described above; never bulk-remove on the string "PLACEHOLDER" alone.
 
 ---
 
@@ -244,6 +274,7 @@ Before finalizing, verify:
 - [ ] Terminology is consistent throughout (no synonym drift)
 - [ ] Synonyms row present with 6–10 collision-safe phrases (see Synonyms section)
 - [ ] No institution-specific content in the core sections (see below)
+- [ ] No images, screenshots, or image placeholders; UI described in text (see **No images** section)
 
 ---
 

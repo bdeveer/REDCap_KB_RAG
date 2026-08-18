@@ -23,8 +23,6 @@ This article covers four related System Configuration pages that control the app
 
 ## 2. Home Page Settings
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Home Page Settings section -->
-
 The Home Page Settings control what users see on the REDCap landing page (before and after login) and on the My Projects page.
 
 **Contact Information**
@@ -45,8 +43,6 @@ The Home Page Settings control what users see on the REDCap landing page (before
 ---
 
 ## 3. Project Templates
-
-<!-- PLACEHOLDER: Insert annotated screenshot of Project Templates section -->
 
 Project Templates are pre-configured projects made available to users when they create a new project. When a user creates a project and selects a template, the template's instruments (and optionally events and user roles) are copied into the new project.
 
@@ -79,8 +75,6 @@ Administrators can manage which templates are available, add new templates from 
 
 ## 4. Default Project Settings
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Default Project Settings section -->
-
 These settings determine the system-wide defaults applied to all new projects when they are created.
 
 **Language**
@@ -108,8 +102,6 @@ A text block (with optional link) that appears at the bottom of all survey pages
 
 ## 5. Footer Settings (All Projects)
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Footer Settings section -->
-
 Configures links and text that appear in the footer of every REDCap project page.
 
 **Footer Links**
@@ -121,8 +113,6 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 ---
 
 ## 6. Field Validation Types
-
-<!-- PLACEHOLDER: Insert annotated screenshot of Field Validation Types section -->
 
 This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can enable or disable individual validation types, and can add custom validations developed for the institution.
 

@@ -29,8 +29,6 @@ The **Modules/Services Configuration** page (under **System Configuration**) is 
 
 ## External Module Framework
 
-<!-- PLACEHOLDER: Insert annotated screenshot of External Module Framework section -->
-
 **Enable the Built-in Process for Users to Request External Module Activation**
 When enabled, a "Request Activation" button appears in project External Module lists, allowing users to submit a request to the REDCap administrator to activate a specific module for their project. This provides a managed workflow for EM activation rather than requiring direct contact with an administrator.
 
@@ -41,8 +39,6 @@ For the full External Modules policy and activation process, see your institutio
 ---
 
 ## Feature Enable/Disable Table
-
-<!-- PLACEHOLDER: Insert annotated screenshot of feature enable/disable table -->
 
 The following features can be enabled or disabled system-wide. When a feature is disabled here, it is unavailable in all projects regardless of project-level settings.
 
@@ -93,8 +89,6 @@ A project-level default can be configured: new projects can default to reCAPTCHA
 
 ### Twilio (SMS & Voice Calls)
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Twilio section -->
-
 Twilio is a third-party service that enables SMS and voice call delivery for survey invitations and alerts. Requires a Twilio account and configuration of account credentials in REDCap.
 
 - **Enable Twilio** — Enables or disables the integration globally. Requires a Twilio account and credentials. The REDCap server must be able to make outbound HTTPS requests to `https://api.twilio.com`, and the server must be publicly reachable from the web so Twilio can POST back to it
@@ -118,8 +112,6 @@ SendGrid is an external email delivery service that enables template-based email
 
 ## Statistics & Charts
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Stats & Charts section -->
-
 **Enable Stats & Charts Module for All Projects**
 Enables the Statistics & Charts feature globally. When enabled, project users can view aggregate data visualizations from the Stats & Charts tab.
 
@@ -129,8 +121,6 @@ When enabled, project administrators can opt to show a respondent their response
 ---
 
 ## e-Consent Framework for PDF Auto-Archiver
-
-<!-- PLACEHOLDER: Insert annotated screenshot of e-Consent section -->
 
 **Display 'e-Consent Framework' Option for All Surveys**
 Makes the e-Consent configuration option visible in survey settings across all projects.
@@ -147,8 +137,6 @@ See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consen
 
 ## Alerts & Notifications Settings
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Alerts & Notifications Settings section -->
-
 These settings control what information users can include in alert recipient fields:
 
 - **Allow normal users to use project variables for email fields** — Allows To/CC/BCC fields in alerts to reference project fields containing email addresses
@@ -162,8 +150,6 @@ See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notif
 ---
 
 ## File Upload Field Enhancement
-
-<!-- PLACEHOLDER: Insert annotated screenshot of File Upload Enhancement section -->
 
 An optional enhancement that adds password verification and automatic external archiving to File Upload fields. When enabled at the system level and then activated in a project, any user uploading a file is asked to confirm it is the correct file. On data entry forms specifically, the user must also enter their REDCap password as part of the verification step. Once confirmed, the file is saved normally in REDCap and simultaneously stored as a duplicate on a configured external server. This feature is intended for projects that require FDA 21 CFR Part 11 compliance.
 
@@ -182,8 +168,6 @@ An optional enhancement that adds password verification and automatic external a
 
 ## Rapid Retrieval (Page-Level Caching)
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Rapid Retrieval section -->
-
 Rapid Retrieval is a read-through page-level caching feature that improves load times for slower REDCap pages, particularly exports, reports, and the record status dashboard. When a requested page is not in the cache, the system automatically fetches and stores it for subsequent requests, reducing direct database queries and wait times.
 
 **Storage modes:**
@@ -201,8 +185,6 @@ By default, file-based caching stores files in REDCap's `temp` folder. An altern
 
 ## Record-Level Locking Enhancement
 
-<!-- PLACEHOLDER: Insert annotated screenshot of Record-Level Locking section -->
-
 An optional enhancement to the record locking feature that adds PDF review and automatic external archiving to the record locking workflow. This applies only to **entire-record locking** (not instrument-level locking). When enabled at the system level and then activated in a project, any user locking a full record is first asked to review a PDF copy of the complete record to confirm it is correct. Once the user confirms the PDF, the record is locked. At that point, the PDF is saved into the project's File Repository and a duplicate copy is archived on a configured external server. This feature is primarily useful for studies requiring a full Part 11-compliant electronic signature and audit trail.
 
 > **Note:** Enabling this at the system level does **not** auto-enable it in any project. Users with Project Setup & Design rights must activate it per project via the Additional Customizations popup on the Project Setup page.
@@ -213,15 +195,11 @@ Supported external storage methods are identical to those for the File Upload Fi
 
 ## e-Consent Framework: PDF External Storage Settings
 
-<!-- PLACEHOLDER: Insert annotated screenshot of e-Consent PDF Storage section -->
-
 When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location (same options as the File Upload Settings storage configuration). Leave disabled unless required for regulatory compliance.
 
 ---
 
 ## AI Services *(pre-17.2.0 only)*
-
-<!-- PLACEHOLDER: Insert annotated screenshot of AI Services section -->
 
 > **Version caveat (≤17.1.x Standard; LTS 16.0.x and earlier):** This section describes AI configuration **as it exists on the Modules/Services Configuration page**. In REDCap 17.2.0 all system-level AI settings were moved off this page onto a dedicated **AI Configuration Settings** page, and the AI Services section below no longer appears here at all — it is gone, not relocated within the page. If your instance is on 17.2.0 or higher (including LTS 17.3.x), see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) instead. The settings below remain accurate for LTS 16.0.x instances, which is why they are retained here.
 
