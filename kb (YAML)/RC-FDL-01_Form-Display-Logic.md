@@ -5,10 +5,13 @@ domain: Form Display Logic
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights to configure
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
 version: '1.1'
-last_updated: 2026-05
+last_updated: 2026-08
 related:
 - id: RC-BL-01
   title: 'Branching Logic: Overview & Scope'
@@ -59,7 +62,9 @@ A single form can appear in multiple condition rows. If the same form is listed 
 
 **Record-Level Evaluation**
 
-Form Display Logic conditions are evaluated at the record level — not within the context of a specific event or repeating instance. This means only standard cross-event references work in conditions; relative smart variables are not supported (see Section 7, Limitations).
+Form Display Logic conditions are evaluated at the record level by default — not within the context of a specific event or repeating instance. This means standard cross-event references work in conditions, while relative smart variables are generally not supported (see Section 7, Limitations).
+
+> **Exception (15.3.2+) — repeating events.** In longitudinal projects with repeating events, a condition **can** be scoped to a specific repeating instance. A condition referencing a field inside a repeating event may use instance smart variables such as `[previous-instance]` and `[current-instance]`, for example `[field][previous-instance] = "1"` or `[field2][current-instance] > 30`. This allows forms within individual instances of a repeating event to be enabled or disabled independently, rather than uniformly across the record. The record-level statement above remains accurate for every other context.
 
 ---
 
@@ -105,6 +110,25 @@ When enabled, this setting overrides Form Display Logic for forms that already h
 When enabled, disabled forms are completely hidden rather than merely grayed out. Hidden forms do not appear in the Data Collection menu or on the Record Home Page. This reduces visual clutter for users who should not interact with certain forms at all, rather than simply being prevented from entering data.
 
 These two settings can be combined: you can hide disabled forms while keeping data-containing forms accessible.
+
+## 5.1 Where Each Condition Applies *(15.7.3+)*
+
+Form Display Logic can drive three separate surfaces: **data entry forms**, **Survey Auto-Continue**, and **MyCap**. Which conditions apply to which surface depends on your version.
+
+| Version | Behaviour |
+| --- | --- |
+| Below 15.7.3 | Survey Auto-Continue and MyCap were **project-wide toggles**. Enabling either applied it to **every** FDL condition in the project — all or nothing |
+| 15.7.3 and higher | Each condition is set **individually** to apply to data entry forms, to Survey Auto-Continue, and/or to MyCap |
+
+> **Note on upgrading:** if the Survey Auto-Continue or MyCap settings were enabled before the upgrade, REDCap applied that setting to **every** FDL condition in the project during the upgrade, preserving the previous behaviour. That is the correct migration, but it means a project upgraded from below 15.7.3 starts with the setting switched on everywhere — review the conditions individually if you want the finer control the feature offers.
+
+MyCap support arrived slightly earlier as the project-wide **"Enable support for MyCap App"** checkbox in the FDL setup dialog (15.5.1), which is a practical way to disable specific MyCap tasks conditionally.
+
+> **Version caveat (≤16.1.7, MyCap only):** With an instrument enabled for MyCap appearing in **multiple** FDL conditions, FDL stopped working for that MyCap task in the app (fixed 16.1.8), and in longitudinal MyCap projects with many events the same situation could make publishing a new MyCap version fail (fixed 17.1.1).
+
+> **Version caveat (≤16.0.3, Survey Auto-Continue):** With Survey Auto-Continue enabled across multiple sequential surveys, participants taking surveys back to back could have surveys **skipped** by FDL when they should not have been — particularly within a repeating event. A first fix in 15.5.27 LTS / 16.0.2 Standard made the problem worse in some cases before it was properly resolved in 16.0.4.
+
+In 17.4.0 the form-selection multi-selects in the FDL Setup dialog were converted to Select2, making instruments easier to find and review in projects with many forms.
 
 ---
 

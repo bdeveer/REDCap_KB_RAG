@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup user rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Version** | 1.2 |
 | **Last Updated** | 2026-04-11 |
@@ -163,11 +165,29 @@ Each field in the instrument editor has the following controls:
 | Action | Description |
 | --- | --- |
 | **Edit** (pencil icon) | Opens the field editor for that field. See Section 7. |
-| **Copy** | Duplicates the field. REDCap automatically assigns a new unique variable name to the copy. All other field settings are preserved. |
+| **Copy** | Duplicates the field. REDCap automatically assigns a new unique variable name to the copy. All other field settings are preserved. **Ctrl-click (Cmd-click on Mac)** instead copies the field to your clipboard for pasting elsewhere — see 6.3.1. |
 | **Move** | Opens a dialog to move the field to a specific position within the instrument, or to a different instrument in the project entirely. |
 | **Drag handle** | Drag and drop the field to reorder it within the instrument. Note: drag-and-drop cannot move a field to a different instrument — use the Move button for that. |
 | **Delete** (trash icon) | Permanently deletes the field and all data collected in records for that field. In Production mode, REDCap will block deletion of fields that contain data. In Development mode, deletion is immediate and permanent with no warning. |
 | **Branching Logic** (fork icon) | Opens the branching logic editor for this field. See Section 9. |
+
+#### 6.3.1 Copy/Paste Fields *(17.2.0+)*
+
+Holding **Ctrl** (or **Cmd** on Mac) while clicking the **Copy** icon copies the field's attributes to your clipboard as JSON rather than duplicating it in place. The copied field can then be pasted into:
+
+- the same project
+- a different project on the same instance
+- **a project on another REDCap instance**, provided that instance is also on 17.2.0 or higher
+
+Multiple fields can be selected and copied together using **Quick-Modify Fields** — see [RC-FD-11 — Online Designer Advanced Options](RC-FD-11_Advanced-Online-Designer-Options.md).
+
+This makes a single field portable. Previously, moving one field between projects meant carrying an entire instrument via a Zip file, or a whole project via Data Dictionary or Project XML — a lot of machinery for one well-built field with fussy validation and action tags.
+
+> **Note:** Because the clipboard payload is JSON, the receiving instance must understand it. Pasting into an instance below 17.2.0 will not work.
+
+> **Version caveat (17.2.0–17.2.0):** The on-screen hint said "Ctrl" on Mac where it should have said "Cmd" (fixed 17.2.1), and a field pasted to the very **top** of an instrument might not appear until the page was refreshed — or, in a production project in draft mode, until the drafted changes were approved (also 17.2.1).
+
+> **Version caveat (≤17.3.0):** Pasting **section headers alone**, with no fields, did not work as expected (fixed 17.3.0), and min/max validation on integer and number fields was not carried across (fixed 17.3.1). On 17.4.0 a further fix corrected **choice order** not being preserved when pasting multiple-choice fields — so on earlier 17.x versions, verify choice order and validation after pasting rather than assuming a faithful copy.
 
 ### 6.4 Using the CDE Library
 
@@ -345,6 +365,27 @@ A radio button field with two pre-defined choices: **True** (coded as 1) and **F
 ### 8.8 Signature
 
 Captures a handwritten signature as an image. Data entry users can sign with a mouse on a desktop or with their finger on a touchscreen device. Commonly used in electronic consent (e-consent) workflows.
+
+#### 8.8.1 Enhanced Signature *(17.1.0+)*
+
+REDCap 17.1.0 added an **Enhanced Signature** field type, a more accessible alternative to the classic scribble signature. After clicking **Add signature** on a form or survey, the signer chooses between:
+
+- **Type signature** (the default) — they type their name into a text box, pick a font style, and REDCap renders it to an image
+- **Draw signature** — the classic scribble behaviour
+
+Both are stored as an image, exactly as a classic Signature field is.
+
+**Defining it in the Data Dictionary:** set the field type to `file` with the field validation type `enhanced_signature`. There is no separate field type value.
+
+> **Note — converting is safe.** An existing Signature field can be converted to an Enhanced Signature **with no data loss**. Signatures already captured remain intact.
+
+The "Type signature" option is the reason this exists: drawing a recognisable signature with a mouse is difficult, and on a touch device it is awkward for anyone with limited motor control. Typing removes that barrier while still producing a signature image.
+
+> **Version caveat (17.1.0–17.1.0):** Two defects affected the initial release. Signature images **did not appear in downloaded instrument PDFs or PDF Snapshots** — a serious problem for a consent workflow, since the signature was captured but absent from the archived document — and the saved image background was not transparent. Both fixed in **17.1.1**. If Enhanced Signature was used on 17.1.0, re-check any PDFs archived from that period.
+
+> **Version caveat (≤17.2.x):** Users and participants could submit a **blank** signature image. Fixed in 17.3.0. On affected versions, treat the presence of a signature image as insufficient evidence that anything was actually signed.
+
+Two later additions: the Copy/Paste Fields feature supports Enhanced Signature from **17.3.0**, and Multi-Language Management can translate the "Sign Here" and "Please type your signature before saving." strings from **17.3.0** — see [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md).
 
 ### 8.9 File Upload
 

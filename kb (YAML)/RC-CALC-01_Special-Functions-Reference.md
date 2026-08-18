@@ -5,10 +5,13 @@ domain: Calculations & Special Functions
 applies_to:
 - All REDCap project types
 - functions are available wherever REDCap logic or calculations are used
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-BL-01 — Branching Logic: Overview & Scope'
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -171,6 +174,9 @@ If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole nu
 | `exponential(number)` | e raised to the power of a number | `exponential(1)` → 2.718... |
 | `log(number, base)` | Logarithm | `log(100, 10)` → 2; omit base for natural log |
 | `mod(dividend, divisor)` | Remainder of integer division | `mod(10, 4)` → 2 |
+| `random(min, max)` | Random integer between `min` and `max`, **inclusive of both**. Requires REDCap 17.0.3+ | `random(1, 6)` → an integer from 1 to 6 |
+
+> **Important — `random()` is not a randomization tool.** It returns a fresh value each time the calculation is evaluated, and calculated fields re-evaluate whenever their inputs change or the form is re-saved. It is unsuitable for treatment allocation or anything requiring a stable, auditable assignment — use the Randomization module for that, see [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md).
 
 > **Important:** For exponents, the surrounding parentheses on both the base and the exponent are required. `4^3` will not work — it must be `(4)^(3)`.
 

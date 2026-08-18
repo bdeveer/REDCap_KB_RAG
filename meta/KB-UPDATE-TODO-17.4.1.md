@@ -145,13 +145,19 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### Fields, forms & design
 
-- [ ] **`RC-FD-06`, `RC-DE-05`, `RC-FD-08` — Enhanced Signature field type. NEW/GAP**
+- [x] **`RC-FD-06` — Enhanced Signature field type. NEW/GAP** — *done 2026-08-18*
+  Documented as `RC-FD-06` §8.8.1 beside the classic Signature field. Data Dictionary definition is field type `file` + validation `enhanced_signature`; existing Signature fields convert with no data loss. **Two consent-relevant caveats the report did not have:** on 17.1.0 the signature image was **missing from downloaded PDFs and PDF Snapshots** (fixed 17.1.1) — captured but absent from the archived document — and up to 17.2.x a **blank** signature could be submitted (fixed 17.3.0), so an image's presence is not evidence anything was signed. Retargeted: `RC-DE-05` and `RC-FD-08` were not the right homes; the field type belongs with the other field types in `RC-FD-06`.
+  *Original entry:*
   17.1.0 added a new, more accessible signature field supporting both scribbled and hand-typed signatures. **Zero** matches in `kb/`. Follow-ups: MLM support for the "Sign Here" and "Please type your signature before saving." strings (17.3.0), and Copy/Paste Fields support (17.3.0). Also check `RC-LOCK-01` for interaction with e-signatures.
 
-- [ ] **`RC-FD-06` — Copy/Paste Fields. GAP**
+- [x] **`RC-FD-06` — Copy/Paste Fields. GAP** — *done 2026-08-18*
+  `RC-FD-06` §6.3.1, with the Field-Level Actions table noting the Ctrl/Cmd-click variant. Key point: a field can be pasted into **another REDCap instance**, provided it is also 17.2.0+. Four fidelity caveats added — section-headers-only pasting (fixed 17.3.0), min/max validation on integer and number fields (17.3.1) and **choice order on multiple-choice fields (17.4.0)** were not carried across, so on earlier 17.x versions verify a pasted field rather than assuming a faithful copy.
+  *Original entry:*
   17.2.0: Ctrl/Cmd-click the Copy icon in the Online Designer copies field attributes to the clipboard as JSON, pasteable elsewhere. 17.2.1 corrected the on-screen key hint to "Cmd" on Mac. **Not covered.**
 
-- [ ] **`RC-AT-01`, `RC-AT-06` — `@SAVE-PROMPT-EXEMPT` and `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET`. GAP**
+- [x] **`RC-AT-01`, `RC-AT-06` — `@SAVE-PROMPT-EXEMPT` and `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET`. GAP** — *done 2026-08-18*
+  New `RC-AT-06` §5a placing both tags in the context that motivates them — autofill tags writing on page load make REDCap warn about changes the user never made — plus both entries in the `RC-AT-01` master table. Documented that neither suppresses the prompt for the *page*, only for the tagged field, and carried REDCap's own data-loss warning.
+  *Original entry:*
   Both added in 15.2.0; **zero** matches in `kb/`. The `-WHEN-AUTOSET` variant specifically suppresses the "Save your changes?" prompt for values set by `@DEFAULT`, `@SETVALUE`, `@TODAY` or `@NOW` — squarely an autofill-article concern.
 
 - [x] **`RC-MYCAP-02`, `RC-MYCAP-08` — `MC-FIELD-SLIDER-BASIC` / `MC-FIELD-SLIDER-CONTINUOUS` removed. WRONG** — *done 2026-08-18*
@@ -159,13 +165,20 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
   **Correction to this report:** `RC-AT-11` was listed here in error. It covers the *REDCap Mobile App* (`@BARCODE-APP`, `@APPUSERNAME-APP`, `@SYNC-APP`), not MyCap, and never mentioned the slider tags. Only two articles were affected.
   Applied: removed both rows from the §4.1 annotation table and the tag recommendation from the field-type table in `RC-MYCAP-02`; swapped the stale example in the `RC-MYCAP-08` testing checklist; added a version caveat noting the tags are inert rather than merely undocumented. Because this shipped as a *Change* rather than a fix, LTS instances on the 15.5.x line still list the tags as valid — the caveat says so.
 
-- [ ] **`RC-CALC-01` — `random()` function missing. GAP**
+- [x] **`RC-CALC-01` — `random()` function missing. GAP** — *done 2026-08-18*
+  Added to §6.2 Mathematical Operations. Included a warning the changelog does not make: `random()` re-evaluates whenever a calculated field's inputs change or the form is re-saved, so it is **unsuitable for treatment allocation** — pointed at the Randomization module instead.
+  *Original entry:*
   17.0.3 added `random(min, max)`. `dayoftheweek()`, `age_at_date()` and `isblanknotmissingcode()` are already present — `random()` is the only one absent.
 
-- [ ] **`RC-FDL-01` — Form Display Logic gained two capability tiers. GAP**
+- [x] **`RC-FDL-01` — Form Display Logic gained two capability tiers. WRONG** — *done 2026-08-18*
+  **Upgraded from GAP to WRONG on inspection.** The article stated flatly that FDL conditions "are evaluated at the record level — not within the context of a specific event or repeating instance". Since **15.3.2** that is no longer universally true: conditions can be scoped to a repeating-event instance using `[previous-instance]` and `[current-instance]`. Corrected in place with the general rule retained.
+  Added §5.1 covering the 15.7.3 move from project-wide Survey Auto-Continue/MyCap toggles to per-condition control, including the upgrade behaviour that applies the old setting to **every** condition. Three version caveats: MyCap FDL breaking with multi-condition instruments (16.1.8), MyCap publish failures (17.1.1), and Survey Auto-Continue skipping surveys where the first fix made it worse before 16.0.4 resolved it.
+  *Original entry:*
   15.3.2 FDL usable within a specific repeating event; 15.5.1 "Enable support for MyCap App" checkbox applying FDL conditions in MyCap; 15.7.3 **condition-level FDL settings** — granular control per condition across data entry forms, Survey Auto-Continue and MyCap, replacing the previous all-or-nothing model. 17.4.0 converted the form multi-selects to Select2. The 15.7.3 change likely makes existing prose incorrect, not merely incomplete. Also check `RC-IMP-08` (Form Display Logic CSV).
 
-- [ ] **`RC-DE-02` — Section Navigation box. GAP**
+- [x] **`RC-DE-02` — Section Navigation box. GAP** — *done 2026-08-18*
+  New §6a. Two caveats: opening REDCap Messenger could leave the box **overlapping the form** and obscuring fields (fixed 17.0.0), and some headers were unreachable on forms with many sections (17.2.1).
+  *Original entry:*
   16.1.5 added an always-visible right-hand navigation box on data entry forms for jumping between sections. **Not covered**, and it is a visible change every data-entry user will notice.
 
 ### Surveys & alerts

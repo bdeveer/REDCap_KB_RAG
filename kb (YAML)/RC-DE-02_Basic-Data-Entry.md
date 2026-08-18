@@ -4,9 +4,12 @@ title: Basic Data Entry
 domain: Data Entry
 applies_to:
 - All REDCap project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
-version: '1.0'
+version: '1.1'
 last_updated: '2025'
 related:
 - id: RC-DE-01
@@ -195,6 +198,20 @@ dot in the Record Home Page and Record Status Dashboard.
     partial survey, green checkmark = completed survey). These are set
     automatically and are separate from the manual form status described
     here.
+
+---
+
+# 6a. Navigating a Long Form
+
+## Section Navigation *(16.1.5+)*
+
+On data entry forms, a **Section Navigation** box is displayed on the right-hand side of the page. It lists the form's section headers and lets you jump straight to any section rather than scrolling.
+
+It appears automatically — there is nothing to enable — and is most useful on long instruments where the section headers are the only structural landmarks.
+
+> **Version caveat (≤17.0.x):** Opening the REDCap Messenger panel while viewing a data entry form could leave the Section Navigation box **overlapping the form**, obscuring fields and making them difficult to complete. Fixed in 17.0.0. Separately, on forms with a large number of section headers some headers were not reachable from the box (fixed 17.2.1).
+
+For jumping to an individual *field* rather than a section, the Online Designer offers a Field Navigator — see [RC-FD-11 — Online Designer Advanced Options](RC-FD-11_Advanced-Online-Designer-Options.md).
 
 ---
 

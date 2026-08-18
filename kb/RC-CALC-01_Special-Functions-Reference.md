@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Calculations & Special Functions |
 | **Applies To** | All REDCap project types; functions are available wherever REDCap logic or calculations are used |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) |
 | **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Synonyms** | list of redcap special functions; how do i use datediff in redcap; calculate the difference between two dates; redcap functions for logic and calculations; round sum and if functions in calc fields; what functions can i use in calculated fields; text and date manipulation functions; redcap built-in function reference |
@@ -157,6 +159,9 @@ If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole nu
 | `exponential(number)` | e raised to the power of a number | `exponential(1)` → 2.718... |
 | `log(number, base)` | Logarithm | `log(100, 10)` → 2; omit base for natural log |
 | `mod(dividend, divisor)` | Remainder of integer division | `mod(10, 4)` → 2 |
+| `random(min, max)` | Random integer between `min` and `max`, **inclusive of both**. Requires REDCap 17.0.3+ | `random(1, 6)` → an integer from 1 to 6 |
+
+> **Important — `random()` is not a randomization tool.** It returns a fresh value each time the calculation is evaluated, and calculated fields re-evaluate whenever their inputs change or the form is re-saved. It is unsuitable for treatment allocation or anything requiring a stable, auditable assignment — use the Randomization module for that, see [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md).
 
 > **Important:** For exponents, the surrounding parentheses on both the base and the exponent are required. `4^3` will not work — it must be `(4)^(3)`.
 

@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Synonyms** | @NOW and @TODAY action tags; @DEFAULT action tag; @SETVALUE action tag; @USERNAME action tag; how do i auto fill a field with today's date; how do i set a default value on a field; prefill a field value on page load; auto populate the current date and time; capture the username automatically into a field |
@@ -122,6 +124,25 @@ Like `@DEFAULT`, but fills the field every time the form is loaded, overwriting 
 **Backward compatibility note:** Older REDCap versions used `@PREFILL` (which still works but is deprecated).
 
 ---
+
+## 5a. Suppressing the "Save your changes?" Prompt
+
+Autofill tags create a specific nuisance: `@DEFAULT`, `@SETVALUE`, `@TODAY` and `@NOW` all write a value into a field the moment the page loads. REDCap sees that as an unsaved change, so a user who opens a form and immediately navigates away is warned about losing changes they never made. Two action tags added in **15.2.0** address this.
+
+| Action tag | Effect |
+| --- | --- |
+| `@SAVE-PROMPT-EXEMPT` | Changes to this field's value never trigger the "Save your changes?" prompt, whenever they occur |
+| `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` | Narrower: only the **initial** setting of the value counts as exempt, and only when the field was blank at page load. A later change by the user does trigger the prompt |
+
+`@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` is the one that pairs with the tags in this article — it exists precisely to stop `@DEFAULT`, `@SETVALUE`, `@TODAY` and `@NOW` from provoking the warning, while still warning about genuine edits.
+
+The canonical use for the broader `@SAVE-PROMPT-EXEMPT` is a bookkeeping field whose value only matters alongside real data — REDCap's own example is a "Last modified by" field carrying both `@READONLY` and `@SETVALUE="[user-name]"`.
+
+> **Important:** Neither tag suppresses the prompt for the *page*. They only remove that one field's ability to trigger it. If any other field on the page has been modified, the prompt still appears.
+
+> **Warning — possible silent data loss.** These tags disable the safety net for the fields that carry them. A user who navigates away without saving loses the value in an exempted field with no warning. That is the intended trade-off, but confine it to fields whose value genuinely does not matter on its own.
+
+> **Version caveat (≤16.1.6):** With `@SAVE-PROMPT-EXEMPT` on an **auto-complete dropdown**, selecting a choice by typing the full label and tabbing out — rather than clicking from the dropdown list — still triggered the prompt. Fixed in 16.1.7.
 
 ## 6. Combining Autofill Tags with Visibility Tags
 

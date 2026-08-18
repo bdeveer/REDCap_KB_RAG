@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); foundational Project Build & Management knowledge |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) through [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) (category articles); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
 | **Synonyms** | what are action tags in redcap; how do i add an action tag to a field; list of available action tags; where do i put action tags in the online designer; action tags field annotation box; intro to redcap action tags; how do action tags work; @ tag to change field behavior |
@@ -112,6 +114,8 @@ Use this table to quickly find which article covers a specific action tag.
 
 | Action Tag | Category | Article | Purpose |
 |---|---|---|---|
+| `@SAVE-PROMPT-EXEMPT` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Stop this field from triggering the "Save your changes?" prompt (15.2.0+) |
+| `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | As above, but only for the field's initial auto-set value (15.2.0+) |
 | `@HIDDEN` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide a field from view |
 | `@HIDDEN-SURVEY` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in survey mode only |
 | `@HIDDEN-FORM` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in data entry form only |

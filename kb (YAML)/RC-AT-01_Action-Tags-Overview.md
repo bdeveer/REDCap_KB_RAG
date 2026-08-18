@@ -5,11 +5,14 @@ domain: Action Tags
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - foundational Project Build & Management knowledge
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-AT-02
   title: '@HIDDEN & @READONLY — Visibility Control through RC-AT-07 — Cosmetic Action
@@ -128,6 +131,8 @@ Use this table to quickly find which article covers a specific action tag.
 
 | Action Tag | Category | Article | Purpose |
 |---|---|---|---|
+| `@SAVE-PROMPT-EXEMPT` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Stop this field from triggering the "Save your changes?" prompt (15.2.0+) |
+| `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | As above, but only for the field's initial auto-set value (15.2.0+) |
 | `@HIDDEN` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide a field from view |
 | `@HIDDEN-SURVEY` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in survey mode only |
 | `@HIDDEN-FORM` | Visibility | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Hide in data entry form only |
