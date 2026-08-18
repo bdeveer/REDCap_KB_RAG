@@ -22,7 +22,7 @@
 >
 > Three attempts at automated coverage detection all failed with high false-positive rates, because article wording legitimately differs from changelog wording. Each item was therefore checked against the article text by hand. **Do not trust keyword matching to answer "is this documented?" for this KB.**
 >
-> Final state: **50 of 52 applied.** The two outstanding items belong to REDCap+ features that have no article yet and are carried on the P0 list in the feature report.
+> Final state: **52 of 52 applied**, as of 2026-08-18. The two items that were outstanding at the time of the reconciliation belonged to REDCap+ features with no article yet; both articles now exist (`RC-PLUS-02`, `RC-PLUS-03`) and carry the caveats.
 
 ---
 
@@ -287,8 +287,8 @@ Useful for setting expectations about adopting new features early — and direct
   *Applied 2026-08-18 → `RC-PLUS-02` §5, alongside two further silent-omission defects the original entry did not capture: records dropped for failing field validation (below 17.0.2) and the Development record limit truncating migrations of Production projects (below 17.1.4).*
 - [x] **Enhanced Signature (17.1.0) signatures were missing from PDFs.** **17.1.1** — the signature image did not appear in downloaded instrument PDFs or PDF Snapshots. Target `RC-SURV-09` and the Enhanced Signature content proposed for `RC-FD-06`.
   *Applied 2026-08-18 → `RC-FD-06` §8.8.1.*
-- [ ] **Rewards (17.0.0) cron crashed repeatedly.** **15.5.5** references `ProcessScheduledRewardOrders` crashing — note the version, which suggests reward plumbing predates the 17.0.0 announcement. Worth confirming before writing the proposed `RC-PLUS-03`.
-  *Not applied — deferred to **`RC-PLUS-03`** (Reward Services) — and still needs confirming; the 15.5.5 `ProcessScheduledRewardOrders` reference predates the 17.0.0 announcement.*
+- [x] **Rewards (17.0.0) cron crashed repeatedly.** **15.5.5** references `ProcessScheduledRewardOrders` crashing — note the version, which suggests reward plumbing predates the 17.0.0 announcement. Worth confirming before writing the proposed `RC-PLUS-03`.
+  *Applied 2026-08-18 → `RC-PLUS-03` §7.* **The suspicion was correct.** Rewards plumbing shipped well before the 17.0.0 feature announcement, and it misbehaved on instances that were not using Rewards and could not have been: besides the 15.5.5 cron crash, the Rewards cron could be written to `redcap_crons` with the wrong enabled/disabled value and **run despite the feature being turned off** (fixed 16.0.6 Standard / 15.5.30 LTS), and the Smart Variables documentation listed Rewards Smart Variables that did not yet exist (fixed 15.6.1 Standard / 15.5.10 LTS).
 - [x] **MyCap app-to-server communication broke for already-joined participants.** *(16.0.37)* — with an explicit note for institutions that had already upgraded. Target `RC-MYCAP-01`.
   *Applied 2026-08-18 → `RC-MYCAP-01` §5.1.*
 
