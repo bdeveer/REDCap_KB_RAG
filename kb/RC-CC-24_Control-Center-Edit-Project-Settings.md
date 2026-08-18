@@ -3,7 +3,7 @@
 **Control Center: Edit Project Settings**
 
 | **Article ID** | [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators only |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **Control Center: Publication Matching**
 
 | **Article ID** | [RC-CC-19 — Control Center: Publication Matching](RC-CC-19_Publication-Matching.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

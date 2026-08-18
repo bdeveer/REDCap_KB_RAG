@@ -3,7 +3,7 @@
 **Data Export — Overview & Workflow**
 
 | **Article ID** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types; requires Data Export user rights |
 | **Requires** | Any supported version |

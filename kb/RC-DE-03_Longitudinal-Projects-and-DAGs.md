@@ -3,7 +3,7 @@
 **Longitudinal Projects & Data Access Groups**
 
 | **Article ID** | [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Data Entry |
 | **Applies To** | REDCap projects with Longitudinal mode or Data Access Groups enabled |
 | **Requires** | Any supported version |

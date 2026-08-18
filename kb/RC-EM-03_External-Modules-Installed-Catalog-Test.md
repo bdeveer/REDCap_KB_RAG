@@ -2,19 +2,19 @@
 
 **External Modules — Installed Module Catalog — Test / Staging Instance**
 
-| Article ID | [RC-EM-03 — External Modules: Installed Catalog — Test / Staging](RC-EM-03_External-Modules-Installed-Catalog-Test.md) |
+| **Article ID** | [RC-EM-03 — External Modules: Installed Catalog — Test / Staging](RC-EM-03_External-Modules-Installed-Catalog-Test.md) |
 |---|---|
-| Instance | Test / Staging |
-| Domain | External Modules |
-| Applies To | REDCap administrators; project designers on the Test / Staging instance |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
-| Prerequisite | [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)|
-| Version | 1.0 |
-| Last Updated | 2026 |
+| **Instance** | Test / Staging |
+| **Domain** | External Modules |
+| **Applies To** | REDCap administrators; project designers on the Test / Staging instance |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Prerequisite** | [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md)|
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Synonyms** | which external modules are on the test instance; list of installed modules on test or staging; is this module available for evaluation on test; modules installed on the staging server; test instance module catalog; what modules can i try out before production; modules that differ between test and production; available modules on the staging environment |
-| Related Topics | [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md); [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md)|
+| **Related Topics** | [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-EM-02 — External Modules: Installed Catalog — Production](RC-EM-02_External-Modules-Installed-Catalog.md); [RC-EM-04 — External Modules: Installed Catalog — Development](RC-EM-04_External-Modules-Installed-Catalog-Development.md)|
 
 ---
 

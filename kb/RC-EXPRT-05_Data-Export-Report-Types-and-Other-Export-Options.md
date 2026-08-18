@@ -3,7 +3,7 @@
 **Data Export — Report Types & Other Export Options**
 
 | **Article ID** | [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types; requires Data Export user rights |
 | **Requires** | Any supported version |

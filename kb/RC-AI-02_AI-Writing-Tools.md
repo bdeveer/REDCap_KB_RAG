@@ -3,7 +3,7 @@
 **AI Writing Tools**
 
 | **Article ID** | [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md) |
-| --- | --- |
+|---|---|
 | **Domain** | AI Tools |
 | **Applies To** | All project types; requires AI Writing Tools to be enabled by administrator |
 | **Requires** | Any supported version |

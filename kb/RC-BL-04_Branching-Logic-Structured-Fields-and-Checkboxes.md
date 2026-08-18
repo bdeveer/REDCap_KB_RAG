@@ -3,7 +3,7 @@
 **Branching Logic — Structured Fields & Checkboxes**
 
 | **Article ID** | [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

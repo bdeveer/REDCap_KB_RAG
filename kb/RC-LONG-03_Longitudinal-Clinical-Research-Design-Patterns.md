@@ -2,18 +2,18 @@
 
 **Longitudinal Clinical Research Design Patterns**
 
-| Article ID | [RC-LONG-03 — Longitudinal Clinical Research Design Patterns](RC-LONG-03_Longitudinal-Clinical-Research-Design-Patterns.md) |
-| --- | --- |
-| Domain | Longitudinal & Repeated Setup |
-| Applies To | Longitudinal project types; requires Project Design and Setup rights |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
-| Prerequisite | [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
-| Version | 1.0 |
-| Last Updated | 2026 |
-| Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| Related Topics | [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-RAND-02 — Randomization Setup](RC-RAND-02_Randomization-Setup.md) |
-| Synonyms | best practices for longitudinal clinical trial design in redcap; standard event architecture for a cohort study; how should i structure events for a clinical trial; design patterns for screening through follow-up; reuse the same instrument across multiple events; call log and adjudication instrument patterns; scoring instrument separate from raw responses; gcp source document checklist setup |
+| **Article ID** | [RC-LONG-03 — Longitudinal Clinical Research Design Patterns](RC-LONG-03_Longitudinal-Clinical-Research-Design-Patterns.md) |
+|---|---|
+| **Domain** | Longitudinal & Repeated Setup |
+| **Applies To** | Longitudinal project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Prerequisite** | [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
+| **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
+| **Related Topics** | [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-RAND-02 — Randomization Setup](RC-RAND-02_Randomization-Setup.md) |
+| **Synonyms** | best practices for longitudinal clinical trial design in redcap; standard event architecture for a cohort study; how should i structure events for a clinical trial; design patterns for screening through follow-up; reuse the same instrument across multiple events; call log and adjudication instrument patterns; scoring instrument separate from raw responses; gcp source document checklist setup |
 
 ---
 

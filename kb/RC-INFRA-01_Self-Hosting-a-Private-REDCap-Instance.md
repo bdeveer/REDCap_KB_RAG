@@ -5,6 +5,7 @@
 | Field | Value |
 |---|---|
 | **Article ID** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) |
+|---|---|
 | **Domain** | Self-Hosting, Deployment & Release Management |
 | **Applies To** | Administrators and developers running a non-production REDCap instance off the main institutional server |
 | **Requires** | Any supported version |
@@ -14,7 +15,7 @@
 | **Last Updated** | 2026-08 |
 | **Author** | REDCap Support |
 | **Related Topics** | [RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose](RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) |
-| Synonyms | how do i set up my own private redcap test server; run a private redcap sandbox for development; self-host redcap for external module development; stand up a non-production redcap instance; install redcap in docker containers; personal redcap instance for testing upgrades; redcap licensing for a private sandbox; test redcap configuration changes safely off production; what php version does redcap require; unicode transformation before upgrading redcap; utf8mb4 charset requirement for redcap database |
+| **Synonyms** | how do i set up my own private redcap test server; run a private redcap sandbox for development; self-host redcap for external module development; stand up a non-production redcap instance; install redcap in docker containers; personal redcap instance for testing upgrades; redcap licensing for a private sandbox; test redcap configuration changes safely off production; what php version does redcap require; unicode transformation before upgrading redcap; utf8mb4 charset requirement for redcap database |
 
 ---
 

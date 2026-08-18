@@ -2,19 +2,19 @@
 
 **Institution-Specific Settings & Policies — Development Instance**
 
-| Article ID | [RC-INST-03 — Institution-Specific Settings & Policies — Development](RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md) |
+| **Article ID** | [RC-INST-03 — Institution-Specific Settings & Policies — Development](RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md) |
 |---|---|
-| Instance | Development |
-| Domain | Institution |
-| Applies To | REDCap administrators and IT staff using the Development instance |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
-| Prerequisite | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(Production) |
-| Version | 1.0 |
-| Last Updated | 2026 |
+| **Instance** | Development |
+| **Domain** | Institution |
+| **Applies To** | REDCap administrators and IT staff using the Development instance |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
+| **Prerequisite** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(Production) |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| Related Topics | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging](RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md)|
-| Synonyms | how do i log in to the development redcap server; dev instance for module developers and it staff; what authentication does the development environment use; development server settings and policies; can i build external modules on the dev instance; redcap url for the development environment; how does dev differ from production; table-based login on the development instance |
+| **Related Topics** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging](RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md)|
+| **Synonyms** | how do i log in to the development redcap server; dev instance for module developers and it staff; what authentication does the development environment use; development server settings and policies; can i build external modules on the dev instance; redcap url for the development environment; how does dev differ from production; table-based login on the development instance |
 
 ---
 

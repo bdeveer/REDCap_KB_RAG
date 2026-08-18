@@ -3,7 +3,7 @@
 **Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS**
 
 | **Article ID** | [RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS](RC-FD-11_Advanced-Online-Designer-Options.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

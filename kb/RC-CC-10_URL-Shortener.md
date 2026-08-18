@@ -3,7 +3,7 @@
 **URL Shortener**
 
 | **Article ID** | [RC-CC-10 — Control Center: URL Shortener](RC-CC-10_URL-Shortener.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

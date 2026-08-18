@@ -3,7 +3,7 @@
 **Alert Management & Notification Log**
 
 | **Article ID** | [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

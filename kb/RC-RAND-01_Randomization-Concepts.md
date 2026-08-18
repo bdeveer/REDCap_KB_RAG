@@ -3,7 +3,7 @@
 **REDCap Randomization – Concepts & Terminology**
 
 | **Article ID** | [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Randomization |
 | **Applies To** | All REDCap project types with Randomization module enabled; intended for PIs, Study Coordinators, and Project Builders planning a randomized study |
 | **Requires** | REDCap v15.4.4+ (Randomization 2.0 — automatic trigger options) |

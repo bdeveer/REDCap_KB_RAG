@@ -3,7 +3,7 @@
 **Clinical Data Interoperability Services (CDIS): Overview and Control Center Setup**
 
 | **Article ID** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Institutions with FHIR/HL7 integration and EHR connectivity |
 | **Requires** | Any supported version |

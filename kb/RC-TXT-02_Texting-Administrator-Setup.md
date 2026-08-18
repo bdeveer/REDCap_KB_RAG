@@ -3,7 +3,7 @@
 **Texting: Administrator Setup**
 
 | **Article ID** | [RC-TXT-02 — Texting: Administrator Setup](RC-TXT-02_Texting-Administrator-Setup.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Texting (SMS) |
 | **Applies To** | REDCap administrators with "Modify system configuration pages" permission |
 | **Requires** | Any supported version |

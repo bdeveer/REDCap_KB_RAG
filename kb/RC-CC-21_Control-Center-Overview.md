@@ -3,7 +3,7 @@
 **Control Center: Overview & Navigation**
 
 | **Article ID** | [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

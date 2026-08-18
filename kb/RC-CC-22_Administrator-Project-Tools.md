@@ -3,7 +3,7 @@
 **Administrator Project Tools**
 
 | **Article ID** | [RC-CC-22 — Admin: Administrator Project Tools (View as User, Project Switcher)](RC-CC-22_Administrator-Project-Tools.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators only |
 | **Requires** | Any supported version |

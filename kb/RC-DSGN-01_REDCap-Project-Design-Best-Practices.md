@@ -3,7 +3,7 @@
 **REDCap Project Design Best Practices**
 
 | **Article ID** | [RC-DSGN-01 — REDCap Project Design Best Practices](RC-DSGN-01_REDCap-Project-Design-Best-Practices.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Project Design Best Practices |
 | **Applies To** | All REDCap projects; all REDCap project designers and reviewers |
 | **Requires** | Any supported version |

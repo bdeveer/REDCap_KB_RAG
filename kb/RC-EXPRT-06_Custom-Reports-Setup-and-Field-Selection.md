@@ -3,7 +3,7 @@
 **Custom Reports: Setup & Field Selection**
 
 | **Article ID** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; requires Add/Edit/Organize Reports privilege |
 | **Requires** | Any supported version |

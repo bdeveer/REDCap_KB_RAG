@@ -3,7 +3,7 @@
 **Control Center: AI Configuration Settings**
 
 | **Article ID** | [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center |
 | **Applies To** | REDCap Administrators; requires Control Center access |
 | **Requires** | REDCap v17.2.0+ (Standard); LTS 17.3.x and higher |

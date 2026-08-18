@@ -3,7 +3,7 @@
 **Custom Reports: Management & Organization**
 
 | **Article ID** | [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; requires Add/Edit/Organize Reports privilege for most actions |
 | **Requires** | Any supported version |

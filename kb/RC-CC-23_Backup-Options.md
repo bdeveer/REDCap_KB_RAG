@@ -3,7 +3,7 @@
 **Backup Options**
 
 | **Article ID** | [RC-CC-23 — Backup Options](RC-CC-23_Backup-Options.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators and project managers |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **Data Export — De-identification & Formatting Options**
 
 | **Article ID** | [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types; availability varies by Data Export Rights level |
 | **Requires** | Any supported version |

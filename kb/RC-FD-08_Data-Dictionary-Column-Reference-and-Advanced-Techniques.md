@@ -3,7 +3,7 @@
 **Data Dictionary: Column Reference & Advanced Techniques**
 
 | **Article ID** | [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **To-Do List**
 
 | **Article ID** | [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

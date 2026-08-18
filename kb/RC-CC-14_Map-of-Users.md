@@ -3,7 +3,7 @@
 **Map of Users**
 
 | **Article ID** | [RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

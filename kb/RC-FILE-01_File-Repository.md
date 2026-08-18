@@ -3,7 +3,7 @@
 **File Repository**
 
 | **Article ID** | [RC-FILE-01 — File Repository](RC-FILE-01_File-Repository.md) |
-| --- | --- |
+|---|---|
 | **Domain** | File Repository |
 | **Applies To** | All REDCap project types; requires File Repository user right |
 | **Requires** | Any supported version |

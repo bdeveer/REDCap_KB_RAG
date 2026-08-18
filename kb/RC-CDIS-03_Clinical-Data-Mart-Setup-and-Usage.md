@@ -3,7 +3,7 @@
 **Clinical Data Mart (CDM): Setup and Usage**
 
 | **Article ID** | [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Institutions using bulk clinical data import for registries and retrospective studies |
 | **Requires** | Any supported version |

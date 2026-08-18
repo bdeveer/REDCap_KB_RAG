@@ -3,7 +3,7 @@
 **Project Bookmarks**
 
 | **Article ID** | [RC-NAV-UI-03 — Project Bookmarks](RC-NAV-UI-03_Project-Bookmarks.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Project Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |

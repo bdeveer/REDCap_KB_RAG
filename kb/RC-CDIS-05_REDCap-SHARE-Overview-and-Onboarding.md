@@ -3,7 +3,7 @@
 **REDCap SHARE: Overview & Onboarding**
 
 | **Article ID** | [RC-CDIS-05 — REDCap SHARE: Overview & Onboarding](RC-CDIS-05_REDCap-SHARE-Overview-and-Onboarding.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | REDCap Administrators (Sections 4–6); study teams evaluating participant-mediated EHR data collection. Requires a REDCap+ subscription |
 | **Requires** | REDCap v17.3.0+ (Standard); LTS 17.3.x and higher. REDCap+ subscription required |

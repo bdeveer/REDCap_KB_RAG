@@ -3,7 +3,7 @@
 **Basic Data Entry**
 
 | **Article ID** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |

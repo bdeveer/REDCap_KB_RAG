@@ -3,7 +3,7 @@
 **REDCap+: Project Migration Tool**
 
 | **Article ID** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) |
-| --- | --- |
+|---|---|
 | **Domain** | REDCap+ |
 | **Applies To** | Users moving a whole project between REDCap instances; REDCap Administrators (Sections 6–7) |
 | **Requires** | REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required on the **destination** instance only — see §2 |

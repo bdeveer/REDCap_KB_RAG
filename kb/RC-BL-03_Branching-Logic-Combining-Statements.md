@@ -3,7 +3,7 @@
 **Branching Logic — Combining Statements**
 
 | **Article ID** | [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **Dynamic SQL Field Type**
 
 | **Article ID** | [RC-FD-12 — Dynamic SQL Field Type](RC-FD-12_Dynamic-SQL-Field-Type.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires REDCap administrator access to create or modify |
 | **Requires** | Any supported version |

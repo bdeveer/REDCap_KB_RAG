@@ -3,7 +3,7 @@
 **Data Dictionary**
 
 | **Article ID** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

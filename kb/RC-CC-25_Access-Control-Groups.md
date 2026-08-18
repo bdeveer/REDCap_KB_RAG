@@ -3,7 +3,7 @@
 **Control Center: Access Control Groups**
 
 | **Article ID** | [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
@@ -13,7 +13,7 @@
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| Synonyms | what are access control groups; limit the maximum privileges a project manager can grant; set a ceiling on user rights across projects; prevent certain users from getting export or delete rights; restrict grantable privileges instance-wide; acg setup in the control center; compliance control over user rights; cap user permissions at the system level |
+| **Synonyms** | what are access control groups; limit the maximum privileges a project manager can grant; set a ceiling on user rights across projects; prevent certain users from getting export or delete rights; restrict grantable privileges instance-wide; acg setup in the control center; compliance control over user rights; cap user permissions at the system level |
 
 ---
 

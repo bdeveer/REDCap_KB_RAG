@@ -3,7 +3,7 @@
 **REDCap+: Email Verification & Unsubscribe**
 
 | **Article ID** | [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md) |
-| --- | --- |
+|---|---|
 | **Domain** | REDCap+ |
 | **Applies To** | Study teams sending participant emails; REDCap Administrators (§3) |
 | **Requires** | REDCap v17.3.0+ and a REDCap+ subscription |

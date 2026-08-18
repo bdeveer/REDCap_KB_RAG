@@ -3,7 +3,7 @@
 **AI Summarization**
 
 | **Article ID** | [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
-| --- | --- |
+|---|---|
 | **Domain** | AI Tools |
 | **Applies To** | All project types; requires AI Summarization to be enabled by administrator |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **System Statistics**
 
 | **Article ID** | [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

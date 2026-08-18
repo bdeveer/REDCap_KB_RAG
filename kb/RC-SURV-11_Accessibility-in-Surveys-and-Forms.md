@@ -3,7 +3,7 @@
 **Accessibility in REDCap Surveys & Forms**
 
 | **Article ID** | [RC-SURV-11 — Accessibility in REDCap Surveys & Forms](RC-SURV-11_Accessibility-in-Surveys-and-Forms.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Surveys |
 | **Applies To** | Survey and instrument designers; anyone answering an institutional accessibility question about REDCap |
 | **Requires** | Varies by item — see §3. Most improvements land between 16.0.6 and 17.3.0 |

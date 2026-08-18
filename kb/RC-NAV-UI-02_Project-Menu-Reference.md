@@ -3,7 +3,7 @@
 **Project Menu Reference**
 
 | **Article ID** | [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Project Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |

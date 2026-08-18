@@ -3,7 +3,7 @@
 **AI Translations**
 
 | **Article ID** | [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md) |
-| --- | --- |
+|---|---|
 | **Domain** | AI Tools |
 | **Applies To** | Projects using the Multi-Language Management module |
 | **Requires** | Any supported version |

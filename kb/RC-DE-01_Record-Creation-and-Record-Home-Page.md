@@ -3,7 +3,7 @@
 **Record Creation & the Record Home Page**
 
 | **Article ID** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **REDCap Versions, Release Lines & Patching**
 
 | **Article ID** | [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Self-Hosting, Deployment & Release Management |
 | **Applies To** | All REDCap users; REDCap Administrators (Sections 5–7) |
 | **Requires** | Any supported version |

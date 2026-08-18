@@ -3,7 +3,7 @@
 **Top Usage Report**
 
 | **Article ID** | [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **REDCap+: Reward Services**
 
 | **Article ID** | [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) |
-| --- | --- |
+|---|---|
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators configuring the service (§3–5); study teams running participant compensation (§6–7) |
 | **Requires** | REDCap v17.0.0+ and a REDCap+ subscription. Also requires a funded institutional account with the third-party gift card provider — see §2 |

@@ -3,7 +3,7 @@
 **REDCap AI Tools: Overview & Security**
 
 | **Article ID** | [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
-| --- | --- |
+|---|---|
 | **Domain** | AI Tools |
 | **Applies To** | All project types; feature availability depends on administrator configuration |
 | **Requires** | REDCap v15.0.0+ |

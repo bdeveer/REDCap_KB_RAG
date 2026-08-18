@@ -3,7 +3,7 @@
 **Online Designer – Instrument and Field Management**
 
 | **Article ID** | [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup user rights |
 | **Requires** | Any supported version |

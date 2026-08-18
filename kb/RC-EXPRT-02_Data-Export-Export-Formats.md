@@ -3,7 +3,7 @@
 **Data Export — Export Formats**
 
 | **Article ID** | [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types; requires Data Export user rights |
 | **Requires** | Any supported version |

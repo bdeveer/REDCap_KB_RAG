@@ -3,7 +3,7 @@
 **My Profile — User Profile Settings**
 
 | **Article ID** | [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Profile (PROF) |
 | **Applies To** | All REDCap users |
 | **Requires** | Any supported version |

@@ -3,7 +3,7 @@
 **Branching Logic — Syntax & Atomic Statements**
 
 | **Article ID** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

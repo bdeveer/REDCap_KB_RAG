@@ -3,7 +3,7 @@
 **Survey Login**
 
 | **Article ID** | [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; Survey Login cannot be applied to a Public Survey |
 | **Requires** | Any supported version |

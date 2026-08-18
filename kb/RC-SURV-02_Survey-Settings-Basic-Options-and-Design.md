@@ -3,7 +3,7 @@
 **Survey Settings: Basic Options & Design**
 
 | **Article ID** | [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; assumes surveys have been enabled on at least one instrument |
 | **Requires** | Any supported version |

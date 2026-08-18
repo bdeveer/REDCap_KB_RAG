@@ -3,7 +3,7 @@
 **Custom Reports: Filtering & Ordering**
 
 | **Article ID** | [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; longitudinal-specific features noted inline |
 | **Requires** | Any supported version |

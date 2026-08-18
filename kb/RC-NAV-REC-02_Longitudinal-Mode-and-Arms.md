@@ -3,7 +3,7 @@
 **Longitudinal Mode and Arms**
 
 | **Article ID** | [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Record Navigation |
 | **Applies To** | Longitudinal projects |
 | **Requires** | Any supported version |

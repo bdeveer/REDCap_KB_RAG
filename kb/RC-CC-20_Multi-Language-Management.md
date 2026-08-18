@@ -3,7 +3,7 @@
 **Control Center: Multi-Language Management**
 
 | **Article ID** | [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

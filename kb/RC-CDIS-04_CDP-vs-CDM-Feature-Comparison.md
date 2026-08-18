@@ -3,7 +3,7 @@
 **CDP vs CDM: Feature Comparison**
 
 | **Article ID** | [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Administrators deciding between CDP and CDM for their institution |
 | **Requires** | Any supported version with CDIS enabled |

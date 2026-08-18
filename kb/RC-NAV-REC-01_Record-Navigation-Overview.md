@@ -3,7 +3,7 @@
 **Record Navigation Overview**
 
 | **Article ID** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Record Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |

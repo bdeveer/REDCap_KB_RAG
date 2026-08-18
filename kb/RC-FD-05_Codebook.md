@@ -3,7 +3,7 @@
 **Codebook**
 
 | **Article ID** | [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

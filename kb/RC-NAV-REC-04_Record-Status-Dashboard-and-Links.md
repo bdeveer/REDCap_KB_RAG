@@ -3,7 +3,7 @@
 **Record Status Dashboard and Links**
 
 | **Article ID** | [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Record Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |

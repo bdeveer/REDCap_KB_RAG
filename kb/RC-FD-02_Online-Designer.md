@@ -3,7 +3,7 @@
 **Online Designer**
 
 | **Article ID** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

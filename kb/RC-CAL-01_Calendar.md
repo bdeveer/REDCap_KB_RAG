@@ -3,7 +3,7 @@
 **Calendar**
 
 | **Article ID** | [RC-CAL-01 — Calendar](RC-CAL-01_Calendar.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Calendar |
 | **Applies To** | All project types; primarily used in longitudinal projects |
 | **Requires** | Any supported version |

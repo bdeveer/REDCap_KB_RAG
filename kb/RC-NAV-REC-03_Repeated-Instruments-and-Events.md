@@ -3,7 +3,7 @@
 **Repeated Instruments and Events**
 
 | **Article ID** | [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Record Navigation |
 | **Applies To** | Projects with repeated instruments or events |
 | **Requires** | Any supported version |

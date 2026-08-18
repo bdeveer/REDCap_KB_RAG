@@ -3,7 +3,7 @@
 **REDCap Randomization – Working with & Managing Randomization**
 
 | **Article ID** | [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Randomization |
 | **Applies To** | Study Coordinators and data entry staff (Sections 4–6); REDCap Administrators (Section 7); requires project in Production with a configured randomization model |
 | **Requires** | Any supported version |

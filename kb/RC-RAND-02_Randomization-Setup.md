@@ -3,7 +3,7 @@
 **REDCap Randomization Setup**
 
 | **Article ID** | [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Randomization |
 | **Applies To** | All REDCap project types with Randomization module enabled; requires Project Design and Setup rights and User Rights management access |
 | **Requires** | REDCap v15.4.4+ (Randomization 2.0 — automatic trigger options) |

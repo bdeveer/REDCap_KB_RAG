@@ -3,7 +3,7 @@
 **Control Center: Custom Application Links**
 
 | **Article ID** | [RC-CC-18 — Control Center: Custom Application Links](RC-CC-18_Custom-Application-Links.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

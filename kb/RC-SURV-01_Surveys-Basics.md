@@ -3,7 +3,7 @@
 **Surveys – Basics**
 
 | **Article ID** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; single-instrument projects assumed for this guide |
 | **Requires** | Any supported version |

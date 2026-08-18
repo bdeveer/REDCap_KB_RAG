@@ -2,19 +2,19 @@
 
 **Institution-Specific Settings & Policies — Test / Staging Instance**
 
-| Article ID | [RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging](RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md) |
+| **Article ID** | [RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging](RC-INST-02_Institution-Specific-Settings-and-Policies-Test.md) |
 |---|---|
-| Instance | Test / Staging |
-| Domain | Institution |
-| Applies To | REDCap users on the Test / Staging instance |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
-| Prerequisite | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(Production) |
-| Version | 1.0 |
-| Last Updated | 2026 |
+| **Instance** | Test / Staging |
+| **Domain** | Institution |
+| **Applies To** | REDCap users on the Test / Staging instance |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
+| **Prerequisite** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(Production) |
+| **Version** | 1.0 |
+| **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| Related Topics | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-03 — Institution-Specific Settings & Policies — Development](RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md)|
-| Synonyms | how do i log in to the test or staging redcap server; can i put real participant data on the test instance; what is the redcap url for uat testing; how does the staging environment differ from production; user acceptance testing redcap settings; test instance authentication and 2fa requirements; rehearse configuration changes before production; staging server policies and feature availability |
+| **Related Topics** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-INST-03 — Institution-Specific Settings & Policies — Development](RC-INST-03_Institution-Specific-Settings-and-Policies-Development.md)|
+| **Synonyms** | how do i log in to the test or staging redcap server; can i put real participant data on the test instance; what is the redcap url for uat testing; how does the staging environment differ from production; user acceptance testing redcap settings; test instance authentication and 2fa requirements; rehearse configuration changes before production; staging server policies and feature availability |
 
 ---
 

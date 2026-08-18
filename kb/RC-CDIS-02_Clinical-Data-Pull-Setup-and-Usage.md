@@ -3,7 +3,7 @@
 **Clinical Data Pull (CDP): Setup and Usage**
 
 | **Article ID** | [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Institutions using real-time, prospective clinical data collection from an EHR |
 | **Requires** | Any supported version |

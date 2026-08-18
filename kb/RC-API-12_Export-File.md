@@ -2,19 +2,19 @@
 
 **Export File API**
 
-| Article ID | [RC-API-12 — Export File API](RC-API-12_Export-File.md) |
+| **Article ID** | [RC-API-12 — Export File API](RC-API-12_Export-File.md) |
 |---|---|
-| Domain | API |
-| Applies To | REDCap projects with file upload fields |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
-| Prerequisite | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| Version | 1.1 |
-| Last Updated | 2026 |
-| Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| Source | REDCap API v16.1.3 official documentation examples |
-| Related Topics | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)|
-| Synonyms | how do i download a file via the api; export file api call; retrieve an uploaded file from a record through the api; api method to get a file-upload field attachment; download signature field file via api; pull binary file content with the api; api endpoint to export a record file; get a file attached to a record programmatically |
+| **Domain** | API |
+| **Applies To** | REDCap projects with file upload fields |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Version** | 1.1 |
+| **Last Updated** | 2026 |
+| **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
+| **Source** | REDCap API v16.1.3 official documentation examples |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)|
+| **Synonyms** | how do i download a file via the api; export file api call; retrieve an uploaded file from a record through the api; api method to get a file-upload field attachment; download signature field file via api; pull binary file content with the api; api endpoint to export a record file; get a file attached to a record programmatically |
 
 ---
 

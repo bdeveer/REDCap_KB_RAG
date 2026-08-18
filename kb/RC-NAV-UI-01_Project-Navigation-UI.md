@@ -3,7 +3,7 @@
 **Project Navigation UI**
 
 | **Article ID** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Project Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |

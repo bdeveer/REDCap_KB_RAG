@@ -3,7 +3,7 @@
 **Form Design Overview**
 
 | **Article ID** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |

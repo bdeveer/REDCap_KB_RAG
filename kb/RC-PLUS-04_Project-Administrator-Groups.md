@@ -3,7 +3,7 @@
 **REDCap+: Project Administrator Groups (PAGs)**
 
 | **Article ID** | [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md) |
-| --- | --- |
+|---|---|
 | **Domain** | REDCap+ |
 | **Applies To** | System administrators delegating administrative work; users designated as project-level admins |
 | **Requires** | REDCap v17.1.0+ and a REDCap+ subscription |

@@ -3,7 +3,7 @@
 **Texting in REDCap: Setup and Usage**
 
 | **Article ID** | [RC-TXT-01 — Texting in REDCap: Setup and Usage](RC-TXT-01_Texting-in-REDCap-Setup-and-Usage.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Texting (SMS) |
 | **Applies To** | Projects with surveys enabled; requires Twilio or Mosio configured at the system level |
 | **Requires** | Any supported version |

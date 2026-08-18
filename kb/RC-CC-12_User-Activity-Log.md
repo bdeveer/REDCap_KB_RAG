@@ -3,7 +3,7 @@
 **User Activity Log**
 
 | **Article ID** | [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |

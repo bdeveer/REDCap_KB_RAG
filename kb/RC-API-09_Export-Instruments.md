@@ -2,19 +2,19 @@
 
 **Export Instruments API**
 
-| Article ID | [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) |
+| **Article ID** | [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) |
 |---|---|
-| Domain | API |
-| Applies To | All REDCap projects |
-| Requires | Any supported version |
-| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
-| Prerequisite | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| Version | 1.1 |
-| Last Updated | 2026 |
-| Author | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| Source | REDCap API v16.1.3 official documentation examples |
-| Related Topics | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)|
-| Synonyms | how do i export the list of instruments via the api; export instruments api call; get all form names through the api; api method to list project instruments; discover instrument names programmatically; retrieve the forms in a project via api; api endpoint to export instrument list; list data collection forms using the api |
+| **Domain** | API |
+| **Applies To** | All REDCap projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
+| **Version** | 1.1 |
+| **Last Updated** | 2026 |
+| **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
+| **Source** | REDCap API v16.1.3 official documentation examples |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)|
+| **Synonyms** | how do i export the list of instruments via the api; export instruments api call; get all form names through the api; api method to list project instruments; discover instrument names programmatically; retrieve the forms in a project via api; api endpoint to export instrument list; list data collection forms using the api |
 
 ---
 

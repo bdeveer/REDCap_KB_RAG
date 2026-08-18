@@ -3,7 +3,7 @@
 **Survey Settings: Behavior, Access & Termination**
 
 | **Article ID** | [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; some settings (Survey Response PDF Save, Time Limit) require additional project features such as longitudinal mode or the Participant List |
 | **Requires** | Any supported version |

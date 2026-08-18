@@ -3,7 +3,7 @@
 **Alerts & Notifications — Setup**
 
 | **Article ID** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
-| --- | --- |
+|---|---|
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
