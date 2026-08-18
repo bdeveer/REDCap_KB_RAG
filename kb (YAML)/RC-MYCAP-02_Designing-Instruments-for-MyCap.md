@@ -4,10 +4,12 @@ title: Designing Instruments for MyCap
 domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - 'RC-MYCAP-01 — MyCap: Overview & Enabling'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-MYCAP-03
   title: 'MyCap: Task Scheduling'
@@ -79,7 +81,7 @@ Not all REDCap field types are supported in MyCap. The following table lists com
 | Radio button | Yes |
 | Dropdown | Yes |
 | Checkbox | Yes |
-| Slider (Visual Analog Scale) | Yes (use `@MC-FIELD-SLIDER-BASIC` or `@MC-FIELD-SLIDER-CONTINUOUS` for best display) |
+| Slider (Visual Analog Scale) | Yes — no annotation required |
 | Yes/No | Yes |
 | True/False | Yes |
 | Calculated field | **No** — does not compute in MyCap |
@@ -104,8 +106,10 @@ MyCap annotations are action tags specific to the MyCap app. Apply them in the *
 | Annotation | Field type | Effect |
 |---|---|---|
 | `@MC-FIELD-HIDDEN` | Any | Hides the field from the participant in MyCap (equivalent to `@HIDDEN` for the mobile context) |
-| `@MC-FIELD-SLIDER-BASIC` | Slider | Displays the slider with fixed endpoints; participant selects a point by tapping |
-| `@MC-FIELD-SLIDER-CONTINUOUS` | Slider | Displays the slider as a continuous drag control; allows fine-grained positioning |
+
+Slider fields need no annotation. They render in MyCap using the choice range defined on the field itself.
+
+> **Version caveat (removed in 15.7.2 Standard; reaches LTS with the 16.0.x line):** Two slider annotations — `@MC-FIELD-SLIDER-BASIC` and `@MC-FIELD-SLIDER-CONTINUOUS` — were removed as valid action tags because they worked only in the now-retired MyCap Classic app, never in the current one. If you find either tag on an existing instrument, it is inert and can be deleted; the slider will render regardless. Because this was a *change* rather than a fix, it did not reach LTS as a patch — LTS instances on the 15.5.x line still list the tags as valid even though they have no effect in the current app.
 
 ## 4.2 Data Capture Annotations
 

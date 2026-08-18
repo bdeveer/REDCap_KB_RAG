@@ -6,9 +6,11 @@
 |---|---|
 | **Domain** | MyCap Mobile App |
 | **Applies To** | Projects with MyCap enabled; pre-launch testing phase |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
 | **Prerequisite** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md); [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)|
 | **Synonyms** | how do i test a mycap project before launch; mycap testing checklist before go-live; join the app with a test record; verify mycap schedule and notifications work; test mycap on a real device not a simulator; view task details csv to check the schedule; pre-launch mycap testing workflow; publish mycap before enrolling participants |
@@ -74,7 +76,7 @@ On the test device:
 - Open MyCap and verify the task list shows all enabled tasks.
 - Complete each task, checking:
   - Field types display correctly (dropdowns, sliders, text boxes, etc.).
-  - MyCap annotations behave as expected (`@MC-FIELD-SLIDER-BASIC`, `@MC-FIELD-FILE-IMAGECAPTURE`, etc.).
+  - MyCap annotations behave as expected (`@MC-FIELD-FILE-IMAGECAPTURE`, `@MC-FIELD-TEXT-BARCODE`, etc.).
   - Branching logic within instruments functions correctly.
   - No piping syntax (`[field_name]`) appears as raw text in field labels or notes.
   - Task completes and is marked done after submission.

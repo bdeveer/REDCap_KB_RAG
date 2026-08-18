@@ -130,8 +130,10 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 - [ ] **`RC-AT-01`, `RC-AT-06` — `@SAVE-PROMPT-EXEMPT` and `@SAVE-PROMPT-EXEMPT-WHEN-AUTOSET`. GAP**
   Both added in 15.2.0; **zero** matches in `kb/`. The `-WHEN-AUTOSET` variant specifically suppresses the "Save your changes?" prompt for values set by `@DEFAULT`, `@SETVALUE`, `@TODAY` or `@NOW` — squarely an autofill-article concern.
 
-- [ ] **`RC-AT-11`, `RC-MYCAP-02`, `RC-MYCAP-08` — `MC-FIELD-SLIDER-BASIC` / `MC-FIELD-SLIDER-CONTINUOUS` removed. WRONG**
-  15.7.2 removed both as valid action tags (they only ever worked in an older MyCap app). Two articles still document them. **Highest-confidence factual error found in this pass.**
+- [x] **`RC-MYCAP-02`, `RC-MYCAP-08` — `MC-FIELD-SLIDER-BASIC` / `MC-FIELD-SLIDER-CONTINUOUS` removed. WRONG** — *done 2026-08-18*
+  15.7.2 Standard removed both as valid action tags; they worked only in the now-retired MyCap Classic app, never in the current one.
+  **Correction to this report:** `RC-AT-11` was listed here in error. It covers the *REDCap Mobile App* (`@BARCODE-APP`, `@APPUSERNAME-APP`, `@SYNC-APP`), not MyCap, and never mentioned the slider tags. Only two articles were affected.
+  Applied: removed both rows from the §4.1 annotation table and the tag recommendation from the field-type table in `RC-MYCAP-02`; swapped the stale example in the `RC-MYCAP-08` testing checklist; added a version caveat noting the tags are inert rather than merely undocumented. Because this shipped as a *Change* rather than a fix, LTS instances on the 15.5.x line still list the tags as valid — the caveat says so.
 
 - [ ] **`RC-CALC-01` — `random()` function missing. GAP**
   17.0.3 added `random(min, max)`. `dayoftheweek()`, `age_at_date()` and `isblanknotmissingcode()` are already present — `random()` is the only one absent.

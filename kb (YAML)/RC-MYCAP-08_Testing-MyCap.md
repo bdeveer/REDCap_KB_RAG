@@ -5,11 +5,13 @@ domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
 - pre-launch testing phase
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
 - 'RC-MYCAP-03 — MyCap: Task Scheduling'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-MYCAP-04
   title: 'MyCap: Participant Onboarding'
@@ -87,7 +89,7 @@ On the test device:
 - Open MyCap and verify the task list shows all enabled tasks.
 - Complete each task, checking:
   - Field types display correctly (dropdowns, sliders, text boxes, etc.).
-  - MyCap annotations behave as expected (`@MC-FIELD-SLIDER-BASIC`, `@MC-FIELD-FILE-IMAGECAPTURE`, etc.).
+  - MyCap annotations behave as expected (`@MC-FIELD-FILE-IMAGECAPTURE`, `@MC-FIELD-TEXT-BARCODE`, etc.).
   - Branching logic within instruments functions correctly.
   - No piping syntax (`[field_name]`) appears as raw text in field labels or notes.
   - Task completes and is marked done after submission.
