@@ -6,8 +6,10 @@
 | --- | --- |
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All REDCap project types |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Last Updated** | 2025 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)(when available) |
@@ -116,6 +118,22 @@ and Stats application may not appear in the menu at all.
 
 > **Tip:** To remove the Data Exports, Reports, and Stats application from a user's menu entirely, set their export rights to No Access for all instruments and uncheck the Add/Edit/Organize Reports right.
 
+
+---
+
+## 4a. Printing a Form Without Full Data Set Rights
+
+Printing a data entry form through the browser is a way of taking data out of REDCap that bypasses the export dialog entirely. REDCap addressed this in two steps, and the outcome differs by version.
+
+| Version | Behaviour |
+| --- | --- |
+| Below 17.0.2 | No restriction. Any user who can view a form can print it |
+| **17.0.2** | Users **without** Full Data Set export privileges for that instrument see an error on the print version of the page instead of the form |
+| **17.0.4 and higher** | The 17.0.2 change was **reverted** and replaced by a system-level setting on the **User Settings** page in the Control Center, applying to all users in all projects |
+
+> **Important — verify the setting after upgrading.** Because 17.0.4 reverted a behaviour that 17.0.2 had introduced and moved it behind an administrative setting, an instance that upgraded across both versions may not be in the state its administrators expect. Check the setting on the Control Center User Settings page rather than assuming — see [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md).
+
+> **Critical — this is a deterrent, not a control.** REDCap states the restriction plainly: it "is not meant to be a completely impenetrable feature since all client-side solutions for this can be subverted and thus are inherently bypassable." It is designed to stop users *accidentally* exporting data by printing to PDF. It does not stop a determined user, and it must not be relied on as a safeguard for data a user should not be able to see at all. If a user must not have the data, restrict Data Viewing Rights — see [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md).
 
 ---
 

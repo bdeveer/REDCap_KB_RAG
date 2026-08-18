@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) |
 | **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how do I send an automated email in REDCap; email reminders; automatic notifications when a form is saved; send an email when a survey is completed; staff notification email; confirmation email to participant; conditional email alert; trigger an email based on logic; difference between alerts and ASIs; set up alerts and notifications; SMS or text message notification |
@@ -176,6 +178,35 @@ The second step of alert setup defines when the alert is sent after the trigger 
 
 > **Important:** Recurring alerts multiply quickly in projects with repeated instruments. An alert set to send 5 times for a repeated instrument with 5 instances will generate 25 total alert sends. Plan repeat counts carefully before enabling.
 
+#### Pausing Recurrences *(15.4.0+)*
+
+When an alert uses conditional logic with **"Ensure logic is still true..."** checked, a further option appears: **"Allow pausing of recurrences? (Existing interval will continue if the logic becomes true again after becoming false.)"**
+
+The difference this makes:
+
+| Setting | What happens when the logic becomes false |
+| --- | --- |
+| Unchecked (default) | Already-scheduled recurrences are **deleted** |
+| Checked | Already-scheduled recurrences are **paused**, and resume on the existing interval if the logic becomes true again |
+
+Use it where the logic is expected to flip back — time-based conditions using `datediff()` are the typical case, as are alerts tied to a status field that may move back and forth.
+
+> **Version caveat (≤17.2.x Standard; ≤16.0.38 LTS):** On unpausing, REDCap could send **more alerts than expected** — firing at one-minute intervals up to the number that would have been sent had the alert never been paused. From a participant's perspective this is a burst of near-identical emails arriving minutes apart, which is exactly the outcome pausing was meant to avoid. Fixed in 17.3.0 Standard / 16.0.39 LTS. If you are on an affected version, either avoid this option or keep a low "Send up to" cap.
+
+### 4.2a Re-evaluate Send Time *(17.2.0+)*
+
+For Alerts and ASIs scheduled relative to a stored date/time — the **"When to send AFTER conditions are met"** option — REDCap can re-evaluate the scheduled send time whenever that date/time field changes. If a participant's appointment moves, the reminder moves with it, instead of firing against the original date.
+
+Scope, which is narrower than it first appears:
+
+- It applies only to **scheduled but unsent** notifications and invitations.
+- **Only the send time changes.** Sender, subject and message content are not re-evaluated.
+- For **ASIs with reminders**, if the initial invitation has already gone out, subsequent unsent reminders are **not** rescheduled.
+
+> **Note on defaults:** The option is **enabled by default for new** Alerts and ASIs. Anything created before the upgrade retains the legacy behaviour — no re-evaluation — for backward compatibility. So an upgraded project has a mix of both behaviours depending on when each alert was built, and nothing on screen flags the difference.
+
+> **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** This feature was unreliable for its entire life before 17.4.1. The checkbox **might not save**, leaving the feature permanently off however many times it was ticked; and where it did work, it could reschedule alerts and invitations **at incorrect times whenever any data was modified** — not only the date field it was supposed to watch. Both fixed in 17.4.1 Standard / 17.3.7 LTS. Separately, the setting's column was missing from the Alerts CSV upload and download files between 17.2.0 and 17.3.0 (fixed 17.3.1), so bulk-managed alerts could not carry it. **Treat this feature as requiring 17.4.1 / 17.3.7 or later.**
+
 ### 4.3 Alert Expiration (Optional)
 
 Set a hard expiration date and time. After this point, REDCap will not send any further alerts from this configuration and will cancel any queued instances. Useful for studies with a defined end date, ensuring no alerts send after the study closes.
@@ -335,6 +366,9 @@ Several Alerts & Notifications behaviors are controlled by system-level settings
 - **Allow normal users to use project variables for email fields** — Controls whether the To/CC/BCC recipient fields can reference project fields containing email addresses. If this is disabled at the system level, dynamic email routing via project fields is unavailable to project users.
 - **Allow normal users to manually enter freeform email addresses** — Controls whether free-text email entry is permitted in recipient fields. Administrators can further restrict this by domain allowlist.
 - **Domain allowlist for freeform email entry** — If set, only email addresses at approved domains can be entered manually.
+- **Universal DO-NOT-REPLY Email Address** *(15.4.0+)* — Set on the General Configuration page rather than Modules/Services. When configured, REDCap uses it as both the **From** and **Reply-To** address for automated emails that originate from the system rather than a person. Without it, replies to automated mail land in the catch-all administrator mailbox, which is where most "why am I getting this?" replies end up. See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
+
+> **Version caveat (≤15.7.4):** The Universal DO-NOT-REPLY address was **not** applied to the automated email a participant receives after clicking **Save & Return Later** on a survey — that message still went out from the previous From address. Fixed in 15.7.5. Worth knowing if participants on an older instance report replying to a survey email and reaching a mailbox nobody monitors.
 - **Allow normal users to use project variables for phone fields** — Controls whether phone number fields for SMS alerts can reference project data fields.
 - **Allow normal users to enter freeform phone numbers** — Controls whether manual phone number entry is permitted for SMS alerts.
 

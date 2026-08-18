@@ -6,11 +6,14 @@ applies_to:
 - All REDCap projects with surveys enabled
 - some settings (Survey Response PDF Save, Time Limit) require additional project
   features such as longitudinal mode or the Participant List
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -252,6 +255,14 @@ By default, returning to a saved survey requires the return code provided at the
 
 - **Keep return codes enabled** for surveys collecting sensitive data.
 - **Disable return codes** only when losing the code is a common support burden and the survey data is not sensitive.
+
+**Scope of a return code.** A return code is valid **only for the participant-specific survey link it was issued against**. It is not a project-wide password: entering a valid code on a different participant's link must not grant access to that participant's responses.
+
+> **Critical — version caveat (all versions below 17.4.1 Standard / 17.3.7 LTS):** That scoping did not hold. If a participant obtained another participant's individual survey link — not the public survey link — their **own** return code would let them open the other participant's saved responses. Fixed in 17.4.1 / 17.3.7. On any earlier version, a return code effectively works against any individual link in the project, so the confidentiality of partially-completed responses depends on individual survey links never being shared or guessed. If you run partially-completed surveys containing sensitive data on an affected version, this is a reason to prioritise the upgrade.
+
+> **Version caveat (≤17.0.2):** In a project with a public survey using Save & Return Later, where records were created through a data entry form rather than through the public survey, a participant entering their return code on the **public** survey link was told the code was incorrect. They must use their own unique survey link. Fixed in 17.0.3.
+
+> **Note (15.4.5+):** The text beneath the Save & Return Later email option now tells participants that while their email address is not stored with their survey responses, it **is** retained in the system's email logs. This was a deliberate transparency change; if your consent materials describe what happens to a participant's email address, they should match.
 
 ## 4.5 Modifying Completed Responses
 

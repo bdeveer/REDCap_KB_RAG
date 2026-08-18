@@ -134,13 +134,19 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### User rights & access
 
-- [ ] **`RC-USER-03` — Form-level Delete rights. GAP**
+- [x] **`RC-USER-03` — Form-level Delete rights. GAP** — *done 2026-08-18*
+  **Mostly a false alarm.** The article already documented the feature accurately, including the View & Edit and Edit Survey Responses prerequisites and the Delete Records inheritance. Only real fix: replaced the vague "may not appear at all institutions depending on local configuration or REDCap version" with the actual threshold — **requires 15.7.0** — and named the Delete Data button it enables.
+  *Original entry:*
   15.7.0 introduced per-instrument delete privileges (the Delete Data button on a form) grantable **without** whole-record or event delete rights. `RC-USER-03` matches on "form-level delete" but the granularity change should be verified against the actual privilege table. Related 15.7.5 change: checking "Delete Records" on the User Rights page now behaves differently on save.
 
-- [ ] **`RC-CC-25`, `RC-USER-02` — Access Control Groups have grown since the article was written. GAP**
+- [x] **`RC-CC-25` — Access Control Groups have grown since the article was written. GAP** — *done 2026-08-18*
+  Added ACG assignment at account creation and on the Edit User page (16.1.8); new §7a **Project Creation privilege** (17.1.0), noting it departs from ACG's usual "ceiling on grantable rights" model by granting or denying an instance-level capability outright; and the 17.3.3 closure of the obvious loophole — denying project creation did not stop project *copying* until copying began requiring both create permission and Full Access rights. Expanded §8 with the two ACG smart variables and the 17.1.3 removal of the User Rights requirement on `[user-acg-noncompliant-rights]`, which had been preventing exactly the users who needed the message from receiving it. `RC-USER-02` needed no change.
+  *Original entry:*
   16.1.8 added ACG assignment at table-based user creation and on the Edit User page; 17.1.0 added the ACG Project Creation Option (ACGs can gate project creation / creation requests); 17.1.3 removed the User Rights requirement on recipients of ACG alert messages sent via `[user-acg-noncompliant-rights]` — **verify that smart variable is documented in `RC-PIPE-05`**.
 
-- [ ] **`RC-EXPRT-03`, `RC-CC-23` — printing forms without Full Data Set export rights. WRONG**
+- [x] **`RC-EXPRT-03` — printing forms without Full Data Set export rights. WRONG** — *done 2026-08-18*
+  **Correction to this report:** the sequence was not "17.0.2 restricted, 17.0.4 added a setting to allow it". 17.0.4 explicitly **reverted** the 17.0.2 restriction and made the whole behaviour an administrative setting on the Control Center **User Settings** page. New `RC-EXPRT-03` §4a gives the three-state version table and tells admins to **verify the setting after upgrading**, since an instance that crossed both versions may not be in the state anyone expects. Also carried REDCap's own admission that the restriction is client-side and "inherently bypassable" — a deterrent against accidental print-to-PDF export, not an access control. Dropped `RC-CC-23`; not a backup topic.
+  *Original entry:*
   17.0.2 made the print version of a data entry form show an error for users lacking Full Data Set export privileges on that instrument; 17.0.4 then added a system-level setting letting admins allow such printing. Two-step behaviour change worth stating precisely.
 
 ### Fields, forms & design
@@ -183,16 +189,24 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 
 ### Surveys & alerts
 
-- [ ] **`RC-ALERT-01`, `RC-SURV-06` — "Re-evaluate Send Time" for Alerts & ASIs. GAP**
+- [x] **`RC-ALERT-01`, `RC-SURV-06` — "Re-evaluate Send Time" for Alerts & ASIs. GAP** — *done 2026-08-18*
+  Documented in both articles, with `RC-SURV-06` distinguishing it from the similar-sounding "Ensure logic is still true" checkbox — one decides *whether* an invitation sends, the other *when*. Scope limits recorded: unsent items only, send time only (not sender/subject/content), and **reminders are not rescheduled once the initial invitation has gone out**. Also the default asymmetry — on for new Alerts/ASIs, legacy behaviour retained for pre-upgrade ones, with nothing on screen distinguishing them. Caveat states the feature was unreliable for its **entire life before 17.4.1 / 17.3.7** and should be treated as requiring those versions.
+  *Original entry:*
   17.2.0 added the ability to re-evaluate scheduled send times for alerts and ASIs sent relative to a stored date/time. Note for readers: 17.3.7 LTS / 17.4.1 Standard fixed two significant bugs in it (the checkbox not persisting, and incorrect rescheduling on unrelated data changes) — **document the feature as requiring ≥17.4.1 / ≥17.3.7 to behave correctly.**
 
-- [ ] **`RC-ALERT-01` — Pause Recurring Alerts. GAP**
+- [x] **`RC-ALERT-01` — Pause Recurring Alerts. GAP** — *done 2026-08-18*
+  Added under Alert Schedule with a pause-versus-delete comparison and the `datediff()` use case REDCap cites. **Caveat worth the whole entry:** on ≤17.2.x Standard / ≤16.0.38 LTS, unpausing could fire **all the alerts that would have been sent during the pause, at one-minute intervals** — a burst of near-identical emails to a participant, precisely the outcome pausing exists to prevent. Fixed 17.3.0 / 16.0.39.
+  *Original entry:*
   15.4.0 added "Allow pausing of recurrences?" for conditional alerts using "Ensure logic is still true…". **Not covered.**
 
-- [ ] **`RC-CC-02`, `RC-ALERT-01` — Universal DO-NOT-REPLY address. GAP**
+- [x] **`RC-ALERT-01` — Universal DO-NOT-REPLY address. GAP** — *done 2026-08-18*
+  Already present in `RC-CC-02`; added to `RC-ALERT-01`'s Administrator Configuration section, where someone investigating alert From addresses will look. Noted it sets **both From and Reply-To**, and the ≤15.7.4 caveat that it was **not** applied to the Save & Return Later participant email — replies to which went to an unmonitored mailbox. Fixed 15.7.5.
+  *Original entry:*
   15.4.0 added a system-level do-not-reply From/Reply-To address for automated system email. `RC-CC-02` mentions it; `RC-ALERT-01` should note the interaction with alert From addresses.
 
-- [ ] **`RC-SURV-03` — survey "Save & Return Later" security correction. WRONG (behaviour)**
+- [x] **`RC-SURV-03` — survey "Save & Return Later" security correction. WRONG (behaviour)** — *done 2026-08-18*
+  Added an explicit statement of return-code scope — valid only for the participant-specific link it was issued against — followed by a **Critical** caveat that this did not hold on any version below 17.4.1 / 17.3.7: a participant holding another's individual survey link could open their saved responses using their *own* code. Framed as an upgrade priority for anyone running partially-completed surveys with sensitive data. Two smaller caveats added: the ≤17.0.2 public-link return code error, and the 15.4.5 transparency change telling participants their email address is retained in the system email logs — worth matching against consent materials.
+  *Original entry:*
   17.4.1 / 17.3.7 fixed a flaw where a Return Code worked against another participant's survey link. If any KB text describes Return Code scope loosely, tighten it: a Return Code is valid **only** for its own participant-specific link.
 
 ---

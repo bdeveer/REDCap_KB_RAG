@@ -4,10 +4,13 @@ title: Surveys — Automated Survey Invitations (ASI)
 domain: Surveys
 applies_to:
 - All projects with surveys enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-SURV-05
   title: Participant List & Manual Survey Invitations
@@ -136,6 +139,21 @@ Configure both a completion trigger and a logic trigger. Then set the relationsh
 This checkbox becomes valuable when combined with a time delay (Section 4.3). If checked, REDCap re-evaluates the trigger logic at the actual send time, not just when the invitation was originally scheduled. If the logic is no longer true at send time, REDCap cancels the invitation.
 
 Use case: A participant enrolled in the study triggers an ASI, but later withdraws. If withdrawal sets the logic condition to false and this checkbox is enabled, the queued invitation is automatically cancelled at send time.
+
+**Re-evaluate send time** *(17.2.0+)*
+
+A distinct setting, and easily confused with the checkbox above. "Ensure logic is still true" decides **whether** a scheduled invitation still goes out; **Re-evaluate send time** decides **when** it goes out.
+
+It applies to ASIs scheduled relative to a stored date/time — the "When to send AFTER conditions are met" option. With it enabled, changing that date/time field reschedules the queued invitation to match. Move a participant's appointment date and the reminder follows it.
+
+Limits worth knowing:
+
+- Only **scheduled but unsent** invitations are affected.
+- Only the send time changes — sender, subject and content are not re-evaluated.
+- **For reminders, if the initial invitation has already been sent, subsequent unsent reminders are not rescheduled.**
+- Enabled by default for **new** ASIs; ASIs created before the upgrade keep the legacy behaviour, so an upgraded project holds a mix with nothing on screen distinguishing them.
+
+> **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** Unreliable for its entire life before 17.4.1. The checkbox could fail to save, and where it worked it could reschedule invitations and reminders **at incorrect times whenever any data changed** — not only the date field concerned. Both fixed in 17.4.1 Standard / 17.3.7 LTS. The setting was also missing from the Alerts CSV upload and download files until 17.3.1. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) §4.2a, which covers the same feature for Alerts.
 
 ## 4.3 Time Delay Settings
 

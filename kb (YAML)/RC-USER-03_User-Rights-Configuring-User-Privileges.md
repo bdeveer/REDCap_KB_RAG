@@ -5,10 +5,13 @@ domain: User Rights
 applies_to:
 - All REDCap project types
 - requires User Rights privilege
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-08
 related:
 - id: RC-USER-02
   title: 'User Rights: Adding Users & Managing Roles'
@@ -143,7 +146,9 @@ These three settings govern how a user can interact with records globally across
 - **Create records** — allows the user to create new records. Most users who do data entry will need this enabled.
 - **Rename records** — allows the user to change the record ID of an existing record. This is rarely needed and carries risk: REDCap relies on the record ID to associate all data. Rename only with a clear purpose and caution.
 - **Delete records** — allows the user to delete entire or partial records (all forms, all events, all repeating instances). Deleted records **cannot** be restored. Disabled by default to prevent accidental data loss. If deletion is needed, the recommended approach is to grant the right temporarily, perform the deletion, and remove the right again. Users with Delete Records automatically inherit Form-Level Delete for all instruments.
-- **Form-Level Delete Rights** *(new in REDCap v15.7.0)* — allows deletion of data on specific instruments only, without deleting an entire record. This provides finer-grained control when you want a user to be able to remove data from one form (e.g., to correct a mis-entry) without risking accidental deletion of the entire record. Form-Level Delete rights are configured per instrument in the Data Viewing Rights section. Requirements: the user must have View & Edit access for the instrument; if the instrument is enabled as a survey, the user must also have Edit Survey Responses rights. This right may not appear at all institutions depending on local configuration or REDCap version.
+- **Form-Level Delete Rights** *(new in REDCap v15.7.0)* — allows deletion of data on specific instruments only, without deleting an entire record. This provides finer-grained control when you want a user to be able to remove data from one form (e.g., to correct a mis-entry) without risking accidental deletion of the entire record. Form-Level Delete rights are configured per instrument in the Data Viewing Rights section. Requirements: the user must have View & Edit access for the instrument; if the instrument is enabled as a survey, the user must also have Edit Survey Responses rights in order to delete a response submitted through the survey interface. Granting it enables the **Delete Data** button at the bottom of the data entry form for those instruments.
+
+> **Requires REDCap 15.7.0 or higher.** On earlier versions the only deletion privilege is Delete Records, which is all-or-nothing. If you do not see per-instrument Delete options in the Data Viewing Rights section, check your instance version before assuming a local configuration difference.
 
 ## 3.5 Record Locking and E-Signatures
 

@@ -4,11 +4,14 @@ title: 'Control Center: Access Control Groups'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
 - familiarity with REDCap user rights
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-07
   title: 'Control Center: Users & Access Management'
@@ -99,6 +102,8 @@ The user list displays each user's **name** and their **Access Control Group**. 
 3. Exit edit mode to save.
 
 Once the feature is enabled, every user has an ACG assignment. Users are initially placed in the Default ACG and can subsequently be moved to any defined group.
+
+> **From 16.1.8:** a user's ACG can also be set **at the point of account creation** for table-based users, and changed later from the **Edit User** page — you no longer have to create the account first and then reassign it here. See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
 
 ## Bulk Assignment via CSV
 
@@ -259,9 +264,32 @@ The custom message field is found at the bottom of the Access Control Groups tab
 
 ---
 
+# 7a. Project Creation Privilege *(17.1.0+)*
+
+From REDCap **17.1.0**, an ACG can also govern whether its members may **create projects** — or request project creation where approval is required. When editing or creating an ACG, administrators choose to:
+
+- **grant** project creation for everyone in the group,
+- **deny** it for everyone in the group, overriding the user-level setting, or
+- **defer** to the user-level project creation privilege set on each account (the default).
+
+This is a departure from the rest of ACG behaviour and worth noting: elsewhere an ACG defines the *ceiling* of rights a user may be granted within a project, whereas this setting can grant or deny an instance-level capability outright.
+
+> **From 17.3.3, the deny setting also blocks project copying.** Setting project creation to "No (overrides the user-level setting)" originally did not stop a user copying an existing project — an obvious way around the restriction. Copying now requires **both** project creation permission and Full Access user rights. On 17.1.0–17.3.2 the restriction is incomplete.
+
+---
+
 # 8. ACG Smart Variables
 
-ACGs support **ACG-specific Smart Variables** that can be used in certain REDCap expressions and contexts. The ACG page includes a tip referencing this capability. For details on Smart Variables in general, see the Smart Variables documentation.
+ACGs support **ACG-specific Smart Variables** that can be used in certain REDCap expressions and contexts, chiefly for telling users what is non-compliant about their rights:
+
+| Smart Variable | Purpose |
+| --- | --- |
+| `[user-acg-noncompliant-rights]` | Lists the recipient's own non-compliant rights |
+| `[acg-noncompliance-table]` | Renders the non-compliance table |
+
+> **From 17.1.3:** `[user-acg-noncompliant-rights]` no longer requires the *recipient* to hold the User Rights privilege. The requirement was dropped because the variable only ever shows a user their own non-compliant rights, never anyone else's — so gating it behind User Rights prevented exactly the people who needed the message from receiving it.
+
+For details on Smart Variables in general, see [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md).
 
 ---
 
