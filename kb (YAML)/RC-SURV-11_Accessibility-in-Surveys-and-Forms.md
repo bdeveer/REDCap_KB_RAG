@@ -10,7 +10,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   behaviour has not been independently tested
 prerequisites:
 - 'RC-SURV-01 — Surveys: Basics'
-version: '1.0'
+version: '1.1'
 last_updated: 2026-08
 related:
 - id: RC-SURV-02
@@ -36,11 +36,15 @@ synonyms:
 - low vision survey design
 - accessibility of redcap forms
 - datepicker keyboard access
+- what is a VPAT
+- accessibility conformance report
+- WCAG AA meaning
+- section 508 vs WCAG
 ---
 
 > **Scope and a caveat about what this article is.** This consolidates the accessibility work REDCap has shipped and the settings that affect accessibility, drawn from release notes through 17.4.1 Standard / 17.3.7 LTS. It has **not** been validated by testing with assistive technology, and it is **not** a conformance statement.
 >
-> **REDCap does not publish a WCAG or Section 508 conformance level, and neither does this article.** If your institution needs a formal accessibility statement — a VPAT, an ACR, a procurement answer — that must come from your own evaluation or from the REDCap Consortium, not from a changelog summary. What follows tells you what has been improved and what you can control; it does not tell you that any given survey is conformant.
+> **REDCap does not publish a WCAG or Section 508 conformance level, and neither does this article.** If your institution needs a formal accessibility statement — a VPAT or ACR, or an answer to a procurement questionnaire — that must come from your own evaluation or from the REDCap Consortium, not from a changelog summary. Those terms are defined in §1.1. What follows tells you what has been improved and what you can control; it does not tell you that any given survey is conformant.
 
 ---
 
@@ -56,6 +60,24 @@ Accessibility in a REDCap survey has two independent parts, and confusing them i
 Upgrading REDCap improves the first. It does nothing for the second. A survey with unlabelled fields, colour-only meaning, or instructions embedded in an image remains inaccessible on the newest release — see §4.
 
 Between **16.0.6** and **17.3.0** REDCap shipped a sustained run of accessibility improvements, most of them concentrated in the 17.1.x releases. That is the single strongest argument for keeping a public-facing survey instance current: participants with disabilities are the population most affected by an old patch level, and they are also the ones least able to work around it.
+
+## 1.1 The terminology
+
+These terms turn up in institutional accessibility requests, usually without explanation.
+
+| Term | What it means |
+| --- | --- |
+| **WCAG** | *Web Content Accessibility Guidelines* — the international standard for web accessibility, published by the W3C. Organised into three conformance levels: **A** (minimum), **AA** (the level most institutions and laws require) and **AAA** (strictest, rarely required in full). "WCAG 2.1 AA" is the common procurement bar |
+| **Section 508** | A provision of the US Rehabilitation Act requiring federal agencies to make electronic and information technology accessible. Since 2018 its technical requirements are **WCAG 2.0 AA**. US institutions receiving federal funding often apply it to their own systems |
+| **EN 301 549** | The European equivalent, referenced by the EU Web Accessibility Directive. Also built on WCAG |
+| **VPAT** | *Voluntary Product Accessibility Template* — a **standard form**, maintained by the Information Technology Industry Council, that a vendor fills in to state how their product measures up against an accessibility standard, requirement by requirement. It is a blank template, not a certification |
+| **ACR** | *Accessibility Conformance Report* — a **completed** VPAT. Strictly, "VPAT" is the empty form and "ACR" is the filled-in document, though in practice people say "VPAT" for both. This is the artefact a procurement office is usually asking for |
+| **Assistive technology (AT)** | Software or hardware a person uses to access a computer — screen readers (JAWS, NVDA, VoiceOver), screen magnifiers, switch devices, voice control |
+| **Screen reader** | Software that reads screen content aloud and lets a user navigate by headings, links and form fields. It depends entirely on the underlying markup being correct — which is why field labels matter so much (§4) |
+
+> **What a VPAT/ACR actually tells you.** It is a **self-assessment by the vendor**, not an audit or a certification. Its value is that it is specific: it walks each criterion and states *Supports*, *Partially Supports*, *Does Not Support* or *Not Applicable*, with explanatory notes. A procurement office asking for one wants that itemised detail, not a yes/no answer.
+>
+> **REDCap does not publish one**, which is why §5 exists — you will need to answer such a request from your own evaluation, or escalate it to the Consortium.
 
 ---
 
@@ -140,7 +162,7 @@ REDCap managers are routinely asked whether REDCap is "508 compliant" or "WCAG A
 - **There is no published conformance level to cite.** REDCap ships accessibility improvements; it does not, in its release notes, claim a conformance level.
 - **Conformance is per-survey, not per-platform.** Even a fully conformant platform will produce a non-conformant survey if the instrument is badly designed. The question "is REDCap accessible?" is not answerable in the abstract.
 - **Patch level is part of the answer.** An instance below 17.1.3 lacks visible keyboard focus indicators on survey fields; below 16.0.9 the date picker is unreachable by keyboard. Those are concrete, checkable facts about *your* instance.
-- **Escalate formal requests.** VPATs, Accessibility Conformance Reports and procurement questionnaires should go to the REDCap Consortium via the Community Portal, or be answered by your institution's own evaluation.
+- **Escalate formal requests.** VPATs and Accessibility Conformance Reports (see §1.1) and procurement questionnaires should go to the REDCap Consortium via the Community Portal, or be answered by your institution's own evaluation.
 
 ---
 
@@ -174,9 +196,11 @@ REDCap managers are routinely asked whether REDCap is "508 compliant" or "WCAG A
 
 **A:** A regression in 16.0.9 through 16.1.1, fixed in **16.1.2**. Upgrade.
 
-**Q: Can we get a VPAT for REDCap?**
+**Q: What is a VPAT, and can we get one for REDCap?**
 
-**A:** Not from this article. Formal conformance documentation should be requested through the REDCap Consortium, or produced by your own institutional evaluation of your instance and your instruments.
+**A:** A **Voluntary Product Accessibility Template** is a standard form a vendor completes to state, criterion by criterion, how their product measures against an accessibility standard; a completed one is properly called an **Accessibility Conformance Report (ACR)**. It is a vendor self-assessment, not a certification or an audit — see §1.1.
+
+REDCap does not publish one. Formal conformance documentation should be requested through the REDCap Consortium, or produced by your own institutional evaluation of your instance and your instruments.
 
 ---
 
