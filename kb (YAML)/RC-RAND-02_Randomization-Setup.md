@@ -5,6 +5,9 @@ domain: Randomization
 applies_to:
 - All REDCap project types with Randomization module enabled
 - requires Project Design and Setup rights and User Rights management access
+requires: REDCap v15.4.4+ (Randomization 2.0 — automatic trigger options)
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-LONG-01 — Longitudinal Project Setup

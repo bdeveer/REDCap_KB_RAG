@@ -7,6 +7,8 @@
 | Instance | Production |
 | Domain | Institution |
 | Applies To | All REDCap users at this installation |
+| Requires | Any supported version |
+| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
 | Prerequisite | None |
 | Version | 2.0 |
 | Last Updated | 2026 |

@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | MCP |
 | **Applies To** | REDCap administrators; users of AI tools with Claude (Cowork / Claude desktop) |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |

@@ -5,6 +5,9 @@ domain: AI Tools
 applies_to:
 - All project types
 - requires AI Writing Tools to be enabled by administrator
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-AI-01 — REDCap AI Tools: Overview & Security'
 version: '1.0'

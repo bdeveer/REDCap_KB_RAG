@@ -134,6 +134,10 @@ Rules:
 - **`Requires` uses the earliest version that supports the feature**, not the newest. If an article documents several features introduced at different times, use the earliest in the header and mark the later ones inline with a version caveat.
 - **`Verified Against` names both lines** — e.g. `REDCap v17.4.1 (Standard) / v17.3.7 (LTS)`. Never write a bare version number; a reader cannot tell which line it refers to.
 - **Never bump `Verified Against` without actually verifying.** An unchecked article with an honest older date is more useful than a current-looking one nobody confirmed.
+- **Say what kind of verification it was.** The two are not equivalent and readers need to tell them apart:
+  - `REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured` — the article was checked against the changelog and needed no change. This is the honest stamp for a bulk review pass.
+  - `REDCap 17.3.6 (LTS)` with no qualifier — the page itself was captured and read.
+  Where only part of an article could be checked, say which part: `Control Center configuration (§4–5) verified; the project-level interface is from release notes only`.
 - Neither field replaces `Version` (the article's own revision number) or `Last Updated` (when the prose last changed).
 
 See `RC-VER-01 — REDCap Versions, Release Lines & Patching` for what the release lines mean.

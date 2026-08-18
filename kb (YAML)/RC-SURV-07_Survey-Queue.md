@@ -4,6 +4,9 @@ title: Surveys — Survey Queue
 domain: Surveys
 applies_to:
 - All projects with surveys enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 version: '1.1'

@@ -5,6 +5,9 @@ domain: Operational & Administrative Project Design
 applies_to:
 - Classic (non-longitudinal) projects
 - institutions using REDCap for internal administrative workflows
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - RC-LONG-02 — Repeated Instruments & Events Setup

@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Piping |
 | **Applies To** | All REDCap project types |
+| **Requires** | Any supported version. Individual Smart Variables have their own version floors — see §3 |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)|
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |

@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |

@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Texting (SMS) |
 | **Applies To** | Projects with surveys enabled; requires Twilio or Mosio configured at the system level |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)|
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

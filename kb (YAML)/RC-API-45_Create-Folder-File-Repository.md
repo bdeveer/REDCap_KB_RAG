@@ -4,6 +4,9 @@ title: Create Folder (File Repository) API
 domain: API
 applies_to:
 - REDCap projects (all types)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
 version: '1.0'

@@ -5,6 +5,9 @@ domain: Data Import
 applies_to:
 - All REDCap project types
 - required rights vary per feature
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-IMP-01 — Data Import Overview
 version: '2.0'

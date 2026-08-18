@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Integration — Dynamic Data Pull |
 | **Applies To** | All REDCap project types (requires administrator enablement) |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

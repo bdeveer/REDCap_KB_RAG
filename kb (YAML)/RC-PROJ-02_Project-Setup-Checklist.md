@@ -5,6 +5,9 @@ domain: Project
 applies_to:
 - All REDCap projects
 - requires Project Design and Setup rights
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
 version: '1.3'

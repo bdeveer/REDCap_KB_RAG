@@ -4,6 +4,9 @@ title: 'MyCap: Task Scheduling'
 domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
 version: '1.0'

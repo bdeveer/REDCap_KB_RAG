@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Administrators deciding between CDP and CDM for their institution |
+| **Requires** | Any supported version with CDIS enabled |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

@@ -5,6 +5,9 @@ domain: Data Entry
 applies_to:
 - Projects with Data Access Groups enabled
 - data entry users assigned to one or more DAGs
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
 version: '1.0'

@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; longitudinal-specific features noted inline |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Surveys |
 | **Applies To** | All projects with surveys enabled |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)|
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |

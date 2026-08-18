@@ -4,6 +4,9 @@ title: Longitudinal Projects & Data Access Groups
 domain: Data Entry
 applies_to:
 - REDCap projects with Longitudinal mode or Data Access Groups enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-DE-02 — Basic Data Entry

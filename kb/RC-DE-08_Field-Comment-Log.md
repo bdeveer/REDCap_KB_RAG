@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types; data entry users with appropriate access |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026 |

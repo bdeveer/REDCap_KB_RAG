@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Data Import |
 | **Applies To** | All REDCap project types; required rights vary per feature |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) |
 | **Skill Level** | Intermediate |
 | **Version** | 2.0 |

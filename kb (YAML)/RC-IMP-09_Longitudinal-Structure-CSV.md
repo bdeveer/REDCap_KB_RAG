@@ -4,6 +4,9 @@ title: Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mapping
 domain: Data Import
 applies_to:
 - Longitudinal REDCap projects
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - RC-LONG-01 — Longitudinal Project Setup

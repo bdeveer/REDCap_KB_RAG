@@ -5,6 +5,9 @@ domain: MCP
 applies_to:
 - REDCap administrators
 - users of AI tools with Claude (Cowork / Claude desktop)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
 - 'RC-AI-01 — REDCap AI Tools: Overview & Security'

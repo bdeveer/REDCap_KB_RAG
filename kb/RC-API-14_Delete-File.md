@@ -6,6 +6,8 @@
 |---|---|
 | Domain | API |
 | Applies To | REDCap projects with file upload fields |
+| Requires | Any supported version |
+| Verified Against | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | Prerequisite | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
 | Version | 1.1 |
 | Last Updated | 2026 |

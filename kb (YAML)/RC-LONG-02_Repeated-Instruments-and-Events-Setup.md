@@ -5,6 +5,9 @@ domain: Longitudinal & Repeated Setup
 applies_to:
 - All REDCap project types (repeated instruments)
 - longitudinal projects only (repeated events)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - RC-LONG-01 — Longitudinal Project Setup (for longitudinal projects only)

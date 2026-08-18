@@ -4,6 +4,10 @@ title: 'Project Migration: Moving a Project Between REDCap Installations'
 domain: Project
 applies_to:
 - All REDCap projects
+requires: Any supported version. The Project Migration Tool alternative requires v17.0.0+
+  on both instances — see §1
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
 version: '1.0'

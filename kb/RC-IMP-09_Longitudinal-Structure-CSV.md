@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Data Import |
 | **Applies To** | Longitudinal REDCap projects |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
 | **Skill Level** | Intermediate |
 | **Version** | 1.0 |

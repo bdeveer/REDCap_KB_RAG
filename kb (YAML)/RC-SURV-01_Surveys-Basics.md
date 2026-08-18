@@ -5,6 +5,9 @@ domain: Surveys
 applies_to:
 - All REDCap projects with surveys enabled
 - single-instrument projects assumed for this guide
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-02 — Online Designer

@@ -4,6 +4,10 @@ title: Institution-Specific Settings & Policies — Development Instance
 domain: Institution
 applies_to:
 - REDCap administrators and IT staff using the Development instance
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This
+  article's content is local policy, not REDCap behaviour** — it should be re-checked
+  against institutional practice, which release notes will never flag
 prerequisites:
 - RC-INST-01 — Institution-Specific Settings & Policies — Production(Production)
 version: '1.0'

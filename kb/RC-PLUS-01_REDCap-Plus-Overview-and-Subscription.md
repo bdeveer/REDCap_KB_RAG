@@ -6,6 +6,7 @@
 | --- | --- |
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions; REDCap v17.0.0+ |
+| **Verified Against** | REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a live unsubscribed instance; feature list from release notes through 17.4.1 Standard |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-08 |

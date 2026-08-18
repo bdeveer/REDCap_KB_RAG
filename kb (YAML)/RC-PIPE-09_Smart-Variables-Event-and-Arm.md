@@ -4,6 +4,9 @@ title: 'Smart Variables: Event & Arm'
 domain: Piping
 applies_to:
 - Longitudinal projects only
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-PIPE-03 — Smart Variables Overview
 version: '1.0'

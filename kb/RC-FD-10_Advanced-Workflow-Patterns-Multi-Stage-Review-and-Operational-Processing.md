@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; surveys enabled; Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-04-28 |

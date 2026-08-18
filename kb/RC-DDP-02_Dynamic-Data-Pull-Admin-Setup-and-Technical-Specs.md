@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Integration — Dynamic Data Pull |
 | **Applies To** | REDCap Administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DDP-01 — Dynamic Data Pull — Overview & User Guide](RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md)|
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

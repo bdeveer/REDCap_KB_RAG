@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Operational & Administrative Project Design |
 | **Applies To** | Classic (non-longitudinal) projects; institutions using REDCap for internal administrative workflows |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md)|
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
+| **Requires** | Any supported version. The Project Migration Tool alternative requires v17.0.0+ on both instances — see §1 |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
@@ -13,7 +15,7 @@
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
 | **Synonyms** | how do i move a project to another redcap server; migrate a project between installations; export and re-import a full project backup; transfer a project to a different institution; copy a project design to a colleague at another site; back up and restore a redcap project; what is included in a project export; project migration pitfalls |
 
-> **Note on REDCap+:** This article covers the standard project migration workflow available in all REDCap installations using the built-in backup and restore feature. REDCap+ includes a revamped Project Migration tool with expanded capabilities. If your installation has REDCap+, check the dedicated REDCap+ documentation for that tool.
+> **Note on REDCap+:** This article covers the standard project migration workflow available in all REDCap installations using the built-in backup and restore feature. REDCap+ subscribers on 17.0.0+ have a second option, the Project Migration Tool — see [RC-PLUS-02](RC-PLUS-02_Project-Migration-Tool.md) and the routing table in §1.
 
 ---
 

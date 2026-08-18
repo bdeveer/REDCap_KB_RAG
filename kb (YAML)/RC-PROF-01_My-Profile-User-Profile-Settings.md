@@ -4,6 +4,9 @@ title: My Profile — User Profile Settings
 domain: Profile (PROF)
 applies_to:
 - All REDCap users
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - Active REDCap user account
 version: '1.1'

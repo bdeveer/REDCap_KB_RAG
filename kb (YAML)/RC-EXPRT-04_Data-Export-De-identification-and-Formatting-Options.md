@@ -5,6 +5,9 @@ domain: Exports, Reports & Stats
 applies_to:
 - All REDCap project types
 - availability varies by Data Export Rights level
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-EXPRT-01 — Data Export: Overview & Workflow'
 - 'RC-EXPRT-03 — Data Export: User Rights & Export Access'

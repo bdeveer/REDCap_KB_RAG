@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; Survey Login cannot be applied to a Public Survey |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |

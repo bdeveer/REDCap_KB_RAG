@@ -4,6 +4,9 @@ title: Export Repeating Instruments and Events API
 domain: API
 applies_to:
 - Projects with repeating instruments or repeating events
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
 version: '1.0'

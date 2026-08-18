@@ -4,6 +4,9 @@ title: Alerts & Notifications CSV — Column Reference and Format Guide
 domain: Data Import
 applies_to:
 - All REDCap project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - 'RC-ALERT-01 — Alerts & Notifications: Setup'

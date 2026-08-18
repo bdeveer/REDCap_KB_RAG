@@ -5,6 +5,9 @@ domain: Action Tags
 applies_to:
 - Projects on REDCap instances where the HIDESUBMIT Action Tags External Module is
   installed and enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - HIDESUBMIT Action Tags External Module must be enabled for the project

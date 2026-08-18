@@ -4,6 +4,9 @@ title: 'MyCap: Participant Onboarding'
 domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-MYCAP-01 — MyCap: Overview & Enabling'
 version: '1.0'

@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Randomization |
 | **Applies To** | All REDCap project types with Randomization module enabled; intended for PIs, Study Coordinators, and Project Builders planning a randomized study |
+| **Requires** | REDCap v15.4.4+ (Randomization 2.0 — automatic trigger options) |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | Foundational REDCap knowledge required: project setup, instruments, user rights, and longitudinal mode basics |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-05-11 |

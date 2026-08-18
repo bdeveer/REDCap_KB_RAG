@@ -4,6 +4,9 @@ title: Longitudinal Mode and Arms
 domain: Record Navigation
 applies_to:
 - Longitudinal projects
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
 version: '1.0'

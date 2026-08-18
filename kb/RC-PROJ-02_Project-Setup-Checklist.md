@@ -6,6 +6,8 @@
 |---|---|
 | **Domain** | Project |
 | **Applies To** | All REDCap projects; requires Project Design and Setup rights |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
 | **Version** | 1.3 |
 | **Last Updated** | 2026 |

@@ -4,6 +4,9 @@ title: Action Tags — Language Action Tags
 domain: Action Tags
 applies_to:
 - REDCap projects with Multi-Language Management (MLM) enabled
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - Multi-Language Management must be configured in the project

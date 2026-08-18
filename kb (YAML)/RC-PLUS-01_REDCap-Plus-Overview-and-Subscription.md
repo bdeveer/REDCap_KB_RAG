@@ -6,6 +6,8 @@ applies_to:
 - REDCap Administrators
 - REDCap Licensed Institutions
 - REDCap v17.0.0+
+verified_against: REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a
+  live unsubscribed instance; feature list from release notes through 17.4.1 Standard
 prerequisites:
 - Existing REDCap License (REDCap Core installation)
 version: '1.1'

@@ -4,6 +4,9 @@ title: Dynamic Data Pull (DDP) — Overview & User Guide
 domain: Integration — Dynamic Data Pull
 applies_to:
 - All REDCap project types (requires administrator enablement)
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links

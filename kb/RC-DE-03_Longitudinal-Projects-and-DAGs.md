@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Data Entry |
 | **Applies To** | REDCap projects with Longitudinal mode or Data Access Groups enabled |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
 | **Version** | 2.0 |
 | **Last Updated** | 2026-05-11 |

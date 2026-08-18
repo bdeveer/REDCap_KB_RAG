@@ -4,6 +4,9 @@ title: Record Navigation Overview
 domain: Record Navigation
 applies_to:
 - All project types
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - None
 version: '1.0'

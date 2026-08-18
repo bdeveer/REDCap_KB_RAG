@@ -6,6 +6,8 @@
 | --- | --- |
 | **Domain** | Project Design Best Practices |
 | **Applies To** | All REDCap projects; all REDCap project designers and reviewers |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
 | **Version** | 1.4 |
 | **Last Updated** | 2026-05-16 |
