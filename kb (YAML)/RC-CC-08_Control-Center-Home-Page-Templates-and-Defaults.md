@@ -4,10 +4,13 @@ title: 'Control Center: Home Page, Templates, Project Defaults & Field Validatio
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-02
   title: 'Control Center: General System Configuration'
@@ -130,6 +133,13 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 # 6. Field Validation Types
 
 This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can enable or disable individual validation types, and can add custom validations developed for the institution.
+
+> **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways.
+
+Two consequences of custom validation types worth knowing, both independent of version:
+
+- **Copying an instrument fails if the target server lacks the validation type.** Copying an instrument whose text field uses a validation type that does not exist on that REDCap server returns a vague error. The same applies to Data Dictionary uploads and Project XML imports moved between instances. If you rely on custom validations, they must exist on every server a project travels to.
+- **Custom validations with an `email` datatype can be used for the Designated Email Field** and for survey invitation addresses (16.0.7), which makes them useful for institution-specific address formats rather than only for display validation.
 
 Administrators can enable or disable any validation type. Once enabled, it appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
 

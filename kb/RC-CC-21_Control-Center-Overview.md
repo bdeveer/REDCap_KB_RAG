@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md)|
 | **Synonyms** | control center overview and navigation; what is the redcap control center; how do i access the control center; admin hub for system-wide settings; who can access the control center; control center sidebar navigation; super user administrative area redcap; intro to the control center for admins |
@@ -55,7 +57,7 @@ Read-only statistical and monitoring views. Includes:
 Tools for looking up and managing individual projects:
 - **Browse Projects** — search and view any project on the instance
 - **Edit Project Settings** — modify settings for a specific project directly; individual project defaults are configured in other sections of the Control Center
-- **Link Lookup** — reverse-lookup which project a given survey or other REDCap link belongs to
+- **Link Lookup** — reverse-lookup which project and record a given REDCap link belongs to. Rebranded from "Survey Link Lookup" in 15.9.0 and expanded beyond survey links to also search **survey queue links, public report links and public project dashboard links**
 
 ### Users
 Administrative tools for user account management. See **[RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)** for full details. Includes:

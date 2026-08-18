@@ -101,22 +101,35 @@ These are whole features with **zero** coverage in the KB. Four of the six are R
 - [x] **`RC-CC-02` — Automatic Version Redirect. GAP** — *done 2026-08-18*
   Covered as part of the old-version-directory story above rather than separately, since 16.1.4, 16.1.5, 17.2.2, 17.3.0 and 17.4.0 are one continuous thread. Added: instructions cover Apache, NGINX and IIS only and require web server changes; a version caveat that 17.2.2–17.2.3 instructions named the **wrong directory** (version folder instead of REDCap root, fixed 17.3.0), and that 17.4.0 moved the redirect's own config check to client-side JavaScript after server-side URL testing proved unreliable.
 
-- [ ] **`RC-CC-24` / `RC-DE-05` — admins can now add and edit custom field validation types. GAP**
+- [x] **`RC-CC-08` / `RC-DE-05` — admins can now add and edit custom field validation types. GAP** — *done 2026-08-18*
+  **Retargeted:** the Field Validation Types page is documented in `RC-CC-08` §6, not `RC-CC-24`. Applied there with the 17.4.0 in-UI add/edit capability, the absorbed "Add Validation Types" EM, and two version-independent consequences worth stating: copying an instrument or importing a Project XML fails if the target server lacks a custom validation type, and `email`-datatype custom validations can be used for the Designated Email Field (16.0.7).
+  *Original entry:*
   17.4.0 made the Field Validation Types page editable in the Control Center (absorbing the "Add Validation Types" External Module). `RC-DE-05` should note that the validation list is now site-extensible. Related: 16.0.7 allows custom validations with `email` datatype to be used for the Designated Email Field and survey invitations.
 
-- [ ] **`RC-CC-07` / `RC-SURV-04` — "Survey Link Lookup" renamed to "Link Lookup". WRONG**
+- [x] **`RC-CC-21` — "Survey Link Lookup" renamed to "Link Lookup". NOT WRONG** — *done 2026-08-18*
+  **Correction to this report: there was no error to fix.** The claim that "three articles still reference the old name" was an artefact of my grep matching the *new* name. A literal search for "Survey Link Lookup" returns **zero** hits KB-wide — the rename had already been applied. `RC-CC-21` was the only article describing the page, and it was already correct.
+  Applied anyway: expanded its one-line entry to record the 15.9.0 rebrand and that the page now also searches survey queue links, public report links and public project dashboard links, which it did not previously say.
+  *Original entry:*
   15.9.0 rebranded and expanded the page beyond survey links. Three articles still reference the old name.
 
-- [ ] **`RC-CC-07` — Email Users page overhaul. GAP**
+- [x] **`RC-CC-07` — Email Users page overhaul. GAP** — *done 2026-08-18*
+  The article already documented the rule-based filter builder. Added the part that was missing: **saved named filters** (15.3.0) with name, description and criteria, reusable across mailings — which is the actual point of the 15.3.0 rework — plus the 15.8.4 Username filter and a note that several filter *semantics* were wrong on older versions (active-status inflation 15.3.3; "does not contain"/"does not end with"/"is null" missing User Email matches 15.7.2).
+  *Original entry:*
   15.3.0 added saveable named user filters with descriptions and criteria; 15.8.4 added a Username filter.
 
-- [ ] **`RC-CC-11` — System Statistics additions. GAP**
+- [x] **`RC-CC-11` — System Statistics additions. GAP** — *done 2026-08-18*
+  CSV download (15.7.5) was already covered. Added: unique-users-logged-in counts for the past month and 6 months (16.0.1), and a REDCap+/SHARE table covering the 17.3.1 split of project participants from EHR-specific records and the 17.3.3 PAG and Email Verification/Unsubscribe counts.
+  *Original entry:*
   15.7.5 CSV download button; 16.0.1 unique-users-logged-in stats (past month / past 6 months); 17.3.3 PAG and Email Verification/Unsubscribe stats when a REDCap+ subscription is active; 17.3.1 SHARE totals separated from project participants.
 
-- [ ] **`RC-CC-02` — Configuration Check has changed substantially. GAP**
+- [x] **`RC-CC-02` — Configuration Check has changed substantially. GAP** — *done 2026-08-18*
+  Remaining items after the previous commit: main-REDCap-directory-writable check (16.1.4, wording clarified 16.1.5), restricted-upload-types warning (16.1.8), `.bcmap` (16.1.5) and `.woff2` (16.1.6) MIME checks, and the 17.0.7 behaviour change limiting service checks to enabled features only. Also recorded two checks **withdrawn as unreliable** so nobody chases them: the MySQL 8.4 `restrict_fk_on_non_standard_key` recommendation (added 15.6.1, removed 15.8.4) and a Windows-only cron check (removed 17.3.0).
+  *Original entry:*
   Cumulative: temp-subfolder creation test (15.1.1), main-directory-writable check (16.0.15), `.bcmap` MIME type (16.1.5), `.woff2` MIME type (16.1.6), warning when Restricted Upload File Types is unset (16.1.8), webroot check for local file storage (17.0.2), and — **behaviour change** — 17.0.7 restricted service checks to only those services actually enabled, where previous versions checked all regardless.
 
-- [ ] **`RC-CC-02`, `RC-CC-23` — Easy Upgrade. GAP**
+- [x] **`RC-CC-02` — Easy Upgrade. GAP** — *done 2026-08-18*
+  **The important finding was a direct conflict the report missed.** 16.1.4 added *both* a Configuration Check recommending the main `redcap` directory be made non-writable by the application, *and* a warning that Easy Upgrade is no longer recommended on production — because Easy Upgrade requires exactly that write access. The two recommendations cannot both be satisfied; it is a documented trade-off, and 17.4.0's AWS Elastic Beanstalk exception exists because those deployments replace the directory wholesale. Also added: 15.0.6 "Check again" link, 15.9.2 logging to the User Activity Log, 17.0.0 version list shown even without Easy Upgrade, and a caveat for the 15.8.2 "must be taken offline" message that was wrong (fixed 15.8.3). Dropped `RC-CC-23` as a target — Easy Upgrade is not a backup topic.
+  *Original entry:*
   15.0.6 always-visible "Check again" link; 15.9.2 Easy Upgrade start/finish/failure now logged to the User Activity Log; 16.0.15 added a production-server warning; 17.0.0 the version list displays even when Easy Upgrade is disabled; 17.4.0 Easy Upgrade is now usable on AWS CloudFormation / Elastic Beanstalk deployments without added security risk.
 
 ### User rights & access

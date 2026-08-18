@@ -4,10 +4,13 @@ title: 'Control Center: Overview & Navigation'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -72,7 +75,7 @@ Read-only statistical and monitoring views. Includes:
 Tools for looking up and managing individual projects:
 - **Browse Projects** — search and view any project on the instance
 - **Edit Project Settings** — modify settings for a specific project directly; individual project defaults are configured in other sections of the Control Center
-- **Link Lookup** — reverse-lookup which project a given survey or other REDCap link belongs to
+- **Link Lookup** — reverse-lookup which project and record a given REDCap link belongs to. Rebranded from "Survey Link Lookup" in 15.9.0 and expanded beyond survey links to also search **survey queue links, public report links and public project dashboard links**
 
 ## Users
 Administrative tools for user account management. See **[RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)** for full details. Includes:

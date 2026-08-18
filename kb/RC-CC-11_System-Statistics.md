@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md)|
 | **Synonyms** | control center system statistics page; how many projects and users on the instance; redcap usage and infrastructure snapshot; export system statistics to csv; instance configuration and usage counts; where do i see total record or project counts; system-wide statistics dashboard admin; redcap server stats overview |
@@ -86,6 +88,26 @@ Statistics on instance-wide feature adoption, including:
 ### Logged Events
 
 - **Total count of logged events**: Cumulative count of audit log entries across the system (all user actions, data modifications, system changes, etc.)
+
+### Login Activity
+
+From REDCap **16.0.1**, two counts appear at the bottom of the page:
+
+- **Unique users that logged in (past month)**
+- **Unique users that logged in (past 6 months)**
+
+These measure *distinct users who actually logged in*, which is a different question from how many accounts exist. The gap between total accounts and either figure is the usual starting point for an account cleanup.
+
+### REDCap+ and SHARE Statistics
+
+Present only where the relevant features are active:
+
+| Statistic | Condition | Introduced |
+| --- | --- | --- |
+| **REDCap SHARE totals**, with project participants distinguished from EHR-specific REDCap records | SHARE in use | 17.3.1 |
+| **Project Administrator Groups** and **Email Verification / Unsubscribe** counts | Active REDCap+ subscription | 17.3.3 |
+
+> **Note:** The distinction drawn in the SHARE totals matters when interpreting them — project participants and EHR-specific REDCap records are counted separately, so the two should not be added together as if they were the same population.
 
 ---
 

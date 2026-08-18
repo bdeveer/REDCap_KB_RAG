@@ -6,9 +6,11 @@
 | --- | --- |
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
+| **Requires** | Any supported version |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Synonyms** | control center home page settings; customize the redcap landing page; create project templates for users; set default project settings instance-wide; configure redcap footer settings; manage available field validation types; change the my projects page appearance; add a new field validation across all projects |
@@ -115,6 +117,13 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 ## 6. Field Validation Types
 
 This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can enable or disable individual validation types, and can add custom validations developed for the institution.
+
+> **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways.
+
+Two consequences of custom validation types worth knowing, both independent of version:
+
+- **Copying an instrument fails if the target server lacks the validation type.** Copying an instrument whose text field uses a validation type that does not exist on that REDCap server returns a vague error. The same applies to Data Dictionary uploads and Project XML imports moved between instances. If you rely on custom validations, they must exist on every server a project travels to.
+- **Custom validations with an `email` datatype can be used for the Designated Email Field** and for survey invitation addresses (16.0.7), which makes them useful for institution-specific address formats rather than only for display validation.
 
 Administrators can enable or disable any validation type. Once enabled, it appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
 

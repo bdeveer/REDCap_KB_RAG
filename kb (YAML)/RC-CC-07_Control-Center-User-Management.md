@@ -4,10 +4,13 @@ title: 'Control Center: Users & Access Management'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-03
   title: 'Control Center: Security & Authentication'
@@ -156,6 +159,16 @@ User filters allow administrators to define which users will receive an email. F
 - **Logic operators:** AND, OR, AND NOT, OR NOT
 - **Grouping:** Rules can be grouped together and groups can be chained using the same logic operators
 - **Drag-and-drop reordering:** Rules and groups can be rearranged to adjust hierarchy
+
+### Saved User Filters
+
+From REDCap **15.3.0**, a filter can be **saved and reused** rather than rebuilt for each mailing. A saved filter is given a **name**, an optional **description**, and its filter criteria, and can then be selected whenever composing a new email.
+
+This is the practical difference between the old and new page: recurring audiences — expiring accounts, project owners, users of a particular feature — are defined once and named, instead of being reconstructed from rules each time and inevitably drifting between mailings.
+
+A **Username** filter option was added in **15.8.4**.
+
+> **Note:** Filter results depend on the rule semantics, which have been corrected several times. Notably, "User Status is active" could slightly inflate the returned count (fixed 15.3.3), and the "does not contain", "does not end with" and "is null" operators could miss matches on User Email (fixed 15.7.2). If you are on an older version and a filter's count looks wrong, it may be the rule rather than your data.
 
 **Filter toolbar icons:**
 

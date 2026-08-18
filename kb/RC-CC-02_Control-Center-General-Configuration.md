@@ -82,6 +82,28 @@ Beyond writability, the Configuration Check verifies that directories which shou
 | --- | --- | --- |
 | **REDCap `temp/` directory not publicly accessible** | REDCap attempts to protect it automatically by writing a `web.config` (IIS) or `.htaccess` (Apache) file into the directory. Where it cannot — **notably NGINX, where neither file has any effect** — the Control Center provides a recommendation to implement the block in the server configuration | 15.3.2 |
 | **Uploaded-files directory not under the webroot** | When using Local file storage, verifies the directory holding all user-uploaded files does not sit beneath the web server's document root | 17.0.2 |
+| **Main REDCap directory not writable by the application** | Flags the case where REDCap *can* write to its own main directory, and recommends tightening the permissions so it cannot. This closes an attack vector where a compromise could modify application files. Wording clarified in 16.1.5 | 16.1.4 |
+| **Restricted upload file types configured** | Warns when "Restricted file types for uploaded files" is unset on the File Upload Settings page, since some types should be blocked to protect the server | 16.1.8 |
+
+> **Important — this check conflicts with Easy Upgrade.** Easy Upgrade requires REDCap to be able to write to the main `redcap` directory, which is exactly what the 16.1.4 check recommends preventing. See the Easy Upgrade section below; the two cannot both be satisfied on the same server.
+
+### MIME Type Checks
+
+The Configuration Check verifies that two file types are served with correct MIME types, and recommends a web server configuration fix (Apache, IIS or NGINX) where they are not.
+
+| File type | Why it matters | Introduced |
+| --- | --- | --- |
+| `.bcmap` | Used by REDCap's built-in PDF viewer when displaying PDFs in certain languages. An unregistered or wrong MIME type breaks PDF display for those languages only, which makes it easy to misdiagnose | 16.1.5 |
+| `.woff2` | Web fonts. Incorrect registration produces fallback fonts rather than an outright failure | 16.1.6 |
+
+### Scope of Service Checks
+
+> **Version caveat (behaviour change in 17.0.7):** The Configuration Check now runs service checks **only for features actually enabled** on the instance. Earlier versions checked every service regardless. If you are comparing against notes or a screenshot from an older version, expect fewer checks to appear — their absence indicates the feature is disabled, not that the check failed or was removed.
+
+Two checks were withdrawn as unreliable rather than fixed, so do not chase them if you saw them on an older version:
+
+- The MySQL 8.4.0+ `restrict_fk_on_non_standard_key` recommendation, added in 15.6.1 and **removed in 15.8.4** as misleading and incorrect.
+- A Windows-only cron job check, **removed in 17.3.0** because it returned false results the majority of the time.
 
 > **Note:** The warning text for the `temp/` directory check was reworded in 15.4.0 because administrators found the original confusing. If you are working from older notes, the wording will differ but the requirement has not changed.
 
@@ -99,6 +121,23 @@ Two related changes:
 > **Version caveat (17.2.2–17.2.3):** The Automatic Version Redirect instructions initially specified placing files in the **version folder** instead of the REDCap root directory. Corrected in 17.3.0, which also embedded `redcap_redirect.php` into the Configuration Check steps rather than the separate non-versioned-files workflow. 17.4.0 moved the redirect's own check to client-side JavaScript, because server-side URL testing produced inaccurate results on some server configurations. A redirect configured on 17.2.2 or 17.2.3 that never worked most likely has its files in the wrong directory.
 
 > **Note — clear the Rapid Retrieval cache after removing old version directories.** Cached pages written while REDCap was on a previous version can reference images and links under that version's path, and will 404 once the directory is gone.
+
+### Easy Upgrade
+
+Easy Upgrade lets an administrator apply a REDCap upgrade from within the Control Center rather than unpacking files on the server.
+
+| Change | Version |
+| --- | --- |
+| A "Check again" link is always shown at the top of the Control Center when Easy Upgrade is available, so admins can check for new releases on demand | 15.0.6 |
+| Easy Upgrade start, completion and failure are written to the **User Activity Log** | 15.9.2 |
+| The list of available REDCap versions is displayed **even when Easy Upgrade is not enabled** on the instance | 17.0.0 |
+| Usable on AWS CloudFormation and Elastic Beanstalk deployments without added security risk, because of how upgrades occur on those platforms | 17.4.0 |
+
+> **Important — Easy Upgrade is no longer recommended on production servers.** From **16.1.4** the Control Center warns admins when Easy Upgrade is enabled. The reason is structural rather than incidental: Easy Upgrade requires the REDCap application to be able to write files into the main `redcap` directory, and application write access to its own code directory is the attack vector the 16.1.4 Configuration Check flags. **These two recommendations are in direct tension and cannot both be satisfied** — you are choosing between upgrade convenience and a tighter permission model. The 17.4.0 AWS Elastic Beanstalk exception exists because those deployments replace the application directory wholesale rather than writing into a live one.
+
+> **Critical — Easy Upgrade and the Unicode Transformation.** On affected versions, Easy Upgrade allowed an instance to move past 15.6.0 **without** performing the required Unicode Transformation, producing a database REDCap no longer expects. Remediation, including the restored `ControlCenter/fixdb.php` page, is covered in [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) Section 3.2.
+
+> **Version caveat (15.8.2):** The upgrade page incorrectly stated that REDCap must be taken offline before upgrading, which was not the case and made the process needlessly disruptive. Corrected in 15.8.3.
 
 ### Internal Service Check
 

@@ -4,10 +4,13 @@ title: 'Control Center: Edit Project Settings'
 domain: Control Center (Admin)
 applies_to:
 - REDCap administrators only
+requires: Any supported version
+verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+  not re-captured
 prerequisites:
 - 'RC-CC-21 — Control Center: Overview & Navigation'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-08
 related:
 - id: RC-CC-08
   title: 'Control Center: Home Page, Templates & Project Defaults'
@@ -128,6 +131,22 @@ A text block displayed at the bottom of all survey pages in this specific projec
 
 # 6. AI Services — Project-Level Override
 
+**How this section works depends on your REDCap version**, because 17.2.0 changed the project-level override from *entering credentials* to *selecting a named configuration*.
+
+## 6.1 On REDCap 17.2.0 and higher (including LTS 17.3.x)
+
+The section contains a single **Select AI Configuration** drop-down. It offers the AI configurations an administrator has already defined on the **AI Configuration Settings** page — see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md). REDCap's wording on the page: *if one or more AI Configuration settings are added globally, then one may select one of them at project level so that the respective AI resource/endpoint values will be utilized for this project.*
+
+Selecting a configuration here applies that configuration's service and credentials to this project. The project can also be set to use no AI at all, overriding a system-wide default.
+
+> **Note:** The drop-down only lists configurations that already exist. An empty drop-down means none have been created yet on the AI Configuration Settings page — it does not mean AI is unavailable.
+
+No endpoint URL, API key or model is entered on this page under this model. Credentials live with the configuration, in one place.
+
+## 6.2 On REDCap below 17.2.0 (including LTS 16.0.x)
+
+> **Version caveat:** The settings described below apply only to versions before 17.2.0. They remain accurate for LTS 16.0.x instances.
+
 If AI Services are enabled globally (configured in **Modules & Services Configuration**, [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)), this section allows an admin to supply a *project-specific* AI endpoint that replaces the system-level configuration for this project only.
 
 Three types of AI service are supported:
@@ -153,7 +172,7 @@ Software packages such as LM Studio, LocalAI, GPT4All, and Ollama allow institut
 | API Key | Password field; may be left blank for local deployments |
 | API Model Version/Name | For Azure: date string (e.g., `2024-02-01`); for others: model identifier (e.g., `mistral-tiny`, `hermes-3-llama-3.2-3b`) |
 
-Project-level values **overwrite** any system-level AI configuration for this project.
+Project-level values **overwrite** any system-level AI configuration for this project. Administrators who wanted AI enabled on only a few projects were advised to leave the system-level fields blank and populate these project-level fields instead — an approach superseded by the scope settings described in `RC-CC-26`.
 
 ---
 
