@@ -54,6 +54,9 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 - [x] **Fix section 1 naming in 3 articles** — RC-CC-07 (body content wrapped under `# 1. Overview`; existing sections renumbered), RC-CC-20 (intro promoted to `# 1. Overview`; Page Tabs renumbered to `# 2.`), RC-CC-21 (renamed from "What Is the Control Center?" to "Overview").
 
+- [x] **Institution-neutrality check** — `tools/check_institution_neutral.py` scans `kb/` and `kb (YAML)/` for real institution names and for host names that aren't recognised placeholders (`yourinstitution.edu`, `institution.edu`, etc.). RC-INST-01 is exempt, since local values belong there. Run `python3 tools/check_institution_neutral.py`; exits 1 on any hit so it can gate CI. Cleared the last stray Yale reference at the same time (RC-IMP-05, an example `email-from` address → `example.edu`).
+  - Not yet wired into `.github/workflows/deploy-docs.yml` — decide whether a hit should block the Pages deploy or just warn.
+
 ---
 
 ## Completed
