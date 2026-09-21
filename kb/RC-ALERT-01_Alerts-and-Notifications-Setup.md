@@ -9,10 +9,10 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
+| **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
 | **Synonyms** | how do I send an automated email in REDCap; email reminders; automatic notifications when a form is saved; send an email when a survey is completed; staff notification email; confirmation email to participant; conditional email alert; trigger an email based on logic; difference between alerts and ASIs; set up alerts and notifications; SMS or text message notification |
 
 ---
@@ -52,7 +52,7 @@ The second step of alert setup. Defines when REDCap sends the alert after the tr
 An optional date and time after which REDCap will not send any further alerts, and will cancel any already-scheduled ones.
 
 **datediff**
-A REDCap logic function that compares two dates or date-times and returns the numeric difference in a specified unit (days, hours, minutes, etc.). Commonly used to build time-based trigger logic for alerts.
+A REDCap logic function that compares two dates or date-times and returns the numeric difference in a specified unit (days, hours, minutes, etc.). Commonly used to build time-based trigger logic for alerts. The returned value is **unsigned by default**; pass `true` as a fourth parameter when the direction of the difference matters. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md).
 
 **Smart Variable**
 A special REDCap token that resolves to a dynamic value at send time, such as a survey link, a form link, or a survey queue URL. Smart variables are inserted into alert messages using bracket notation (e.g., `[survey-link:instrument_name]`).
@@ -112,10 +112,12 @@ To trigger an alert based on a date or date-time value, use the `datediff` funct
 Basic syntax:
 
 ```
-datediff(date1, date2, "unit")
+datediff(date1, date2, "unit", returnSignedValue)
 ```
 
-Units: `"d"` (days), `"h"` (hours), `"m"` (minutes), `"M"` (months), `"y"` (years).
+Units: `"d"` (days), `"h"` (hours), `"m"` (minutes), `"M"` (months), `"y"` (years), `"s"` (seconds).
+
+The fourth parameter is optional and defaults to `false`, which makes the result **unsigned**: `datediff` returns the same positive number regardless of which date is later. Pass `true` when the direction of the difference matters, which in alert logic it usually does. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) for the full signature.
 
 **Static comparison:**
 ```
@@ -131,9 +133,11 @@ Returns the number of days since January 1, 2025, and increases by 1 each day.
 
 **Dynamic comparison using a record variable:**
 ```
-datediff([visit_date], "today", "d") = "-14"
+datediff("today", [visit_date], "d", true) = "14"
 ```
 Becomes true when today's date is exactly 14 days before the value in `[visit_date]`. Use this pattern to trigger alerts a fixed number of days before a date stored in the record.
+
+> **The `true` is required here.** Without it `datediff` returns an unsigned value, so the condition would match a record whose visit date was 14 days in the *past* just as readily as one 14 days in the future. A version of this condition written as `datediff([visit_date], "today", "d") = "-14"`, with no sign parameter, is never true at all.
 
 > **Important:** When using date-based logic triggers with the "Ensure logic is still true" checkbox, be aware that the logic will only be true for exactly one day (the day the datediff equals the target value). The alert must be scheduled to send on that same day, or the logic check will return false and cancel it.
 
@@ -319,7 +323,7 @@ Click the green **Add Attachments** button at the bottom of the message panel.
 
 **Q: My alert fires for date-based logic, but the datediff condition is only true for one day. Will the "Ensure logic is still true" checkbox cause REDCap to cancel it?**
 
-**A:** Yes, if the alert is not sent on the same day the condition becomes true. If `datediff([visit_date], "today", "d") = "-14"` is only true on one specific calendar day, the alert must be sent that day. Schedule the alert for immediate send, or do not use the "Ensure logic" checkbox for this pattern.
+**A:** Yes, if the alert is not sent on the same day the condition becomes true. If `datediff("today", [visit_date], "d", true) = "14"` is only true on one specific calendar day, the alert must be sent that day. Schedule the alert for immediate send, or do not use the "Ensure logic" checkbox for this pattern.
 
 **Q: Can I send an alert to someone who is not a project user?**
 
@@ -410,6 +414,7 @@ For the full column-by-column reference, accepted values, an annotated example, 
 - [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (advanced piping in email contexts)
 - [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (prerequisite for writing logic triggers)
 - [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (logic syntax reference)
+- [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (full `datediff` signature and the other functions usable in trigger logic)
 - [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (survey fundamentals; alerts can send survey invitations)
 - [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (Survey Notifications feature — simple per-survey email alerts without custom logic)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (context for trigger limits in Step 1C)

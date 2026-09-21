@@ -291,6 +291,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-ALERT-02 — Alert Management & Notification Log
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-CALC-01 — Special Functions Reference
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-IMP-05 — Alerts & Notifications CSV
 - RC-LONG-02 — Repeated Instruments & Events Setup
@@ -2057,6 +2058,7 @@ Each entry lists: **Prerequisites** (must be read first), **Outbound links** (ar
 - RC-DQ-01 — Data Quality Module
 
 **Inbound links (referenced by):**
+- RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-CALC-02 — Calculated Fields
 - RC-DQ-01 — Data Quality Module

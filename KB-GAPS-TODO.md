@@ -1,25 +1,16 @@
 # KB Gaps — Articles Still Needed
 
-These articles are referenced by existing KB articles or skills but do not yet exist in the KB.
+Articles referenced by existing KB articles or skills that do not yet exist in the KB.
+
+**Status: no open gaps as of 2026-09-02.** Every article this file has tracked is written. Keep the resolved list below — it records why certain slugs were chosen or repurposed — and add new entries under Open Gaps as they come up.
 
 ---
 
 ## Open Gaps
 
----
+**None.** Every article previously tracked here has been written — see below.
 
----
-
-### ⚠️ RC-PLUS-02 — REDCap+ Project Migration Tool
-
-> **On hold — Summer 2026.** Requires access to a REDCap+ instance and REDCap v17. Neither is available yet.
-
-**Why needed:** RC-PLUS-01 references this article three times (frontmatter, Section 4, and Related Articles) with the label *(planned)*. RC-PROJ-05 covers the standard cross-installation migration workflow but explicitly notes that REDCap+ has a separate migration tool. Without this article, users with REDCap+ subscriptions have no KB guidance on the dedicated migration pathway.
-
-**Domain slug:** PLUS (established)
-**What to cover:** What the REDCap+ Project Migration Tool is and how it differs from the standard XML-based migration in RC-PROJ-05; prerequisites (REDCap+ subscription, source and destination instance requirements); step-by-step migration workflow; what is and is not migrated (data, instruments, users, rights, external modules); error handling and rollback; relationship to RC-PLUS-01 (subscription context) and RC-PROJ-05 (standard migration fallback)
-
----
+What remains on the REDCap+ and CDIS articles is **verification, not writing**: RC-PLUS-02, RC-PLUS-03, RC-PLUS-04 and RC-CDIS-05 were written from release notes plus captures of the pages that render without a subscription, and each carries an in-article scope note marking which sections are unverified. Closing that out needs a capture from a REDCap+ subscribed instance, not new articles. Tracked in `meta/KB-UPDATE-TODO-17.4.1.md`.
 
 ---
 
@@ -62,8 +53,9 @@ The full RC-CC series is written and on disk:
 - RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage ✅
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage ✅
 - RC-CDIS-04 — CDP vs CDM: Feature Comparison ✅
+- RC-CDIS-05 — REDCap SHARE: Overview & Onboarding ✅ *(written 2026-08-18. Filed in CDIS rather than a new SHARE domain — every language key on the page is prefixed `cdis_pm_` and the feature lives in the CDIS codebase. The Projects tab and all in-project setup, dashboards and mapping UI remain unverified)*
 
-> **Note:** RC-IMP-02 was previously listed as a gap for "Clinical Data Mart Integration." CDM content is fully covered by RC-CDIS-03. The IMP-02 slot has been repurposed for a dedicated XML/CDISC ODM Import article — see Open Gaps above.
+> **Note:** RC-IMP-02 was previously listed as a gap for "Clinical Data Mart Integration." CDM content is fully covered by RC-CDIS-03. The IMP-02 slot was repurposed for a dedicated XML/CDISC ODM Import article, which is now written — see the Data Import section below.
 
 ### AI Tools (RC-AI) — new domain
 
@@ -156,6 +148,10 @@ RC-DE-01 was previously the only DE article. The domain now covers:
 ### REDCap Plus (RC-PLUS) — new domain
 
 - RC-PLUS-01 — REDCap+: Overview & Subscription ✅ *(was ⚠️)*
+- RC-PLUS-02 — Project Migration Tool ✅ *(was ⚠️ "on hold, Summer 2026"; written 2026-08-18. §6.2 verified against 17.3.6 LTS; §3–4 from release notes only — the migration workflow cannot be observed without a subscription)*
+- RC-PLUS-03 — Reward Services ✅ *(written 2026-08-18; §4–5 verified against a 17.3.6 LTS capture)*
+- RC-PLUS-04 — Project Administrator Groups ✅ *(written 2026-08-18; page is hard-gated without a subscription, so content came from the language keys REDCap still emits)*
+- RC-PLUS-05 — Email Verification & Unsubscribe ✅ *(written 2026-08-18; system-level setting verified)*
 
 ### Data Import (RC-IMP) — expansion
 

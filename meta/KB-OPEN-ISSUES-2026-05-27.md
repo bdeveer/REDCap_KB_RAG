@@ -1,12 +1,16 @@
-# KB Open Issues — as of 2026-05-27
+# KB Open Issues — from the 2026-05-27 Consistency Review
 
-All items from the [KB Consistency Review](KB-CONSISTENCY-REVIEW-2026-05-27.md) that have not yet been fixed. Hard contradictions are all resolved. Remaining work is in inconsistencies/terminology drift and intra-article issues.
+> **All resolved — closed 2026-09-02.** Every item this file tracked (17 in Section 2, 10 in Section 3) is fixed and marked ✅ below, the last of them on 2026-05-29. The section headings previously read "17 open" and "10 open"; those counts were never updated as items were fixed, and the file read as a live backlog for months after the work was done.
+>
+> Kept as a record of what was reconciled and why — several entries explain a deliberate distinction (the Survey Access Code vs. Survey Login, the two-level `0` sentinel for record limits, the PHP-ceiling vs. application-default upload sizes) that is easy to re-break. Nothing here needs action.
+
+Source: [KB Consistency Review](KB-CONSISTENCY-REVIEW-2026-05-27.md). Hard contradictions were all resolved before this list was drawn up; what it tracked was inconsistencies, terminology drift, and intra-article issues.
 
 **Note:** Several section 1 and section 3 entries in the review doc still lack ✅ markers even though the underlying issues were fixed (they were tracked in the prioritization list, not back-marked in the source sections). This list reflects actual fix status, not marker status.
 
 ---
 
-## Section 2 — Inconsistencies / Terminology Drift (17 open)
+## Section 2 — Inconsistencies / Terminology Drift (17 — all fixed)
 
 ### Piping / Smart Variables
 
@@ -60,7 +64,7 @@ All items from the [KB Consistency Review](KB-CONSISTENCY-REVIEW-2026-05-27.md) 
 
 ---
 
-## Section 3 — Intra-article Issues (10 open)
+## Section 3 — Intra-article Issues (10 — all fixed)
 
 18. ✅ **`[RC-BL-05] §3 / §3.1`** — Defines cross-event prefix as a "different event" construct, then states the current event's own name can also be used as a prefix. Needs a clarifying note. *(Fixed 2026-05-29: converted §3.1 Tip to a Note explaining the underlying rule — the prefix syntax accepts any event name including the current one; prefix is required only for different events)*
 

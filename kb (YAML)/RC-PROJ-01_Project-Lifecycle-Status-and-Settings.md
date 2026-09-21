@@ -9,8 +9,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - None
-version: '1.4'
-last_updated: '2026-04-29'
+version: '1.5'
+last_updated: '2026-09-21'
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -94,9 +94,9 @@ From Analysis/Cleanup, a project can return to Production or be moved to Complet
 
 Indicates the project is fully done.
 
-- The project is taken **offline** and hidden from all users' project lists.
-- Only a REDCap administrator can access the project or change its status.
-- To view completed projects, use the **"Show Completed Projects"** link at the bottom of the My Projects page.
+- The project is taken **offline**. It is removed from the main My Projects list for every user, including the project owner.
+- Visibility and access are separate. Users who were members can still see the project **listed** via the **"Show Completed Projects"** link at the bottom of the My Projects page, but they cannot open it.
+- Only a REDCap administrator can open a Completed project or change its status.
 
 > **Note on legacy statuses:** Prior to REDCap version 9.8.0 (standard) / 10.0.5 (LTS), projects used "Inactive" and "Archived" statuses. These were automatically migrated: Inactive → Analysis/Cleanup; Archived → Analysis/Cleanup within the renamed "My Hidden Projects" folder.
 
@@ -336,7 +336,7 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 
 **Q: Where can I view projects in "Completed" status?**
 
-**A:** On the **My Projects** page, scroll to the bottom and click **"Show Completed Projects."** Only a REDCap administrator can change a project's status once it reaches Completed.
+**A:** On the **My Projects** page, scroll to the bottom and click **"Show Completed Projects."** That lists the Completed projects you were a member of, but it does not restore access to them. A Completed project is offline: only a REDCap administrator can open it or change its status.
 
 ---
 

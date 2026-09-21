@@ -10,6 +10,17 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 - [ ] **Flesh out RC-INST-01** — The article structure and `[FILL IN]` template exist but all placeholders need to be populated with real values for this installation: support channel, support hours, server time zone, draft mode policy, account creation workflow, global suspension rules, and enabled/disabled external modules.
 
+- [ ] **Verify the REDCap+ and SHARE articles against a subscribed instance** — Carried over from the 17.4.1 changelog review, which is otherwise complete. RC-PLUS-02 §3–4 (the migration workflow), RC-PLUS-04's page layout, and RC-CDIS-05's Projects tab and in-project setup/dashboard/mapping UI were written from release notes and from the language keys REDCap emits even when it refuses to render a gated page. Each article carries a scope note saying which sections are unverified. Needs a capture from an instance holding a REDCap+ subscription — the maintaining instance does not.
+  - Useful context: REDCap+ gating style **varies per page**. Some Control Center pages render their REDCap+ settings server-side and merely disable them in the browser (readable); others replace the interface entirely with a subscription notice (not readable). See RC-PLUS-01 §4a.
+
+- [ ] **Pin a REDCap version on every article** — Only 42 of ~250 articles carry an explicit version in their metadata. Pinning the rest would make the next changelog diff substantially cheaper, since matching changelog entries to articles currently relies on title/synonym/keyword overlap plus hand review. Flagged as a caveat in `meta/KB-UPDATE-TODO-17.4.1.md`.
+
+- [ ] **Verify the two fixes applied 2026-09-21** — Both corrections came out of the REDCap Handbook consistency review and were applied to resolve an internal KB contradiction, not from an observation on a live instance. Confirm both, then close this item.
+  - **`datediff` signature.** RC-ALERT-01 §3.3 and its FAQ used `datediff([visit_date], "today", "d") = "-14"`, which cannot be true given the unsigned default that RC-CALC-01 §5.1 documents. Both were changed to `datediff("today", [visit_date], "d", true) = "14"`. Open question: REDCap's own Special Functions reference may place a **date-format** parameter between the units and the sign flag, in which case `true` is in the wrong position in both articles and in RC-CALC-01's stated signature. Copy the signature verbatim from the Special Functions link in the Online Designer calc-field editor and check.
+  - **Completed project access.** RC-PROJ-01 §2.4 said a Completed project is "hidden from all users' project lists" while RC-NAV-UI-04 §5 said the "Show Completed Projects" link reveals all such projects you were a member of. Both now say the project is **listed** under that link but can only be **opened** by an administrator. Confirm with a non-admin member account against a project moved to Completed: is it listed, is the name a link, and what happens on click?
+
+- [ ] **Decide whether to sweep excluded changelog rows** — The 15.0.0 → 17.4.1 review scoped out plain bug fixes and security fixes (~6,000 rows), so behaviour-altering fixes may be undocumented. The Save & Return Later Return Code fix was pulled in by hand as one known example. Re-runnable with `Major bug fix` enabled if the sweep is wanted.
+
 ---
 
 ## Tooling & Skills
@@ -70,4 +81,6 @@ Running list of development tasks for the REDCap KB / RAG project — separate f
 
 ---
 
-*Last updated: 2026-05-16 (RC-DSGN-01 v1.4 — style guide expanded with §5.7 role/DAG smart variable naming, §9 variable and instrument naming conventions, §10 ASI safety patterns. Cross-refs updated.)*
+*Last updated: 2026-09-02 — Tidied three stale tracking files (`KB-GAPS-TODO.md`, `meta/KB-OPEN-ISSUES-2026-05-27.md`, `meta/KB-UPDATE-TODO-17.4.1.md`), all of which read as live backlogs after their work was finished. Residual items from the 17.4.1 review carried into this file. Added `tools/check_institution_neutral.py`.*
+
+*Previously: 2026-05-16 (RC-DSGN-01 v1.4 — style guide expanded with §5.7 role/DAG smart variable naming, §9 variable and instrument naming conventions, §10 ASI safety patterns. Cross-refs updated.)*

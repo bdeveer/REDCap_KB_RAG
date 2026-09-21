@@ -9,8 +9,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026-05-06'
+version: '1.1'
+last_updated: '2026-09-21'
 related:
 - id: RC-PROJ-01
   title: 'Project Lifecycle: Status and Settings'
@@ -118,9 +118,9 @@ REDCap includes a built-in special folder called **My Hidden Projects**. Its beh
 
 # 5. Completed Projects
 
-Projects in **Completed** status are hidden from the main My Projects list. To access them, scroll to the bottom of the My Projects page and click **"Show Completed Projects."** This reveals all projects in Completed status that you were a member of.
+Projects in **Completed** status are hidden from the main My Projects list. To see them, scroll to the bottom of the My Projects page and click **"Show Completed Projects."** This lists all projects in Completed status that you were a member of.
 
-Only a REDCap administrator can change a project's status once it reaches Completed. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details on project statuses and transitions.
+The list is visibility only, not access. A Completed project is taken offline: only a REDCap administrator can open it or change its status once it reaches Completed. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details on project statuses and transitions.
 
 ---
 
@@ -170,7 +170,7 @@ On narrow screens (phones and small tablets), the tabular project grid is replac
 
 **Q: Where do Completed projects appear?**
 
-**A:** They are hidden from the main list. Click **"Show Completed Projects"** at the bottom of the My Projects page to reveal them.
+**A:** They are hidden from the main list. Click **"Show Completed Projects"** at the bottom of the My Projects page to see them listed. Listing is not access: a Completed project is offline and can only be opened by a REDCap administrator.
 
 ---
 

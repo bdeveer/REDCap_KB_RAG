@@ -1,5 +1,11 @@
 # KB Update To-Do — REDCap 15.0.0 → 17.4.1
 
+> **Complete — all 93 tracked items worked, closed 2026-09-02.** The KB's high-water mark is now **17.4.1 Standard / 17.3.7 LTS**. The summary table and priority sections below are kept as the record of what changed and why; they are not a backlog. Three things this review surfaced *are* still outstanding, and they are carried in `PROJECT-TODO.md` rather than here:
+>
+> 1. **Verification debt on the REDCap+ and SHARE articles.** RC-PLUS-02 §3–4, RC-PLUS-04's page layout, and RC-CDIS-05's Projects tab and in-project UI were written from release notes and language keys because the maintaining instance holds no REDCap+ subscription. Each article says so in a scope note. Needs a capture from a subscribed instance.
+> 2. **Version pinning.** Only 42 of ~250 articles carry an explicit REDCap version in their metadata. Pinning the rest would make the next changelog diff substantially cheaper — see Caveats.
+> 3. **Excluded rows.** Bug fixes and security fixes were scoped out, so behaviour-altering fixes may be undocumented. Re-runnable with `Major bug fix` enabled.
+
 **Generated:** 2026-08-18
 **Source:** `ChangeLog_Standard_2026-08-18.csv` (9,135 rows) + `ChangeLog_LTS_2026-08-18.csv` (6,392 rows)
 **Current releases:** Standard **17.4.1** (2026-08-13) · LTS **17.3.7** (2026-08-13)
@@ -26,13 +32,13 @@
 
 ## Summary
 
-| Priority | Items | Effort |
-|---|---|---|
-| P0 — New articles | 6 | Large |
-| P1 — Wrong or materially incomplete | 24 | Medium |
-| P2 — Gaps worth filling | 41 | Small–medium |
-| P3 — Minor / cosmetic | ~90 | Trivial |
-| No doc impact | ~180 | — |
+| Priority | Items | Effort | Status |
+|---|---|---|---|
+| P0 — New articles | 6 | Large | ✅ All written (RC-PLUS-02–05, RC-CDIS-05, + RC-CC-06 section) |
+| P1 — Wrong or materially incomplete | 24 | Medium | ✅ All corrected |
+| P2 — Gaps worth filling | 41 | Small–medium | ✅ All filled |
+| P3 — Minor / cosmetic | ~90 | Trivial | ✅ Folded in |
+| No doc impact | ~180 | — | — |
 
 ---
 
@@ -388,7 +394,7 @@ Spot-checked and confirmed present in the KB, despite post-dating the nominal ar
 
 ---
 
-## Suggested order of work
+## Suggested order of work *(historical — this sequence was followed and completed)*
 
 1. **`RC-AT-11` / `RC-MYCAP-02` / `RC-MYCAP-08`** — remove the deleted slider action tags. Smallest edit, clearest factual error.
 2. **`RC-INFRA-01` / `RC-INFRA-02`** — PHP 8.1 minimum, PHP 8.5 support, UTF8MB3 upgrade blocker. Highest operational risk.
