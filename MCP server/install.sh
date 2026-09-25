@@ -11,9 +11,9 @@
 set -e
 
 # ── CONFIGURE THESE ───────────────────────────────────────────────────────────
-REDCAP_URL_PROD="https://redcap.school.wakehealth.edu/api/"
-REDCAP_URL_TEST="https://redcap-test.wakehealth.edu/api/"
-REDCAP_URL_DEV="https://redcapdev.school.wakehealth.edu/api/"
+REDCAP_URL_PROD="https://redcap.yourinstitution.edu/api/"
+REDCAP_URL_TEST="https://redcap-test.yourinstitution.edu/api/"
+REDCAP_URL_DEV="https://redcap-dev.yourinstitution.edu/api/"
 # ─────────────────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.3 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
@@ -231,7 +231,7 @@ Large demographics sections are often split across two or more descriptive field
 
 **Forgetting to add branching logic in the "Other, please specify" pattern.** If branching logic is omitted, the embedded text box renders for every respondent — not just those who selected "Other." Always pair the embedding reference with appropriate branching logic when the field should be conditional.
 
-**The host field's branching logic hides all fields embedded within it.** If the host field (the one containing the curly-brace references) has its own branching logic and that logic evaluates to FALSE, all fields embedded inside it will also be hidden — they are treated as part of the host field. On data entry forms (not surveys), if any embedded field has a saved value when the host field is being hidden, REDCap will prompt "Erase current value of the field?" for each affected embedded field. If the user clicks Cancel for any of these prompts, the host field will remain visible rather than being hidden.
+**The host field's branching logic hides all fields embedded within it.** If the host field (the one containing the curly-brace references) has its own branching logic and that logic evaluates to FALSE, all fields embedded inside it will also be hidden — they are treated as part of the host field. On data entry forms (not surveys), if any embedded field has a saved value when the host field is being hidden, REDCap will prompt "Erase the Value of the Field?" for each affected embedded field. If the user clicks Cancel for any of these prompts, the host field will remain visible rather than being hidden.
 
 **The Record ID field cannot be embedded.** The first field in a REDCap project (the record identifier) is a special system field and cannot be repositioned via field embedding.
 

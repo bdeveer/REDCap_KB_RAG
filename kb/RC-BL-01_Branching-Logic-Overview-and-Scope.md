@@ -9,10 +9,10 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
+| **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) |
 | **Synonyms** | how do i show a field only when another answer is selected; conditional field visibility; what is branching logic in redcap; hide a question based on a previous answer; where do i set up branching logic; make fields appear conditionally; show hide fields on a form; intro to branching logic |
 
 ---
@@ -48,11 +48,17 @@ Every logic statement in REDCap resolves to either true or false. In branching l
 The branching logic feature has one job: show or hide a specific field based on whether a logic statement is true or false.
 
 - If the statement is true: the field is visible to the user.
-- If the statement is false: the field is hidden and its stored value is cleared automatically.
+- If the statement is false: the field is hidden. What happens to a value already stored in that field depends on context — see the note below.
 - Branching logic is evaluated dynamically as data is entered — fields appear and disappear without a page reload.
-- The user cannot override or bypass branching logic during data entry.
+- The user cannot write logic exceptions for themselves during data entry, but on data entry forms they can decline the erase prompt described below.
 
-> **Important:** When branching logic hides a field, any value previously stored in that field is automatically deleted. This is intentional behavior — it prevents orphaned data from remaining in hidden fields. Design your logic carefully to avoid inadvertently clearing data.
+> **Important:** When branching logic is about to hide a field that holds a value, the behavior differs by context.
+>
+> - **Data entry forms:** REDCap prompts the user before erasing the value. If the user cancels, the field remains visible and keeps its data.
+> - **Survey pages:** there is no prompt. The field is hidden and its value erased automatically.
+> - **Project setting override:** when **Prevent branching logic from hiding fields that have values** is enabled under Project Setup → Additional Customizations, any field containing a value is exempt from branching logic entirely and stays visible on both forms and surveys. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
+>
+> Design logic on the assumption that survey data in hidden fields is lost, and that form data may or may not be, depending on what the user clicked.
 
 ---
 
@@ -143,7 +149,7 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 **Q: What happens to data in a field when branching logic hides it?**
 
-**A:** The data is cleared and deleted automatically. REDCap removes the stored value from the database whenever a field becomes hidden by branching logic. This is by design and cannot be overridden.
+**A:** It depends on context. On a survey page the value is erased automatically with no prompt. On a data entry form REDCap asks the user first, and the user can cancel, in which case the field stays visible with its value intact. The behavior can also be overridden project-wide: the **Prevent branching logic from hiding fields that have values** setting under Project Setup → Additional Customizations exempts any value-bearing field from branching logic altogether. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
 **Q: Can I write branching logic directly in the Data Dictionary instead of the Online Designer?**
 
@@ -151,13 +157,18 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 **Q: Is branching logic case-sensitive?**
 
-**A:** It depends on what you are comparing. Hard-coded text values (strings) in logic statements are case-sensitive. For example, `[fav_color]="green"` will not match if the user typed "Green" with a capital G. Variable names and boolean operators (AND, OR) are not case-sensitive.
+**A:** Yes, in both halves of a comparison.
+
+- **Variable names are case-sensitive.** REDCap stores every variable name in lowercase, so a capitalized reference matches nothing. The Online Designer's logic editor flags `[Age]` as an error; if the logic is saved anyway (for example by importing it through the Data Dictionary), the data entry form throws an error when it evaluates the logic.
+- **Hard-coded text values are case-sensitive.** `[fav_color]="green"` will not match a stored value of "Green".
+
+Boolean operators are the exception: `and` and `AND`, `or` and `OR` are interchangeable.
 
 ---
 
 ## 8. Common Mistakes & Gotchas
 
-**Assuming hidden fields retain their data.** When branching logic hides a field, its stored value is deleted. If a user triggers the hide condition after entering data, that data is gone. Test all logic thoroughly in Development mode before collecting real data.
+**Assuming hidden fields always retain their data — or never do.** Both assumptions cause trouble. On surveys, a field hidden by branching logic loses its value silently, so a respondent who backtracks loses downstream answers. On data entry forms the user is prompted and may cancel, which means a hidden field *can* still hold a value. That second case is why Data Quality rule F (hidden fields containing values) exists and routinely finds records. Note that fields hidden by the `@HIDDEN` action tag family are a separate mechanism: those keep their values and continue to calculate. Test all logic thoroughly in Development mode before collecting real data.
 
 **Applying branching logic in Production without testing.** The Online Designer's syntax checker validates that logic is syntactically correct, but it does not verify that it behaves as intended. Always test in a Development project or with test records before deploying.
 
@@ -171,7 +182,7 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 ### 9.1 Checkbox Gate (Participation / Intent Gate)
 
-A common survey design pattern is to place a single required checkbox at the top of a form — labelled something like "Yes, I would like to participate" or "I confirm I want to proceed" — and then apply `[gate_field(1)]=1` as the branching logic condition on every subsequent field. This has the effect of hiding all questions until the respondent explicitly opts in.
+A common survey design pattern is to place a single checkbox at the top of a form — labelled something like "Yes, I would like to participate" or "I confirm I want to proceed" — and then apply `[gate_field(1)]=1` as the branching logic condition on every subsequent field. This has the effect of hiding all questions until the respondent explicitly opts in. Note that marking the gate checkbox itself as required achieves nothing: REDCap ignores the required flag on checkbox fields, so the gate can be left unticked and the form still submitted. See [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md).
 
 **Why use it:**
 - It provides a clear, visible commitment step before the respondent sees the full form.

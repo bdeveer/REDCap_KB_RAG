@@ -5,12 +5,13 @@ domain: Integration
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.3.10 — Data Entry Trigger help text on Project Setup
+  → Additional Customizations captured 2026-09-21; the import exclusion and the POST
+  parameter list verified directly against it
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-09
 related:
 - id: RC-DE-02
   title: Basic Data Entry

@@ -9,8 +9,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-USER-03 — User Rights: Configuring User Privileges'
-version: '1.3'
-last_updated: 2026-08
+version: '1.4'
+last_updated: 2026-09
 source: REDCap API v16.1.3 official documentation
 related:
 - id: RC-INTG-01
@@ -70,7 +70,7 @@ A built-in REDCap tool, accessible from every project's left-hand menu, that let
 
 **Format**
 
-The data format the API uses to deliver or receive data. The three main formats are JSON (JavaScript Object Notation — the default for most methods and easiest to work with in modern languages), CSV (comma-separated, compatible with spreadsheets and R), and XML (includes the CDISC ODM flavor, which can be re-imported into REDCap or other EDC systems).
+The data format the API uses to deliver or receive data. The three main formats are JSON (JavaScript Object Notation — easiest to work with in modern languages), CSV (comma-separated, compatible with spreadsheets and R), and XML (the format returned when `format` is omitted, and the basis of the CDISC ODM flavor, which can be re-imported into REDCap or other EDC systems). Always set `format` explicitly: the default is XML, which is rarely what a modern client expects.
 
 **API Export Right / API Import Right**
 

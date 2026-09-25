@@ -7,10 +7,10 @@
 | **Domain** | Data Quality |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.3.10 — Data Quality Rules page captured 2026-09-21; the A–I rule set and bulk-execution controls verified directly against it |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i check my data for errors; find blank required fields and out of range values; run data quality rules across all records; write a custom data quality rule; automatically flag discrepancies when a form is saved; import and export data quality rules; data quality module how to use; detect calculated field mismatches and hidden field data |
@@ -19,7 +19,7 @@
 
 ## 1. Overview
 
-The Data Quality module is a project-level tool that lets authorized users check their data for discrepancies. It provides a set of built-in default rules covering common data problems (blank required fields, out-of-range values, hidden fields retaining data, calculated field mismatches) and allows users to write their own custom rules using the same logic syntax as branching logic. Rules can be run on demand across all project records, or triggered automatically in real time whenever a data entry form is saved. Custom rules can be exported to CSV and imported from CSV, making it straightforward to migrate rule sets between projects or manage them in bulk. This article covers how to access and use the module, how the default rules work, how to write and configure custom rules, how to import and export rules, and how to interpret and manage results.
+The Data Quality module is a project-level tool that lets authorized users check their data for discrepancies. It provides a set of built-in default rules covering common data problems (blank values, validation and range errors, numerical outliers, hidden fields retaining data, invalid multiple-choice codes, calculated field mismatches, missing data codes) and allows users to write their own custom rules using the same logic syntax as branching logic. Rules can be run on demand across all project records, or triggered automatically in real time whenever a data entry form is saved. Custom rules can be exported to CSV and imported from CSV, making it straightforward to migrate rule sets between projects or manage them in bulk. This article covers how to access and use the module, how the default rules work, how to write and configure custom rules, how to import and export rules, and how to interpret and manage results.
 
 ---
 
@@ -85,11 +85,11 @@ Starting in REDCap 16, three bulk execution options are available instead of a s
 
 | Button | What It Runs |
 |---|---|
-| **Run all rules** | All default rules (A–H) and all custom rules |
-| **Run all rules except A & B** | All default rules except Required Fields (A) and Identifier Fields (B), plus all custom rules |
+| **All** | All default rules (A–I) and all custom rules |
+| **All except A&B** | All default rules except the two blank-value scans, A and B, plus all custom rules |
 | **Run all custom** | Custom rules only — default rules are skipped |
 
-"Run all rules except A & B" is useful for routine data checks where identifier and required-field coverage is handled separately (e.g., by a dedicated data manager review), saving time on large datasets.
+"All except A&B" is useful for routine data checks on large datasets. Rules A and B both scan every record for blank values (A across all fields, B across required fields only), so they dominate the run time of a full pass; skipping them is what makes a routine check quick.
 
 #### Field Selector for Standard Rules (REDCap 16+)
 
@@ -105,22 +105,23 @@ If the project uses Data Access Groups (DAGs), discrepancy results are automatic
 
 ---
 
-## 4. Default Rules (A–H)
+## 4. Default Rules (A–I)
 
-REDCap includes eight pre-defined default rules. They appear in red text and cannot be modified, reordered, or removed. Each covers a distinct category of data problem:
+REDCap includes nine pre-defined default rules. They appear in red text and cannot be modified, reordered, or removed. Each covers a distinct category of data problem:
 
 | Rule | What It Checks |
 |---|---|
-| A | Required fields that have been left blank |
-| B | Fields marked as identifiers that contain data |
-| C | Number-validated fields with values outside their specified min/max range |
-| D | Date/datetime-validated fields with values outside their specified min/max range |
-| E | Calculated fields whose stored value is blank |
-| F | Multiple-choice fields with a saved value that no longer matches any current answer choice (occurs when choices are edited after data collection) |
-| G | Fields currently hidden by branching logic that still have a saved value |
-| H | Calculated fields whose stored value differs from their currently computed value |
+| A | Blank values, across every field |
+| B | Blank values, required fields only |
+| C | Field validation errors: incorrect data type |
+| D | Field validation errors: out of range |
+| E | Outliers for numerical fields (number, integer, slider and calculated fields) |
+| F | Hidden fields that contain values |
+| G | Multiple choice fields with invalid values (occurs when choices are edited after data collection) |
+| H | Incorrect values for calculated fields |
+| I | Fields containing missing data codes |
 
-> **Note:** Not all rules are relevant to every project. Rules B and E, for example, may produce no results if the project has no identifier-designated fields or no calculated fields, respectively.
+> **Note:** Not all rules are relevant to every project. Rules E and H produce no results in a project with no calculated fields, and rule I none in a project that does not use missing data codes.
 
 ---
 
@@ -158,7 +159,7 @@ Custom rules can be created, edited, deleted, and reordered from the bottom of t
 
 REDCap can export all custom rules from a project to a CSV file, and can import custom rules from a CSV file in the same format. This is useful for migrating rules between projects, maintaining a versioned rule set outside REDCap, or creating rules in bulk.
 
-Default rules (A–H) are not included in the export — only custom rules are exported and importable.
+Default rules (A–I) are not included in the export — only custom rules are exported and importable.
 
 #### CSV Format
 
@@ -296,7 +297,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 **A:** In REDCap 16 and later, use the field selector to limit standard default rules to specific fields rather than running them across the entire project. You can also use the "Run all custom" button to skip default rules entirely if only custom rule results are needed.
 
 **Q: What is the difference between "Run all rules except A & B" and "Run all custom"?**
-**A:** "Run all rules except A & B" still runs default rules C through H alongside all custom rules — it only skips the Required Fields (A) and Identifier Fields (B) checks. "Run all custom" skips all default rules and runs only the rules you have written yourself.
+**A:** "All except A&B" still runs default rules C through I alongside all custom rules — it only skips the two blank-value scans, A (all fields) and B (required fields only). "Run all custom" skips all default rules and runs only the rules you have written yourself.
 
 ---
 

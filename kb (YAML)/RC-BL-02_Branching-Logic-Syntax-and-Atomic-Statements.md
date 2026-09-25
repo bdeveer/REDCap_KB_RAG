@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-BL-01 — Branching Logic: Overview & Scope'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-09
 related:
 - id: RC-BL-01
   title: 'Branching Logic: Overview & Scope'
@@ -268,9 +268,13 @@ consistent and avoids ambiguity.
 
 **Q: Are variable names in logic case-sensitive?**
 
-**A:** No. Variable names in REDCap are always lowercase (REDCap
-enforces this), and logic syntax treats them case-insensitively.
-However, text string comparison values are case-sensitive.
+**A:** Yes. Variable names in REDCap are always lowercase (REDCap
+enforces this at field creation), and logic does not fold case to
+match them, so a capitalized reference matches no field at all. The
+Online Designer's logic editor flags `[Age]` as an error. Logic that
+reaches the project some other way, such as a Data Dictionary import,
+will instead throw an error on the data entry form when REDCap tries
+to evaluate it. Text string comparison values are case-sensitive too.
 \[status\]='Enrolled' will not match a stored value of 'enrolled'
 (lowercase e).
 

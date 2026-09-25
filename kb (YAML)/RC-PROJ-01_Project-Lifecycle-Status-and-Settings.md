@@ -9,7 +9,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - None
-version: '1.5'
+version: '1.6'
 last_updated: '2026-09-21'
 related:
 - id: RC-CC-04
@@ -86,7 +86,7 @@ Indicates that formal data collection is complete. In Analysis/Cleanup:
 - Most active data collection features are **disabled**: surveys, automated survey invitations, and alerts & notifications.
 - **No new records** can be created.
 - Existing data remains intact and fully accessible.
-- An administrator can set existing records to either **Editable** (existing records only) or **Read-only/Locked**.
+- Existing records can be set to either **Editable** (existing records only) or **Read-only/Locked**.
 
 From Analysis/Cleanup, a project can return to Production or be moved to Completed.
 

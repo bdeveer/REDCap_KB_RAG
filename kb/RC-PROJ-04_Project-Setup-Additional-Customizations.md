@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-08 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md); [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md); [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) |
@@ -237,7 +237,7 @@ This setting applies project-wide. There is no per-field toggle for this button 
 
 ## 11. Prevent Branching Logic from Hiding Fields That Have Values
 
-By default, when a field is hidden by branching logic on a data entry form, REDCap prompts the user with "Erase the value of the field?" before hiding it. On survey pages, the field is hidden and its value erased automatically without a prompt.
+By default, when a field is hidden by branching logic on a data entry form, REDCap prompts the user with "Erase the Value of the Field?" before hiding it, and the user chooses whether to keep the value or hide the field. On survey pages, the field is hidden and its value erased automatically without a confirmation prompt, which has always been the default behavior for surveys.
 
 When this setting is **enabled**, the behavior changes: any field that currently contains a value will not be hidden by branching logic at all. Instead of asking the user whether to erase the value, the field stays visible even if its branching logic condition is no longer met. Fields with no value continue to hide normally.
 

@@ -7,10 +7,10 @@
 | **Domain** | Integration |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.3.10 — Data Entry Trigger help text on Project Setup → Additional Customizations captured 2026-09-21; the import exclusion and the POST parameter list verified directly against it |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how do i set up a data entry trigger; send an http post when a record is saved; notify an external system when data changes in redcap; det fires on data entry but not on imports; real-time webhook for redcap form submissions; trigger an api call when a survey is submitted; where do i enter the data entry trigger url; redcap det configuration and behavior |

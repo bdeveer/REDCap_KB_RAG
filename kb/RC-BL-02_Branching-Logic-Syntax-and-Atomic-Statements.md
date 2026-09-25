@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
 | **Synonyms** | how do i write a branching logic statement; redcap logic syntax operators; what operators can i use in branching logic; how to reference a field in branching logic; single condition logic statement; branching logic brackets and quotes; greater than less than equals in redcap logic; how to write a simple conditional expression |
@@ -251,9 +251,13 @@ consistent and avoids ambiguity.
 
 **Q: Are variable names in logic case-sensitive?**
 
-**A:** No. Variable names in REDCap are always lowercase (REDCap
-enforces this), and logic syntax treats them case-insensitively.
-However, text string comparison values are case-sensitive.
+**A:** Yes. Variable names in REDCap are always lowercase (REDCap
+enforces this at field creation), and logic does not fold case to
+match them, so a capitalized reference matches no field at all. The
+Online Designer's logic editor flags `[Age]` as an error. Logic that
+reaches the project some other way, such as a Data Dictionary import,
+will instead throw an error on the data entry form when REDCap tries
+to evaluate it. Text string comparison values are case-sensitive too.
 \[status\]='Enrolled' will not match a stored value of 'enrolled'
 (lowercase e).
 

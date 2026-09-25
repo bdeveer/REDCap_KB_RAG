@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation |
 | **Related Topics** | [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
@@ -52,7 +52,7 @@ A built-in REDCap tool, accessible from every project's left-hand menu, that let
 
 **Format**
 
-The data format the API uses to deliver or receive data. The three main formats are JSON (JavaScript Object Notation — the default for most methods and easiest to work with in modern languages), CSV (comma-separated, compatible with spreadsheets and R), and XML (includes the CDISC ODM flavor, which can be re-imported into REDCap or other EDC systems).
+The data format the API uses to deliver or receive data. The three main formats are JSON (JavaScript Object Notation — easiest to work with in modern languages), CSV (comma-separated, compatible with spreadsheets and R), and XML (the format returned when `format` is omitted, and the basis of the CDISC ODM flavor, which can be re-imported into REDCap or other EDC systems). Always set `format` explicitly: the default is XML, which is rarely what a modern client expects.
 
 **API Export Right / API Import Right**
 

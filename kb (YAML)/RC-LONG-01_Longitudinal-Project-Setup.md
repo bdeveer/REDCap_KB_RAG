@@ -11,8 +11,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.3'
-last_updated: 2026-08
+version: '1.4'
+last_updated: 2026-09
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -160,7 +160,7 @@ This page displays a matrix with instruments as rows and events as columns. A se
 
 > **Critical:** Unchecking an instrument-event combination that already contains saved data will make that data inaccessible — it will no longer appear in the UI. The data is not deleted from the database and can be recovered by re-checking the combination, but treat this as a high-risk action: always verify the combination is empty, or export the data first, before removing a designation. If new data is collected in the same instrument-event combination after it was unchecked and then re-checked, there may be record-level collisions that require backend database intervention to resolve. If you are unsure, contact your local REDCap administrator before proceeding.
 
-> **Important:** Always designate the first instrument in your project (the one containing the record ID field) to the very first event in each arm. REDCap stores the record ID in this instrument-event combination. Omitting it will cause unpredictable behavior and risk data not being saved correctly.
+> **Important:** Always designate the first instrument in your project (the one containing the record ID field) to the very first event in each arm. REDCap stores the record ID in this instrument-event combination. Omitting it leads to problems that vary by project setup rather than to one predictable failure — reported symptoms include orphaned records and branching logic or calculations not firing as expected. Because the symptom is unpredictable and usually surfaces long after data collection starts, treat this as a setup step to verify rather than a risk to weigh.
 
 ---
 
@@ -353,7 +353,7 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **Q: What happens if I forget to designate the first instrument to the first event?**
 
-**A:** REDCap stores the record ID in the first instrument-event combination. If that combination is not designated, new records may fail to save data correctly and the project can exhibit unpredictable behavior. Always designate your first instrument to your first event before collecting data.
+**A:** REDCap stores the record ID in the first instrument-event combination. Leaving it undesignated does not produce one specific documented error; in practice it produces different problems in different projects, including orphaned records and logic that fails to fire. Always designate your first instrument to your first event before collecting data.
 
 **Q: Can the same instrument appear in multiple events?**
 
@@ -391,7 +391,7 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **Renaming events without auditing logic.** Every reference to a renamed event's unique event name in branching logic, piping, or calculated fields will silently stop working. REDCap will not flag broken logic at the time of renaming. Always run a full logic audit after any event rename.
 
-**Omitting the first instrument from the first event.** Failing to designate the record-ID instrument to the first event causes records to save incorrectly or not at all. This is one of the most common and consequential configuration errors in new longitudinal projects.
+**Omitting the first instrument from the first event.** Failing to designate the record-ID instrument to the first event causes downstream problems whose shape depends on the project — orphaned records and mis-firing logic are the ones most often reported. This is one of the most common and consequential configuration errors in new longitudinal projects, and one of the hardest to diagnose after the fact, precisely because the symptom rarely points back at the mapping.
 
 **Uploading instrument-event mappings expecting additive behavior.** The instrument-event mapping CSV upload replaces the entire mapping, not just the rows in the file. Uploading a partial mapping will uncheck all omitted combinations. Always download and edit the existing mapping rather than creating a file from scratch.
 

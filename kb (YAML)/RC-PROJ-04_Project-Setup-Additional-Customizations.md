@@ -10,7 +10,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
-version: '1.1'
+version: '1.2'
 last_updated: 2026-08
 related:
 - id: RC-PROJ-01
@@ -262,7 +262,7 @@ This setting applies project-wide. There is no per-field toggle for this button 
 
 # 11. Prevent Branching Logic from Hiding Fields That Have Values
 
-By default, when a field is hidden by branching logic on a data entry form, REDCap prompts the user with "Erase the value of the field?" before hiding it. On survey pages, the field is hidden and its value erased automatically without a prompt.
+By default, when a field is hidden by branching logic on a data entry form, REDCap prompts the user with "Erase the Value of the Field?" before hiding it, and the user chooses whether to keep the value or hide the field. On survey pages, the field is hidden and its value erased automatically without a confirmation prompt, which has always been the default behavior for surveys.
 
 When this setting is **enabled**, the behavior changes: any field that currently contains a value will not be hidden by branching logic at all. Instead of asking the user whether to erase the value, the field stays visible even if its branching logic condition is no longer met. Fields with no value continue to hide normally.
 

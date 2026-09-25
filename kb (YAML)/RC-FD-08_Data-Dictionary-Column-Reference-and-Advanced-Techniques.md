@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - RC-FD-03 — Data Dictionary
-version: '1.2'
-last_updated: '2026-05-07'
+version: '1.4'
+last_updated: 2026-09
 related:
 - id: RC-FD-01
   title: Form Design Overview
@@ -282,6 +282,8 @@ For `text` fields, this column sets the validation format. REDCap will only acce
 | `integer` | Whole numbers only |
 | `email` | Email address format |
 | `phone` | US phone number format |
+
+> **Note:** The date codes describe the *entry and display* format enforced on the instrument, not the storage format. REDCap stores all dates as YYYY-MM-DD and the API returns them that way regardless of which validation code the field carries — a `date_mdy` field exports as `2026-04-30`. (Verified by API export, REDCap v17, 2026-09.) A user's own date display preference can change how dates appear in an interface download, but not what is stored or what the API returns.
 | `zipcode` | US ZIP code format |
 | `mrn_10d` | 10-digit medical record number |
 | `signature` | Marks a `file` field as a classic (drawn) Signature field |
@@ -637,7 +639,7 @@ REDCap has progressively widened the set of permitted tags in user input such as
 
 **Setting validation min/max for the wrong field type.** Populating Columns I or J for a field type that does not support validation (e.g., `radio`, `checkbox`, `calc`) will cause the upload to fail. These columns apply only to `text` fields that also have a validation type set in Column H.
 
-**Marking a checkbox field as required.** REDCap silently ignores the `y` value in Column M (Required Field?) on `checkbox` fields. The required flag has no effect — REDCap cannot enforce "at least one option selected" using this column. This is a common mistake. To enforce completeness on a checkbox, use `@NOMISSING` on individual option fields or implement a validation calc field that alerts staff when nothing is checked.
+**Marking a checkbox field as required.** REDCap silently ignores the `y` value in Column M (Required Field?) on `checkbox` fields. The required flag has no effect — REDCap cannot enforce "at least one option selected" using this column, on data entry forms or on surveys. A survey will submit with an empty required checkbox. This is a common mistake. There is no action tag that imposes a minimum either: `@MAXCHECKED` caps the maximum number of boxes and has no minimum behaviour. Completeness has to be caught after the fact, with a validation calc field that flags the empty case or a Data Quality rule that finds the affected records.
 
 ---
 

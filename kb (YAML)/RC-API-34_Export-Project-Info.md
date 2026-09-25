@@ -9,7 +9,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
+version: '1.2'
 last_updated: '2026'
 source: REDCap API v16.1.3 official documentation examples
 related:
@@ -190,7 +190,7 @@ The API returns project metadata in the format specified. Boolean values are rep
 | `display_today_now_button` | Boolean | Whether the Today/Now button is shown |
 | `missing_data_codes` | String | Configured missing data codes |
 | `external_modules` | String | Enabled external modules |
-| `bypass_branching_erase_field_prompt` | Boolean | Whether the branching logic erase prompt is bypassed |
+| `bypass_branching_erase_field_prompt` | Boolean | Corresponds to the **Prevent branching logic from hiding fields that have values** project setting. `1` does not mean "erase silently" — it means fields holding a value are exempt from branching logic and stay visible, so the prompt never arises. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md) §11. |
 
 ---
 

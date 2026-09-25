@@ -9,7 +9,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
+version: '1.2'
 last_updated: '2026'
 source: REDCap API v16.1.3 official documentation examples
 related:
@@ -90,7 +90,7 @@ The ability to modify only specific project fields in a single API call. Fields 
 | `project_pi_lastname` | String | Principal investigator last name |
 | `project_pi_email` | String | Principal investigator email address |
 | `display_today_now_button` | Integer | `0` (hidden) or `1` (shown) |
-| `bypass_branching_erase_field_prompt` | Integer | `0` (show prompt) or `1` (bypass prompt) |
+| `bypass_branching_erase_field_prompt` | Integer | `0` (default: forms prompt "Erase the Value of the Field?", surveys erase silently) or `1` (fields holding a value are exempt from branching logic and stay visible on both forms and surveys). The parameter name describes the mechanism, not the effect — `1` preserves data rather than erasing it without asking. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md) §11. |
 
 Boolean-type fields use `0` (false/no) or `1` (true/yes).
 

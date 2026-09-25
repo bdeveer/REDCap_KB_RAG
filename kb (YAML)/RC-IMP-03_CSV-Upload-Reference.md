@@ -227,7 +227,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Location:** Applications → Data Quality → "Upload or download rules" option.
 
-**What it does:** Exports all custom Data Quality rule definitions from a project as a CSV and allows re-importing them. Useful for copying a rule set from one project to another or for bulk-authoring rules outside REDCap. Default rules (A–H) are not exported.
+**What it does:** Exports all custom Data Quality rule definitions from a project as a CSV and allows re-importing them. Useful for copying a rule set from one project to another or for bulk-authoring rules outside REDCap. Default rules (A–I) are not exported.
 
 **Upload behavior:** Additive — imported rules are appended to the existing custom rule list; existing rules are not replaced.
 

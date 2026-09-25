@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-09-21 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
@@ -64,7 +64,7 @@ Indicates that formal data collection is complete. In Analysis/Cleanup:
 - Most active data collection features are **disabled**: surveys, automated survey invitations, and alerts & notifications.
 - **No new records** can be created.
 - Existing data remains intact and fully accessible.
-- An administrator can set existing records to either **Editable** (existing records only) or **Read-only/Locked**.
+- Existing records can be set to either **Editable** (existing records only) or **Read-only/Locked**.
 
 From Analysis/Cleanup, a project can return to Production or be moved to Completed.
 
