@@ -9,7 +9,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
+version: '1.2'
 last_updated: '2026'
 source: REDCap API v16.1.3 official documentation examples
 related:
@@ -34,7 +34,9 @@ synonyms:
 
 # 1. Overview
 
-The Delete User Roles API method removes custom user roles from your project. You provide a list of role IDs (the `unique_role_name` values) to delete. This method deletes the role definition; users currently assigned to that role are not deleted, but they lose the role's permission template. If users need to retain access after role deletion, they must be reassigned to another role or have individual permissions set.
+The Delete User Roles API method removes custom user roles from your project. You provide a list of role IDs (the `unique_role_name` values) to delete.
+
+> **Unassign users first.** In the user interface REDCap **refuses** to delete a role that still has users assigned to it (see [RC-USER-02](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) §130 and [RC-USER-04](RC-USER-04_User-Rights-User-Management.md) §124); the role must be emptied first, by moving its users to another role or to individual rights. Whether this API method enforces the same guard or proceeds regardless has **not been verified**. Treat unassigning first as the required step either way: if the guard applies, the call fails until you do it, and if it does not, the users silently lose the permissions the role granted.
 
 Use this method to clean up unused roles, automate role lifecycle management, or revoke access granted through a specific role.
 
@@ -170,7 +172,7 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 # 6. Common Mistakes & Gotchas
 
-**Deleting a role without reassigning its users.** Users assigned to a deleted role will lose the permissions granted by that role. Before deleting a role in production, ensure that affected users are reassigned to alternative roles or given individual permissions. Consider running an export to identify affected users.
+**Deleting a role without reassigning its users.** Empty the role before calling this method. Use [RC-API-55 — Export User-Role Assignments](RC-API-55_Export-User-Role-Assignments.md) to list who is currently assigned, then move those users to another role or give them individual permissions. The interface blocks deletion of a populated role outright; it is unverified whether this API method does the same, so do not rely on the call failing to protect you from a mistake.
 
 **Confusing role labels with role IDs.** The `unique_role_name` is the system ID (e.g., `U-522RX7WM49`), not the human-readable label (e.g., `'Project Manager'`). Use the ID, not the label, in the delete request.
 
