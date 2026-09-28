@@ -7,11 +7,11 @@ applies_to:
 - functions are available wherever REDCap logic or calculations are used
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Blank handling in `sum()` and `+` tested on v16.0.49 (LTS), 2026-09
 prerequisites:
 - 'RC-BL-01 — Branching Logic: Overview & Scope'
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-09
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -170,7 +170,9 @@ Comparisons involving blank or null values have been a recurring source of **sil
 
 > **Version caveat (below 15.0.28 Standard):** Calculations comparing a field to a number or another field using `<` or `<=` where the referenced value is **blank/null** could return an incorrect result. REDCap's own example: `if([v1] < 5, [v1], 0)`.
 
-> **Version caveat (16.0.42 and below, Standard):** Various special functions used with fields compared to a blank value — `[field1]=""` or `[field2]<>""` — could produce incorrect results. Two consecutive releases were needed to resolve it (16.0.43 and 16.0.44), so treat anything at or below 16.0.42 as suspect.
+> **Behavior change (16.0.41 LTS, July 2026):** REDCap changed how special functions handle fields with a blank value (changelog: "Using various REDCap special functions in calculations in certain ways with fields that have a blank value could result in incorrect results", ticket #281007b; it followed a `concat()` fix for the same issue in 16.0.39, ticket #281007). This is a permanent change, not a bug. The most visible effect: `sum()` of inputs that are **all blank** now returns **blank**, where it used to return 0. Projects that relied on the old result, including workarounds written to tell an all-blank `sum()` apart from a genuine 0, can see stored calculated values change from 0 to blank the next time the record is recalculated (form save, import, or rule H). See §6.3.
+
+> **Version caveat (16.0.42 and 16.0.43 LTS only):** A regression introduced in 16.0.42 made various special functions used with fields compared to a blank value — `[field1]=""` or `[field2]<>""` — return incorrect results. 16.0.43 fixed the `=""` case (ticket #281847) and 16.0.44 fixed the `<>""` case (ticket #281847b). Versions before 16.0.42 were not affected by this regression, and 16.0.44 and later are fixed.
 
 Blank-comparison patterns are common in branching logic and calculated fields, so this is worth checking if historical calculated values on an older instance look wrong in ways nobody can explain. See also [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md).
 
@@ -219,7 +221,10 @@ These functions operate on a set of two or more values. Blank values are always 
 
 There is no limit to the number of values that can be passed into these functions.
 
-> **sum() vs. the + operator:** `sum()` will produce a result even if some (or all) of the variables are blank — blank values are simply skipped. If you need a calculation that only fires when *all* variables are filled in, use the `+` operator instead: `[var1]+[var2]+[var3]`. With the `+` operator, if any variable is blank the entire expression returns blank, making incomplete data visible rather than silently partial.
+> **sum() vs. the + operator:** `sum()` skips blank values and totals the rest. If **every** input is blank, `sum()` returns **blank** (since 16.0.41 LTS; earlier versions returned 0). The `+` operator treats blank values as 0: `[a]+[b]` returns the filled value when one input is blank, and 0 when both are blank. Neither one waits for all inputs to be filled in. If a total must stay blank until every input has a value, test for blanks explicitly:
+> `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`
+>
+> Tested on Yale 16.0.49 LTS (2026-09-28) on data entry, data import and Data Quality rule H, with identical results in all three. Older documentation, including earlier versions of this article, said `+` returns blank if any operand is blank. That does not hold on current versions.
 
 ## 6.4 Type-Checking Functions
 
@@ -315,7 +320,11 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Q: What's the difference between sum() and just adding variables together with +?**
 
-**A:** `sum([a], [b], [c])` will return a result even if some variables are blank — blanks are skipped and the remaining values are totaled. By contrast, `[a]+[b]+[c]` returns blank if *any* of the variables is blank. Use `sum()` when partial totals are acceptable. Use `+` when you want the result to be blank until all inputs are filled in.
+**A:** They differ only when inputs are blank. `sum([a], [b], [c])` skips blanks and totals the rest, and returns blank if all three are blank. `[a]+[b]+[c]` treats blanks as 0, so it always returns a number, and returns 0 if all three are blank. Use `sum()` when you want an all-blank result to stay blank rather than show a 0. Neither one waits for all inputs to be filled in; for that, wrap the calculation in `if()` with `isblankormissingcode()` checks (see §6.3).
+
+**Q: After our upgrade, some sum() calculations changed from 0 to blank. Why?**
+
+**A:** In 16.0.41 LTS, REDCap changed how special functions handle blank values. `sum()` now returns blank when every input is blank; before, it returned 0. This is intended behavior and will not be reversed, and REDCap cannot be downgraded. The old values are still in the project's Logging and in each field's data history. Update the logic in a copy or test project first, move it to production through Draft Mode, then run Data Quality rule H to recalculate every record in one pass. Don't run rule H on production before the logic is fixed: it would rewrite all the affected values using the current logic.
 
 **Q: Can I nest functions inside other functions?**
 
@@ -341,7 +350,11 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Using `:label` as a function parameter.** It is not possible to pass the display label of a multiple choice field into a Special Function using the `:label` modifier (e.g., `contains([field:label], 'value')`). Only the raw stored value of a field can be passed into functions. Use the field variable directly without any modifier.
 
-**Expecting blank fields to affect aggregate results.** `sum()`, `mean()`, `min()`, `max()`, `median()`, and `stdev()` all silently skip blank values. If a field is unanswered, it is excluded from the calculation entirely — it does not count as zero. If zero is the intended value for unanswered fields, that must be handled separately (e.g., using `if()`). For `sum()` specifically: if you need the total to remain blank until *all* inputs are filled in, use the `+` operator instead (`[var1]+[var2]+[var3]`), which returns blank as soon as any operand is blank.
+**Expecting blank fields to affect aggregate results.** `sum()`, `mean()`, `min()`, `max()`, `median()`, and `stdev()` all silently skip blank values. If a field is unanswered, it is excluded from the calculation entirely — it does not count as zero. If zero is the intended value for unanswered fields, that must be handled separately (e.g., using `if()`). For `sum()` specifically: if every input is blank, the result is blank, not 0 (16.0.41 LTS and later).
+
+**Using + to keep a total blank until all inputs are filled in.** On current versions `+` treats blank values as 0, so `[var1]+[var2]+[var3]` returns a partial total when some inputs are blank and 0 when all are blank. It does not stay blank. If the total must stay blank until every input has a value, wrap it: `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`.
+
+**Relying on how an older version handled blank values.** Logic built around a blank-handling result, such as code to tell an all-blank `sum()` (formerly 0) apart from a real 0, can silently change results after an upgrade. Test for blanks explicitly with `isblankormissingcode()` instead of relying on what a function returns for blank inputs.
 
 **Using text functions on MDY/DMY date fields.** Functions like `left()`, `right()`, `find()`, and `contains()` should not be used on date or datetime fields with MDY or DMY formatting. The string representation of the date differs from what the function expects. Use `year()`, `month()`, and `day()` for date component extraction.
 

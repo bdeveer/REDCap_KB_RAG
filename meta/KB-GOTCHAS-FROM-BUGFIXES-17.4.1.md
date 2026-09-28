@@ -65,7 +65,7 @@
 - [x] **Comparisons against blank values returned wrong results. WRONG**
   *Applied 2026-08-18 → `RC-CALC-01` §5.5.*
   - **15.0.28** — calculations comparing a field to a number or another field with `<` or `<=` where the referenced value is blank/null, e.g. `if([v1] < 5, [v1], 0)`, might not return the correct result.
-  - **16.0.43 / 16.0.44** — various special functions used with fields compared to a blank value (`[field1]=""`, `[field2]<>""`) could produce incorrect results. Two consecutive releases were needed, so 16.0.42 and earlier in that line are suspect.
+  - **16.0.43 / 16.0.44 (LTS)** — various special functions used with fields compared to a blank value (`[field1]=""`, `[field2]<>""`) could produce incorrect results. *Corrected 2026-09-28:* the changelog says the bug emerged in the previous version, so only 16.0.42 (and 16.0.43 for `<>""`) was affected, not "16.0.42 and earlier". These were follow-ups to the 16.0.41 LTS behavior change (#281007b) in how special functions handle blank values, which made `sum()` of all-blank inputs return blank instead of 0. Applied to `RC-CALC-01` §5.5 and §6.3 and to `RC-CALC-02`.
 
   `RC-CALC-01` and `RC-BL-02` both teach blank-comparison patterns. Worth a note that results on affected versions may be silently wrong rather than erroring.
 

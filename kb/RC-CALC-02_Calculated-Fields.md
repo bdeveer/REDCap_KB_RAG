@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-09 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)|
 | **Synonyms** | how do i create a calculated field; redcap calc field formula; auto calculate a value from other fields; calculated field returns blank; difference between calc field and calctext; when does a calculated field update; add or compute a score automatically; set up a calculation in the online designer |
@@ -105,8 +105,8 @@ Calculated field formulas use the same syntax as REDCap branching logic:
 | BMI from kg and cm (1 decimal) | `round(([weight]*10000)/(([height])^(2)), 1)` |
 | Age in whole years | `age_at_date([dob], [visit_date])` |
 | Days since baseline | `datediff([baseline_date], 'today', 'd')` |
-| Total from three items, blank if any item is blank | `[item1]+[item2]+[item3]` |
-| Total that calculates even with some items blank | `sum([item1], [item2], [item3])` |
+| Total from three items, blank if any item is blank | `if(isblankormissingcode([item1]) or isblankormissingcode([item2]) or isblankormissingcode([item3]), "", [item1]+[item2]+[item3])` |
+| Total that calculates even with some items blank (blank if all are blank) | `sum([item1], [item2], [item3])` |
 
 > **Cross-event references in longitudinal projects:** To reference a field from a different event, use the standard cross-event syntax: `[unique_event_name][variable_name]`. Example: `datediff([baseline_arm_1][baseline_date], 'today', 'd')`.
 
@@ -147,7 +147,7 @@ A calculated field's value is recomputed in three contexts:
 
 ## 7. Display Behavior and Read-Only Enforcement
 
-**Display.** During data entry, the calculated value is displayed in the field as soon as all input variables have values. If any input variable is blank, the displayed value depends on the formula: a `sum()` of blanks returns 0; arithmetic with `+` returns blank if any operand is blank. The stored value matches what is displayed.
+**Display.** During data entry, the calculated value is displayed in the field as soon as all input variables have values. If any input variable is blank, the displayed value depends on the formula: `sum()` skips blanks and returns blank only when every input is blank (16.0.41 LTS and later; earlier versions returned 0); `+` treats blanks as 0, so it always returns a number. The stored value matches what is displayed. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §5.5 and §6.3.
 
 **Decimal places.** REDCap stores and displays however many decimal places the formula produces. If you want a specific number of decimal places, wrap the formula in `round()`, `roundup()`, or `rounddown()`. Example: `round([weight]/([height])^(2)*703, 1)` stores and displays one decimal place.
 
@@ -165,7 +165,7 @@ A calculated field's value is recomputed in three contexts:
 
 **Q: My calculated field is showing blank. Why?**
 
-**A:** The most common causes are: (1) one or more input variables is blank — if you use `+` operators, any blank input makes the whole expression blank; (2) the formula result is not a number (e.g., the formula produces a text string or date); (3) the formula references a variable that doesn't exist or is spelled incorrectly. Check the formula in the Online Designer's syntax validator and test it against a record where all inputs are filled in.
+**A:** The most common causes are: (1) the input variables are blank — `sum()` returns blank when every input is blank, and an `if()` that tests for blanks may return `""` by design; (2) the formula result is not a number (e.g., the formula produces a text string or date); (3) the formula references a variable that doesn't exist or is spelled incorrectly. Check the formula in the Online Designer's syntax validator and test it against a record where all inputs are filled in.
 
 **Q: Can I use a calculated field to compute a date — for example, a follow-up appointment 30 days after baseline?**
 
@@ -197,7 +197,7 @@ A calculated field's value is recomputed in three contexts:
 
 **Expecting a text result to be stored.** Formulas that produce a non-numeric result — including text strings, date strings, or empty strings — will not store a value in the calculated field. The field will appear blank. If you need a non-numeric result, switch to a Text Box field with `@CALCTEXT` or `@CALCDATE`.
 
-**Using + instead of sum() when some inputs may be blank.** If any variable in `[a]+[b]+[c]` is blank, the entire expression returns blank — not a partial sum. This is often unexpected when scoring instruments where some items are optional. Use `sum([a], [b], [c])` to get a result even when some inputs are blank. Be aware that `sum()` silently excludes blank values from the total, which can produce a misleadingly high score if many items are empty.
+**Assuming + keeps a total blank until all inputs are filled in.** On current versions `+` treats blank values as 0, so `[a]+[b]+[c]` returns a partial total when some items are blank and 0 when all are blank. Older documentation said it returns blank; that does not hold on current versions (tested on 16.0.49 LTS, 2026-09). If the total must stay blank until every item has a value, wrap it in `if()` with `isblankormissingcode()` checks. Also note that `sum()` and `+` both silently leave out blank items, which can make a score look complete when many items are empty.
 
 **Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the record is opened and saved, or until rule H is run. After any formula change in a project with existing data, run rule H to synchronize all records.
 
