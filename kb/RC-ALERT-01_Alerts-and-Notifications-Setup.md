@@ -64,7 +64,7 @@ An optional checkbox in the alert trigger setup. When enabled, REDCap re-evaluat
 
 ## 3. Alert Triggers
 
-Navigate to **Alerts & Notifications** in the project Applications menu. Click **+ Add New Alert** to open the alert creation dialog.
+Navigate to **Alerts & Notifications** in the project Applications menu. Select **+ Add New Alert** to open the alert creation dialog.
 
 Before configuring the trigger, give the alert a clear title. This is optional but strongly recommended for any project with more than a few alerts, as titles are the primary way to identify alerts in the management view and notification log.
 
@@ -254,11 +254,11 @@ You may optionally set a **display name** for the from address (e.g., "Heart Con
 
 ### 5.3 To, CC, and BCC
 
-REDCap supports standard To, Carbon Copy (CC), and Blind Carbon Copy (BCC) fields. CC and BCC are hidden by default; click **+ Show more options** to reveal them. All three fields work identically.
+REDCap supports standard To, Carbon Copy (CC), and Blind Carbon Copy (BCC) fields. CC and BCC are hidden by default; select **+ Show more options** to reveal them. All three fields work identically.
 
 There are three ways to specify recipients:
 
-**User emails** — select any email linked to a current project user from the "select recipients" dropdown. Click the dropdown again to add additional users. Best for alerts sent to study team members.
+**User emails** — select any email linked to a current project user from the "select recipients" dropdown. Open the dropdown again to add additional users. Best for alerts sent to study team members.
 
 **Variables** — any text field with email validation in your project appears in the dropdown below user emails. Selecting a variable dynamically resolves to that record's email value at send time. Best for alerts sent to participants. In longitudinal projects, use event-prefixed piping syntax in the CSV (e.g., `[baseline_arm_1][contact_email]`) to pull the email from a specific event — this is required if the same field appears in multiple events and you need a specific event's value. The GUI recipient dropdown typically handles this automatically based on the triggering event.
 
@@ -299,13 +299,13 @@ For a complete smart variable reference, see [RC-PIPE-03 — Smart Variables Ove
 
 ### 5.6 Attachments
 
-Click the green **Add Attachments** button at the bottom of the message panel.
+Select the green **Add Attachments** button at the bottom of the message panel.
 
 **File upload fields** — select one or more file upload fields from your project. If a record has a file in that field when the alert fires, REDCap attaches that file to the email. Common uses: attaching a completed e-consent PDF or supporting documents to a confirmation or notification email.
 
 **Direct attachments** — upload a file that will be attached to every alert instance regardless of record. Up to 5 files allowed. Best for static documents like study flyers or protocol summaries.
 
-> **Note:** Most email providers enforce a maximum attachment size (typically 10–25 MB). For large files, consider using piping to link to the file instead of attaching it directly. For example, `[protocol_pdf:link]` produces a clickable download link for a file stored in a file upload field. Recipients click to download rather than receiving the file as an attachment.
+> **Note:** Most email providers enforce a maximum attachment size (typically 10–25 MB). For large files, consider using piping to link to the file instead of attaching it directly. For example, `[protocol_pdf:link]` produces a clickable download link for a file stored in a file upload field. Recipients select the link to download rather than receiving the file as an attachment.
 
 ---
 
@@ -384,7 +384,7 @@ Several Alerts & Notifications behaviors are controlled by system-level settings
 - **Domain allowlist for freeform email entry** — If set, only email addresses at approved domains can be entered manually.
 - **Universal DO-NOT-REPLY Email Address** *(15.4.0+)* — Set on the General Configuration page rather than Modules/Services. When configured, REDCap uses it as both the **From** and **Reply-To** address for automated emails that originate from the system rather than a person. Without it, replies to automated mail land in the catch-all administrator mailbox, which is where most "why am I getting this?" replies end up. See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
 
-> **Version caveat (≤15.7.4):** The Universal DO-NOT-REPLY address was **not** applied to the automated email a participant receives after clicking **Save & Return Later** on a survey — that message still went out from the previous From address. Fixed in 15.7.5. Worth knowing if participants on an older instance report replying to a survey email and reaching a mailbox nobody monitors.
+> **Version caveat (≤15.7.4):** The Universal DO-NOT-REPLY address was **not** applied to the automated email a participant receives after selecting **Save & Return Later** on a survey — that message still went out from the previous From address. Fixed in 15.7.5. Worth knowing if participants on an older instance report replying to a survey email and reaching a mailbox nobody monitors.
 - **Allow normal users to use project variables for phone fields** — Controls whether phone number fields for SMS alerts can reference project data fields.
 - **Allow normal users to enter freeform phone numbers** — Controls whether manual phone number entry is permitted for SMS alerts.
 

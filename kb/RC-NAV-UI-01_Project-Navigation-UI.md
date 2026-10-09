@@ -44,7 +44,7 @@ Every REDCap project uses a consistent two-panel layout: a persistent left-hand 
 | **Step** | **Action & Detail** |
 | --- | --- |
 | **1 — Log in** | Open your institution's REDCap URL (see [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for this installation's URL) and log in with your credentials. You will land on the My Projects page. |
-| **2 — Find your project** | Locate your project in the list. Projects can be searched or filtered. Click the project name to open it. |
+| **2 — Find your project** | Locate your project in the list. Projects can be searched or filtered. Select the project name to open it. |
 | **3 — Confirm you are in the project** | The left menu will appear with project-specific sections. The workspace will show the Project Home page by default. |
 
 ### 3.2 Using the two-panel layout
@@ -62,7 +62,7 @@ Once inside a project, the interface is split into two panels that are always pr
 | --- | --- |
 | **1 — Recognize the state** | The left menu has disappeared. You may see a three-line icon (☰) in the upper area of the page. |
 | **2 — Option A: Widen the window** | Drag your browser window wider. The menu will reappear automatically once the window exceeds the breakpoint width. |
-| **3 — Option B: Click the hamburger icon** | Click the ☰ icon to toggle the menu open without resizing the window. |
+| **3 — Option B: Select the hamburger icon** | Select the ☰ icon to toggle the menu open without resizing the window. |
 
 > **Note:** Hamburger mode is useful for previewing how a survey will look on a participant's mobile device while still working on a desktop computer.
 
@@ -77,10 +77,10 @@ Menu items are only visible when two conditions are both true: (1) your user rig
 Each user's menu reflects their individual user rights and the project's feature settings. Two users in the same project can see different menus if their rights differ.
 
 **Q: The left menu has disappeared — what happened?**
-The browser window is likely too narrow, triggering hamburger mode. Widen the window or click the ☰ icon to restore the menu.
+The browser window is likely too narrow, triggering hamburger mode. Widen the window or select the ☰ icon to restore the menu.
 
 **Q: Can I get back to My Projects without logging out?**
-Yes. Click the REDCap logo or the My Projects link at the top of the left menu from within any project.
+Yes. Select the REDCap logo or the My Projects link at the top of the left menu from within any project.
 
 ---
 

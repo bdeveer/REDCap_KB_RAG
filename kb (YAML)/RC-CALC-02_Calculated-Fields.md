@@ -35,14 +35,6 @@ synonyms:
 - set up a calculation in the online designer
 ---
 
-> **Critical — Data Quality rule H and import-triggered calcs skipped fields in longitudinal projects (below 15.5.8 Standard).** Rule H and the auto-calculations performed during data imports **did not run at all** for calc and CALCTEXT fields in longitudinal projects **unless those fields sat on a repeating instrument or repeating event**. REDCap classified this as "major/near-critical".
->
-> The consequence is that a data-cleaning pass on an affected version could return a clean result while leaving stale calculated values untouched. A clean rule H run from that period is not evidence the calculations were correct. Fixed across 15.0.37 and 15.5.8. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
-
-> **Version caveat (below 15.0.31 Standard):** In longitudinal projects with repeating events, calc and CALCTEXT fields **referencing a field on a repeating event that currently held no data** failed server-side.
-
-> **Note (15.7.0) — error reporting improved.** Branching logic and calculation errors on a form or survey page are now collected into a **single dialog listing every affected field**, rather than surfacing one at a time. On a form with several broken expressions this turns an iterative fix-reload-repeat cycle into one pass.
-
 # 1. Overview
 
 This article covers REDCap's **Calculated Field** — a dedicated field type whose value is computed automatically from a formula rather than entered manually. Calculated fields always return a number. If you need a calculation that produces a text result, use `@CALCTEXT`. If you need to compute a date, use `@CALCDATE` or the `datediff()` family of functions. This article explains how to create and configure calculated fields, how formulas work, when the value updates, and how calculated fields compare to the `@CALCTEXT` and `@CALCDATE` action tags.
@@ -67,7 +59,7 @@ The process by which REDCap recomputes a calculated field's value whenever its i
 
 **Read-Only**
 
-Calculated fields are read-only for all users, regardless of user rights. Users cannot click into the field and type a value. The displayed value is always the result of the formula.
+Calculated fields are read-only for all users, regardless of user rights. Users cannot type a value into the field. The displayed value is always the result of the formula.
 
 **Data Quality Rule H**
 
@@ -80,12 +72,12 @@ A built-in Data Quality rule that re-evaluates all calculated fields across all 
 ## 3.1 Online Designer
 
 1. Open the instrument in the **Online Designer**.
-2. Click **Add Field** (or edit an existing field with the pencil icon).
+2. Select **Add Field** (or edit an existing field with the pencil icon).
 3. In the **Field Type** dropdown, select **Calculated Field**.
 4. Enter a **Field Label** — the text displayed above the computed value.
 5. Enter a **Variable Name** following REDCap naming rules (lowercase letters, numbers, underscores; no spaces).
 6. Enter the formula in the **Calculation Equation** box. Use the **Special Functions** button in the toolbar to browse available functions.
-7. Click **Save**.
+7. Select **Save**.
 
 > **Tip:** The Online Designer validates formula syntax when you save. If your formula references an unknown variable or has unbalanced brackets, the designer will flag the error and prevent saving. However, it does not verify that the formula logic is correct — test your formula against real or realistic data before going to Production.
 
@@ -128,6 +120,8 @@ Calculated field formulas use the same syntax as REDCap branching logic:
 
 > **Cross-event references in longitudinal projects:** To reference a field from a different event, use the standard cross-event syntax: `[unique_event_name][variable_name]`. Example: `datediff([baseline_arm_1][baseline_date], 'today', 'd')`.
 
+> **Version caveat (below 15.0.31 Standard):** In longitudinal projects with repeating events, calc and CALCTEXT fields **referencing a field on a repeating event that currently held no data** failed server-side.
+
 ---
 
 # 5. The Numeric-Only Constraint
@@ -160,6 +154,10 @@ A calculated field's value is recomputed in three contexts:
 **During data import.** When records are imported via the Data Import Tool or API, REDCap recalculates all calculated fields whose input variables are included in the import file. Fields not included in the import are not recalculated.
 
 **When Data Quality rule H is run.** Rule H specifically targets calculated fields across all records in the project. Running rule H forces REDCap to evaluate every calculated field expression for every record, correcting any stale values. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
+
+> **Version caveat (below 15.5.8 Standard) — rule H and import recalculation skipped fields in longitudinal projects.** Rule H and the auto-calculations performed during data imports **did not run at all** for calc and CALCTEXT fields in longitudinal projects **unless those fields sat on a repeating instrument or repeating event**. REDCap classified this as "major/near-critical".
+>
+> The consequence is that a data-cleaning pass on an affected version could return a clean result while leaving stale calculated values untouched. A clean rule H run from that period is not evidence the calculations were correct. Fixed across 15.0.37 and 15.5.8. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
 
 > **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Calculations containing **inline comments**, or static text with an **apostrophe or quotation mark**, could fail to evaluate on the form or survey. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3 and §3.6.
 
@@ -226,6 +224,8 @@ A calculated field's value is recomputed in three contexts:
 **Forgetting parentheses in exponentiation.** REDCap requires both the base and the exponent to be individually wrapped in parentheses: `([base])^([exponent])`. Writing `[height]^2` will not compute correctly. The correct form is `([height])^(2)`.
 
 **Editing formulas in Excel before Data Dictionary upload.** Excel can corrupt special characters — including single and double quotes — when saving CSV files. A formula that looks correct in Excel may fail to parse when uploaded. After editing a formula in Excel, always open the saved CSV in a plain text editor to verify the formula is intact before uploading.
+
+> **Note (15.7.0) — error reporting improved.** Branching logic and calculation errors on a form or survey page are now collected into a **single dialog listing every affected field**, rather than surfacing one at a time. On a form with several broken expressions this turns an iterative fix-reload-repeat cycle into one pass.
 
 ---
 

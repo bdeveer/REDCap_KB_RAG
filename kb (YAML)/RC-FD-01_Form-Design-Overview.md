@@ -101,7 +101,7 @@ after administrator approval, depending on local policy.
 - If the project is in Production mode, it opens on the Project Home
     page.
 
-- In the left-hand menu, click Designer under the Data Collection
+- In the left-hand menu, select Designer under the Data Collection
     section to reach the instrument design area.
 
 - The same Design Your Data Collection Instruments section is
@@ -233,7 +233,7 @@ approved.
 **Q: Where do I find the Online Designer if my project is already in
 Production?**
 
-**A:** In Production mode, the project opens on the Project Home page. Click
+**A:** In Production mode, the project opens on the Project Home page. Select
 Designer in the left-hand menu under Data Collection to reach the
 instrument design area, which includes access to the Online Designer.
 

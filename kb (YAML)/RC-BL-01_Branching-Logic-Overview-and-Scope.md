@@ -77,7 +77,7 @@ The branching logic feature has one job: show or hide a specific field based on 
 > - **Survey pages:** there is no prompt. The field is hidden and its value erased automatically.
 > - **Project setting override:** when **Prevent branching logic from hiding fields that have values** is enabled under Project Setup → Additional Customizations, any field containing a value is exempt from branching logic entirely and stays visible on both forms and surveys. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 >
-> Design logic on the assumption that survey data in hidden fields is lost, and that form data may or may not be, depending on what the user clicked.
+> Design logic on the assumption that survey data in hidden fields is lost, and that form data may or may not be, depending on what the user chose in the prompt.
 
 ---
 
@@ -130,13 +130,13 @@ Branching logic for a specific field is configured in the Online Designer. There
 
 - In the Online Designer, open the instrument that contains the field you want to add logic to.
 - Locate the field in the instrument's field list.
-- Click the branching logic icon (a fork/branch symbol) next to the field. This opens the branching logic editor for that field.
+- Select the branching logic icon (a fork/branch symbol) next to the field. This opens the branching logic editor for that field.
 
 ## 5.2 From the Field Edit Dialog
 
-- In the Online Designer, open the field edit dialog for any field (click the pencil/edit icon).
+- In the Online Designer, open the field edit dialog for any field (select the pencil/edit icon).
 - Scroll to the Branching Logic section within the dialog.
-- Click **Open Branching Logic Editor** to open the dedicated editor, or type logic directly into the text field.
+- Select **Open Branching Logic Editor** to open the dedicated editor, or type logic directly into the text field.
 
 > **Tip:** The branching logic editor provides a drag-and-drop interface for building basic statements without typing syntax. For more complex or compound logic, typing directly into the syntax field is faster. Both methods produce identical results.
 

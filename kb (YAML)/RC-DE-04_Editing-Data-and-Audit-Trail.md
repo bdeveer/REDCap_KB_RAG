@@ -58,7 +58,7 @@ value to what value. It cannot be edited or deleted.
 **Field History ('H' button)**
 
 An inline audit view available on individual fields during data entry.
-Clicking the small 'H' icon next to a field shows a popup with the
+Selecting the small 'H' icon next to a field shows a popup with the
 complete change history for that specific field in that record.
 
 **Logging Application**
@@ -85,7 +85,7 @@ first time:
 - Navigate to the record using Add/Edit Records, the Record Status
     Dashboard, or any Record ID link.
 
-- On the Record Home Page, click the dot for the instrument you want
+- On the Record Home Page, select the dot for the instrument you want
     to edit.
 
 - Change the field values you need to update.
@@ -118,7 +118,7 @@ first time:
 - When viewing or editing an instrument, look for a small grey 'H'
     icon next to each field label.
 
-- Click the 'H' button to open a popup showing every saved value for
+- Select the 'H' button to open a popup showing every saved value for
     that field in that record, in chronological order.
 
 - Each entry in the history shows: the value, the user who saved it,
@@ -171,7 +171,7 @@ deliberate action that requires an explicit user right.
 
 - Navigate to the survey-completed instrument.
 
-- Click the 'Edit survey response' button at the top of the form.
+- Select the 'Edit survey response' button at the top of the form.
 
 - Make your changes to the field values.
 
@@ -233,7 +233,7 @@ rights.
 # 7. Common Mistakes & Gotchas
 
 - Editing a survey form and forgetting to save: survey edit mode works
-    like any other data entry — you must click a save button before
+    like any other data entry — you must select a save button before
     navigating away or changes are lost.
 
 - Expecting an undo function: REDCap has no undo. Reversion requires

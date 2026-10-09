@@ -66,12 +66,12 @@ to the research team.
 
 ## 3. Accessing the Online Designer
 
-- From the Project Setup page (Development mode): click the Online
+- From the Project Setup page (Development mode): select the Online
     Designer button in the Design Your Data Collection Instruments
     section.
 
 - From the Project Home page (Production mode or alternate path):
-    click Designer in the left-hand menu, then select Online Designer.
+    select Designer in the left-hand menu, then select Online Designer.
 
 - The Online Designer opens to a list of all existing instruments in
     the project. From here you can add a new instrument, open an

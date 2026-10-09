@@ -150,7 +150,7 @@ Every REDCap installation comes with a set of pre-loaded project templates. Thes
 | 2 | Select the **"Use a template"** option. |
 | 3 | Browse the available templates and select one. |
 | 4 | Fill out the remaining required fields (project title, purpose, etc.). |
-| 5 | Click **Create Project** — or **Submit a Project Request**, depending on your institution's REDCap configuration. |
+| 5 | Select **Create Project** — or **Submit a Project Request**, depending on your institution's REDCap configuration. |
 
 > **Note:** Your REDCap administration team can add custom templates specific to your institution. This is especially useful if there is a frequently used base project structure at your organization.
 
@@ -181,9 +181,9 @@ The backup feature offers two distinct options:
 | 1 | Navigate to **Create a New Project**. |
 |---|---|
 | 2 | Under **Project creation option**, select **"Upload a REDCap project XML file (CDISC ODM format)"**. |
-| 3 | Click **Select XML file** and choose your backup file. (Pro tip: you can drag and drop the file directly onto the Choose File button.) After a valid file is selected, REDCap displays the **Source REDCap version** and **File creation date** from the XML — verify these match the export you intended to restore. |
+| 3 | Use **Select XML file** to choose your backup file. (Pro tip: you can drag and drop the file directly onto the Choose File button.) After a valid file is selected, REDCap displays the **Source REDCap version** and **File creation date** from the XML — verify these match the export you intended to restore. |
 | 4 | Fill out the remaining required fields (project title, purpose, PI name). |
-| 5 | Click **Create Project** — or **Submit a Project Request**, depending on your REDCap installation's configuration. |
+| 5 | Select **Create Project** — or **Submit a Project Request**, depending on your REDCap installation's configuration. |
 
 > **Note:** If REDCap displays "This file does not appear to be a valid REDCap project XML file," the upload was rejected. Common causes: the file is not in CDISC ODM format, it is corrupted or truncated, or it was exported from an incompatible REDCap version. Re-export from the source project and try again.
 
@@ -206,11 +206,11 @@ The Data Import Tool allows you to import participant record data in bulk. REDCa
 |---|---|
 | 2 | Review and confirm the import settings before uploading. The available settings are described in the table below. In most cases, the standard settings are correct — but always verify the delimiter matches your file and confirm the date format. |
 | 3 | Select your CSV file. (Pro tip: you can drag and drop the file directly onto the "Choose File" button.) |
-| 4 | Click the **"Upload File"** button. |
+| 4 | Select the **"Upload File"** button. |
 | 5 | REDCap processes the file and displays a results preview. |
-| 6 | Review the results window carefully for any errors or warnings. If issues are found, click **Cancel**, fix the CSV file, and upload again. If everything looks correct, scroll down and click the **"Import Data"** button to commit the upload. |
+| 6 | Review the results window carefully for any errors or warnings. If issues are found, select **Cancel**, fix the CSV file, and upload again. If everything looks correct, scroll down and select the **"Import Data"** button to commit the upload. |
 
-> **Important:** Clicking "Upload File" does not import the data — it only stages a preview. The data is not saved to the project until you click "Import Data" at the bottom of the results screen. This is the most common reason users do not see their records after uploading.
+> **Important:** Selecting "Upload File" does not import the data — it only stages a preview. The data is not saved to the project until you select "Import Data" at the bottom of the results screen. This is the most common reason users do not see their records after uploading.
 
 ### Import Settings Reference
 
@@ -255,11 +255,11 @@ REDCap can import record data from a CDISC ODM XML file produced by a REDCap exp
 
 | 1 | Navigate to **Project → Applications menu → Data Import Tool**, then select the **CDISC ODM (XML) import** tab. |
 |---|---|
-| 2 | Click **Browse** or **Choose File** to select the ODM XML file on your computer. |
+| 2 | Select **Browse** or **Choose File** to select the ODM XML file on your computer. |
 | 3 | Set the **Overwrite data with blank values** option as appropriate (see Import Settings Reference in Section 8.1). |
-| 4 | Click **Upload File**. |
+| 4 | Select **Upload File**. |
 | 5 | REDCap checks the file for errors and displays the data for review — the data is not immediately imported. Review for any errors or warnings. |
-| 6 | If the data looks correct, click **Import Data** to commit. If errors are found, click **Cancel**, correct the file, and upload again. |
+| 6 | If the data looks correct, select **Import Data** to commit. If errors are found, select **Cancel**, correct the file, and upload again. |
 
 > **Note:** Unlike the CSV import, the ODM import does not offer a background processing option. The import runs in real time in the browser.
 
@@ -353,11 +353,11 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 
 **Q: How do I import participant data into REDCap in bulk?**
 
-**A:** Use the Data Import Tool, accessible from the project's Applications menu. Prepare your data as a CSV file with a header row of REDCap variable names and a Record ID column. Upload the file, review the preview for errors, then click "Import Data" to commit. Any REDCap data export in CSV format can be used directly as an import file.
+**A:** Use the Data Import Tool, accessible from the project's Applications menu. Prepare your data as a CSV file with a header row of REDCap variable names and a Record ID column. Upload the file, review the preview for errors, then select "Import Data" to commit. Any REDCap data export in CSV format can be used directly as an import file.
 
 **Q: Why didn't my records appear in REDCap after I uploaded my CSV file?**
 
-**A:** The most common reason is clicking "Upload File" without completing the second step. Uploading stages a preview only — the data is not saved until you scroll to the bottom of the results screen and click "Import Data."
+**A:** The most common reason is selecting "Upload File" without completing the second step. Uploading stages a preview only — the data is not saved until you scroll to the bottom of the results screen and select "Import Data."
 
 **Q: What column headers does my CSV import file need?**
 
@@ -387,7 +387,7 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 
 # 12. Common Mistakes & Gotchas
 
-**Clicking "Upload File" but not "Import Data."** The upload step only stages a preview — data is not saved until you scroll down and click "Import Data." If you navigate away after uploading without clicking Import Data, nothing is imported. This is the single most common import support question.
+**Selecting "Upload File" but not "Import Data."** The upload step only stages a preview — data is not saved until you scroll down and select "Import Data." If you navigate away after uploading without selecting Import Data, nothing is imported. This is the single most common import support question.
 
 **Selecting the wrong delimiter.** If the delimiter selected in the Data Import Tool does not match the actual delimiter in your CSV file, REDCap may reject the file outright or, worse, misread the columns and map data to the wrong variables. Always confirm the delimiter before uploading — open your file in a text editor if unsure.
 

@@ -91,7 +91,7 @@ Before any instrument can be used as a survey, surveys must be turned on for the
 | 1 | Navigate to the **Project Setup** page from the left-hand menu. |
 | --- | --- |
 | 2 | Under **Main Project Settings**, locate the **Use Surveys in this project** option. |
-| 3 | If the button is red, surveys are disabled. Click **Enable** to turn surveys on. If the button is green, surveys are already enabled. |
+| 3 | If the button is red, surveys are disabled. Select **Enable** to turn surveys on. If the button is green, surveys are already enabled. |
 
 The **Enable/Disable** button toggles between the enabled (green) and disabled (red) state. When surveys are disabled, all survey-related functionality — including survey settings, distribution tools, and survey status icons — is hidden throughout the project.
 
@@ -105,13 +105,13 @@ The Online Designer now shows additional survey-related columns and buttons:
 | --- | --- |
 | **Survey Options** header | Contains advanced survey features. Covered in [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md). |
 | **Enabled as Survey** column | The primary column for enabling instruments as surveys. |
-| **Enable** button | Appears behind each instrument that is not yet a survey. Clicking it takes you directly to that instrument's Survey Settings. |
-| **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Clicking it has no action — it is informational only. |
+| **Enable** button | Appears behind each instrument that is not yet a survey. Selecting it takes you directly to that instrument's Survey Settings. |
+| **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Selecting it does nothing — it is informational only. |
 | **Survey Related Options** column | Appears for instruments that are already enabled as surveys and contains additional controls. |
 | **Survey Settings** button | Returns you to the Survey Settings page for that instrument to adjust settings after initial setup. |
 | **Automated Invitations** button | An advanced feature for scheduling email invitations. Covered in a separate course. |
 
-| 1 | In the **Enabled as Survey** column, click the **Enable** button behind the instrument you want to enable as a survey. |
+| 1 | In the **Enabled as Survey** column, select the **Enable** button behind the instrument you want to enable as a survey. |
 | --- | --- |
 | 2 | You are taken directly to the Survey Settings page for that instrument. |
 
@@ -119,7 +119,7 @@ The Online Designer now shows additional survey-related columns and buttons:
 
 The Survey Settings page contains a long list of options that control the appearance and behavior of your survey. For a first-time setup, you do not need to change any settings — the defaults are appropriate for most surveys.
 
-> **Critical:** Your instrument is not enabled as a survey until you scroll to the bottom of the Survey Settings page and click **Save Changes**. Do not navigate away without saving.
+> **Critical:** Your instrument is not enabled as a survey until you scroll to the bottom of the Survey Settings page and select **Save Changes**. Do not navigate away without saving.
 
 See Section 5 for a reference guide to all available settings.
 
@@ -171,7 +171,7 @@ Governs what participants see and what happens after they submit a completed sur
 
 ## 5.7 Deleting Survey Settings
 
-This button appears at the very bottom of the Survey Settings page, but **only** when you return to the page after a survey has already been enabled (it is not visible during initial setup). Clicking it removes all survey configuration and reverts the instrument back to a standard instrument.
+This button appears at the very bottom of the Survey Settings page, but **only** when you return to the page after a survey has already been enabled (it is not visible during initial setup). Selecting it removes all survey configuration and reverts the instrument back to a standard instrument.
 
 > **Important:** Deleting survey settings does **not** delete the instrument or any data collected through the survey. Only the survey-specific configuration is removed.
 
@@ -223,7 +223,7 @@ Using the Participant List is a two-step process:
 
 **Step 1 — Add Participants:**
 
-| 1 | Click the **Add Participants** button. |
+| 1 | Select the **Add Participants** button. |
 | --- | --- |
 | 2 | Paste participant email addresses into the input box, one email address per line. |
 | 3 | Optionally add an identifier alongside each email (useful for matching responses to your own records). |
@@ -231,13 +231,13 @@ Using the Participant List is a two-step process:
 
 **Step 2 — Compose and Send Survey Invitations:**
 
-| 1 | Click the **Compose Survey Invitations** button. A popup window opens. |
+| 1 | Select the **Compose Survey Invitations** button. A popup window opens. |
 | --- | --- |
 | 2 | Fill in the **From Address**, **Subject**, and **Body** of the invitation email. |
 | 3 | Select which participants from the list should receive this invitation. |
 | 4 | Optionally set a **send delay** to schedule the invitation for a future time. |
 | 5 | Optionally configure up to **5 reminder emails** to be sent automatically to participants who have not yet completed the survey. |
-| 6 | Click **Send Invitations**. |
+| 6 | Select **Send Invitations**. |
 
 > **Note:** REDCap automatically cancels any pending reminders for a participant as soon as they complete the survey. For example, if a participant completes the survey after the second reminder, reminders three through five are automatically deleted.
 
@@ -286,11 +286,11 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 | 1 | Navigate to the survey response in question using the Record Home Page or the record navigation tools. |
 | --- | --- |
-| 2 | Click the **Edit Response** button, found in the highlighted green information box at the top of the survey view. |
+| 2 | Select the **Edit Response** button, found in the highlighted green information box at the top of the survey view. |
 | 3 | Modify the data as needed. |
 | 4 | Save your changes. |
 
-> **Note:** You must click **Edit Response** each time you want to modify a given survey response. The form does not remain in edit mode between sessions.
+> **Note:** You must select **Edit Response** each time you want to modify a given survey response. The form does not remain in edit mode between sessions.
 
 > **Permission required:** The user must have the **Edit Survey Responses** right for the specific instrument in order for the Edit Response button to appear. See Section 7.
 
@@ -301,7 +301,7 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 | Does enabling surveys prevent users from entering data directly into the instrument? | No. Enabling an instrument as a survey does not remove the ability to enter data as a logged-in user. Both data entry modes (user-entered and survey participant) remain available simultaneously. |
 | --- | --- |
 | What is the difference between the Public Survey Link and the Participant List? | The Public Survey Link is a single URL anyone can use — no tracking of individual participants. The Participant List sends each participant a unique link, enabling response tracking and automated reminders. |
-| What happens to survey settings and data if I click "Delete Survey Settings"? | Only the survey configuration is deleted. The instrument definition and all collected data are preserved. The instrument reverts to a standard, non-survey instrument. |
+| What happens to survey settings and data if I select "Delete Survey Settings"? | Only the survey configuration is deleted. The instrument definition and all collected data are preserved. The instrument reverts to a standard, non-survey instrument. |
 | Why does the "Edit Survey Responses" checkbox not appear in the user rights page? | The checkbox only appears after an instrument has been enabled as a survey. If you don't see it, verify that the instrument is enabled as a survey first. |
 | Can I temporarily disable a survey without losing its settings? | Yes. Use the **Survey Status** toggle in the Survey Settings page to switch the survey to Offline. The settings and data are preserved; participants who visit the link will see an offline message. |
 | What is the Survey Access Code used for? | It is a shorter alternative to the full Public Survey URL. Participants can enter this code in the REDCap general survey portal (if your institution has one configured) instead of using the full URL. |
@@ -312,12 +312,12 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 # 10. Common Mistakes & Gotchas
 
-## Forgetting to click Save Changes after enabling a survey
+## Forgetting to select Save Changes after enabling a survey
 
-- The user clicks Enable behind an instrument, reviews the Survey Settings, but navigates away without scrolling to the bottom and clicking Save Changes.
+- The user selects Enable behind an instrument, reviews the Survey Settings, but navigates away without scrolling to the bottom and selecting Save Changes.
 - The instrument is not enabled as a survey. The green checkmark shield does not appear.
-- **Prevention:** Always scroll to the bottom of the Survey Settings page and confirm the Save Changes click before navigating away.
-- **Recovery:** Return to the Online Designer, click Enable behind the instrument again, and save.
+- **Prevention:** Always scroll to the bottom of the Survey Settings page and confirm you have selected Save Changes before navigating away.
+- **Recovery:** Return to the Online Designer, select Enable behind the instrument again, and save.
 
 ## Distributing the survey before saving settings
 

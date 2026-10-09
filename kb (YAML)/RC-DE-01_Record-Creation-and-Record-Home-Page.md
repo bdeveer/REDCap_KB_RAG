@@ -90,7 +90,7 @@ Several changes make the page easier to work with on projects holding many recor
 
 > **Version caveat (below 17.4.1 Standard):** Data Search failed to navigate correctly when the selected record's name contained a **pipe character** (`|`). Relevant only to projects using pipes in record IDs, which is unusual but not unheard of in imported data.
 
-**Save & Go To Next Record** — from **15.7.0**, clicking this on the last record when record auto-numbering is enabled behaves sensibly rather than leaving the user in an undefined state.
+**Save & Go To Next Record** — from **15.7.0**, selecting this on the last record when record auto-numbering is enabled behaves sensibly rather than leaving the user in an undefined state.
 
 ---
 
@@ -101,12 +101,12 @@ Several changes make the page easier to work with on projects holding many recor
 - Log in to your REDCap instance and open the project from the My
     Projects page.
 
-- In the left-hand menu, under Data Collection, click Add / Edit
+- In the left-hand menu, under Data Collection, select Add / Edit
     Records.
 
 ## 3.2 Creating a New Record
 
-- On the Add/Edit Records page, click the Add new record button.
+- On the Add/Edit Records page, select the Add new record button.
 
 - REDCap automatically assigns the next available Record ID
     (incrementing integer).
@@ -165,7 +165,7 @@ Several changes make the page easier to work with on projects holding many recor
 - In complex projects (multiple instruments, longitudinal events), the
     page shows a grid of dots — one per instrument-event combination.
 
-- Click any dot to open the corresponding instrument for that record.
+- Select any dot to open the corresponding instrument for that record.
 
 - Once inside an instrument, the left-hand menu shows a list of all
     instruments in the project for quick switching.
@@ -194,10 +194,10 @@ saved for the first time. However, once a record ID is assigned and data
 has been entered, changing it requires administrative intervention. For
 most projects, the auto-assigned ID is the recommended approach.
 
-**Q: What happens if I click 'Add new record' by accident?**
+**Q: What happens if I select 'Add new record' by accident?**
 
 **A:** REDCap creates a record and assigns it a Record ID as soon as you
-save any data. If you clicked 'Add new record' but have not saved
+save any data. If you selected 'Add new record' but have not saved
 anything yet, you can navigate away without creating a record. If data
 was already saved, contact your project administrator to delete the test
 record.
@@ -220,7 +220,7 @@ own group.
 **Q: Can I navigate directly to an instrument without going through the
 Record Home Page?**
 
-**A:** Yes. You can click any dot in the Record Status Dashboard to go
+**A:** Yes. You can select any dot in the Record Status Dashboard to go
 directly to that instrument for that record, bypassing the Record Home
 Page entirely.
 
@@ -243,7 +243,7 @@ Page entirely.
     Record ID.
 
 - Creating duplicate records by accident: if 'Add new record' is
-    clicked more than once, multiple records are created. Check whether
+    selected more than once, multiple records are created. Check whether
     a record already exists via Data Search before creating a new one.
 
 - Expecting the Record Home Page to look the same in every project:

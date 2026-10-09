@@ -33,7 +33,7 @@ entering any data in REDCap.
 
 A structured data-entry page within a REDCap project. Each instrument
 contains one or more fields (variables). Instruments are opened by
-clicking a status dot on the Record Home Page or Record Status
+selecting a status dot on the Record Home Page or Record Status
 Dashboard.
 
 **Field (Variable)**
@@ -204,7 +204,7 @@ For jumping to an individual *field* rather than a section, the Online Designer 
 ## 7. Saving Data
 
 
-> **Critical:** REDCap does not auto-save. If you close the browser tab, navigate away, or click Cancel without saving, all unsaved data on the current form is lost.
+> **Critical:** REDCap does not auto-save. If you close the browser tab, navigate away, or select Cancel without saving, all unsaved data on the current form is lost.
 
 
 Every instrument has the following core save options at the bottom of the page:
@@ -218,7 +218,7 @@ Every instrument has the following core save options at the bottom of the page:
 
 > **Note:** These core options are available in all instruments. Additional save options appear in specific contexts — for surveys (Save & Mark Survey as Complete) and for repeating instruments (Save & Go To Next Instance, Save & Add New Instance). See [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) for the complete reference.
 
-> **Warning:** Clicking Cancel on an instrument discards all unsaved changes on that form and returns you to the Record Home Page. There is no undo.
+> **Warning:** Selecting Cancel on an instrument discards all unsaved changes on that form and returns you to the Record Home Page. There is no undo.
 
 
 ---

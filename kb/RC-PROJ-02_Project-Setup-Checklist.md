@@ -91,7 +91,7 @@ Repeating instruments allow multiple instances of a single form to be collected 
 
 Survey features become available after enabling surveys in Phase 1. Each instrument must be individually enabled as a survey before survey-specific settings or automation can be configured for it.
 
-- [ ] **Enable each instrument as a survey** from the Online Designer by clicking the "Enable" button next to that instrument under the Survey column. This reveals the survey settings panel for that instrument.
+- [ ] **Enable each instrument as a survey** from the Online Designer by selecting the "Enable" button next to that instrument under the Survey column. This reveals the survey settings panel for that instrument.
 - [ ] **Configure survey settings per instrument:** set the survey title, instructions, completion text, auto-continue behavior, save-and-return options, and any response limit. See [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md).
 - [ ] **Configure access and termination settings** for each survey: public vs. private link, stop actions, response limits. See [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
 - [ ] **[Survey Queue] Set up the Survey Queue** to chain multiple surveys in sequence. Requires at least two instruments to be enabled as surveys. Define the condition under which each subsequent survey is activated. See [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md).
@@ -157,7 +157,7 @@ Before moving to Production, enter test data and verify that every aspect of the
 When the project is fully tested and ready for live data collection, move it to Production. This step enables change-control safeguards and signals that real data collection has begun.
 
 - [ ] **[Required] Delete all test data** before going live. On the Project Setup page, use "Delete all records" (under Other Functionality) or choose to delete test data when prompted during the move-to-Production step.
-- [ ] **[Required] Move the project to Production** by clicking "Move project to Production" at the bottom of the Project Setup page. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §2.2.
+- [ ] **[Required] Move the project to Production** by selecting "Move project to Production" at the bottom of the Project Setup page. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §2.2.
 - [ ] **Confirm Production protections are active** — verify that the Online Designer now shows the "Enter Draft Mode" button, indicating that design changes require review before taking effect.
 - [ ] **Communicate the go-live to your team.** Ensure all users know the project is live and that any future design change requests must go through the Draft Mode review process.
 
