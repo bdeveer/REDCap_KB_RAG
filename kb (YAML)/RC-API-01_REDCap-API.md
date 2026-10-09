@@ -106,7 +106,7 @@ Before requesting a token:
 - **Use HTTPS.** Always send API requests to the HTTPS version of your REDCap URL. Sending tokens over plain HTTP exposes them in transit.
 - If you believe a token has been compromised, contact your REDCap administrator to have it revoked and regenerated.
 
-> **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — click the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that `RC-PROF-01` warns separately about API tokens appearing in profile screenshots.
+> **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — click the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md) warns separately about API tokens appearing in profile screenshots.
 
 ## 3.3a Call the API at the Non-Versioned URL
 

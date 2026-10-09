@@ -172,7 +172,7 @@ Software packages such as LM Studio, LocalAI, GPT4All, and Ollama allow institut
 | API Key | Password field; may be left blank for local deployments |
 | API Model Version/Name | For Azure: date string (e.g., `2024-02-01`); for others: model identifier (e.g., `mistral-tiny`, `hermes-3-llama-3.2-3b`) |
 
-Project-level values **overwrite** any system-level AI configuration for this project. Administrators who wanted AI enabled on only a few projects were advised to leave the system-level fields blank and populate these project-level fields instead — an approach superseded by the scope settings described in `RC-CC-26`.
+Project-level values **overwrite** any system-level AI configuration for this project. Administrators who wanted AI enabled on only a few projects were advised to leave the system-level fields blank and populate these project-level fields instead — an approach superseded by the scope settings described in [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md).
 
 ---
 

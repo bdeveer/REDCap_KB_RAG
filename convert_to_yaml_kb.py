@@ -15,7 +15,13 @@ Output:
 
 import os
 import re
+import sys
 import yaml
+
+# Windows consoles default to cp1252, which cannot print the → in the progress output.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
 
 KB_DIR = os.path.join(os.path.dirname(__file__), "kb")
 OUT_DIR = os.path.join(os.path.dirname(__file__), "kb (YAML)")

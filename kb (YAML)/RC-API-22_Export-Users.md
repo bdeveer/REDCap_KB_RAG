@@ -196,7 +196,7 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 
 **Attempting to export users from a project where you lack API Export right.** If your API token does not include the API Export right, the method will fail with an authentication error. Verify your token permissions in the API Credentials settings.
 
-**`data_export` vs. `data_export_tool`.** This endpoint uses `data_export` for the export rights field. The sibling Roles endpoints (RC-API-26 / RC-API-27) use `data_export_tool` for the same permission. Using the wrong field name in role import calls will silently fail to set the intended permission.
+**`data_export` vs. `data_export_tool`.** This endpoint uses `data_export` for the export rights field. The sibling Roles endpoints ([RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) / [RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md)) use `data_export_tool` for the same permission. Using the wrong field name in role import calls will silently fail to set the intended permission.
 
 ---
 

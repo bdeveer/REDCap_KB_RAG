@@ -17,7 +17,7 @@ related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
 - id: RC-AT-08
-  title: 'Action Tags: @IF — Conditional Logic — @IF'
+  title: 'Action Tags: @IF — Conditional Logic'
 tags:
 - action tags
 synonyms:

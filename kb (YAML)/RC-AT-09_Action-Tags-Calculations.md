@@ -19,7 +19,7 @@ related:
 - id: RC-AT-06
   title: Autofill Action Tags
 - id: RC-AT-08
-  title: 'Action Tags: @IF — Conditional Logic — @IF'
+  title: 'Action Tags: @IF — Conditional Logic'
 - id: RC-DE-05
   title: Field Validations
 tags:

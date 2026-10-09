@@ -12,8 +12,8 @@ verified_against: REDCap 17.3.6 (LTS) — Project Migration Dashboard verified a
   and **cannot be verified without a REDCap+ subscription** — see the scope note
 prerequisites:
 - 'RC-PLUS-01 — REDCap+: Overview and Subscription'
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-PROJ-05
   title: 'Project Migration: Moving a Project Between REDCap Installations'
@@ -28,7 +28,7 @@ related:
 tags:
 - redcap+
 synonyms:
-- how do i move a project to another redcap server
+- move a project with the redcap+ migration tool
 - project migration tool redcap plus
 - migrate a whole project including logs and files
 - migration key redcap
@@ -67,7 +67,7 @@ For a regulated study, that list is the point. A project moved by XML arrives wi
 
 The authoritative list of what the tool tracks is the **column set of the Project Migration Dashboard** — see §6.2, which enumerates all fifteen components individually.
 
-For the XML-based approach — which remains the right tool when the destination is not on 17.0.0+, or when you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
+When it is available, the PMT is the preferred way to move a project. The Project XML approach is the fallback — for when either instance is below 17.0.0, the destination has no REDCap+ subscription, or you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
 
 ---
 
@@ -75,7 +75,7 @@ For the XML-based approach — which remains the right tool when the destination
 
 ## 2.1 Both instances must be on 17.0.0 or later
 
-The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher.** If either is older, the tool is unavailable and the XML route in `RC-PROJ-05` is the alternative.
+The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher.** If either is older, the tool is unavailable and the XML route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md) is the alternative.
 
 ## 2.2 The subscription requirement is asymmetric
 
@@ -241,6 +241,10 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 **Q: Do we need a REDCap+ subscription to use it?**
 
 **A:** Only to receive projects. Moving a project **off** your instance does not require a subscription; moving a project **to** your instance does. An institution without REDCap+ can send but not receive.
+
+**Q: The destination doesn't have REDCap+. Can we still move the project?**
+
+**A:** Yes, by Project XML — the fallback route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md). It moves the design and, optionally, the records and uploaded files, but not logging, randomization history, locking statuses or survey participants. If that history matters, ask whether the destination can subscribe before you move.
 
 **Q: Both instances need to be on 17.0.0?**
 

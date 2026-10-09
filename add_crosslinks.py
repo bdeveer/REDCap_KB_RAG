@@ -23,6 +23,11 @@ import os
 import re
 import sys
 
+# Windows consoles default to cp1252, which cannot print the symbols in the progress output.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
+
 KB_DIR = "kb"
 INDEX_FILE = "meta/KB-INDEX.md"
 APPLY = "--apply" in sys.argv
@@ -46,16 +51,17 @@ sorted_ids = sorted(id_map.keys(), key=len, reverse=True)
 
 def structured_pattern(article_id):
     """
-    For table rows and list items: match the ID + optional ' — any title text'
-    up to a hard delimiter (; | newline end-of-string).
-    This consumes whatever title text is present in the article.
+    For table rows and list items: match the ID + optional ' — title text'.
+    The title text stops at a hard delimiter (; | [ newline end-of-string), a
+    backtick, a second em dash ("ID — Title — why it's related") or a sentence
+    end, so annotations and following sentences are never consumed.
     """
     eid = re.escape(article_id)
     return re.compile(
         rf'(?<!\[)(?<!\]\()'
-        rf'({eid}(?:\s*[—\-]{{1,2}}\s*[^;\|\n\[\]]+?)?)'
+        rf'({eid}(?:\s*[—\-]{{1,2}}\s*[^;\|\n\[\]`—]+?)?)'
         rf'(?!\])'
-        rf'(?=\s*[;\|\n\[]|$)'
+        rf'(?=\s*(?:[;\|\n\[`—]|\.\s|\.$)|$)'
     )
 
 def body_pattern(article_id, title):
@@ -82,16 +88,34 @@ body_patterns = [
 # ── 3. Linkify a single line ───────────────────────────────────────────────────
 
 # Cleans up orphaned " — Title Text" fragments left after an article link,
-# e.g. "[RC-API-03 — Import Records API](url) — Import Records" → "[...](url)"
+# e.g. "[RC-API-03 — Import Records API](url) — Import Records" → "[...](url)".
+# Only a fragment that repeats (part of) the link's own title is removed; any
+# other text after a link is an annotation ("— why it's related") and is kept.
 ORPHAN_CLEANUP = re.compile(
-    r'(\]\([^)]+\.md\))'       # closing ](filename.md)
-    r'\s*[—\-]{1,2}\s*'        # followed by a dash
-    r'[A-Z][^;\|\n\[\](]*'     # and title-like text (starts with capital)
+    r'\[(RC-[A-Z0-9-]+) — ([^\]]+)\]\(([^)]+\.md)\)'  # [ID — Title](file.md)
+    r'(\s*[—\-]{1,2}\s*([^;\|\n\[\](—]*))'             # " — fragment"
 )
+
+def _drop_repeated_title(m):
+    title, fragment = m.group(2), m.group(5).strip().rstrip('.')
+    if fragment and fragment.lower() in title.lower():
+        return m.group(0)[: m.start(4) - m.start(0)]
+    return m.group(0)
+
+# Backticked IDs (`RC-XX-NN` or `RC-XX-NN — Title`) become plain links; the
+# backticks would otherwise render the link as code.
+BACKTICK_ID = re.compile(r'`(RC-[A-Z]+(?:-[A-Z]+)?-\d{2})(?: — [^`]*)?`')
 
 def linkify_line(line, current_file=None):
     is_table = line.strip().startswith('|')
-    is_list  = bool(re.match(r'^\s*[-*]|\s*\d+\.', line.strip()))
+    is_list  = bool(re.match(r'^(?:[-*+]\s|\d+\.\s)', line.strip()))
+
+    line = BACKTICK_ID.sub(
+        lambda m: (f"[{m.group(1)} — {id_map[m.group(1)][0]}]({id_map[m.group(1)][1]})"
+                   if m.group(1) in id_map and id_map[m.group(1)][1] != current_file
+                   else m.group(0)),
+        line,
+    )
 
     if is_table or is_list:
         patterns = structured_patterns
@@ -110,7 +134,7 @@ def linkify_line(line, current_file=None):
     # Remove orphaned " — Title" fragments left after article links,
     # but only in table rows and list items where we know the context is safe.
     if is_table or is_list:
-        line = ORPHAN_CLEANUP.sub(r'\1', line)
+        line = ORPHAN_CLEANUP.sub(_drop_repeated_title, line)
 
     return line
 

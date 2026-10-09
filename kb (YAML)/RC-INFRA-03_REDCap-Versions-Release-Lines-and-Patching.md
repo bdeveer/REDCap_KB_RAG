@@ -41,7 +41,7 @@ synonyms:
 
 REDCap is not distributed as a single stream of releases. It is published on **two parallel release lines** — Standard and Long Term Support (LTS) — that carry different version numbers, ship on different schedules, and are aimed at institutions with different priorities. An instance running "REDCap 17.3.7" and one running "REDCap 17.4.1" may have received the same security patch on the same day, despite the different numbers.
 
-This article explains what the two lines are, how to read a REDCap version number, how to find the version your instance is running, how to read the official changelog, and why keeping current is the main risk control an institution actually has. It does not cover the mechanics of performing an upgrade — see `RC-INFRA-01 — Self-Hosting a Private REDCap Instance` for that.
+This article explains what the two lines are, how to read a REDCap version number, how to find the version your instance is running, how to read the official changelog, and why keeping current is the main risk control an institution actually has. It does not cover the mechanics of performing an upgrade — see [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) for that.
 
 Understanding this matters even if you never touch a server. Every KB article carries a `Requires` and a `Verified Against` version, colleagues at other institutions will quote version numbers that look older or newer than yours, and the answer to "why does that feature not appear in my REDCap?" is very often the release line rather than a configuration setting.
 
@@ -145,7 +145,7 @@ Each line runs roughly nine months in practice — about six months as the curre
 |---|---|---|
 | Page footer | Bottom of any REDCap page — displays the version number | All users |
 | Control Center home | The main Control Center page states the current version and, if Easy Upgrade is available, whether newer versions exist | Administrators |
-| API | The **Export REDCap Version** method returns the version string — see `RC-API-44 — Export REDCap Version API` | Any user with an API token |
+| API | The **Export REDCap Version** method returns the version string — see [RC-API-44 — Export REDCap Version API](RC-API-44_Export-REDCap-Version.md) | Any user with an API token |
 
 The footer and API return a bare version number without naming the line. To determine your line, compare against the branch points in Section 3.1, or check whether your instance receives new features between releases — if the feature set never changes, you are on LTS.
 
@@ -211,7 +211,7 @@ Running an unpatched instance is the largest controllable risk an institution ca
 - **Security fixes ship in most releases, on both lines simultaneously.** Staying near the head of your line is the single most effective control available.
 - **Most vulnerabilities require an authenticated user.** This is not reassurance. In a typical REDCap instance, the authenticated population is large — every study team member across every project. A handful of issues have been exploitable by unauthenticated survey participants.
 - **Remove old version directories from the server.** REDCap has explicitly flagged that leaving prior version directories in place keeps known vulnerabilities reachable. On newer versions, calls to survey and API endpoints containing a version directory in the URL are refused outright.
-- **Check upgrade prerequisites before planning a jump.** Minimum PHP version and database charset requirements have both changed, and either can block an upgrade — see `RC-INFRA-01 — Self-Hosting a Private REDCap Instance`.
+- **Check upgrade prerequisites before planning a jump.** Minimum PHP version and database charset requirements have both changed, and either can block an upgrade — see [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md).
 - **Read the changelog between your version and your target**, not just the target's entry. A multi-version jump accumulates changes, and provenance statements in intermediate releases may tell you to go re-check data.
 
 > **Important:** Because LTS lines carry an older version prefix, an LTS instance can look alarmingly out of date to someone who does not know the release model. Judge currency by how far behind the head of your own line you are — not by comparing against a Standard version number.
@@ -222,7 +222,7 @@ Running an unpatched instance is the largest controllable risk an institution ca
 
 **Q: What REDCap version am I running?**
 
-**A:** Look at the footer of any REDCap page. Administrators can also see it on the Control Center home page, and any user with an API token can call the Export REDCap Version method — see `RC-API-44 — Export REDCap Version API`. Note that none of these tell you which release line you are on; compare against the branch points in Section 3.1 to work that out.
+**A:** Look at the footer of any REDCap page. Administrators can also see it on the Control Center home page, and any user with an API token can call the Export REDCap Version method — see [RC-API-44 — Export REDCap Version API](RC-API-44_Export-REDCap-Version.md). Note that none of these tell you which release line you are on; compare against the branch points in Section 3.1 to work that out.
 
 **Q: What is the difference between REDCap LTS and Standard?**
 
@@ -234,7 +234,7 @@ Running an unpatched instance is the largest controllable risk an institution ca
 
 **Q: Why can't I find a feature that the documentation describes?**
 
-**A:** Three likely reasons, in order. First, you may be on an LTS line branched before the feature existed — check the article's `Requires` field against your version. Second, the feature may require a REDCap+ subscription — see `RC-PLUS-01 — REDCap+: Overview and Subscription`. Third, it may be disabled at the system level by your administrators.
+**A:** Three likely reasons, in order. First, you may be on an LTS line branched before the feature existed — check the article's `Requires` field against your version. Second, the feature may require a REDCap+ subscription — see [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md). Third, it may be disabled at the system level by your administrators.
 
 **Q: Should we switch from Standard to LTS, or the other way around?**
 

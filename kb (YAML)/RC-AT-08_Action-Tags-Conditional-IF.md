@@ -17,7 +17,7 @@ related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
 - id: RC-AT-02
-  title: '@HIDDEN & @READONLY — Visibility Control — @HIDDEN & @READONLY'
+  title: '@HIDDEN & @READONLY — Visibility Control'
 - id: RC-AT-03
   title: Radio & Dropdown Action Tags
 - id: RC-AT-06

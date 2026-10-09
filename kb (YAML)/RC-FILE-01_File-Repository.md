@@ -20,7 +20,7 @@ related:
 - id: RC-DAG-01
   title: Data Access Groups
 - id: RC-SURV-08
-  title: 'e-Consent Framework: Setup & Management — e-Consent Framework'
+  title: 'e-Consent Framework: Setup & Management'
 - id: RC-SENDIT-01
   title: 'Send-It: Secure File Transfer'
 - id: RC-EXPRT-01

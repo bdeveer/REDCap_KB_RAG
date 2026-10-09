@@ -232,7 +232,7 @@ The Action Tags knowledge base series is organized by tag category:
 
 # 9. Related Articles
 
-- [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) — @HIDDEN & @READONLY
+- [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md)
 - [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md)
 - [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md)
 - [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md)
