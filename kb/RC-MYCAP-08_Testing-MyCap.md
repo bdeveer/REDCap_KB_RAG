@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
 | **Prerequisite** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md); [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md)|
 | **Synonyms** | how do i test a mycap project before launch; mycap testing checklist before go-live; join the app with a test record; verify mycap schedule and notifications work; test mycap on a real device not a simulator; view task details csv to check the schedule; pre-launch mycap testing workflow; publish mycap before enrolling participants |
@@ -134,7 +134,7 @@ Verify that push notifications are delivered at the expected time.
 #### 7.1 Enabling Push Notifications
 
 - Ensure push notifications are enabled for the MyCap app on the test device (device settings > notifications > MyCap).
-- Confirm the notification time in **MyCap > App Settings > Notification Settings**.
+- Confirm the notification time in **MyCap > App Settings > Additional Settings** (**Notification Settings** below 17.5.0).
 
 #### 7.2 Testing Task Notifications
 

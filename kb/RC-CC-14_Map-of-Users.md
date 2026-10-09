@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
 | **Synonyms** | control center map of users; geographic map of where users access redcap; see user locations by ip address; google maps view of redcap users; user distribution by region admin; map showing redcap user activity by location; ip geolocation map of users; where are my redcap users located |
@@ -20,6 +20,8 @@
 ## 1. Overview
 
 The Map of Users displays a geographic map showing where users are accessing REDCap from, based on their IP addresses. It is accessible under "Dashboards & Activity" in the Control Center sidebar and uses Google Maps to render the visualization. This tool provides a visual summary of user distribution and activity patterns across geographic regions.
+
+> **Requires your own Google Maps API key (17.5.4 Standard / 17.3.18 LTS).** The map stopped working on earlier versions. From these versions the page explains how to obtain your own Google Maps API key and store it in the database; until a key is stored, the map does not render. On earlier versions the page simply shows a broken or empty map, and there is no fix short of upgrading.
 
 ---
 
@@ -72,6 +74,9 @@ This commonly occurs when users access REDCap through a centralized proxy, VPN, 
 
 **Q: How can I use the Map of Users to verify that participants in a multi-site study are accessing from expected locations?**
 Generate the map for the time period of active data collection. The map should show markers in the geographic regions where your study sites are located. If you see markers in unexpected locations, investigate whether those represent legitimate access (e.g., remote researchers, participants traveling) or potential security concerns.
+
+**Q: The Map of Users is blank. Is something wrong with our instance?**
+Probably not. The map stopped working on earlier versions. On 17.5.4 Standard / 17.3.18 LTS and later, follow the instructions on the page to obtain your own Google Maps API key and store it. On earlier versions there is no workaround other than upgrading.
 
 **Q: What does the time window parameter do?**
 The time window (in hours) controls how recent the user activity is. Adjusting this parameter from, for example, 1 hour to 24 hours will show more user activity on the map. A 1-hour window shows only very recent activity, while a 24-hour window shows all activity from the past day.

@@ -7,10 +7,10 @@
 | **Domain** | Project Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md), [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)[RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)[RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md), [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)[RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md), [RC-FD-05 — Codebook](RC-FD-05_Codebook.md), [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)[RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md), [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md), [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md), [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md), [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md), [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md), [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md), [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)[RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)[RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)[RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md)[RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md), [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md), [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md), [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md)|
 | **Synonyms** | what does each project menu item do; reference list of all left-hand menu sections; where do i find a specific feature in the menu; explanation of project menu sections and items; what menu items appear and who can see them; redcap menu item glossary; which menu option opens reports or codebook; list of every section in the project sidebar |
@@ -103,7 +103,7 @@ core items.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
-| **Record Status Dashboard** | Always           Overview of form completion status across all records. Shows which forms are complete, incomplete, or unverified at a glance. |
+| **Record Status Dashboard** | Always           Overview of form completion status across all records. Shows which forms are complete, incomplete, or unverified at a glance. From 17.5.3, users with Project Design rights also see a **Manage** link beside it for creating, editing and deleting custom dashboards. |
 | **Add / Edit Records** | Always           Create new records or look up and edit existing ones. Primary data entry entry point. |
 | **Survey Distribution Tools** | Conditional      Appears when surveys are enabled in the project. Manage survey links, send email/SMS invitations, and view the invitation log. |
 | **MyCap Participant Management** | Conditional      Manage participants using the MyCap mobile app. Requires MyCap to be enabled. As of MyCap 2.0 (September 2023, REDCap v13.10.0+), longitudinal projects are supported. Consult your support team before using. |

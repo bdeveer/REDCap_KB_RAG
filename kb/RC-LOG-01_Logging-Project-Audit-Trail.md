@@ -7,10 +7,10 @@
 | **Domain** | Logging |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | REDCap Support |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) |
 | **Synonyms** | how do i view the project audit trail; who changed this data and when; see a history of all actions in my project; filter and export the logging records; redcap audit log for compliance; track record creation deletion and exports; data history popup clock icon; difference between logging and email logging |
@@ -101,7 +101,7 @@ The log table has four columns:
 | Column | Description |
 |---|---|
 | **Time / Date** | Timestamp in server local time (format: MM/DD/YYYY H:MMam/pm in the UI; YYYY-MM-DD HH:MM in the CSV export) |
-| **Username** | REDCap username of the person who performed the action, or `[survey respondent]` for unauthenticated survey submissions, or `SYSTEM` for automated system actions |
+| **Username** | REDCap username of the person who performed the action, or `[survey respondent]` for unauthenticated survey submissions, `[mycap respondent]` for MyCap task submissions (17.5.3+), or `SYSTEM` for automated system actions |
 | **Action** | Action category and description (see Section 4.2 for examples) |
 | **List of Data Changes OR Fields Exported** | For data entry actions: every changed field and its new value. For exports and API calls: what was exported. For page views: the full URL visited. |
 
@@ -340,6 +340,9 @@ No. The audit trail is immutable — no project user or administrator can delete
 
 **Q: How do I find all changes made by a specific user?**
 Select the user's name from the "Filter by user" dropdown (all users with activity in the project are listed). Set a date range if needed. To narrow by type, also select "Record updated (only)" from the event type dropdown.
+
+**Q: Why do some entries show `[mycap respondent]` as the user?**
+From 17.5.3 (Standard), task submissions from the MyCap app are logged under `[mycap respondent]`, with the description suffix **(MyCap - API)** rather than **(API)**. The Data History popup on the form shows the same label. This separates participant submissions from staff API use. On earlier versions, including the 17.3.x LTS line, MyCap submissions appear as ordinary API activity, so filter on the record and timestamp rather than the user.
 
 **Q: What does "SYSTEM" appear as the username?**
 The `SYSTEM` username indicates an automated REDCap action with no specific logged-in user — typically a scheduled task or calculated field update triggered by the server rather than a human interaction.

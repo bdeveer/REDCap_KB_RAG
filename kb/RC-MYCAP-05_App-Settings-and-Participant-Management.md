@@ -7,10 +7,10 @@
 | **Domain** | MyCap Mobile App |
 | **Applies To** | Projects with MyCap enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md); [RC-MYCAP-04 — MyCap: Participant Onboarding](RC-MYCAP-04_Participant-Onboarding.md)|
 | **Synonyms** | how do i customize the mycap app appearance; set up about pages contacts and links in mycap; change the mycap app theme and notifications; track which participants have joined mycap; send messages and announcements to mycap participants; troubleshoot mycap sync issues; mycap participant management hub; brand the mycap app for my study |
@@ -45,9 +45,9 @@ A section of App Settings where the study team can provide web links relevant to
 
 Visual customization of the MyCap app's color scheme using Material Design. Currently available on iOS only; not available on Android.
 
-**Notification Settings**
+**Additional Settings** *(called **Notification Settings** below 17.5.0)*
 
-The time of day at which MyCap sends push notifications to participants when new tasks become available. Default is 8:00 AM local device time.
+The App Settings tab that holds the time of day at which MyCap sends push notifications to participants when new tasks become available (default 8:00 AM local device time) and, from 17.5.0, whether participants may send messages to the study team.
 
 **Participant Management**
 
@@ -117,20 +117,24 @@ The Theme setting allows customization of the app's primary color using Material
 
 > **From 15.8.4:** the **Purple** theme is the default for newly created projects, whether created from a project template or by enabling MyCap on an existing project. The same release corrected the Purple swatch shown on the App Settings page so it matches what actually renders in the app — on earlier versions the preview and the app disagreed.
 
-### 3.5 Notification Settings
+### 3.5 Additional Settings (Notification Time and Participant Messaging)
 
-Controls when MyCap sends push notifications to participants when new tasks become available.
+> **Renamed in 17.5.0 (Standard).** This tab was called **Notification Settings**. It was renamed **Additional Settings** when the participant-messaging option was added. On the 17.3.x LTS line and earlier it is still **Notification Settings** and has no messaging option.
+
+**Notification time** controls when MyCap sends push notifications to participants when new tasks become available.
 
 - **Default:** 8:00 AM local device time.
 - **Format:** 24-hour time format (e.g., 08:00, 20:00).
 - All participants in the project receive notifications at the same configured time.
 - Per-participant notification time customization is not currently supported.
 
+**Allow participants to send messages to the project user(s)** *(17.5.0+)* — selected by default. Deselect it to turn off incoming messages from participants. Participants still receive announcements and messages sent by REDCap users; they just cannot reply or start a thread. Use this for studies with no staff capacity to monitor a MyCap inbox — a message nobody reads is worse than no channel at all.
+
 ---
 
 ## 4. Publishing App Settings Changes
 
-After making any change to App Settings (About, Contacts, Links, Theme, Notification Settings):
+After making any change to App Settings (About, Contacts, Links, Theme, Additional Settings):
 
 1. Navigate to **MyCap > Publish MyCap Version**.
 2. Review the summary of changes.
@@ -270,6 +274,14 @@ If a participant's data fails to sync correctly, a sync issue flag appears in th
 **Q: Can participants see messages from the study team in the app?**
 
 **A:** Yes. Messages sent via Participant Management appear in the participant's MyCap app in a messages inbox. The participant also receives a push notification.
+
+**Q: Can I stop participants sending messages to the study team?**
+
+**A:** From 17.5.0, yes. In **App Settings > Additional Settings**, deselect **Allow participants to send messages to the project user(s)**, then publish. Participants still receive your messages and announcements. Below 17.5.0 there is no way to turn incoming messages off — set up email notifications on incoming messages (Section 5.3) so they are at least seen.
+
+**Q: How do I tell MyCap submissions apart from staff data entry in the logging?**
+
+**A:** From 17.5.3 (Standard), MyCap task submissions are logged under the username **`[mycap respondent]`**, and the action description reads **(MyCap - API)** instead of **(API)**. The same label appears in the Data History popup on the form. On earlier versions, MyCap submissions are logged as ordinary API activity. See [RC-LOG-01 — Logging (Project Audit Trail)](RC-LOG-01_Logging-Project-Audit-Trail.md).
 
 **Q: How do I know if a participant has joined?**
 

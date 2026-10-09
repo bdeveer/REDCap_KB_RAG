@@ -7,10 +7,10 @@
 | **Domain** | Self-Hosting, Deployment & Release Management |
 | **Applies To** | All REDCap users; REDCap Administrators (Sections 5–7) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — release tables from the 2026-10-09 changelogs |
 | **Prerequisite** | None |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md); [RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose](RC-INFRA-02_Self-Hosting-REDCap-on-Synology-Docker.md); [RC-API-44 — Export REDCap Version API](RC-API-44_Export-REDCap-Version.md); [RC-CC-23 — Backup Options](RC-CC-23_Backup-Options.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
 | **Synonyms** | what redcap version am i running; difference between redcap lts and standard; should we use lts or standard redcap; how often is redcap released; what does long term support mean in redcap; why is our redcap version number lower than another site; how to read the redcap changelog; how do i know if my redcap needs patching; what redcap version introduced this feature; redcap release schedule and upgrade cadence |
@@ -94,11 +94,13 @@ A new LTS line is cut roughly **every six months**, historically at the end of J
 
 This is the single most common source of confusion, and the reason every version reference in this KB names its line.
 
-An LTS line **keeps the version prefix of the Standard release it was branched from** and then increments only the patch number. So LTS 16.0.10 through 16.0.47 all carry the `16.0` prefix inherited from Standard 16.0.9 — even though, by the time 16.0.47 shipped, Standard had moved on to 17.4.1.
+An LTS line **keeps the version prefix of the Standard release it was branched from** and then increments only the patch number. So LTS 16.0.10 through 16.0.55 all carry the `16.0` prefix inherited from Standard 16.0.9 — even though, by the time 16.0.55 shipped, Standard had moved on to 17.5.4.
 
 The consequence: a *lower* version number does not mean a *less current* instance.
 
 > **Important:** On 2026-08-13, three releases shipped on the same day — Standard **17.4.1**, LTS **17.3.7**, and LTS **16.0.47**. All three contained the same security fix. Their version numbers differ by more than a full major version, but none of them was behind on patches. Always ask which line a version belongs to before concluding anything about how current it is.
+
+The pattern repeats. On 2026-09-09 a **critical** unauthenticated remote code execution fix shipped as Standard **17.4.4**, LTS **17.3.10** and LTS **16.0.49**; on 2026-10-08 the next batch of security fixes shipped as Standard **17.5.4**, LTS **17.3.18** and LTS **16.0.55**.
 
 ### 3.3 Two LTS lines are supported at once
 
@@ -110,10 +112,12 @@ Observed lifespans of recent LTS lines:
 |---|---|---|---|
 | 15.0.x | 32 | 2025-01-30 | 2025-10-29 |
 | 15.5.x | 34 | 2025-07-31 | 2026-04-23 |
-| 16.0.x | 38 | 2026-01-29 | 2026-08-13 |
-| 17.3.x | 3 | 2026-07-30 | *(current)* |
+| 16.0.x | 46 | 2026-01-29 | *(still receiving fixes — 16.0.55 on 2026-10-08)* |
+| 17.3.x | 14 | 2026-07-30 | *(current — 17.3.18 on 2026-10-08)* |
 
-Each line runs roughly nine months in practice — about six months as the current LTS, then a further overlap period after its successor is cut.
+Each line runs roughly nine months in practice — about six months as the current LTS, then a further overlap period after its successor is cut. Counts for the two active lines are as of the 2026-10-09 changelogs.
+
+On the Standard line, a new minor version starts every few weeks: 17.4.0 on 2026-08-06 (seven releases, through 17.4.6) and 17.5.0 on 2026-09-17 (17.5.4 on 2026-10-08).
 
 > **Note:** These lifespans are observed from the published changelogs, not a stated guarantee. Confirm the supported window for your line before planning around it.
 
@@ -189,7 +193,7 @@ Some entries state when a defect was introduced — *"Bug emerged in REDCap 17.2
 Running an unpatched instance is the largest controllable risk an institution carries with REDCap, and it compounds silently.
 
 - **Security fixes ship in most releases, on both lines simultaneously.** Staying near the head of your line is the single most effective control available.
-- **Most vulnerabilities require an authenticated user.** This is not reassurance. In a typical REDCap instance, the authenticated population is large — every study team member across every project. A handful of issues have been exploitable by unauthenticated survey participants.
+- **Most vulnerabilities require an authenticated user.** This is not reassurance. In a typical REDCap instance, the authenticated population is large — every study team member across every project. A handful of issues have been exploitable by unauthenticated survey participants. The clearest example is the 2026-09-09 critical fix (Standard 17.4.4 / LTS 17.3.10 / LTS 16.0.49): remote code execution through survey passthrough routing, present since 13.3.0, exploitable by anyone holding a valid survey hash — which every survey link contains.
 - **Remove old version directories from the server.** REDCap has explicitly flagged that leaving prior version directories in place keeps known vulnerabilities reachable. On newer versions, calls to survey and API endpoints containing a version directory in the URL are refused outright.
 - **Check upgrade prerequisites before planning a jump.** Minimum PHP version and database charset requirements have both changed, and either can block an upgrade — see [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md).
 - **Read the changelog between your version and your target**, not just the target's entry. A multi-version jump accumulates changes, and provenance statements in intermediate releases may tell you to go re-check data.

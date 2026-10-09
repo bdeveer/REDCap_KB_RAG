@@ -7,10 +7,10 @@
 | **Domain** | Record Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md), [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)[RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md), [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md), [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)[RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)[RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md), [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md), [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)[RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)[RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md), [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md), [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) |
 | **Synonyms** | what is the record status dashboard; how to create a custom record dashboard; where to see all records and their completion status; how to make a custom dashboard filtered by criteria; clicking links to open records from the dashboard; view of all records as rows and instruments as columns; how to find record links throughout redcap; record status dashboard colored dots |
@@ -116,6 +116,22 @@ From **16.1.1**, rows on the Record Status Dashboard highlight on hover and on k
 
 - They are automatically available to all project users once created
     — no additional setup is required per user.
+
+### 4.3 Managing Custom Dashboards *(17.5.3+)*
+
+From 17.5.3 (Standard), users with Project Design rights see a
+**Manage** link next to the **Record Status Dashboard** link on the
+left-hand project menu. It opens a dedicated page that lists every
+custom dashboard in the project and lets you create new ones and edit
+or delete existing ones, without first opening each dashboard.
+
+The same release slightly changed the buttons on the Record Status
+Dashboard page itself, so older written instructions that name specific
+buttons there may not match.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):**
+> There is no Manage page. Custom dashboards are created and edited from
+> the Record Status Dashboard page.
 
 ---
 

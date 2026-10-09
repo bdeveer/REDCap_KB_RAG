@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
 | **Prerequisite** | [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md); [RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links](RC-MYCAP-07_Advanced-Features-FDL-MLM-Survey-Links.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) |
 | **Synonyms** | how do i design an instrument for mycap; which field types are supported in mycap; mycap action tags and annotations; enable an instrument for the mycap app; configure a baseline date for mycap; publish a mycap instrument; mycap task metadata fields; mobile-specific field constraints for mycap forms |
@@ -219,7 +219,7 @@ Publishing pushes the current project configuration — enabled instruments, sch
 Publish is required after any of the following changes:
 - Enabling or disabling instruments
 - Changing the task schedule
-- Changing App Settings (About pages, Contacts, Links, Theme, Notification Settings)
+- Changing App Settings (About pages, Contacts, Links, Theme, Additional Settings — called Notification Settings below 17.5.0)
 
 > **Note:** Form Display Logic changes and Multi-Language Management (MLM) changes do **not** require publishing — they apply immediately on the participant's next sync.
 
