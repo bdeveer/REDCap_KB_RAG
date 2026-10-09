@@ -314,6 +314,60 @@ Patterns worth stating:
 
 ---
 
+## M. Client-side logic evaluation — *addendum from the 17.5.4 review*
+
+**Target: `RC-BL-01`, `RC-BL-02`, `RC-BL-05`, `RC-CALC-02`, `RC-AT-08`, `RC-AT-09`, `RC-ALERT-01`, redcap-syntax skill**
+*Source: `ChangeLog_*_2026-10-09.csv`, tracked in `KB-UPDATE-TODO-17.5.4.md`.*
+
+The common thread: most of these were wrong only **on the form or survey page**, while server-side evaluation (rule H, imports) was right. That split is the diagnostic — now recorded in the redcap-syntax `fix-mode.md` as check 4f.
+
+- [x] **Long logic always True (17.3.1–17.4.1 Std / 17.3.5–17.3.7 LTS).** More than ~200–300 `and`/`or` clauses → True. *Applied 2026-10-09 → `RC-BL-01` §4a.*
+- [x] **Inline comments (below 17.5.4 / 17.3.18; alerts below 17.5.1 / 17.3.14).** The latest in a run of comment fixes back to 13.6.1. *Applied → `RC-BL-02` new §3.6 (the KB had no comment-syntax coverage at all), `RC-ALERT-01` §3.2, `RC-CALC-02` §6, `RC-BL-01` §4a.*
+- [x] **Quote characters in comparison text (below 17.5.4 / 17.3.18).** Invalid JavaScript, logic silently inert. *Applied → `RC-BL-02` §3.3.*
+- [x] **`0` as blank on repeating events (below 17.5.4 / 17.3.18).** *Applied → `RC-BL-02` §6, `RC-BL-05` §5.3.*
+- [x] **X-instance + Missing Data Code on dates (below 17.5.0 / 17.3.13).** Page only. *Applied → `RC-BL-05` §5.3.*
+- [x] **All calcs re-run on any change (below 17.5.3 / 17.3.16).** Performance, not correctness. *Applied → `RC-CALC-02` §6.*
+- [x] **`@CALCTEXT` HTML stripped on another survey page (below 17.5.1 / 17.3.14).** *Applied → `RC-AT-09` §3.3.*
+- [x] **`@IF` slowing PDFs (below 17.4.4 / 17.3.10).** *Applied → `RC-AT-08` §5.*
+- [x] **`@INLINE-PREVIEW` broken (17.4.2 Standard only).** *Applied → `RC-AT-07` §5.*
+
+---
+
+## N. Remaining clusters — *addendum from the 17.5.4 review*
+
+*Source: `ChangeLog_*_2026-10-09.csv`. All applied 2026-10-09; versions given as Standard / LTS (/ 16.0 LTS where it shipped there).*
+
+**Alerts & ASI non-delivery (extends I)**
+- [x] Scheduled alerts re-sent several times after restarts or upgrades — fixed 17.5.1 / 17.3.14 → `RC-ALERT-01` §4.2a.
+- [x] ASI reminders mis-scheduled with time lag + re-evaluate — 17.5.1 / 17.3.14 → `RC-SURV-06` §4.2.
+- [x] Uppercase MLM language IDs ignored in alerts/ASIs — 17.4.2 / 17.3.8 → `RC-MLM-01` §6.
+- [x] Rich-text images broken in emails, 17.5.1–17.5.3 Standard only → `RC-ALERT-01` §5.5.
+- [x] Notification Log hid overdue sends and shifted recurring dates — 17.5.1 / 17.3.14 → `RC-ALERT-02` §5.
+
+**Survey form status & Save & Return (extends G)**
+- [x] Form Status `0` instead of blank on import / XML creation — 17.4.3 / 17.3.9 → `RC-IMP-04` §4a, `RC-PROJ-05` §5.1a.
+- [x] Return codes not reserved atomically — 17.5.1 / 17.3.14 → `RC-SURV-03`.
+
+**Access & export rights (extends C and D)**
+- [x] DAG admin routes skipped the DAG privilege, all versions — 17.5.1 / 17.3.14 / 16.0.52 → `RC-DAG-01` banner (now six leaks).
+- [x] Project XML API export bypassed full-export check — 17.4.5 / 17.3.11 / 16.0.50 → `RC-API-36`.
+- [x] Delete links on protected File Upload history — 17.5.1 / 17.3.14 → `RC-DE-04` §4.1.
+- [x] Role-assignment upload accepted padded usernames — 17.5.0 / 17.3.13 → `RC-USER-02` §7.3.
+- [x] DQ export with checkbox logic wrongly refused (regression from the 17.4.0 fix) — 17.4.5 / 17.3.11 → `RC-DQ-01` §3.1.
+
+**Import, export & structure**
+- [x] Empty JSON exports from memory exhaustion — 17.5.1 / 17.3.14 → `RC-API-02` §4.
+- [x] XML import: accented names, MyCap XML, MyCap joins → `RC-PROJ-05` §5.1a, written as current behaviour with a version caveat per defect, keyed to the destination's version.
+- [x] Arms download needed two events — 17.4.3 / 17.3.9 → `RC-LONG-01` §6.1.
+- [x] Copy Project: locking-enhancement setting dropped; admin From address on admin-performed copies → `RC-PROJ-01` §4.1.
+
+**Security posture (extends L)**
+- [x] 1 critical + 17 major fixes 17.4.2 → 17.5.4 → `RC-INFRA-03` new §7.1 table, linking the hash fix to broken legacy URLs.
+- [x] Weak 2FA secrets → `RC-CC-03` §3.1, with a **recommendation to regenerate all existing authenticator secrets** after upgrading (decided 2026-10-09; the changelog itself is silent on this); user-side note in `RC-PROF-01` §8.1.
+- [x] Summarize Data path traversal — 17.4.3 / 17.3.9 / 16.0.48 → `RC-AI-04` §8.
+
+---
+
 ## Deliberately excluded
 
 Roughly 1,000 of the 1,076 routine bug fixes are transient defects with no durable lesson: a button that didn't render, a dialog that didn't close, a column that sorted wrong, a fatal error in one page for one release. They were fixed, the fix is in every current version, and documenting them would make articles harder to read without making any reader more capable.
