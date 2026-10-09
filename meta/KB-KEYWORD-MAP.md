@@ -16,7 +16,7 @@ automated email, trigger email, send email when, notification on save, condition
 
 ## Action Tags — RC-AT
 
-@HIDDEN, @READONLY, @REQUIRED, @DEFAULT, @CALCTEXT, @CALCDATE, @IF, @HIDEBUTTON, @NONEOFTHEABOVE, @CHARLIMIT, @WORDLIMIT, @MAXCHOICE, @NOMISSING, @NUMBERSDONTMATCH, action tag, field modifier, instrument modifier, @HIDDEN-SURVEY, @HIDDEN-APP, @HIDDEN-PDF, @SETVALUE, @AUTOQUERY, @CLEARVALUE, action tags for external modules, EM action tag, module-specific action tag
+@HIDDEN, @READONLY, @REQUIRED, @DEFAULT, @CALCTEXT, @CALCDATE, @IF, @HIDEBUTTON, @HIDEDATEPICKER, @NONEOFTHEABOVE, @CHARLIMIT, @WORDLIMIT, @MAXCHOICE, @NOMISSING, @NUMBERSDONTMATCH, action tag, field modifier, instrument modifier, @HIDDEN-SURVEY, @HIDDEN-APP, @HIDDEN-PDF, @SETVALUE, @AUTOQUERY, @CLEARVALUE, action tags for external modules, EM action tag, module-specific action tag
 
 ## Branching Logic — RC-BL
 

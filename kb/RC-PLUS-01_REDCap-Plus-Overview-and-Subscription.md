@@ -7,10 +7,10 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
 | **Requires** | REDCap v17.0.0+ — REDCap+ does not exist below this version. The article itself is informational and useful on any version |
-| **Verified Against** | REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a live unsubscribed instance; feature list from release notes through 17.4.1 Standard |
+| **Verified Against** | REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a live unsubscribed instance; feature list from release notes through 17.5.4 Standard |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
 | **Synonyms** | what is redcap plus; redcap+ paid subscription tier; how much does redcap plus cost; difference between redcap core and redcap plus; premium redcap features subscription; do i need redcap+ to use my features; redcap plus vs free redcap; which features require a redcap+ subscription |
@@ -114,6 +114,10 @@ Delegates routine administrative work — project creation approvals, production
 ### Email Verification & Email Unsubscribe *(17.3.0)*
 
 Lets participants verify their email address and opt out of all emails from a project, via four Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
+### REDCap Login Protection *(17.5.0)*
+
+Adds an **Enforce REDCap login protection** option to Survey Login, so respondents authenticate through the instance's normal REDCap login instead of entering stored field values. Page-1 survey fields can be prefilled with the logged-in user's username, name and email. The same protection can be applied to public reports and public project dashboards. Under SSO or LDAP it admits anyone who can authenticate to the instance, not only existing REDCap users. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5.
 
 ### Additional Community Portal Seats
 

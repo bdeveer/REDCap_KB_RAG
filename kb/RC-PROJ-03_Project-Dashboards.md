@@ -7,13 +7,13 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md); [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md); [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) |
-| **Synonyms** | how do i create a project dashboard; display summary statistics and charts for my project; make a dashboard public for stakeholders; add charts and tables to a dashboard page; build a project summary page with smart variables; share project data without a redcap account; configure dashboard access; project dashboard vs record status dashboard |
+| **Synonyms** | how do i create a project dashboard; display summary statistics and charts for my project; make a dashboard public for stakeholders; add charts and tables to a dashboard page; build a project summary page with smart variables; share project data without a redcap account; configure dashboard access; project dashboard vs record status dashboard; require redcap login to view a public dashboard |
 
 ---
 
@@ -153,7 +153,7 @@ By default a dashboard is private — only users with project access can view it
 3. Optionally set an **Access Code** if you want to restrict viewing to people who have the code.
 4. Save settings.
 
-Once public, the dashboard is accessible via its unique URL to anyone with the link (and the access code, if one is set). There is no REDCap login required.
+Once public, the dashboard is accessible via its unique URL to anyone with the link (and the access code, if one is set). There is no REDCap login required unless REDCap login protection is turned on (Section 5.5).
 
 > **Important:** As a privacy safeguard, Smart Functions, Smart Tables, and Smart Charts will **not render** on the public version of a dashboard unless they are displaying at least **8 data points**. Widgets that fall below this threshold appear blank to external viewers, even if they render correctly when viewed inside the project. This threshold applies only to public (unauthenticated) views — internal project users see all content regardless of data point count.
 
@@ -179,6 +179,17 @@ The public URL for a dashboard can be found in two ways:
 ### 5.4 Who Can View Internal Dashboards
 
 Each dashboard has its own user access privilege settings, configurable in the dashboard settings panel. This allows you to control which project users can view a given dashboard — for example, restricting a sensitive data-quality dashboard to specific roles. The public access toggle controls external (unauthenticated) access separately from these internal privilege settings.
+
+### 5.5 REDCap Login Protection *(REDCap+, 17.5.0+)*
+
+> **⚠️ REDCap+ Feature Tag**
+> REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
+
+Once a dashboard is public, a button immediately beneath it (labelled **"Enabled REDCap login protection"** in the 17.5.0 release notes) makes viewers log in to REDCap before the dashboard is displayed. Anyone already logged in sees it straight away.
+
+This is real authentication, unlike an access code, but it is not a project user list: under SSO or LDAP, anyone who can authenticate to the instance can view the dashboard, including people with no prior REDCap account. The internal user access settings in Section 5.4 do not apply to the public version. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5 for the same feature on surveys.
+
+> **Scope note:** Written from the 17.5.0 release notes; not checked against a live subscribed instance. In particular, the release notes do not say whether the 8-data-point threshold for public views (Section 5.1) still applies once a viewer has logged in.
 
 ---
 
@@ -262,3 +273,4 @@ For the full smart variable syntax used in each of these contexts, see [RC-PIPE-
 - [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) (smart variables for sharing dashboard URLs and links)
 - [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (the system-generated record completion view — distinct from Project Dashboards)
 - [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using dashboard links in alerts and survey invitations)
+- [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) (REDCap login protection, which also applies to public dashboards)

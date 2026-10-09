@@ -6,20 +6,20 @@
 |---|---|
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
-| **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Requires** | Any supported version (`@HIDEDATEPICKER` requires 17.5.0+) |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Synonyms** | @HIDEBUTTON action tag; @INLINE action tag; @INLINE-PREVIEW action tag; how do i remove the today now button from a date field; how do i show an uploaded file inline on the form; display image or pdf inline instead of a download link; cosmetic action tags for field display |
+| **Synonyms** | @HIDEBUTTON action tag; @HIDEDATEPICKER action tag; how do i hide the calendar icon on a date field; remove the date picker from a date or time field; @INLINE action tag; @INLINE-PREVIEW action tag; how do i remove the today now button from a date field; how do i show an uploaded file inline on the form; display image or pdf inline instead of a download link; cosmetic action tags for field display |
 
 ---
 
 ## 1. Overview
 
-This article covers action tags that adjust the visual display of certain field types without changing the underlying data: `@HIDEBUTTON`, `@INLINE`, and `@INLINE-PREVIEW`.
+This article covers action tags that adjust the visual display of certain field types without changing the underlying data: `@HIDEBUTTON`, `@HIDEDATEPICKER`, `@INLINE`, and `@INLINE-PREVIEW`.
 
 ---
 
@@ -38,7 +38,30 @@ Text boxes with a date or date-time validation automatically display a **Today**
 
 ---
 
-## 3. @INLINE
+## 3. @HIDEDATEPICKER
+
+Text boxes with date, time or date-time validation display a calendar/clock picker icon to the right of the field. `@HIDEDATEPICKER` hides that icon, so the value must be typed.
+
+**Applies to:** Text box with date, time or date-time validation.
+
+**Syntax:**
+```
+@HIDEDATEPICKER
+```
+
+`@HIDEDATEPICKER` does **not** hide the **Today**/**Now** button. To remove both, use the two tags together:
+
+```
+@HIDEDATEPICKER @HIDEBUTTON
+```
+
+**Use case:** Dates that are easier to type than to pick — such as a date of birth decades in the past — or fields where the picker's default to the current month invites careless entry.
+
+> **Version caveat (below 17.5.0):** `@HIDEDATEPICKER` does not exist before REDCap 17.5.0 (Standard). On older instances, and on the 17.3.x LTS line, the tag is ignored and the picker icon still shows. The same release also replaced the picker icon with a Font Awesome icon, so the icon looks different on 17.5.0+.
+
+---
+
+## 4. @INLINE
 
 Renders an uploaded file directly within the form, inline with other fields, instead of just showing the file name.
 
@@ -48,7 +71,7 @@ Renders an uploaded file directly within the form, inline with other fields, ins
 
 `@INLINE` supports three forms:
 
-### 3.1 @INLINE without parameters
+### 4.1 @INLINE without parameters
 
 Displays the file at 100% width of the containing area:
 
@@ -56,7 +79,7 @@ Displays the file at 100% width of the containing area:
 @INLINE
 ```
 
-### 3.2 @INLINE with one parameter
+### 4.2 @INLINE with one parameter
 
 Sets the display width; height scales proportionally:
 
@@ -70,7 +93,7 @@ Use a whole number for pixels or append `%` for a percentage of screen width:
 @INLINE(50%)
 ```
 
-### 3.3 @INLINE with two parameters
+### 4.3 @INLINE with two parameters
 
 Sets both width and height independently (may distort aspect ratio):
 
@@ -83,7 +106,7 @@ Sets both width and height independently (may distort aspect ratio):
 
 ---
 
-## 4. @INLINE-PREVIEW
+## 5. @INLINE-PREVIEW
 
 A compromise between default (filename only) and `@INLINE` (always displayed). Adds a toggle button to the file upload field: a magnifier icon shows the file; an × icon hides it.
 
@@ -98,7 +121,7 @@ A compromise between default (filename only) and `@INLINE` (always displayed). A
 
 ---
 
-## 5. Displaying Files via Piping
+## 6. Displaying Files via Piping
 
 A file upload field's inline display can also be referenced elsewhere in a form using a piped reference with the `:inline` qualifier:
 
@@ -110,7 +133,7 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 ---
 
-## 6. Common Questions
+## 7. Common Questions
 
 **Q: Can I use @INLINE with a video or audio file?**
 
@@ -124,6 +147,10 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 **A:** Yes. `@HIDEBUTTON` only hides the "Today" or "Now" button; respondents can still type or use a date picker to enter a date manually (depending on the field validation and browser support).
 
+**Q: What is the difference between @HIDEBUTTON and @HIDEDATEPICKER?**
+
+**A:** They hide different controls. `@HIDEBUTTON` hides the **Today**/**Now** button; `@HIDEDATEPICKER` (17.5.0+) hides the calendar/clock picker icon. Neither stops the respondent typing a value. Use both together to leave only the text box.
+
 **Q: Can I use @INLINE to display a PDF that is dynamically piped from another field?**
 
 **A:** No. `@INLINE` displays a file upload field's content based on what is already uploaded to that specific field. You cannot pipe a filename from another field. To reference a file from elsewhere, use the piped syntax `[field:inline]` on a descriptive field instead.
@@ -134,17 +161,21 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 ---
 
-## 7. Common Mistakes
+## 8. Common Mistakes
 
 **Not testing `@INLINE` across devices.** Pixel-based sizing looks very different on high-density smartphone screens versus standard monitors. Always test on representative devices.
 
 **Using `@INLINE` with unsupported file formats.** DICOM and other specialized formats are not supported. The file can still be uploaded and downloaded — it simply cannot be rendered inline.
 
+**Expecting `@HIDEDATEPICKER` to remove the Today/Now button.** It hides only the picker icon. Add `@HIDEBUTTON` as well if the button should go too.
+
+**Using `@HIDEDATEPICKER` on an instance below 17.5.0.** The tag is silently ignored — REDCap does not warn about unrecognised action tags. Check the instance version before relying on it, particularly on the LTS line.
+
 **Expecting `@INLINE` to work on files that are purely text.** Text files (TXT, CSV) cannot be displayed inline; only image and PDF formats are supported.
 
 ---
 
-## 8. Related Articles
+## 9. Related Articles
 
 - [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
 - [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md)

@@ -69,6 +69,7 @@ ACTION_TAG_DESCRIPTIONS = {
     "@PASSWORDMASK":        "Masks input as asterisks; value is still stored in plain text",
     "@NONEOFTHEABOVE":      "Adds a 'None of the above' option to a checkbox that unchecks all other selections when chosen",
     "@HIDEBUTTON":          "Hides the Today/Now button next to a date or datetime field (RC-AT-07)",
+    "@HIDEDATEPICKER":      "Hides the calendar/time picker icon on a date, time or datetime field; not the Today/Now button; 17.5.0+ (RC-AT-07)",
     "@HIDESUBMIT-SURVEY":   "Hides the survey submit button — provided by an external module, not core REDCap (RC-AT-EM-01)",
     "@FORCE-MINMAX":        "Forces validation min/max enforcement even when the user tries to override the out-of-range warning",
     "@HIDECHOICE":          "Hides specific choice option(s) without removing them from the data",

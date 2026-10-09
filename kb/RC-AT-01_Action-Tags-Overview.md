@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); foundational Project Build & Management knowledge |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) through [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) (category articles); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
 | **Synonyms** | what are action tags in redcap; how do i add an action tag to a field; list of available action tags; where do i put action tags in the online designer; action tags field annotation box; intro to redcap action tags; how do action tags work; @ tag to change field behavior |
@@ -151,6 +151,7 @@ Use this table to quickly find which article covers a specific action tag.
 | `@SETVALUE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on every load |
 | `@PREFILL` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Deprecated alias for @SETVALUE — use @SETVALUE instead |
 | `@HIDEBUTTON` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide Today/Now button |
+| `@HIDEDATEPICKER` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide date/time picker icon (17.5.0+) |
 | `@INLINE` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display uploaded file inline |
 | `@INLINE-PREVIEW` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display with toggle button |
 | `@IF` | Conditional | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Apply action tags conditionally based on logic |
@@ -188,7 +189,7 @@ The Action Tags knowledge base series is organized by tag category:
 | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
 | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
 | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Autofill | `@NOW`, `@TODAY`, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
-| [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Cosmetic | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW` |
+| [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Cosmetic | `@HIDEBUTTON`, `@HIDEDATEPICKER`, `@INLINE`, `@INLINE-PREVIEW` |
 | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Conditional | `@IF` |
 | [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculation | `@CALCTEXT`, `@CALCDATE` |
 | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |
