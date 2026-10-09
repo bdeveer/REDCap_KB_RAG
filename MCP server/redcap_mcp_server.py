@@ -13,6 +13,10 @@ Environment variables:
   REDCAP_TOKEN  (optional) Default project API token. Can be overridden
                 per call via the token parameter. Treat like a password.
 
+  Either source may hold a 1Password secret reference instead of a raw
+  token (e.g. op://<vault>/<item>/credential). It is resolved with the
+  1Password CLI ('op read') on first use and cached for the process.
+
 Multi-instance usage:
   Register separate named servers for each environment:
     claude mcp add --scope user redcap-prod --env REDCAP_URL=https://redcap.example.edu/api/ -- python3 redcap_mcp_server.py
@@ -28,6 +32,7 @@ Setup:
 
 import json
 import os
+import subprocess
 from typing import Any, Dict, List, Optional
 
 import requests
@@ -53,6 +58,28 @@ def _api_url(override: Optional[str] = None) -> str:
     return url
 
 
+_op_cache: Dict[str, str] = {}
+
+
+def _read_1password(ref: str) -> str:
+    """Resolve an op:// secret reference via the 1Password CLI, cached per process."""
+    if ref not in _op_cache:
+        try:
+            result = subprocess.run(
+                ["op", "read", "--no-newline", ref],
+                capture_output=True, text=True, timeout=120,
+            )
+        except FileNotFoundError:
+            raise ValueError(
+                "Token is a 1Password reference but the 'op' CLI is not installed "
+                "or not on PATH."
+            )
+        if result.returncode != 0:
+            raise ValueError(f"1Password could not resolve {ref}: {result.stderr.strip()}")
+        _op_cache[ref] = result.stdout.strip()
+    return _op_cache[ref]
+
+
 def _resolve_token(token: Optional[str]) -> str:
     t = (token or os.environ.get("REDCAP_TOKEN", "")).strip()
     if not t:
@@ -60,6 +87,8 @@ def _resolve_token(token: Optional[str]) -> str:
             "No API token provided. Pass a token argument to this tool, "
             "or set the REDCAP_TOKEN environment variable."
         )
+    if t.startswith("op://"):
+        t = _read_1password(t)
     return t
 
 
