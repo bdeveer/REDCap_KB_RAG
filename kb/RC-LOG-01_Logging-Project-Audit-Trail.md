@@ -386,7 +386,7 @@ When an alert is created or modified, REDCap logs the full configuration includi
 - [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) (separate query/response log within records)
 - [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (field-level comments, separately accessible)
 - [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md) *(coming soon)* (lock/unlock events selectable via "Record locking & e-signatures" event type filter)
-- [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md)(coming soon)* (record rename, delete, DAG move — all logged under Manage/Design)
+- [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md) (coming soon)* (record rename, delete, DAG move — all logged under Manage/Design)
 - [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (export actions are logged; relevant for compliance packages)
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alert create/modify events appear in detail in the Logging module)
 - [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (Data History Popup and Reason for Change settings)

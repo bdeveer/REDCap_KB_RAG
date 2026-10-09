@@ -181,6 +181,6 @@ Example JSON response:
 ## 7. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)(add or modify arms in a project)
-- [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)(remove arms from a project)
+- [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md) (add or modify arms in a project)
+- [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md) (remove arms from a project)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms are configured in a longitudinal project)

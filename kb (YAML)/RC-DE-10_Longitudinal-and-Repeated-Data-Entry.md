@@ -228,6 +228,6 @@ Repeated events support the same prefill behavior as regular events: fields can 
 - [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (how longitudinal mode and DAGs change the interface)
 - [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) (all save button variants, including instance-specific options)
 - [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) (prerequisite — how arms and events are structured and navigated)
-- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)(prerequisite — how repeated instruments and events appear in the interface)
+- [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) (prerequisite — how repeated instruments and events appear in the interface)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how longitudinal mode, arms, and events are configured)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeated instruments and events are configured)

@@ -197,11 +197,11 @@ The embedded help text lists every available smart variable, its syntax, its cat
 
 ## 8. Related Articles
 
-- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(core piping syntax and field type behavior)
-- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(instance qualifier smart variables; cross-event piping)
-- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using smart variables in confirmation emails, invitations, and alerts)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (core piping syntax and field type behavior)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (instance qualifier smart variables; cross-event piping)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (using smart variables in confirmation emails, invitations, and alerts)
 - [RC-PIPE-06 — Smart Variables: Record](RC-PIPE-06_Smart-Variables-Record.md) (record-level metadata smart variables)
 - [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md) (smart variables for capturing randomization metadata)
 - [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md) (smart variables for linking to public reports)
 - [RC-PIPE-17 — Smart Variables: Miscellaneous](RC-PIPE-17_Smart-Variables-Miscellaneous.md) (miscellaneous smart variables not covered in other sub-articles)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(using smart variables in logic conditions)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (using smart variables in logic conditions)

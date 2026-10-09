@@ -478,10 +478,10 @@ No. Switching languages in real-time only changes the display. Data already ente
 
 # 11. Related Articles
 
-- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)(see for enabling instruments as surveys)*
-- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)(see for alert configuration; MLM language source is set in the base language Alerts tab)*
-- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(see RC-AT series for general action tag guidance)*
-- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)(MyCap-specific action tags)*
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (see for enabling instruments as surveys)*
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (see for alert configuration; MLM language source is set in the base language Alerts tab)*
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) (see RC-AT series for general action tag guidance)*
+- [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) (MyCap-specific action tags)*
 - [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md) *(AI-assisted translation integrates with MLM language IDs and display names)*
 - [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md) *(system-level MLM configuration: enabling MLM, managing system languages, setting access restrictions)*
 - [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) *(the Multi-Language Management item appears in the Applications section of the left menu when MLM is enabled)*

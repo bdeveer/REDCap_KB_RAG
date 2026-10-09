@@ -287,7 +287,7 @@ On failure, an error message is returned in the format specified by `returnForma
 ## 11. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md)(retrieve current repeating configuration before importing)
-- [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md)(get full instrument list to verify form names before importing)
-- [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)(confirm event-instrument assignments in longitudinal projects)
+- [RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md) (retrieve current repeating configuration before importing)
+- [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) (get full instrument list to verify form names before importing)
+- [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md) (confirm event-instrument assignments in longitudinal projects)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments and events via the UI)

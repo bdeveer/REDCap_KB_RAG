@@ -135,7 +135,7 @@ This knowledge base series covers the foundations of REDCap's logic syntax. The 
 The following topics are outside the scope of this series. Each has its own dedicated article:
 
 - Calculated fields and calculation syntax — [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md)
-- Action tags that use logic syntax — [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)(start here for the full series)
+- Action tags that use logic syntax — [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (start here for the full series)
 - Smart variables — [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md)
 - Field embedding (curly bracket syntax) — [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md)
 - Event-based logic in longitudinal projects — [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)
@@ -210,10 +210,10 @@ Apply this expression as the branching logic for every field that should only ap
 
 ## 10. Related Articles
 
-- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)(the logic language and writing your first statement)
-- [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md)(AND, OR, parentheses)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (the logic language and writing your first statement)
+- [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md) (AND, OR, parentheses)
 - [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (where branching logic is configured)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (alternative location for writing logic in bulk)
 - [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (explains how branching logic appears from the data entry user's perspective)
-- [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md)(related pattern: embedding sub-fields inside radio choice labels alongside branching logic)
+- [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md) (related pattern: embedding sub-fields inside radio choice labels alongside branching logic)

@@ -189,5 +189,5 @@ Yes, you can delete records from a Data Mart project like any other REDCap proje
 - [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md)
 - [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)
 - [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md) (for granting Data Mart privileges)
-- [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)(for approving configuration change requests)
+- [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md) (for approving configuration change requests)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)

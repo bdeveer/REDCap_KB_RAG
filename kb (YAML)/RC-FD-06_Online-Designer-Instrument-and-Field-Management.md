@@ -649,10 +649,10 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (conceptual overview: what it is, when to use it, Development vs. Production mode behavior)
 - [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (prerequisite: covers the overall form design workflow and tool selection)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (bulk editing alternative to the Online Designer; required for restructuring matrices or moving many fields at once)
-- [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)(importing and exporting instruments)
+- [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) (importing and exporting instruments)
 - [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (read-only reference for the variable definitions created in the Online Designer)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(prerequisite for understanding branching logic concepts used in Section 9)
-- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)(next step after mastering the Drag-N-Drop Logic Builder)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (prerequisite for understanding branching logic concepts used in Section 9)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (next step after mastering the Drag-N-Drop Logic Builder)
 - [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (full coverage of calculated field syntax and configuration)
 - [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) (how min/max and @FORCE-MINMAX constraints work from the data entry side)
 

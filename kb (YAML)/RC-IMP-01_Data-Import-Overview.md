@@ -418,7 +418,7 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 - [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) (instrument-level import and export)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (bulk instrument management via CSV)
 - [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (navigating to import features)
-- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md)(manual data entry as an alternative to bulk import)
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) (manual data entry as an alternative to bulk import)
 - [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md) (detailed reference for every CSV upload in REDCap)
 - [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Data Import Tool appears in the Applications section of the left menu)
 - [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) (instrument status dot values can be bulk-updated via data import using coded values 0/1/2)

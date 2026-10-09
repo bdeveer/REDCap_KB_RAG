@@ -17,7 +17,7 @@ related:
 - id: RC-EXPRT-04
   title: 'Data Export: De-identification & Formatting Options'
 - id: RC-USER-01
-  title: 'User Rights: Overview & Three-Tier Access(when available)'
+  title: 'User Rights: Overview & Three-Tier Access (when available)'
 tags:
 - exports, reports & stats
 - data

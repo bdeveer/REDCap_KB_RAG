@@ -257,9 +257,9 @@ When called as a background process (`backgroundProcess=true`), the response is 
 ## 10. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from record-level file-upload fields)
-- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to record-level file-upload fields)
-- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from record-level file-upload fields)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md) (download files from record-level file-upload fields)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md) (upload files to record-level file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md) (remove files from record-level file-upload fields)
 - [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md) (look up `dag_id` values for folder access restriction)
 - [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) (look up `role_id` values for folder access restriction)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (concept reference for `dag_id`)

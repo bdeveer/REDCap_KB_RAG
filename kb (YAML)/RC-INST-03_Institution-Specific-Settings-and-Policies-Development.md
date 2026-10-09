@@ -9,7 +9,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   article's content is local policy, not REDCap behaviour** — it should be re-checked
   against institutional practice, which release notes will never flag
 prerequisites:
-- RC-INST-01 — Institution-Specific Settings & Policies — Production(Production)
+- RC-INST-01 — Institution-Specific Settings & Policies — Production (Production)
 version: '1.0'
 last_updated: '2026'
 related:

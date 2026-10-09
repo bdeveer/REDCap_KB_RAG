@@ -410,7 +410,7 @@ Several aspects of the project lifecycle are controlled by system-wide settings 
 - [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md) (where draft approvals and project requests appear)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (making design changes in Development and Draft Mode)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (alternative approach to making structural changes)
-- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(institution-level guidance on production approval timelines)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) (institution-level guidance on production approval timelines)
 - [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (dependency-ordered checklist covering all phases of project configuration from creation through go-live)
 - [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (how project status is displayed in the interface and what changes at each stage)
 - [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Project Home and Design menu section where status is shown and managed)

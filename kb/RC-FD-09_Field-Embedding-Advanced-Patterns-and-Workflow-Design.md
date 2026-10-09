@@ -377,11 +377,11 @@ This pattern is well suited to:
 ## 10. Related Articles
 
 - [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md) (mechanics of curly-brace embedding, rules, valid embedding locations including radio choice labels)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (companion to Pattern 4: branching logic controls sub-field visibility alongside embedding positioning)
 - [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md) (extends these patterns with @DEFAULT carry-forward, @CALCTEXT lookup, [file:inline]/[file:link], parallel reviewer instruments, checkbox-gated previews, and [form-link:])
-- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)(square-bracket piping syntax and field type behavior)
-- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(piping in alerts, confirmation emails, and ASIs)
+- [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (square-bracket piping syntax and field type behavior)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (piping in alerts, confirmation emails, and ASIs)
 - [RC-PIPE-08 — Smart Variables: Survey](RC-PIPE-08_Smart-Variables-Survey.md) (full reference for [survey-link:], [survey-url:], and related survey smart variables)
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (configuring trigger conditions and email bodies for the approval workflow)
-- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md)(the external module tag used on preview instruments)
+- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) (the external module tag used on preview instruments)
 - [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (calc field setup, formula syntax, and behavior)

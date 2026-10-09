@@ -328,7 +328,7 @@ This behavior also applies to completed instances of repeatable instruments.
 
 # 11. Related Articles
 
-- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(email-based automated invitation scheduling; use with survey queue for time-point studies)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) (email-based automated invitation scheduling; use with survey queue for time-point studies)
 - [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) (manual invitation workflow; participant list survey queue column)
 - [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md) (auto-continue and Save and Return Later settings)
 - [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (logic syntax for queue trigger conditions)

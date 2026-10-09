@@ -259,9 +259,9 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
 - [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) (creates folders whose contents this method can list)
-- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from record-level file-upload fields — distinct from File Repository files)
-- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to record-level file-upload fields)
-- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from record-level file-upload fields)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md) (download files from record-level file-upload fields — distinct from File Repository files)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md) (upload files to record-level file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md) (remove files from record-level file-upload fields)
 - [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) (look up `role_id` values referenced by File Repository restrictions)
 - [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md) (look up `dag_id` values referenced by File Repository restrictions)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (concept reference for DAG-based folder restriction)

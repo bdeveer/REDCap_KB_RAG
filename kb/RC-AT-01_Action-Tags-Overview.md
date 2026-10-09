@@ -226,6 +226,6 @@ The Action Tags knowledge base series is organized by tag category:
 - [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) — @CALCTEXT & @CALCDATE: Calculations
 - [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md)
 - [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md)
-- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md)(HIDESUBMIT)
+- [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) (HIDESUBMIT)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)

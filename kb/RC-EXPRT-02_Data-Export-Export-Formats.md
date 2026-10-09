@@ -164,7 +164,7 @@ from both formats in an analysis will produce mismatched values.
 
 - [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md)
 
-- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)(pulling data directly into R or other tools via
+- [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (pulling data directly into R or other tools via
     the REDCap API)
 
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (CSV raw data format is also used for

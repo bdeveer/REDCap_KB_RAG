@@ -282,9 +282,9 @@ On success, the API returns a count of user-role assignments added or updated. F
 # 8. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
-- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)(retrieve current assignments before modifying them)
-- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(get role definitions and their `unique_role_name` IDs)
-- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(create or update role definitions)
-- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md)(add users to the project before assigning roles)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md) (retrieve current assignments before modifying them)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) (get role definitions and their `unique_role_name` IDs)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) (create or update role definitions)
+- [RC-API-23 — Import Users API](RC-API-23_Import-Users.md) (add users to the project before assigning roles)
 - [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (conceptual overview of roles and assignments)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAGs if using the `data_access_group` field)

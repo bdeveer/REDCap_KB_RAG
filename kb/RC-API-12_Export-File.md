@@ -206,5 +206,5 @@ The `returnFormat` parameter controls the format of error messages only and does
 ## 8. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to file-upload fields)
-- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)(remove files from file-upload fields)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md) (upload files to file-upload fields)
+- [RC-API-14 — Delete File API](RC-API-14_Delete-File.md) (remove files from file-upload fields)

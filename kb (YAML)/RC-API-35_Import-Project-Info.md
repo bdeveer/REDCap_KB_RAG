@@ -18,7 +18,7 @@ related:
 - id: RC-API-34
   title: Export Project Info API
 - id: RC-API-37
-  title: Import Project (Create Project) API(Create Project)
+  title: Import Project (Create Project) API (Create Project)
 tags:
 - api
 synonyms:
@@ -176,4 +176,4 @@ On error, you receive an error message with details about what failed.
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
-- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project)

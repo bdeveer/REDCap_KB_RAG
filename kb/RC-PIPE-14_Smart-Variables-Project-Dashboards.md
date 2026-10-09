@@ -153,5 +153,5 @@ Your access code: [dashboard-access-code:D-557DRCW87L]
 
 - [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (overview of all smart variable categories)
 - [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) (creating charts and functions for dashboards)
-- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(using dashboard links in project emails and alerts)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (using dashboard links in project emails and alerts)
 - [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md) (full guide to creating and configuring project dashboards)

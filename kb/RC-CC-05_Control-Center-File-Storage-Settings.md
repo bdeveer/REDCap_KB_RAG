@@ -213,8 +213,8 @@ Vary them based on context. The File Repository typically allows larger files (e
 
 ## 4. Related Articles
 
-- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)(system configuration and performance settings)
-- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)(Send-It and other file-related module configuration)
+- [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (system configuration and performance settings)
+- [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (Send-It and other file-related module configuration)
 - [RC-FILE-01 — File Repository](RC-FILE-01_File-Repository.md) (file storage user guide and workflows)
 - RC-FILE-02 — File Upload Fields (file upload field configuration and constraints)
-- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(file storage policy considerations)
+- [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) (file storage policy considerations)

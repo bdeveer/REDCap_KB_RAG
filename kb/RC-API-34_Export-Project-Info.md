@@ -13,7 +13,7 @@
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project) |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project) |
 | **Synonyms** | how do i export project info via the api; export project info api call; get project settings and metadata through the api; api method to retrieve project title and configuration; check production status and longitudinal setup via api; audit project attributes programmatically; api endpoint to export project information; read project-level settings via api |
 
 ---
@@ -212,4 +212,4 @@ The API returns project metadata in the format specified. Boolean values are rep
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md)
 - [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)
-- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project)

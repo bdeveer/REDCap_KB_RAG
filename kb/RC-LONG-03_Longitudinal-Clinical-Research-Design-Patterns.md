@@ -663,10 +663,10 @@ When using arms this way, ensure the repeating instrument configuration is ident
 
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and instrument designation — foundational prerequisite)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments; custom form labels)
-- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)(cross-event and arm-qualified references in branching logic)
+- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) (cross-event and arm-qualified references in branching logic)
 - [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (building scoring instruments and change-score formulas)
 - [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) (@DEFAULT and [previous-event-name] — foundational building blocks for carry-forward)
-- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(implementing score-based category labels and clinical flags)
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) (implementing score-based category labels and clinical flags)
 - [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (`:hideunderscore` modifier and event-qualified references)
 - [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) ([current-instance] and instance qualifier syntax)
 - [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) (using the Randomization module for arm assignment in RCTs)

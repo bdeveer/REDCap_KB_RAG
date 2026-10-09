@@ -328,9 +328,9 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 # 7. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)(reading data from REDCap)
-- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)(removing records)
-- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(get the data dictionary to understand field names)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (reading data from REDCap)
+- [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md) (removing records)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (get the data dictionary to understand field names)
 - [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (explains why DET does not fire on API imports)
 - [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (manual import workflow and formatting rules)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (how DAGs affect imported data)

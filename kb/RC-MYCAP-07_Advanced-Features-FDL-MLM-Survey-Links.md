@@ -256,9 +256,9 @@ A common pattern for returning results to participants:
 
 ## 7. Related Articles
 
-- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)(field design and annotations)
-- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)(schedule types, FDL interaction with Infinite schedule)
-- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)(testing FDL, MLM, and Survey Links)
+- [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md) (field design and annotations)
+- [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md) (schedule types, FDL interaction with Infinite schedule)
+- [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md) (testing FDL, MLM, and Survey Links)
 - [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md) (full FDL reference for standard REDCap use)
 - [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) (full MLM reference)
 - [RC-PIPE-16 — Smart Variables: MyCap](RC-PIPE-16_Smart-Variables-MyCap.md) (MyCap-specific smart variable reference)

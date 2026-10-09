@@ -9,7 +9,7 @@
 | **Applies To** | REDCap administrators and IT staff using the Development instance |
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. **This article's content is local policy, not REDCap behaviour** — it should be re-checked against institutional practice, which release notes will never flag |
-| **Prerequisite** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)(Production) |
+| **Prerequisite** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) (Production) |
 | **Version** | 1.0 |
 | **Last Updated** | 2026 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |

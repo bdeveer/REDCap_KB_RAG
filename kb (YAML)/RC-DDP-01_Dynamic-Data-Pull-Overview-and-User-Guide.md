@@ -183,7 +183,7 @@ The user must select a radio button next to each value they wish to import, then
 
 # 9. Related Articles
 
-- [RC-DDP-02 — Dynamic Data Pull — Admin Setup & Technical Specs](RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md)(administrator configuration, web service setup)
-- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)(where the adjudication count column appears)
-- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md)(record identifier context)
-- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)(DDP privilege assignment)
+- [RC-DDP-02 — Dynamic Data Pull — Admin Setup & Technical Specs](RC-DDP-02_Dynamic-Data-Pull-Admin-Setup-and-Technical-Specs.md) (administrator configuration, web service setup)
+- [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (where the adjudication count column appears)
+- [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) (record identifier context)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (DDP privilege assignment)

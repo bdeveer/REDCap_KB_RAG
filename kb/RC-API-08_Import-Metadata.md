@@ -213,7 +213,7 @@ The method returns a count of fields that were successfully created or modified,
 ## 9. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)(read the data dictionary)
+- [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (read the data dictionary)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the GUI alternative to API-based metadata import)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (format specification for the CSV being imported)
 - [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (column reference for valid values in each field)

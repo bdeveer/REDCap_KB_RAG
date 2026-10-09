@@ -246,6 +246,6 @@ Custom CSS is stored internally and is also exposed in the **Survey Settings bul
 - [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) (prerequisite — field types, alignment, field notes, field annotation, individual field editing)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (alternative tool for bulk restructuring that Quick-modify cannot perform, such as splitting instruments)
 - [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (alignment code reference in Section 5.12)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(background on branching logic editing, used by the Quick-modify branching logic action)
-- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)(background on action tags, used by the Quick-modify action tag editor)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (background on branching logic editing, used by the Quick-modify branching logic action)
+- [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (background on action tags, used by the Quick-modify action tag editor)
 - [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) (Survey Settings bulk CSV, which exposes the `custom_css` column)

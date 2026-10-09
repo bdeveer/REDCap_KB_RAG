@@ -20,7 +20,7 @@ related:
 - id: RC-API-36
   title: Export Project XML API
 - id: RC-API-37
-  title: Import Project (Create Project) API(Create Project)
+  title: Import Project (Create Project) API (Create Project)
 tags:
 - api
 synonyms:
@@ -228,4 +228,4 @@ The API returns project metadata in the format specified. Boolean values are rep
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-35 — Import Project Info API](RC-API-35_Import-Project-Info.md)
 - [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)
-- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project)

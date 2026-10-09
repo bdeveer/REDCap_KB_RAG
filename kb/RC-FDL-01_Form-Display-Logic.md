@@ -330,7 +330,7 @@ For the full column-by-column reference, accepted values, an annotated example, 
 
 - [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (field-level logic vs. form-level logic)
 - [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (the logic language used in conditions)
-- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)(event-based field references used in conditions)
+- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) (event-based field references used in conditions)
 - [RC-PIPE-05 — Smart Variables: User](RC-PIPE-05_Smart-Variables-User.md) (user-based variables usable in Form Display Logic conditions)
 - [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (where Form Display Logic visually takes effect)
 - [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) (related feature not affected by Form Display Logic)

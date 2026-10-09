@@ -245,9 +245,9 @@ Combining correct ordering with branching logic produces instruments that flow c
 
 # 9. Related Articles
 
-- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)(cross-event piping, repeated instrument scenarios, :value and other modifiers)
+- [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (cross-event piping, repeated instrument scenarios, :value and other modifiers)
 - [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (system-level bracket expressions)
-- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)(confirmation emails, survey invitations, alerts)
+- [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (confirmation emails, survey invitations, alerts)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (where piping references are configured)
 - [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) (quick reference for variable names when building pipe references)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(using the same bracket syntax in logic conditions)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (using the same bracket syntax in logic conditions)

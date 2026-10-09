@@ -178,8 +178,8 @@ Users who have no role assignment are not included in the response.
 ## 8. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (foundational; required reading before using any API method)
-- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md)(export full per-user permission sets)
-- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)(export role definitions and their privilege sets)
-- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md)(create or update role definitions)
+- [RC-API-22 — Export Users API](RC-API-22_Export-Users.md) (export full per-user permission sets)
+- [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) (export role definitions and their privilege sets)
+- [RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) (create or update role definitions)
 - [RC-API-56 — Import User-Role Assignments API](RC-API-56_Import-User-Role-Assignments.md) (assign users to roles via API)
 - [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (conceptual overview of roles and assignments)

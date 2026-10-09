@@ -244,8 +244,8 @@ Large demographics sections are often split across two or more descriptive field
 ## 8. Related Articles
 
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (the tool used to create fields and configure embedding)
-- [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)(managing field order and instrument structure)
+- [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) (managing field order and instrument structure)
 - [RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design](RC-FD-09_Field-Embedding-Advanced-Patterns-and-Workflow-Design.md) (real-world patterns including approval workflows and email preview instruments)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(frequently used alongside field embedding to control field visibility)
-- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)(writing the logic conditions used with embedded fields)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (frequently used alongside field embedding to control field visibility)
+- [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (writing the logic conditions used with embedded fields)
 - [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (covers @PLACEHOLDER and other action tags used to refine embedded field behavior)

@@ -189,5 +189,5 @@ Example success response (JSON):
 ## 7. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-12 — Export File API](RC-API-12_Export-File.md)(download files from file-upload fields)
-- [RC-API-13 — Import File API](RC-API-13_Import-File.md)(upload files to file-upload fields)
+- [RC-API-12 — Export File API](RC-API-12_Export-File.md) (download files from file-upload fields)
+- [RC-API-13 — Import File API](RC-API-13_Import-File.md) (upload files to file-upload fields)

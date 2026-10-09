@@ -239,6 +239,6 @@ This number reflects how many arms were created or renamed, not the total number
 # 7. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
-- [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)(retrieve arm metadata from a project)
-- [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)(remove arms from a project)
+- [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md) (retrieve arm metadata from a project)
+- [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md) (remove arms from a project)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms are structured; use case for programmatic import)

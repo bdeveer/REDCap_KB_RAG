@@ -318,6 +318,6 @@ After system-level DDP configuration is complete:
 
 ## 8. Related Articles
 
-- [RC-DDP-01 — Dynamic Data Pull — Overview & User Guide](RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md)(user-facing concepts, mapping, adjudication)
+- [RC-DDP-01 — Dynamic Data Pull — Overview & User Guide](RC-DDP-01_Dynamic-Data-Pull-Overview-and-User-Guide.md) (user-facing concepts, mapping, adjudication)
 - [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (related integration pattern using HTTP POST)
-- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)(DDP privilege assignment)
+- [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) (DDP privilege assignment)

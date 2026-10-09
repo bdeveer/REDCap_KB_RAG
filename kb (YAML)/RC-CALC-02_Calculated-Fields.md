@@ -232,7 +232,7 @@ A calculated field's value is recomputed in three contexts:
 # 10. Related Articles
 
 - [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (full reference for `datediff()`, `round()`, `sum()`, `if()`, and all other functions usable in formulas)
-- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(for text output or date output calculations)
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) (for text output or date output calculations)
 - [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) (the shared variable reference and operator syntax)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (where calculated fields are created and formulas entered)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (bulk field creation including calculated fields)

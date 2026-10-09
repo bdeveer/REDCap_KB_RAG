@@ -443,6 +443,6 @@ When the setting is enabled, project-level users with Project Design and Setup r
 - [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md) (navigating repeated instances as a data entry user)
 - [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (setting up instruments before longitudinal configuration)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (building and managing instruments)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(how branching logic is affected by longitudinal setup)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (how branching logic is affected by longitudinal setup)
 - [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (data entry in a longitudinal context)
 - [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (accessing Project Setup)

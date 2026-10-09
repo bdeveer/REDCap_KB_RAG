@@ -148,9 +148,9 @@ See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for authentication, toke
 ## 8. Related Articles
 
 - [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (full workflow and import tool walkthrough)
-- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)(index of all CSV upload types in REDCap)
+- [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md) (index of all CSV upload types in REDCap)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and unique event name reference)
-- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)(repeating instance reference)
+- [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (repeating instance reference)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG assignment and the `redcap_data_access_group` column)
 - [RC-API-02 — Export Records API](RC-API-02_Export-Records.md)
 - [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)

@@ -13,7 +13,7 @@
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project) |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project) |
 | **Synonyms** | export project xml api method; how do i export the whole project as xml via api; api call to clone a project as cdisc odm xml; export project structure and data as xml through the api; download project odm xml file using the api; api method to get returnmetadataonly project xml; export full project design xml for cloning api; get project xml export to recreate project on another server |
 
 ---
@@ -217,6 +217,6 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
-- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project)
 - [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument structure captured in the project XML)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the metadata embedded in the exported XML)

@@ -275,7 +275,7 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 # 8. Related Articles
 
 - [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md) (public vs. individual links, smart variables, Survey Options menu)
-- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)(automated, trigger-based invitation scheduling)
+- [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) (automated, trigger-based invitation scheduling)
 - [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md) (controlling multi-survey flow for participants)
 - [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md) (email history for Alerts & Notifications)
 - [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) (using piped variables in email bodies)

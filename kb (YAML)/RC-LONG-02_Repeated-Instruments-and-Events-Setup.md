@@ -320,5 +320,5 @@ When the setting is enabled, users with Project Design and Setup rights can make
 - [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md) (navigating longitudinal records)
 - [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (building instruments before configuring repeatability)
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) (creating and managing instruments)
-- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)(how repeated setups affect branching logic)
+- [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) (how repeated setups affect branching logic)
 - [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) (data entry in a longitudinal and repeated context)

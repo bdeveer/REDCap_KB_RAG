@@ -18,7 +18,7 @@ related:
 - id: RC-API-34
   title: Export Project Info API
 - id: RC-API-37
-  title: Import Project (Create Project) API(Create Project)
+  title: Import Project (Create Project) API (Create Project)
 tags:
 - api
 synonyms:
@@ -231,6 +231,6 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
-- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)(Create Project)
+- [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project)
 - [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (instrument structure captured in the project XML)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the metadata embedded in the exported XML)

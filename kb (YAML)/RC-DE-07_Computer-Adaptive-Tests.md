@@ -132,6 +132,6 @@ If CAT instruments are unavailable in your instance, or if a CAT fails to load o
 # 7. Related Articles
 
 - [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
-- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)(relevant if the CAT instrument is administered as a participant-facing survey)
+- [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) (relevant if the CAT instrument is administered as a participant-facing survey)
 - [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (how to document issues encountered during a CAT administration)
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level CAT module enablement)
