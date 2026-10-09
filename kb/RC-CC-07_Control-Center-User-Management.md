@@ -35,7 +35,7 @@ The Users section contains the following tools:
 
 ### Browse Users
 
-A searchable list of all user accounts on the REDCap instance. Administrators can look up users by **username, first name, last name, or primary email address**.
+A searchable list of all user accounts on the REDCap instance. The Browse Users and **Add Users (Table-based Only)** pages were restyled slightly in 17.5.0; the options are unchanged. Administrators can look up users by **username, first name, last name, or primary email address**.
 
 #### User Account Details
 

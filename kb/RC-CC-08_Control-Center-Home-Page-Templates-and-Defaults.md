@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Synonyms** | control center home page settings; customize the redcap landing page; create project templates for users; set default project settings instance-wide; configure redcap footer settings; manage available field validation types; change the my projects page appearance; add a new field validation across all projects |
@@ -124,7 +124,7 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 
 This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can enable or disable individual validation types, and can add custom validations developed for the institution.
 
-> **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways.
+> **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways. In 17.4.0–17.4.2 the help tooltips for **Data Type** and **Display Name** on the add form were swapped; trust the field labels, not the tooltips (fixed 17.4.3).
 
 Two consequences of custom validation types worth knowing, both independent of version:
 

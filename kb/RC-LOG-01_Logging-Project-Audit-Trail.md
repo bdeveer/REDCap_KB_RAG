@@ -85,6 +85,7 @@ To use the API Export Logging endpoint programmatically, the user must also have
 | PDF downloads of single or multiple instruments now log **contextual detail** — instrument, event, instance, and whether the PDF used the "compact" format | 17.0.0 |
 | The **Email Logging** search results table includes an email **Type** column, useful when searching across all types at once | 17.2.0 |
 | The record drop-down on the **Email Logging** page is searchable | 15.7.2 |
+| The **"This data entry form with saved data (via browser's Save as PDF)"** export option is logged like the other PDF export options. Below this version it left no log entry | 17.5.3 Standard / 17.3.16 LTS |
 
 The 17.0.0 change is worth noting for anyone using the log as evidence of what left the project: previously a PDF download was recorded without saying *which* instrument or event it covered, so the entry established that an export happened but not what it contained.
 

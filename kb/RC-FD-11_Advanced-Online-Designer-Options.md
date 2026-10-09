@@ -7,10 +7,10 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-05-06 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)|
 | **Synonyms** | edit multiple fields at once; quick modify fields bulk action; jump to a field by variable name; field navigator in the online designer; add custom css to an instrument; style a form or survey with css; bulk apply changes to selected fields; advanced online designer shortcuts |
@@ -73,6 +73,8 @@ The toolbar is organized into two rows. The top row contains the primary structu
 ### 2.4 Navigating Within the Selection
 
 Once you have multiple fields selected, two small **prev / next** arrows appear in the toolbar. These scroll the page to each selected field in order, which is useful for verifying your selection on long instruments before committing to a bulk action.
+
+From 17.4.4 (Standard), the selection controls are more prominent, and pressing **Escape** is handled more consistently when working in the toolbar.
 
 ### 2.5 Expanding the Selection with the QEES Panel
 
