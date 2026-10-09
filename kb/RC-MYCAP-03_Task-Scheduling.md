@@ -7,10 +7,10 @@
 | **Domain** | MyCap Mobile App |
 | **Applies To** | Projects with MyCap enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md); [RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox](RC-MYCAP-06_Active-Tasks-and-Mobile-Toolbox.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
 | **Synonyms** | how do i set up mycap task scheduling; control when tasks appear in the mycap app; one-time repeating and fixed schedule types; anchor tasks to install date or baseline date; delay onset and end conditions for mycap tasks; schedule tasks in a longitudinal mycap project; why isn't a mycap task showing up on schedule; mycap schedule reference date |
@@ -128,6 +128,10 @@ Delay onset is available for One-Time and Repeating schedule types. It defines t
 
 For Infinite tasks, delay onset is not applicable — the task is always available.
 
+For Fixed tasks, delay onset does not apply either, and from 17.5.3 the **Number of days to delay** input is hidden on the Task Setup page for Fixed schedules.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):** The **Number of days to delay** input is still shown for Fixed schedules, and a value entered there **overrides** the fixed dates. Leave it at 0 on Fixed tasks.
+
 ---
 
 ## 5. End Conditions
@@ -240,6 +244,8 @@ For MTB tasks, REDCap v14.3.8 or later is required. MTB tasks appear in the same
 **Setting Active Tasks up before designating them to events (longitudinal).** Active Tasks must be designated to events on the instrument–event mapping page before you can configure them in the MyCap Active Tasks setup. Attempting to set up an Active Task before event designation will result in it not appearing in the scheduling interface.
 
 **Using Fixed schedule when participant-relative timing is needed.** Fixed schedules are based on calendar dates, not individual participant timelines. All participants see Fixed schedule tasks on the same dates, regardless of when they joined. Use One-Time or Repeating schedules for participant-relative timing.
+
+**Editing schedules of active tasks in production.** Changing the schedule of a task participants are already using can make **completed tasks reappear** in their app, and schedule changes cannot be previewed on a device before they are published. From 17.4.3 and 17.5.3, REDCap warns about both when you edit a schedule in a production project. Test the change in a development copy first — see [RC-MYCAP-08 — Testing MyCap](RC-MYCAP-08_Testing-MyCap.md).
 
 **Not setting an end condition on Repeating tasks when appropriate.** Without an end condition, a Repeating task runs indefinitely. If the study has a defined endpoint, set an end condition to prevent tasks from appearing after study completion.
 

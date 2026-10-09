@@ -7,10 +7,10 @@
 | **Domain** | Surveys |
 | **Applies To** | Projects with surveys enabled; requires Project Design and Setup, User Rights, and Data Access Groups rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) |
 | **Synonyms** | how do i set up electronic consent in redcap; e-consent framework setup; collect signed consent forms online; generate a signed consent pdf; manage consent versions over time; participant signature and consent workflow; electronic informed consent configuration; immutable consent pdf record |
@@ -231,7 +231,7 @@ If consents were captured on any of these versions, the archived PDFs and the si
 After saving the e-Consent entry, click **"Add consent form"** in the Survey column of the e-Consent table. The popup contains:
 
 - **Consent form version** — A required identifier for this version. Use a consistent scheme (e.g., incrementing integers: 1, 2, 3; or dates: 2025-01-15). The scheme is yours to define — pick one and stick to it.
-- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown.
+- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown. The descriptive field **must not be the only field on the instrument** — if it is, the PDF on the survey certification page does not generate correctly. Put at least the signature or name fields on the same instrument. The dialog states this from 17.4.3.
 - **Display for specific DAG** — If DAGs are defined, assign this version to a specific DAG or to the default ("When record is not assigned to a DAG"). Always create a default version — records without a DAG assignment will show a blank consent if no default exists.
 - **Display for specific Language** — If MLM languages are defined, assign this version to a specific language or to the default ("When participant has no language selected"). Always create a default version for the same reason.
 - **Consent form content** — Two options:

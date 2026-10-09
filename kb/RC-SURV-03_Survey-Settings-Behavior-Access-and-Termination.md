@@ -7,10 +7,10 @@
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; some settings (Survey Response PDF Save, Time Limit) require additional project features such as longitudinal mode or the Participant List |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
 | **Synonyms** | how do i set a survey expiration date; limit who can access a survey; what happens after a participant submits a survey; survey termination and redirect options; set a survey time limit; save and return later setting; control survey access and behavior; show a custom message when a survey closes |
@@ -223,6 +223,8 @@ Example: You send a weekly symptom survey every Monday. Setting a 7-day time lim
 Takes the survey offline at a specific date and time — regardless of how many responses have been collected and regardless of individual invitation timing.
 
 Example: You want registration for an event to close at midnight on the day before the event.
+
+Expiration is applied by the scheduled **Expire Surveys** cron job, not at the exact second. From 17.5.1, each survey it expires is recorded in the project's logging, so you can confirm when a survey actually went offline.
 
 > **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly. For this installation's server time zone, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 3**.
 

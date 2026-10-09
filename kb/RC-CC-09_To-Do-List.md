@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
 | **Synonyms** | control center to-do list task queue; approve draft changes requests admin; pending administrator action items; where do i review user requests in redcap; approve project move to production; admin approval queue control center; list of tasks awaiting administrator review; handle pending requests from users |
@@ -87,7 +87,7 @@ The To-Do List is tightly integrated with REDCap's Production mode workflow.
 1. A project is placed in Production mode to lock design and restrict changes
 2. A user with appropriate permissions submits design changes via Draft Mode
 3. REDCap automatically creates an "Approve draft changes" task in the To-Do List
-4. The administrator is typically notified by email of the pending request
+4. The administrator is typically notified by email of the pending request. From 17.5.1, these To-Do List request emails are logged under their own **To-Do List Request** category in Email Logging, which also has a matching filter option — useful for confirming a notification went out
 5. The administrator reviews and approves or rejects the changes
 6. The changes take effect (if approved) or are returned for revision (if rejected)
 

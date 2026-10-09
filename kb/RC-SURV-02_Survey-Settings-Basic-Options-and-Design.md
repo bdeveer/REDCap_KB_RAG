@@ -7,10 +7,10 @@
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; assumes surveys have been enabled on at least one instrument |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
 | **Synonyms** | how do i change the look of my survey; add a logo and colors to a survey; edit survey title and instructions; customize survey layout and fonts; survey design and theme options; basic survey settings page; change survey appearance; where do i set the survey status |
@@ -83,6 +83,13 @@ Use a participant-friendly title when the instrument name is technical or intern
 - Survey title: `Patient Health Questionnaire`
 
 > **Note:** The survey title supports a limited set of HTML tags, including `<u>` (underline) and `<i>` (italic). Full HTML or script tags are not permitted.
+
+**Piping into the title** *(17.5.3+)* — the survey title can contain piped values, e.g. `Follow-up survey for [first_name]`. Two limits apply:
+
+- It works only for **existing records**. The public survey link has no record when it opens, so piping is not applied there.
+- The title is evaluated **once, on page load**. It does not update live as the respondent answers questions on the page.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):** Piping in the survey title is not supported. Pipe into the survey instructions instead, which has always worked.
 
 ### 3.3 Survey Instructions
 

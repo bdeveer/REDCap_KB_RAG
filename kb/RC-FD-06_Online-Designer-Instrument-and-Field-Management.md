@@ -7,10 +7,10 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup user rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-04-11 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how to add edit move or delete fields; rename copy or reorder instruments; manage fields in the online designer; all redcap field types explained; create a matrix of fields; drag and drop logic builder for branching; delete an instrument in the designer; online designer field management tasks |
@@ -71,7 +71,7 @@ When you open the Online Designer, you see a list of all instruments currently d
 
 | Button | Description |
 | --- | --- |
-| **Create Snapshot of Instruments** | Backs up a data dictionary of your current instrument setup. Useful before making significant structural changes. See [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) for more on the Data Dictionary. |
+| **Create Snapshot of Instruments** | Backs up a data dictionary of your current instrument setup. Useful before making significant structural changes. From 17.5.0 you can attach an optional **comment** and **file** to the snapshot (see [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) §6.2). See [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) for more on the Data Dictionary. |
 | **+ Create** | Opens the instrument creation flow, allowing you to add a new blank instrument to your project. |
 | **Import** | Imports a validated instrument from the REDCap Shared Library. See [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) for details. |
 | **Upload** | Imports a local zip file to create a new instrument. See [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) for details. |

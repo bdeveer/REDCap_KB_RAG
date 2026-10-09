@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | what is piping in redcap; how does piping syntax work; how to display a field value in another field label; [variable] bracket piping basics; what does each field type return when piped; how to insert a previous answer into a question; piping a field into a form label; getting started with redcap piping |
@@ -101,6 +101,8 @@ Piping works anywhere REDCap displays text. The complete list of supported locat
 **Descriptive text fields.** A field type that displays text without capturing any data. Piping into descriptive text fields is useful for building summary displays — for example, showing a participant's entered values back to them mid-instrument.
 
 **Survey instructions.** The introductory text shown at the top of a survey before the first question.
+
+**Survey title** *(17.5.3+)*. Existing records only (not the public survey), and evaluated on page load only — see [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) §3.2.
 
 **Survey completion text.** The message shown after a participant submits a survey. Piping participant information (such as their name) into the completion message personalizes the experience.
 

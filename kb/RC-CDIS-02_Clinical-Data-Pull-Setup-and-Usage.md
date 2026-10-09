@@ -7,10 +7,10 @@
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | Institutions using real-time, prospective clinical data collection from an EHR |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md); [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md); [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)|
 | **Synonyms** | how do i pull ehr data one patient at a time; set up clinical data pull cdp; adjudicate imported clinical data before saving; review and approve ehr data in redcap; real-time prospective clinical data collection; map ehr fields to redcap fields cdp; patient-by-patient clinical data import; cdp adjudication workflow |
@@ -171,6 +171,7 @@ The **Mapping Helper** supports setup and troubleshooting without needing a live
 | Review **pasted or uploaded FHIR payloads** to inspect supported resource data, without fetching live data from the EHR | 17.1.3 |
 | **Search for available patient identifiers** by entering patient demographics, to validate patient lookup and mapping setup | 17.1.3 |
 | CDP Mapping Setup reachable directly from the Clinical Data Interoperability Services section of the left-hand project menu, next to Mapping Helper | 17.2.0 |
+| Mapping results gain a **collapsible summary** (entries per category, unique mappings, mapping-status coverage, REDCap workflow, EHR/FHIR source, progressive fetched totals, filtered vs. category totals); categories sorted alphabetically; table headings and mapping statuses stay visible while scrolling | 17.4.2 |
 
 Both 17.1.3 additions address the same problem: previously, checking whether a mapping was correct meant pulling real patient data. Working from a pasted payload lets you validate the setup without touching live records.
 

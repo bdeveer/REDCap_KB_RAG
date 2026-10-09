@@ -74,7 +74,7 @@ Not all REDCap field types are supported in MyCap. The following table lists com
 | File upload (image capture) | Yes — use `@MC-FIELD-FILE-IMAGECAPTURE` |
 | File upload (video capture) | Yes — use `@MC-FIELD-FILE-VIDEOCAPTURE` |
 | Signature | **Yes** — from 15.4.1. Earlier versions could not receive Signature field data from the app |
-| Descriptive text | Yes |
+| Descriptive text | Yes — including media attachments and embedded media from 17.4.3 |
 | Section header | Yes |
 | Matrix (Grid of radio buttons) | Yes |
 
@@ -162,6 +162,14 @@ MyCap determines whether a task has been completed by checking the REDCap form c
 
 - If the required completion status has been reached: the task is marked done and removed from the participant's active task list (unless on an Infinite or Repeating schedule).
 - If the required completion status has not been reached: the task remains available in the participant's app and they may resubmit.
+
+### 5.3 Save and Complete Later — "Partial MyCap Response" *(17.5.0+)*
+
+When a task has **Allow save and complete later?** enabled, a participant can leave a task part-way through. From 17.5.0 (Standard), such a submission is saved under a dedicated **Partial MyCap Response** status rather than an ordinary form status, so partial and finished tasks can be told apart in REDCap. The record shows an informational banner with the start and entry dates, which stays until the participant performs a complete sync.
+
+How the setting behaves in the app depends on the task's schedule; the help popup beside the setting on the task settings page explains the differences (clarified in 17.4.3).
+
+> **Version caveat (below 17.5.0 Standard, and the 17.3.x LTS line):** There is no Partial MyCap Response status. A partial submission is indistinguishable from other incomplete data, so check the form status and the data itself before treating a task as done.
 
 ---
 

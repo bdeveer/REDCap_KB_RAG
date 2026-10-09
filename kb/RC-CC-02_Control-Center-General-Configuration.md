@@ -7,13 +7,13 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)|
-| **Synonyms** | control center general configuration settings; configure outgoing email server in redcap; redcap smtp and mail delivery settings; server configuration settings control center; configuration check diagnostic tool; instance-level system settings page; where do i set the redcap base url; other system settings control center |
+| **Synonyms** | control center general configuration settings; configure outgoing email server in redcap; redcap smtp and mail delivery settings; server configuration settings control center; configuration check diagnostic tool; instance-level system settings page; where do i set the redcap base url; other system settings control center; fix broken legacy image or file download links after upgrade; nginx version redirect 404 fallback |
 
 ---
 
@@ -22,6 +22,8 @@
 The **General Configuration** page is the central hub for REDCap instance-level settings that control how the system operates at a technical level. It is organized into several major sections: Configuration Check (diagnostic tools), Server Configuration Settings (basic system operations), Configuration for Outgoing Emails (mail delivery), and Other System Settings (institutional and behavioral options). These settings affect all users and projects on the instance and require REDCap administrator access to modify.
 
 ---
+
+> **API token fields are masked (17.5.0+).** Every API token field on the General Configuration page is shown as a password mask, so third-party service tokens are not exposed to anyone looking at the screen.
 
 The **General Configuration** page contains the core technical and operational settings that govern how REDCap runs at the instance level. It is organized into three sub-sections: **Server Configuration Settings**, **Configuration for Outgoing Emails**, and **Other System Settings**. A separate **Configuration Check** tool also lives under System Configuration.
 
@@ -52,6 +54,7 @@ These are passive indicator checks shown as pass/warn/fail icons. They do not st
 - **GD library (version 2+)** — Required for image processing features.
 - **Imagick PHP extension** *(Recommended, not required)* — If not installed, inline PDF attachments on **Descriptive Text** fields will not display inside PDF exports of forms or surveys. Recommended for full PDF functionality.
 - **PHP Fileinfo extension** — Required for file-type detection on uploads.
+- **Dangerous PHP functions disabled** *(17.5.4+)* — recommends adding functions such as `system` and `exec` to the `disable_functions` setting in the web server's `php.ini` where they are not already listed. These functions let PHP run operating-system commands, so disabling them limits what a code-execution flaw can do. Check that no External Module you use depends on them before disabling.
 - **REDCap can send emails** — Confirms the mail subsystem is functional.
 
 ### MySQL / MariaDB Configuration Recommendations
@@ -118,9 +121,22 @@ Two related changes:
 - From **16.1.5**, REDCap rejects survey and API calls whose URL contains a version directory. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`. REDCap noted no known vulnerabilities in those endpoints at the time — this is pre-emptive.
 - From **17.2.2**, the **Automatic Version Redirect** feature can redirect stale bookmarks and old survey invitation links to the current version rather than returning a 404. The Configuration Check page carries setup instructions for Apache, NGINX and IIS. It requires web server configuration changes and should be implemented by whoever administers that layer.
 
+The redirect instructions were refined again: the Apache test also recognises the modern `rewrite_module` identifier as well as `mod_rewrite.c` (17.4.4 Standard / 17.3.10 LTS), the first mod_rewrite step notes that `AllowOverride` must permit it (17.5.1 / 17.3.14), and the NGINX recommendation now ends the default location block with a plain **404** rather than handing unmatched requests to `redcap_redirect.php` (17.5.4 / 17.3.18).
+
+> **Version caveat (NGINX, below 17.3.18 LTS / 17.5.4 Standard):** The earlier NGINX recommendation sent all unwanted traffic to `redcap_redirect.php`, so REDCap itself processed scanner and bot requests and could **trigger IP bans** under some conditions. If you implemented the redirect on NGINX from older instructions, replace the fallback with a 404 per the current Configuration Check page.
+
 > **Version caveat (17.2.2–17.2.3):** The Automatic Version Redirect instructions initially specified placing files in the **version folder** instead of the REDCap root directory. Corrected in 17.3.0, which also embedded `redcap_redirect.php` into the Configuration Check steps rather than the separate non-versioned-files workflow. 17.4.0 moved the redirect's own check to client-side JavaScript, because server-side URL testing produced inaccurate results on some server configurations. A redirect configured on 17.2.2 or 17.2.3 that never worked most likely has its files in the wrong directory.
 
 > **Note — clear the Rapid Retrieval cache after removing old version directories.** Cached pages written while REDCap was on a previous version can reference images and links under that version's path, and will 404 once the directory is gone.
+
+### Fix Legacy Image/File URL *(17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS)*
+
+A security fix in **17.3.11 LTS / 17.4.5 Standard** (and 16.0.50 LTS) changed the document-hash algorithm used in image and file-download links. Links created before an instance reached **15.7.3** — typically images uploaded through the rich text editor into field labels, survey instructions or emails, and file-download links that someone copied and pasted as static text — stopped working.
+
+- **Manual tool (17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS):** a Control Center page, **Fix Legacy Image/File URL**, regenerates a valid URL from a broken one. When a user reports a broken image or download link, they send the URL to an administrator, who generates the replacement and gives it back for pasting in place of the old one.
+- **Automatic repair (17.3.14 LTS / 17.5.1 Standard onward):** the upgrade process rewrites broken legacy URLs across the system itself. Coverage was extended to Community Platform Software posts in 17.5.3 Standard / 17.3.16 LTS and completed in **17.3.18 LTS / 17.5.4 Standard**, where earlier passes had missed some URLs. Nothing needs to be done by users or admins.
+
+> **Version caveat (17.3.11–17.3.17 LTS / 17.4.5–17.5.3 Standard):** Some legacy image and file links may still be broken. Upgrade to 17.3.18 LTS / 17.5.4 Standard, which repairs them during the upgrade, or fix individual links with the Fix Legacy Image/File URL page.
 
 ### Easy Upgrade
 

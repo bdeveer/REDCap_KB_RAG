@@ -7,13 +7,13 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Synonyms** | control center browse and manage user accounts; system-level user account administration; user allowlist to restrict redcap access; email a filtered group of users; manage api tokens across all projects; edit a user account at the instance level; control center users section tools; find and edit user accounts admin |
+| **Synonyms** | control center browse and manage user accounts; system-level user account administration; user allowlist to restrict redcap access; email a filtered group of users; manage api tokens across all projects; edit a user account at the instance level; control center users section tools; find and edit user accounts admin; how do i change a redcap username; rename a user account in the control center |
 
 ---
 
@@ -78,10 +78,24 @@ From the Browse Users page, administrators can:
 - **Edit user info** — update any of the editable attributes above
 - **Suspend/unsuspend** an account
 - **Delete** a user from the REDCap system (not available for administrator accounts)
-- **Reset password** (for table-based authentication instances)
+- **Reset password** (for table-based authentication instances). Sending the reset email is logged (17.4.2+ Standard). The text under the button reads **"Password last reset via password reset email on X"** — X is when the user completed a reset from a reset email, whether an admin or the user triggered it (wording clarified in 17.5.1 Standard / 17.3.14 LTS).
 - **Grant/revoke administrator privileges**
+- **Change Username** *(17.5.0+)* — see below
 
 > **Note:** Administrator accounts cannot be deleted through this interface. To remove administrator access, first revoke admin privileges via the Administrator Privileges page, then delete the account if needed.
+
+#### Changing a Username *(17.5.0+)*
+
+When viewing an individual user, a **Change Username** button opens a dialog for entering the new username. REDCap replaces the username in every relevant database table **except the logging tables** (`redcap_log_event*` and `redcap_log_view`), which keep the old name for historical accuracy. The change itself is logged.
+
+Once a user's username has been changed, a **History** button appears on their Browse Users page showing each change with its timestamp.
+
+Typical uses: a name change, or moving an account to a new SSO identifier format.
+
+- **Searching the audit trail:** Project logging before the change shows the *old* username. Use the History button to find it before searching logs for that person's activity.
+- **SSO accounts:** the new username must be what the identity provider will actually send at login, or the user will arrive as a new, separate account.
+
+> **Version caveat (17.5.0 Standard):** Early bugs, fixed in 17.5.1: the confirmation popup could not be closed, a user could inadvertently create a new account under their previous username, and users with a username-change history could not be deleted. Setting or changing a user's **sponsor** on Browse Users always failed in 17.5.0 through 17.5.2 (fixed in 17.5.3). Use 17.5.3 or later.
 
 #### View User List By Criteria
 

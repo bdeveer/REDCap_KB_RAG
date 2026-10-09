@@ -7,10 +7,10 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.6 |
-| **Last Updated** | 2026-09-21 |
+| **Version** | 1.8 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
 | **Synonyms** | how do i move my project to production; what are the project statuses; difference between development and production mode; how to copy or delete a project; make design changes after going to production; enter draft mode to edit a live project; project lifecycle stages explained; change project status settings |
@@ -53,7 +53,7 @@ The active data collection state. In Production:
 - This protects existing data from accidental modification or deletion.
 - Surveys, alerts, automated invitations, and all standard features remain fully active.
 
-**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live.
+**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+) — see [RC-RAND-03 — Working with Randomization](RC-RAND-03_Working-with-Randomization.md).
 
 > **Why move to Production?** Moving to Production preserves data accuracy and integrity. The post-production change control process provides a safety check to prevent accidental deletion, recoding, or overwriting of data that has already been collected.
 
@@ -194,6 +194,8 @@ Two caches are cleared by this action:
 - **Rapid Retrieval** — A page-level cache that stores rendered versions of frequently accessed pages to speed up load times. If a page is returning stale data, clearing this cache forces REDCap to re-render it from the database.
 
 Clearing both caches causes the Record List Cache to regenerate and removes all stored page-level caches for the project. This is safe to do at any time, though REDCap notes it is normally not needed.
+
+While the Record List Cache is rebuilding (status **Processing**), REDCap blocks **renaming records** and **changing a record's DAG assignment** until the build finishes (17.5.3 Standard / 17.3.16 LTS onward), to keep the cache consistent. If either action is refused shortly after clearing caches or a large import, wait and retry.
 
 ---
 

@@ -7,10 +7,10 @@
 | **Domain** | MyCap Mobile App |
 | **Applies To** | Projects with MyCap enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MYCAP-05 — MyCap: App Settings & Participant Management](RC-MYCAP-05_App-Settings-and-Participant-Management.md); [RC-PIPE-16 — Smart Variables: MyCap](RC-PIPE-16_Smart-Variables-MyCap.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
 | **Synonyms** | how do participants join a mycap project; mycap app links and qr codes for enrollment; invite participants to mycap automatically; migrate from firebase dynamic links to app links; embed a mycap join link in an email; why can't a participant join the app; mycap onboarding workflow for coordinators; participant must have a record before joining mycap |
@@ -39,7 +39,7 @@ The legacy URL-based joining mechanism, deprecated August 25, 2025. Firebase Dyn
 
 **QR Code**
 
-A scannable code displayed by the study team (on screen or printed) that a participant scans using the MyCap app — not the device's standard camera app. The QR code contains the participant's unique project code, participant code, and institution identifier. Requires the MyCap app to be pre-installed on the participant's device.
+A scannable code displayed by the study team (on screen or printed) that a participant scans using the MyCap app — not the device's standard camera app. From 17.4.3, clicking the **QR Code** icon on the MyCap Participant List opens a popup that scrolls automatically so the whole code is visible and scannable. The QR code contains the participant's unique project code, participant code, and institution identifier. Requires the MyCap app to be pre-installed on the participant's device.
 
 **Participant Code**
 
