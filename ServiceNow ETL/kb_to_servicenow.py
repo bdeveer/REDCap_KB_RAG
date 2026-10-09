@@ -6,15 +6,17 @@ Reads from the "kb (YAML)" folder — articles use YAML frontmatter for metadata
 and standard markdown for body content.
 
 Sheet 1 – Articles      : one row per article, fields mapped to kb_knowledge columns.
-                          Now self-tags each article with the Yale publish plan
+                          Self-tags each article with the publish plan
                           (audience, per-instance availability, publish_plan, phase,
-                          availability note) via kb_yale_classification.classify().
+                          availability note) via kb_classification.classify(). The
+                          institution-specific data comes from etl.classification_file.
                           workflow_state is DERIVED from the plan, not hardcoded.
 Sheet 2 – Relationships : one row per cross-reference (Prerequisites + Related Topics)
 Sheet 3 – Import Instructions
 """
 
 import re
+import sys
 import yaml
 import markdown
 from pathlib import Path
@@ -23,7 +25,12 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-from kb_yale_classification import classify   # Yale publish-plan tagging
+from kb_classification import classify, AVAIL_COLUMNS   # publish-plan tagging
+
+# Windows consoles default to cp1252, which cannot print the symbols in the progress output.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
 
 # ── Instance configuration ────────────────────────────────────────────────────
 # Paths are loaded from config.local.yaml in the repo root.
@@ -121,22 +128,19 @@ def parse_article(path: Path) -> dict:
         extensions=["tables", "fenced_code", "nl2br"]
     )
 
-    # --- Yale publish classification (audience / per-instance / plan / phase) ---
+    # --- Publish classification (audience / per-instance / plan / phase) ---
     plan = classify(source_id)
 
     return {
         "source_id":          source_id,
         "short_description":  title,
         "category":           domain,
-        # Yale publish-plan columns (self-tagged) ────────────────────────────
+        # Publish-plan columns (self-tagged) ─────────────────────────────────
         "audience":           plan["audience"],
         "publish_plan":       plan["publish_plan"],
-        "yale_phase":         plan["yale_phase"],
+        "rollout_phase":      plan["rollout_phase"],
         "feature_dependent":  plan["feature_dependent"],
-        "avail_rc1":          plan["avail_rc1"],
-        "avail_rc2":          plan["avail_rc2"],
-        "avail_connect":      plan["avail_connect"],
-        "avail_p11":          plan["avail_p11"],
+        **{c: plan[c] for c in AVAIL_COLUMNS},   # one avail_<instance> column per instance
         "availability_note":  plan["availability_note"],
         # ─────────────────────────────────────────────────────────────────────
         "applies_to":         applies_to,
@@ -198,14 +202,11 @@ def build_excel(articles: list[dict]):
         "source_id",          # your RC-xxx ID — store in u_source_id custom field
         "short_description",  # article title → kb_knowledge.short_description
         "category",           # domain → kb_knowledge.category
-        "audience",           # End-user | Power-user | Admin | Exclude  (Yale plan)
+        "audience",           # End-user | Power-user | Admin | Exclude
         "publish_plan",       # Publish | Draft (banner) | Hold | Hold (admin KB) | Exclude
-        "yale_phase",         # 0 pilot | 1 core | 2 gated | 3 admin | — held
+        "rollout_phase",      # 0 pilot | 1 core | 2 gated | 3 admin | — held
         "feature_dependent",  # Yes/No — availability varies by instance
-        "avail_rc1",          # RC1 = redcap.med.yale.edu
-        "avail_rc2",          # RC2 = redcap.research.yale.edu
-        "avail_connect",      # Connect = redcapynh.ynhh.org
-        "avail_p11",          # P11 = redcapynh-p11.ynhh.org (21 CFR Part 11)
+        *AVAIL_COLUMNS,       # avail_<instance>, from the classification file
         "availability_note",  # action / caveat for this article
         "kb_knowledge_base",  # leave blank; fill in after admin configures SN
         "workflow_state",     # DERIVED from publish_plan (published/draft/retired)
@@ -235,7 +236,7 @@ def build_excel(articles: list[dict]):
         if fill:
             ws1.cell(row=r, column=col_idx["publish_plan"]).fill = PatternFill("solid", start_color=fill)
         # per-instance colour
-        for h in ("avail_rc1", "avail_rc2", "avail_connect", "avail_p11"):
+        for h in AVAIL_COLUMNS:
             af = _AVAIL_FILL.get(art.get(h))
             if af:
                 ws1.cell(row=r, column=col_idx[h]).fill = PatternFill("solid", start_color=af)
@@ -243,8 +244,8 @@ def build_excel(articles: list[dict]):
     # Column widths by header name
     width_by_header = {
         "source_id": 14, "short_description": 42, "category": 18, "audience": 15,
-        "publish_plan": 15, "yale_phase": 7, "feature_dependent": 11,
-        "avail_rc1": 11, "avail_rc2": 12, "avail_connect": 13, "avail_p11": 12,
+        "publish_plan": 15, "rollout_phase": 7, "feature_dependent": 11,
+        **{c: max(11, len(c) + 2) for c in AVAIL_COLUMNS},
         "availability_note": 52, "kb_knowledge_base": 20, "workflow_state": 14,
         "author": 16, "version": 9, "last_updated": 13, "applies_to": 30,
         "meta": 34, "prerequisite_raw": 34, "related_topics_raw": 34, "text": 80,
@@ -272,7 +273,7 @@ def build_excel(articles: list[dict]):
         "relationship_type",   # Prerequisite | Related Topic
         "target_id",           # RC-xxx being referenced
         "target_title",        # resolved if that article is also in the set
-        "target_publish_plan", # Yale plan for the target — flags links to held/draft targets
+        "target_publish_plan", # publish plan for the target — flags links to held/draft targets
         "notes",
     ]
 
@@ -335,18 +336,18 @@ def build_excel(articles: list[dict]):
         ("source_id", "Store in a custom field (u_source_id) so articles remain findable by RC-xxx ID after import."),
         ("short_description", "Maps to kb_knowledge.short_description (the article title)."),
         ("category", "Maps to kb_knowledge.category. Your SN admin may need to create matching category records first."),
-        ("audience", "Yale plan: End-user articles go in the end-user KB now; Admin/Power-user articles are held for a later admin KB; Exclude = not applicable to Yale."),
-        ("publish_plan", "Yale rollout decision. Publish = load & publish. Draft (banner) = load hidden, add a Yale availability note, publish when the feature is confirmed. Hold / Hold (admin KB) = not for the end-user KB yet. Exclude = do not load."),
-        ("yale_phase", "Rollout order: 0 pilot, 1 core end-user, 2 feature-gated/advanced, 3 admin KB, — held/excluded."),
-        ("avail_rc1..p11", "Per-instance feature availability from config-scan section 6. Standard=always on; On=enabled; On*=enabled but per-project admin activation; Off=disabled; Verify/Part=confirm. Drives the availability banner text on feature articles."),
-        ("availability_note", "Article-specific action or caveat (e.g. 'disabled on P11', 'Connect-only', 'populate from config scan')."),
+        ("audience", "End-user articles go in the end-user KB now; Admin/Power-user articles are held for a later admin KB; Exclude = not applicable to your institution."),
+        ("publish_plan", "Rollout decision. Publish = load & publish. Draft (banner) = load hidden, add a local availability note, publish when the feature is confirmed. Hold / Hold (admin KB) = not for the end-user KB yet. Exclude = do not load."),
+        ("rollout_phase", "Rollout order: 0 pilot, 1 core end-user, 2 feature-gated/advanced, 3 admin KB, — held/excluded."),
+        ("avail_<instance>", "One column per REDCap instance listed in the classification file. Standard=always on; On=enabled; On*=enabled but per-project admin activation; Off=disabled; Verify/Part=confirm. Drives the availability banner text on feature articles."),
+        ("availability_note", "Article-specific action or caveat (e.g. 'disabled on one instance', 'only on instance X', 'populate from local policy')."),
         ("kb_knowledge_base", "Fill in the sys_id or name of your target Knowledge Base before importing."),
         ("workflow_state", "DERIVED from publish_plan: Publish→published, Draft*→draft, Hold*→draft, Exclude→retired. Override in SN if your review process differs."),
         ("author", "Must match a valid ServiceNow user (by name or sys_id). Update before import."),
         ("text", "HTML body. Paste into kb_knowledge.text. Verify formatting in SN preview after import."),
         ("", ""),
         ("SHEET: Relationships", ""),
-        ("target_publish_plan", "The Yale plan for the linked target. Any value other than 'Publish' means the target is not (yet) live — wiring that link now would dead-end. Wire it up when the target is published."),
+        ("target_publish_plan", "The publish plan for the linked target. Any value other than 'Publish' means the target is not (yet) live — wiring that link now would dead-end. Wire it up when the target is published."),
         ("How to use", "After Pass 1 import, use this sheet to wire up Related Articles links in ServiceNow — skipping/deferring links whose target_publish_plan is not 'Publish'."),
         ("⚠ Not in current export", "Target article was referenced but its source .md file was not in this export batch. Import it separately."),
         ("Two-pass approach", "1) Import Articles sheet → note the KB article numbers SN assigns.\n2) Use Relationships sheet + those numbers to create related-article links via SN admin or script."),
@@ -355,7 +356,7 @@ def build_excel(articles: list[dict]):
         ("u_source_id", "Add this custom field to kb_knowledge in ServiceNow. Store the RC-xxx ID here. Enables reliable lookups and future re-imports without duplication."),
         ("", ""),
         ("PUBLISH PLAN SOURCE", ""),
-        ("kb_yale_classification.py", "The audience / per-instance / publish_plan / phase values are generated by kb_yale_classification.py, sourced from repo/current-projects/config-scan/instance-settings-checklist.md. Update that module when Yale enablement changes, then re-run this export."),
+        ("kb_classification.py", "The audience / per-instance / publish_plan / phase values are generated by kb_classification.py from the institution's classification file (config.local.yaml → etl.classification_file; format in classification.example.yaml). Update that file when feature enablement changes, then re-run this export."),
     ]
 
     ws3.append(["Field / Topic", "Guidance"])
@@ -456,12 +457,12 @@ def check_title_collisions(articles: list[dict]) -> dict:
 
 
 def report_publish_plan(articles: list[dict]) -> None:
-    """Print the Yale publish-plan summary so a re-run shows the current split."""
+    """Print the publish-plan summary so a re-run shows the current split."""
     plan_c  = Counter(a["publish_plan"] for a in articles)
-    phase_c = Counter(a["yale_phase"] for a in articles)
+    phase_c = Counter(a["rollout_phase"] for a in articles)
     aud_c   = Counter(a["audience"] for a in articles)
     print("=" * 70)
-    print("YALE PUBLISH PLAN SUMMARY")
+    print("PUBLISH PLAN SUMMARY")
     print("=" * 70)
     print(f"Total articles: {len(articles)}")
     print("\nBy publish_plan:")
@@ -491,7 +492,7 @@ if __name__ == "__main__":
     print("\nArticle summary:")
     for a in articles:
         print(f"  {a['source_id']:12s} | {a['audience']:16s} | {a['publish_plan']:15s} "
-              f"| ph{a['yale_phase']} | prereqs={a['_prereq_ids']} | related={a['_related_ids']}")
+              f"| ph{a['rollout_phase']} | prereqs={a['_prereq_ids']} | related={a['_related_ids']}")
 
     report_publish_plan(articles)
     check_title_collisions(articles)

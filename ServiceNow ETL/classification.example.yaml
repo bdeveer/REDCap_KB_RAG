@@ -1,0 +1,59 @@
+# KB → ServiceNow publish classification — EXAMPLE
+#
+# Copy this file OUTSIDE the repo, fill it in for your institution, and point
+# config.local.yaml → etl.classification_file at it. kb_classification.py reads it.
+#
+# Resolution order for each article: overrides → topic_rules → default
+# (End-user, Publish, Standard on every instance; rollout phase 1, or 0 if in `pilot`).
+#
+# Availability values: Standard | On | On* (per-project admin activation) | Off | Verify | Part | —
+#   "standard" = Standard on every instance, "none" = — on every instance,
+#   or a mapping of instance key → value (missing keys become —).
+# Each instance adds an avail_<key> column to the ServiceNow import file.
+
+institution: Example University
+
+instances:
+  - key: prod
+    label: Production
+    host: redcap.example.edu
+  - key: secure
+    label: Secure (21 CFR Part 11)
+    host: redcap-secure.example.edu
+
+# Optional: override the readable topic label for a domain prefix
+topic_labels:
+  INST: Example University Instance Policies
+
+# High-traffic end-user articles to load first (rollout_phase 0)
+pilot:
+  - RC-DE-01
+  - RC-FD-01
+  - RC-SURV-01
+
+# Rules applied to every article in a domain (first matching rule wins)
+topic_rules:
+  - topics: [CC, EM]
+    audience: Admin
+    feature_dependent: 'No'
+    availability: none
+    publish_plan: Hold (admin KB)
+    phase: '3'
+    note: Control Center / module administration — internal admin KB.
+
+# Per-article decisions (take precedence over topic_rules)
+overrides:
+  RC-MYCAP-01:
+    audience: End-user
+    feature_dependent: 'Yes'
+    availability: {prod: 'On*', secure: 'Off'}
+    publish_plan: Draft (banner)
+    phase: '2'
+    note: Enabled with per-project activation on Production; disabled on Secure.
+  RC-INFRA-01:
+    audience: Exclude
+    feature_dependent: 'No'
+    availability: none
+    publish_plan: Exclude
+    phase: —
+    note: About self-hosting — not applicable to our users.

@@ -18,6 +18,11 @@ etl:
   # Absolute path for the generated Excel import file (output)
   out_file: "/path/to/REDCap_KB_RAG/ServiceNow ETL/REDCap_KB_ServiceNow_Import.xlsx"
 
+  # Your institution's publish classification (instances, per-article availability,
+  # holds/excludes). Keep it outside this repo; format: ServiceNow ETL/classification.example.yaml.
+  # Leave unset to publish everything as End-user with no per-instance columns.
+  classification_file: "/path/to/your/kb-servicenow-classification.yaml"
+
 # ── ServiceNow connection ─────────────────────────────────────────────────────
 # Only needed if you are importing via the ServiceNow API rather than file upload.
 # See ServiceNow ETL/ServiceNow_Admin_Handoff.md for setup instructions.
@@ -28,6 +33,8 @@ servicenow:
   password: "YOUR_SN_PASSWORD"
   # sys_id of the target Knowledge Base (fill in after admin configures SN)
   knowledge_base_sys_id: ""
+  # Service Portal article URL used by resolve_links.py (Pass 2); must contain {sys_id}
+  article_url_template: "https://yourinstance.service-now.com/kb?id=kb_article_view&sys_kb_id={sys_id}"
 
 # ── REDCap instances ──────────────────────────────────────────────────────────
 # The MCP server reads REDCAP_URL and REDCAP_TOKEN from environment variables

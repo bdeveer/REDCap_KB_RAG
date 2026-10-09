@@ -6,8 +6,8 @@ admin has sent back an export of the imported articles. It turns the RC-xxx
 references inside each article into real ServiceNow hyperlinks, and produces a
 ready-to-import "Related Articles" file for the sidebar.
 
-Because Yale is NOT adding a u_source_id custom field, the join key across the
-two passes is the article TITLE (short_description). The handback file maps each
+This assumes the ServiceNow instance has NO u_source_id custom field, so the join
+key across the two passes is the article TITLE (short_description). The handback file maps each
 title to its ServiceNow sys_id; every link is built from that.
 
 ────────────────────────────────────────────────────────────────────────────────
@@ -25,7 +25,7 @@ OUTPUTS  (written next to this script)
         Related Articles sidebar (published→published pairs only).
 
 LINK POLICY
-  - Only link to targets whose Yale publish_plan == "Publish" (an end user should
+  - Only link to targets whose publish_plan == "Publish" (an end user should
     not be sent to a draft/held article). References to not-yet-published targets
     are left as plain text and listed in the report so a later pass can fill them
     in once those articles go live.
@@ -34,15 +34,26 @@ LINK POLICY
 
 import re
 import csv
+import sys
 from pathlib import Path
 from collections import Counter
 from openpyxl import Workbook, load_workbook
 
 from kb_to_servicenow import parse_article, KB_DIR, style_header_row
-from kb_yale_classification import classify
+from kb_classification import classify
+import yaml
 
-# Confirmed Yale Service Portal article URL pattern (keyed on sys_id):
-URL_TEMPLATE = "https://yale.service-now.com/kb?id=kb_article_view&sys_kb_id={sys_id}"
+# Windows consoles default to cp1252, which cannot print the symbols in the progress output.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
+
+# Service Portal article URL pattern (keyed on sys_id). Set it in config.local.yaml:
+#   servicenow:
+#     article_url_template: "https://<instance>.service-now.com/kb?id=kb_article_view&sys_kb_id={sys_id}"
+_CONFIG_PATH = Path(__file__).resolve().parent.parent / "config.local.yaml"
+_cfg = yaml.safe_load(_CONFIG_PATH.read_text(encoding="utf-8")) if _CONFIG_PATH.exists() else {}
+URL_TEMPLATE = ((_cfg or {}).get("servicenow") or {}).get("article_url_template", "")
 
 HANDBACK_FILE = Path(__file__).resolve().parent / "sn_handback.csv"   # override as needed
 OUT_DIR = Path(__file__).resolve().parent
@@ -116,6 +127,9 @@ def rewrite_body(html: str, rcid_to_url: dict, self_id: str) -> tuple[str, list]
 
 
 def main():
+    if "{sys_id}" not in URL_TEMPLATE:
+        sys.exit("Set servicenow.article_url_template in config.local.yaml, e.g.\n"
+                 "  https://<instance>.service-now.com/kb?id=kb_article_view&sys_kb_id={sys_id}")
     articles = [parse_article(f) for f in sorted(KB_DIR.glob("RC-*.md"))]
     by_id = {a["source_id"]: a for a in articles}
 
