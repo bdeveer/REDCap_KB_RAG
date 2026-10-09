@@ -9,11 +9,11 @@
 | **Requires** | REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required on the **destination** instance only — see §2 |
 | **Verified Against** | REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against a live instance. The migration workflow itself (§3–4) is from release notes only and **cannot be verified without a REDCap+ subscription** — see the scope note |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
-| **Synonyms** | how do i move a project to another redcap server; project migration tool redcap plus; migrate a whole project including logs and files; migration key redcap; move project between institutions with all data; transfer a redcap project to another instance; does project migration include randomization and logging; project migration dashboard; what does the project migration tool actually copy |
+| **Synonyms** | move a project with the redcap+ migration tool; project migration tool redcap plus; migrate a whole project including logs and files; migration key redcap; move project between institutions with all data; transfer a redcap project to another instance; does project migration include randomization and logging; project migration dashboard; what does the project migration tool actually copy |
 
 ---
 
@@ -45,7 +45,7 @@ For a regulated study, that list is the point. A project moved by XML arrives wi
 
 The authoritative list of what the tool tracks is the **column set of the Project Migration Dashboard** — see §6.2, which enumerates all fifteen components individually.
 
-For the XML-based approach — which remains the right tool when the destination is not on 17.0.0+, or when you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
+When it is available, the PMT is the preferred way to move a project. The Project XML approach is the fallback — for when either instance is below 17.0.0, the destination has no REDCap+ subscription, or you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
 
 ---
 
@@ -53,7 +53,7 @@ For the XML-based approach — which remains the right tool when the destination
 
 ### 2.1 Both instances must be on 17.0.0 or later
 
-The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher.** If either is older, the tool is unavailable and the XML route in `RC-PROJ-05` is the alternative.
+The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher.** If either is older, the tool is unavailable and the XML route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md) is the alternative.
 
 ### 2.2 The subscription requirement is asymmetric
 
@@ -219,6 +219,10 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 **Q: Do we need a REDCap+ subscription to use it?**
 
 **A:** Only to receive projects. Moving a project **off** your instance does not require a subscription; moving a project **to** your instance does. An institution without REDCap+ can send but not receive.
+
+**Q: The destination doesn't have REDCap+. Can we still move the project?**
+
+**A:** Yes, by Project XML — the fallback route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md). It moves the design and, optionally, the records and uploaded files, but not logging, randomization history, locking statuses or survey participants. If that history matters, ask whether the destination can subscribe before you move.
 
 **Q: Both instances need to be on 17.0.0?**
 

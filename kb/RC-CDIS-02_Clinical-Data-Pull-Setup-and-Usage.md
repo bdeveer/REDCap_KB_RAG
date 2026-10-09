@@ -231,7 +231,7 @@ No. CDP only imports clinical notes if they are in HTML format. If your EHR stor
 - [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)
 - [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md)
 - [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md)
-- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) — @CALCTEXT & @CALCDATE (for the @RICHTEXT action tag context, see [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md))
+- [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md)(for the @RICHTEXT action tag context, see [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md))
 - [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) (includes @RICHTEXT)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)

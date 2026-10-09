@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) |
-| **Synonyms** | what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly |
+| **Synonyms** | set slider range min max in data dictionary; what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly |
 
 ---
 
@@ -195,7 +195,7 @@ The Field Type determines how REDCap renders the variable in data entry and surv
 | `calc` | Calculated field; value is computed from a formula |
 | `file` | File upload field |
 | `descriptive` | Static text or image; no data is collected |
-| `slider` | Visual analog scale (0–100); supports optional numeric display |
+| `slider` | Visual analog scale (default range 0–100; set a custom range in columns I/J); supports optional numeric display |
 | `yesno` | Built-in Yes/No radio; no choices column needed |
 | `truefalse` | Built-in True/False radio; no choices column needed |
 
@@ -264,12 +264,12 @@ For `text` fields, this column sets the validation format. REDCap will only acce
 | `integer` | Whole numbers only |
 | `email` | Email address format |
 | `phone` | US phone number format |
-
-> **Note:** The date codes describe the *entry and display* format enforced on the instrument, not the storage format. REDCap stores all dates as YYYY-MM-DD and the API returns them that way regardless of which validation code the field carries — a `date_mdy` field exports as `2026-04-30`. (Verified by API export, REDCap v17, 2026-09.) A user's own date display preference can change how dates appear in an interface download, but not what is stored or what the API returns.
 | `zipcode` | US ZIP code format |
 | `mrn_10d` | 10-digit medical record number |
 | `signature` | Marks a `file` field as a classic (drawn) Signature field |
 | `enhanced_signature` | Marks a `file` field as an Enhanced Signature field — typed or drawn *(17.1.0+)* |
+
+> **Note:** The date codes describe the *entry and display* format enforced on the instrument, not the storage format. REDCap stores all dates as YYYY-MM-DD and the API returns them that way regardless of which validation code the field carries — a `date_mdy` field exports as `2026-04-30`. (Verified by API export, REDCap v17, 2026-09.) A user's own date display preference can change how dates appear in an interface download, but not what is stored or what the API returns.
 
 For `slider` fields, entering `number` in this column displays the current numeric value next to the slider handle.
 
@@ -281,16 +281,18 @@ For `slider` fields, entering `number` in this column displays the current numer
 
 ### 5.8 Columns I & J — Text Validation Min / Text Validation Max (Non-mandatory)
 
-These two columns define acceptable lower and upper bounds for validated `text` fields. Both are optional — you may set a minimum only, a maximum only, or both.
+These two columns define acceptable lower and upper bounds for validated `text` fields, and the range of `slider` fields. Both are optional — you may set a minimum only, a maximum only, or both.
+
+**For `slider` fields:** the columns set the slider's lower and upper bound — e.g. `0` and `10` for a 0–10 scale. Left empty, a slider runs from 0 to 100. The Column F labels (left, middle, right) are placed along whatever range you set. (Verified by Data Dictionary export, REDCap 16.0.49 LTS, 2026-10.)
 
 **Rules:**
 - The value entered must match the validation type. For a `date_ymd` field, enter dates in YYYY-MM-DD format; for a `number` or `integer` field, enter numeric values.
 - Build in a reasonable buffer to accommodate outliers rather than setting hard biological or logical limits that legitimate data could exceed.
 
 **Do not:**
-- Populate these columns for non-text or non-validated field types.
+- Populate these columns for field types other than validated `text` and `slider`.
 
-**Example from practice:** A height field validated as `number` might have a min of `130` and a max of `215` (centimeters).
+**Example from practice:** A height field validated as `number` might have a min of `130` and a max of `215` (centimeters). A pain-rating slider might use `0` and `10`, with Column F labels `No pain | | Worst pain`.
 
 ---
 

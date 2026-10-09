@@ -9,11 +9,11 @@
 | **Requires** | Any supported version. The Project Migration Tool alternative requires v17.0.0+ on both instances — see §1 |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Synonyms** | how do i move a project to another redcap server; migrate a project between installations; export and re-import a full project backup; transfer a project to a different institution; copy a project design to a colleague at another site; back up and restore a redcap project; what is included in a project export; project migration pitfalls |
+| **Synonyms** | how do i move a project to another redcap server; project xml or project migration tool which should i use; migrate a project between installations; export and re-import a full project backup; transfer a project to a different institution; copy a project design to a colleague at another site; back up and restore a redcap project; what is included in a project export; project migration pitfalls |
 
 > **Note on REDCap+:** This article covers the standard project migration workflow available in all REDCap installations using the built-in backup and restore feature. REDCap+ subscribers on 17.0.0+ have a second option, the Project Migration Tool — see [RC-PLUS-02](RC-PLUS-02_Project-Migration-Tool.md) and the routing table in §1.
 
@@ -21,20 +21,27 @@
 
 ## 1. Overview
 
-There are many reasons to move a REDCap project from one installation to another: changing institutions, consolidating multiple REDCap installations, or sharing a project design with a colleague at a different site. Whatever the reason, REDCap provides a built-in mechanism to export a full project backup and re-import it elsewhere.
+There are many reasons to move a REDCap project from one installation to another: changing institutions, consolidating multiple REDCap installations, or sharing a project design with a colleague at a different site. REDCap offers two routes:
 
-> **Scope — this article covers the Project XML approach. There is now a second option.** From **17.0.0**, REDCap+ subscribers can use the **Project Migration Tool**, which moves a project as a whole — including things the XML route cannot carry at all: **record locking statuses, survey participants and timestamps, File Repository contents, randomization assignments and allocation tables, Logging and Email Logging**. See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md).
->
-> **Which to use:**
->
-> | Situation | Route |
-> | --- | --- |
-> | Either instance is below 17.0.0 | Project XML — this article |
-> | The destination instance has no REDCap+ subscription | Project XML — this article |
-> | You only need the project **design**, not its history | Project XML — this article |
-> | You need the audit trail, randomization history or locking statuses to survive the move | Project Migration Tool |
->
-> The XML route remains fully supported and is the right tool in the first three cases. It is not deprecated.
+- **The Project Migration Tool** (17.0.0+, REDCap+) — the newer and far more complete route. It moves the project as a whole, including things the XML route cannot carry at all: **record locking statuses, survey participants and timestamps, File Repository contents, randomization assignments and allocation tables, the Field Comment Log and Data Resolution Workflow, Logging and Email Logging**. Covered in [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md).
+- **Project XML export and import** — the long-standing route, available on every installation. It carries the project design and, optionally, its records and uploaded files, but none of the history listed above. This article covers it.
+
+**Use the Project Migration Tool whenever it is available; use Project XML as the fallback.**
+
+### 1.1 Which route to use
+
+| Situation | Route |
+|---|---|
+| Both instances run 17.0.0 or later **and** the destination has a REDCap+ subscription | **Project Migration Tool** — [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) |
+| Either instance is below 17.0.0 | Project XML — this article |
+| The destination has no REDCap+ subscription (the source does not need one) | Project XML — this article |
+| You only want to share the project **design** — e.g. a template for a colleague — not the project itself | Project XML, metadata only — this article |
+
+If you don't know whether the destination has REDCap+, ask its REDCap administrators before you start — see [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
+
+> **Moving by XML loses the project's history.** A project migrated by XML arrives with no audit trail, no randomization history, no locking statuses and no query history. For a regulated study, check whether that is acceptable before choosing the fallback.
+
+The Project XML route remains fully supported; it is not deprecated.
 
 This article covers:
 
@@ -271,7 +278,7 @@ The Big Bang approach carries the highest risk of data collection gaps and parti
 
 ## 7. Alternative Migration Methods
 
-The full XML backup/restore approach moves the entire project in one step. When that is not possible — for example, when migrating to an older REDCap version, or when you only need to move part of a project — the following piece-by-piece alternatives are available.
+If both instances qualify, the Project Migration Tool ([RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md)) is the preferred way to move a whole project — see §1.1. Within the XML route, the full backup/restore approach moves the entire project in one step. When that is not possible — for example, when migrating to an older REDCap version, or when you only need to move part of a project — the following piece-by-piece alternatives are available.
 
 Note that some features depend on others being in place first. For example, you cannot assign instruments to events until the data dictionary and event definitions are already imported.
 
@@ -302,6 +309,12 @@ Use these targeted exports when you only need to transfer specific components, o
 ---
 
 ## 8. Common Questions
+
+**Q: Should I use Project XML or the Project Migration Tool?**
+
+**A:** Use the Project Migration Tool whenever it is available: both instances on 17.0.0 or later and a REDCap+ subscription on the destination. It moves the project as a whole, including logging, randomization, locking statuses and survey participants. Use Project XML as the fallback when either condition isn't met, or when you only want to share a project's design. See §1.1.
+
+---
 
 **Q: I'm moving to a new institution. Do I need to do anything special before exporting?**
 
@@ -353,6 +366,8 @@ Use these targeted exports when you only need to transfer specific components, o
 
 ## 9. Related Articles
 
+- [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) (the preferred route when both instances qualify)
+- [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) (checking whether an instance has REDCap+)
 - [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, copy/delete features)
 - [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (post-import checklist for setting up your new project)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (piece-by-piece alternative: instrument/field structure transfer)

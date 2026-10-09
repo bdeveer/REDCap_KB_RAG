@@ -165,7 +165,7 @@ This makes the whole app (including the admin login) public — keep the admin p
 Before a version jump, check three prerequisites — any of them will stop the migration:
 
 1. **PHP version.** The minimum is PHP 8.1.0 from REDCap 16.0.5 onward; PHP 8.5 is supported from that version too. The `php:8.3-apache` base used in this build satisfies current REDCap. See [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) Section 3.1.
-2. **Database charset.** REDCap 15.6.0 and higher refuse to upgrade until the Unicode Transformation has been performed, because support for the legacy `UTF8` / `UTF8-MB3` charset was dropped. A stack built as described here starts from a fresh `mysql:8.0` database, so create it as `utf8mb4` and this never arises. See `RC-INFRA-01` Section 3.2.
+2. **Database charset.** REDCap 15.6.0 and higher refuse to upgrade until the Unicode Transformation has been performed, because support for the legacy `UTF8` / `UTF8-MB3` charset was dropped. A stack built as described here starts from a fresh `mysql:8.0` database, so create it as `utf8mb4` and this never arises. See [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) Section 3.2.
 3. **Target version.** Some versions are known-bad for install or upgrade — see the table below.
 
 > **Note — sandbox upgrades are the point.** Validating an upgrade here before it reaches production is one of the main reasons to run this instance. Restore a copy of production's database into the sandbox first; an upgrade that succeeds against an empty schema proves much less than one that succeeds against real structure.

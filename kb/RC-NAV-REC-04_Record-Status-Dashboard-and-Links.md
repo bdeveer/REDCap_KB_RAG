@@ -252,7 +252,7 @@ project.
     Record IDs are clickable links to the Record Home Page; custom
     dashboards and reports are complementary tools
 
-- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) — survey
+- [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md)
     invitation logs contain Record ID links, but only in identified
     (non-anonymous) survey mode
 
