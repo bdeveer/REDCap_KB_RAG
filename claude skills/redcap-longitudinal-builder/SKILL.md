@@ -11,12 +11,14 @@ description: |
   "help me design the longitudinal structure", or any time the user describes study
   timepoints, visit schedules, arms, or form assignments and wants files to import.
   Also trigger when a user shares a protocol document, schedule table, or spreadsheet
-  and asks to turn it into a REDCap longitudinal setup. This is the companion to the
-  redcap-longitudinal-structure skill (which reads existing files) — use this one when
-  building from scratch.
+  and asks to turn it into a REDCap longitudinal setup. Do NOT use for reading,
+  summarizing, or explaining an existing project's arms/events/mappings (use
+  redcap-longitudinal-structure for that) — use this one only when building new structure.
 ---
 
 # REDCap Longitudinal Builder Skill
+
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 This skill guides you through collecting the information needed to generate the three
 REDCap longitudinal project CSV files, then produces them ready for import.
@@ -94,7 +96,7 @@ If the user gives you partial information, ask only the missing pieces.
 Before generating, resolve these common ambiguities:
 
 **Classic mode vs. longitudinal mode — confirm longitudinal is the right choice**
-Per the REDCap Project Design Best Practices (`kb (YAML)/RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`, Section 3.1), longitudinal mode
+Per the REDCap Project Design Best Practices (`C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`, Section 3.1), longitudinal mode
 should only be used when at least one of the following is true:
 - The same instrument is completed by the same participant at more than one time point, OR
 - The project needs multiple arms, event-based branching logic, or scheduling windows
@@ -122,9 +124,10 @@ that's multiple arms.
 (`baseline_arm_1`, `baseline_arm_2`). Clarify whether the same event schedule applies
 to all arms or differs by arm.
 
-**Visit windows**: Not all projects use visit windows. If the user doesn't mention them,
-set `offset_min = offset_max = day_offset` (meaning no window). If they say "±7 days",
-set `offset_min = day_offset - 7` and `offset_max = day_offset + 7`.
+**Visit windows**: Not all projects use visit windows. `offset_min` and `offset_max` are
+window **widths in days** before/after `day_offset` (positive numbers, RC-LONG-01), not
+absolute days. No window = leave them out (default `0`). "±7 days" = `offset_min: 7,
+offset_max: 7`; "-3/+14 days" = `offset_min: 3, offset_max: 14`.
 
 **Form names**: These must match the variable names in the data dictionary exactly
 (lowercase, underscores). If the user gives you human-readable names like "Demographics
@@ -151,8 +154,8 @@ structure to pass to the generator script. The format:
 ```json
 {
   "arms": [
-    {"arm_num": 1, "arm_name": "Treatment"},
-    {"arm_num": 2, "arm_name": "Control"}
+    {"arm_num": 1, "name": "Treatment"},
+    {"arm_num": 2, "name": "Control"}
   ],
   "events": [
     {
@@ -166,23 +169,34 @@ structure to pass to the generator script. The format:
       "event_name": "Month 3",
       "arm_num": 1,
       "day_offset": 90,
-      "offset_min": 83,
-      "offset_max": 97
+      "offset_min": 7,
+      "offset_max": 7,
+      "custom_event_label": ""
     }
   ],
   "mapping": [
-    {"unique_event_name": "baseline_arm_1", "form": "demographics"},
-    {"unique_event_name": "month_3_arm_1",  "form": "labs"}
+    {"event_name": "Baseline", "arm_num": 1, "form": "demographics"},
+    {"event_name": "Month 3",  "arm_num": 1, "form": "labs"}
   ]
 }
 ```
 
-**Note on `unique_event_name`**: You don't need to set this for events — the generator
-derives it automatically. Leave `unique_event_name` out of the events array and the
-generator will compute the correct value. The same function is used when building
-the mapping, so the two files will always stay in sync.
+**Spec keys are strict:** the only top-level keys are `arms`, `events`, and `mapping`
+(singular). Any other key — e.g. `"mappings"` — is an error and nothing is generated, so
+a misnamed key can never silently drop `InstrumentDesignations.csv`. If `mapping` is
+missing or empty the script warns loudly and writes only Arms/Events. Arms accept `name`
+(the Arms CSV column) or `arm_name`. Mapping rows reference an event by `event_name` +
+`arm_num` (preferred) or by its expected `unique_event_name`; rows matching no event are
+skipped with a warning. `custom_event_label` is optional (piped label, e.g. `[visit_date]`).
 
-REDCap's actual slugification algorithm (which the generator replicates exactly):
+**Note on `unique_event_name`**: Do not set it on events. `Events.csv` leaves the
+`unique_event_name` column **blank** so REDCap generates it on import (RC-IMP-09) —
+supplying a value tells REDCap to *modify an existing event* with that name (RC-API-20),
+and the generator warns if you do. The generator still computes the **expected** name
+for each event and uses it in `InstrumentDesignations.csv` and the summary.
+
+These expected names are **predictions**. REDCap's documented algorithm (RC-LONG-01),
+which the generator follows:
 1. Lowercase
 2. **Remove hyphens entirely** — they vanish, not become underscores
    (`"Follow-up"` → `"followup"`, **not** `"follow_up"`)
@@ -193,9 +207,21 @@ REDCap's actual slugification algorithm (which the generator replicates exactly)
 Examples: `"Follow-up 30 min"` → `followup_30_min_arm_1`,
 `"Ad Hoc Follow-up"` → `ad_hoc_followup_arm_1`, `"Month 3"` → `month_3_arm_1`.
 
-**Do not manually type `unique_event_name` values into the spec** unless copying
-them from an existing REDCap export — hand-typed names frequently diverge from
-what REDCap generates, which breaks the mapping import.
+Accented characters are transliterated (REDCap 17.3.0+ in newly created projects;
+older projects may keep accents). The KB documents no length limit or truncation rule,
+so the generator applies none. Two events in the same arm that would produce the same
+name (e.g. "Follow-up" and "Followup") are rejected as an error.
+
+**Always verify after importing `Events.csv`:** download the events (Define My Events →
+download events, or API/MCP `export_events`, RC-API-19) and confirm each real
+`unique_event_name` matches the expected name in `InstrumentDesignations.csv` before
+uploading the designations. A mismatched name makes that mapping row fail silently
+(RC-IMP-09). If any differ, fix the designations file with the real names.
+
+**Scheduling columns:** `Events.csv` always includes `day_offset`, `offset_min`,
+`offset_max` (needed for display order). RC-LONG-01 notes these columns appear in
+REDCap's own export only when the Scheduling module is active; if an upload is rejected
+in a project without scheduling, remove those three columns.
 
 **Event display order — critical for same-day events**: REDCap displays events in
 ascending `day_offset` order. When multiple events share the same `day_offset`,
@@ -214,29 +240,34 @@ same-day events that would sort alphabetically into an unintended order.
 
 ## Step 4: Run the Generator
 
-Save the spec to a temp JSON file and run:
+Save the spec as `longitudinal_spec.json` in `<output_folder>` (the folder the user is working in, or one they name; never a temp folder) and run:
 
 ```bash
 python <skill_path>/scripts/generate_longitudinal.py \
-  --spec /tmp/longitudinal_spec.json \
-  --output-dir /tmp/longitudinal_output/
+  --spec <output_folder>/longitudinal_spec.json \
+  --output-dir <output_folder>
 ```
 
 The script writes up to three CSV files:
-- `Arms.csv` — **only generated and presented for multi-arm projects** (see below)
-- `Events.csv`
-- `InstrumentDesignations.csv`
+- `Arms.csv` — `arm_num,name`; **only written for multi-arm projects** (see below).
+  Arms referenced by events but missing from `arms` are added as "Arm N".
+- `Events.csv` — `event_name,arm_num,day_offset,offset_min,offset_max,unique_event_name,custom_event_label`
+  with `unique_event_name` blank
+- `InstrumentDesignations.csv` — `arm_num,unique_event_name,form` using expected names;
+  only written when the spec has `mapping` rows
 
-It also prints a summary of what was generated and any warnings.
+It also prints a summary (including the expected unique event names) and any warnings.
+Errors (unknown spec keys, duplicate event names in an arm, negative offsets, no events)
+stop the run with exit code 1 and no files are written.
 
-> **Single-arm projects: skip Arms.csv entirely.** REDCap creates a default arm
-> automatically, so there is nothing to import. Do not generate or present `Arms.csv`
-> when the project has only one arm — it adds confusion without benefit.
+> **Single-arm projects: no Arms.csv.** Arm 1 is created automatically when longitudinal
+> mode is enabled (RC-IMP-09), so the script does not write `Arms.csv` when only arm 1 is
+> used. If the user wants arm 1 renamed, tell them to rename it in Define My Events.
 
 For a quick preview without writing files:
 ```bash
 python <skill_path>/scripts/generate_longitudinal.py \
-  --spec /tmp/longitudinal_spec.json \
+  --spec <output_folder>/longitudinal_spec.json \
   --preview
 ```
 
@@ -251,13 +282,17 @@ After generation, do three things:
    the output and gives the user a clear confirmation of what was built:
 
    ```bash
-   python <reader_skill_path>/scripts/parse_longitudinal.py \
-     --arms /tmp/longitudinal_output/Arms.csv \
-     --events /tmp/longitudinal_output/Events.csv \
-     --mapping /tmp/longitudinal_output/InstrumentDesignations.csv
+   python ~/.claude/skills/redcap-longitudinal-structure/scripts/parse_longitudinal.py \
+     --arms <output_folder>/Arms.csv \
+     --events <output_folder>/Events.csv \
+     --mapping <output_folder>/InstrumentDesignations.csv
    ```
 
-2. **Copy files to the workspace folder** and present them so the user can download them.
+   Omit `--arms` for single-arm projects (no `Arms.csv`). Because `Events.csv` has a blank
+   `unique_event_name`, the reader predicts the names and marks them with `~` — tell the
+   user these are expected names to verify after import, not confirmed ones.
+
+2. **Give the user the full path of each file** as a link.
    For single-arm projects, present only `Events.csv` and `InstrumentDesignations.csv`.
 
 3. **Include repeatable instrument/event instructions.** This is mandatory — do not wait
@@ -296,9 +331,26 @@ Tell the user how to import the files:
 > download the current mapping first and merge your new rows into it before uploading.
 >
 > **Alternative — REDCap API:** POST each file with the appropriate `content` parameter
-> (`arm`, `event`, `formEventMapping`) and `action=import`. Arms and events imports are
-> additive; instrument-event mapping import replaces the full configuration (same
-> behavior as the UI upload).
+> (`arm`, `event`, `formEventMapping`) and `action=import`. Use `override=0` for arms and
+> events (`override=1` deletes all existing arms/events first, RC-API-17/20). Arms and
+> events imports are additive; instrument-event mapping import replaces the full
+> configuration (same behavior as the UI upload).
+
+### Uploading via the REDCap MCP connectors
+
+The instrument-event mapping import **replaces the whole mapping** — any designation not
+in the file is unchecked. If the user wants you to import through the REDCap MCP
+connectors instead of uploading themselves:
+
+1. **First export the current state** from the target project: `export_arms`,
+   `export_events`, `export_instrument_event_mappings`. Merge new rows into the existing
+   mapping rather than importing the generated file alone, and show the user the diff.
+2. **Only import on connectors the connector map (`~/.claude/redcap-connectors.md`) marks as non-production** —
+   and only after the user
+   explicitly confirms the target project and the import.
+3. **Never import on production connectors.** For those, hand the user the files to upload themselves.
+4. Import in order arms → events → mappings; after events, run `export_events` and use the
+   real `unique_event_name` values in the mapping before importing it.
 
 ---
 
@@ -320,8 +372,8 @@ Extract the rows (visits) and columns (instruments). Each column with a checkmar
 "X" at a given visit = one row in the mapping. Confirm arm structure, then generate.
 
 ### Single-arm longitudinal project
-Set `"arms": [{"arm_num": 1, "arm_name": "Arm 1"}]` (or the user's preferred name).
-All events go under `arm_num: 1`. Do not generate or present `Arms.csv`.
+Set `"arms": [{"arm_num": 1, "name": "Arm 1"}]` (or omit `arms`). All events go under
+`arm_num: 1`. The script does not write `Arms.csv`.
 
 ### Same event schedule across all arms
 Build events for Arm 1, then duplicate them for other arms with incremented `arm_num`.

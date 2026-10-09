@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 """
 REDCap Data Dictionary Parser
-Parses a REDCap Data Dictionary CSV and outputs a structured JSON summary.
+Parses a REDCap Data Dictionary and outputs a structured summary.
 
 Usage:
-    python parse_dd.py <path_to_data_dictionary.csv> [--json | --text]
+    python parse_dd.py <data_dictionary.csv | metadata.json> [--text | --json] [--fields]
 
-Handles:
-- UTF-8 with and without BOM
+    --text    Human-readable project summary (default)
+    --json    Structured JSON summary
+    --fields  Every field in full (label, type, choices, validation, branching
+              logic, annotation, ...), grouped by instrument, no truncation —
+              suitable as LLM context. Add --json for the same as a JSON list.
+
+Handles (via dd_common.py):
+- UTF-8 with and without BOM, cp1252/latin-1 fallback
+- Display headers ("Variable / Field Name", ...) or API headers (field_name, ...)
+- JSON metadata from the API / a REDCap connector's export_metadata
 - Large HTML fields in descriptive variables
 - All 18 standard REDCap columns
 - Cross-instrument branching logic dependencies
@@ -17,33 +25,34 @@ Handles:
 - Action tag inventory and explanations
 """
 
-import csv
+import argparse
+import html
 import json
 import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-# REDCap descriptive fields can contain large HTML blobs; raise the limit
-csv.field_size_limit(10 * 1024 * 1024)  # 10 MB
+# Windows consoles default to cp1252, which cannot print the report symbols.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
+
+# Shared Data Dictionary reading / constants (same folder as this script)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from dd_common import (  # noqa: E402
+    CHOICE_TYPES, VALID_FIELD_TYPES, COLUMNS, parse_choices, read_dd,
+)
 
 # ---------------------------------------------------------------------------
 # Reference data
 # ---------------------------------------------------------------------------
 
-VALID_FIELD_TYPES = {
-    "text", "notes", "dropdown", "radio", "checkbox",
-    "calc", "file", "descriptive", "slider", "yesno",
-    "truefalse", "sql",
-}
-
-CHOICE_TYPES = {"dropdown", "radio", "checkbox"}
-
-# Action tag brief descriptions — drawn from RC-FD-08 and REDCap documentation.
-# NOTE: A full KB article (RC-AT-01) has not yet been written. These descriptions
-# cover the tags observed across the example projects; the list is not exhaustive.
+# Action tag brief descriptions — checked against the KB action tag index (RC-AT-01)
+# and the per-category articles RC-AT-03..11. Not exhaustive: for any tag not listed,
+# look it up in RC-AT-01.
 ACTION_TAG_DESCRIPTIONS = {
-    "@NOMISSING":           "Prevents saving with a missing value even when field is not in the Required list; commonly used in clinical trials to enforce data completeness",
+    "@NOMISSING":           "Disables missing data codes for this field (hides the M button); does not make the field required (RC-PROJ-04 §7.6)",
     "@HIDDEN":              "Hides field in both survey and data entry modes",
     "@HIDDEN-SURVEY":       "Hides field in survey mode only; still visible in data entry",
     "@HIDDEN-FORM":         "Hides field in data entry mode only; still visible in surveys",
@@ -51,27 +60,26 @@ ACTION_TAG_DESCRIPTIONS = {
     "@READONLY":            "Makes field read-only in both survey and data entry",
     "@READONLY-SURVEY":     "Makes field read-only in survey mode only",
     "@IF":                  "Conditionally applies another action tag based on a logic expression: @IF([cond],'@TAG','')",
-    "@CALCTEXT":            "Displays a calculated text string in a descriptive field; value is not stored",
-    "@CALCDATE":            "Displays a calculated date in a descriptive field; value is not stored",
+    "@CALCTEXT":            "Calculates a text value from an expression; Text Box fields only; the value is stored (RC-AT-09)",
+    "@CALCDATE":            "Calculates a date from a source date + offset; Text Box fields with date validation only; the value is stored (RC-AT-09)",
     "@DEFAULT":             "Pre-fills the field with a specified value when the form first loads",
-    "@SETVALUE":            "Programmatically sets a field value, typically used with smart variables or piping",
+    "@SETVALUE":            "Like @DEFAULT, but re-applies the value on every form load, overwriting what is there (RC-AT-06)",
     "@NOW":                 "Pre-fills with the current date and time when the form loads",
     "@TODAY":               "Pre-fills with today's date when the form loads",
     "@PASSWORDMASK":        "Masks input as asterisks; value is still stored in plain text",
     "@NONEOFTHEABOVE":      "Adds a 'None of the above' option to a checkbox that unchecks all other selections when chosen",
-    "@HIDEBUTTON":          "Hides the save/submit button on a form or survey page",
-    "@HIDESUBMIT-SURVEY":   "Hides the submit button on a survey page",
+    "@HIDEBUTTON":          "Hides the Today/Now button next to a date or datetime field (RC-AT-07)",
+    "@HIDESUBMIT-SURVEY":   "Hides the survey submit button — provided by an external module, not core REDCap (RC-AT-EM-01)",
     "@FORCE-MINMAX":        "Forces validation min/max enforcement even when the user tries to override the out-of-range warning",
     "@HIDECHOICE":          "Hides specific choice option(s) without removing them from the data",
     "@SHOWCHOICE":          "Shows specific choice option(s) that are otherwise hidden",
     "@CHARLIMIT":           "Limits the number of characters a user can enter in a text or notes field",
     "@PLACEHOLDER":         "Shows greyed-out placeholder text inside an empty text field",
     "@BARCODE-APP":         "Enables barcode scanning via the REDCap mobile app camera",
-    "@BARCODE":             "Enables barcode scanning (generic; use @BARCODE-APP for mobile app context)",
     "@LATITUDE":            "Captures GPS latitude coordinate via device location services",
     "@LONGITUDE":           "Captures GPS longitude coordinate via device location services",
     "@MAXCHECKED":          "Limits the maximum number of checkboxes that can be selected simultaneously",
-    "@MAXCHOICE":           "Limits the maximum number of choices selectable",
+    "@MAXCHOICE":           "Caps how many records can select each option, e.g. @MAXCHOICE(1=25,2=30); checked on page load only (RC-AT-03)",
     "@LANGUAGE-CURRENT-SURVEY": "Returns the language code of the current survey session (used in multi-language projects)",
 }
 
@@ -90,44 +98,21 @@ _ADMIN_KEYWORDS  = ["tracker", "notification", "announcement", "migration", "mod
 # Parsing helpers
 # ---------------------------------------------------------------------------
 
-def read_dd(path: str) -> list[dict]:
-    """Read a data dictionary CSV, handling BOM and encoding gracefully."""
-    path = Path(path)
-    if not path.exists():
-        raise FileNotFoundError(f"File not found: {path}")
-
-    for encoding in ("utf-8-sig", "utf-8", "latin-1"):
-        try:
-            with open(path, encoding=encoding, newline="") as fh:
-                reader = csv.DictReader(fh)
-                rows = list(reader)
-                if rows and "Variable / Field Name" not in rows[0]:
-                    continue
-                return rows
-        except UnicodeDecodeError:
-            continue
-
-    raise ValueError(f"Could not decode {path} with any supported encoding.")
+def load_rows(path: str) -> list[dict]:
+    """Read a DD (CSV or metadata JSON) via dd_common; drop fully blank rows
+    (Excel often leaves trailing ',,,,' lines). Read notes go to stderr."""
+    result = read_dd(path)
+    for note in result.warnings:
+        print(f"Note: {note}", file=sys.stderr)
+    return [
+        r for r in result.rows
+        if any((v or "").strip() for k, v in r.items() if k is not None)
+    ]
 
 
 def strip_html(text: str) -> str:
     """Remove HTML tags for display purposes."""
     return re.sub(r"<[^>]+>", "", text).strip()
-
-
-def parse_choices(choices_str: str) -> list[dict]:
-    """Parse pipe-delimited choices string into list of {value, label} dicts."""
-    choices = []
-    if not choices_str.strip():
-        return choices
-    for item in choices_str.split("|"):
-        item = item.strip()
-        if "," in item:
-            value, label = item.split(",", 1)
-            choices.append({"value": value.strip(), "label": label.strip()})
-        else:
-            choices.append({"value": item, "label": item})
-    return choices
 
 
 def check_choice_gaps(choices_str: str) -> list[tuple]:
@@ -410,8 +395,8 @@ def summarize(rows: list[dict]) -> dict:
             issues.append(
                 f"REQUIRED CHECKBOX: '{var}' is a checkbox marked as required — "
                 f"REDCap cannot enforce 'at least one selected' on checkboxes. "
-                f"The required flag will be silently ignored. Consider using branching logic "
-                f"or @NOMISSING on individual checkbox sub-options instead."
+                f"The required flag will be silently ignored (RC-FD-08). Consider branching logic "
+                f"or a validation check (e.g. a Data Quality rule) instead."
             )
 
     # Missing choices on choice-type fields
@@ -436,16 +421,17 @@ def summarize(rows: list[dict]) -> dict:
                 f"The field will display as blank."
             )
 
-    # Validation min/max on non-text fields
+    # Validation min/max on non-text fields (sliders use min/max as the slider's
+    # lower/upper bound — confirmed on a real export, 2026-10-09)
     for r in rows:
         ft      = r.get("Field Type", "").strip()
         val_min = r.get("Text Validation Min", "").strip()
         val_max = r.get("Text Validation Max", "").strip()
         var     = r.get("Variable / Field Name", "").strip()
-        if ft != "text" and (val_min or val_max):
+        if ft not in ("text", "slider") and (val_min or val_max):
             issues.append(
                 f"VALIDATION ON NON-TEXT: '{var}' (type '{ft}') has validation min/max set, "
-                f"which is only valid for text fields. Upload will fail."
+                f"which is only valid for text and slider fields. Upload will fail."
             )
 
     # Duplicate variable names
@@ -674,21 +660,141 @@ def print_text_report(summary: dict, filename: str) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Full per-field listing (--fields)
+# ---------------------------------------------------------------------------
+
+_IMPLIED_CHOICES = {
+    "yesno":     [{"value": "1", "label": "Yes"}, {"value": "0", "label": "No"}],
+    "truefalse": [{"value": "1", "label": "True"}, {"value": "0", "label": "False"}],
+}
+
+
+def html_to_text(text: str) -> str:
+    """HTML → plain text without truncation: <br>/<p>/<li> become line breaks,
+    tags are removed, entities decoded, blank lines and runs of spaces collapsed."""
+    text = re.sub(r"(?i)<br\s*/?>|</(p|div|li|h[1-6]|tr)>", "\n", text or "")
+    text = html.unescape(re.sub(r"<[^>]+>", "", text))
+    lines = [re.sub(r"[ \t ]+", " ", ln).strip() for ln in text.splitlines()]
+    return "\n".join(ln for ln in lines if ln)
+
+
+def field_records(rows: list[dict]) -> list[dict]:
+    """One complete record per field, in DD order."""
+    records = []
+    for r in rows:
+        get = lambda col: (r.get(col) or "").strip()  # noqa: E731
+        ft = get("Field Type")
+        col_f = get("Choices, Calculations, OR Slider Labels")
+        rec = {
+            "variable":        get("Variable / Field Name"),
+            "form":            get("Form Name"),
+            "section_header":  html_to_text(get("Section Header")),
+            "field_type":      ft,
+            "label":           html_to_text(get("Field Label")),
+            "choices":         parse_choices(col_f) if ft in CHOICE_TYPES else _IMPLIED_CHOICES.get(ft, []),
+            "calculation":     col_f if ft == "calc" else "",
+            "slider_labels":   col_f if ft == "slider" else "",
+            "other_column_f":  col_f if ft not in CHOICE_TYPES | {"calc", "slider"} else "",
+            "field_note":      html_to_text(get("Field Note")),
+            "validation":      get("Text Validation Type OR Show Slider Number"),
+            "validation_min":  get("Text Validation Min"),
+            "validation_max":  get("Text Validation Max"),
+            "identifier":      get("Identifier?").lower() == "y",
+            "required":        get("Required Field?").lower() == "y",
+            "branching_logic": get("Branching Logic (Show field only if...)"),
+            "custom_alignment": get("Custom Alignment"),
+            "question_number": get("Question Number (surveys only)"),
+            "matrix_group":    get("Matrix Group Name"),
+            "matrix_ranking":  get("Matrix Ranking?").lower() == "y",
+            "annotation":      get("Field Annotation"),
+        }
+        # Keep any non-standard columns rather than silently dropping them
+        for k, v in r.items():
+            if k is not None and k not in COLUMNS and (v or "").strip():
+                rec.setdefault("extra_columns", {})[k] = v.strip()
+        records.append(rec)
+    return records
+
+
+def print_fields_report(records: list[dict], filename: str) -> None:
+    """Print every field in full, grouped by instrument."""
+    forms: dict[str, list] = defaultdict(list)
+    for rec in records:
+        forms[rec["form"]].append(rec)
+
+    def block(label: str, value: str, indent: str = "    ") -> None:
+        if not value:
+            return
+        lines = value.splitlines()
+        print(f"{indent}{label}: {lines[0]}")
+        for ln in lines[1:]:
+            print(f"{indent}{' ' * (len(label) + 2)}{ln}")
+
+    print(f"REDCap Data Dictionary — all fields: {filename}")
+    print(f"{len(records)} fields in {len(forms)} instrument(s). "
+          "Labels are shown as plain text (HTML removed); nothing is truncated.")
+    for form, recs in forms.items():
+        print(f"\n{'=' * 65}\nInstrument: {form or '(no form name)'}  ({len(recs)} fields)\n{'=' * 65}")
+        for rec in recs:
+            if rec["section_header"]:
+                print(f"\n  --- Section: {rec['section_header'].replace(chr(10), ' / ')} ---")
+            print(f"\n  [{rec['variable']}] ({rec['field_type']})")
+            block("label", rec["label"])
+            if rec["choices"]:
+                implied = " (built-in)" if rec["field_type"] in _IMPLIED_CHOICES else ""
+                block(f"choices{implied}",
+                      "\n".join(f"{c['value']} = {c['label']}" for c in rec["choices"]))
+            block("calculation", rec["calculation"])
+            block("slider labels", rec["slider_labels"])
+            block("column F", rec["other_column_f"])
+            val = rec["validation"]
+            if rec["validation_min"] or rec["validation_max"]:
+                val += f" (min {rec['validation_min'] or '-'}, max {rec['validation_max'] or '-'})"
+            block("validation", val.strip())
+            block("note", rec["field_note"])
+            flags = [name for name, on in (("identifier", rec["identifier"]),
+                                           ("required", rec["required"]),
+                                           ("matrix ranking", rec["matrix_ranking"])) if on]
+            block("flags", ", ".join(flags))
+            block("show only if", rec["branching_logic"])
+            block("matrix group", rec["matrix_group"])
+            block("alignment", rec["custom_alignment"])
+            block("question number", rec["question_number"])
+            block("annotation", rec["annotation"])
+            for k, v in rec.get("extra_columns", {}).items():
+                block(k, v)
+    print()
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: parse_dd.py <data_dictionary.csv> [--json | --text]")
-        sys.exit(1)
+    ap = argparse.ArgumentParser(
+        description="Summarize a REDCap Data Dictionary (CSV with display or API "
+                    "headers, or export_metadata JSON).")
+    ap.add_argument("path", help="Data Dictionary CSV or metadata JSON")
+    ap.add_argument("--json", action="store_true", help="JSON output")
+    ap.add_argument("--text", action="store_true", help="text output (default)")
+    ap.add_argument("--fields", action="store_true",
+                    help="list every field in full instead of the summary")
+    args = ap.parse_args()
 
-    path          = sys.argv[1]
-    output_format = "json" if "--json" in sys.argv else "text"
-
+    path = args.path
     try:
-        rows    = read_dd(path)
+        rows = load_rows(path)
+        if args.fields:
+            records = field_records(rows)
+            if args.json:
+                print(json.dumps(records, indent=2, ensure_ascii=False))
+            else:
+                print_fields_report(records, Path(path).name)
+            return
         summary = summarize(rows)
-        if output_format == "json":
+        if "error" in summary:
+            raise ValueError(summary["error"])
+        if args.json:
             print(json.dumps(summary, indent=2, ensure_ascii=False))
         else:
             print_text_report(summary, Path(path).name)

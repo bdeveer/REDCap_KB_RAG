@@ -1,12 +1,20 @@
 ---
 name: redcap-data-dictionary
 description: |
-  Use this skill whenever a REDCap Data Dictionary CSV file is involved — whether the user uploads one, asks you to read or summarize one, analyze its field structure, check for issues, explain what a project does, or compare instruments. Trigger on phrases like "data dictionary", "REDCap CSV", "uploaded DD", "what's in this project", "analyze this instrument", "review this form structure", "what fields does this project have". Also trigger when the user uploads any file whose name contains DataDictionary. This skill is the foundation for any REDCap project analysis task — use it before trying to understand or explain a project's design.
+  Use this skill whenever a REDCap Data Dictionary CSV file (or project metadata pulled live with a REDCap connector's export_metadata) needs to be read, summarized or explained — whether the user uploads one, asks you to read or summarize one, analyze its field structure, check for issues, explain what a project does, compare instruments, or produce a project overview for stakeholders (PI, IRB, sponsor, new staff) or a full field listing to use as LLM context. Trigger on phrases like "data dictionary", "REDCap CSV", "uploaded DD", "summarize this DD", "what's in this project", "what does this project collect", "give me a project overview", "describe this study's forms", "analyze this instrument", "review this form structure", "what fields does this project have". Also trigger when the user uploads any file whose name contains DataDictionary. This skill is the foundation for any REDCap project analysis task — use it before trying to understand or explain a project's design. Do NOT use for fixing a DD (use redcap-dd-fixer), building or extending one (use redcap-dd-builder), or reading a Codebook PDF (use redcap-codebook-reader).
 ---
 
 # REDCap Data Dictionary Skill
 
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+
+**Working from a live project.** If the user names a project instead of attaching a CSV, pull the DD with `export_metadata`, save the JSON to a file and run `parse_dd.py` on it — same output as for a CSV.
+
 This skill teaches you how to correctly read, parse, and interpret a REDCap Data Dictionary CSV. Use it whenever a data dictionary is in play — as input, output, or analysis target.
+
+**Do NOT use for:** fixing a DD that fails to upload (redcap-dd-fixer), building or extending a DD (redcap-dd-builder), or Codebook PDFs (redcap-codebook-reader).
+
+**Shared module:** `scripts/dd_common.py` holds the Data Dictionary reading/writing code and column constants used by this skill and by redcap-dd-builder and redcap-dd-fixer — keep this skill installed whenever those are.
 
 ---
 
@@ -18,7 +26,7 @@ A REDCap Data Dictionary is a CSV file that completely defines every variable (f
 
 ## Step 1: Parse the File
 
-Always use the bundled script rather than reading the CSV manually — it handles encoding edge cases (UTF-8 BOM, latin-1 fallback), large HTML fields in descriptive variables, and produces a complete structured analysis.
+Always use the bundled script rather than reading the CSV manually — it handles encoding edge cases (UTF-8 BOM, cp1252/latin-1 fallback), display headers (`Variable / Field Name`, ...) or API headers (`field_name`, ...), large HTML fields in descriptive variables, and produces a complete structured analysis.
 
 ```bash
 python <skill_path>/scripts/parse_dd.py <path_to_csv> --text
@@ -29,9 +37,16 @@ For machine-readable output (useful when doing follow-up analysis or comparisons
 python <skill_path>/scripts/parse_dd.py <path_to_csv> --json
 ```
 
-**Finding `<skill_path>`:** The skill lives in the directory containing this SKILL.md file. Reference it as a relative or absolute path as needed.
+For every field in full — label, type, choices, calculation, validation, branching logic, annotation, grouped by instrument, nothing truncated (use this as context when answering detailed questions or writing an overview). Add `--json` for the same as a JSON list:
+```bash
+python <skill_path>/scripts/parse_dd.py <path_to_csv> --fields
+```
 
-**Finding the uploaded CSV:** Data dictionaries uploaded by the user are at `/sessions/.../mnt/uploads/<filename>.csv`. If the user has a mounted workspace folder, they may also be there.
+**Finding `<skill_path>`:** The skill's base directory, shown when the skill loads (normally `~/.claude/skills/<skill-name>`).
+
+**Metadata from a REDCap connector:** If the project is reachable through a REDCap MCP connector, its `export_metadata` tool returns the same 18 columns as JSON with API keys (`field_name`, `form_name`, ...). Save that JSON to a `.json` file and pass it to `parse_dd.py` exactly like a CSV (all options work).
+
+**Finding the input file:** Use the path the user gives or attaches. If they only name the file, look in the folder they are working in or use Glob to find it; ask if more than one file matches.
 
 Run the script and read its full output before proceeding with any analysis. The script produces these sections in order: field type distribution, per-instrument breakdown, complexity ranking, cross-instrument dependencies, identifiers, required fields, matrix groups, calc fields, action tags with descriptions, branching logic count, choice value gaps, project hints, and potential issues.
 
@@ -50,7 +65,7 @@ Each row = one variable/field. Row 1 is always the header; row 2 is always the R
 | E | Field Label | Mandatory | Question text shown to users. May contain HTML. |
 | F | Choices / Calculation / Slider Labels | Conditional | Required for dropdown/radio/checkbox; formula for calc; endpoint labels for slider. |
 | G | Field Note | Optional | Short instructional text below the field. |
-| H | Text Validation Type | Optional | Validation code for text fields (e.g. `date_ymd`, `number`, `integer`). |
+| H | Text Validation Type | Optional | Validation code for text fields (e.g. `date_ymd`, `number`, `integer`). Also used on file fields (`signature`, `enhanced_signature`) and sliders (`number`, to show the value) — RC-FD-08 §5.7. |
 | I | Text Validation Min | Optional | Min value — text fields with validation only. |
 | J | Text Validation Max | Optional | Max value — text fields with validation only. |
 | K | Identifier? | Optional | `y` = flagged as PII. Affects de-identified exports; not an access control. |
@@ -113,19 +128,18 @@ Key tags to understand when reviewing a project:
 
 | Tag | Effect |
 |-----|--------|
-| `@NOMISSING` | Prevents saving with a missing value even when not in Required list — common in clinical trials |
 | `@HIDDEN` / `@HIDDEN-SURVEY` / `@HIDDEN-FORM` | Selectively hides field by context |
 | `@HIDDEN-PDF` | Excludes from PDF/print view |
 | `@READONLY` / `@READONLY-SURVEY` | Makes field non-editable |
 | `@IF` | Conditionally applies another tag: `@IF([cond],'@TAG','')` |
-| `@CALCTEXT` / `@CALCDATE` | Displays calculated text/date in a descriptive field; value not stored |
+| `@CALCTEXT` / `@CALCDATE` | Calculated text/date on a Text Box field; the value is stored (RC-AT-09) |
 | `@DEFAULT` / `@SETVALUE` / `@NOW` / `@TODAY` | Auto-fill behaviors |
 | `@NONEOFTHEABOVE` | Adds a "None of the above" option that unchecks all other checkboxes |
-| `@NOMISSING` | Forces completeness beyond the Required flag |
+| `@NOMISSING` | Turns off missing data codes for this field. It does **not** make the field required |
 | `@FORCE-MINMAX` | Enforces validation range even when user tries to override |
 | `@CHARLIMIT` | Limits character count in text/notes fields |
 
-> **Note:** A full KB article (RC-AT-01 — Action Tags) has not yet been written. The parser includes descriptions for all commonly encountered tags, but the list is not exhaustive. When you encounter an unfamiliar tag, look it up in REDCap's action tag documentation.
+> **Note:** For any tag not listed here, look it up in the KB action tag index, `RC-AT-01_Action-Tags-Overview.md`, which links every tag to its detail article (RC-AT-03 to RC-AT-11).
 
 > **Important (Excel):** Column R cells must be formatted as Text before typing `@` tags — Excel interprets `@` as a formula prefix in General-formatted cells and will flag an error.
 
@@ -160,7 +174,7 @@ The parser flags these issues automatically:
 - Unknown/unsupported field types
 
 **Silent design problems (won't block upload, but produce wrong behavior):**
-- Required checkboxes — REDCap silently ignores the required flag on checkbox fields; it cannot enforce "at least one selected." This is a very common mistake. Alternatives: @NOMISSING on individual sub-options, or branching logic.
+- Required checkboxes — REDCap silently ignores the required flag on checkbox fields; it cannot enforce "at least one selected." This is a very common mistake. Alternatives: branching logic, or a Data Quality rule that flags records with no option checked.
 - SQL fields present — flag prominently; these must never be edited in the CSV.
 
 **Warnings requiring review:**
@@ -182,6 +196,21 @@ After parsing, present a clear summary. A well-structured report covers these po
 8. **Choice gaps** — mention if significant; note they may be intentional coding.
 
 Keep the summary in plain language. Surface what's actually interesting about *this specific project's* design. If the project uses non-English labels (non-ASCII characters or HTML with non-English text), note this.
+
+---
+
+## Project Overview for Stakeholders
+
+When the user wants to know what a project collects, or asks for an overview for a PI, IRB, sponsor, new staff member, or another LLM, run `--text` for the structure and `--fields` for the content, then write a plain-language overview — not a field dump:
+
+1. **Purpose in one paragraph** — what the study/project appears to do, inferred from instrument names and labels (say it is inferred).
+2. **Instruments in workflow order** — one or two lines each: what it captures, roughly how many questions, survey vs. staff-entered, repeating if detected. Name standardized scales you recognise (PHQ-9, GAD-7, MoCA, SF-12, ...).
+3. **Key data elements** — primary outcomes, scores/calculations and what they compute, important dates.
+4. **Sensitive data** — identifier-flagged fields and any obvious PHI not flagged (names, dates of birth, MRNs, addresses, phone numbers).
+5. **Logic worth knowing** — branching that changes who sees what, cross-instrument dependencies, longitudinal event references.
+6. **Limits** — what the DD does not show (events, survey settings, user rights; see below).
+
+Keep it at the audience's level: no variable names or REDCap syntax for non-technical stakeholders unless asked. For an LLM-context deliverable, give the `--fields` output (or its JSON) as-is, preceded by a short summary.
 
 ---
 
@@ -211,7 +240,7 @@ When a user asks about any of these, note that this information is not in the da
 
 **Explaining cross-instrument dependencies:** Run `--json` and examine `branching_logic.cross_instrument_deps`. For each dep pair, explain what data must be entered in the source instrument before the dependent instrument's conditions will behave correctly.
 
-**Reviewing action tag usage:** The parser lists all tags found with counts and descriptions. High counts of `@NOMISSING` indicate clinical trial-style completeness enforcement. `@CALCTEXT`/`@CALCDATE` in descriptive fields means those fields display dynamic content but store nothing. `@IF` indicates conditional tag application — find the full annotation to understand the condition.
+**Reviewing action tag usage:** The parser lists all tags found with counts and descriptions. `@NOMISSING` means the project uses missing data codes and these fields opt out of them. `@CALCTEXT`/`@CALCDATE` fields are Text Box fields whose calculated value is stored. `@IF` indicates conditional tag application — find the full annotation to understand the condition.
 
 **Identifying required checkbox problems:** Any checkbox flagged as required is a design error the parser will catch. Explain to the user that REDCap cannot enforce "at least one selected" and suggest alternatives.
 

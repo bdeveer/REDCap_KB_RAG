@@ -1,0 +1,13 @@
+"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max","Identifier?","Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"
+record_id,intake,,text,Record ID,,,,,,,,,,,,,
+ mrn ,intake,,text,MRN,,,,,,y,,,,,,,
+dob,intake,,text,Date of birth,,,date_ymd,,,y,,YES,,,,,
+refer_source,intake,,dropdown,Referral source,,,,,,,,,,,,,
+smoking,intake,,radio,Smoking status,,,,,,,,,,,,,
+alcohol,intake,,checkbox,Alcohol use,,,,,,,,,,,,,
+phq9_q1,phq9,Over the last 2 weeks...,radio,Little interest or pleasure,"0, Not at all | 1, Several days | 2, More than half the days | 3, Nearly every day",,,,,,,,,,phq9,,
+phq9_q2,phq9,,radio,"Feeling down, depressed, or hopeless","0, Not at all | 1, Several days | 2, More than half the days | 3, Nearly every day",,,,,,,,,,phq9,,
+phq9_total,phq9,,calc,PHQ-9 total,,,,0,27,,,,,,,,
+fu_needed,followup,,yesno,Follow-up needed?,,,,,,,,,,,,,
+fu_date,followup,,text,Follow-up date,,,date_ymd,,,,[fu_needed]==1,,,,,,
+fu_notes,followup,,notes,Follow-up notes,,,,,,,[fu_needed]==1 and [fu_date]!='',,,,,,

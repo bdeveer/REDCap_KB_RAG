@@ -11,10 +11,18 @@ description: |
   "I need to capture these variables in REDCap". Also trigger when the user describes variables,
   scales, or questionnaires they want to collect and needs them formatted as a REDCap data
   dictionary. If the user is not sure whether to start fresh or modify an existing DD, use this
-  skill and ask them.
+  skill and ask them. Do NOT use this skill to fix an existing DD that fails to upload or has
+  structural errors (use redcap-dd-fixer), or to summarize, explain, or audit an existing DD
+  (use redcap-data-dictionary).
 ---
 
 # REDCap Data Dictionary Builder
+
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+
+**Working from a live project.** To add to an existing project's DD, you can pull it with `export_metadata` instead of asking for a CSV: save the JSON to a file and pass it to `--append` (the shared reader accepts `export_metadata` JSON and the output CSV uses the standard upload headers). Hand the finished CSV to the user to upload on the project's **Data Dictionary** page, which previews the changes before committing. Do not call `import_metadata` yourself unless the user asks for it on a non-production connector — it replaces the entire data dictionary.
+
+**Dependency:** `build_dd.py` imports the shared module `dd_common.py`, and validation uses `parse_dd.py`, both from the redcap-data-dictionary skill — that skill must be installed alongside this one.
 
 This skill guides you through building a valid, upload-ready REDCap Data Dictionary CSV — either
 from scratch based on a protocol, codebook, or conversation, or by extending an existing DD with
@@ -71,10 +79,8 @@ from scratch when the document already contains the information.
 If the user is adding to or modifying an existing data dictionary, parse it first:
 
 ```bash
-python <data_dictionary_skill_path>/scripts/parse_dd.py <path_to_csv> --text
+python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
 ```
-
-`<data_dictionary_skill_path>` = `/sessions/.../mnt/.claude/skills/redcap-data-dictionary`
 
 This gives you the complete picture of what already exists: all variable names, all form names,
 all field types. You need this before designing additions so you can:
@@ -103,7 +109,8 @@ contain. The subsections below describe how to make good decisions on naming, ty
 
 **Variable names** (the field's machine-readable identifier):
 - Lowercase letters, digits, underscores — must start with a letter
-- Max 26 characters
+- Keep to 26 characters or fewer — RC-FD-08 §5.1: "Maximum recommended length: 26 characters."
+  This is a recommendation, not an upload error; the build script warns on longer names.
 - **Unique across the entire project** (not just within one form)
 - Use consistent prefixes to group related fields: `phq9_q1` through `phq9_q9`, `phq9_total`
 - Be specific enough to avoid future collisions: `visit_date` not `date`; `ae_notes` not `notes`
@@ -158,9 +165,14 @@ When a good name is not obvious, suggest one and let the user confirm.
 | Decimal, 2 places | `number_2dp` |
 | Email address | `email` |
 | US phone number | `phone` |
-| URL | `url` |
+| US ZIP code | `zipcode` |
 
 Default to `date_ymd` for dates unless the study specifies a different format.
+
+Column H is not text-only (RC-FD-08 §5.7): on a `file` field, `signature` makes it a classic
+signature and `enhanced_signature` an Enhanced Signature (17.1.0+); on a `slider` field, `number`
+shows the selected value. Leave it empty for every other non-text type. Min/max apply to `text`
+fields only.
 
 ### Standard choices for common fields
 
@@ -198,18 +210,18 @@ Branching logic: [insurance_type] = '5'
 - If all items share the same response options, group them in a matrix (Column P = Matrix Group Name)
 - Add a `calc` field for the total score: `sum([phq9_q1],[phq9_q2],...,[phq9_q9])`
 - Open with a `descriptive` field containing the instrument's standard instructions
-- Use `redcap-syntax-builder` skill to write the scoring formula if it has conditional components
+- Use `redcap-syntax` skill to write the scoring formula if it has conditional components
 
 **Calculated fields**
-For any calc field, use the `redcap-syntax-builder` skill if the formula is non-trivial. Describe
+For any calc field, use the `redcap-syntax` skill if the formula is non-trivial. Describe
 what the field should calculate, list the source variable names, and note whether the project is
 longitudinal. Common patterns:
 - Total score: `sum([q1],[q2],[q3],[q4])`
 - BMI: `([weight_kg])/(([height_m])^(2))`
-- Age at enrollment: `datediff([dob],[consent_date],'y')`
+- Age at enrollment: `age_at_date([dob],[consent_date],false)` (calendar-accurate; avoid `datediff(...,'y')` for age)
 
 **Branching logic**
-For anything beyond a simple single-condition show/hide, use the `redcap-syntax-builder` skill.
+For anything beyond a simple single-condition show/hide, use the `redcap-syntax` skill.
 For simple cases:
 - Show if a radio = a value: `[field_name] = '1'`
 - Show if checkbox option is checked: `[field_name(coded_value)] = '1'`
@@ -219,7 +231,7 @@ For simple cases:
 
 ### Style conventions
 
-Before finalizing field designs, apply the best practices from `kb (YAML)/RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`
+Before finalizing field designs, apply the best practices from `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`
 in the repo. Read it if you need the full rationale. The conventions most relevant to DD
 building:
 
@@ -233,10 +245,9 @@ building:
 - Avoid mixing Left and Right fields in the same section without a clear layout purpose —
   alternating widths creates a visually fragmented form.
 
-When building the JSON spec, set the `alignment` property on fields where the convention calls
-for a non-default value (i.e., `notes` fields and any `radio`/`checkbox` field). If the build
-script doesn't support alignment, list the alignment decisions in the delivery notes so the user
-can apply them in the Online Designer.
+When building the JSON spec, set the `custom_alignment` property on fields where the convention
+calls for a non-default value (i.e., `notes` fields and any `radio`/`checkbox` field). Only `LH`,
+`LV`, `RH`, `RV` are valid; the script flags anything else.
 
 **Field Note (Column G) vs. Field Annotation (Column R)**
 - **Field Note** (`field_note` in the spec) — visible to everyone completing the form, including
@@ -335,14 +346,19 @@ Once confirmed, assemble the JSON spec and run the build script.
 | `choices` | If radio/dropdown/checkbox | List of `{value, label}` dicts |
 | `formula` | If calc | The calculation expression (plain string) |
 | `field_note` | No | Instructional text displayed below the field |
-| `validation` | If text | Validation type code |
+| `validation` | No | Column H: any validation code on `text`; `signature`/`enhanced_signature` on `file`; `number` on `slider` |
 | `validation_min` | No | Min value (text fields with validation only) |
 | `validation_max` | No | Max value (text fields with validation only) |
 | `identifier` | No | `true` = flag as containing PII |
 | `branching_logic` | No | REDCap branching logic expression |
 | `required` | No | `true` = must be answered to save the form |
+| `custom_alignment` | No | `LH`, `LV`, `RH`, or `RV` (blank = `RV` default) |
+| `question_number` | No | Survey question number |
 | `field_annotation` | No | Action tags (e.g., `@HIDDEN`, `@CALCTEXT(...)`) |
-| `matrix_group` | No | Groups radio/checkbox fields into a matrix grid |
+| `matrix_group` | No | Groups radio/checkbox fields into a matrix grid — rows must be contiguous, same type, identical choices |
+| `matrix_ranking` | No | `true` = ranking matrix (radio matrices only) |
+
+Numbers in the JSON (e.g., `"validation_min": 0`) are fine; the script converts them to text.
 
 ### Running the build script
 
@@ -351,18 +367,26 @@ Once confirmed, assemble the JSON spec and run the build script.
 
 # New build from scratch:
 python <skill_path>/scripts/build_dd.py spec.json \
-  --output "/sessions/.../mnt/workspace/MyStudy_DataDictionary.csv"
+  --output "<output_folder>/MyStudy_DataDictionary.csv"
 
 # Appending to an existing DD:
 python <skill_path>/scripts/build_dd.py spec.json \
   --append existing_dd.csv \
-  --output "/sessions/.../mnt/workspace/MyStudy_DataDictionary_updated.csv"
+  --output "<output_folder>/MyStudy_DataDictionary_updated.csv"
 ```
 
-`<skill_path>` = the directory containing this SKILL.md file.
+**Finding `<skill_path>`:** The skill's base directory, shown when the skill loads (normally `~/.claude/skills/<skill-name>`). `<output_folder>` = the folder the existing DD is in, or one the user names (never a temp folder).
+
+With `--append`, fields for a form that already exists are inserted right after that form's last
+existing row (REDCap rejects a DD whose form rows are split); new forms go at the end. The output
+keeps the input's header style — display headers (`Variable / Field Name`, ...) or API-style
+headers (`field_name`, `form_name`, ...). If the headers are unrecognised, the script stops
+without writing anything.
 
 The script will warn you about any issues it detects (missing choices, invalid variable names,
-duplicate names). Review the warnings before proceeding.
+duplicate names across the existing DD and the spec, non-contiguous forms, matrix group problems,
+invalid alignment codes, validation values dropped for the field type). Review the warnings
+before proceeding.
 
 ---
 
@@ -371,12 +395,12 @@ duplicate names). Review the warnings before proceeding.
 Run the parser on the generated CSV to catch any remaining structural issues:
 
 ```bash
-python <data_dictionary_skill_path>/scripts/parse_dd.py <output_csv> --text
+python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <output_csv> --text
 ```
 
 If the parser reports issues:
 - **Missing choices on a choice field** → ask the user for the options, then rebuild
-- **Missing formula on a calc field** → use `redcap-syntax-builder` to write it
+- **Missing formula on a calc field** → use `redcap-syntax` to write it
 - **Duplicate variable names** → rename the duplicate (and confirm with the user before doing so)
 - **Other structural errors** → use the `redcap-dd-fixer` skill
 

@@ -1,41 +1,81 @@
 ---
 name: redcap-project-analyzer
 description: >
-  Analyze a REDCap project for design issues, logic errors, and structural problems by connecting
-  to the REDCap API. Use this skill whenever the user wants to audit, review, health-check, or
-  assess a REDCap project's structure and configuration. Trigger on: "analyze my REDCap project",
-  "audit this project", "review the project design", "check for issues in my REDCap project",
-  "is my project structured correctly", "project health check", "look at my REDCap project",
-  "can you review how this project is set up", "something seems wrong with my project structure",
-  or any time the user wants an automated review of a REDCap project through the API. Walks the
-  user step by step through obtaining an API token if they don't have one, confirms the correct
-  REDCap instance before pulling data, and produces a structured report of findings.
+  Read-only design audit of a live REDCap project, pulled through the REDCap MCP connectors
+  (one connector per REDCap server). Flags design issues, broken
+  branching logic, calc-field chains, structural antipatterns and style-convention gaps, and writes
+  a structured markdown report. Use whenever the user wants to audit, review, health-check, or
+  assess the structure and configuration of an existing project on a REDCap server. Trigger on:
+  "analyze my REDCap project", "audit PID 12345", "review the project design", "check for issues
+  in my REDCap project", "is my project structured correctly", "project health check", "look at
+  my REDCap project", "can you review how this project is set up", "something seems wrong with my
+  project structure". Only calls metadata export tools — never imports, deletes, or exports
+  records, reports, logging, or survey participants. Do NOT use for data dictionary CSV files or
+  longitudinal CSV files on disk (use the redcap-dd-* / redcap-data-dictionary and
+  redcap-longitudinal-* skills), for building or fixing a project, or for anything that changes
+  a project.
 ---
 
 # REDCap Project Analyzer
 
-This skill connects to a REDCap project via API and produces a structured analysis report flagging
-design issues, logic errors, and structural antipatterns. Work through the steps below in order.
-The interactive setup in Steps 1–2 is important — don't skip ahead to pulling data.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+
+This skill reads a REDCap project's design through the REDCap MCP connector tools and produces a
+structured analysis report flagging design issues, logic errors, and structural antipatterns.
+Work through the steps below in order. The confirmation in Steps 1–2 is important — don't skip
+ahead to pulling data.
 
 ---
 
-## Step 1: Explain what you need and why
+## Read-only rule (applies to every step)
 
-Before asking for any credentials, explain what the analysis involves in plain terms. Something like:
+This is a design audit. It never changes a project and never needs participant data. The **only**
+tools you may call are these, on the confirmed connector (`mcp__<connector>__<tool>`):
 
-> "To analyze your project I need to connect to it using the **REDCap API** — a way for programs
-> to read project data directly. For this I need two things:
->
-> **1. Your REDCap URL** — the base web address of your REDCap server, for example:
-> `https://redcap.yourorganization.edu`
-> (Just the hostname — not the full URL of a specific page)
->
-> **2. An API token** — a 32-character string that acts as your personal key to this specific
-> project. It's tied to both your user account and the project, so a token from one project won't
-> work on another, and someone else's token won't give you access to your project."
+- `check_connection`
+- `export_redcap_version`
+- `export_project_info`
+- `export_metadata`
+- `export_instruments`
+- `export_field_names`
+- `export_arms`
+- `export_events`
+- `export_instrument_event_mappings`
+- `export_repeating_instruments_events`
 
-Then explain how to get the token:
+This list is exhaustive. Never call any `import_*`, `delete_*`, `rename_record`,
+`randomize_record`, `switch_dag`, `create_file_repository_folder`, or `generate_next_record_name`
+tool. Also never call `export_records`, `export_report`, `export_logging`, `export_pdf`,
+`export_project_xml`, `export_file_*`, `export_survey_*`, or user/DAG exports — they return
+participant or user data that a design audit does not need. If a check would require one of
+these, skip it and note the limitation in the report.
+
+Do not fall back to raw HTTP (Python `requests`, `curl`) to reach the API. The MCP connector
+tools are the only method.
+
+---
+
+## Step 1: Identify the connector and the project
+
+Each REDCap server has its own connector. Which connectors exist, which are production, and where
+their API URLs are recorded is institution-specific and lives in the local connector map, `~/.claude/redcap-connectors.md`
+(see `CONNECTOR-RULES.md`). Read it before asking, and use the URL from there rather than from memory.
+
+Always ask the user which server and which project (PID or title) they mean — even if it seems
+obvious from context. Then state back, before any tool call:
+
+> "I'll use the **`<connector>`** connector → `https://<your-redcap-server>/api/`
+> for **PID 12345**. ⚠️ This is a **production** server with live data — I'll only read the
+> project design (metadata), never records or participant data. OK to proceed?"
+
+Include the ⚠️ production line whenever the connector map marks the connector as production.
+Wait for the user to confirm.
+
+### API token
+
+Each connector may have a default token configured. Try the connector's default first (call the
+tools with no `token` argument). If there is no default, or the default belongs to a different
+project, ask the user for the project's API token and explain where to find it:
 
 > "To get your API token:
 > 1. Open your REDCap project
@@ -44,113 +84,43 @@ Then explain how to get the token:
 > 4. If not, click **Generate Token** — if that option isn't visible, you may need to ask your
 >    REDCap administrator to grant you API access for this project
 >
-> The token looks like: `A1B2C3D4E5F6A1B2C3D4E5F6A1B2C3D4`
->
-> You can share it here — I'll use it only for this session and won't store it anywhere."
+> The token is a 32-character string tied to your account and this one project."
 
-Ask the user to provide both the URL and the token. Wait for their reply before doing anything else.
+Token handling rules:
+
+- Pass the token **only** as the tool's `token` argument.
+- Never echo it back, quote it, or include it in a summary.
+- Never write it to a file, script, report, or memory.
 
 ---
 
 ## Step 2: Confirm the connection and the right project
 
-Once the user provides the URL and token, verify the connection immediately using Python. The goal
-is to confirm (a) the credentials work and (b) this is the project the user intended.
+Call `check_connection` first. If it fails, stop and help the user fix it (wrong connector,
+missing/invalid token, or no API rights on the project) before continuing.
 
-> **Cowork/sandbox note:** The bash sandbox cannot make outbound HTTPS requests to external
-> servers — attempts will fail with a proxy 403 error. In Cowork sessions, **always use the
-> MCP tools** (`mcp__redcap-prod__*`, `mcp__redcap-test__*`, `mcp__redcap-dev__*`) instead of
-> Python `requests`. Every MCP tool accepts a `token` parameter that overrides its default,
-> so you can pass the user's token directly. The Python scripts in Steps 2–3 are reference
-> implementations for non-Cowork environments (Claude Code, API) where direct HTTP works.
-
-```python
-import requests, json, sys
-
-url = "https://YOUR_REDCAP_URL/api/"   # replace with user's URL, ensure /api/ suffix
-token = "USER_TOKEN"
-
-# Step 1: Get REDCap version
-r = requests.post(url, data={"token": token, "content": "version"})
-if r.status_code != 200 or not r.text.strip():
-    print(f"ERROR {r.status_code}: Could not connect. Response: {r.text[:200]}")
-    sys.exit(1)
-version = r.text.strip()
-print(f"Connected to REDCap v{version}")
-
-# Step 2: Get project info
-r2 = requests.post(url, data={
-    "token": token, "content": "project",
-    "format": "json", "returnFormat": "json"
-})
-proj = json.loads(r2.text)
-print(json.dumps({
-    "project_id": proj.get("project_id"),
-    "project_title": proj.get("project_title"),
-    "is_longitudinal": proj.get("is_longitudinal"),
-    "surveys_enabled": proj.get("surveys_enabled"),
-    "record_autonumbering_enabled": proj.get("record_autonumbering_enabled"),
-    "has_repeating_instruments_or_events": proj.get("has_repeating_instruments_or_events"),
-    "in_production": proj.get("in_production"),
-    "purpose": proj.get("purpose"),
-}, indent=2))
-```
+Then call `export_redcap_version` and `export_project_info`. From project info, note
+`project_id`, `project_title`, `is_longitudinal`, `surveys_enabled`,
+`record_autonumbering_enabled`, `has_repeating_instruments_or_events`, `in_production`, and
+`purpose`.
 
 Show the user the **project title and PID** and ask: *"Is this the right project?"* Do not pull
-further data until they confirm. If the URL is missing `/api/`, the token is wrong (403 error), or
-the project doesn't match, stop and help them correct it before continuing.
-
-**If the user's project is one of the already-connected MCP instances** (redcap-dev, redcap-prod,
-or redcap-test), you can use those MCP tools directly instead of raw HTTP — they're already
-authenticated. Ask which instance they mean if it's ambiguous.
+further data until they confirm. If the PID doesn't match what they asked for, the token belongs
+to a different project — stop and get the right token.
 
 ---
 
-## Step 3: Pull all project data
+## Step 3: Pull the project design
 
-Once confirmed, gather everything needed for analysis. In Cowork, call the MCP tools in parallel
-(export_redcap_version, export_project_info, export_metadata, export_instruments, and conditionally
-export_arms, export_events, export_instrument_event_mappings,
-export_repeating_instruments_events) — each accepts the user's `token` parameter directly.
-Always call `export_redcap_version` so the exact version string goes into the report. In other
-environments, use the Python script below which writes results to temp JSON files for the
-analysis step.
+Once confirmed, call these on the same connector (in parallel where possible):
 
-```python
-import requests, json, os
+- `export_metadata` (full data dictionary — no `fields`/`forms` filter)
+- `export_instruments`
+- If `is_longitudinal = 1`: `export_arms`, `export_events`, `export_instrument_event_mappings`
+- If `has_repeating_instruments_or_events = 1`: `export_repeating_instruments_events`
 
-url = "https://YOUR_REDCAP_URL/api/"
-token = "USER_TOKEN"
-OUT = "/tmp/rc_analysis/"
-os.makedirs(OUT, exist_ok=True)
-
-def call(content, extra=None):
-    params = {"token": token, "content": content, "format": "json", "returnFormat": "json"}
-    if extra:
-        params.update(extra)
-    r = requests.post(url, data=params)
-    try:
-        return json.loads(r.text)
-    except:
-        return r.text
-
-proj = call("project")
-metadata = call("metadata")
-instruments = call("instrument")
-arms = call("arm") if proj.get("is_longitudinal") == 1 else []
-events = call("event") if proj.get("is_longitudinal") == 1 else []
-mappings = call("formEventMapping") if proj.get("is_longitudinal") == 1 else []
-repeating = call("repeatingInstrumentsAndEvents") if proj.get("has_repeating_instruments_or_events") == 1 else []
-
-for name, data in [
-    ("project", proj), ("metadata", metadata), ("instruments", instruments),
-    ("arms", arms), ("events", events), ("mappings", mappings), ("repeating", repeating)
-]:
-    with open(f"{OUT}{name}.json", "w") as f:
-        json.dump(data, f, indent=2)
-
-print(f"Pulled {len(metadata)} fields across {len(instruments)} instruments")
-```
+Keep the results in context for the analysis; do not write them to disk. Always keep the exact
+`export_redcap_version` string for the report.
 
 Confirm counts to the user ("I pulled N fields across N forms") so they can sanity-check before
 the analysis.
@@ -164,6 +134,22 @@ Run each check below. Collect all findings before writing the report. Flag sever
 - 🔴 **Critical** — Will cause broken behavior or data problems (fix these first)
 - 🟡 **Warning** — Suboptimal design that may cause confusion or maintenance issues
 - 🔵 **Suggestion** — A better REDCap feature exists for this pattern
+
+### Parsing field references (used by 4b and 4c)
+
+To extract field references from branching logic or calc formulas:
+
+1. Find every bracketed token `[...]`.
+2. Strip any `(code)` suffix inside the brackets, so a checkbox reference `[symptoms(3)]` counts
+   as field `symptoms`. (Also strip instance/smart-variable suffixes such as `[field][1]` or
+   `:value`-style modifiers where present.)
+3. A bracketed token is an **event prefix**, not a field, when it is immediately followed by
+   another `[...]` (e.g. `[baseline_arm_1][weight]`) **and** it matches a unique event name from
+   `export_events`. Treat the second token as the field.
+4. Skip Smart Variables (`[event-name]`, `[record-id]`, `[current-instance]`, etc. — tokens
+   containing a hyphen) and anything that isn't a valid variable name.
+
+Cross-reference the remaining names against the field list from `export_metadata`.
 
 ### 4a. Structural pattern checks
 
@@ -195,19 +181,13 @@ using Data Dictionary versioning or project XML export. Flag as 🟡 Warning.
 ### 4b. Field-level checks
 
 **Calculated fields referencing other calculated fields**
-Build a dependency graph: for each `calc` field, parse its formula and extract `[field_name]`
-references. If any referenced field is itself a `calc` type, that's a chain. Chains of depth 3+
+Build a dependency graph: for each `calc` field, parse its formula using the reference rules
+above. If any referenced field is itself a `calc` type, that's a chain. Chains of depth 3+
 = 🟡 Warning (REDCap recalculates in field order, so deep chains can produce stale values).
 
 **Text fields with date/time semantics but no validation**
 Fields whose variable name or label contains "date", "dob", "time", "datetime" that have
 `field_type = text` and `text_validation_type_or_show_slider_number` is blank = 🟡 Warning.
-
-**Required fields that are hidden by branching logic**
-A field that is `required_field = 'y'` AND has branching logic. This isn't always wrong, but flag
-any required field whose branching logic references *another required field that itself has branching
-logic* — nested required+branching chains are a common source of "can't submit the form" bugs.
-Flag as 🟡 Warning with the specific field names.
 
 **Very large forms**
 Any single instrument with more than 100 fields = 🔵 Suggestion to split into sub-forms.
@@ -217,23 +197,24 @@ Any single instrument with more than 100 fields = 🔵 Suggestion to split into 
 fields used as spacers) = 🔵 Suggestion.
 
 **Missing field notes where they'd help**
-Text and number fields in a survey-enabled project with no `field_note` and no validation — users
-filling out surveys may not know the expected format. Flag forms with 5+ such fields as 🔵 Suggestion.
+Text and number fields in a project with `surveys_enabled = 1` that have no `field_note` and no
+validation — users filling out surveys may not know the expected format. Flag forms with 5+ such
+fields as 🔵 Suggestion. (The API does not say which instruments are surveys, so word this as
+"if this form is used as a survey".)
 
 ### 4c. Branching logic checks
 
 This is the highest-value analysis. Parse branching logic carefully.
 
 **References to non-existent fields**
-Extract all `[field_name]` patterns from every branching logic expression (use regex
-`\[([a-z_][a-z0-9_]*)\]`, excluding event-qualified references for now). Cross-reference against
-the complete field list from the data dictionary. Any reference to a field that doesn't exist in
-the project = 🔴 Critical. Report the offending field and the bad reference.
+Extract field references from every branching logic expression using the parsing rules above
+(checkbox `(code)` suffixes stripped, event prefixes set aside). Any reference to a field that
+doesn't exist in the project = 🔴 Critical. Report the offending field and the bad reference.
 
 **References to non-existent events (longitudinal only)**
 In longitudinal projects, branching logic can reference events as `[event_name][field_name]`.
-Extract event names from these references and check against the actual event list. Missing event
-= 🔴 Critical.
+For any bracketed token that is immediately followed by another `[...]` but does **not** match an
+event name from `export_events` (and isn't a field or Smart Variable) = 🔴 Critical.
 
 **Logic checking for impossible choice values**
 For radio, dropdown, and checkbox fields, extract the `select_choices_or_calculations` values.
@@ -251,12 +232,27 @@ If Field A's logic references Field B, and Field B's logic references Field A (o
 `is_longitudinal = 1` and `record_autonumbering_enabled = 0` = 🔵 Suggestion (manual record IDs
 are error-prone in multi-site longitudinal studies).
 
-**Surveys enabled but no instrument configured as a survey**
-`surveys_enabled = 1` in project info but no survey participants visible or no survey-designated
-instrument in the instrument list = 🟡 Warning.
+**Surveys enabled**
+`surveys_enabled` comes from `export_project_info`, but none of the allowed tools reports which
+instruments are enabled as surveys, so don't flag "surveys enabled but no survey instrument".
+Just report Surveys: Yes/No in the header.
 
-**Project in production with no description/purpose set**
-`in_production = 1` and `purpose = 0` (not set) = 🔵 Suggestion (good practice for IRB and audit).
+**Project purpose**
+Report `purpose` with its label (and `purpose_other` if present) in the project-structure table.
+Codes (as stored in the `redcap_projects` table):
+
+| `purpose` | Label | | `status` | Label |
+|---|---|---|---|---|
+| 0 | Practice / Just for fun | | 0 | Development |
+| 1 | Other | | 1 | Production |
+| 2 | Research | | 2 | Inactive |
+| 3 | Quality Improvement | | 3 | Archived |
+| 4 | Operational Support | | | |
+
+Purpose 0 (Practice) is not an error on its own. Flag it as **Low** only if the project is in
+Production (`status = 1`) — a practice project collecting real data usually has the wrong purpose
+set, which matters for reporting. If `purpose = 2` (Research), note whether PI and IRB fields are filled in
+when `export_project_info` returns them.
 
 **No data validation on any text field in a large project**
 If the project has 20+ text fields and none have `text_validation_type_or_show_slider_number` set
@@ -264,7 +260,7 @@ If the project has 20+ text fields and none have `text_validation_type_or_show_s
 
 ### 4e. Style convention checks
 
-Read `kb (YAML)/RC-DSGN-01_REDCap-Project-Design-Best-Practices.md` before running these checks — it is the authoritative
+Read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\RC-DSGN-01_REDCap-Project-Design-Best-Practices.md` before running these checks — it is the authoritative
 source for each rule. These are detectable from the data dictionary export.
 
 **Notes fields with wrong alignment (RC-DSGN-01 §2.1)**
@@ -285,8 +281,9 @@ selected.
 For every field where `required_field = 'y'` AND `branching_logic` is populated: check whether
 the branching condition is simple (one field, one value) or complex (multiple conditions). Simple
 cases may be intentional; flag complex cases where the required field only applies under a narrow
-condition — these are the ones most likely to block form submission unexpectedly. Report as 🟡
-Warning with the field name and its branching expression.
+condition, and any required field whose logic references another required field that itself has
+branching logic — these are the ones most likely to block form submission unexpectedly. Report as
+🟡 Warning with the field name and its branching expression.
 
 **Repeating instruments without a custom form label (RC-DSGN-01 §6.1)**
 If the project uses repeating instruments (check `export_repeating_instruments_events`), verify
@@ -300,14 +297,14 @@ is configured in Project Setup → Repeating Instruments (not in the Online Desi
 ## Step 5: Generate the report
 
 Produce a structured markdown report. Use the template below exactly. Save it as a `.md` file
-in the user's workspace folder and provide a download link.
+in a folder the user names (default: the current working folder) and tell them the full file path.
 
 ```
 # REDCap Project Analysis Report
 
 **Project:** [title] (PID [project_id])
-**REDCap Version:** [exact version string from export_redcap_version API call — never guess or approximate]
-**REDCap URL:** [base URL, no token]
+**REDCap Version:** [exact version string from export_redcap_version — never guess or approximate]
+**Server:** [connector name] — [API URL from the connector map, no token] [⚠️ Production, if applicable]
 **Analyzed:** [today's date]
 **Project type:** [Classic / Longitudinal] | Surveys: [Yes/No] | Repeating instruments: [Yes/No] | Status: [Development / Production]
 
@@ -336,6 +333,7 @@ duplicated forms that would benefit from MLM migration."]
 | Arms | N (longitudinal only) |
 | Events | N (longitudinal only) |
 | Repeating instruments | [names] or None |
+| Purpose | [code — label] |
 
 ---
 
@@ -386,14 +384,23 @@ project team, not just the REDCap admin — explain the user impact, not just th
 1. [Most critical thing]
 2. [Second priority]
 ...
+
+---
+
+## Limitations
+
+[Checks skipped or only partly possible through the read-only API — e.g. which instruments are
+surveys, complex expressions needing runtime evaluation.]
 ```
 
 ---
 
 ## Important reminders
 
-- **Never include the API token in the report or in any saved file.** The report should only
-  reference the REDCap URL (without the token).
+- **Read-only.** Only the tools in the read-only rule above. No exceptions, even if the user asks
+  for a quick fix mid-audit — point them to the Online Designer or the redcap-dd-fixer skill.
+- **Never include the API token in the report, in chat, or in any saved file.** The report only
+  names the connector and API URL.
 - Branching logic analysis is best-effort: complex expressions with `datediff()`, `sum()`,
   `if()`, or event-scoped references require runtime evaluation to fully validate. Flag what you
   can and note limitations.

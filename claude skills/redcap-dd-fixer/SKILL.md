@@ -1,12 +1,18 @@
 ---
 name: redcap-dd-fixer
 description: |
-  Fix errors and problems in a REDCap Data Dictionary CSV. Use this skill whenever a user uploads or shares a data dictionary that has issues, fails to upload to REDCap, or needs corrections applied. Trigger on: "fix my data dictionary", "my DD won't upload", "the upload is failing", "fix the branching logic in my DD", "clean up this CSV", "there are errors in my data dictionary", "can you fix this", or any time a data dictionary CSV is shared alongside a complaint, error message, or request to fix/correct/clean something. Also trigger when parse_dd.py or REDCap itself reports upload errors. Use this skill even for partial fixes — "just fix the branching logic columns" or "clean up the validation columns" — this skill handles targeted repairs too.
+  Fix errors and problems in a REDCap Data Dictionary CSV. Use this skill whenever a user uploads or shares a data dictionary that has issues, fails to upload to REDCap, or needs corrections applied. Trigger on: "fix my data dictionary", "my DD won't upload", "the upload is failing", "fix the branching logic in my DD", "clean up this CSV", "there are errors in my data dictionary", "can you fix this", or any time a data dictionary CSV is shared alongside a complaint, error message, or request to fix/correct/clean something. Also trigger when parse_dd.py or REDCap itself reports upload errors. Use this skill even for partial fixes — "just fix the branching logic columns" or "clean up the validation columns" — this skill handles targeted repairs too. Do NOT use for building a new data dictionary from scratch (use redcap-dd-builder) or for summarizing/explaining what a DD contains (use redcap-data-dictionary).
 ---
 
 # REDCap Data Dictionary Fixer
 
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+
+**Working from a live project.** If the user names a project instead of attaching a CSV, pull the DD with `export_metadata`, save the JSON to a file and run the fixer on it (the output CSV uses the standard upload headers). Hand the fixed CSV to the user to upload on the project's **Data Dictionary** page. Do not call `import_metadata` yourself unless the user asks for it on a non-production connector — it replaces the entire data dictionary.
+
 This skill diagnoses issues in a REDCap Data Dictionary CSV, applies safe automatic corrections, flags remaining problems that need manual attention, and delivers a corrected CSV ready for re-upload.
+
+**Dependency:** `fix_dd.py` imports the shared module `dd_common.py`, and Step 1 uses `parse_dd.py`, both from the redcap-data-dictionary skill — that skill must be installed alongside this one.
 
 ---
 
@@ -15,13 +21,16 @@ This skill diagnoses issues in a REDCap Data Dictionary CSV, applies safe automa
 Start by running the parser to understand what's in the file and surface any structural issues.
 
 ```bash
-python <skill_path>/scripts/parse_dd.py <path_to_csv> --text
+python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
 ```
 
 Read the output. Pay attention to the "Potential Issues" section — these are the problems you need to fix or flag.
 
-**Finding `<skill_path>`:** The directory containing this SKILL.md file.
-**Finding the uploaded CSV:** Files uploaded by the user land at `/sessions/.../mnt/uploads/<filename>.csv`. Check the mounted workspace folder too.
+**Finding `<skill_path>`** (used for `fix_dd.py` below): This skill's base directory, shown when the skill loads (normally `~/.claude/skills/redcap-dd-fixer`).
+
+**Finding the input file:** Use the path the user gives or attaches. If they only name the file, look in the folder they are working in or use Glob to find it; ask if more than one file matches.
+
+Write output files next to the input file, or to a folder the user names (never a temp folder), and give the user the full path of each file.
 
 ---
 
@@ -33,6 +42,8 @@ Apply automatic corrections:
 python <skill_path>/scripts/fix_dd.py <path_to_csv> --output <output_path>
 ```
 
+The fixer writes a change log next to the output CSV (`<output>_changes.txt`, or `.json` with `--log-json`) before writing the CSV, and prints the same log. Input may use display headers or API-style headers (`field_name`, `branching_logic`, ...); the output keeps the input's header style.
+
 For a machine-readable change log (useful for downstream processing):
 ```bash
 python <skill_path>/scripts/fix_dd.py <path_to_csv> --output <output_path> --log-json
@@ -43,17 +54,16 @@ The fixer applies these corrections automatically:
 | What it fixes | Where | How |
 |---|---|---|
 | Leading/trailing whitespace | All cells | Stripped |
-| Uppercase variable names | Column A | Lowercased |
 | Uppercase field types | Column D | Lowercased |
-| Double quotes in branching logic | Column L | Replaced with single quotes |
-| `==` equality operator | Column L | Replaced with `=` |
+| `"double-quoted"` strings in branching logic | Column L | Converted to `'single quotes'` — unless the string contains an apostrophe (e.g. `"O'Brien"`), which is left as-is and flagged. Why: REDCap accepts both, but opening a DD with double quotes in Excel mangles them |
+| `==` equality operator | Column L | Replaced with `=` (operators inside string literals are never touched) |
 | `!=` not-equal operator | Column L | Replaced with `<>` |
 | `&&` boolean and | Column L | Replaced with `AND` |
 | `\|\|` boolean or | Column L | Replaced with `OR` |
-| `Y`/`yes`/`1` in Identifier? | Column K | Normalized to `y` |
-| `Y`/`yes`/`1` in Required? | Column M | Normalized to `y` |
-| Validation min/max on non-text fields | Columns I/J | Cleared |
-| Double quotes in @CALCTEXT/@CALCDATE | Column R | Replaced with single quotes |
+| `Y`/`yes`/`1`/`true` in Identifier? | Column K | Normalized to `y` (`N`/`no`/`0`/`false` → blank; anything else kept and flagged) |
+| `Y`/`yes`/`1`/`true` in Required? | Column M | Same as Identifier? |
+| Validation min/max on fields other than text/slider | Columns I/J | Cleared |
+| `"double-quoted"` strings in @CALCTEXT/@CALCDATE | Column R | Converted to single quotes (same apostrophe rule; nested parentheses handled) |
 
 The fixer also flags — but does **not** auto-fix — these issues that require human judgment:
 
@@ -61,7 +71,9 @@ The fixer also flags — but does **not** auto-fix — these issues that require
 - **Missing formula** on calc fields → field will display blank
 - **Duplicate variable names** → REDCap rejects the upload
 - **Invalid field types** → REDCap rejects the upload
-- **Invalid variable name characters** → may be rejected or cause unpredictable behavior
+- **Uppercase or invalid variable names** (e.g. `Age`) → reported with every row that references them; never renamed by the script
+- **Unrecognised Identifier?/Required? values** → kept as-is for you to decide
+- **Double-quoted strings containing an apostrophe**, unbalanced quotes, or unclosed @CALCTEXT/@CALCDATE parentheses
 - **Complex expression errors** in branching logic or formulas (see Step 3)
 
 ---
@@ -103,7 +115,7 @@ Common misses: `datediff()` requires 3 args (unit string is mandatory); `if()` r
 **Cross-event references (longitudinal)**
 Format is `[event_name][field_name]` — no dot, no space, no nested brackets.
 
-> For complex expression repairs, the `redcap-syntax-fixer` skill has the full set of rules and handles reference checking (whether fields and events actually exist in the project). If you need to go deep on a specific expression, read that skill's SKILL.md.
+> For complex expression repairs, the `redcap-syntax` skill (fix mode) has the full set of rules and handles reference checking (whether fields and events actually exist in the project). If you need to go deep on a specific expression, read that skill's SKILL.md and `references/fix-mode.md`.
 
 ---
 
@@ -121,7 +133,7 @@ Once the user provides the options, add them to the corrected CSV in Column F an
 
 ### Missing formula on calc field (ERROR — field will always be blank)
 
-Ask what the field should compute. If the user describes it in plain language, use the `redcap-syntax-builder` skill to write the formula.
+Ask what the field should compute. If the user describes it in plain language, use the `redcap-syntax` skill to write the formula.
 
 > `[field_name]` is a calculated field with no formula — it will always display blank. What should it calculate? If you describe the calculation (e.g. "sum of phq9_q1 through phq9_q9"), I can write the formula for you.
 
@@ -137,11 +149,11 @@ Show what REDCap received and list the valid alternatives.
 
 > `[variable_name]` has field type `[invalid_type]`, which REDCap doesn't recognise. The valid types are: `text`, `notes`, `dropdown`, `radio`, `checkbox`, `calc`, `file`, `descriptive`, `slider`, `yesno`, `truefalse`. Which type did you intend?
 
-### Invalid variable name characters (ERROR — may block upload or cause issues)
+### Uppercase or invalid variable names (ERROR — may block upload or cause issues)
 
-Show the problem and offer a suggested correction.
+Show the problem, the references the fixer listed, and offer a suggested correction. Only rename after the user confirms, and then rename consistently: the variable itself **and every reference** (`[Age]`, `[Age(1)]`, `[event][Age]`, piping) in branching logic, calc formulas, annotations, labels, and notes. List every change.
 
-> `[variable_name]` contains characters REDCap doesn't allow. Variable names must start with a letter and contain only lowercase letters, digits, and underscores. A corrected version might be `[suggested_name]` — does that work, or would you prefer something else?
+> `[variable_name]` isn't a valid REDCap variable name — names must start with a letter and contain only lowercase letters, digits, and underscores. It's referenced in rows X and Y. A corrected version might be `[suggested_name]`, updated in those references too. If data has already been collected under this name, renaming will orphan it. Rename?
 
 ### Complex expression errors in branching logic or formulas (WARNING)
 

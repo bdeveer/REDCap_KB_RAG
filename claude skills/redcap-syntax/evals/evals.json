@@ -1,0 +1,213 @@
+{
+  "skill_name": "redcap-syntax",
+  "evals": [
+    {
+      "id": 1,
+      "mode": "write",
+      "eval_name": "branching-multi-condition",
+      "prompt": "I need branching logic to show a field called `pregnancy_complications` only when the participant is female AND currently pregnant. Sex is stored in a radio field called `sex` (coded 1=Male, 2=Female) and pregnancy status in a radio called `pregnant` (coded 1=Yes, 0=No). Not a longitudinal project, no repeating instruments.",
+      "expected_output": "A correct branching logic expression using [sex]='2' AND [pregnant]='1', with a brief explanation and any relevant gotchas (e.g., case sensitivity, single quotes).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "mode": "write",
+      "eval_name": "calctext-phq9-categories",
+      "prompt": "I need a @CALCTEXT expression that categorizes PHQ-9 scores into severity labels. The total score field is called `phq9_total`. The categories are: 0-4 = Minimal, 5-9 = Mild, 10-14 = Moderate, 15-19 = Moderately Severe, 20 and above = Severe. Not a longitudinal project, no repeating instruments.",
+      "expected_output": "A correct @CALCTEXT using nested if() functions covering all 5 categories, placed on a Text Box field. Expression should handle the score ranges correctly with no gaps or overlaps.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "mode": "write",
+      "eval_name": "calcdate-cross-event-longitudinal",
+      "prompt": "We have a longitudinal study with a Baseline event (unique event name: baseline_arm_1) and a Month 6 event (unique event name: month_6_arm_1). The enrollment date is stored in a field called `enroll_date` on the Baseline event. I need a @CALCDATE expression for a field on the Month 6 event that calculates exactly 6 months after the enrollment date. Both fields use date_ymd validation.",
+      "expected_output": "A correct @CALCDATE using a cross-event reference to [baseline_arm_1][enroll_date] with offset 6 and unit 'M'. Should include the note about format matching, server time, and the approximation of 'M' vs using days.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "mode": "fix",
+      "eval_name": "wrong-operators",
+      "prompt": "Can you check this branching logic? It's not showing the field when I expect it to:\n\n[age] >= 18 && [consent_status] == 'yes' && [site] != 'withdrawn'",
+      "expected_output": "Identifies three syntax errors: && should be AND, == should be =, != should be <>. Distinguishes all as syntax errors. Provides corrected expression: [age] >= 18 AND [consent_status] = 'yes' AND [site] <> 'withdrawn'",
+      "files": [],
+      "assertions": [
+        "Identifies && as a syntax error and replaces with AND",
+        "Identifies == as a syntax error and replaces with =",
+        "Identifies != as a syntax error and replaces with <>",
+        "Classifies all three as syntax errors, not reference errors",
+        "Provides a complete corrected expression"
+      ]
+    },
+    {
+      "id": 5,
+      "mode": "fix",
+      "eval_name": "exponentiation",
+      "prompt": "My BMI calculated field is always blank. Here's the formula:\n\n([weight_kg] / [height_cm]^2) * 10000",
+      "expected_output": "Identifies the exponentiation syntax error: [height_cm]^2 should be ([height_cm])^(2). Classifies as syntax error. Provides corrected expression: ([weight_kg] / (([height_cm])^(2))) * 10000",
+      "files": [],
+      "assertions": [
+        "Identifies the exponentiation syntax error (missing parentheses around base)",
+        "Classifies as a syntax error",
+        "Provides corrected expression with ([height_cm])^(2)",
+        "Does not flag [weight_kg] or [height_cm] as reference errors (no context was provided to check against)"
+      ]
+    },
+    {
+      "id": 6,
+      "mode": "fix",
+      "eval_name": "calcdate-dot-and-minutes",
+      "prompt": "This @CALCDATE isn't working — the follow-up date field stays blank:\n\n@CALCDATE([baseline_arm_1].[visit_date], 90, 'm')\n\nThe source field is a date_ymd field. I want to calculate 90 days after the baseline visit date.",
+      "expected_output": "Identifies two errors: (1) syntax error — dot notation [baseline_arm_1].[visit_date] should be [baseline_arm_1][visit_date] (no separator); (2) syntax error — 'm' is minutes, not months or days — for 90 days it should be 'd'. Provides corrected expression: @CALCDATE([baseline_arm_1][visit_date], 90, 'd')",
+      "files": [],
+      "assertions": [
+        "Identifies dot notation as a syntax error and corrects to adjacent brackets",
+        "Identifies 'm' (minutes) as the wrong unit — should be 'd' for days",
+        "Explains that 'm' is minutes and 'M' is months (case sensitivity)",
+        "Provides corrected expression: @CALCDATE([baseline_arm_1][visit_date], 90, 'd')",
+        "Classifies both as syntax errors"
+      ]
+    },
+    {
+      "id": 7,
+      "mode": "fix",
+      "eval_name": "missing-arg-and-ref",
+      "prompt": "Please check this calculated field formula. We're in a longitudinal project. The field is on the Screening event. I've pasted the formula and our field list below.\n\nFormula:\nif([enroll_date] <> '', datediff([enroll_date], [fu_date]), '')\n\nFields in the project (all assigned to Screening event only):\n- record_id\n- enroll_date (date_ymd)\n- fu_date (date_ymd)\n- days_to_followup (calc)\n\nEvents: screening_arm_1, followup_arm_1",
+      "expected_output": "Identifies one syntax error: datediff() is missing its required third argument (the unit string). Also identifies a potential reference error: fu_date is assigned only to Screening, so if the intention was to reference it from the Followup event, there's a designation issue. The corrected expression adds a unit, e.g. datediff([enroll_date], [fu_date], 'd'). Should note that the if() returns '' (text) in the false branch for a calc field, which will produce blank (not an error per se, just expected REDCap behavior).",
+      "files": [],
+      "assertions": [
+        "Identifies datediff() missing the required third argument (unit) as a syntax error",
+        "Provides a corrected datediff() call with a unit argument (e.g., 'd')",
+        "Notes that '' as the false branch of if() in a calc field will produce blank, not an error",
+        "Does NOT incorrectly flag [enroll_date] or [fu_date] as reference errors (both exist in the field list)"
+      ]
+    },
+    {
+      "id": 8,
+      "mode": "fix",
+      "eval_name": "clean-expression",
+      "prompt": "Is there anything wrong with this branching logic?\n\n[age] >= 18 AND [consent] = '1'",
+      "expected_output": "No errors found. Expression is valid branching logic. Optionally notes minor gotchas like blank vs zero or case sensitivity of text comparisons, but does not invent problems.",
+      "files": [],
+      "assertions": [
+        "States that no syntax errors are found",
+        "Does not fabricate errors in a correct expression",
+        "Identifies this as branching logic",
+        "May mention that reference checking was skipped (no field list provided) but does not treat this as an error"
+      ]
+    },
+    {
+      "id": 9,
+      "mode": "fix",
+      "eval_name": "checkbox-plain-reference",
+      "prompt": "This branching logic is supposed to show `chest_pain_detail` when 'Chest pain' is ticked in the `symptoms` checkbox, but the field never shows. Chest pain is coded 3.\n\n[symptoms] = '3'",
+      "expected_output": "Identifies that a plain [symptoms] reference on a checkbox field does not reference any option in logic (RC-BL-04). Corrected expression: [symptoms(3)]='1'. Explains that each option is a sub-variable storing 1 (checked) or 0 (unchecked).",
+      "files": [],
+      "assertions": [
+        "Identifies the plain checkbox reference as the error",
+        "Provides corrected expression [symptoms(3)]='1'",
+        "Explains that checkbox options store 1 (checked) / 0 (unchecked)",
+        "Does not claim that [symptoms]='3' works for single selections"
+      ]
+    },
+    {
+      "id": 10,
+      "mode": "fix",
+      "eval_name": "instance-qualifier",
+      "prompt": "In my repeating 'Visit' instrument I want a @CALCTEXT that shows the weight from the visit before this one, but it just shows the literal text. Here is what I have:\n\n@CALCTEXT('Previous weight: [weight](previous-instance)')\n\n`weight` is on the repeating Visit instrument. Not longitudinal.",
+      "expected_output": "Identifies two errors: (1) the variable is inside a quoted string, so it is output literally — pull it out and use concat(); (2) the instance qualifier must be in square brackets immediately after the variable: [weight][previous-instance]. Corrected: @CALCTEXT(concat('Previous weight: ',[weight][previous-instance])). Notes that [previous-instance] is blank in instance 1.",
+      "files": [],
+      "assertions": [
+        "Identifies the variable embedded in a quoted string as an error",
+        "Corrects the qualifier syntax to [weight][previous-instance]",
+        "Provides a corrected expression using concat() or equivalent with the variable outside quotes",
+        "Notes that [previous-instance] returns blank in instance 1"
+      ]
+    },
+    {
+      "id": 11,
+      "mode": "fix",
+      "eval_name": "calcdate-months-unit-case",
+      "prompt": "I want the 3-month follow-up date to be 3 months after `consent_date`, but this gives a date almost identical to the consent date:\n\n@CALCDATE([consent_date], 3, 'm')\n\nBoth fields are date_ymd.",
+      "expected_output": "Identifies that 'm' is minutes (lowercase) and months is 'M' (capital). Corrected: @CALCDATE([consent_date], 3, 'M'). Notes 'M' uses 30.44 days per month, so 'd' (e.g., 90) is better if an exact day count is needed.",
+      "files": [],
+      "assertions": [
+        "Identifies 'm' as minutes and 'M' as months",
+        "Explains the unit argument is case-sensitive",
+        "Provides corrected expression @CALCDATE([consent_date], 3, 'M')",
+        "Mentions the 30.44-day approximation or suggests 'd' for exact intervals"
+      ]
+    },
+    {
+      "id": 12,
+      "mode": "fix",
+      "eval_name": "and-or-precedence",
+      "prompt": "This should show the field for adults at either site A or site B, but it's showing for kids at site A too:\n\n[site] = 'A' OR [site] = 'B' AND [age] >= 18",
+      "expected_output": "Explains that AND binds before OR (RC-BL-03), so the expression is evaluated as [site]='A' OR ([site]='B' AND [age]>=18). Flags this as a logic error and adds parentheses: ([site]='A' OR [site]='B') AND [age]>=18.",
+      "files": [],
+      "assertions": [
+        "States that AND is evaluated before OR",
+        "Shows how the original expression is actually grouped",
+        "Provides corrected expression ([site]='A' OR [site]='B') AND [age]>=18",
+        "Does not claim REDCap evaluates strictly left to right"
+      ]
+    },
+    {
+      "id": 13,
+      "mode": "fix",
+      "eval_name": "plus-with-blanks",
+      "prompt": "My total score calc shows 0 even when nobody has answered the questionnaire yet. I only want a total once all three items are answered.\n\n[item1] + [item2] + [item3]",
+      "expected_output": "Explains that + treats blanks as 0, so the total is always a number (0 when all are blank). Notes sum() would skip blanks and return blank only if every input is blank (16.0.41+), which still doesn't wait for all items. Provides: if(isblankormissingcode([item1]) or isblankormissingcode([item2]) or isblankormissingcode([item3]), \"\", [item1]+[item2]+[item3]) (RC-CALC-01 §6.3).",
+      "files": [],
+      "assertions": [
+        "Explains that + treats blank as 0",
+        "Correctly states sum() skips blanks and returns blank only if all inputs are blank (does not claim sum() waits for all items)",
+        "Provides an if(isblankormissingcode(...) or ..., \"\", ...) wrapper covering all three items",
+        "Does not claim the original expression is a syntax error"
+      ]
+    },
+    {
+      "id": 14,
+      "mode": "explain",
+      "eval_name": "explain-nested-calctext",
+      "prompt": "What does this do? It's on a text field in our intake form.\n\n@CALCTEXT(if([bmi]='', '', if([bmi]<18.5, 'Underweight', if([bmi]<25, 'Normal', if([bmi]<30, 'Overweight', 'Obese')))))",
+      "expected_output": "Identifies it as @CALCTEXT on a Text Box returning text. Walks through each condition in order: blank BMI → blank; <18.5 Underweight; 18.5–<25 Normal; 25–<30 Overweight; 30+ Obese. Notes the first branch prevents a blank BMI from being labeled. Does not invent errors.",
+      "files": [],
+      "assertions": [
+        "Identifies the type as @CALCTEXT returning text on a Text Box",
+        "Maps each range to its label correctly, including boundaries",
+        "Explains the purpose of the initial blank check",
+        "Does not report errors in this valid expression"
+      ]
+    },
+    {
+      "id": 15,
+      "mode": "explain",
+      "eval_name": "explain-event-smart-variable",
+      "prompt": "Can you explain this branching logic? We're longitudinal and the vitals form isn't on every event.\n\n[previous-event-name][sbp] <> '' AND [sbp] > [previous-event-name][sbp] + 20",
+      "expected_output": "Explains that [previous-event-name][sbp] is the systolic BP from the closest earlier event where the vitals instrument is designated (not necessarily the immediately preceding event, RC-PIPE-09). The logic is true when that earlier value exists and the current event's SBP is more than 20 above it. Notes it is blank in the first event, which the <>'' check handles.",
+      "files": [],
+      "assertions": [
+        "Identifies it as branching logic returning true/false",
+        "Explains that the prepended [previous-event-name] finds the closest earlier event where the field's instrument is designated",
+        "Explains the blank check guards against the first event / no earlier value",
+        "States the condition in plain words (current SBP more than 20 above the earlier value)"
+      ]
+    },
+    {
+      "id": 16,
+      "mode": "explain",
+      "eval_name": "explain-calc-vs-calctext",
+      "prompt": "What's the difference between a calc field and @CALCTEXT? When would I use each?",
+      "expected_output": "Explains calc fields (field type calc) return numbers only — text or date output stores blank; @CALCTEXT is an action tag on a Text Box that can return text, numbers, field values, or smart variables. Gives a short example of each and mentions @CALCDATE for dates. Both update during data entry, import, and Data Quality rule H.",
+      "files": [],
+      "assertions": [
+        "States calc fields return numbers only",
+        "States @CALCTEXT goes on a Text Box and can return text or numbers",
+        "Gives an example of each",
+        "Mentions @CALCDATE for date output"
+      ]
+    }
+  ]
+}

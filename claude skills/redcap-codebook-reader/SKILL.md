@@ -1,89 +1,85 @@
 ---
 name: redcap-codebook-reader
 description: |
-  Read and interpret a REDCap Codebook PDF or Data Dictionary CSV to produce
-  a structured project overview. Use this skill whenever a user uploads a
-  Codebook PDF or Data Dictionary CSV and wants to understand what a REDCap
-  project collects, get a summary they can share with stakeholders, or
-  provide a complete project description for LLM-assisted analysis. Trigger
-  on: "summarize this project", "what does this project collect", "give me
-  an overview of this REDCap project", "I uploaded a codebook", "read this
-  codebook", "what's in this codebook", "explain this project to me",
-  "help an LLM understand this project", "create a project summary for
-  documentation", or any time a user uploads a file whose name ends in
-  DataDictionary, Codebook, or PDF and asks for a description or summary.
-  Also trigger when another skill needs a full picture of the project
-  before doing its work (e.g. building branching logic, writing KB articles
-  about a specific project). Use --llm-context mode when another skill or
-  pipeline needs the output, or when the user asks for a machine-readable
-  or structured version. Use --summary mode for human-facing output.
+  Read and interpret a REDCap Codebook PDF (a saved/printed copy of the
+  project's Codebook page) to produce a structured project overview. PDF
+  codebooks only. Use when a user uploads a Codebook PDF and wants to
+  understand what a REDCap project collects, get a summary they can share
+  with stakeholders, or provide a complete project description for
+  LLM-assisted analysis. Trigger on: "summarize this codebook", "what does
+  this project collect" (with a Codebook PDF), "read this codebook", "what's
+  in this codebook", "explain this project to me" (with a Codebook PDF), or
+  any time a user uploads a PDF whose name contains Codebook and asks for a
+  description or summary. Also use when another skill needs the full picture
+  of a project and only a Codebook PDF is available. Use --llm-context when
+  another skill or pipeline needs the output; --summary for human-facing
+  output. Do NOT use for Data Dictionary CSVs (redcap-data-dictionary) or
+  for live projects (redcap-project-analyzer).
 ---
 
 # REDCap Codebook Reader Skill
 
-This skill reads a REDCap Codebook (PDF or Data Dictionary CSV) and produces
-either a human-readable narrative summary or a compact LLM-context dump
-of the full project structure.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+
+This skill reads a REDCap **Codebook PDF** and produces either a
+human-readable narrative summary or a complete LLM-context dump of the
+project structure.
+
+**Not for:**
+- **Data Dictionary CSVs** → use the redcap-data-dictionary skill:
+  `python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <csv> --text`
+  (the script exits with this pointer if given a `.csv`).
+- **Live projects with API access** → use redcap-project-analyzer.
 
 ---
 
-## What This Skill Does
+## Offer the API Route First (when available)
 
-The REDCap Codebook is the authoritative human-readable view of a project's
-instruments and variables (RC-FD-05). It shows every field's variable name,
-label, type, choices, branching logic, action tags, and required/identifier
-flags — all in one place. For longitudinal projects, it also includes the
-Events table with unique event names and the repeating instrument/event
-configuration.
+A PDF is a lossy source: text extraction can mangle wrapped expressions,
+and some information is shown only as icons. If the user has API access to
+the project and a REDCap connector is available, pulling metadata directly
+is more reliable than parsing a PDF. Offer it:
 
-This skill parses that information and produces one of two outputs:
+> "If you have API access to this project, I can read its structure
+> directly through the REDCap connector instead of parsing the PDF — that is
+> more reliable, especially for events and repeating setup. Want me to do
+> that?"
 
-- **`--summary`** (default) — A narrative overview for human consumption.
-  Use for: project documentation, stakeholder briefs, onboarding to an
-  unfamiliar project, or preparing context before consulting with an SME.
+The read-only exports that cover what the Codebook shows:
 
-- **`--llm-context`** — A compact, token-efficient structured dump for
-  LLM consumption. Use for: giving another Claude session a complete
-  picture of the project before asking it to write branching logic,
-  build a data dictionary, answer questions about specific fields, etc.
-  The format encodes every field (variable name, type, label, choices,
-  branching logic conditions, action tags) as a dense but readable
-  per-line entry, grouped by instrument.
+| Export | Gives you |
+|--------|-----------|
+| `export_metadata` | Every field: name, form, type, label, choices, calc, validation, branching logic, annotation, required/identifier |
+| `export_events` | Events with unique event names (longitudinal) |
+| `export_instrument_event_mappings` | Which instruments are assigned to which events |
+| `export_repeating_instruments_events` | Which instruments/events are repeating |
 
----
-
-## Supported Input Formats
-
-| Format | How to get it from REDCap | What it includes |
-|--------|--------------------------|-----------------|
-| **PDF** (preferred) | Project Setup → "Download PDF of All Instruments" | Full Codebook: instruments, fields, event table, repeating config |
-| **CSV** | Project Setup → "Download the current Data Dictionary" | Field content only — no event table, no repeating setup |
-
-**Recommend PDF for longitudinal projects.** The Data Dictionary CSV does not
-include the Events table or the instrument-event assignment information.
-The Codebook PDF is the only single-document source for the full project
-picture, including which events each instrument appears at and which
-instruments are configured as repeating. For classic (non-longitudinal)
-projects, the CSV is sufficient.
+Only these read-only exports are needed — never call import/delete tools
+for this task. If the user prefers the PDF (or has no API access), continue
+below.
 
 ---
 
-## Step 1 — Identify the Input File
+## Step 1 — Get the Codebook PDF
 
-The user will have uploaded one of:
-- A PDF file (often named something like `MyStudy_Codebook.pdf` or downloaded
-  via "Download PDF of All Instruments")
-- A CSV file (named with `_DataDictionary_` in the filename)
+Use the path the user gives or attaches. If they only name the file, look
+in the folder they are working in or use Glob; ask if more than one file
+matches.
 
-Uploaded files are at `/sessions/.../mnt/uploads/<filename>`.
-If the user has a mounted workspace folder, check there too.
+**If they don't have it yet**, tell them how to get it (RC-FD-05 §3):
 
-**If neither format is uploaded**, ask the user:
-> "To give you a full project overview, I'll need either the Codebook PDF
-> (from Project Setup → 'Download PDF of All Instruments') or the Data
-> Dictionary CSV (from Project Setup → 'Download the current Data
-> Dictionary'). The PDF is preferred for longitudinal projects as it
-> includes the events table. Which do you have?"
+> "Open the Codebook in your project — either from **Project Setup** (click
+> **Codebook** in the *Design your data collection instruments* section) or
+> from the **left-hand project menu → Codebook**. Then print the page and
+> choose **Save as PDF** (or use a PDF/download option if your REDCap
+> version shows one on the Codebook page). Send me that PDF."
+
+**Not the same thing:** *"Download PDF of All Instruments"* produces the
+blank data-entry forms, not the Codebook. It lacks the field-attribute
+table, the Instruments/Events summary tables, and the codebook layout this
+script parses. If that's what the user has, ask for the Codebook instead
+(or offer the connector route above). If the script reports *"no Codebook
+field table found"*, this mix-up is the most likely cause.
 
 ---
 
@@ -97,32 +93,30 @@ If the user has a mounted workspace folder, check there too.
 | User says "for an LLM", "machine-readable", or "structured" | `--llm-context` |
 | User wants to paste context into another Claude session | `--llm-context` |
 
-When unclear, default to `--summary` and offer to also produce
-`--llm-context` if they need it for further processing.
+When unclear, default to `--summary` and offer `--llm-context` if they need
+it for further processing.
 
 ---
 
 ## Step 3 — Run the Script
 
-**Finding `<skill_path>`:** The skill lives in the directory containing
-this SKILL.md file. Use that as `<skill_path>`.
+**Finding `<skill_path>`:** The skill's base directory, shown when the skill loads (normally `~/.claude/skills/<skill-name>`).
 
 ```bash
-# For PDF input:
 python <skill_path>/scripts/codebook_report.py <path_to_codebook.pdf> --summary
 python <skill_path>/scripts/codebook_report.py <path_to_codebook.pdf> --llm-context
-
-# For CSV input:
-python <skill_path>/scripts/codebook_report.py <path_to_dd.csv> --summary
-python <skill_path>/scripts/codebook_report.py <path_to_dd.csv> --llm-context
 ```
 
-If PDF mode fails with an import error, install pdfplumber first:
+The script needs **pdfplumber**. If it is missing, the script exits with
+an install hint; install it and re-run:
 ```bash
-pip install pdfplumber --break-system-packages
+py -m pip install pdfplumber
 ```
 
-Read the full output before presenting to the user.
+Exit codes: `0` ok; `1` unreadable PDF / missing file / pdfplumber
+missing / no Codebook field table found; `2` wrong input type (e.g. a CSV).
+
+Read the full output before presenting it to the user.
 
 ---
 
@@ -132,27 +126,28 @@ Read the full output before presenting to the user.
 
 Present the output as-is or lightly reformat it. Call out:
 
-- **Project type and scale** — what kind of project it is, how many
-  instruments and fields.
-- **Events** (if longitudinal) — list all unique event names, since these
-  are needed in branching logic and piping expressions. Remind the user
-  these exact strings are what REDCap uses in expressions like
-  `[event_name][field_name]`.
-- **Repeating setup** — note which instruments use `[current-instance]`
-  (indicating a repeating instrument), since the Data Dictionary alone
-  cannot show this configuration.
+- **Project type and scale** — the project-type label is a keyword
+  heuristic; treat it as a guess.
+- **Events** (if longitudinal) — list the unique event names, since these
+  are what REDCap uses in expressions like `[event_name][field_name]`.
+- **Instrument-event assignments** — shown exactly as printed in the
+  Codebook's Instruments table (unique event names such as
+  `baseline_arm_1` in current REDCap versions).
+- **Repeating setup** — only a "repeat icon" flag read from the icon glyph in
+  the Instruments table (see below). Present it as likely, not confirmed;
+  confirm with `export_repeating_instruments_events` or a visual check.
+- **Clipped text** — a warning means some text ran past the printed page
+  edge and is missing from the PDF (marked `[...clipped...]`).
 - **Notable design features** — action tags, calculated scoring, cross-
   instrument dependencies, matrix groups.
-- **Warnings** — required checkboxes, missing choices, etc.
-- **Source limitation** — if the source was CSV, remind the user that
-  the event table and repeating configuration are not available and
-  recommend the Codebook PDF for a complete picture.
+- **Warnings** — e.g. required checkboxes.
 
 ### For `--llm-context` output (machine-facing):
 
-Pass the output verbatim to the receiving LLM session or downstream skill.
-You do not need to reformat or summarize it — the format is designed to be
-consumed directly. When handing off to another skill, prepend the block with:
+Pass the output verbatim. Nothing is truncated: full labels, every choice,
+full branching logic, full calc formulas, and the complete Field Annotation
+text (including `@CALCTEXT(...)`/`@DEFAULT=...` expressions). When handing
+off to another skill, prepend:
 
 > "Use the following REDCap project context to complete the task. All field
 > names, choice codes, and event names in this context are the exact strings
@@ -160,69 +155,89 @@ consumed directly. When handing off to another skill, prepend the block with:
 
 ---
 
-## What the Codebook Shows (vs. What It Doesn't)
+## What the Script Extracts (and What It Doesn't)
 
-Per RC-FD-05, the Codebook includes:
+The script reads the browser-printed Codebook page by word position (column
+layout taken from the field table's header row). It drops the browser's
+print header/footer (date, page title, page URL, `1/17` page counter) and
+removes icon-font glyphs (Unicode Private Use Area). Per RC-FD-05, the
+Codebook shows the items below. The script extracts:
 
-- Variable names, labels, field types
-- Choices with coded values and labels (use codes in branching logic expressions)
-- Validation type and min/max range
-- Calculation formulas for calc fields
-- Branching logic conditions
-- Action tag annotations (verbatim)
-- Required and Identifier flags
-- Section headers and field notes
-- **[PDF only]** Unique event names for each event in longitudinal projects
-- **[PDF only]** Which instruments are assigned to which events
-- **[PDF only]** Which instruments/events are configured as repeating
-- **Auto-generated `_complete` fields** (see below)
+- Project title, PID, and snapshot timestamp (header)
+- Variable names, field types, labels, section headers, and field notes
+  (the small italic line under the label)
+- Choices with raw codes and labels, any code format (`1`, `-77`, `AL`,
+  `Other`), read from the choice table's code column; wrapped choice labels
+  are re-joined. Checkbox options skip the `fieldname___code` subvariable.
+  Yes/No and True/False fields show their fixed `1`/`0` choices.
+- Validation type and min/max (`text (integer, Min: 0, Max: 120)`); slider
+  min/max, "show number" (`slider (number, ...)`), and slider labels
+- Calculation formulas
+- Branching logic ("Show the field ONLY if:")
+- Field annotations, verbatim, plus the list of action tags
+- Required and Identifier flags; custom alignment; survey question number;
+  the "(Matrix)" flag; BioPortal ontology on text fields
+- "Enabled as survey" per instrument
+- Events table (longitudinal): event name, unique event name, event ID; arm
+  from the `_arm_N` suffix
+- Instrument-event assignments from the Instruments table's Events column,
+  as printed (unique event names in current versions, so arm-qualified)
+- A "repeat icon" flag when the Instruments table shows the repeat icon
+  glyph (Font Awesome U+F363) next to an instrument or its events
 
-The Codebook does NOT include (configure separately in REDCap):
-- Survey settings (queue, auto-continue, theme)
-- User rights and Data Access Groups
-- Randomization setup
-- Alerts and notifications
-- Data Quality rules
-- Reports
+On the test project (103 fields, 10 instruments) every field, form, type,
+label, choice, validation, calc, branching logic, flag, note and section
+header matched the Data Dictionary. The only mismatch was one annotation
+that was clipped at the page edge in the PDF.
+
+**Not extracted from the PDF — say so rather than guess:**
+
+- **Matrix group names and matrix ranking.** Only "(Matrix)" is printed.
+- **Raw HTML/markup** in labels and section headers. The PDF holds only the
+  rendered text (descriptive fields with HTML come out as plain text).
+- **Confirmed repeating setup.** The repeat icon flag depends on the glyph
+  surviving in the text layer, and whole-event repeating is not detected.
+  Use `export_repeating_instruments_events`.
+- **Text clipped at the page edge.** A long unbroken string (e.g. a
+  `@CALCTEXT(...)` with no spaces) can run past the printed page and is
+  lost. The script marks the gap `[...clipped...]` and warns; get the
+  exact text from the Codebook page or `export_metadata`.
+- **Exact whitespace at line wraps** in expressions. Wrapped lines are
+  re-joined by rule (no space inside `[...]` or between `][`; mid-word
+  breaks in branching logic are detected from line width), which matched
+  the test project, but odd spacing in the original cannot be recovered.
+- **Slider labels that contain commas** are split at the comma (the PDF
+  prints them comma-separated).
+
+The Codebook itself does NOT include (configure separately in REDCap):
+survey settings, user rights and DAGs, randomization, alerts, data quality
+rules, reports.
+
+**Text-extraction caveats:** Ligature code points (U+FB00–FB06) are
+normalized; the known REDCap boilerplate artifact `Show the !eld ONLY if`
+is repaired. Ordinary characters such as `!` and `#` in user text are never
+rewritten, so if a font maps a ligature to `!`/`#` you may see e.g. `O#ce`
+in a label — read it in context, and prefer the connector route for exact
+text. Curly quotes in branching logic and calc formulas are straightened
+(REDCap expressions only accept straight quotes); annotations are left
+verbatim.
 
 ---
 
 ## Auto-Generated `_complete` Fields
 
-Every REDCap instrument automatically has a system-generated completion
-status field. Its variable name follows the pattern `{form_name}_complete`
-(e.g., `application_complete`, `review_1_complete`). This field is a
-dropdown with three fixed choices:
+Every instrument has a system-generated completion status field named
+`{form_name}_complete` (e.g. `application_complete`), a dropdown with
+`0` Incomplete, `1` Unverified, `2` Complete. It appears as the last field
+of each instrument in the Codebook and in data exports, but not in the Data
+Dictionary CSV (RC-FD-05 §5) — so the Codebook has exactly one more field
+per instrument than the CSV.
 
-| Code | Label |
-|------|-------|
-| `0` | Incomplete |
-| `1` | Unverified |
-| `2` | Complete |
-
-**Where it appears:**
-
-| Location | Present? |
-|----------|----------|
-| Codebook PDF | ✓ Yes — appears as the final field in each instrument section |
-| Data exports (CSV, R, SPSS, etc.) | ✓ Yes |
-| Codebook web view | ✓ Yes |
-| Data Dictionary CSV | ✗ No — auto-generated fields are excluded |
-| Data Dictionary upload | ✗ No — cannot be added, modified, or removed |
-
-**Implication for field counts:** The Codebook PDF will always have
-exactly one more field per instrument than the Data Dictionary CSV.
-For a project with N instruments, the Codebook PDF has N extra fields.
-This is expected — not a discrepancy.
-
-**The script skips `_complete` fields** by default when parsing a
-Codebook PDF, so that PDF and CSV field counts align and the output
-focuses on user-designed fields. If you need completion status
-information in downstream work, reference the field by its variable
-name `{form_name}_complete` — it is always present in data exports
-and can be used in branching logic and calculated fields.
-
-**Using `_complete` in expressions:**
+**The script skips only `{form_name}_complete` for the instrument being
+parsed**, so field counts align with the Data Dictionary. User fields that
+merely end in `_complete` (e.g. `consent_complete` on a non-`consent` form)
+are kept. Reference completion status in downstream work by its variable
+name:
 
 ```
 # Show a field only if a prior form is marked Complete
@@ -236,45 +251,39 @@ if([form_a_complete]='2', 1, 0) + if([form_b_complete]='2', 1, 0)
 
 ## Important REDCap Syntax Notes
 
-These frequently come up when using codebook output for downstream work:
-
 - **Checkbox expression syntax:** The Codebook shows `fieldname___code` as the
   subvariable name (used in exports), but REDCap expressions must use
   `[fieldname(code)]` — e.g., `[race(3)] = '1'`. Never use the triple-underscore
   form in branching logic or calc fields.
 
-- **Choice codes vs. labels:** The Codebook shows both. In branching logic,
-  always use the numeric code, not the label. E.g., `[sex] = '1'` not
-  `[sex] = 'Female'`.
+- **Choice codes vs. labels:** In branching logic, always use the raw code,
+  not the label. E.g., `[sex] = '1'` not `[sex] = 'Female'`.
 
-- **Event names in expressions:** Longitudinal cross-event references use the
-  unique event name from the Events table: `[baseline_arm_1][weight]`. The
-  display name ("Baseline") is not used in expressions.
+- **Event names in expressions:** Cross-event references use the unique
+  event name: `[baseline_arm_1][weight]`, not the display name ("Baseline").
 
-- **Piped labels:** In longitudinal projects, some field labels use piping
-  syntax like `[event][field]`. The Codebook shows the raw syntax — it
-  does not resolve piped values. This is expected behavior.
+- **Piped labels:** The Codebook shows raw piping syntax like
+  `[event][field]` in labels; it does not resolve piped values.
 
 ---
 
 ## Common Scenarios
 
-**User uploads a DD CSV and asks "what does this project collect?"**
-→ Run `--summary` on the CSV. Note at the end that event info is not
-available and recommend the Codebook PDF if the project is longitudinal.
+**User uploads a Data Dictionary CSV:**
+→ Don't use this skill. Use redcap-data-dictionary
+(`parse_dd.py <csv> --text`).
 
 **User uploads a Codebook PDF for a longitudinal project:**
-→ Run both `--summary` and `--llm-context`. Present the summary to the user
-and keep the LLM context ready if a follow-up task needs it (e.g., building
-branching logic for a specific instrument).
+→ If they have API access, offer the connector route. Otherwise run
+`--summary` (and `--llm-context` if a follow-up task needs it). Flag that
+repeating setup must be checked separately.
 
-**Another skill (e.g., redcap-syntax-builder) needs project context:**
-→ Run `--llm-context` and pass the output verbatim as context to that skill.
+**User uploads "Download PDF of All Instruments" output:**
+→ Explain it's the blank forms, not the Codebook; give the Step 1
+instructions or offer the connector route.
+
+**Another skill (e.g., redcap-syntax) needs project context:**
+→ Run `--llm-context` and pass the output verbatim.
 
 **User says "I need to describe this project for an IRB submission":**
-→ Run `--summary`, then offer to produce a more detailed Word document
-using the docx skill with the summary as source content.
-
-**User says "I need to share this project structure with a developer":**
-→ Run `--llm-context`. The structured format is easy for developers and
-LLMs to parse. Offer to wrap it in a Word doc if they need a formal deliverable.
+→ Run `--summary`, then offer a Word document via the docx skill.

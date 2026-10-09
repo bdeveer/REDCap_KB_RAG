@@ -4,9 +4,11 @@
     {
       "id": 0,
       "name": "operator-fixes-and-exponent",
-      "prompt": "I have a data dictionary that keeps failing to upload. The branching logic has some wrong operators I think. Can you fix it? The file is at /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_operators.csv",
-      "expected_output": "Should run fix_dd.py, identify == operators in branching logic, convert them to =, convert && to AND, convert != to <>, flag the broken exponentiation in the BMI formula ([weight_kg])/([height_m])^(2) — the base is already wrapped but the weight_kg reference lacks parentheses — and produce a corrected CSV with a change log. Should also flag missing choices on dropdown fields if any, and note the Identifier?=Y normalization.",
-      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_operators.csv"],
+      "prompt": "I have a data dictionary that keeps failing to upload. The branching logic has some wrong operators I think. Can you fix it? The file is at evals/files/test_dd_operators.csv",
+      "expected_output": "Should run fix_dd.py and produce a corrected CSV with a change log: == → = in sex_other and pregnant branching logic, \"1\" → '1' and && → AND in pregnant, != → <> in bmi, and Identifier? Y → y on pt_name. Should also flag (from its own expression review, not the script) that the BMI formula [weight_kg]/[height_m]^2 needs parentheses around base and exponent: [weight_kg]/(([height_m])^(2)).",
+      "files": [
+        "evals/files/test_dd_operators.csv"
+      ],
       "assertions": [
         {
           "id": "runs_fixer_script",
@@ -43,9 +45,11 @@
     {
       "id": 1,
       "name": "structural-errors-and-calctext",
-      "prompt": "Please fix this data dictionary — I got errors when trying to upload it. File: /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_structural.csv",
-      "expected_output": "Should parse the DD, run the fixer, identify: (1) the missing choices on 'diagnosis' dropdown and 'adverse_event' radio — flagged not auto-fixed; (2) the double quotes in the @CALCTEXT annotation on pat_name — auto-fixed to single quotes; (3) the validation min/max on ae_description (which is a text field so these are actually valid — but min=100 means minimum 100 characters which is unusual, should be noted); (4) the uppercase 'Dropdown' field type — auto-fixed to lowercase; (5) the duplicate record_id variable — flagged as error; (6) the broken @CALCTEXT with escaped double quotes around 'Unnamed'. Should produce a corrected CSV.",
-      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_structural.csv"],
+      "prompt": "Please fix this data dictionary — I got errors when trying to upload it. File: evals/files/test_dd_structural.csv",
+      "expected_output": "Should parse the DD, run the fixer, and identify: (1) missing choices on 'diagnosis' (Dropdown) and 'adverse_event' (radio) — flagged, not auto-fixed; (2) double-quoted literals in the @CALCTEXT annotation on pat_name (including \"Unnamed\" and the empty-string check) — auto-fixed to single quotes; (3) 'Dropdown' field type — lowercased; (4) duplicate record_id — flagged as an error; (5) ae_description has validation min=100/max=2000 with no validation type — worth noting to the user. Should produce a corrected CSV.",
+      "files": [
+        "evals/files/test_dd_structural.csv"
+      ],
       "assertions": [
         {
           "id": "flags_missing_choices",
@@ -82,9 +86,11 @@
     {
       "id": 2,
       "name": "mixed-whitespace-and-missing-formulas",
-      "prompt": "My data dictionary has a bunch of issues — whitespace in variable names, wrong operators, missing choices, missing formulas. Can you fix what you can and tell me what's left? File is at /sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_mixed.csv",
-      "expected_output": "Should parse and run fixer on the mixed issues DD. Should fix: (1) leading/trailing whitespace on ' mrn ' variable name; (2) == operators in fu_date and fu_notes branching logic to =, != to <>; (3) YES in Required Field? normalized to y. Should flag: (4) missing choices on refer_source, smoking, and alcohol fields; (5) missing formula on phq9_total calc field; (6) mrn variable name after stripping whitespace may have issues if the result still has a leading space issue. Should also note the phq9 matrix fields have validation min/max set which is valid since they're text fields. Should deliver corrected CSV.",
-      "files": ["/sessions/zealous-intelligent-ritchie/redcap-dd-fixer-workspace/test_dd_mixed.csv"],
+      "prompt": "My data dictionary has a bunch of issues — whitespace in variable names, wrong operators, missing choices, missing formulas. Can you fix what you can and tell me what's left? File is at evals/files/test_dd_mixed.csv",
+      "expected_output": "Should parse and run the fixer. Should fix: (1) whitespace around ' mrn '; (2) == → = in fu_date and fu_notes branching logic, != → <> in fu_notes; (3) YES → y in Required Field? for dob; (4) validation min/max cleared on the phq9_total calc field. Should flag: (5) missing choices on refer_source, smoking, and alcohol; (6) missing formula on phq9_total. phq9_q1/phq9_q2 are radio fields in matrix group 'phq9' sharing identical choices — that is a valid matrix and should not be flagged. Should deliver a corrected CSV.",
+      "files": [
+        "evals/files/test_dd_mixed.csv"
+      ],
       "assertions": [
         {
           "id": "fixes_whitespace_varname",
@@ -115,6 +121,68 @@
           "id": "produces_output_csv",
           "name": "Produced a corrected CSV file",
           "description": "A corrected CSV file was written and its path was shared with the user"
+        },
+        {
+          "id": "fixes_calc_minmax",
+          "name": "Cleared min/max on calc field",
+          "description": "Cleared Text Validation Min/Max (0/27) on the phq9_total calc field"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "apostrophe-in-double-quoted-string",
+      "prompt": "Can you clean up the branching logic and calc text in this DD before I upload it? evals/files/test_dd_apostrophe.csv",
+      "expected_output": "Should run fix_dd.py. In city_note, \"New Haven\"/\"Hamden\" become single-quoted, == → =, || → OR. In obrien_note, == → = but \"O'Brien\" must stay double-quoted (NOT 'O'Brien', which would break the expression) and be reported as a warning. In the greeting @CALCTEXT (nested if), \"Dia duit\", \"Hamden\", \"Hi\", \"Hello\" become single-quoted while \"O'Brien\" stays double-quoted, and the closing parentheses are intact.",
+      "files": [
+        "evals/files/test_dd_apostrophe.csv"
+      ],
+      "assertions": [
+        {
+          "id": "keeps_apostrophe_literal",
+          "name": "Kept \"O'Brien\" double-quoted",
+          "description": "The output CSV still contains \"O'Brien\" in double quotes in obrien_note branching logic and in the greeting annotation; it never contains 'O'Brien'"
+        },
+        {
+          "id": "converts_safe_literals",
+          "name": "Converted safe literals",
+          "description": "\"New Haven\" and \"Hamden\" in city_note are now single-quoted, with == → = and || → OR"
+        },
+        {
+          "id": "nested_calctext",
+          "name": "Handled nested @CALCTEXT",
+          "description": "All safe literals in the nested if() of the greeting @CALCTEXT were converted (including those after the inner if), and the expression is otherwise unchanged"
+        },
+        {
+          "id": "reports_apostrophe_warning",
+          "name": "Reported the kept literal",
+          "description": "Told the user that \"O'Brien\" was left double-quoted and why"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "mixed-case-variable-names-referenced",
+      "prompt": "REDCap says my variable names are invalid. Fix this DD please: evals/files/test_dd_mixedcase.csv",
+      "expected_output": "Should run fix_dd.py, which must NOT rename Age or Smoker. Should report both as uppercase-variable errors listing where they are referenced ([Age] in Smoker branching logic, age_months formula, age_text @CALCTEXT; [Smoker] in packs_day branching logic). Should ask the user to confirm before renaming, warn that renaming orphans any collected data, and — only if the user agrees — rename consistently (age/smoker) everywhere, including every reference.",
+      "files": [
+        "evals/files/test_dd_mixedcase.csv"
+      ],
+      "assertions": [
+        {
+          "id": "no_silent_rename",
+          "name": "Did not silently rename",
+          "description": "The corrected CSV produced before user confirmation still has Age and Smoker, with references unchanged — no half-renamed file where the variable is 'age' but logic still says [Age]"
+        },
+        {
+          "id": "lists_references",
+          "name": "Listed references",
+          "description": "Reported the rows/fields that reference [Age] and [Smoker]"
+        },
+        {
+          "id": "asks_before_rename",
+          "name": "Asked before renaming",
+          "description": "Asked the user to confirm the rename and mentioned the data-loss risk if data has been collected"
         }
       ]
     }

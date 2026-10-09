@@ -4,8 +4,13 @@ REDCap Longitudinal Structure Parser
 
 Parses the three CSVs that define a REDCap longitudinal project:
   - Arms CSV         (arm_num, arm_name/name)
-  - Events CSV       (event_name, arm_num, day_offset, offset_min, offset_max, unique_event_name)
+  - Events CSV       (event_name, arm_num, day_offset, offset_min, offset_max,
+                      unique_event_name, custom_event_label)
   - Mapping CSV      (arm_num, unique_event_name, form)  [instrument designations]
+
+Each file may instead be the JSON array returned by the API / MCP exports
+(export_arms, export_events, export_instrument_event_mappings) -- same keys.
+offset_min/offset_max are window widths in days before/after day_offset.
 
 Usage:
     python parse_longitudinal.py [--arms PATH] [--events PATH] [--mapping PATH] [--json]
@@ -17,35 +22,55 @@ Any of the three file flags can be omitted — the script works with whatever is
 import argparse
 import csv
 import json
+import re
 import sys
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
+
+# Windows consoles default to cp1252, which cannot print the report symbols.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
+def _clean(value) -> str:
+    """Normalize a cell to a stripped string (None -> '', numbers -> str)."""
+    return "" if value is None else str(value).strip()
+
+
 def open_csv(path: str) -> list[dict]:
-    """Open a CSV with BOM/encoding resilience. Returns list of row dicts."""
+    """
+    Open a CSV (BOM/encoding resilient) or a JSON array as returned by the
+    API exports (export_arms / export_events / export_instrument_event_mappings;
+    keys match the CSV columns). Returns list of row dicts with string values.
+    """
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(f"File not found: {path}")
 
-    for encoding in ("utf-8-sig", "utf-8", "latin-1"):
+    for encoding in ("utf-8-sig", "latin-1"):
         try:
-            with open(p, newline="", encoding=encoding) as f:
-                reader = csv.DictReader(f)
-                rows = [row for row in reader]
-            # Strip whitespace from keys and values
-            cleaned = []
-            for row in rows:
-                cleaned.append({k.strip(): v.strip() for k, v in row.items() if k})
-            return cleaned
-        except (UnicodeDecodeError, Exception):
+            text = p.read_text(encoding=encoding)
+            break
+        except UnicodeDecodeError:
             continue
 
-    raise ValueError(f"Could not read {path} with any supported encoding.")
+    if p.suffix.lower() == ".json" or text.lstrip().startswith("["):
+        data = json.loads(text)
+        if not isinstance(data, list) or not all(isinstance(r, dict) for r in data):
+            raise ValueError(f"{path}: expected a JSON array of objects.")
+        rows = data
+    else:
+        rows = list(csv.DictReader(text.splitlines()))
+
+    # Strip whitespace from keys and values; short rows give None values,
+    # extra cells land under a None key -- both are dropped/blanked here.
+    return [{k.strip(): _clean(v) for k, v in row.items() if k} for row in rows]
 
 
 def detect_file_type(rows: list[dict]) -> str:
@@ -102,9 +127,6 @@ def parse_events(rows: list[dict]) -> list[dict]:
         cols = {k.lower(): v for k, v in row.items()}
         event_name = (cols.get("event_name") or "").strip()
         arm_num_raw = (cols.get("arm_num") or "").strip()
-        day_offset_raw = (cols.get("day_offset") or "0").strip()
-        offset_min_raw = (cols.get("offset_min") or "").strip()
-        offset_max_raw = (cols.get("offset_max") or "").strip()
         unique_event_name = (cols.get("unique_event_name") or "").strip()
 
         try:
@@ -112,29 +134,63 @@ def parse_events(rows: list[dict]) -> list[dict]:
         except ValueError:
             continue
 
-        try:
-            day_offset = int(day_offset_raw)
-        except ValueError:
-            day_offset = 0
+        predicted = not unique_event_name
+        if predicted:
+            # Upload-style files (e.g. from redcap-longitudinal-builder) leave
+            # this blank; REDCap generates it on import. Predict it so the
+            # mapping can still be cross-checked.
+            unique_event_name = predict_unique_event_name(event_name, arm_num)
 
-        def to_int_or_none(s):
-            try:
-                return int(s)
-            except (ValueError, TypeError):
-                return None
-
-        events.append({
+        event = {
             "event_name": event_name,
             "arm_num": arm_num,
-            "day_offset": day_offset,
-            "offset_min": to_int_or_none(offset_min_raw),
-            "offset_max": to_int_or_none(offset_max_raw),
+            "day_offset": to_number_or_none(cols.get("day_offset")),
+            # Window widths in days. The CSV uses positive numbers; the API
+            # export returns offset_min as a negative number -- normalize.
+            "offset_min": abs_or_none(to_number_or_none(cols.get("offset_min"))),
+            "offset_max": abs_or_none(to_number_or_none(cols.get("offset_max"))),
             "unique_event_name": unique_event_name,
-        })
+            "custom_event_label": (cols.get("custom_event_label") or "").strip(),
+        }
+        if predicted:
+            event["unique_event_name_predicted"] = True
+        if (cols.get("event_id") or "").strip():
+            event["event_id"] = cols["event_id"].strip()
+        events.append(event)
 
-    # Sort by arm_num, then day_offset
-    events.sort(key=lambda e: (e["arm_num"], e["day_offset"]))
+    # Sort by arm_num, then day_offset; same-day ties by unique_event_name
+    # (REDCap's own tiebreak). Without day_offset, keep file order.
+    events.sort(key=event_sort_key)
     return events
+
+
+def predict_unique_event_name(event_name: str, arm_num: int) -> str:
+    """REDCap's documented algorithm (RC-LONG-01); a prediction, not ground truth."""
+    slug = unicodedata.normalize("NFKD", event_name)
+    slug = "".join(ch for ch in slug if not unicodedata.combining(ch)).lower()
+    slug = slug.replace("-", "")
+    slug = re.sub(r"[^a-z0-9]+", "_", slug)
+    slug = re.sub(r"_+", "_", slug).strip("_")
+    return f"{slug}_arm_{arm_num}"
+
+
+def to_number_or_none(s):
+    """'28' -> 28, '28.5' -> 28.5, '' / junk -> None."""
+    try:
+        n = float((s or "").strip())
+    except ValueError:
+        return None
+    return int(n) if n.is_integer() else n
+
+
+def abs_or_none(n):
+    return None if n is None else abs(n)
+
+
+def event_sort_key(e):
+    has_day = e["day_offset"] is not None
+    return (e["arm_num"], e["day_offset"] if has_day else 0,
+            e["unique_event_name"] if has_day else "")
 
 
 def parse_mapping(rows: list[dict]) -> list[dict]:
@@ -220,6 +276,14 @@ def build_analysis(arms, events, mapping):
                 + ", ".join(sorted(events_with_no_forms))
             )
 
+    predicted = [e["unique_event_name"] for e in events if e.get("unique_event_name_predicted")]
+    if predicted:
+        issues.append(
+            "Events file has blank unique_event_name (normal for an upload file). Names marked "
+            "'~' were PREDICTED -- verify against a real events export after import: "
+            + ", ".join(predicted)
+        )
+
     # Check for forms never assigned anywhere
     if mapping and not seen_forms:
         issues.append("Mapping file contains no valid form assignments.")
@@ -258,9 +322,12 @@ def build_analysis(arms, events, mapping):
                     "day_offset": e["day_offset"],
                     "offset_min": e["offset_min"],
                     "offset_max": e["offset_max"],
+                    "custom_event_label": e["custom_event_label"],
+                    **({"event_id": e["event_id"]} if "event_id" in e else {}),
+                    "unique_event_name_predicted": e.get("unique_event_name_predicted", False),
                     "forms": forms_by_event.get(e["unique_event_name"], []),
                 }
-                for e in sorted(events_by_arm[arm_num], key=lambda x: x["day_offset"])
+                for e in sorted(events_by_arm[arm_num], key=event_sort_key)
             ]
             for arm_num in all_arm_nums
         },
@@ -322,12 +389,19 @@ def render_text(arms_data, events_data, mapping_data, analysis) -> str:
                 continue
             subsection(f"Arm {arm_num}: {arm['arm_name']}")
             for evt in arm_evts:
+                day = evt["day_offset"]
+                lo, hi = evt["offset_min"] or 0, evt["offset_max"] or 0
                 window = ""
-                if evt["offset_min"] is not None and evt["offset_max"] is not None:
-                    if evt["offset_min"] != evt["day_offset"] or evt["offset_max"] != evt["day_offset"]:
-                        window = f"  [window: {evt['offset_min']} – {evt['offset_max']}]"
+                if (lo or hi) and day is not None:
+                    # offset_min/offset_max are days before/after day_offset
+                    window = f"  [window: -{lo}/+{hi} days → Day {day - lo:g}–{day + hi:g}]"
+                elif lo or hi:
+                    window = f"  [window: -{lo}/+{hi} days]"
+                label = f"  label: {evt['custom_event_label']}" if evt["custom_event_label"] else ""
+                day_str = f"{day:g}" if day is not None else "—"
+                uen = ("~" if evt["unique_event_name_predicted"] else "") + evt["unique_event_name"]
                 lines.append(
-                    f"  Day {evt['day_offset']:>4}  {evt['event_name']:<30} ({evt['unique_event_name']}){window}"
+                    f"  Day {day_str:>4}  {evt['event_name']:<30} ({uen}){window}{label}"
                 )
 
     # Form-event matrix
@@ -363,15 +437,7 @@ def render_text(arms_data, events_data, mapping_data, analysis) -> str:
                     sep += " " + "-" * col_width
                 lines.append(sep)
 
-                # Data rows — only show forms that are relevant to this arm
-                arm_forms = [
-                    f for f in a["all_forms"]
-                    if any(
-                        m["unique_event_name"] in {e["unique_event_name"] for e in arm_evts}
-                        for m in [] if m["form"] == f  # placeholder; see below
-                    )
-                ]
-                # Simpler: all forms, mark blank if not in this arm at all
+                # Data rows — only forms assigned at least once in this arm
                 for form in a["all_forms"]:
                     row_str = f"  {form:<{form_col_width}}"
                     form_in_arm = False
@@ -472,7 +538,7 @@ def main():
                     file=sys.stderr,
                 )
             return rows
-        except Exception as e:
+        except (OSError, ValueError, csv.Error) as e:
             errors.append(str(e))
             print(f"Error loading {path}: {e}", file=sys.stderr)
             return []

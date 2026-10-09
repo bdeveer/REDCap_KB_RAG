@@ -1,0 +1,10 @@
+"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max","Identifier?","Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"
+record_id,demographics,,text,Record ID,,,,,,,,,,,,,
+pt_name,demographics,,text,Patient name,,,,,,Y,,y,,,,,
+sex,demographics,,radio,Sex,"1, Female | 2, Male | 99, Other",,,,,,,y,,,,,
+sex_other,demographics,,text,Specify sex,,,,,,,[sex]==99,,,,,,
+pregnant,demographics,,yesno,Currently pregnant?,,,,,,,"[sex]==""1"" && [age]>=12",,,,,,
+age,demographics,,text,Age,,,integer,0,120,,,,,,,,
+weight_kg,demographics,,text,Weight (kg),,,number,,,,,,,,,,
+height_m,demographics,,text,Height (m),,,number,,,,,,,,,,
+bmi,demographics,,calc,BMI,[weight_kg]/[height_m]^2,,,,,,[height_m]!='',,,,,,
