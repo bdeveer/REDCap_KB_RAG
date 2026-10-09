@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); familiarity with branching logic syntax |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md); [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | @IF action tag; how do i apply an action tag conditionally; conditional action tag based on logic; use @IF to hide a field for some records but not others; apply different action tags by event or user; @IF condition evaluated on page load; make a field behave differently with @IF |
@@ -111,6 +111,8 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 ## 5. PDF Behavior
 
 `@IF` is also evaluated when generating a PDF of an instrument or survey. This means PDF-specific action tags (such as `@HIDDEN-PDF`) can be placed inside `@IF` branches and will be applied correctly in the generated PDF.
+
+> **Version caveat (below 17.4.4 Standard / 17.3.10 LTS):** In some situations, `@IF` and similar action tags made REDCap-generated PDFs take **much longer** to produce than expected. This affects PDF exports, e-Consent, PDF Snapshots and PDF attachments. If PDF generation is slow on an older instance with heavy `@IF` use, that is the likely cause.
 
 ---
 

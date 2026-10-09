@@ -7,13 +7,13 @@
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Synonyms** | how do i write a branching logic statement; redcap logic syntax operators; what operators can i use in branching logic; how to reference a field in branching logic; single condition logic statement; branching logic brackets and quotes; greater than less than equals in redcap logic; how to write a simple conditional expression |
+| **Synonyms** | how do i write a branching logic statement; redcap logic syntax operators; what operators can i use in branching logic; how to reference a field in branching logic; single condition logic statement; branching logic brackets and quotes; greater than less than equals in redcap logic; how to write a simple conditional expression; how do i add comments to branching logic; annotate logic with // or # comments |
 
 ---
 
@@ -107,6 +107,8 @@ marks. Both single and double quotes are accepted.
 ```
 
 
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** In some cases, a comparison value or label containing an **apostrophe or quotation mark** — `[site]="O'Brien Clinic"` — generated invalid JavaScript on the form or survey, so the branching logic or calculation silently stopped working there. REDCap now escapes these characters. On older versions, avoid quote characters inside comparison values; compare against a coded value instead of label text.
+
 > **Best Practice:** If you plan to edit your logic via the Data Dictionary in Excel or another spreadsheet program, use single quotes throughout. Excel interprets double quotes as part of its own formula syntax, which can corrupt logic statements during CSV import/export.
 
 
@@ -140,6 +142,23 @@ lowercase are accepted.
 
 Combining AND and OR in the same statement requires parentheses to
 control evaluation order. See [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md) for full details.
+
+### 3.6 Inline Comments
+
+Logic can carry comments. Text from `//` or `#` to the end of the line is ignored when the logic is evaluated, which lets you annotate long logic in the Logic Editor:
+
+```
+[consent]='1'          // consented
+and [age]>=18          // adult
+and [site]<>''         # site assigned
+```
+
+Comments are worth using on any logic someone else will maintain, but they have the longest defect history of any logic feature — a run of fixes from 13.6.1 to 17.5.4 covering comments in calculations, Form Display Logic, `@IF`, alerts and Data Dictionary uploads. Two rules keep them safe on any version:
+
+- Avoid apostrophes and quotation marks inside comments.
+- Don't make a line consist only of a comment where it would be the whole of the logic.
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Logic or calculations containing inline comments could fail to evaluate in some places and return an error. Alert logic with comment lines could fail to trigger the alert (fixed earlier, in 17.5.1 Standard / 17.3.14 LTS). If logic that works without its comments fails with them on an older instance, remove the comments.
 
 ---
 
@@ -234,6 +253,8 @@ as equivalent to a field containing zero. They are not the same.
 | Empty / blank | No data has been entered into this field at all. The field has never been saved with a value. | [field]='' (equals empty string) |
 | Zero (numeric) | The user actively entered the value 0 into a number field. Zero is a data value. | [field]=0 or [field]='0' |
 
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** For **integer and number fields on a repeating event**, client-side branching logic could treat `0` as blank and blank as non-blank — exactly the distinction this section depends on. If logic testing `=0` or `=''` misbehaves on a repeating event in an older instance, upgrade; the stored data is unaffected.
 
 > **Note:** Using [nr_pregnancies]<>0 will evaluate to true for both an empty field AND for values like 1, 2, 3. If you specifically want to test for a field that has been actively filled in with a non-zero number, combine conditions: [nr_pregnancies]<>'' and [nr_pregnancies]<>0.
 

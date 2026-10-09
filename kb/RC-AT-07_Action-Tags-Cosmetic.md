@@ -119,6 +119,8 @@ A compromise between default (filename only) and `@INLINE` (always displayed). A
 
 **Use case:** Sensitive images or large PDFs that should be viewable on demand but not always visible.
 
+> **Version caveat (17.4.2 Standard only):** `@INLINE-PREVIEW` stopped working on surveys and data entry forms in 17.4.2. Fixed in 17.4.3. The LTS line was not affected.
+
 ---
 
 ## 6. Displaying Files via Piping

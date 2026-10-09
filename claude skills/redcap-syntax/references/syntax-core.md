@@ -82,6 +82,10 @@ variable, a sum, or a literal.
 - `{field}` is Field Embedding syntax — it has no role in logic or calculations. Use `[field]`.
 - The `:label` modifier (`[field:label]`) cannot be passed into Special Functions —
   `contains([status:label],'active')` will not work; functions operate on raw stored values.
+- **Inline comments:** text from `//` or `#` to the end of a line is ignored (RC-BL-02 §3.6).
+  Keep apostrophes and quotes out of comments, and don't let a comment be the whole of the logic —
+  both have a long defect history. Below 17.5.4 Standard / 17.3.18 LTS, comments could break
+  evaluation on forms and surveys, and below 17.5.1 / 17.3.14 they could stop alerts firing.
 
 ---
 

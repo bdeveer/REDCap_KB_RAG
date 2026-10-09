@@ -7,10 +7,10 @@
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.6 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
 | **Synonyms** | how do I send an automated email in REDCap; email reminders; automatic notifications when a form is saved; send an email when a survey is completed; staff notification email; confirmation email to participant; conditional email alert; trigger an email based on logic; difference between alerts and ASIs; set up alerts and notifications; SMS or text message notification |
@@ -94,6 +94,8 @@ Then select a form status requirement:
 **For combination triggers and logic triggers:**
 
 Enter a logic statement in the logic editor. The editor is the same interface used for branching logic. If you are unfamiliar with logic syntax, see [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md).
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Alert logic containing **comment lines** (`//` or `#`) might not be evaluated correctly, so an alert that should have fired did not. On older instances, keep comments out of alert logic. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.6.
 
 The logic evaluates at the record level. You cannot write logic that counts records across the entire project (e.g., "trigger if 20 survey responses have arrived"). All logic must reference variables within a single record.
 

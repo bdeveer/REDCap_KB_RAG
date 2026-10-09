@@ -131,6 +131,26 @@ its unique event name, breaking old references.
 a repeating event? If not → **instance qualifier on a non-repeating field**; the KB documents no
 reliable result — remove the qualifier.
 
+**4f. Version-specific defects** — if the expression is valid and the references check out but it
+still misbehaves *on the form or survey*, ask which REDCap version the instance runs (or read it via
+`export_redcap_version` during live validation) and check this table. Each row was a silent wrong
+result, not an error message. Name the defect and the fix version rather than "correcting" valid
+syntax.
+
+| Symptom | Affected versions | KB |
+|---|---|---|
+| Very long logic (~200–300+ `and`/`or` clauses) always True | 17.3.1–17.4.1 Std / 17.3.5–17.3.7 LTS | RC-BL-01 §4a |
+| Logic or calc with inline comments fails to evaluate | below 17.5.4 Std / 17.3.18 LTS | RC-BL-02 §3.6 |
+| Alert with comment lines never fires | below 17.5.1 Std / 17.3.14 LTS | RC-ALERT-01 §3.2 |
+| Comparison text containing `'` or `"` silently does nothing | below 17.5.4 Std / 17.3.18 LTS | RC-BL-02 §3.3 |
+| `0` treated as blank (and blank as not) for number/integer fields on a repeating event | below 17.5.4 Std / 17.3.18 LTS | RC-BL-02 §6 |
+| X-instance qualifier on a date field with a Missing Data Code gives an odd result on the page only | below 17.5.0 Std / 17.3.13 LTS | RC-BL-05 §5.3 |
+| `@CALCTEXT` HTML stripped when piped on another page of a multipage survey | below 17.5.1 Std / 17.3.14 LTS | RC-AT-09 §3.3 |
+| Every calc on the form recalculates on any change (slow forms) | below 17.5.3 Std / 17.3.16 LTS | RC-CALC-02 §6 |
+
+"Page only" defects are a strong clue: if Data Quality rule H or an import computes the right value
+but the form shows the wrong one, suspect the version before the expression.
+
 ---
 
 ## Step 5 (optional): Validate against the live project
@@ -142,6 +162,7 @@ If the user named a connector and project: confirm the connector first and say i
 - `export_events` → unique event names (4c)
 - `export_instrument_event_mappings` → designations (4d)
 - `export_repeating_instruments_events` → repeat setup (4e)
+- `export_redcap_version` → instance version (4f)
 
 Never import, delete, or export records.
 

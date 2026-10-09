@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); familiarity with REDCap calculated fields |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md); [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md) |
 | **Synonyms** | @CALCTEXT action tag; @CALCDATE action tag; how do i make a calculated text field; calculate a date difference with an action tag; turn a text box into a calculated field; conditional text output with @CALCTEXT; date arithmetic action tag; calc field that returns text instead of a number |
@@ -81,6 +81,8 @@ Field variables and Smart Variables can be used as return values directly (witho
 ```
 @CALCTEXT(if([age] >= 18, [dob], [event-label]))
 ```
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** A `@CALCTEXT` field that outputs **HTML tags**, piped onto a **different page** of the same multipage survey, had all its HTML stripped. It displayed correctly when piped on the field's own page. On affected versions, pipe it on the same page or upgrade.
 
 > **Restriction:** Field variables and Smart Variables **cannot** be piped inside quotes in the return value. `@CALCTEXT(if([x]='1', 'Value: [other_field]', ''))` will not substitute `[other_field]` — it will output the literal string `Value: [other_field]`. Use the variable as a standalone return value, not embedded in a quoted string.
 

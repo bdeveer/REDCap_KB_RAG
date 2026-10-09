@@ -86,7 +86,8 @@ project instead of asking the user to paste them.
 - **Confirm first:** restate the connector (and that it is **production**, if it is) and get a yes
   before the first call.
 - **Allowed tools — read-only metadata only:** `export_project_info`, `export_metadata`,
-  `export_events`, `export_instrument_event_mappings`, `export_repeating_instruments_events`.
+  `export_events`, `export_instrument_event_mappings`, `export_repeating_instruments_events`,
+  `export_redcap_version` (for the version-defect check in `fix-mode.md` 4f).
 - **Never** call any import, delete, rename, randomize, or record/report/file export tool from this
   skill — not even "just to look".
 - What to check is listed in the Reference check of `references/fix-mode.md`; use the same list to
