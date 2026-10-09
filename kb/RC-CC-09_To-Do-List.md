@@ -35,7 +35,7 @@ The main section of the To-Do List displays all pending tasks awaiting administr
 - **Requesting user**: The username or email of the user who initiated the action
 - **Project title**: The name of the project associated with the request
 
-Administrators can click on any request to view details and take action.
+Administrators can select any request to view details and take action.
 
 ---
 
@@ -52,7 +52,7 @@ Other task types may appear depending on system configuration and feature usage,
 
 ## 4. Completing Tasks
 
-To complete a task, administrators click on the request to open it. 
+To complete a task, administrators select the request to open it. 
 
 **For draft change approvals:**
 - Administrators are taken to the project's draft review page
