@@ -7,10 +7,10 @@
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-07-27 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) |
 | **Synonyms** | how do i manage multiple alerts in redcap; where is the notification log; cancel a scheduled alert send; copy or deactivate an existing alert; re-evaluate alerts in redcap; view history of sent alerts; edit alerts on the management page; what is a unique alert id |
@@ -171,6 +171,8 @@ Reusing an existing ID isn't limited to literal in-place edits — it's also the
 The Notification Log is accessible from the Alerts & Notifications management page. It provides a complete record of every alert instance in the project — both those already sent and those scheduled for future delivery.
 
 > **Note:** The Notification Log covers only alerts created through the Alerts & Notifications feature. Emails scheduled by Automated Survey Invitations (ASIs) do not appear in this log.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** For alerts with a **start date in the past**, the log could omit overdue one-time notifications and show recurring notifications with dates **shifted forward**. The log, not the sending, was wrong — but on affected versions do not treat the log as proof of what is scheduled.
 
 ### 5.1 Filters
 

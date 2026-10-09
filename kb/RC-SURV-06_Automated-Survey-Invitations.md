@@ -7,10 +7,10 @@
 | **Domain** | Surveys |
 | **Applies To** | All projects with surveys enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md); [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Synonyms** | how do i send automatic survey invitations; schedule survey emails based on logic; set up automated survey invitations asi; send follow-up surveys without manual work; trigger a survey invite when a condition is met; add a time delay before sending a survey invite; configure survey reminders automatically; automated email invitations for surveys |
@@ -134,6 +134,8 @@ Limits worth knowing:
 - Enabled by default for **new** ASIs; ASIs created before the upgrade keep the legacy behaviour, so an upgraded project holds a mix with nothing on screen distinguishing them.
 
 > **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** Unreliable for its entire life before 17.4.1. The checkbox could fail to save, and where it worked it could reschedule invitations and reminders **at incorrect times whenever any data changed** — not only the date field concerned. Both fixed in 17.4.1 Standard / 17.3.7 LTS. The setting was also missing from the Alerts CSV upload and download files until 17.3.1. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) §4.2a, which covers the same feature for Alerts.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Even after the 17.4.1 fixes, **reminders** could be scheduled at the wrong time for an ASI that combined a **time lag relative to a stored date** with **Re-evaluate send time**. Check reminder times in the Survey Invitation Log on affected versions.
 
 ### 4.3 Time Delay Settings
 

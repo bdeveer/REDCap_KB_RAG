@@ -198,6 +198,29 @@ Running an unpatched instance is the largest controllable risk an institution ca
 - **Check upgrade prerequisites before planning a jump.** Minimum PHP version and database charset requirements have both changed, and either can block an upgrade — see [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md).
 - **Read the changelog between your version and your target**, not just the target's entry. A multi-version jump accumulates changes, and provenance statements in intermediate releases may tell you to go re-check data.
 
+### 7.1 Recent critical and major security fixes
+
+The 17.4.2 → 17.5.4 window (2026-08-20 to 2026-10-08) carried an unusually heavy run: **1 critical and 17 major** security fixes. Each shipped on Standard, the current LTS line and the 16.0.x LTS line on the same day.
+
+| Fixed in (Std / LTS / 16.0 LTS) | Grade | Issue | Who could exploit |
+|---|---|---|---|
+| 17.4.4 / 17.3.10 / 16.0.49 | **Critical** | Remote code execution via survey passthrough routing (13.3.0+) | **Anyone with a valid survey hash** — no login |
+| 17.4.4 / 17.3.10 / 16.0.49 | Major | Control Center POST tampering could switch on the Database Query Tool and other protected settings | Admins with configuration rights |
+| 17.4.4 / 17.3.10 / 16.0.49 | Major | Stored XSS in BioPortal ontology search (6.7.0+) | Users with Project Design |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Deterministic AES-CBC IV in the encryption helper; predictable project salts; weak MyCap code randomness | Attackers able to infer related values |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Legacy document-hash formats still accepted on file download and image endpoints | Anyone who could obtain a document ID and legacy hash |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Project XML API export bypassed the full-export check | Authenticated users with limited export rights |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Hook-loader file inclusion via `hook_functions_file` | Depends on deployment |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | Fail-open `SUPER_USER` check could grant full admin rights | Unauthenticated or improperly initialised requests |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | 2FA authenticator secrets generated from a non-cryptographic random source (all versions) | Attackers targeting TOTP |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | Two MyCap SQL injections (13.0.0+); further Control Center configuration tampering | Authenticated users / config admins |
+| 17.5.4 / 17.3.18 / 16.0.55 | Major | SSRF in content fetching; project-settings authorization weakness; stored XSS in record-locking text; PHP-type upload block | Authenticated users |
+
+Two consequences reach beyond patching:
+
+- The 17.4.5 / 17.3.11 document-hash fix is what **broke legacy image and file links** created before 15.7.3 — see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md), Fix Legacy Image/File URL.
+- The 2FA fix changes how **new** secrets are generated; secrets created before it stay weak until replaced. **Regenerate existing authenticator secrets after upgrading** — see [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) §3.1 for the procedure.
+
 > **Important:** Because LTS lines carry an older version prefix, an LTS instance can look alarmingly out of date to someone who does not know the release model. Judge currency by how far behind the head of your own line you are — not by comparing against a Standard version number.
 
 ---

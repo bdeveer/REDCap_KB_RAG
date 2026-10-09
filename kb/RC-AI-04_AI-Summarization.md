@@ -7,10 +7,10 @@
 | **Domain** | AI Tools |
 | **Applies To** | All project types; requires AI Summarization to be enabled by administrator |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
 | **Synonyms** | how do i summarize free text responses in redcap; ai summarize open-ended answers in a report; summarize a notes box variable across records; redcap report ai summary wizard wand icon; bulk summarize multiple variables with ai; find themes in free text data redcap; customize the ai summarization prompt; which field types can be summarized by ai |
@@ -167,6 +167,9 @@ Processing time depends on the amount of text data in the variable (number of re
 ---
 
 ## 8. Common Mistakes & Gotchas
+
+> **Version caveat (15.0.0 through 17.4.2 Standard / 17.3.8 LTS):** An endpoint used by the reports **Summarize Data** feature had a **path traversal** vulnerability (medium security fix), exploitable by authenticated users where this AI feature was enabled. Fixed in 17.4.3 Standard / 17.3.9 LTS / 16.0.48 LTS. If your instance is older and the feature is on, upgrade or disable it.
+
 
 **Closing the menu before saving the result.** REDCap does not save AI summaries automatically. If you close the Summarization menu — whether the single-variable or bulk version — without first copying or downloading the output, you must regenerate it. Make it a habit to copy or download results immediately.
 

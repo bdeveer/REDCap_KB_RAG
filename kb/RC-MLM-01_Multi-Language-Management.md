@@ -7,10 +7,10 @@
 | **Domain** | Multi-Language Management |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
 | **Synonyms** | how do i set up a survey in multiple languages; translate my forms and surveys; add a language selector to a survey; multi-language management mlm setup; does redcap translate content automatically; translate alert messages and field labels; enable a second language for data entry; mlm not appearing in my applications menu |
@@ -280,6 +280,8 @@ Designate a language preference field on the MLM Languages tab (Settings section
 - Data import.
 
 Like the designated email field, the language preference field's value is synchronized across all events and repeat instances — changing it in one location updates it everywhere.
+
+> **Version caveat (below 17.4.2 Standard / 17.3.8 LTS):** Language IDs containing **uppercase letters** (for example `French`) were not matched when sending **alerts and ASIs**, so participants received the base language despite a correct preference. Survey pages were unaffected. On older instances, use lowercase language IDs.
 
 ### 6.3 Setting the Initially Displayed Survey Language
 

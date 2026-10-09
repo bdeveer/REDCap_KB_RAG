@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.3.10 — Data Quality Rules page captured 2026-09-21; the A–I rule set and bulk-execution controls verified directly against it |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i check my data for errors; find blank required fields and out of range values; run data quality rules across all records; write a custom data quality rule; automatically flag discrepancies when a form is saved; import and export data quality rules; data quality module how to use; detect calculated field mismatches and hidden field data |
@@ -71,7 +71,9 @@ Rules can be scoped before running, which matters on large projects where a full
 
 **Deleting rules in bulk** — many or all custom rules can be removed at once (15.9.0), rather than one at a time.
 
-> **Version caveat (below 17.4.0 Standard):** Users could **export the CSV results of a Data Quality rule even without Full Access data export privileges** for some of the fields in the export. From 17.4.0 the export is restricted accordingly. If DQ result exports were part of how data left your projects on an older instance, the export-rights boundary was not applied there. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
+> **Version caveat (below 17.4.0 Standard):** Users could **export the CSV results of a Data Quality rule even without Full Access data export privileges** for some of the fields in the export. From 17.4.0 the export is restricted accordingly. If DQ result exports were part of how data left your projects on an older instance, the export-rights boundary was not applied there.
+
+> **Version caveat (17.4.0–17.4.4 Standard / 17.3.6–17.3.10 LTS):** The fix above over-reached: exporting results of a custom rule whose logic contains a **checkbox field** failed with *"you do not have data export privileges to one or more fields"* even for users with full rights, and the export contained no results. Fixed in 17.4.5 Standard / 17.3.11 LTS. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
 
 > **Version caveat (below 15.8.2 Standard):** Executing **rule E** where the project contains no numeric fields — calcs, sliders or number/integer-validated text — or where the user has no access to them, behaved incorrectly. Fixed in 15.8.2.
 

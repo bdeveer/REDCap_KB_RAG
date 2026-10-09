@@ -113,6 +113,10 @@ REDCap only shows options that are active in the source project.
 
 > **Important:** Project logging is **never** copied. This includes record creation timestamps, survey timestamps, and project management history. The copy starts with a clean log.
 
+> **Version caveat (below 17.4.3 Standard / 17.3.9 LTS):** The **Record-level Locking Enhancement** setting (PDF confirmation and automatic external file storage) was not carried over to the copy. Re-enable it by hand in copies made on older versions.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Where project creation is admin-only and an administrator performed the copy for a requesting user, the new project used the **administrator's** email as the From address for ASIs, Alerts & Notifications and survey confirmation emails. Check From addresses in copies made this way on older versions.
+
 ### 4.2 Downloading a Backup (XML / CDISC ODM)
 
 REDCap can export the entire project — or just its structure — as an XML file in **CDISC ODM format**. Two options are available from **Other Functionality**:

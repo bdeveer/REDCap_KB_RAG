@@ -7,11 +7,11 @@
 | **Domain** | Data Import |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md)|
 | **Skill Level** | Intermediate |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-05-07 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap](RC-IMP-03_CSV-Upload-Reference.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) |
 | **Synonyms** | how do i import record data from a csv file; upload participant data with the data import tool; bulk import records into redcap; csv column format for importing data; re-import an exported csv back into the project; overwrite existing data with blank values on import; why is my imported data not saving; partial data import for specific fields or events |
@@ -106,6 +106,8 @@ Several defects caused imports to **report success while dropping data**. There 
 > **Version caveat (below 15.5.10 Standard):** Imports in **EAV format** via the Import Records API or `REDCap::saveData()` misbehaved where the payload included a blank `redcap_event_name` column on a **non-longitudinal** project.
 
 ---
+
+> **Version caveat (below 17.4.3 Standard / 17.3.9 LTS):** When a new record was created by import — or by creating a project from a Project XML file — and the **record ID was the only field with data on the first instrument** (no `*_complete` value), that instrument's Form Status was set to `0` **Incomplete** (red) instead of blank (gray). Records imported this way on older versions look as if someone opened and saved the form. Data Quality checks and reports filtering on `[form_complete]=''` will miss them.
 
 ## 5. Common Questions
 

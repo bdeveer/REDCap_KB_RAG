@@ -219,6 +219,8 @@ Scope, which is narrower than it first appears:
 
 > **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** This feature was unreliable for its entire life before 17.4.1. The checkbox **might not save**, leaving the feature permanently off however many times it was ticked; and where it did work, it could reschedule alerts and invitations **at incorrect times whenever any data was modified** — not only the date field it was supposed to watch. Both fixed in 17.4.1 Standard / 17.3.7 LTS. Separately, the setting's column was missing from the Alerts CSV upload and download files between 17.2.0 and 17.3.0 (fixed 17.3.1), so bulk-managed alerts could not carry it. **Treat this feature as requiring 17.4.1 / 17.3.7 or later.**
 
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Alerts with **scheduled send times** could be **re-sent several times** after a server restart or a REDCap upgrade, because duplicate recurrence entries were created in the backend tables. If recipients reported duplicate alerts around an upgrade on an older instance, this is the cause; check the Notification Log for repeated sends to the same record.
+
 ### 4.3 Alert Expiration (Optional)
 
 Set a hard expiration date and time. After this point, REDCap will not send any further alerts from this configuration and will cancel any queued instances. Useful for studies with a defined end date, ensuring no alerts send after the study closes.
@@ -274,6 +276,8 @@ The message body supports:
 
 - **Plain text and rich text formatting** via the built-in rich text editor (comparable to a basic word processor).
 - **HTML and inline images** for custom layout.
+
+> **Version caveat (17.5.1–17.5.3 Standard):** Images embedded through the rich text editor arrived as **broken images** in the recipient's email — for alerts, ASIs and other outgoing messages. Fixed in 17.5.4. The LTS line was not affected.
 - **Piped variables** — any project variable can be inserted using standard piping syntax. See [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) and [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) for full reference.
 - **Smart variables** — REDCap-specific tokens that resolve to dynamic links and values at send time. Access them via the green **Smart Variables** button below the message body.
 

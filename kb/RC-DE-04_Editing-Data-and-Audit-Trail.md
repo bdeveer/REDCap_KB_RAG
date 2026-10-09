@@ -7,10 +7,10 @@
 | **Domain** | Data Entry |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md) |
 | **Synonyms** | how do i edit data that was already saved; view the change history for a field; audit trail for editing data; who changed this value and when; edit data that came in from a survey; see the full history of data changes; modify previously entered data; field-level audit trail data entry |
@@ -112,6 +112,8 @@ first time:
 
 - The 'H' button is always visible during data entry, regardless of
     whether any edits have been made.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** For **File Upload** fields that should not be editable — survey responses outside edit mode, or fields with `@READONLY` / `@READONLY-FORM` — the history popup still offered **Delete** links. Using them gave misleading confirmations or actually changed the protected file.
 
 ### 4.2 Project-Level Logging Application
 

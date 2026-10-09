@@ -7,10 +7,10 @@
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how do i set up a longitudinal project; collect data across multiple time points and events; enable longitudinal mode in redcap; define arms and events; assign instruments to events; multiple visits or timepoints per participant; set up study arms for control and intervention groups; designate which forms are collected at which event |
@@ -158,7 +158,7 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 | **Option** | **Behavior** |
 |---|---|
 | Upload arms (CSV) | **Additive.** Adds new arms. Existing arms not in the file are unaffected. |
-| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. |
+| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. Below 17.4.3 Standard / 17.3.9 LTS it only worked once at least two events were defined. |
 | Upload events (CSV) | **Additive.** Adds new events. Existing events not in the file are unaffected. |
 | Download events (CSV) | Exports current event configuration. |
 
