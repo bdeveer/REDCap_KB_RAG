@@ -6,13 +6,13 @@ applies_to:
 - Longitudinal REDCap projects
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
 - RC-LONG-01 — Longitudinal Project Setup
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-BL-01
   title: 'Branching Logic: Overview & Scope'
@@ -218,6 +218,10 @@ When branching logic runs inside a repeated instrument (i.e., the field being sh
 ```
 
 If the current instance is the first, `[previous-instance]` returns blank.
+
+> **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** If the referenced field is a **date or datetime field with a Missing Data Code** saved, logic like `[visit_date][last-instance]<>''` could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was correct, so the same logic could behave differently on the page and in a report.
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** On **repeating events**, branching logic on integer and number fields could treat `0` as blank and blank as non-blank. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §6.
 
 > **See also:** [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (Section 8.1) for a broader discussion of how repeated setups affect branching logic; [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (Section 4.2–4.3) for the parallel piping syntax.
 

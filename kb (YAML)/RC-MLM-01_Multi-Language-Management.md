@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - None
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -299,6 +299,8 @@ Designate a language preference field on the MLM Languages tab (Settings section
 - Data import.
 
 Like the designated email field, the language preference field's value is synchronized across all events and repeat instances — changing it in one location updates it everywhere.
+
+> **Version caveat (below 17.4.2 Standard / 17.3.8 LTS):** Language IDs containing **uppercase letters** (for example `French`) were not matched when sending **alerts and ASIs**, so participants received the base language despite a correct preference. Survey pages were unaffected. On older instances, use lowercase language IDs.
 
 ## 6.3 Setting the Initially Displayed Survey Language
 

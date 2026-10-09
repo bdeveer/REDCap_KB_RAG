@@ -6,11 +6,11 @@ applies_to:
 - All REDCap projects
 requires: Any supported version. The Project Migration Tool alternative requires v17.0.0+
   on both instances — see §1
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
-version: '1.1'
+version: '1.2'
 last_updated: 2026-10
 related:
 - id: RC-PROJ-01
@@ -236,6 +236,24 @@ If you encounter a timeout during import, options include:
 - Contact the destination REDCap support team — an administrator may be able to run the import in a context with a higher timeout, or assist with a database-level transfer.
 
 > **REDCap+ note:** The revamped Project Migration tool in REDCap+ does not have this limitation. It runs the migration in the background through a series of API calls rather than a single synchronous request, making it suitable for large-scale migrations that would otherwise time out.
+
+## 5.1a What to Expect from an XML Import on Current Versions
+
+On current versions (17.5.4 Standard / 17.3.18 LTS), a destination instance:
+
+- Imports XML files **generated on older versions**, including files whose event or DAG names contain accented characters.
+- Imports **MyCap-enabled** project XML, and MyCap participants can **join** the new project from the app.
+- Leaves the first instrument's Form Status **blank** (gray) on new records where only the record ID has data, as it should.
+
+What decides whether these hold is the **destination** instance's version; the source version does not matter except for the accented-names case. Check the destination's version before migrating, especially for a MyCap project.
+
+> **Version caveat (destination 17.3.0 up to 17.4.6 Standard / 17.3.12 LTS):** Project XML generated **before 17.3.0** could fail to import with an error if any event or DAG name contained **accented characters**. Fixed in 17.5.0 Standard / 17.3.13 LTS. Workaround on affected versions: remove the accents from event and DAG names in the source project before exporting.
+
+> **Version caveat (destination below 17.5.1 Standard / 17.3.14 LTS):** Importing a **MyCap-enabled** project XML failed with a database error (`UPDATE redcap_mycap_projects…`), so the project could not be created at all.
+
+> **Version caveat (destination below 17.4.4 Standard / 17.3.10 LTS):** A project created from XML imported, but MyCap participants **could not join** it from the mobile app.
+
+> **Version caveat (destination below 17.4.3 Standard / 17.3.9 LTS):** New records whose only data on the first instrument was the record ID were given Form Status `0` (red) instead of blank — see [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md) §4a.
 
 ## 5.2 Feature Availability
 

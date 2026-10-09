@@ -7,13 +7,13 @@ applies_to:
 - REDCap Administrators (Section 7)
 - requires project in Production with a configured randomization model
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
-version: '1.2'
-last_updated: '2026-05-11'
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-RAND-01
   title: Randomization Concepts & Terminology
@@ -267,6 +267,12 @@ up to four action icons; assigned slots have one.
 | **Manual randomization** | Manually assigns a specific record to this allocation slot. The record must not already be randomized. Requires: reason (logged), valid record ID, and typing 'confirm'.                                                                               *Unassigned slots only* |
 | **Make sequence unavailable** | Removes the allocation slot entirely from the pool — it will not be used for any future randomizations. Displayed with a stop symbol. Requires: reason (logged) and typing 'confirm'.                                                                *Unassigned slots only* |
 | **Restore availability** | Reverses a 'Make sequence unavailable' action. Only available on slots previously made unavailable. Requires: reason (logged) and typing 'confirm'.                                                                                                  *Unavailable slots only* |
+
+## 7.2a Moving a project with randomized records to production
+
+If records have already been randomized when you click **Move project to Production**, REDCap shows an additional warning in the dialog (17.4.4+) about the consequences. Records randomized in development were allocated from the **development** allocation table, which is not the table your production study runs on. Decide deliberately whether to keep those records; normally, delete test data on the move and randomize real participants only in production.
+
+From 17.5.0 Standard / 17.3.13 LTS, administrators can no longer upload a **development** allocation table (Randomization Setup, Step 3) once the project is in production. Before that, the buttons only *looked* disabled for administrators and could still be clicked.
 
 ## 7.3 Redoing a randomization model in production
 

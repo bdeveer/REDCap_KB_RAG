@@ -8,11 +8,11 @@ applies_to:
 requires: REDCap v17.0.0+ — REDCap+ does not exist below this version. The article
   itself is informational and useful on any version
 verified_against: REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a
-  live unsubscribed instance; feature list from release notes through 17.4.1 Standard
+  live unsubscribed instance; feature list from release notes through 17.5.4 Standard
 prerequisites:
 - Existing REDCap License (REDCap Core installation)
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-PLUS-02
   title: 'REDCap+: Project Migration Tool'
@@ -134,6 +134,10 @@ Delegates routine administrative work — project creation approvals, production
 ## Email Verification & Email Unsubscribe *(17.3.0)*
 
 Lets participants verify their email address and opt out of all emails from a project, via four Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
+## REDCap Login Protection *(17.5.0)*
+
+Adds an **Enforce REDCap login protection** option to Survey Login, so respondents authenticate through the instance's normal REDCap login instead of entering stored field values. Page-1 survey fields can be prefilled with the logged-in user's username, name and email. The same protection can be applied to public reports and public project dashboards. Under SSO or LDAP it admits anyone who can authenticate to the instance, not only existing REDCap users. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5.
 
 ## Additional Community Portal Seats
 

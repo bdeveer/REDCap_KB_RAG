@@ -5,12 +5,12 @@ domain: Project
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - None
-version: '1.6'
-last_updated: '2026-09-21'
+version: '1.8'
+last_updated: 2026-10
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -75,7 +75,7 @@ The active data collection state. In Production:
 - This protects existing data from accidental modification or deletion.
 - Surveys, alerts, automated invitations, and all standard features remain fully active.
 
-**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live.
+**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+) — see [RC-RAND-03 — Working with Randomization](RC-RAND-03_Working-with-Randomization.md).
 
 > **Why move to Production?** Moving to Production preserves data accuracy and integrity. The post-production change control process provides a safety check to prevent accidental deletion, recoding, or overwriting of data that has already been collected.
 
@@ -134,6 +134,10 @@ When copying, REDCap presents a checklist of items that can be included:
 REDCap only shows options that are active in the source project.
 
 > **Important:** Project logging is **never** copied. This includes record creation timestamps, survey timestamps, and project management history. The copy starts with a clean log.
+
+> **Version caveat (below 17.4.3 Standard / 17.3.9 LTS):** The **Record-level Locking Enhancement** setting (PDF confirmation and automatic external file storage) was not carried over to the copy. Re-enable it by hand in copies made on older versions.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Where project creation is admin-only and an administrator performed the copy for a requesting user, the new project used the **administrator's** email as the From address for ASIs, Alerts & Notifications and survey confirmation emails. Check From addresses in copies made this way on older versions.
 
 ## 4.2 Downloading a Backup (XML / CDISC ODM)
 
@@ -216,6 +220,8 @@ Two caches are cleared by this action:
 - **Rapid Retrieval** — A page-level cache that stores rendered versions of frequently accessed pages to speed up load times. If a page is returning stale data, clearing this cache forces REDCap to re-render it from the database.
 
 Clearing both caches causes the Record List Cache to regenerate and removes all stored page-level caches for the project. This is safe to do at any time, though REDCap notes it is normally not needed.
+
+While the Record List Cache is rebuilding (status **Processing**), REDCap blocks **renaming records** and **changing a record's DAG assignment** until the build finishes (17.5.3 Standard / 17.3.16 LTS onward), to keep the cache consistent. If either action is refused shortly after clearing caches or a large import, wait and retry.
 
 ---
 

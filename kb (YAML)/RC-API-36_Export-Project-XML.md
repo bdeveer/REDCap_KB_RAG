@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -41,6 +41,8 @@ By default, the export includes both metadata and data. Setting `returnMetadataO
 **Important — data export rights apply:** When `returnMetadataOnly` is `false` (the default), your Data Export user rights are enforced. If you have De-Identified or Remove All Identifier Fields export rights, some fields may be stripped from the returned data. Use Full Data Set export rights to ensure no data is filtered out.
 
 This method requires only the API Export right.
+
+> **Version caveat (below 17.4.5 Standard / 17.3.11 LTS / 16.0.50 LTS):** The Project XML export endpoint could **bypass the full data export privilege check**, so a user with limited export rights could receive more data than their rights allow. A major security fix; on older instances, treat API Export on any account with restricted export rights as potentially full export through this method.
 
 ---
 

@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires User Rights privilege
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
@@ -242,6 +242,8 @@ The simplest of the three files — just two columns:
 | `unique_role_name` | System-generated role ID (e.g., `U-594WK7W9KY`). Leave blank if the user is not assigned to any role (individual rights). |
 
 All project users appear in this file, including those without a role assignment (their `unique_role_name` is blank). Uploading this file assigns or clears role assignments — it does not add or remove users from the project.
+
+> **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** Usernames with **leading or trailing spaces** were accepted by the upload, creating assignments that could not be removed from the User Rights page. Usernames are now trimmed. On the fixed versions, removing one of those space-containing assignments also removes the matching trimmed one — re-add that user to the project afterwards if needed. On older versions, trim usernames before uploading.
 
 > **Cross-file consistency:** The `unique_role_name` values here must match the IDs in the User Roles CSV. If you are migrating a role configuration from another project, do not hardcode old role IDs in the assignments file. Instead: upload the User Roles CSV to the new project first, then re-download the User Roles CSV to get the newly assigned IDs, then build or update the assignments file using those new IDs.
 

@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - familiarity with branching logic syntax
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -130,6 +130,8 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 # 5. PDF Behavior
 
 `@IF` is also evaluated when generating a PDF of an instrument or survey. This means PDF-specific action tags (such as `@HIDDEN-PDF`) can be placed inside `@IF` branches and will be applied correctly in the generated PDF.
+
+> **Version caveat (below 17.4.4 Standard / 17.3.10 LTS):** In some situations, `@IF` and similar action tags made REDCap-generated PDFs take **much longer** to produce than expected. This affects PDF exports, e-Consent, PDF Snapshots and PDF attachments. If PDF generation is slow on an older instance with heavy `@IF` use, that is the likely cause.
 
 ---
 

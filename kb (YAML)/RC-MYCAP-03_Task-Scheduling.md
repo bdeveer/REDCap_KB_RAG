@@ -5,12 +5,12 @@ domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-MYCAP-02 — MyCap: Designing Instruments for MyCap'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-MYCAP-01
   title: 'MyCap: Overview & Enabling'
@@ -142,6 +142,10 @@ Delay onset is available for One-Time and Repeating schedule types. It defines t
 
 For Infinite tasks, delay onset is not applicable — the task is always available.
 
+For Fixed tasks, delay onset does not apply either, and from 17.5.3 the **Number of days to delay** input is hidden on the Task Setup page for Fixed schedules.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):** The **Number of days to delay** input is still shown for Fixed schedules, and a value entered there **overrides** the fixed dates. Leave it at 0 on Fixed tasks.
+
 ---
 
 # 5. End Conditions
@@ -254,6 +258,8 @@ For MTB tasks, REDCap v14.3.8 or later is required. MTB tasks appear in the same
 **Setting Active Tasks up before designating them to events (longitudinal).** Active Tasks must be designated to events on the instrument–event mapping page before you can configure them in the MyCap Active Tasks setup. Attempting to set up an Active Task before event designation will result in it not appearing in the scheduling interface.
 
 **Using Fixed schedule when participant-relative timing is needed.** Fixed schedules are based on calendar dates, not individual participant timelines. All participants see Fixed schedule tasks on the same dates, regardless of when they joined. Use One-Time or Repeating schedules for participant-relative timing.
+
+**Editing schedules of active tasks in production.** Changing the schedule of a task participants are already using can make **completed tasks reappear** in their app, and schedule changes cannot be previewed on a device before they are published. From 17.4.3 and 17.5.3, REDCap warns about both when you edit a schedule in a production project. Test the change in a development copy first — see [RC-MYCAP-08 — Testing MyCap](RC-MYCAP-08_Testing-MyCap.md).
 
 **Not setting an end condition on Repeating tasks when appropriate.** Without an end condition, a Repeating task runs indefinitely. If the study has a defined endpoint, set an end condition to prevent tasks from appearing after study completion.
 

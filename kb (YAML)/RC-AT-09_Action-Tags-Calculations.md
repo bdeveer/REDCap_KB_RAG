@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - familiarity with REDCap calculated fields
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -99,6 +99,8 @@ Field variables and Smart Variables can be used as return values directly (witho
 ```
 @CALCTEXT(if([age] >= 18, [dob], [event-label]))
 ```
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** A `@CALCTEXT` field that outputs **HTML tags**, piped onto a **different page** of the same multipage survey, had all its HTML stripped. It displayed correctly when piped on the field's own page. On affected versions, pipe it on the same page or upgrade.
 
 > **Restriction:** Field variables and Smart Variables **cannot** be piped inside quotes in the return value. `@CALCTEXT(if([x]='1', 'Value: [other_field]', ''))` will not substitute `[other_field]` — it will output the literal string `Value: [other_field]`. Use the variable as a standalone return value, not embedded in a quoted string.
 

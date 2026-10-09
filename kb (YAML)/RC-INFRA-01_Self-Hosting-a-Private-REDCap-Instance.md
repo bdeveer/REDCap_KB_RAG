@@ -9,8 +9,8 @@ requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
 prerequisites:
 - None
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-INFRA-02
   title: Self-Hosting REDCap on a Synology NAS with Docker Compose
@@ -170,6 +170,10 @@ From **17.3.1**, a REDCap fatal-error report includes a small, **privacy-safe sn
 
 > **Note:** REDCap describes the snapshot as privacy-safe, but error reports still warrant the same handling as any diagnostic output from a system holding participant data. Confirm what your instance does with them before routing them anywhere automated.
 
+## 4a.3b Disable dangerous PHP functions
+
+From **17.5.4** the Configuration Check page recommends adding dangerous PHP functions — `system`, `exec` and similar — to `disable_functions` in `php.ini`. Mirror whatever production does: a sandbox that leaves them enabled when production disables them will not catch an External Module that depends on them.
+
 ## 4a.4 Old version directories
 
 REDCap upgrades leave the previous `redcap_vXX.X.X/` directories in place, and they remain reachable.
@@ -177,6 +181,8 @@ REDCap upgrades leave the previous `redcap_vXX.X.X/` directories in place, and t
 - From **16.1.4** the Configuration Check page **names the specific old versions** it recommends removing, on the basis that known vulnerabilities in those versions stay executable while the directories exist. REDCap's stated position is that it is not necessary to remove all older version directories at every future upgrade, though you may choose to — so treat the flagged versions as the actionable list.
 - From **16.1.5** REDCap **refuses survey and API calls whose URL contains a version directory**. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`, or it returns an error. Any integration, script or bookmark using a versioned URL breaks on upgrade to 16.1.5 or later. REDCap noted no known vulnerabilities in those endpoints at the time; this is pre-emptive hardening.
 - From **17.2.2** the **Automatic Version Redirect** feature can send stale bookmarks and old survey invitation links to the current version instead of a 404. The Configuration Check page carries setup instructions for Apache, NGINX and IIS. It changes web server configuration, so it is work for whoever owns that layer.
+
+> **Version caveat (NGINX, below 17.3.18 LTS / 17.5.4 Standard):** The NGINX redirect recommendation used `redcap_redirect.php` as the catch-all fallback, so REDCap processed every unwanted request and could trigger IP bans. Current instructions use a plain 404 in the default location block — see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
 
 > **Version caveat (17.2.2–17.2.3):** The Automatic Version Redirect instructions initially told you to place files in the **version folder** rather than the REDCap root directory. Corrected in 17.3.0, which also embedded `redcap_redirect.php` directly into the Configuration Check steps rather than serving it through the separate non-versioned-files workflow. 17.4.0 then moved the redirect's own configuration check to client-side JavaScript, because server-side URL testing was giving false results on some configurations. If you set this up on 17.2.2 or 17.2.3 and it never worked, the file is probably in the wrong directory.
 

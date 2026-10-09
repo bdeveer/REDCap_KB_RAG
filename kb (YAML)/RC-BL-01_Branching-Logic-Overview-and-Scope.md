@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
-version: '1.4'
-last_updated: 2026-09
+version: '1.5'
+last_updated: 2026-10
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -102,13 +102,19 @@ The same logic syntax that powers branching logic is also used in several other 
 
 # 4a. Version Caveats Affecting Branching Logic
 
-Three defects are worth knowing because each produced a **wrong result rather than a visible failure**.
+These defects are worth knowing because each produced a **wrong result rather than a visible failure**.
 
 > **Critical — fields that should have been hidden were not (below 16.0.27 Standard).** Some forms and surveys displayed a branching logic error popup where no real problem existed, **and in some cases fields that branching logic should have hidden were shown**. The second half is a data-exposure concern: a participant or user could see a question intended to be hidden from them. Fixed in 16.0.27.
 
 > **Version caveat (below 16.0.40 Standard):** Branching logic or calculated fields containing a **`$` character** stopped working entirely and could display an error on the page. Fixed in 16.0.40.
 
 > **Version caveat (below 15.4.5 Standard):** Form Display Logic rules containing a **comment at the end of the logic** might not be interpreted correctly. Fixed in 15.4.5 — see [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md).
+
+> **Version caveat (17.3.1–17.4.1 Standard / 17.3.5–17.3.7 LTS):** Logic containing more than roughly **200–300 `and`/`or` clauses** could fail to evaluate and **always return True** — so a field meant to be hidden was shown, or an alert or filter matched every record. Emerged in 17.3.1 Standard and was inherited by the 17.3.x LTS line; fixed in 17.4.2 Standard / 17.3.8 LTS, which handles far longer logic. Very long logic is usually generated (for example, a long list of eligible codes); on an affected version, split it or replace it with a lookup field.
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Several client-side logic defects were fixed together. On forms and surveys: logic or calculations with **inline comments** could fail to evaluate in some situations; static text or label values containing an **apostrophe or quotation mark** could produce invalid JavaScript, so the logic silently did nothing; and on **repeating events**, integer and number fields could have **`0` treated as blank** (and blanks as non-blank). See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3, §3.6 and §6.
+
+> **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** Logic or calculations referencing a **date or datetime field that has a Missing Data Code**, with an X-instance smart variable appended (such as `[visit_date][last-instance]`), could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was not affected. See [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) §5.3.
 
 Comparisons against blank values have their own history of returning wrong results — see [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §5.5.
 

@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-CC-03
   title: 'Control Center: Security & Authentication'
@@ -35,6 +35,8 @@ synonyms:
 - edit a user account at the instance level
 - control center users section tools
 - find and edit user accounts admin
+- how do i change a redcap username
+- rename a user account in the control center
 ---
 
 # 1. Overview
@@ -55,7 +57,7 @@ The Users section contains the following tools:
 
 ## Browse Users
 
-A searchable list of all user accounts on the REDCap instance. Administrators can look up users by **username, first name, last name, or primary email address**.
+A searchable list of all user accounts on the REDCap instance. The Browse Users and **Add Users (Table-based Only)** pages were restyled slightly in 17.5.0; the options are unchanged. Administrators can look up users by **username, first name, last name, or primary email address**.
 
 ### User Account Details
 
@@ -98,10 +100,24 @@ From the Browse Users page, administrators can:
 - **Edit user info** — update any of the editable attributes above
 - **Suspend/unsuspend** an account
 - **Delete** a user from the REDCap system (not available for administrator accounts)
-- **Reset password** (for table-based authentication instances)
+- **Reset password** (for table-based authentication instances). Sending the reset email is logged (17.4.2+ Standard). The text under the button reads **"Password last reset via password reset email on X"** — X is when the user completed a reset from a reset email, whether an admin or the user triggered it (wording clarified in 17.5.1 Standard / 17.3.14 LTS).
 - **Grant/revoke administrator privileges**
+- **Change Username** *(17.5.0+)* — see below
 
 > **Note:** Administrator accounts cannot be deleted through this interface. To remove administrator access, first revoke admin privileges via the Administrator Privileges page, then delete the account if needed.
+
+### Changing a Username *(17.5.0+)*
+
+When viewing an individual user, a **Change Username** button opens a dialog for entering the new username. REDCap replaces the username in every relevant database table **except the logging tables** (`redcap_log_event*` and `redcap_log_view`), which keep the old name for historical accuracy. The change itself is logged.
+
+Once a user's username has been changed, a **History** button appears on their Browse Users page showing each change with its timestamp.
+
+Typical uses: a name change, or moving an account to a new SSO identifier format.
+
+- **Searching the audit trail:** Project logging before the change shows the *old* username. Use the History button to find it before searching logs for that person's activity.
+- **SSO accounts:** the new username must be what the identity provider will actually send at login, or the user will arrive as a new, separate account.
+
+> **Version caveat (17.5.0 Standard):** Early bugs, fixed in 17.5.1: the confirmation popup could not be closed, a user could inadvertently create a new account under their previous username, and users with a username-change history could not be deleted. Setting or changing a user's **sponsor** on Browse Users always failed in 17.5.0 through 17.5.2 (fixed in 17.5.3). Use 17.5.3 or later.
 
 ### View User List By Criteria
 

@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
-version: '1.3'
-last_updated: 2026-09
+version: '1.4'
+last_updated: 2026-10
 related:
 - id: RC-CALC-01
   title: Special Functions Reference
@@ -153,11 +153,15 @@ This constraint has two practical consequences:
 
 A calculated field's value is recomputed in three contexts:
 
-**During data entry (real-time).** When a user is actively entering data on a form, calculated fields update instantly as input values change — without saving the form or refreshing the page.
+**During data entry (real-time).** When a user is actively entering data on a form, calculated fields update instantly as input values change — without saving the form or refreshing the page. Only calculations that reference the changed field are re-run.
+
+> **Version caveat (below 17.5.3 Standard / 17.3.16 LTS):** Changing certain field types, or submitting the page, re-ran **every** calculated field on the form rather than only those referencing the changed field. Values were correct, but forms with many calculations could become sluggish. Fixed in 17.5.3 / 17.3.16.
 
 **During data import.** When records are imported via the Data Import Tool or API, REDCap recalculates all calculated fields whose input variables are included in the import file. Fields not included in the import are not recalculated.
 
 **When Data Quality rule H is run.** Rule H specifically targets calculated fields across all records in the project. Running rule H forces REDCap to evaluate every calculated field expression for every record, correcting any stale values. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Calculations containing **inline comments**, or static text with an **apostrophe or quotation mark**, could fail to evaluate on the form or survey. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3 and §3.6.
 
 > **Note:** Calculated fields are not updated when you edit a branching logic condition, rename a field, or make other project design changes. Run Data Quality rule H after any design changes that affect a formula to ensure all stored values are current.
 

@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.4'
-last_updated: 2026-09
+version: '1.5'
+last_updated: 2026-10
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -179,7 +179,7 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 | **Option** | **Behavior** |
 |---|---|
 | Upload arms (CSV) | **Additive.** Adds new arms. Existing arms not in the file are unaffected. |
-| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. |
+| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. Below 17.4.3 Standard / 17.3.9 LTS it only worked once at least two events were defined. |
 | Upload events (CSV) | **Additive.** Adds new events. Existing events not in the file are unaffected. |
 | Download events (CSV) | Exports current event configuration. |
 

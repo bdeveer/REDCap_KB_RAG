@@ -5,12 +5,12 @@ domain: Surveys
 applies_to:
 - All projects with surveys enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-SURV-05 — Participant List & Manual Survey Invitations
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-SURV-05
   title: Participant List & Manual Survey Invitations
@@ -154,6 +154,8 @@ Limits worth knowing:
 - Enabled by default for **new** ASIs; ASIs created before the upgrade keep the legacy behaviour, so an upgraded project holds a mix with nothing on screen distinguishing them.
 
 > **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** Unreliable for its entire life before 17.4.1. The checkbox could fail to save, and where it worked it could reschedule invitations and reminders **at incorrect times whenever any data changed** — not only the date field concerned. Both fixed in 17.4.1 Standard / 17.3.7 LTS. The setting was also missing from the Alerts CSV upload and download files until 17.3.1. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) §4.2a, which covers the same feature for Alerts.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Even after the 17.4.1 fixes, **reminders** could be scheduled at the wrong time for an ASI that combined a **time lag relative to a stored date** with **Re-evaluate send time**. Check reminder times in the Survey Invitation Log on affected versions.
 
 ## 4.3 Time Delay Settings
 

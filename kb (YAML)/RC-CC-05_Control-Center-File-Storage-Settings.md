@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - REDCap administrator access
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -117,6 +117,18 @@ vxd, wsc, wsf, wsh, xll
 ```
 
 This list covers executables, scripts, system files, and installer formats that could be used to execute malicious code.
+
+## Always-blocked extensions *(17.5.4 Standard / 17.3.18 LTS / 16.0.55 LTS)*
+
+Independently of the configurable list, REDCap refuses uploads with these extensions anywhere in the system:
+
+```
+php, phtml, php3, php4, php5, phar, cgi, shtml, shtm, pht
+```
+
+These are server-executable formats. They are blocked in code, not by the setting above, so removing them from the blocklist has no effect. This closed a remote code execution route open to anyone who gained certain elevated admin-level privileges.
+
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS / 16.0.55 LTS):** Only the configurable blocklist applies. The default list includes `php` but **not** `phtml`, `phar`, `cgi`, `shtml` or the other variants, so an instance that relied on the default list accepted them. If you cannot upgrade yet, add the full set above to **Restricted file types for uploaded files** now.
 
 ---
 

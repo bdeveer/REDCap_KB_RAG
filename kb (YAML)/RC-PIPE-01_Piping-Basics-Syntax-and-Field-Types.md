@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-PIPE-02
   title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
@@ -118,6 +118,8 @@ Piping works anywhere REDCap displays text. The complete list of supported locat
 **Descriptive text fields.** A field type that displays text without capturing any data. Piping into descriptive text fields is useful for building summary displays — for example, showing a participant's entered values back to them mid-instrument.
 
 **Survey instructions.** The introductory text shown at the top of a survey before the first question.
+
+**Survey title** *(17.5.3+)*. Existing records only (not the public survey), and evaluated on page load only — see [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) §3.2.
 
 **Survey completion text.** The message shown after a participant submits a survey. Piping participant information (such as their name) into the completion message personalizes the experience.
 

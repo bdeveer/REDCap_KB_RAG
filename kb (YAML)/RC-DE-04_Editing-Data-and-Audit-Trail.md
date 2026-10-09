@@ -5,12 +5,12 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-DE-01
   title: Record Creation & the Record Home Page
@@ -126,6 +126,8 @@ first time:
 
 - The 'H' button is always visible during data entry, regardless of
     whether any edits have been made.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** For **File Upload** fields that should not be editable — survey responses outside edit mode, or fields with `@READONLY` / `@READONLY-FORM` — the history popup still offered **Delete** links. Using them gave misleading confirmations or actually changed the protected file.
 
 ## 4.2 Project-Level Logging Application
 

@@ -5,12 +5,12 @@ domain: Project Navigation
 applies_to:
 - All project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-NAV-UI-01
   title: 'Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04
@@ -123,7 +123,7 @@ core items.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
-| **Record Status Dashboard** | Always           Overview of form completion status across all records. Shows which forms are complete, incomplete, or unverified at a glance. |
+| **Record Status Dashboard** | Always           Overview of form completion status across all records. Shows which forms are complete, incomplete, or unverified at a glance. From 17.5.3, users with Project Design rights also see a **Manage** link beside it for creating, editing and deleting custom dashboards. |
 | **Add / Edit Records** | Always           Create new records or look up and edit existing ones. Primary data entry entry point. |
 | **Survey Distribution Tools** | Conditional      Appears when surveys are enabled in the project. Manage survey links, send email/SMS invitations, and view the invitation log. |
 | **MyCap Participant Management** | Conditional      Manage participants using the MyCap mobile app. Requires MyCap to be enabled. As of MyCap 2.0 (September 2023, REDCap v13.10.0+), longitudinal projects are supported. Consult your support team before using. |

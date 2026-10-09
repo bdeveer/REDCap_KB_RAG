@@ -5,13 +5,13 @@ domain: Clinical Data Interoperability Services
 applies_to:
 - Institutions using real-time, prospective clinical data collection from an EHR
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center
   Setup'
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-CDIS-01
   title: 'Clinical Data Interoperability Services: Overview & Control Center Setup'
@@ -186,6 +186,7 @@ The **Mapping Helper** supports setup and troubleshooting without needing a live
 | Review **pasted or uploaded FHIR payloads** to inspect supported resource data, without fetching live data from the EHR | 17.1.3 |
 | **Search for available patient identifiers** by entering patient demographics, to validate patient lookup and mapping setup | 17.1.3 |
 | CDP Mapping Setup reachable directly from the Clinical Data Interoperability Services section of the left-hand project menu, next to Mapping Helper | 17.2.0 |
+| Mapping results gain a **collapsible summary** (entries per category, unique mappings, mapping-status coverage, REDCap workflow, EHR/FHIR source, progressive fetched totals, filtered vs. category totals); categories sorted alphabetically; table headings and mapping statuses stay visible while scrolling | 17.4.2 |
 
 Both 17.1.3 additions address the same problem: previously, checking whether a mapping was correct meant pulling real patient data. Working from a pasted payload lets you validate the setup without touching live records.
 

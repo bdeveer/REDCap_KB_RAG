@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: '2026'
+version: '1.3'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -167,6 +167,8 @@ print $output;
 # 4. Response
 
 The method returns records in the requested format (JSON, CSV, XML, or ODM), ordered by record ID and then event ID.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** **JSON** exports of large projects with many records and repeating forms or events could return an **empty response** when PHP ran out of memory — not an error. JSON export now streams. On older instances, export in batches with the `records` parameter, or use CSV, and check the record count of every response.
 
 **JSON format (flat type):** An array of objects, where each object is one record:
 ```json

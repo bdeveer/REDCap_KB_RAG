@@ -6,12 +6,12 @@ applies_to:
 - All project types
 - requires AI Summarization to be enabled by administrator
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-AI-01 — REDCap AI Tools: Overview & Security'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-AI-01
   title: 'REDCap AI Tools: Overview & Security'
@@ -182,6 +182,9 @@ Processing time depends on the amount of text data in the variable (number of re
 ---
 
 # 8. Common Mistakes & Gotchas
+
+> **Version caveat (15.0.0 through 17.4.2 Standard / 17.3.8 LTS):** An endpoint used by the reports **Summarize Data** feature had a **path traversal** vulnerability (medium security fix), exploitable by authenticated users where this AI feature was enabled. Fixed in 17.4.3 Standard / 17.3.9 LTS / 16.0.48 LTS. If your instance is older and the feature is on, upgrade or disable it.
+
 
 **Closing the menu before saving the result.** REDCap does not save AI summaries automatically. If you close the Summarization menu — whether the single-variable or bulk version — without first copying or downloading the output, you must regenerate it. Make it a habit to copy or download results immediately.
 

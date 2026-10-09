@@ -6,13 +6,13 @@ applies_to:
 - Projects with surveys enabled
 - requires Project Design and Setup, User Rights, and Data Access Groups rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-SURV-09
   title: PDF Snapshots of Records
@@ -253,7 +253,7 @@ If consents were captured on any of these versions, the archived PDFs and the si
 After saving the e-Consent entry, click **"Add consent form"** in the Survey column of the e-Consent table. The popup contains:
 
 - **Consent form version** — A required identifier for this version. Use a consistent scheme (e.g., incrementing integers: 1, 2, 3; or dates: 2025-01-15). The scheme is yours to define — pick one and stick to it.
-- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown.
+- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown. The descriptive field **must not be the only field on the instrument** — if it is, the PDF on the survey certification page does not generate correctly. Put at least the signature or name fields on the same instrument. The dialog states this from 17.4.3.
 - **Display for specific DAG** — If DAGs are defined, assign this version to a specific DAG or to the default ("When record is not assigned to a DAG"). Always create a default version — records without a DAG assignment will show a blank consent if no default exists.
 - **Display for specific Language** — If MLM languages are defined, assign this version to a specific language or to the default ("When participant has no language selected"). Always create a default version for the same reason.
 - **Consent form content** — Two options:

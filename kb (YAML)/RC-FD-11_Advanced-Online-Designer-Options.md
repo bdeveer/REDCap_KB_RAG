@@ -7,13 +7,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
-version: '1.1'
-last_updated: '2026-05-06'
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-FD-03
   title: Data Dictionary
@@ -95,6 +95,8 @@ The toolbar is organized into two rows. The top row contains the primary structu
 ## 2.4 Navigating Within the Selection
 
 Once you have multiple fields selected, two small **prev / next** arrows appear in the toolbar. These scroll the page to each selected field in order, which is useful for verifying your selection on long instruments before committing to a bulk action.
+
+From 17.4.4 (Standard), the selection controls are more prominent, and pressing **Escape** is handled more consistently when working in the toolbar.
 
 ## 2.5 Expanding the Selection with the QEES Panel
 

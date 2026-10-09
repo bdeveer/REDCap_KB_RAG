@@ -5,13 +5,13 @@ domain: Surveys
 applies_to:
 - Survey and instrument designers
 - anyone answering an institutional accessibility question about REDCap
-requires: Varies by item — see §3. Most improvements land between 16.0.6 and 17.3.0
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review. Assistive-technology
+requires: Varies by item — see §3. Most improvements land between 16.0.6 and 17.5.4
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review. Assistive-technology
   behaviour has not been independently tested
 prerequisites:
 - 'RC-SURV-01 — Surveys: Basics'
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-SURV-02
   title: 'Survey Settings: Basic Options and Design'
@@ -42,7 +42,7 @@ synonyms:
 - section 508 vs WCAG
 ---
 
-> **Scope and a caveat about what this article is.** This consolidates the accessibility work REDCap has shipped and the settings that affect accessibility, drawn from release notes through 17.4.1 Standard / 17.3.7 LTS. It has **not** been validated by testing with assistive technology, and it is **not** a conformance statement.
+> **Scope and a caveat about what this article is.** This consolidates the accessibility work REDCap has shipped and the settings that affect accessibility, drawn from release notes through 17.5.4 Standard / 17.3.18 LTS. It has **not** been validated by testing with assistive technology, and it is **not** a conformance statement.
 >
 > **REDCap does not publish a WCAG or Section 508 conformance level, and neither does this article.** If your institution needs a formal accessibility statement — a VPAT or ACR, or an answer to a procurement questionnaire — that must come from your own evaluation or from the REDCap Consortium, not from a changelog summary. Those terms are defined in §1.1. What follows tells you what has been improved and what you can control; it does not tell you that any given survey is conformant.
 
@@ -114,6 +114,8 @@ All versions below are **Standard**. An LTS instance receives these only if its 
 | **17.1.0** | The **language selector** widget communicates its expanded/collapsed state, so assistive technology reports when the menu opens or closes |
 | **17.1.1** | Dismissing the **"required fields" error popup** now scrolls to and focuses the first incomplete required field, instead of leaving the user to re-traverse the page hunting for it |
 | **17.1.4** | After a **failed login**, the error message sits closer to the login fields and is exposed to the screen reader on redirect back to the page |
+| **17.4.2** | **Read-only calculated fields** are announced as read-only. **Signature** and **file upload** prompts are announced as buttons that open a dialog, so a screen reader user knows activating them opens a popup. No visible change |
+| **17.5.4** | Page structure separates **navigation from main content** on project and non-project pages; the navigation menu was previously nested inside the main content region. On surveys, the **banner** is now announced outside the main content. Both make landmark navigation work as intended. No visible change |
 
 ## 3.2 Keyboard navigation and visible focus
 
@@ -124,6 +126,8 @@ All versions below are **Standard**. An LTS instance receives these only if its 
 | **17.1.0** | **Survey navigation buttons** ("Next Page", "Save & Continue", "Save & Return Later") show a glowing highlight on hover or keyboard focus |
 | **17.1.3** | Survey **form fields and buttons** show a clear visible highlight when reached by keyboard — the single most useful change for anyone navigating without a mouse or with low vision |
 | **17.1.3** | The **slider** control highlights its surrounding question in green on focus, consistent with every other field type, and the track and knob have improved contrast when active |
+| **17.4.2** | **Read-only calculated fields** can be reached by keyboard |
+| **17.5.4** | A **"Skip to login form"** link on the login page lets keyboard users bypass the page header |
 
 ## 3.3 Visual presentation
 

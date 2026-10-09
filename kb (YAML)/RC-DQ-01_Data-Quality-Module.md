@@ -9,8 +9,8 @@ verified_against: REDCap v17.3.10 — Data Quality Rules page captured 2026-09-2
   A–I rule set and bulk-execution controls verified directly against it
 prerequisites:
 - RC-DE-02 — Basic Data Entry
-version: '1.3'
-last_updated: 2026-09
+version: '1.4'
+last_updated: 2026-10
 related:
 - id: RC-BL-01
   title: 'Branching Logic: Overview & Scope'
@@ -91,7 +91,9 @@ Rules can be scoped before running, which matters on large projects where a full
 
 **Deleting rules in bulk** — many or all custom rules can be removed at once (15.9.0), rather than one at a time.
 
-> **Version caveat (below 17.4.0 Standard):** Users could **export the CSV results of a Data Quality rule even without Full Access data export privileges** for some of the fields in the export. From 17.4.0 the export is restricted accordingly. If DQ result exports were part of how data left your projects on an older instance, the export-rights boundary was not applied there. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
+> **Version caveat (below 17.4.0 Standard):** Users could **export the CSV results of a Data Quality rule even without Full Access data export privileges** for some of the fields in the export. From 17.4.0 the export is restricted accordingly. If DQ result exports were part of how data left your projects on an older instance, the export-rights boundary was not applied there.
+
+> **Version caveat (17.4.0–17.4.4 Standard / 17.3.6–17.3.10 LTS):** The fix above over-reached: exporting results of a custom rule whose logic contains a **checkbox field** failed with *"you do not have data export privileges to one or more fields"* even for users with full rights, and the export contained no results. Fixed in 17.4.5 Standard / 17.3.11 LTS. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
 
 > **Version caveat (below 15.8.2 Standard):** Executing **rule E** where the project contains no numeric fields — calcs, sliders or number/integer-validated text — or where the user has no access to them, behaved incorrectly. Fixed in 15.8.2.
 

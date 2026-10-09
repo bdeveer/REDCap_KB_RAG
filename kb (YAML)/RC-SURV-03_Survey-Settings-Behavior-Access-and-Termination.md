@@ -7,13 +7,13 @@ applies_to:
 - some settings (Survey Response PDF Save, Time Limit) require additional project
   features such as longitudinal mode or the Participant List
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
-version: '1.1'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -245,6 +245,8 @@ Takes the survey offline at a specific date and time — regardless of how many 
 
 Example: You want registration for an event to close at midnight on the day before the event.
 
+Expiration is applied by the scheduled **Expire Surveys** cron job, not at the exact second. From 17.5.1, each survey it expires is recorded in the project's logging, so you can confirm when a survey actually went offline.
+
 > **Note:** REDCap uses the **server's time zone** for the expiration, not the participant's local time zone. If your server is in a different time zone than your participants, adjust the expiration time accordingly. For this installation's server time zone, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) — Institution-Specific Settings & Policies, Section 3**.
 
 ## 4.4 Save and Return
@@ -261,6 +263,8 @@ By default, returning to a saved survey requires the return code provided at the
 **Scope of a return code.** A return code is valid **only for the participant-specific survey link it was issued against**. It is not a project-wide password: entering a valid code on a different participant's link must not grant access to that participant's responses.
 
 > **Critical — version caveat (all versions below 17.4.1 Standard / 17.3.7 LTS):** That scoping did not hold. If a participant obtained another participant's individual survey link — not the public survey link — their **own** return code would let them open the other participant's saved responses. Fixed in 17.4.1 / 17.3.7. On any earlier version, a return code effectively works against any individual link in the project, so the confidentiality of partially-completed responses depends on individual survey links never being shared or guessed. If you run partially-completed surveys containing sensitive data on an affected version, this is a reason to prioritise the upgrade.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** Return codes were not always **reserved atomically** when a response was first created or Save & Return was first used. Under concurrent activity a code could be reused, or associated with the wrong response. This is a different defect from the scoping problem above, and fixed later.
 
 > **Version caveat (≤17.0.2):** In a project with a public survey using Save & Return Later, where records were created through a data entry form rather than through the public survey, a participant entering their return code on the **public** survey link was told the code was incorrect. They must use their own unique survey link. Fixed in 17.0.3.
 

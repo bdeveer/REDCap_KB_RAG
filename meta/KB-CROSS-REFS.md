@@ -76,6 +76,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
+- RC-PROF-01 — My Profile: User Profile Settings
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-07 — Control Center: Users & Access Management
 
@@ -88,6 +89,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-PROF-01 — My Profile: User Profile Settings
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
+- RC-INFRA-03 — REDCap Versions, Release Lines & Patching
 - RC-PLUS-01 — REDCap+: Overview and Subscription
 
 ---
@@ -850,6 +852,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-03 — Data Dictionary
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-CALC-01 — Special Functions Reference
+- RC-RAND-03 — Working with & Managing Randomization
 - RC-CC-02 — Control Center: General System Configuration
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-LONG-01 — Longitudinal Project Setup
@@ -947,12 +950,15 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PIPE-14 — Smart Variables: Project Dashboards
 - RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-PLUS-01 — REDCap+: Overview and Subscription
+- RC-SURV-10 — Survey Login
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
 
 **Inbound links (referenced by):**
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-PIPE-14 — Smart Variables: Project Dashboards
+- RC-SURV-10 — Survey Login
 
 ---
 
@@ -998,6 +1004,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-PLUS-01 — REDCap+: Overview and Subscription
+- RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide
 - RC-PROJ-02 — Project Setup Checklist
 
 **Inbound links (referenced by):**
@@ -1056,6 +1063,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MSG-01 — REDCap Messenger
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-API-01 — REDCap API
 - RC-MSG-01 — REDCap Messenger
 
@@ -1123,6 +1131,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-AT-01 — Action Tags: Overview
 - RC-AT-08 — Action Tags: @IF — Conditional Logic
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-SURV-10 — Survey Login
 
 ---
 
@@ -1418,8 +1427,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-ALERT-02 — Alert Management & Notification Log
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CALC-01 — Special Functions Reference
-- RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe
 - RC-CC-02 — Control Center: General System Configuration
 - RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide
 - RC-SURV-02 — Survey Settings: Basic Options & Design
@@ -2811,10 +2820,10 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CALC-02 — Calculated Fields
 - RC-AT-01 — Action Tags: Overview
 - RC-FDL-01 — Form Display Logic
+- RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-CALC-01 — Special Functions Reference
 - RC-PIPE-03 — Smart Variables Overview
 - RC-FD-07 — Field Embedding
-- RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-03 — Data Dictionary
 - RC-DE-02 — Basic Data Entry
@@ -3695,6 +3704,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-PIPE-15 — Smart Variables: Public Reports
+- RC-PLUS-01 — REDCap+: Overview and Subscription
+- RC-SURV-10 — Survey Login
 - RC-API-01 — REDCap API
 - RC-API-38 — Export Reports API
 
@@ -3706,6 +3717,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-08 — Custom Reports: Management & Organization
 - RC-NAV-REC-01 — Record Navigation Overview
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-SURV-10 — Survey Login
 
 ---
 
@@ -3957,9 +3969,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-04 — Instrument Library & Zip Files
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
-- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-SURV-11 — Accessibility in REDCap Surveys & Forms
 - RC-MLM-01 — Multi-Language Management
 - RC-CALC-02 — Calculated Fields
@@ -4254,6 +4266,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
+- RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 
@@ -4422,6 +4435,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-23 — Backup Options
 - RC-PLUS-01 — REDCap+: Overview and Subscription
 - RC-CC-02 — Control Center: General System Configuration
+- RC-CC-03 — Control Center: Security & Authentication
 
 **Inbound links (referenced by):**
 - RC-CC-26 — Control Center: AI Configuration Settings
@@ -4483,6 +4497,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-DE-13 — Record Administration: Choose Action for Record
 - RC-LOCK-01 — Record Locking & E-Signatures
+- RC-MYCAP-05 — MyCap: App Settings & Participant Management
 
 ---
 
@@ -4811,8 +4826,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MYCAP-06 — MyCap: Active Tasks & Mobile Toolbox
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
-- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
 - RC-MYCAP-08 — MyCap: Testing
+- RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Inbound links (referenced by):**
@@ -4853,6 +4868,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-MYCAP-04 — MyCap: Participant Onboarding
+- RC-LOG-01 — Logging — Project Audit Trail
 - RC-MYCAP-07 — MyCap: Advanced Features — FDL, MLM, and Survey Links
 - RC-MYCAP-08 — MyCap: Testing
 
@@ -5187,6 +5203,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-FD-05 — Codebook
+- RC-SURV-02 — Survey Settings: Basic Options & Design
 
 **Inbound links (referenced by):**
 - RC-ALERT-01 — Alerts & Notifications: Setup
@@ -5591,6 +5608,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PIPE-13 — Smart Variables: Randomization
 
 **Inbound links (referenced by):**
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-API-52 — Randomize Record API
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
@@ -5667,6 +5685,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
 - RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-04 — Survey Link Types & Access Methods
@@ -5900,11 +5919,18 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-04 — Survey Link Types & Access Methods
 - RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-PLUS-01 — REDCap+: Overview and Subscription
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-PROJ-03 — Project Dashboards
+- RC-AT-02 — @HIDDEN & @READONLY — Visibility Control
 - RC-SURV-07 — Survey Queue
 
 **Inbound links (referenced by):**
+- RC-PROJ-03 — Project Dashboards
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-FD-02 — Online Designer
 - RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-PLUS-01 — REDCap+: Overview and Subscription
 
 ---
 
@@ -6204,14 +6230,18 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-SURV-10 — Survey Login
 - RC-CC-03 — Control Center: Security & Authentication
 - RC-EM-01 — External Modules: Overview & Manager
 
 **Inbound links (referenced by):**
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CDIS-05 — REDCap SHARE: Overview & Onboarding
+- RC-PROJ-03 — Project Dashboards
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-INFRA-03 — REDCap Versions, Release Lines & Patching
+- RC-SURV-10 — Survey Login
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-PLUS-03 — REDCap+: Reward Services
 - RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)

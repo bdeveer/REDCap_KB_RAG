@@ -6,11 +6,12 @@ applies_to:
 - All REDCap users
 - REDCap Administrators (Sections 5–7)
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS)
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — release tables from
+  the 2026-10-09 changelogs
 prerequisites:
 - None
-version: '1.0'
-last_updated: 2026-08
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-INFRA-01
   title: Self-Hosting a Private REDCap Instance
@@ -114,11 +115,13 @@ A new LTS line is cut roughly **every six months**, historically at the end of J
 
 This is the single most common source of confusion, and the reason every version reference in this KB names its line.
 
-An LTS line **keeps the version prefix of the Standard release it was branched from** and then increments only the patch number. So LTS 16.0.10 through 16.0.47 all carry the `16.0` prefix inherited from Standard 16.0.9 — even though, by the time 16.0.47 shipped, Standard had moved on to 17.4.1.
+An LTS line **keeps the version prefix of the Standard release it was branched from** and then increments only the patch number. So LTS 16.0.10 through 16.0.55 all carry the `16.0` prefix inherited from Standard 16.0.9 — even though, by the time 16.0.55 shipped, Standard had moved on to 17.5.4.
 
 The consequence: a *lower* version number does not mean a *less current* instance.
 
 > **Important:** On 2026-08-13, three releases shipped on the same day — Standard **17.4.1**, LTS **17.3.7**, and LTS **16.0.47**. All three contained the same security fix. Their version numbers differ by more than a full major version, but none of them was behind on patches. Always ask which line a version belongs to before concluding anything about how current it is.
+
+The pattern repeats. On 2026-09-09 a **critical** unauthenticated remote code execution fix shipped as Standard **17.4.4**, LTS **17.3.10** and LTS **16.0.49**; on 2026-10-08 the next batch of security fixes shipped as Standard **17.5.4**, LTS **17.3.18** and LTS **16.0.55**.
 
 ## 3.3 Two LTS lines are supported at once
 
@@ -130,10 +133,12 @@ Observed lifespans of recent LTS lines:
 |---|---|---|---|
 | 15.0.x | 32 | 2025-01-30 | 2025-10-29 |
 | 15.5.x | 34 | 2025-07-31 | 2026-04-23 |
-| 16.0.x | 38 | 2026-01-29 | 2026-08-13 |
-| 17.3.x | 3 | 2026-07-30 | *(current)* |
+| 16.0.x | 46 | 2026-01-29 | *(still receiving fixes — 16.0.55 on 2026-10-08)* |
+| 17.3.x | 14 | 2026-07-30 | *(current — 17.3.18 on 2026-10-08)* |
 
-Each line runs roughly nine months in practice — about six months as the current LTS, then a further overlap period after its successor is cut.
+Each line runs roughly nine months in practice — about six months as the current LTS, then a further overlap period after its successor is cut. Counts for the two active lines are as of the 2026-10-09 changelogs.
+
+On the Standard line, a new minor version starts every few weeks: 17.4.0 on 2026-08-06 (seven releases, through 17.4.6) and 17.5.0 on 2026-09-17 (17.5.4 on 2026-10-08).
 
 > **Note:** These lifespans are observed from the published changelogs, not a stated guarantee. Confirm the supported window for your line before planning around it.
 
@@ -209,10 +214,33 @@ Some entries state when a defect was introduced — *"Bug emerged in REDCap 17.2
 Running an unpatched instance is the largest controllable risk an institution carries with REDCap, and it compounds silently.
 
 - **Security fixes ship in most releases, on both lines simultaneously.** Staying near the head of your line is the single most effective control available.
-- **Most vulnerabilities require an authenticated user.** This is not reassurance. In a typical REDCap instance, the authenticated population is large — every study team member across every project. A handful of issues have been exploitable by unauthenticated survey participants.
+- **Most vulnerabilities require an authenticated user.** This is not reassurance. In a typical REDCap instance, the authenticated population is large — every study team member across every project. A handful of issues have been exploitable by unauthenticated survey participants. The clearest example is the 2026-09-09 critical fix (Standard 17.4.4 / LTS 17.3.10 / LTS 16.0.49): remote code execution through survey passthrough routing, present since 13.3.0, exploitable by anyone holding a valid survey hash — which every survey link contains.
 - **Remove old version directories from the server.** REDCap has explicitly flagged that leaving prior version directories in place keeps known vulnerabilities reachable. On newer versions, calls to survey and API endpoints containing a version directory in the URL are refused outright.
 - **Check upgrade prerequisites before planning a jump.** Minimum PHP version and database charset requirements have both changed, and either can block an upgrade — see [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md).
 - **Read the changelog between your version and your target**, not just the target's entry. A multi-version jump accumulates changes, and provenance statements in intermediate releases may tell you to go re-check data.
+
+## 7.1 Recent critical and major security fixes
+
+The 17.4.2 → 17.5.4 window (2026-08-20 to 2026-10-08) carried an unusually heavy run: **1 critical and 17 major** security fixes. Each shipped on Standard, the current LTS line and the 16.0.x LTS line on the same day.
+
+| Fixed in (Std / LTS / 16.0 LTS) | Grade | Issue | Who could exploit |
+|---|---|---|---|
+| 17.4.4 / 17.3.10 / 16.0.49 | **Critical** | Remote code execution via survey passthrough routing (13.3.0+) | **Anyone with a valid survey hash** — no login |
+| 17.4.4 / 17.3.10 / 16.0.49 | Major | Control Center POST tampering could switch on the Database Query Tool and other protected settings | Admins with configuration rights |
+| 17.4.4 / 17.3.10 / 16.0.49 | Major | Stored XSS in BioPortal ontology search (6.7.0+) | Users with Project Design |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Deterministic AES-CBC IV in the encryption helper; predictable project salts; weak MyCap code randomness | Attackers able to infer related values |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Legacy document-hash formats still accepted on file download and image endpoints | Anyone who could obtain a document ID and legacy hash |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Project XML API export bypassed the full-export check | Authenticated users with limited export rights |
+| 17.4.5 / 17.3.11 / 16.0.50 | Major | Hook-loader file inclusion via `hook_functions_file` | Depends on deployment |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | Fail-open `SUPER_USER` check could grant full admin rights | Unauthenticated or improperly initialised requests |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | 2FA authenticator secrets generated from a non-cryptographic random source (all versions) | Attackers targeting TOTP |
+| 17.5.1 / 17.3.14 / 16.0.52 | Major | Two MyCap SQL injections (13.0.0+); further Control Center configuration tampering | Authenticated users / config admins |
+| 17.5.4 / 17.3.18 / 16.0.55 | Major | SSRF in content fetching; project-settings authorization weakness; stored XSS in record-locking text; PHP-type upload block | Authenticated users |
+
+Two consequences reach beyond patching:
+
+- The 17.4.5 / 17.3.11 document-hash fix is what **broke legacy image and file links** created before 15.7.3 — see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md), Fix Legacy Image/File URL.
+- The 2FA fix changes how **new** secrets are generated; secrets created before it stay weak until replaced. **Regenerate existing authenticator secrets after upgrading** — see [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) §3.1 for the procedure.
 
 > **Important:** Because LTS lines carry an older version prefix, an LTS instance can look alarmingly out of date to someone who does not know the release model. Judge currency by how far behind the head of your own line you are — not by comparing against a Standard version number.
 

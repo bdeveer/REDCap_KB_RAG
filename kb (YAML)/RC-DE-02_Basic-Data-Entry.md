@@ -5,12 +5,12 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
-version: '1.1'
-last_updated: '2025'
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-DE-01
   title: Record Creation & the Record Home Page
@@ -209,7 +209,7 @@ On data entry forms, a **Section Navigation** box is displayed on the right-hand
 
 It appears automatically — there is nothing to enable — and is most useful on long instruments where the section headers are the only structural landmarks.
 
-> **Version caveat (≤17.0.x):** Opening the REDCap Messenger panel while viewing a data entry form could leave the Section Navigation box **overlapping the form**, obscuring fields and making them difficult to complete. Fixed in 17.0.0. Separately, on forms with a large number of section headers some headers were not reachable from the box (fixed 17.2.1).
+> **Version caveat (≤17.0.x):** Opening the REDCap Messenger panel while viewing a data entry form could leave the Section Navigation box **overlapping the form**, obscuring fields and making them difficult to complete. Fixed in 17.0.0. Separately, on forms with a large number of section headers some headers were not reachable from the box (fixed 17.2.1). On some forms, the box could also cover part of the data entry table and block entry; from 17.5.4 Standard / 17.3.18 LTS, on narrower windows it moves below the form instead of over it.
 
 For jumping to an individual *field* rather than a section, the Online Designer offers a Field Navigator — see [RC-FD-11 — Online Designer Advanced Options](RC-FD-11_Advanced-Online-Designer-Options.md).
 

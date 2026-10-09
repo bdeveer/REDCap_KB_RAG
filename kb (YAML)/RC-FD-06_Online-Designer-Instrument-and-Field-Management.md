@@ -6,14 +6,14 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup user rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-version: '1.2'
-last_updated: '2026-04-11'
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-FD-02
   title: Online Designer
@@ -89,7 +89,7 @@ When you open the Online Designer, you see a list of all instruments currently d
 
 | Button | Description |
 | --- | --- |
-| **Create Snapshot of Instruments** | Backs up a data dictionary of your current instrument setup. Useful before making significant structural changes. See [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) for more on the Data Dictionary. |
+| **Create Snapshot of Instruments** | Backs up a data dictionary of your current instrument setup. Useful before making significant structural changes. From 17.5.0 you can attach an optional **comment** and **file** to the snapshot (see [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) §6.2). See [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) for more on the Data Dictionary. |
 | **+ Create** | Opens the instrument creation flow, allowing you to add a new blank instrument to your project. |
 | **Import** | Imports a validated instrument from the REDCap Shared Library. See [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) for details. |
 | **Upload** | Imports a local zip file to create a new instrument. See [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) for details. |

@@ -5,12 +5,12 @@ domain: Record Navigation
 applies_to:
 - All project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-NAV-REC-01
   title: 'Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-03
@@ -133,6 +133,22 @@ From **16.1.1**, rows on the Record Status Dashboard highlight on hover and on k
 
 - They are automatically available to all project users once created
     — no additional setup is required per user.
+
+## 4.3 Managing Custom Dashboards *(17.5.3+)*
+
+From 17.5.3 (Standard), users with Project Design rights see a
+**Manage** link next to the **Record Status Dashboard** link on the
+left-hand project menu. It opens a dedicated page that lists every
+custom dashboard in the project and lets you create new ones and edit
+or delete existing ones, without first opening each dashboard.
+
+The same release slightly changed the buttons on the Record Status
+Dashboard page itself, so older written instructions that name specific
+buttons there may not match.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):**
+> There is no Manage page. Custom dashboards are created and edited from
+> the Record Status Dashboard page.
 
 ---
 

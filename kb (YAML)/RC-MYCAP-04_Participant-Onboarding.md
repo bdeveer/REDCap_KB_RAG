@@ -5,12 +5,12 @@ domain: MyCap Mobile App
 applies_to:
 - Projects with MyCap enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-MYCAP-01 — MyCap: Overview & Enabling'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-MYCAP-05
   title: 'MyCap: App Settings & Participant Management'
@@ -53,7 +53,7 @@ The legacy URL-based joining mechanism, deprecated August 25, 2025. Firebase Dyn
 
 **QR Code**
 
-A scannable code displayed by the study team (on screen or printed) that a participant scans using the MyCap app — not the device's standard camera app. The QR code contains the participant's unique project code, participant code, and institution identifier. Requires the MyCap app to be pre-installed on the participant's device.
+A scannable code displayed by the study team (on screen or printed) that a participant scans using the MyCap app — not the device's standard camera app. From 17.4.3, clicking the **QR Code** icon on the MyCap Participant List opens a popup that scrolls automatically so the whole code is visible and scannable. The QR code contains the participant's unique project code, participant code, and institution identifier. Requires the MyCap app to be pre-installed on the participant's device.
 
 **Participant Code**
 

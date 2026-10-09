@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-ALERT-01 — Alerts & Notifications: Setup'
-version: '1.2'
-last_updated: '2026-07-27'
+version: '1.3'
+last_updated: 2026-10
 related:
 - id: RC-ALERT-01
   title: 'Alerts & Notifications: Setup'
@@ -184,6 +184,8 @@ Reusing an existing ID isn't limited to literal in-place edits — it's also the
 The Notification Log is accessible from the Alerts & Notifications management page. It provides a complete record of every alert instance in the project — both those already sent and those scheduled for future delivery.
 
 > **Note:** The Notification Log covers only alerts created through the Alerts & Notifications feature. Emails scheduled by Automated Survey Invitations (ASIs) do not appear in this log.
+
+> **Version caveat (below 17.5.1 Standard / 17.3.14 LTS):** For alerts with a **start date in the past**, the log could omit overdue one-time notifications and show recurring notifications with dates **shifted forward**. The log, not the sending, was wrong — but on affected versions do not treat the log as proof of what is scheduled.
 
 ## 5.1 Filters
 

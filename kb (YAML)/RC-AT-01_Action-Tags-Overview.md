@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 - foundational Project Build & Management knowledge
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-AT-02
   title: '@HIDDEN & @READONLY — Visibility Control through RC-AT-07 — Cosmetic Action
@@ -168,6 +168,7 @@ Use this table to quickly find which article covers a specific action tag.
 | `@SETVALUE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on every load |
 | `@PREFILL` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Deprecated alias for @SETVALUE — use @SETVALUE instead |
 | `@HIDEBUTTON` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide Today/Now button |
+| `@HIDEDATEPICKER` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide date/time picker icon (17.5.0+) |
 | `@INLINE` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display uploaded file inline |
 | `@INLINE-PREVIEW` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display with toggle button |
 | `@IF` | Conditional | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Apply action tags conditionally based on logic |
@@ -205,7 +206,7 @@ The Action Tags knowledge base series is organized by tag category:
 | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
 | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
 | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Autofill | `@NOW`, `@TODAY`, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
-| [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Cosmetic | `@HIDEBUTTON`, `@INLINE`, `@INLINE-PREVIEW` |
+| [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Cosmetic | `@HIDEBUTTON`, `@HIDEDATEPICKER`, `@INLINE`, `@INLINE-PREVIEW` |
 | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Conditional | `@IF` |
 | [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculation | `@CALCTEXT`, `@CALCDATE` |
 | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |

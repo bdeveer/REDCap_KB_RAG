@@ -6,12 +6,12 @@ applies_to:
 - All REDCap projects with surveys enabled
 - assumes surveys have been enabled on at least one instrument
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -100,6 +100,13 @@ Use a participant-friendly title when the instrument name is technical or intern
 - Survey title: `Patient Health Questionnaire`
 
 > **Note:** The survey title supports a limited set of HTML tags, including `<u>` (underline) and `<i>` (italic). Full HTML or script tags are not permitted.
+
+**Piping into the title** *(17.5.3+)* — the survey title can contain piped values, e.g. `Follow-up survey for [first_name]`. Two limits apply:
+
+- It works only for **existing records**. The public survey link has no record when it opens, so piping is not applied there.
+- The title is evaluated **once, on page load**. It does not update live as the respondent answers questions on the page.
+
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):** Piping in the survey title is not supported. Pipe into the survey instructions instead, which has always worked.
 
 ## 3.3 Survey Instructions
 

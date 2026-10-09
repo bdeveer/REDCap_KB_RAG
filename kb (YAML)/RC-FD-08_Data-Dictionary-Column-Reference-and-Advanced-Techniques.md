@@ -6,11 +6,11 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - RC-FD-03 — Data Dictionary
-version: '1.5'
+version: '1.6'
 last_updated: 2026-10
 related:
 - id: RC-FD-01
@@ -508,10 +508,13 @@ The Data Dictionary Snapshot feature allows you to save a named copy of the curr
 
 1. Navigate to the Online Designer.
 2. Click "Create a snapshot of instruments."
+3. *(17.5.0+)* Optionally enter a **comment** and attach a **file** — for example, the change request or protocol amendment that prompted the edit.
 
 **Viewing revision history:**
 
-All project history revisions are accessible from Project Setup → Project Revision History tab.
+All project history revisions are accessible from Project Setup → Project Revision History tab. Snapshot comments and attachments are shown there, and from 17.5.0 the comment can be edited afterwards on the same page.
+
+A snapshot comment that names *why* the structure is about to change ("Before amendment 3 — adding AE follow-up instrument") is far more useful a year later than the timestamp alone.
 
 > **Note:** Snapshots are a convenience feature, not a substitute for downloading and storing local backups. Always maintain at least one local copy of the pre-edit Data Dictionary.
 

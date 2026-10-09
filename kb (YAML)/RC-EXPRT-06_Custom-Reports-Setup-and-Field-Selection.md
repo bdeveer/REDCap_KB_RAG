@@ -6,12 +6,12 @@ applies_to:
 - All project types
 - requires Add/Edit/Organize Reports privilege
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
+verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
   not re-captured
 prerequisites:
 - 'RC-EXPRT-05 — Data Export: Report Types & Other Export Options'
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -39,6 +39,7 @@ synonyms:
 - select which fields show in a report
 - set up a new report with public access
 - create a saved view of project data
+- require redcap login to view a public report
 ---
 
 # 1. Overview
@@ -114,6 +115,17 @@ The code can be retrieved programmatically with the `[report-access-code:unique_
 > **Important — an access code is a convenience control, not access control.** It gates a URL; it does not authenticate anyone, produce an audit trail of who viewed the report, or allow revocation for one recipient. The rule above still governs: do not make a report public if it contains sensitive or identifiable data. Treat the access code as protection against a link being casually forwarded, nothing more.
 
 > **Note (16.1.7):** `[report-access-code]` is now always shown in the smart variable documentation, because administrators can make reports public even where the system setting "Allow reports to be made public?" is set to No. The parallel `[dashboard-access-code]` is correctly **hidden** in that situation, since nobody — including admins — can use it. If the two appear to behave inconsistently in the documentation, that is why.
+
+### REDCap Login Protection *(REDCap+, 17.5.0+)*
+
+> **⚠️ REDCap+ Feature Tag**
+> REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
+
+Once a report is public, a button immediately beneath the public-report setting (labelled **"Enabled REDCap login protection"** in the 17.5.0 release notes) makes viewers log in to REDCap before the report is displayed. Anyone already logged in sees it straight away.
+
+Unlike an access code, this does authenticate the viewer. It does **not** restrict the report to project users: under SSO or LDAP, anyone who can authenticate to the instance can view it, including people with no prior REDCap account. The same feature for surveys is described in [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5, including who can get in (§5.4).
+
+> **Scope note:** Written from the 17.5.0 release notes; not checked against a live subscribed instance.
 
 > **Important:** Never make a report public if it contains sensitive, identifiable, or protected information. Some REDCap installations have disabled the public report feature entirely to comply with data privacy requirements.
 
