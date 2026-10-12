@@ -38,7 +38,7 @@ synonyms:
 
 # 1. Overview
 
-The REDCap API (Application Programming Interface) allows external applications to connect to REDCap remotely and interact with it programmatically — importing or exporting records, retrieving project configuration, managing files, and more. Instead of a person clicking through the REDCap interface, a program sends structured requests to REDCap over HTTP (the same protocol browsers use to load web pages) and REDCap responds with the requested data or confirmation of the action taken.
+The REDCap API (Application Programming Interface) allows external applications to connect to REDCap remotely and interact with it programmatically — importing or exporting records, retrieving project configuration, managing files, and more. Instead of a person working through the REDCap interface, a program sends structured requests to REDCap over HTTP (the same protocol browsers use to load web pages) and REDCap responds with the requested data or confirmation of the action taken.
 
 Common use cases include automated nightly data pulls into a statistical analysis environment, populating REDCap records from an external clinical system, and building custom dashboards or integrations that read from or write to REDCap without manual steps. Programmers can use the API to build applications, websites, scripts, and automated workflows that interact with REDCap directly.
 
@@ -93,8 +93,8 @@ Before requesting a token:
 
 ## 3.2 Requesting a Token
 
-1. Open the project and click **API** in the Applications section of the left-hand menu.
-2. On the API page, click **Request API Token** to submit a request to your REDCap administrator.
+1. Open the project and select **API** in the Applications section of the left-hand menu.
+2. On the API page, select **Request API Token** to submit a request to your REDCap administrator.
 3. Once approved, your token is displayed on the same API page. Copy it and store it securely — treat it like a password.
 
 > **Note:** If you do not see an **API** link in the left-hand menu, you have not been granted API privileges for that project. Ask a project administrator to assign the API Export and/or API Import user right to your account via the User Rights page.
@@ -106,7 +106,7 @@ Before requesting a token:
 - **Use HTTPS.** Always send API requests to the HTTPS version of your REDCap URL. Sending tokens over plain HTTP exposes them in transit.
 - If you believe a token has been compromised, contact your REDCap administrator to have it revoked and regenerated.
 
-> **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — click the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md) warns separately about API tokens appearing in profile screenshots.
+> **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — select the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md) warns separately about API tokens appearing in profile screenshots.
 
 ## 3.3a Call the API at the Non-Versioned URL
 
@@ -228,13 +228,13 @@ The REDCap API organizes its functionality into method groups. The methods avail
 
 The API Playground is the best place to start with the REDCap API. It requires no programming setup and provides an interactive, guided way to test any API method.
 
-**Accessing the Playground:** Open your project and click **API** in the left-hand menu (under Applications). The Playground opens with a list of all available methods on the left.
+**Accessing the Playground:** Open your project and select **API** in the left-hand menu (under Applications). The Playground opens with a list of all available methods on the left.
 
 **How the Playground works:**
 
 1. Select a method (e.g., "Export Records").
 2. Fill in the parameters using the form fields provided — the Playground explains each parameter inline.
-3. Click **Execute** to run the request and see the raw response.
+3. Select **Execute** to run the request and see the raw response.
 4. Switch to the **Code** tab to see ready-to-copy sample code in PHP, Python, R, Ruby, Java, cURL, or Perl.
 
 The Playground uses your existing token automatically, so you can run real requests against real project data to verify what the API returns before writing a script.
@@ -382,7 +382,7 @@ Administrators can also manage and revoke API tokens for any user from the Contr
 # 11. Related Articles
 
 - [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) (separate mechanism for real-time notification of data changes to external systems; does not fire on API imports)
-- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)(manual export workflow; for comparison with API-based export)
+- [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (manual export workflow; for comparison with API-based export)
 - [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) (manual import methods; API import is the programmatic equivalent)
 - [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (where API Export and API Import rights are granted)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG-scoped access applies equally to API tokens)
