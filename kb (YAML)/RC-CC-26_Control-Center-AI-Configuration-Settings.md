@@ -6,11 +6,11 @@ applies_to:
 - REDCap Administrators
 - requires Control Center access
 requires: REDCap v17.2.0+ (Standard); LTS 17.3.x and higher
-verified_against: REDCap v17.3.6 (LTS)
+verified_against: REDCap v17.3.19 (LTS)
 prerequisites:
 - 'RC-AI-01 — REDCap AI Tools: Overview & Security'
-version: '1.0'
-last_updated: 2026-08
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
@@ -35,6 +35,9 @@ synonyms:
 - map an ai config to a specific ai feature
 - why is the ai section gone from modules services
 - assign an ai configuration to a project
+- combine default ai config with project ai config
+- project ai config overrides the default
+- only one ai configuration per project
 ---
 
 # 1. Overview
@@ -124,6 +127,8 @@ On a project's **Edit Project Settings** page (Control Center → Edit Project S
 
 This is a meaningful simplification over the previous model, where enabling AI for one project meant typing that project's endpoint URL, API key and model into the project's settings. Credentials now live in exactly one place.
 
+**Only one configuration is active in a project at a time.** Selecting a configuration here replaces the all-projects default for that project entirely; the two do not combine. If the default serves Writing Tools and the project selects a configuration mapped only to Summarization, the project loses Writing Tools. Map a project-level configuration to every AI feature the project should keep.
+
 > **Note:** The section only offers configurations that already exist. If the drop-down is empty, no configurations have been created on the AI Configuration Settings page yet.
 
 ---
@@ -152,7 +157,7 @@ Mapping the old settings to the new model:
 
 **Q: Can different AI features use different AI services?**
 
-**A:** Yes, and this is the main reason the page exists. Each configuration is mapped to whichever of the three features it should serve, so you might run Writing Tools on a locally-hosted model while MLM auto-translate uses a cloud service.
+**A:** Yes, across the instance, and this is the main reason the page exists. Each configuration is mapped to whichever of the three features it should serve, so you might run Writing Tools on a locally-hosted model while MLM auto-translate uses a cloud service. Within a single project, though, only one configuration is active, so all of that project's AI features run on the one configuration it uses.
 
 **Q: How do I enable AI for just one project?**
 
@@ -170,6 +175,10 @@ Mapping the old settings to the new model:
 
 **A:** A bug affecting upgrades to 17.2.0 through 17.2.3 left the "enabled for all projects by default" setting disabled when it should have been enabled, and newly created projects did not pick up the configuration. Fixed in 17.3.0. Re-check the setting on this page and verify a recently created project.
 
+**Q: Can a project use the default AI configuration for one feature and its own configuration for another?**
+
+**A:** No. A project has one active AI configuration. A project-level selection overrides the all-projects default completely rather than adding to it. To give a project its own service for one feature while keeping the others, create a configuration mapped to all the features that project needs and select it for the project.
+
 **Q: Do I still enter the API key on each project that uses AI?**
 
 **A:** No. That was the pre-17.2.0 behaviour. Credentials belong to the configuration, and a project selects a configuration by name.
@@ -185,6 +194,8 @@ Mapping the old settings to the new model:
 **Assuming an upgrade preserved the default-on behaviour.** Upgrading from below 17.2.0 on an affected version silently disabled the all-projects default and skipped applying it to new projects. Nothing warns you; existing projects keep working, so the gap only shows up on projects created after the upgrade. Verify the setting explicitly after any upgrade across the 17.2.0 boundary.
 
 **Naming configurations opaquely.** The Title is what appears in the scope drop-downs and in every project's selector. A configuration called "Config 1" forces whoever picks it to come back to this page to work out what it connects to. Name it for the service and its purpose.
+
+**Expecting a project configuration to add to the default.** A project-level selection replaces the all-projects default; it does not layer on top of it. A project switched to a configuration mapped only to Summarization silently loses Writing Tools and auto-translate it had through the default. Map the project's configuration to every feature it should keep.
 
 **Deleting a configuration that projects are using.** A configuration referenced as a system default or by individual projects is not inert. Check where a configuration is in use before removing it, or those projects lose the AI features they were relying on.
 
