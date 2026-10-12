@@ -150,7 +150,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_SUPER_TOKEN&content=project&format=json&data=[{\"project_title\":\"New%20Project%20via%20API\",\"purpose\":0,\"purpose_other\":\"\",\"project_note\":\"Some%20notes%20about%20the%20project\"}]"
+DATA="token=$API_SUPER_TOKEN&content=project&format=json&data=[{\"project_title\":\"New%20Project%20via%20API\",\"purpose\":0,\"purpose_other\":\"\",\"project_notes\":\"Some%20notes%20about%20the%20project\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -169,7 +169,7 @@ $record = array(
 	'project_title' => 'New Project via API',
 	'purpose'       => 0,
 	'purpose_other' => '',
-	'project_note'  => 'Some notes about the project',
+	'project_notes'  => 'Some notes about the project',
 );
 
 $data = json_encode($record);
@@ -182,7 +182,7 @@ $data = <<<EOF
 <project_title><![CDATA[New Project via API]]></project_title>
 <purpose>0</purpose>
 <purpose_other></purpose_other>
-<project_note><![CDATA[Some notes about the project]]></project_note>
+<project_notes><![CDATA[Some notes about the project]]></project_notes>
 </project>
 </items>
 EOF;
