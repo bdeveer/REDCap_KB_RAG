@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -33,6 +33,8 @@ synonyms:
 - prefill a field value on page load
 - auto populate the current date and time
 - capture the username automatically into a field
+- prefill last year's answers in a repeat survey
+- show the previous answer without prefilling it
 ---
 
 # 1. Overview
@@ -129,6 +131,14 @@ Carry forward a value from the previous event:
 
 Pre-fills the field with the value of `rx1` from the most recent prior event. Requires understanding of longitudinal projects (see [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)).
 
+**Decide per field whether to carry the value forward or only show it.** A pre-filled value is accepted as soon as the respondent submits the page, whether they read it or not. That is what you want for answers that rarely change (an institution name, a country, a diagnosis). For values that are expected to change between events (counts, measurements, current status), a carried-forward default lets a respondent click through and resubmit the old value, and the result looks like real data. For those fields, leave out `@DEFAULT` and pipe the previous value into the **Field Note** instead, so it shows as a reference while the field itself stays blank:
+
+```
+Field Note:  Last time you reported: [previous-event-name][active_users]
+```
+
+The respondent sees the earlier value but has to enter a current one. Pair it with `@PLACEHOLDER` or required-field status if a blank answer is a problem.
+
 ---
 
 # 5. @SETVALUE — Pre-fill on Every Load
@@ -209,6 +219,8 @@ Pre-populates with the current user's username and locks it to prevent manual ed
 **Applying `@TODAY` or `@NOW` to a field with no date validation.** Both tags will autofill any text field regardless of whether date or datetime validation is set. If the field has no validation, REDCap fills it with a date or datetime string on first load — but does not enforce the format on save. Users can overwrite the autofilled value with free text, and REDCap will accept it. Over time this produces inconsistently formatted data in what was intended to be a timestamp field. For reliable timestamp capture, always set the matching validation type: `date_mdy` (or `date_ymd`, `date_dmy`) for `@TODAY` fields, and `datetime_ymd` (or another datetime variant) for `@NOW` fields. The validation enforces format consistency on every entry, not only the autofilled ones. If you need a reliable date anchor for calculations but want to keep a visible field without format restrictions, see the hidden anchor field pattern in [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md).
 
 **Expecting autofill tags to populate during data import.** These tags run only when a form is loaded in the browser.
+
+**Carrying forward values that are supposed to change.** `@DEFAULT='[previous-event-name][field]'` on a count or measurement makes it easy to submit last event's number unchanged, and nothing in the data shows that it wasn't re-entered. Carry forward only stable answers. For changing values, show the previous value in the field note with piping and leave the field blank (see Section 4.5).
 
 ---
 

@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)|
-| **Synonyms** | how do i create a calculated field; redcap calc field formula; auto calculate a value from other fields; calculated field returns blank; difference between calc field and calctext; when does a calculated field update; add or compute a score automatically; set up a calculation in the online designer |
+| **Synonyms** | how do i create a calculated field; redcap calc field formula; auto calculate a value from other fields; calculated field returns blank; difference between calc field and calctext; when does a calculated field update; add or compute a score automatically; set up a calculation in the online designer; score is wrong when someone answers don't know; total score from radio button answers runs backwards |
 
 ---
 
@@ -99,6 +99,9 @@ Calculated field formulas use the same syntax as REDCap branching logic:
 | Days since baseline | `datediff([baseline_date], 'today', 'd')` |
 | Total from three items, blank if any item is blank | `if(isblankormissingcode([item1]) or isblankormissingcode([item2]) or isblankormissingcode([item3]), "", [item1]+[item2]+[item3])` |
 | Total that calculates even with some items blank (blank if all are blank) | `sum([item1], [item2], [item3])` |
+| Score one radio item, recoded (Always = 2, Sometimes = 1, Never = 0, Don't know = left out) | `if([item1]='1', 2, if([item1]='2', 1, if([item1]='3', 0, "")))` |
+
+> **Scoring radio and dropdown answers.** A formula works on the stored **code** of a choice, not its label. Adding up items directly only gives a meaningful score when the codes were chosen to be the score: ascending in the direction you want, with no "Don't know" or "Not applicable" option coded as a large number such as 99. When the codes don't fit, recode each item first. The most transparent way is one hidden calc field per item using the recode pattern above. It returns blank for "Don't know", because an empty result stores no value. Then total those fields with `sum()`, which leaves out blank items. If the project uses missing data codes, test each item with `isblankormissingcode()` before scoring it.
 
 > **Cross-event references in longitudinal projects:** To reference a field from a different event, use the standard cross-event syntax: `[unique_event_name][variable_name]`. Example: `datediff([baseline_arm_1][baseline_date], 'today', 'd')`.
 
@@ -200,6 +203,8 @@ A calculated field's value is recomputed in three contexts:
 **Expecting a text result to be stored.** Formulas that produce a non-numeric result — including text strings, date strings, or empty strings — will not store a value in the calculated field. The field will appear blank. If you need a non-numeric result, switch to a Text Box field with `@CALCTEXT` or `@CALCDATE`.
 
 **Assuming + keeps a total blank until all inputs are filled in.** On current versions `+` treats blank values as 0, so `[a]+[b]+[c]` returns a partial total when some items are blank and 0 when all are blank. Older documentation said it returns blank; that does not hold on current versions (tested on 16.0.49 LTS, 2026-09). If the total must stay blank until every item has a value, wrap it in `if()` with `isblankormissingcode()` checks. Also note that `sum()` and `+` both silently leave out blank items, which can make a score look complete when many items are empty.
+
+**Adding up coded answers that weren't coded as scores.** `sum([q1], [q2], [q3])` on radio fields adds the raw codes. With choices coded `1, Always | 2, Sometimes | 3, Never | 99, Don't know`, a higher total means *less* of the thing being measured, and a single "Don't know" adds 99 and makes the score meaningless. REDCap gives no warning, because the formula is valid. Before writing a total, check the codes in the Codebook. If they aren't already in score order without high "unknown" codes, recode each item (see the scoring note in Section 4). Changing the codes on a production field with data instead changes the meaning of existing responses, so don't fix it that way.
 
 **Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the record is opened and saved, or until rule H is run. After any formula change in a project with existing data, run rule H to synchronize all records.
 

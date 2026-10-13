@@ -2393,6 +2393,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
 - RC-API-37 — Import Project (Create Project) API
+- RC-API-51 — Export Repeating Instruments and Events API
 
 ---
 
@@ -2708,6 +2709,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-19 — Export Events API
 - RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-API-34 — Export Project Info API
 - RC-API-02 — Export Records API
 
 **Inbound links (referenced by):**
@@ -4675,6 +4677,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CALC-02 — Calculated Fields
 - RC-RAND-02 — Randomization Setup Guide
 - RC-AT-06 — Autofill Action Tags
+- RC-SURV-04 — Survey Link Types & Access Methods
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
 - RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
 - RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
@@ -5749,6 +5752,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-OPS-01 — Using REDCap as an Operational Request Management System
 - RC-API-40 — Export Survey Link API
 - RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide
+- RC-LONG-03 — Longitudinal Clinical Research Design Patterns
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-10 — Survey Login

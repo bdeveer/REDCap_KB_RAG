@@ -7,13 +7,13 @@
 | **Domain** | API |
 | **Applies To** | Projects with repeating instruments or repeating events |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.5 (Standard) — empty-configuration error observed on a live project, 2026-10; rest from changelog review of v17.4.1 (Standard) / v17.3.7 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
-| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md) |
 | **Synonyms** | export repeating instruments and events api method; how do i list repeating instruments via the api; api call to get repeating instruments and events config; retrieve which instruments are set to repeat through the api; export repeating events setup using the api; api method to read the repeating instruments configuration; programmatically get repeating forms and events with the api |
 
 ---
@@ -224,6 +224,10 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 **A:** Yes. For classic projects, the `event_name` field will be blank, and the response will list only repeating instruments. Repeating events are only applicable to longitudinal projects.
 
+**Q: Why does this call fail with an HTTP 400 error on a project that has no repeating instruments?**
+
+**A:** When nothing in the project is set to repeat, REDCap does not return an empty list. It returns HTTP 400 with `{"error":"You cannot export repeating instruments and events because the project does not contain any repeating instruments and events"}`. Treat that specific response as "no repeating setup", not as a failure. To check first without triggering the error, use the `has_repeating_instruments_or_events` flag from Export Project Information ([RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)).
+
 **Q: What is the custom_repeat_instrument_label?**
 
 **A:** When a project designer enables repeating for an instrument, they can optionally provide a custom label that will appear in the repeating instances table header in the data entry UI (e.g., "Adverse Event" instead of the generic "Repeat Instrument"). This field returns that label. If none was set, the field is empty.
@@ -231,6 +235,8 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 ---
 
 ## 9. Common Mistakes & Gotchas
+
+**Treating "no repeating setup" as an error.** On a project with no repeating instruments or events, this method returns HTTP 400 rather than an empty array (see Common Questions). Scripts that export every metadata type in a loop will stop or report a failure on perfectly normal projects. Check `has_repeating_instruments_or_events` in the project info first, or catch this specific error message and carry on with an empty result.
 
 **Assuming all instruments appear in the response.** This method only returns instruments configured as repeating. Non-repeating instruments are excluded entirely. If you need the full instrument list, call [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) separately.
 
@@ -248,4 +254,5 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 - [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) (full list of all instruments; not just repeating)
 - [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md) (which instruments are assigned to which events in longitudinal projects)
 - [RC-API-19 — Export Events API](RC-API-19_Export-Events.md) (list all events in a longitudinal project)
+- [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md) (`has_repeating_instruments_or_events` flag — check before calling this method)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments and events via the UI)

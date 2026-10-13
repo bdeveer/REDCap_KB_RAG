@@ -11,8 +11,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-LONG-01
   title: Longitudinal Project Setup
@@ -24,6 +24,10 @@ related:
   title: Calculated Fields
 - id: RC-RAND-02
   title: Randomization Setup
+- id: RC-AT-06
+  title: Autofill Action Tags
+- id: RC-SURV-04
+  title: Survey Link Types & Access Methods
 tags:
 - longitudinal & repeated setup
 - longitudinal
@@ -36,6 +40,9 @@ synonyms:
 - call log and adjudication instrument patterns
 - scoring instrument separate from raw responses
 - gcp source document checklist setup
+- annual survey of the same respondents every year
+- repeat survey wave design with one event per year
+- new respondents land in the wrong year event
 ---
 
 # 1. Overview
@@ -590,11 +597,68 @@ Design the QC checklist before data collection begins. The instrument effectivel
 
 ---
 
-# 15. Common Questions
+# 15. Recurring Survey of the Same Respondents (Annual Waves)
+
+## 15.1 The Problem
+
+Some projects survey the same respondents again and again: an annual survey of member organizations, a yearly staff questionnaire, a cohort followed up each year by survey only. Each wave has to be kept separately so it can be compared over time, returning respondents shouldn't retype answers that haven't changed, and new respondents still join in later waves. A longitudinal project with one event per wave handles this well, but two built-in behaviours catch designers out: the public survey link always opens the **first** event, and `[previous-event-name]` carry-forward accepts old values without anyone checking them.
+
+## 15.2 The Pattern
+
+- **One event per wave**, with every survey instrument assigned to every wave event. Name the events by wave from the start (`2025`, `2026`). The unique event name is generated from the label, and renaming an event later regenerates it (see Section 17).
+- **One record per respondent**, kept across all waves.
+- **A stored wave identifier on every response.** Don't rely on the event alone to say which wave an answer belongs to (see 15.3).
+- **Carry forward stable answers only.** Use `@DEFAULT='[previous-event-name][field]'` for answers that rarely change, and show changing values in the field note instead (see 15.5).
+
+## 15.3 Store the Wave Explicitly
+
+The **public survey link** always opens the first instrument in the **first event** (see [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md)). A respondent who joins in the third wave through the public link therefore lands in the first wave's event, next to other respondents' first-wave answers. If the analysis treats "event = wave", that respondent's data is filed under the wrong year without any sign of it.
+
+Capture the wave as data on the first instrument of every wave:
+
+| Field | Setup | Purpose |
+|---|---|---|
+| `wave_date` | Text, date validation, `@TODAY @HIDDEN-SURVEY @READONLY` | Records when the response was started |
+| `wave` | Text, `@CALCTEXT(year([wave_date]))` and `@HIDDEN-SURVEY`, or a hidden dropdown the team sets | The wave label used in analysis |
+
+If a wave runs across a calendar year boundary, map dates to waves in analysis rather than using the calendar year. Analyse and report by `wave`, never by event.
+
+## 15.4 Getting Respondents Into the Right Event
+
+| Respondent | Route |
+|---|---|
+| Returning, known email | Send the invitation from the **Participant List** of the current wave's event, or use an Alert or Automated Survey Invitation that pipes the wave's survey link |
+| New, joining in a later wave | Either accept that the public link files them in the first event (safe once the wave is stored as data, 15.3), or make the first event a short **Registration** event that isn't a wave and route people from there to the current wave's survey with an Alert or the Survey Queue |
+
+The Registration approach keeps every wave's data in its own event, at the cost of one more step for respondents. Settle on the route before the first wave goes out, because moving existing responses between events later is manual work.
+
+## 15.5 What to Carry Forward
+
+| Kind of answer | Examples | Carry forward? |
+|---|---|---|
+| Stable identity and profile | Organization name, country, contact | Yes, `@DEFAULT='[previous-event-name][field]'` |
+| Policies and models that change occasionally | Funding model, support model, settings | Yes, but say in the instructions that pre-filled answers need checking |
+| Counts, measurements, current status | Active users, staff numbers, salaries, version in use | **No.** Pipe the previous value into the field note: `Last year you reported: [previous-event-name][field]` |
+
+Pre-filled numbers that are expected to change get resubmitted unchanged, and the trend data then looks flatter than reality. See [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) Section 4.5. `[previous-event-name]` resolves to the previous event in the event list, not the previous wave the respondent answered (Section 12.3). A respondent who skipped a wave gets no carry-forward.
+
+## 15.6 Planning for Future Waves
+
+- Create the next wave's event before its invitations go out. In production, adding events may need an administrator, depending on the instance's settings.
+- To show something other than the event name on the Record Status Dashboard, such as the response date, use a **Custom Event Label** that pipes a field (see [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md)). It changes the display without changing the unique event name.
+- Survey timestamps per event are already stored and can be exported with the records. Don't build extra fields to copy them unless you need them in logic.
+
+---
+
+# 16. Common Questions
 
 **Q: Can I assign an instrument to every event in a project?**
 
 **A:** Yes. There is no limit on how many events share an instrument. If an instrument is relevant at every time point (e.g., a vital signs form), assign it to all events.
+
+**Q: In our annual survey, why are some of this year's responses showing up in last year's event?**
+
+**A:** Those respondents most likely came in through the public survey link, which always opens the first event. Store the wave as data on each response and analyse by that field, or route new respondents through a registration event (see Section 15).
 
 **Q: Does reusing an instrument across events mean the data is shared?**
 
@@ -646,9 +710,11 @@ When using arms this way, ensure the repeating instrument configuration is ident
 
 ---
 
-# 16. Common Mistakes & Gotchas
+# 17. Common Mistakes & Gotchas
 
 **Duplicating instruments instead of reusing them.** A common mistake is creating `phq_baseline` and `phq_followup` as two separate instruments when the same `physician_health_questionnaire` instrument could simply be assigned to both events. Duplicate instruments double the maintenance burden: any field label change or branching logic fix must be applied to both copies. If the data structure at each time point is identical, use one instrument and assign it to multiple events.
+
+**Using the event as the only record of which wave a response belongs to.** In a recurring survey with one event per wave, the public survey link always opens the first event, so new respondents in a later wave land in the first wave's event. Store the wave as data on every response and analyse by that field (see Section 15.3).
 
 **Renaming events after the project has data.** Changing an event label regenerates the unique event name. Any branching logic, piping, or calculated fields that reference the old unique event name will silently fail. Audit all logic before renaming an event in a project that has collected data.
 
@@ -680,7 +746,7 @@ When using arms this way, ensure the repeating instrument configuration is ident
 
 ---
 
-# 17. Related Articles
+# 18. Related Articles
 
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (arms, events, and instrument designation — foundational prerequisite)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (configuring repeating instruments; custom form labels)
@@ -694,3 +760,4 @@ When using arms this way, ensure the repeating instrument configuration is ident
 - [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (HTML in field labels)
 - [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (custom record label using piped patient identifiers)
 - [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md) (adjudication and multi-stage review patterns)
+- [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md) (why the public survey link always opens the first event — relevant to recurring surveys)

@@ -12,7 +12,7 @@ verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog revie
 prerequisites:
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
-version: '1.2'
+version: '1.3'
 last_updated: 2026-10
 related:
 - id: RC-FD-03
@@ -37,6 +37,8 @@ synonyms:
 - style a form or survey with css
 - bulk apply changes to selected fields
 - advanced online designer shortcuts
+- background image on a survey disappeared
+- where to host an image used in survey css
 ---
 
 # 1. Overview
@@ -183,6 +185,7 @@ The CSS editor accepts standard CSS. Important rules:
 
 - **Do not include `<style>` tags** — REDCap wraps your CSS in a `<style>` block automatically when rendering the page. If you include the tags yourself, they will appear as literal text.
 - **Standard CSS comments are supported** using the `/* your comment here */` syntax. Comments are ignored during processing and have no effect on rendering.
+- **Host any image the CSS loads somewhere you control.** A `background-image: url(...)` pointing at a free image-hosting site works until that site deletes the image or a respondent's network blocks it. Use a file your institution hosts, such as a public link to a file in the project's File Repository.
 - There is a **Fullscreen Mode** button in the editor dialog for working with longer stylesheets.
 - Click **Update & Close Editor** when finished to save and close the dialog. The CSS is saved when you return to the instrument editor.
 
@@ -235,6 +238,8 @@ Custom CSS is stored internally and is also exposed in the **Survey Settings bul
 - **Assuming Quick-modify Copy creates usable duplicates immediately**: copied fields retain their original variable names with a numeric suffix added by REDCap, but you still need to review and update each variable name to confirm it is meaningful and unique before moving on.
 
 - **Using Quick-modify Delete without checking for data**: in Production mode, fields with data cannot be deleted and REDCap will block the action — but in Development mode, deletion is immediate and permanent including any test data. Always confirm the fields are empty or that the data is intentionally disposable before bulk-deleting.
+
+- **Loading images from a third-party image host**: CSS such as `background-image: url("https://<free-image-host>/abc.png")` depends on a site the project doesn't control. If the image is removed, or a respondent's institution or country blocks the host, the background disappears with no error. This happens on surveys sent to many organizations, where some networks block the host. Host the image yourself (for example, a public File Repository link) and reference that URL. The same applies to `<style>` blocks placed in descriptive field labels to style a survey.
 
 - **Forgetting that CSS selectors targeting internal REDCap class names can break**: if a REDCap upgrade removes or renames a class your CSS relies on, the styling silently stops working (or causes visual glitches). Keep a record of any custom CSS in use so it can be re-evaluated after version upgrades.
 
