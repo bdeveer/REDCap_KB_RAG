@@ -10,7 +10,7 @@ verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog revie
   not re-captured
 prerequisites:
 - RC-FD-03 — Data Dictionary
-version: '1.6'
+version: '1.7'
 last_updated: 2026-10
 related:
 - id: RC-FD-01
@@ -34,6 +34,7 @@ synonyms:
 - meaning of the 18 data dictionary fields
 - format reference for data dictionary csv
 - how to fill in each dictionary column correctly
+- make a redcap slider horizontal or vertical
 ---
 
 # 1. Overview
@@ -382,17 +383,20 @@ The L/R letter controls how much horizontal space the variable occupies. REDCap 
 
 **What "Vertical" and "Horizontal" mean in practice**
 
-The V/H letter controls how selectable answer choices are arranged. It only has a visible effect on fields that have choices: `radio`, `checkbox`, `yesno`, and `truefalse`.
+The V/H letter controls how selectable answer choices are arranged. It has a visible effect on fields that have choices (`radio`, `checkbox`, `yesno`, and `truefalse`) and on `slider` fields, where it sets the direction of the slider bar.
 
 - **V** — each choice is a block-level element displayed on its own line (stacked vertically).
 - **H** — choices are inline elements displayed side by side in a horizontal row.
 
-For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`, `slider`), V and H produce identical rendering. `LV` and `LH` look the same; `RV` and `RH` look the same.
+On a `slider`, **V** draws the bar vertically (up and down) and **H** draws it horizontally (left to right).
+
+For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`), V and H produce identical rendering. `LV` and `LH` look the same; `RV` and `RH` look the same.
 
 **Effect on specific field types**
 
-- **`text`, `notes`, `dropdown`, `calc`, `file`, `slider`:** Only the L/R letter has any visual effect. Width changes are most noticeable on `notes` — a Right-aligned notes box is roughly half the page width, which is narrow and awkward to type in. The V/H letter has no effect on these types; `LV` and `LH` are interchangeable, as are `RV` and `RH`.
+- **`text`, `notes`, `dropdown`, `calc`, `file`:** Only the L/R letter has any visual effect. Width changes are most noticeable on `notes` — a Right-aligned notes box is roughly half the page width, which is narrow and awkward to type in. The V/H letter has no effect on these types; `LV` and `LH` are interchangeable, as are `RV` and `RH`.
 - **`radio`, `checkbox`, `yesno`, `truefalse`:** Both letters affect rendering. L/R controls full vs. half width; V/H controls whether choices stack vertically or run horizontally. Choose H for short lists (2–4 choices) and V for longer lists.
+- **`slider`:** Both letters affect rendering. L/R controls full vs. half width; V/H controls the bar's direction: V gives a vertical bar, H a horizontal one. Use `LH` for a full-width horizontal slider, the layout most people expect for a rating scale.
 - **`descriptive`:** Alignment has no visual effect. Descriptive fields always render at full width regardless of which code is entered.
 - **`sql`:** Behaves identically to `dropdown` for alignment purposes.
 

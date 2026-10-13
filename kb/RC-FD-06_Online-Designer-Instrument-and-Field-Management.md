@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
@@ -287,7 +287,7 @@ Marks the field as containing personally identifiable information (PII). The def
 
 Controls how the field is displayed on screen — specifically whether it occupies the full width of the form or approximately half the page width, and whether answer choices are stacked vertically or laid out in a horizontal row. The available codes are `LH` (Left Horizontal), `LV` (Left Vertical), `RH` (Right Horizontal), and `RV` (Right Vertical). Left-aligned fields are full-width; Right-aligned fields are half-width. The default when left blank is `RV`.
 
-This setting has meaningful display consequences for some field types. For `notes` fields in particular, the default `RV` produces a cramped half-width text area — `LH` or `LV` is almost always preferable. For `radio` and `checkbox` fields, the Horizontal/Vertical component controls whether choices are displayed side by side or stacked.
+This setting has meaningful display consequences for some field types. For `notes` fields in particular, the default `RV` produces a cramped half-width text area — `LH` or `LV` is almost always preferable. For `radio` and `checkbox` fields, the Horizontal/Vertical component controls whether choices are displayed side by side or stacked. For `slider` fields, it controls the direction of the slider bar: Vertical draws an up-and-down bar, Horizontal a left-to-right bar.
 
 **Best practice:** Apply alignment consistently across all fields in an instrument to avoid a visually fragmented layout. See the project STYLE-GUIDE.md for team conventions. See [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) Section 5.12 for a full explanation of how each code behaves.
 
@@ -410,7 +410,7 @@ Allows the data entry person to upload any file up to a defined size limit (the 
 
 ### 8.10 Slider
 
-Displays a horizontal slider ranging from 0 to 100 by default. Options include:
+Displays a slider ranging from 0 to 100 by default. The **Custom Alignment** setting decides its direction: a Vertical code (`RV`, the default, or `LV`) draws an up-and-down bar, and a Horizontal code (`RH` or `LH`) draws a left-to-right bar (see [7.7 Custom Alignment](#77-custom-alignment)). Options include:
 - Defining 2 or 3 custom labels positioned at points along the slider.
 - Choosing whether to display the numeric value alongside the slider handle.
 - Adjusting the minimum and maximum values.

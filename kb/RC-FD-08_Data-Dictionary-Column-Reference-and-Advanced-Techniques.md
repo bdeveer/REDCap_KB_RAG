@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Version** | 1.6 |
+| **Version** | 1.7 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) |
-| **Synonyms** | set slider range min max in data dictionary; what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly |
+| **Synonyms** | set slider range min max in data dictionary; what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly; make a redcap slider horizontal or vertical |
 
 ---
 
@@ -363,17 +363,20 @@ The L/R letter controls how much horizontal space the variable occupies. REDCap 
 
 **What "Vertical" and "Horizontal" mean in practice**
 
-The V/H letter controls how selectable answer choices are arranged. It only has a visible effect on fields that have choices: `radio`, `checkbox`, `yesno`, and `truefalse`.
+The V/H letter controls how selectable answer choices are arranged. It has a visible effect on fields that have choices (`radio`, `checkbox`, `yesno`, and `truefalse`) and on `slider` fields, where it sets the direction of the slider bar.
 
 - **V** — each choice is a block-level element displayed on its own line (stacked vertically).
 - **H** — choices are inline elements displayed side by side in a horizontal row.
 
-For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`, `slider`), V and H produce identical rendering. `LV` and `LH` look the same; `RV` and `RH` look the same.
+On a `slider`, **V** draws the bar vertically (up and down) and **H** draws it horizontally (left to right).
+
+For all other field types (`text`, `notes`, `dropdown`, `calc`, `file`), V and H produce identical rendering. `LV` and `LH` look the same; `RV` and `RH` look the same.
 
 **Effect on specific field types**
 
-- **`text`, `notes`, `dropdown`, `calc`, `file`, `slider`:** Only the L/R letter has any visual effect. Width changes are most noticeable on `notes` — a Right-aligned notes box is roughly half the page width, which is narrow and awkward to type in. The V/H letter has no effect on these types; `LV` and `LH` are interchangeable, as are `RV` and `RH`.
+- **`text`, `notes`, `dropdown`, `calc`, `file`:** Only the L/R letter has any visual effect. Width changes are most noticeable on `notes` — a Right-aligned notes box is roughly half the page width, which is narrow and awkward to type in. The V/H letter has no effect on these types; `LV` and `LH` are interchangeable, as are `RV` and `RH`.
 - **`radio`, `checkbox`, `yesno`, `truefalse`:** Both letters affect rendering. L/R controls full vs. half width; V/H controls whether choices stack vertically or run horizontally. Choose H for short lists (2–4 choices) and V for longer lists.
+- **`slider`:** Both letters affect rendering. L/R controls full vs. half width; V/H controls the bar's direction: V gives a vertical bar, H a horizontal one. Use `LH` for a full-width horizontal slider, the layout most people expect for a rating scale.
 - **`descriptive`:** Alignment has no visual effect. Descriptive fields always render at full width regardless of which code is entered.
 - **`sql`:** Behaves identically to `dropdown` for alignment purposes.
 

@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - None
-version: '1.4'
-last_updated: '2026-05-16'
+version: '1.5'
+last_updated: 2026-10
 related:
 - id: RC-FD-08
   title: 'Data Dictionary: Column Reference & Advanced Techniques'
@@ -60,10 +60,12 @@ These are defaults, not mandates. Individual projects may deviate when there is 
 REDCap supports four alignment codes: `LH`, `LV`, `RH`, and `RV`. See [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) Section 5.12 for a full explanation of what each code does visually.
 
 The short version:
-- **L (Left)** = field spans full page width
-- **R (Right)** = field is approximately half-width (right side of page)
-- **H (Horizontal)** = label and input are side by side
-- **V (Vertical)** = label sits above the input
+- **L (Left)** = the answer sits below the label and spans the full page width
+- **R (Right)** = the answer sits to the right of the label, side by side, in roughly half the page width
+- **V (Vertical) / H (Horizontal)** = depends on the field type:
+  - `radio`, `checkbox`, `yesno`, `truefalse`: V stacks the choices one per line; H lines them up in a row
+  - `slider`: V draws a vertical (up-and-down) bar; H draws a horizontal (left-to-right) bar
+  - all other types: no visible effect
 
 The default when the column is left blank is `RV`.
 
