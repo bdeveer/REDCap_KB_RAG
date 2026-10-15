@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap instances (requires Super API Token) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Section 4.5, the plain-text token response and the `purpose_other` error tested live on v16.0.49 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
-| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)|
-| **Synonyms** | create project api method; how do i create a new project via the api; import project api with super token; api call to provision a new redcap project from xml; programmatically create project using super api token; bulk create projects through the create project api; import project design to make a new project via api; api method to clone a project across instances |
+| **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)|
+| **Synonyms** | create project api method; how do i create a new project via the api; import project api with super token; api call to provision a new redcap project from xml; programmatically create project using super api token; bulk create projects through the create project api; import project design to make a new project via api; api method to clone a project across instances; enable instrument as survey via api; create project with survey already enabled via api; purpose_other required error on create project |
 
 ---
 
@@ -209,17 +209,72 @@ print $output;
 
 > **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
+### 4.5 Creating a project with an instrument already enabled as a survey
+
+The REDCap API has no method that enables an instrument as a survey. `surveys_enabled: 1` only turns on the project-level **Use surveys in this project?** setting; each instrument still has to be enabled in the Online Designer. The one API route is at creation time: pass a project XML in the `odm` parameter that includes the survey settings for the instrument.
+
+The XML can be minimal. One form holding the record ID field is enough, as long as `GlobalVariables` contains:
+- `<redcap:SurveysEnabled>1</redcap:SurveysEnabled>`
+- a `<redcap:SurveysGroup>` block with one `<redcap:Surveys>` element per survey, with at least `form_name`, `title` and `survey_enabled="1"`. Other attributes (such as `instructions`, `acknowledgement` and `save_and_return`) are optional; REDCap uses its defaults for any you leave out.
+
+After the project exists, load the real fields with Import Metadata ([RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)). The survey settings are stored against the form name, so they survive the data dictionary import **as long as the instrument keeps the same form name**.
+
+```python
+import requests, json
+
+FORM = "questions"
+odm = f"""<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:redcap="https://projectredcap.org" ODMVersion="1.3.1" FileType="Snapshot" SourceSystem="REDCap">
+<Study OID="Project.Questions">
+<GlobalVariables>
+	<StudyName>Question Survey</StudyName>
+	<StudyDescription>Question Survey</StudyDescription>
+	<ProtocolName>Question Survey</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="{FORM}" title="Send us your questions" survey_enabled="1"
+		    acknowledgement="&lt;p&gt;Thank you!&lt;/p&gt;" save_and_return="0"/>
+	</redcap:SurveysGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.Questions" Name="Question Survey" redcap:RecordIdField="record_id">
+	<FormDef OID="Form.{FORM}" Name="Questions" Repeating="No" redcap:FormName="{FORM}">
+		<ItemGroupRef ItemGroupOID="{FORM}.record_id" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="{FORM}.record_id" Name="Questions" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+</MetaDataVersion>
+</Study>
+</ODM>"""
+
+info = [{"project_title": "Question Survey", "purpose": 4, "purpose_other": "",
+         "surveys_enabled": 1, "record_autonumbering_enabled": 1}]
+r = requests.post(api_url, data={"token": super_token, "content": "project", "format": "json",
+                                 "data": json.dumps(info), "odm": odm})
+project_token = r.text.strip()
+
+# Then replace the placeholder form with the real fields. Every row keeps form_name = FORM.
+requests.post(api_url, data={"token": project_token, "content": "metadata", "format": "csv",
+                             "data": open("data_dictionary.csv", encoding="utf-8").read()})
+```
+
+Escape HTML inside attribute values (`&lt;p&gt;`, `&amp;`, `&quot;`). To check the result, export the project XML ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) with `returnMetadataOnly=true` and look for `survey_enabled="1"` on the form's `<redcap:Surveys>` element. To see the full set of survey attributes, export the XML of any project that already has a survey and copy its `<redcap:Surveys>` element.
+
 ---
 
 ## 5. Response
 
-On success, the API returns the newly created project's API token:
+On success, the API returns the newly created project's 32-character API token as plain text, even when `format` is `json`:
 
-```json
-{
-  "token": "A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6"
-}
 ```
+A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6
+```
+
+Read the response body as a string and trim whitespace rather than parsing it as JSON.
 
 On error, you receive an error message:
 
@@ -245,6 +300,12 @@ On error, you receive an error message:
 **Q: What purpose code should I use for my research study?**
 **A:** Use `2` for Research. Full mapping: `0` = Practice/just for fun, `1` = Other (requires `purpose_other` text), `2` = Research, `3` = Quality Improvement, `4` = Operational Support.
 
+**Q: Can I enable an instrument as a survey through the API?**
+**A:** Not on an existing project: there is no API method for it, so use the Online Designer. On a new project you can, by passing a project XML with a `<redcap:SurveysGroup>` block in the `odm` parameter of this method. See Section 4.5.
+
+**Q: Can I get a project's public survey link through the API?**
+**A:** No. [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md) returns the link for a specific record, not the public link. Copy the public link from **Survey Distribution Tools** in the project.
+
 **Q: Can I create a longitudinal project with arms and events via API?**
 **A:** Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md).
 
@@ -255,6 +316,12 @@ On error, you receive an error message:
 **Super token confusion:** Many developers attempt this with regular project tokens and receive authentication errors. Verify you are using a Super API Token, not a project-specific token.
 
 **Missing purpose field:** The `purpose` field is required. Requests without it will fail. Always include `purpose` as an integer (0–4).
+
+**Purpose `1` without `purpose_other` text:** `1` means *Other*, not a generic default. Sending `purpose: 1` with an empty `purpose_other` fails with HTTP 400 ("You must provide some text for 'purpose_other'..."). Use another code, or describe the purpose in `purpose_other`.
+
+**Expecting `surveys_enabled` to turn on a survey:** `surveys_enabled: 1` only enables surveys at the project level. No instrument becomes a survey until it is enabled in the Online Designer, or included in the `odm` XML's survey settings at creation (Section 4.5).
+
+**Renaming the form after creating it with survey settings:** Survey settings are tied to the form name. If the data dictionary you import afterwards uses a different form name, the new instrument is not a survey. Keep the form name from the XML.
 
 **Project title length limits:** Project titles cannot exceed 255 characters. Validation will fail silently if you exceed this length.
 
@@ -269,3 +336,5 @@ On error, you receive an error message:
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md)
 - [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)
 - [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)
+- [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)
+- [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)

@@ -1776,6 +1776,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-API-07 — Export Metadata (Data Dictionary) API
 - RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-37 — Import Project (Create Project) API
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-FD-03 — Data Dictionary
@@ -2440,6 +2441,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info API
 - RC-API-36 — Export Project XML API
+- RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-40 — Export Survey Link API
 
 **Inbound links (referenced by):**
 - RC-CC-23 — Backup Options
@@ -2498,6 +2501,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-04 — Survey Link Types & Access Methods
 
 **Inbound links (referenced by):**
+- RC-API-37 — Import Project (Create Project) API
 - RC-API-41 — Export Survey Queue Link API
 - RC-API-42 — Export Survey Return Code API
 - RC-API-43 — Export Survey Participants API
