@@ -21,3 +21,5 @@ LOCAL_REDCAP_SETUP.md
 
 # Generated ServiceNow import file — rebuilt by "ServiceNow ETL/kb_to_servicenow.py"
 ServiceNow ETL/REDCap_KB_ServiceNow_Import.xlsx
+
+skill-zips/

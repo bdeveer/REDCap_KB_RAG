@@ -18,6 +18,9 @@ Provides:
     - parse_choices, VALID_FIELD_TYPES, validation type sets
 """
 
+from __future__ import annotations
+
+
 import csv
 import io
 import json

@@ -26,6 +26,8 @@ Dependencies:
       py -m pip install pdfplumber
 """
 
+from __future__ import annotations
+
 import logging
 import re
 import sys

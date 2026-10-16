@@ -1,19 +1,16 @@
 ---
 name: redcap-longitudinal-builder
-description: |
-  Build the three REDCap longitudinal project CSV files — Arms, Events, and Instrument
-  Designations — from user input or uploaded documentation. Use this skill whenever a
-  user wants to set up or draft a longitudinal project structure, is starting a new
-  longitudinal REDCap project, wants to generate importable CSV files, or describes a
-  study schedule and needs it turned into importable CSVs. Trigger on: "create my events",
-  "set up the longitudinal structure", "generate the arms and events", "build the event
-  mapping", "import longitudinal setup", "I have a protocol and need the event CSVs",
-  "help me design the longitudinal structure", or any time the user describes study
-  timepoints, visit schedules, arms, or form assignments and wants files to import.
-  Also trigger when a user shares a protocol document, schedule table, or spreadsheet
-  and asks to turn it into a REDCap longitudinal setup. Do NOT use for reading,
-  summarizing, or explaining an existing project's arms/events/mappings (use
-  redcap-longitudinal-structure for that) — use this one only when building new structure.
+description: >
+  Build the three REDCap longitudinal project CSV files (Arms, Events, Instrument Designations)
+  from user input or uploaded documentation. Use whenever a user wants to set up or draft a
+  longitudinal project structure, is starting a new longitudinal project, or describes a study
+  schedule and needs it turned into importable CSVs. Trigger on "create my events", "set up the
+  longitudinal structure", "generate the arms and events", "build the event mapping", "I have a
+  protocol and need the event CSVs", "help me design the longitudinal structure", or any time the
+  user describes timepoints, visit schedules, arms or form assignments and wants files to import,
+  including from a shared protocol, schedule table or spreadsheet. Do NOT use for reading,
+  summarizing or explaining an existing project's arms, events or mappings (use
+  redcap-longitudinal-structure); use this one only when building new structure.
 ---
 
 # REDCap Longitudinal Builder Skill
@@ -282,7 +279,7 @@ After generation, do three things:
    the output and gives the user a clear confirmation of what was built:
 
    ```bash
-   python ~/.claude/skills/redcap-longitudinal-structure/scripts/parse_longitudinal.py \
+   python <skill_path>/../redcap-longitudinal-structure/scripts/parse_longitudinal.py \
      --arms <output_folder>/Arms.csv \
      --events <output_folder>/Events.csv \
      --mapping <output_folder>/InstrumentDesignations.csv

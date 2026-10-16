@@ -1,19 +1,16 @@
 ---
 name: redcap-project-analyzer
 description: >
-  Read-only design audit of a live REDCap project, pulled through the REDCap MCP connectors
-  (one connector per REDCap server). Flags design issues, broken
-  branching logic, calc-field chains, structural antipatterns and style-convention gaps, and writes
-  a structured markdown report. Use whenever the user wants to audit, review, health-check, or
-  assess the structure and configuration of an existing project on a REDCap server. Trigger on:
-  "analyze my REDCap project", "audit PID 12345", "review the project design", "check for issues
-  in my REDCap project", "is my project structured correctly", "project health check", "look at
-  my REDCap project", "can you review how this project is set up", "something seems wrong with my
-  project structure". Only calls metadata export tools — never imports, deletes, or exports
-  records, reports, logging, or survey participants. Do NOT use for data dictionary CSV files or
-  longitudinal CSV files on disk (use the redcap-dd-* / redcap-data-dictionary and
-  redcap-longitudinal-* skills), for building or fixing a project, or for anything that changes
-  a project.
+  Read-only design audit of a live REDCap project, pulled through the REDCap MCP connectors (one
+  per REDCap server). Flags design issues, broken branching logic, calc-field chains, structural
+  antipatterns and style-convention gaps, and writes a structured markdown report. Use whenever
+  the user wants to audit, review, health-check or assess an existing project on a REDCap server.
+  Trigger on "analyze my REDCap project", "audit PID 12345", "review the project design", "check
+  for issues in my REDCap project", "is my project structured correctly", "project health check",
+  "can you review how this project is set up". Only calls metadata export tools; never imports,
+  deletes, or exports records, reports, logging or survey participants. Do NOT use for DD or
+  longitudinal CSV files on disk (use the redcap-dd-*, redcap-data-dictionary and
+  redcap-longitudinal-* skills), or for building, fixing or changing a project.
 ---
 
 # REDCap Project Analyzer

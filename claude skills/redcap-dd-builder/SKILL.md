@@ -1,19 +1,16 @@
 ---
 name: redcap-dd-builder
-description: |
+description: >
   Build a new REDCap Data Dictionary CSV from scratch, or add new instruments and fields to an
-  existing one. Use this skill whenever a user wants to create REDCap instruments, design a data
-  dictionary from a study protocol or codebook, convert a CRF to REDCap format, or extend an
-  existing project with new forms. Trigger on: "build me a data dictionary", "create a DD for my
-  study", "I have a protocol that needs to become a REDCap project", "make a REDCap form for",
-  "add a new instrument to my project", "design these fields in REDCap", "convert this codebook
-  to REDCap", "help me set up my REDCap project variables", "create a data collection form for",
-  "I need to capture these variables in REDCap". Also trigger when the user describes variables,
-  scales, or questionnaires they want to collect and needs them formatted as a REDCap data
-  dictionary. If the user is not sure whether to start fresh or modify an existing DD, use this
-  skill and ask them. Do NOT use this skill to fix an existing DD that fails to upload or has
-  structural errors (use redcap-dd-fixer), or to summarize, explain, or audit an existing DD
-  (use redcap-data-dictionary).
+  existing one. Use whenever a user wants to create REDCap instruments, design a data dictionary
+  from a study protocol or codebook, convert a CRF to REDCap format, or extend a project with new
+  forms. Trigger on "build me a data dictionary", "create a DD for my study", "I have a protocol
+  that needs to become a REDCap project", "make a REDCap form for", "add a new instrument to my
+  project", "convert this codebook to REDCap", "I need to capture these variables in REDCap", or
+  when the user describes variables, scales or questionnaires they want formatted as a data
+  dictionary. If unsure whether to start fresh or modify an existing DD, use this skill and ask.
+  Do NOT use to fix a DD that fails to upload (redcap-dd-fixer) or to summarize, explain or audit
+  one (redcap-data-dictionary).
 ---
 
 # REDCap Data Dictionary Builder
@@ -79,7 +76,7 @@ from scratch when the document already contains the information.
 If the user is adding to or modifying an existing data dictionary, parse it first:
 
 ```bash
-python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
+python <skill_path>/../redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
 ```
 
 This gives you the complete picture of what already exists: all variable names, all form names,
@@ -395,7 +392,7 @@ before proceeding.
 Run the parser on the generated CSV to catch any remaining structural issues:
 
 ```bash
-python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <output_csv> --text
+python <skill_path>/../redcap-data-dictionary/scripts/parse_dd.py <output_csv> --text
 ```
 
 If the parser reports issues:

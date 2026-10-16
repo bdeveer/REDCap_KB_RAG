@@ -27,7 +27,7 @@ project structure.
 
 **Not for:**
 - **Data Dictionary CSVs** → use the redcap-data-dictionary skill:
-  `python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <csv> --text`
+  `python <skill_path>/../redcap-data-dictionary/scripts/parse_dd.py <csv> --text`
   (the script exits with this pointer if given a `.csv`).
 - **Live projects with API access** → use redcap-project-analyzer.
 

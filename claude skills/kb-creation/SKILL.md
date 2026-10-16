@@ -1,6 +1,14 @@
 ---
 name: kb-creation
-description: Use this skill when the user wants to create a new REDCap Knowledge Base article in the RC-KB format — usually by converting a training outline (a Word document) or other source material, or by writing from a topic description. Triggers include: providing a training outline .docx, asking to "convert this outline", "build a KB article", "write a new KB article on", "turn this into a KB article", or any request to produce a new RC-[DOMAIN]-[NN] article. Also trigger when the user says things like "let's do the next outline" or "here's the next one". Do NOT use for editing, correcting or adding to existing articles — use the kb-update skill for that. Do NOT use for simply looking something up in the KB — use kb-search.
+description: >
+  Use this skill when the user wants to create a new REDCap Knowledge Base article in the RC-KB
+  format, usually by converting a training outline (a Word document) or other source material, or
+  by writing from a topic description. Triggers include providing a training outline .docx, asking
+  to "convert this outline", "build a KB article", "write a new KB article on", "turn this into a
+  KB article", or any request to produce a new RC-[DOMAIN]-[NN] article. Also trigger when the
+  user says things like "let's do the next outline" or "here's the next one". Do NOT use for
+  editing, correcting or adding to existing articles (use kb-update), or for simply looking
+  something up in the KB (use kb-search).
 ---
 
 # REDCap KB Article Builder

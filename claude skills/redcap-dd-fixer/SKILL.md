@@ -21,7 +21,7 @@ This skill diagnoses issues in a REDCap Data Dictionary CSV, applies safe automa
 Start by running the parser to understand what's in the file and surface any structural issues.
 
 ```bash
-python ~/.claude/skills/redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
+python <skill_path>/../redcap-data-dictionary/scripts/parse_dd.py <path_to_csv> --text
 ```
 
 Read the output. Pay attention to the "Potential Issues" section — these are the problems you need to fix or flag.

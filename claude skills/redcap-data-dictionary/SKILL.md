@@ -1,7 +1,16 @@
 ---
 name: redcap-data-dictionary
-description: |
-  Use this skill whenever a REDCap Data Dictionary CSV file (or project metadata pulled live with a REDCap connector's export_metadata) needs to be read, summarized or explained — whether the user uploads one, asks you to read or summarize one, analyze its field structure, check for issues, explain what a project does, compare instruments, or produce a project overview for stakeholders (PI, IRB, sponsor, new staff) or a full field listing to use as LLM context. Trigger on phrases like "data dictionary", "REDCap CSV", "uploaded DD", "summarize this DD", "what's in this project", "what does this project collect", "give me a project overview", "describe this study's forms", "analyze this instrument", "review this form structure", "what fields does this project have". Also trigger when the user uploads any file whose name contains DataDictionary. This skill is the foundation for any REDCap project analysis task — use it before trying to understand or explain a project's design. Do NOT use for fixing a DD (use redcap-dd-fixer), building or extending one (use redcap-dd-builder), or reading a Codebook PDF (use redcap-codebook-reader).
+description: >
+  Use this skill whenever a REDCap Data Dictionary CSV (or project metadata pulled live with a
+  REDCap connector's export_metadata) needs to be read, summarized or explained: analyzing field
+  structure, checking for issues, explaining what a project does, comparing instruments, or
+  producing a project overview for stakeholders (PI, IRB, sponsor, new staff) or a full field
+  listing as LLM context. Trigger on "data dictionary", "REDCap CSV", "uploaded DD", "summarize
+  this DD", "what's in this project", "what does this project collect", "give me a project
+  overview", "analyze this instrument", "what fields does this project have", or any uploaded file
+  whose name contains DataDictionary. Use it before trying to explain a project's design. Do NOT
+  use for fixing a DD (redcap-dd-fixer), building or extending one (redcap-dd-builder), or reading
+  a Codebook PDF (redcap-codebook-reader).
 ---
 
 # REDCap Data Dictionary Skill
