@@ -18,7 +18,7 @@ description: |
 
 # REDCap Data Dictionary Builder
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 **Working from a live project.** To add to an existing project's DD, you can pull it with `export_metadata` instead of asking for a CSV: save the JSON to a file and pass it to `--append` (the shared reader accepts `export_metadata` JSON and the output CSV uses the standard upload headers). Hand the finished CSV to the user to upload on the project's **Data Dictionary** page, which previews the changes before committing. Do not call `import_metadata` yourself unless the user asks for it on a non-production connector — it replaces the entire data dictionary.
 
@@ -231,8 +231,8 @@ For simple cases:
 
 ### Style conventions
 
-Before finalizing field designs, apply the best practices from `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`
-in the repo. Read it if you need the full rationale. The conventions most relevant to DD
+Before finalizing field designs, apply the best practices from `kb/RC-DSGN-01_REDCap-Project-Design-Best-Practices.md`
+in the REDCap_KB_RAG repo. Read it if you need the full rationale. The conventions most relevant to DD
 building:
 
 **Field alignment (Column N — Custom Alignment)**

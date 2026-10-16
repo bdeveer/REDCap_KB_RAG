@@ -15,7 +15,7 @@ description: |
 
 # REDCap Longitudinal Structure Skill
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 This skill teaches you how to parse and interpret the three CSVs that define a REDCap
 longitudinal project's structure. Use it whenever any of these files are in play.

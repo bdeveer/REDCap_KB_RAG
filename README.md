@@ -194,7 +194,7 @@ The `claude skills/` directory contains Claude skills (installed into Claude Cod
 **Installing:** each skill is linked into `~/.claude/skills` as a directory junction pointing at its folder here, so edits in the repo take effect immediately and git is the version history. To (re)create the links in PowerShell:
 
 ```powershell
-$src = "C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills"
+$src = "<path to your REDCap_KB_RAG clone>\claude skills"
 $dst = "$env:USERPROFILE\.claude\skills"
 New-Item -ItemType Directory -Force $dst | Out-Null
 Get-ChildItem $src -Directory | ForEach-Object {

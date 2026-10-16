@@ -57,7 +57,7 @@ Tags: **[Bug]** wrong output, a crash, or a mistake in the REDCap facts · **[Cl
 Shared: none of the three skills mentions `kb (YAML)/`. But `ServiceNow ETL/kb_to_servicenow.py:46` reads `kb (YAML)/`, so "run the ETL to check for synonym collisions" checks old data unless `convert_to_yaml_kb.py` is run first.
 
 ### kb-search — minor cleanup
-- [Bug] `SKILL.md:13` uses a Cowork KB path. Hardcode `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb`.
+- [Bug] `SKILL.md:13` uses a Cowork KB path. Point it at the repo's `kb/` folder.
 - [Bug] `:86`, `:95` say "check REFERENCE-MAP", but `kb/KB-REFERENCE-MAP.md` is now an 11-line "Moved" stub.
 - [Bug] `:59` refers to ⚠️ "unwritten" markers, which `meta/KB-INDEX.md` doesn't have.
 - [Cleanup] `:17-36`: the domain table covers 16 of 43 domains (API, CC, PIPE, MYCAP and others are missing). Point to `meta/KB-INDEX.md` instead.

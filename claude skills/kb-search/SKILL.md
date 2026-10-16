@@ -10,9 +10,9 @@ Use this skill to find and read the right articles from the REDCap knowledge bas
 
 ## Locating the KB
 
-The KB lives at `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\`. Search only `kb\`, never `kb (YAML)\`, which holds generated duplicates of the same articles. If the folder is not accessible, request access to `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG` for this session.
+Locate the REDCap_KB_RAG repo: use the current working directory if it contains `kb/` and `meta/` folders; otherwise ask the user where their copy of the repo is and request access to it for this session. The KB lives in the repo's `kb/` folder. Search only `kb/`, never `kb (YAML)/`, which holds generated duplicates of the same articles. All paths below are relative to the repo root.
 
-Navigation files live in `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\meta\`:
+Navigation files live in the repo's `meta/` folder:
 
 | File | Use it for |
 |---|---|
@@ -43,7 +43,7 @@ Before searching, identify: What REDCap feature or concept is this about? Which 
 1. Read `meta/KB-INDEX.md` and pick candidates by ID and title.
 2. If nothing obvious matches, check `meta/KB-KEYWORD-MAP.md` for the user's phrasing.
 3. Still unsure? Grep the **Synonyms** row of the articles — every article has one listing alternative search phrasings:
-   `Grep pattern="<phrase>" path="C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb" glob="RC-*.md" -i`
+   `Grep pattern="<phrase>" path="<repo>/kb" glob="RC-*.md" -i`
 
 ### Step 3 — Select articles to read
 

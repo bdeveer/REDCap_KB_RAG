@@ -30,10 +30,10 @@ Write the output directly as a markdown file using the Write tool.
 
 ## Step 0: Verify repo access (run before anything else)
 
-Check that the KB repo is accessible. The repo is at `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG` and the KB articles are in its `kb\` folder.
+Check that the KB repo is accessible. Locate the REDCap_KB_RAG repo: use the current working directory if it contains `kb/` and `meta/` folders; otherwise ask the user where their copy of the repo is and request access to it for this session. The KB articles are in its `kb/` folder.
 
 - **If accessible** → proceed.
-- **If not accessible** → request access to `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG` for this session. Do not proceed until access is confirmed.
+- **If not accessible** → ask the user for the repo location and request access to it for this session. Do not proceed until access is confirmed.
 
 All repo paths below are relative to that folder.
 

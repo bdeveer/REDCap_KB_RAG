@@ -6,7 +6,7 @@ description: |
 
 # REDCap Data Dictionary Skill
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 **Working from a live project.** If the user names a project instead of attaching a CSV, pull the DD with `export_metadata`, save the JSON to a file and run `parse_dd.py` on it — same output as for a CSV.
 

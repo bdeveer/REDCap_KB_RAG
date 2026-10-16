@@ -6,7 +6,7 @@ description: |
 
 # REDCap Data Dictionary Fixer
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 **Working from a live project.** If the user names a project instead of attaching a CSV, pull the DD with `export_metadata`, save the JSON to a file and run the fixer on it (the output CSV uses the standard upload headers). Hand the fixed CSV to the user to upload on the project's **Data Dictionary** page. Do not call `import_metadata` yourself unless the user asks for it on a non-production connector — it replaces the entire data dictionary.
 

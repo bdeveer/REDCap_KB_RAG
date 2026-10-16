@@ -18,7 +18,7 @@ description: >
 
 # REDCap Project Analyzer
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 This skill reads a REDCap project's design through the REDCap MCP connector tools and produces a
 structured analysis report flagging design issues, logic errors, and structural antipatterns.
@@ -260,7 +260,7 @@ If the project has 20+ text fields and none have `text_validation_type_or_show_s
 
 ### 4e. Style convention checks
 
-Read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\kb\RC-DSGN-01_REDCap-Project-Design-Best-Practices.md` before running these checks — it is the authoritative
+Read `kb/RC-DSGN-01_REDCap-Project-Design-Best-Practices.md` in the REDCap_KB_RAG repo before running these checks — it is the authoritative
 source for each rule. These are detectable from the data dictionary export.
 
 **Notes fields with wrong alignment (RC-DSGN-01 §2.1)**

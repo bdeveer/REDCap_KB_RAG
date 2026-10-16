@@ -2,27 +2,21 @@
 name: redcap-syntax
 description: >
   Write, fix, or explain REDCap expressions — branching logic, calculated fields, @CALCTEXT,
-  @CALCDATE, and the smart variables, instance qualifiers, and cross-event references used inside
-  them. Three jobs: (1) WRITE a new expression from a described goal or complete a partial one;
-  (2) FIX/diagnose an expression that isn't working, returns blank, shows unexpectedly, or contains
-  a mistake — separating syntax errors from reference errors (field, event, designation, repeat
-  setup); (3) EXPLAIN/read an existing expression — what it does, what type it is, what it returns.
-  Triggers include: "write me a formula", "how do I calculate X", "I need branching logic that
-  shows Y when Z", "build a calc field for", "create an expression", "write a @CALCTEXT", "help me
-  make a calculated field", "what would the syntax be for", "can you write the logic for", "how
-  would I express this in REDCap", "fix this", "what's wrong with", "this isn't working", "my
-  calculation is blank", "branching logic not showing", "can you check this expression", "is this
-  valid REDCap syntax?", "what does this expression mean?", "why is my calculation blank?", "what's
-  the difference between a calc field and @CALCTEXT?", or any pasted snippet with square-bracket
-  variables, REDCap operators, or @CALCTEXT/@CALCDATE syntax. Use it even if the expression looks
-  almost right. Do NOT use for: repairing a whole data dictionary CSV (use redcap-dd-fixer),
-  building a data dictionary (use redcap-dd-builder), or KB lookups unrelated to a specific
-  expression (use kb-search).
+  @CALCDATE, smart variables, instance qualifiers, and cross-event references. WRITE a new
+  expression from a goal or complete a partial one; FIX one that isn't working, returns blank, or
+  shows unexpectedly (separating syntax errors from reference errors); EXPLAIN what an existing
+  expression does and returns. Triggers: "write me a formula", "how do I calculate X", "branching
+  logic that shows Y when Z", "write a @CALCTEXT", "fix this", "what's wrong with", "my
+  calculation is blank", "branching logic not showing", "is this valid REDCap syntax?", "what
+  does this expression mean?", or any pasted snippet with square-bracket variables or
+  @CALCTEXT/@CALCDATE. Use even if the expression looks almost right. Not for repairing a whole
+  data dictionary (redcap-dd-fixer), building one (redcap-dd-builder), or general KB lookups
+  (kb-search).
 ---
 
 # REDCap Syntax
 
-> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG\claude skills\CONNECTOR-RULES.md` and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
+> **REDCap connectors:** before calling any REDCap MCP tool from this skill, read `references/CONNECTOR-RULES.md` (bundled with this skill; the source copy is `claude skills/CONNECTOR-RULES.md` in the REDCap_KB_RAG repo) and follow it — confirm the connector and PID, flag production, stay read-only unless the user explicitly confirms a write on a non-production connector, and never expose the API token.
 
 One skill for every REDCap expression task. Pick the mode first, then read only the references
 that mode needs.

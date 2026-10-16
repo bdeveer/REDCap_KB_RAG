@@ -12,10 +12,10 @@ This skill routes new information into the right place in the knowledge base —
 
 ## Step 0: Verify repo access
 
-The repo is at `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG` and the KB articles are in its `kb\` folder.
+Locate the REDCap_KB_RAG repo: use the current working directory if it contains `kb/` and `meta/` folders; otherwise ask the user where their copy of the repo is and request access to it for this session. The KB articles are in its `kb/` folder. All repo paths below are relative to that folder.
 
 - **If accessible** → proceed.
-- **If not accessible** → request access to `C:\Users\bd593\Documents\RCRAG\REDCap_KB_RAG` for this session. Do not proceed until access is confirmed.
+- **If not accessible** → ask the user for the repo location and request access to it for this session. Do not proceed until access is confirmed.
 
 ---
 
