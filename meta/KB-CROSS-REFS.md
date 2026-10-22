@@ -1619,6 +1619,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-03 — Import Records API
 - RC-API-06 — Export Field Names API
 - RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-API-04 — Delete Records API
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-02 — Data Export: Export Formats
@@ -1635,6 +1636,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-38 — Export Reports API
 - RC-API-43 — Export Survey Participants API
 - RC-API-51 — Export Repeating Instruments and Events API
+- RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-02 — Data Export: Export Formats
 - RC-IMP-01 — Data Import Overview
@@ -2953,12 +2955,14 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-03 — Branching Logic: Combining Statements
 - RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers
+- RC-API-02 — Export Records API
 - RC-PIPE-09 — Smart Variables: Event & Arm
 - RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-FD-03 — Data Dictionary
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
+- RC-API-02 — Export Records API
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-FDL-01 — Form Display Logic
 - RC-LONG-02 — Repeated Instruments & Events Setup

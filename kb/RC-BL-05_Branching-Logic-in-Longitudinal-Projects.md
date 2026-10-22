@@ -7,13 +7,13 @@
 | **Domain** | Branching Logic |
 | **Applies To** | Longitudinal REDCap projects; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §3–§8 live-tested in a 2-arm sandbox project (Data Dictionary import, data entry forms, event rename); repeating events, Survey Queue/ASI/alert use and the Missing Data Code caveat not re-tested; LTS line not re-tested, last changelog review v17.3.18 (LTS) |
 | **Prerequisite** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) |
-| **Synonyms** | branching logic across events; how do i reference a field from another event in branching logic; cross-event branching logic syntax; branching logic in longitudinal projects; show a field based on data from a previous visit; using event names in branching logic; branching logic with arms and repeating instruments; reference an earlier event in logic |
+| **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) |
+| **Synonyms** | branching logic across events; how do i reference a field from another event in branching logic; cross-event branching logic syntax; branching logic in longitudinal projects; show a field based on data from a previous visit; using event names in branching logic; branching logic with arms and repeating instruments; reference an earlier event in logic; errors exist on this form after renaming an event; hidden fields showing after event rename |
 
 ---
 
@@ -88,7 +88,7 @@ The two bracket pairs are written immediately adjacent — no space, no operator
 
 The unique event name is visible in the **Define My Events** table in Project Setup. It appears in the **Unique Event Name** column next to each event. It is auto-generated from the event label and arm number and cannot be manually overridden.
 
-> **Important:** If you rename an event label, the unique event name changes automatically. Any branching logic that references the old unique event name will silently stop working. Always audit all logic after renaming an event.
+> **Important:** If you rename an event label, the unique event name changes automatically (e.g. `baseline_arm_1` → `screening_arm_1`), but logic that references the old name is **not** updated. On data entry forms REDCap then shows an **ERRORS EXIST ON THIS FORM!** dialog listing the affected fields, and those fields are **displayed regardless of their logic** — questions meant to be hidden become visible. In reports, alerts and other filters the old reference fails silently. Always audit all logic after renaming an event.
 
 ---
 
@@ -263,7 +263,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Q: What happens if I rename an event after writing cross-event logic?**
 
-**A:** Renaming an event changes its unique event name. Any branching logic that references the old name will stop evaluating correctly — the reference will return blank as if the event doesn't exist. REDCap will not flag the broken reference automatically. Always audit all logic statements that reference an event's unique name before and after renaming.
+**A:** Renaming an event changes its unique event name, and REDCap does not update logic that uses the old name. On data entry forms, every field whose branching logic references the old name triggers an **ERRORS EXIST ON THIS FORM!** dialog when the form opens, and those fields are shown regardless of their logic. Report filters and other server-side uses of the logic fail silently instead (for example, a filter on the old name returns no records). Nothing warns you at the moment of renaming, so audit all logic statements that reference an event's unique name before and after renaming.
 
 **Q: Can I reference a field from a different arm in my logic?**
 
@@ -281,6 +281,8 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **A:** Yes. The same cross-event syntax works in any REDCap feature that uses the logic language — Survey Queue conditions, Automated Survey Invitation logic, alert conditions, and reports. The syntax is identical.
 
+The evaluation context is not always identical, though. A form evaluates logic for the event it is open in; a report or API filter (`filterLogic`) returns the rows of the event the logic references. `[baseline_arm_1][enrolled]='1'` used as a filter returns each matching record's **baseline** row, not its follow-up rows. See [RC-API-02 — Export Records API](RC-API-02_Export-Records.md).
+
 ---
 
 ## 8. Common Mistakes & Gotchas
@@ -289,7 +291,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Testing for zero instead of blank on unsaved cross-event fields.** If a referenced field in another event has never been saved, it returns `''` (empty string), not `0`. A condition like `[baseline_arm_1][score]<>0` will evaluate to true for unsaved fields — because blank does not equal zero. Use `<>''` to test whether a cross-event field has been filled in at all.
 
-**Breaking logic by renaming events.** Renaming an event label changes its unique event name silently. REDCap will not warn you that existing logic references will break. After renaming an event, search the Data Dictionary's Branching Logic column for the old unique event name and update every reference before saving the project.
+**Breaking logic by renaming events.** Renaming an event label changes its unique event name without warning, and existing logic keeps the old name. Forms then show an error dialog and display the affected fields unconditionally — hidden questions appear — while reports and alerts that use the old name silently match nothing. After renaming an event, search the Data Dictionary's Branching Logic column for the old unique event name and update every reference before saving the project.
 
 **Referencing arm-specific events from instruments shared across arms.** An instrument designated to both arms that contains `[baseline_arm_1][field]` will work for Arm 1 records but return blank for Arm 2 records. This can cause fields to appear or disappear unexpectedly depending on the record's arm assignment. Validate cross-event logic against test records in every arm where the instrument appears.
 
@@ -308,3 +310,4 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 - [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (parallel cross-event syntax for piping)
 - [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) (arm and event smart variables for arm-aware logic)
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (bulk editing of branching logic — useful for auditing cross-event references after an event rename)
+- [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (`filterLogic` evaluates cross-event logic differently from forms)

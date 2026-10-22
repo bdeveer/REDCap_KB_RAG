@@ -6,10 +6,11 @@ applies_to:
 - All REDCap projects
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. `filterLogic` behaviour (invalid logic, longitudinal projects)
+  live-tested on v17.5.6 (Standard)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.3'
+version: '1.4'
 last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
@@ -21,6 +22,8 @@ related:
   title: Export Field Names API
 - id: RC-API-07
   title: Export Metadata (Data Dictionary) API
+- id: RC-BL-05
+  title: Branching Logic — Longitudinal Projects
 tags:
 - api
 synonyms:
@@ -32,6 +35,8 @@ synonyms:
 - get all records from a project using the api
 - export raw values or labels via records api
 - api method to retrieve entered data
+- api filterlogic returns all records
+- filterlogic with events returns nothing in longitudinal export
 ---
 
 # 1. Overview
@@ -61,7 +66,7 @@ When to use this method: When you need to read record data from REDCap in an aut
 | `exportCheckboxLabel` | Optional | `true` or `false` (default). Only applies when `rawOrLabel=label` and `type=flat`. If `true`, checked checkboxes export as their option label; unchecked export as blank. If `false`, all checkboxes export as `'Checked'` or `'Unchecked'`. Ignored for EAV type (EAV always exports checkbox labels, or 0/1 for raw). |
 | `exportSurveyFields` | Optional | `true` or `false` (default). If `true`, includes the survey identifier field (`redcap_survey_identifier`) and survey timestamp fields. These pseudo-fields are ignored if imported back via API. |
 | `exportDataAccessGroups` | Optional | `true` or `false` (default). If `true`, includes the `redcap_data_access_group` column. Only effective when the token owner is not in a DAG; otherwise reverts to `false`. |
-| `filterLogic` | Optional | A logic string (e.g., `[age] > 30`) to filter returned records. Only records where the logic evaluates as TRUE are returned. Invalid syntax returns an error. |
+| `filterLogic` | Optional | A logic string (e.g., `[age] > 30`) to filter returned records. Only records where the logic evaluates as TRUE are returned. Invalid logic does **not** return an error — it returns every record (see Gotchas). In longitudinal projects the filter is not evaluated per event the way branching logic is (see Gotchas). |
 | `dateRangeBegin` | Optional | Return only records created or modified **after** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, no lower bound is applied. |
 | `dateRangeEnd` | Optional | Return only records created or modified **before** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, uses the current server time. |
 | `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
@@ -235,6 +240,10 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **A:** Use the `events` parameter. For example, `'events': ['visit_1_arm_1', 'visit_2_arm_1']` exports only those events. Omitting `events` exports all events.
 
+**Q: Why does my `filterLogic` return nothing when I combine it with `events` in a longitudinal project?**
+
+**A:** Because the filter returns the rows of the event the logic references, not of the event you asked for. `filterLogic=[baseline_arm_1][consent]='1'` with `events=followup_arm_1` returns no rows, even for consented records. Filter without `events` to get the matching records, then export the follow-up data for those record IDs with the `records` parameter.
+
 **Q: What happens if I request a field that doesn't exist?**
 
 **A:** The field is silently ignored. The API will not return an error; it simply will not include that field in the response.
@@ -257,7 +266,9 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **Exporting label format without understanding encoded values.** When you set `rawOrLabel` to `'label'`, choice fields are converted to their text labels. If your downstream system expects numeric codes, you must decode the labels back to raw values or export in raw format instead.
 
-**`filterLogic` errors return an API error, not empty results.** Unlike requesting a non-existent field (which is silently ignored), passing malformed filter logic causes the API to return an error response. Always validate your logic string before using it in production.
+**Invalid `filterLogic` returns every record, not an error.** Malformed logic — a missing parenthesis, a capitalized variable such as `[Age]`, curly brackets, unquoted text, `not()`, a comment after the logic on the same line, even an empty or nonsense string — returns HTTP 200 with **all records**, exactly as if no filter had been passed. A reference to a variable that does not exist returns no records instead. Either way there is no error to catch, so a typo silently changes what your script processes. Validate the logic first (for example by saving it as branching logic in the Online Designer, or importing it in a Data Dictionary, both of which reject syntax errors) and sanity-check the record count of filtered exports.
+
+**In longitudinal projects, `filterLogic` does not evaluate logic per event.** Branching logic on a form is evaluated in the context of the current event; `filterLogic` is not. When the logic references another event explicitly — `[baseline_arm_1][enrolled]='1'` — the export returns that event's rows (here the `baseline_arm_1` row of each matching record), not the rows of the events where the logic would be true. Combining it with `events` for a different event (e.g. `events=followup_arm_1`) therefore returns nothing. It can even return a row for an event in which the record has no data. Unprefixed fields are evaluated within each event's own row. Use `filterLogic` to decide **which records** match; to work out per-event results (what a form would show), export the data and evaluate in your own code. See [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) for how the same logic behaves on forms.
 
 **`exportDataAccessGroups` is silently overridden for DAG members.** If the token belongs to a user who is assigned to a DAG, this parameter is ignored and the column is not included — even if you set it to `true`. Only tokens from users outside any DAG will include the DAG column.
 
@@ -280,3 +291,4 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 - [RC-EXPRT-02 — Data Export: Export Formats](RC-EXPRT-02_Data-Export-Export-Formats.md) (format reference for CSV, SPSS, SAS, R, Stata)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (how DAGs filter exported data)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (repeat instance handling in exports)
+- [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) (cross-event logic on forms, versus `filterLogic`)
