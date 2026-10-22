@@ -7,13 +7,13 @@
 | **Domain** | Calculations & Special Functions |
 | **Applies To** | All REDCap project types; functions are available wherever REDCap logic or calculations are used |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Blank handling in `sum()` and `+` tested on v16.0.49 (LTS), 2026-09 |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions; data entry form and API import compared); blank handling in `sum()` and `+` also tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-09 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
-| **Synonyms** | list of redcap special functions; how do i use datediff in redcap; calculate the difference between two dates; redcap functions for logic and calculations; round sum and if functions in calc fields; what functions can i use in calculated fields; text and date manipulation functions; redcap built-in function reference |
+| **Synonyms** | list of redcap special functions; how do i use datediff in redcap; calculate the difference between two dates; redcap functions for logic and calculations; round sum and if functions in calc fields; what functions can i use in calculated fields; text and date manipulation functions; redcap built-in function reference; plus sign calculation blank when one field is empty; ismissingcode wrong after data import |
 
 ---
 
@@ -147,6 +147,8 @@ Extract individual components from a date or datetime field:
 
 You may use `'now'` or `'today'` (in quotes) instead of a field variable in any of these functions.
 
+`month()` and `day()` return **zero-padded** values — `01` for January, `05` for the 5th — and a calculated field stores them that way. Numeric comparisons (`month([visit_date]) = 1`) still work; a text comparison against `'1'` does not.
+
 ---
 
 ### 5.5 Comparing Against Blank Values — Version Caveats
@@ -189,7 +191,7 @@ If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole nu
 
 > **Important — `random()` is not a randomization tool.** It returns a fresh value each time the calculation is evaluated, and calculated fields re-evaluate whenever their inputs change or the form is re-saved. It is unsuitable for treatment allocation or anything requiring a stable, auditable assignment — use the Randomization module for that, see [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md).
 
-> **Important:** For exponents, the surrounding parentheses on both the base and the exponent are required. `4^3` will not work — it must be `(4)^(3)`.
+> **Important:** For exponents, the surrounding parentheses on both the base and the exponent are required. `4^3` or `[n]^3` is rejected as a **syntax error** by the Online Designer and the Data Dictionary upload — it must be `(4)^(3)`.
 
 ### 6.3 Aggregate Functions
 
@@ -202,14 +204,22 @@ These functions operate on a set of two or more values. Blank values are always 
 | `mean(n1, n2, ...)` | Average of the set | `mean([score1], [score2], [score3])` |
 | `median(n1, n2, ...)` | Median of the set | `median([score1], [score2], [score3])` |
 | `sum(n1, n2, ...)` | Sum of the set | `sum([score1], [score2], [score3])` |
-| `stdev(n1, n2, ...)` | Standard deviation of the set | `stdev([score1], [score2], [score3])` |
+| `stdev(n1, n2, ...)` | **Sample** standard deviation of the set (divides by n−1) | `stdev([score1], [score2], [score3])` |
 
 There is no limit to the number of values that can be passed into these functions.
 
-> **sum() vs. the + operator:** `sum()` skips blank values and totals the rest. If **every** input is blank, `sum()` returns **blank** (since 16.0.41 LTS; earlier versions returned 0). The `+` operator treats blank values as 0: `[a]+[b]` returns the filled value when one input is blank, and 0 when both are blank. Neither one waits for all inputs to be filled in. If a total must stay blank until every input has a value, test for blanks explicitly:
-> `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`
+> **sum() vs. the + operator:** `sum()` skips blank values and totals the rest. If **every** input is blank, `sum()` returns **blank** (since 16.0.41 LTS; earlier versions returned 0). This holds on every version tested.
 >
-> Tested on Yale 16.0.49 LTS (2026-09-28) on data entry, data import and Data Quality rule H, with identical results in all three. Older documentation, including earlier versions of this article, said `+` returns blank if any operand is blank. That does not hold on current versions.
+> **How `+` handles a blank input depends on the version** — test it on yours before relying on it:
+>
+> | Version tested | `[a]+[b]+[c]` with one input blank | all inputs blank | Where tested |
+> |---|---|---|---|
+> | 16.0.49 LTS (2026-09-28) | partial total (blank counted as 0) | 0 | data entry, data import, Data Quality rule H — identical |
+> | 17.5.6 Standard (2026-10-22) | **blank** | **blank** | data entry form and API import — identical |
+>
+> Because the result differs between versions, don't write logic that depends on either behaviour. Use `sum()` when partial totals are wanted, and an explicit guard when the total must stay blank until every input has a value:
+> `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`
+> The guard gives the same result on both versions.
 
 ### 6.4 Type-Checking Functions
 
@@ -232,6 +242,8 @@ These functions are only meaningful in projects where Missing Data Codes have be
 | `hasmissingcode(value, 'codes')` | The value is a Missing Data Code AND matches one of the codes listed (comma-delimited string in the second parameter) |
 
 **Example:** `hasmissingcode([age], 'NASK,NI,UNK')` returns true if `[age]` is one of those three specific codes.
+
+> **Data imports can store the wrong result (observed on 17.5.6 Standard).** On a data entry form these functions recognise a Missing Data Code correctly. When the record is created by a **data import** (API or Data Import Tool), the calculated or `@CALCTEXT` value stored for `ismissingcode()`, `isblankormissingcode()` and `hasmissingcode()` was **false** for a value that is a defined code. Blank values were handled correctly. The stored value is corrected when the form is opened and saved. If records with Missing Data Codes are imported, check the stored results (or re-save / recalculate) before relying on them.
 
 ---
 
@@ -305,7 +317,7 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Q: What's the difference between sum() and just adding variables together with +?**
 
-**A:** They differ only when inputs are blank. `sum([a], [b], [c])` skips blanks and totals the rest, and returns blank if all three are blank. `[a]+[b]+[c]` treats blanks as 0, so it always returns a number, and returns 0 if all three are blank. Use `sum()` when you want an all-blank result to stay blank rather than show a 0. Neither one waits for all inputs to be filled in; for that, wrap the calculation in `if()` with `isblankormissingcode()` checks (see §6.3).
+**A:** They differ only when inputs are blank. `sum([a], [b], [c])` skips blanks and totals the rest, and returns blank if all three are blank. What `[a]+[b]+[c]` does with a blank depends on the version: on 16.0.49 LTS it treated blanks as 0 (partial total; 0 when all are blank), on 17.5.6 Standard it returns blank as soon as any input is blank (see the table in §6.3). Use `sum()` when you want a total from whatever is filled in. When the total must stay blank until every input has a value, wrap the calculation in `if()` with `isblankormissingcode()` checks — that works the same on every version.
 
 **Q: After our upgrade, some sum() calculations changed from 0 to blank. Why?**
 
@@ -331,13 +343,13 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 ## 11. Common Mistakes & Gotchas
 
-**Forgetting parentheses around both the base and exponent.** For exponentiation, `(base)^(exponent)` is required. Writing `4^3` without the surrounding parentheses will not calculate correctly. Both the base and the exponent must each be wrapped in their own parentheses: `(4)^(3)`.
+**Forgetting parentheses around both the base and exponent.** For exponentiation, `(base)^(exponent)` is required. Writing `4^3` without the surrounding parentheses is a syntax error, so the equation cannot be saved. Both the base and the exponent must each be wrapped in their own parentheses: `(4)^(3)`.
 
-**Using `:label` as a function parameter.** It is not possible to pass the display label of a multiple choice field into a Special Function using the `:label` modifier (e.g., `contains([field:label], 'value')`). Only the raw stored value of a field can be passed into functions. Use the field variable directly without any modifier.
+**Using `:label` as a function parameter.** It is not possible to pass the display label of a multiple choice field into a Special Function using the `:label` modifier (e.g., `contains([field:label], 'value')`) — the Online Designer and Data Dictionary upload reject it as a syntax error. Only the raw stored value of a field can be passed into functions. Use the field variable directly without any modifier.
 
 **Expecting blank fields to affect aggregate results.** `sum()`, `mean()`, `min()`, `max()`, `median()`, and `stdev()` all silently skip blank values. If a field is unanswered, it is excluded from the calculation entirely — it does not count as zero. If zero is the intended value for unanswered fields, that must be handled separately (e.g., using `if()`). For `sum()` specifically: if every input is blank, the result is blank, not 0 (16.0.41 LTS and later).
 
-**Using + to keep a total blank until all inputs are filled in.** On current versions `+` treats blank values as 0, so `[var1]+[var2]+[var3]` returns a partial total when some inputs are blank and 0 when all are blank. It does not stay blank. If the total must stay blank until every input has a value, wrap it: `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`.
+**Relying on what + does with a blank input.** The behaviour differs by version: 16.0.49 LTS treated blanks as 0 (partial total, or 0 when all are blank); 17.5.6 Standard returns blank as soon as any input is blank. Logic that depends on either result can change meaning after an upgrade or when a project moves between servers. Use `sum()` for partial totals, and wrap the total when it must stay blank until every input has a value: `if(isblankormissingcode([var1]) or isblankormissingcode([var2]) or isblankormissingcode([var3]), "", [var1]+[var2]+[var3])`.
 
 **Relying on how an older version handled blank values.** Logic built around a blank-handling result, such as code to tell an all-blank `sum()` (formerly 0) apart from a real 0, can silently change results after an upgrade. Test for blanks explicitly with `isblankormissingcode()` instead of relying on what a function returns for blank inputs.
 
