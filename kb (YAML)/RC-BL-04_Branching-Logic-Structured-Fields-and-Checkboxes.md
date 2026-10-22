@@ -6,12 +6,14 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §4–§7 live-tested in a sandbox project
+  (Online Designer validator, Data Dictionary upload, server-side logic, data entry
+  form); file upload/signature (§4.2) not tested; LTS line not re-tested, last changelog
+  review v17.3.7 (LTS)
 prerequisites:
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -32,6 +34,8 @@ synonyms:
 - checkbox sub-variable syntax
 - show field when a specific checkbox is ticked
 - branching logic for multiple choice fields
+- checkbox logic works on form but not in report
+- test for unchecked checkbox option
 ---
 
 # 1. Overview
@@ -150,11 +154,14 @@ you can use them in logic to check whether a file has been attached or a
 signature captured:
 
 ```
-[consent_form]<>'' // True when a file has been uploaded  
+// True when a file has been uploaded
+[consent_form]<>''
                                                                  
-[signature]<>'' // True when a signature has been captured 
+// True when a signature has been captured
+[signature]<>''
                                                                  
-[consent_form]='' // True when no file has been uploaded yet
+// True when no file has been uploaded yet
+[consent_form]=''
 ```
 
 You cannot compare the file contents — only the presence or absence of
@@ -201,11 +208,14 @@ Format: [variable_name(raw_value)]
                                                               
 Examples:                                                     
                                                               
-[conditions(1)]='1' // Is the Diabetes option checked?    
+// Is the Diabetes option checked?
+[conditions(1)]='1'
                                                               
-[conditions(2)]='1' // Is the Hypertension option checked?
+// Is the Hypertension option checked?
+[conditions(2)]='1'
                                                               
-[conditions(3)]='0' // Is the Cancer option NOT checked?  
+// Is the Cancer option NOT checked?
+[conditions(3)]='0'
 ```
 
 ## 5.3 Comparing Radio vs. Checkbox Syntax
@@ -291,6 +301,10 @@ selected'. Each option is a separate binary sub-variable. To check
 whether any option is selected, you must OR together checks on each
 sub-variable: \[field(1)\]='1' or \[field(2)\]='1' etc.
 
+REDCap does not warn you about this mistake: \[field\]\<\>'' passes the
+logic validator and Data Dictionary upload, but it is never true, even
+when options are checked.
+
 **Q: I changed a radio button field to a checkbox. Now my branching
 logic is broken. How do I fix it?**
 
@@ -321,9 +335,13 @@ are affected.
     carefully before data collection begins.
 
 - Treating checkbox 'unchecked' as empty: an unchecked checkbox
-    option stores 0, not '' (empty). Testing \[field(1)\]='' will
-    not behave as expected. Use \[field(1)\]='0' to test for
-    unchecked.
+    option stores 0, not '' (empty). Testing \[field(1)\]='' gives
+    different answers in different places: on a data entry form it is
+    true for every unchecked option, but in reports, alerts, survey
+    invitations and API filters it is never true. The same logic can
+    therefore show a field on the form while excluding the record from a
+    report. Use \[field(1)\]='0' to test for unchecked; it behaves the
+    same everywhere, including on records where the form was never saved.
 
 - Assuming checkbox logic mirrors radio logic: the most common mistake
     for users familiar with radio buttons is writing checkbox logic

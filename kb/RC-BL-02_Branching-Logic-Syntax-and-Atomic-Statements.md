@@ -7,13 +7,13 @@
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §3–§8 live-tested in a sandbox project (Online Designer validator, Data Dictionary upload, server-side logic, data entry form); LTS line not re-tested, last changelog review v17.3.18 (LTS) |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Synonyms** | how do i write a branching logic statement; redcap logic syntax operators; what operators can i use in branching logic; how to reference a field in branching logic; single condition logic statement; branching logic brackets and quotes; greater than less than equals in redcap logic; how to write a simple conditional expression; how do i add comments to branching logic; annotate logic with // or # comments |
+| **Synonyms** | how do i write a branching logic statement; redcap logic syntax operators; what operators can i use in branching logic; how to reference a field in branching logic; single condition logic statement; branching logic brackets and quotes; greater than less than equals in redcap logic; how to write a simple conditional expression; how do i add comments to branching logic; annotate logic with // or # comments; why is my branching logic comment a syntax error; can i use != in redcap branching logic; compare two fields only when both are filled in |
 
 ---
 
@@ -91,23 +91,31 @@ They compare a variable to a value and return true or false.
 | < | Less than | [bmi]<25 |
 | <= | Less than or equal to | [bmi]<=25 |
 
+`!=` is also accepted as "not equal to" and behaves exactly like `<>`, including being true when the field is blank. `<>` remains the conventional form in REDCap documentation.
+
 ### 3.3 Quotation Marks
 
 Any comparison value that is not a number must be enclosed in quotation
 marks. Both single and double quotes are accepted.
 
 ```
-[fav_color]="green" // double quotes               
+// double quotes
+[fav_color]="green"
                                                         
-[fav_color]='green' // single quotes — equivalent
+// single quotes — equivalent
+[fav_color]='green'
                                                         
-[email]<>"" // empty string check (double quotes) 
+// empty string check (double quotes)
+[email]<>""
                                                         
-[email]<>'' // empty string check (single quotes) 
+// empty string check (single quotes)
+[email]<>''
 ```
 
 
 > **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** In some cases, a comparison value or label containing an **apostrophe or quotation mark** — `[site]="O'Brien Clinic"` — generated invalid JavaScript on the form or survey, so the branching logic or calculation silently stopped working there. REDCap now escapes these characters. On older versions, avoid quote characters inside comparison values; compare against a coded value instead of label text.
+
+> **Note:** Even on current versions, a Data Dictionary upload rejects logic like `[site]="O'Brien Clinic"` as a syntax error, although the Online Designer accepts it and it evaluates correctly. If logic will travel through the Data Dictionary, compare against a coded value instead.
 
 > **Best Practice:** If you plan to edit your logic via the Data Dictionary in Excel or another spreadsheet program, use single quotes throughout. Excel interprets double quotes as part of its own formula syntax, which can corrupt logic statements during CSV import/export.
 
@@ -145,18 +153,22 @@ control evaluation order. See [RC-BL-03 — Branching Logic: Combining Statement
 
 ### 3.6 Inline Comments
 
-Logic can carry comments. Text from `//` or `#` to the end of the line is ignored when the logic is evaluated, which lets you annotate long logic in the Logic Editor:
+Logic can carry comments, but **only on a line of their own**. A line that starts with `//` or `#` is ignored when the logic is evaluated, which lets you annotate long logic in the Logic Editor:
 
 ```
-[consent]='1'          // consented
-and [age]>=18          // adult
-and [site]<>''         # site assigned
+// consented adults with a site assigned
+[consent]='1'
+and [age]>=18
+# site is filled in
+and [site]<>''
 ```
+
+A comment placed **after logic on the same line** — `[age]>=18 // adult` — is a syntax error. The Online Designer refuses to save it and a Data Dictionary upload rejects it, with either `//` or `#`. Used as a report filter or an API `filterLogic` value, the same logic fails silently and matches every record.
 
 Comments are worth using on any logic someone else will maintain, but they have the longest defect history of any logic feature — a run of fixes from 13.6.1 to 17.5.4 covering comments in calculations, Form Display Logic, `@IF`, alerts and Data Dictionary uploads. Two rules keep them safe on any version:
 
+- Put every comment on its own line, never after logic.
 - Avoid apostrophes and quotation marks inside comments.
-- Don't make a line consist only of a comment where it would be the whole of the logic.
 
 > **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Logic or calculations containing inline comments could fail to evaluate in some places and return an error. Alert logic with comment lines could fail to trigger the alert (fixed earlier, in 17.5.1 Standard / 17.3.14 LTS). If logic that works without its comments fails with them on an older instance, remove the comments.
 
@@ -237,6 +249,10 @@ The field is shown when the value of \[email\_primary\] exactly matches
 the value of \[email\_secondary\]. Useful for validating that two fields
 have the same entry (e.g., email confirmation).
 
+Two blank fields also count as a match, so this statement is true before
+either email has been entered. To match only real entries, add a blank
+check: \[email\_primary\]=\[email\_secondary\] and \[email\_primary\]\<\>''.
+
 
 > **Important:** REDCap validates that your logic syntax is correct (valid operators, properly closed brackets, known variable names), but it does not validate whether the logic makes sense for your study. A statement like [age]=999 is syntactically valid but will never match any realistic data. Always test your logic against real or realistic test data.
 
@@ -274,11 +290,11 @@ consistent and avoids ambiguity.
 
 **A:** Yes. Variable names in REDCap are always lowercase (REDCap
 enforces this at field creation), and logic does not fold case to
-match them, so a capitalized reference matches no field at all. The
-Online Designer's logic editor flags `[Age]` as an error. Logic that
-reaches the project some other way, such as a Data Dictionary import,
-will instead throw an error on the data entry form when REDCap tries
-to evaluate it. Text string comparison values are case-sensitive too.
+match them, so a capitalized reference matches no field at all. Both
+the Online Designer's logic editor and a Data Dictionary upload reject
+`[Age]` as a syntax error, so it cannot be saved. Used as a report
+filter or API `filterLogic`, it fails silently and matches every
+record. Text string comparison values are case-sensitive too.
 \[status\]='Enrolled' will not match a stored value of 'enrolled'
 (lowercase e).
 
@@ -318,6 +334,14 @@ names against the Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) befor
 - Treating empty as zero: an empty field and a field containing 0 are
     different states. Test for them separately when both matter to your
     logic.
+
+- **Putting a comment after logic on the same line:** `[age]>=18 // adult`
+    is a syntax error, so the Online Designer and Data Dictionary upload
+    reject it. Move the comment to its own line above or below the logic.
+
+- **Forgetting that two blanks are equal:** `[email1]=[email2]` is true
+    while both fields are still empty. Add `and [email1]<>''` when only
+    real matches should count.
 
 - Using curly brackets for variable references: curly brackets { } are
     for Field Embedding only. Variable references always use square

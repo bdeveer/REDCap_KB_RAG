@@ -7,9 +7,9 @@
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. §7 case-sensitivity live-tested on v17.5.6 (Standard) |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) |
@@ -93,7 +93,7 @@ These defects are worth knowing because each produced a **wrong result rather th
 
 > **Version caveat (17.3.1–17.4.1 Standard / 17.3.5–17.3.7 LTS):** Logic containing more than roughly **200–300 `and`/`or` clauses** could fail to evaluate and **always return True** — so a field meant to be hidden was shown, or an alert or filter matched every record. Emerged in 17.3.1 Standard and was inherited by the 17.3.x LTS line; fixed in 17.4.2 Standard / 17.3.8 LTS, which handles far longer logic. Very long logic is usually generated (for example, a long list of eligible codes); on an affected version, split it or replace it with a lookup field.
 
-> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Several client-side logic defects were fixed together. On forms and surveys: logic or calculations with **inline comments** could fail to evaluate in some situations; static text or label values containing an **apostrophe or quotation mark** could produce invalid JavaScript, so the logic silently did nothing; and on **repeating events**, integer and number fields could have **`0` treated as blank** (and blanks as non-blank). See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3, §3.6 and §6.
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Several client-side logic defects were fixed together. On forms and surveys: logic or calculations with **inline comments** could fail to evaluate in some situations; static text or label values containing an **apostrophe or quotation mark** could produce invalid JavaScript, so the logic silently did nothing; and on **repeating events**, integer and number fields could have **`0` treated as blank** (and blanks as non-blank). See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3, §3.6 and §6. Independent of version, comments are only accepted on a line of their own; a comment after logic on the same line is a syntax error ([RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.6).
 
 > **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** Logic or calculations referencing a **date or datetime field that has a Missing Data Code**, with an X-instance smart variable appended (such as `[visit_date][last-instance]`), could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was not affected. See [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) §5.3.
 
@@ -165,7 +165,7 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 **A:** Yes, in both halves of a comparison.
 
-- **Variable names are case-sensitive.** REDCap stores every variable name in lowercase, so a capitalized reference matches nothing. The Online Designer's logic editor flags `[Age]` as an error; if the logic is saved anyway (for example by importing it through the Data Dictionary), the data entry form throws an error when it evaluates the logic.
+- **Variable names are case-sensitive.** REDCap stores every variable name in lowercase, so a capitalized reference matches nothing. Both the Online Designer's logic editor and a Data Dictionary upload reject `[Age]` as a syntax error, so it cannot be saved as branching logic. Used as a report filter or API `filterLogic`, it fails silently and matches every record.
 - **Hard-coded text values are case-sensitive.** `[fav_color]="green"` will not match a stored value of "Green".
 
 Boolean operators are the exception: `and` and `AND`, `or` and `OR` are interchangeable.
