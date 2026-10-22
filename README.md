@@ -48,6 +48,8 @@ REDCap_KB_RAG/
 │   ├── kb_to_servicenow.py                # Converts kb (YAML)/ articles to a 3-sheet Excel workbook
 │   ├── REDCap_KB_ServiceNow_Import.xlsx   # Most-recent export (Articles, Relationships, Import Instructions)
 │   └── ServiceNow_Admin_Handoff.md        # Field-by-field import guide for ServiceNow admins
+├── testing/
+│   └── README.md                          # Guide to writing Playwright tests for REDCap (RSVC feature tests, API setup, gotchas) — not RAG content
 ├── visualization/
 │   └── kb_dependency_graph.html           # Interactive graph of inter-article dependencies
 ├── convert_to_yaml_kb.py             # Script: converts kb/ articles to YAML frontmatter format → kb (YAML)/
