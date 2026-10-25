@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 (Data Entry Trigger and Analysis/Cleanup not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
-| **Synonyms** | how do i import records via the api; import records api call; create or update records through the api; push data into redcap programmatically; bulk upload record data with the api; api method to write json or csv records; overwrite behavior for record import api; load data into a project via api |
+| **Synonyms** | how do i import records via the api; import records api call; create or update records through the api; push data into redcap programmatically; bulk upload record data with the api; api method to write json or csv records; overwrite behavior for record import api; load data into a project via api; import records api one invalid value rejects whole import |
 
 ---
 
@@ -293,11 +293,11 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 **Forgetting to JSON-encode the data parameter.** The `data` parameter must be a JSON, CSV, or XML string — not a native object or array. Depending on your language, you must serialize the data first using `json.dumps()`, `toJSON()`, or equivalent.
 
-**Using the wrong field names.** Field names in the import data must exactly match the variable names in the data dictionary. A typo or using the field label instead of the variable name will cause the API to ignore that field or return an error.
+**Using the wrong field names.** Field names in the import data must exactly match the variable names in the data dictionary. A typo or using the field label instead of the variable name makes the whole import fail: HTTP 400 `The following fields were not found in the project as real data fields: …`.
 
 **Assuming blank fields don't matter in normal mode.** In normal mode, including blank fields in your import data is harmless — they are ignored. But be aware of this behavior if you're expecting an update to clear a field. Use overwrite mode if you need to explicitly clear values.
 
-**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API will return an error and the import will fail. Validate your data before importing.
+**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API returns an error listing record, field and value, and **nothing** is imported — the valid rows in the same request are rejected too. Validate your data before importing.
 
 **Mixing up record_id and redcap_event_name.** In a longitudinal project, the record ID and event name are separate. `record_id` identifies the participant; `redcap_event_name` identifies the visit or time point. Both are usually required in longitudinal imports.
 

@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. `filterLogic` behaviour (invalid logic, longitudinal projects) live-tested on v17.5.6 (Standard) |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 (survey fields and memory limits not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.18 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)|
-| **Synonyms** | how do i export records via the api; export records api call; pull record data through the api export method; api endpoint to download record data; programmatically read redcap data as json or csv; get all records from a project using the api; export raw values or labels via records api; api method to retrieve entered data; api filterlogic returns all records; filterlogic with events returns nothing in longitudinal export |
+| **Synonyms** | how do i export records via the api; export records api call; pull record data through the api export method; api endpoint to download record data; programmatically read redcap data as json or csv; get all records from a project using the api; export raw values or labels via records api; api method to retrieve entered data; api filterlogic returns all records; filterlogic with events returns nothing in longitudinal export; export records fields parameter missing record id; csvDelimiter tab error export records api |
 
 ---
 
@@ -37,7 +37,7 @@ When to use this method: When you need to read record data from REDCap in an aut
 | `format` | Required | Response format: `'json'`, `'csv'`, `'xml'` (default), or `'odm'` (CDISC ODM XML v1.3.1). |
 | `type` | Optional | Data structure: `'flat'` (default; one row per record) or `'eav'` (entity-attribute-value; one row per field value). Non-longitudinal EAV has columns `record`, `field_name`, `value`; longitudinal adds `redcap_event_name`. |
 | `records` | Optional | Array of record IDs to export. If omitted, all records are exported. |
-| `fields` | Optional | Array of field/variable names to export, or a comma-separated string. If omitted, all fields are exported. |
+| `fields` | Optional | Array of field/variable names to export, or a comma-separated string. If omitted, all fields are exported. Only the listed fields are returned — include the record ID field yourself. A name that doesn't exist returns an error. |
 | `forms` | Optional | Array of instrument (form) names to export. Replace spaces in form names with underscores. If omitted, all forms are exported. |
 | `events` | Optional | Array of event names to export. Only applicable in longitudinal projects. If omitted, all events are exported. |
 | `rawOrLabel` | Optional | `'raw'` (default) to export raw coded values, `'label'` to export choice labels. |
@@ -48,7 +48,7 @@ When to use this method: When you need to read record data from REDCap in an aut
 | `filterLogic` | Optional | A logic string (e.g., `[age] > 30`) to filter returned records. Only records where the logic evaluates as TRUE are returned. Invalid logic does **not** return an error — it returns every record (see Gotchas). In longitudinal projects the filter is not evaluated per event the way branching logic is (see Gotchas). |
 | `dateRangeBegin` | Optional | Return only records created or modified **after** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, no lower bound is applied. |
 | `dateRangeEnd` | Optional | Return only records created or modified **before** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, uses the current server time. |
-| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
+| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
 | `decimalCharacter` | Optional | Forces all numeric values (calc fields and number-validated text fields) to use a consistent decimal separator: `','` or `'.'`. If omitted, numbers use their native format. |
 | `exportBlankForGrayFormStatus` | Optional | `true` or `false` (default). If `true`, instrument complete status fields with a gray (unstarted) icon export as blank instead of `0`. Recommended when data will be re-imported into REDCap. |
 | `combineCheckboxOptions` | Optional | `true` or `false` (default). If `true`, all checked options for a checkbox field are combined into a single column instead of exporting as separate `variable___code` columns. |
@@ -209,7 +209,7 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **Q: Can I export only certain fields from each record?**
 
-**A:** Yes. Use the `fields` parameter and pass an array of variable names. For example, `'fields': ['first_name', 'email', 'age']` will export only those three fields plus the record ID.
+**A:** Yes. Use the `fields` parameter and pass an array of variable names. For example, `'fields': ['record_id', 'first_name', 'email', 'age']`. Only the fields you list are returned — the record ID is **not** added automatically, so list it too or you can't tell the rows apart.
 
 **Q: What's the difference between raw and label format?**
 
@@ -225,7 +225,7 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **Q: What happens if I request a field that doesn't exist?**
 
-**A:** The field is silently ignored. The API will not return an error; it simply will not include that field in the response.
+**A:** The request fails: HTTP 400 `The following values in the parameter "fields" are not valid: 'no_such_field'`. Check field names against Export Field Names ([RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)) first.
 
 **Q: Can I export survey metadata like completion timestamps?**
 
@@ -241,7 +241,7 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **Forgetting to set the format.** If you don't specify a `format` parameter, the API may use a default format you didn't expect. Always explicitly set `format` to `'json'`, `'csv'`, or `'xml'` based on what your application requires.
 
-**Mixing up type and format parameters.** The `type` parameter controls data structure (flat vs. eav) and only applies to JSON and XML. The `format` parameter controls the output format (json, csv, xml). These are different parameters for different purposes.
+**Mixing up type and format parameters.** The `type` parameter controls data structure (flat vs. eav); the `format` parameter controls the output format (json, csv, xml). They combine freely — `type=eav` with `format=csv` gives an EAV CSV with columns `record, field_name, value, redcap_repeat_instrument, redcap_repeat_instance`.
 
 **Exporting label format without understanding encoded values.** When you set `rawOrLabel` to `'label'`, choice fields are converted to their text labels. If your downstream system expects numeric codes, you must decode the labels back to raw values or export in raw format instead.
 
@@ -251,11 +251,13 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **`exportDataAccessGroups` is silently overridden for DAG members.** If the token belongs to a user who is assigned to a DAG, this parameter is ignored and the column is not included — even if you set it to `true`. Only tokens from users outside any DAG will include the DAG column.
 
+**`csvDelimiter=tab` crashes CSV exports.** On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). The error page names `fputcsv(): Argument #3 ($separator) must be a single character`. Imports accept `tab` normally.
+
 **`exportBlankForGrayFormStatus` matters for round-trip imports.** If you export data and plan to re-import it, set this to `true`. Otherwise, gray-status instruments will export as `0` (Incomplete), and re-importing will convert those gray statuses to explicit Incomplete — changing the project's data.
 
 **Exporting all records from a large project can exhaust server memory.** In projects with a high record count and a large number of fields — particularly projects that use many repeating instrument instances — an unfiltered full-record export can cause REDCap to crash with a PHP memory exhaustion error. The API returns an HTTP 200 response whose body contains an HTML fatal error block followed by a JSON error message: `{"error":"REDCap ran out of server memory. The request cannot be processed. Please try importing/exporting a smaller amount of data."}`. This is not a standard API error response and can confuse clients that parse JSON without first checking for embedded HTML. To avoid this, break large exports into smaller chunks using `records` (a batch of record IDs), `fields` or `forms` (a subset of the data dictionary), or `dateRangeBegin`/`dateRangeEnd` (a time-bounded slice). Operational or administrative tracking projects that accumulate many records over time are especially susceptible.
 
-**Passing `'record_id'` as a field name in the `fields` parameter fails if the primary key has a different variable name.** REDCap auto-numbering projects (and any project where the designer named the primary key something other than `record_id`) will return an API error: `"The following values in the parameter 'fields' are not valid: 'record_id'"`. The primary key field always carries whatever variable name was given to the first field in the data dictionary. To discover the actual primary key variable name before filtering exports, call the Export Field Names API ([RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)) — the first entry in the response is always the primary key. Note that the primary key is always included in every export automatically, regardless of which `fields` you specify.
+**Passing `'record_id'` as a field name in the `fields` parameter fails if the primary key has a different variable name.** REDCap auto-numbering projects (and any project where the designer named the primary key something other than `record_id`) will return an API error: `"The following values in the parameter 'fields' are not valid: 'record_id'"`. The primary key field always carries whatever variable name was given to the first field in the data dictionary. To discover the actual primary key variable name before filtering exports, call the Export Field Names API ([RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md)) — the first entry in the response is always the primary key. Note that the primary key is **not** added when you pass `fields` — include it in the list yourself.
 
 ---
 

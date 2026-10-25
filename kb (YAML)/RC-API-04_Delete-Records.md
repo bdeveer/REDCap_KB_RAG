@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 and the case caveat (delete_logging
+  not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line
+  last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +31,7 @@ synonyms:
 - bulk delete records using the api
 - permanently remove record data through the api
 - api to clear records in an arm
+- delete records api non-existent record error
 ---
 
 # 1. Overview
@@ -55,7 +57,7 @@ When to use this method: When you need to remove records from the project, clean
 | `delete_logging` | Optional | `'0'` (keep logging) or `'1'` (delete logging). Only available in projects where an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings. When that setting is enabled, the default is `'1'` (logging deleted with the record); pass `'0'` to preserve the log. If the setting is not enabled in the project, this parameter has no effect and defaults to `'0'`. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. |
 
-> **Critical — match the stored case of the record name exactly (version caveat, below 16.0.0 Standard).** When deleting a specific instrument's data in a **longitudinal** project, supplying the record name in different case to how it is stored — `taylor-101` where the project holds `TAYLOR-101` — could cause **all data in the entire record to be deleted** rather than just the named instrument's data. Fixed in 16.0.0. Deletion is irreversible, so on any earlier version match the stored case exactly, and test against a copy of the project first.
+> **Critical — match the stored case of the record name exactly (version caveat, below 16.0.0 Standard).** When deleting a specific instrument's data in a **longitudinal** project, supplying the record name in different case to how it is stored — `taylor-101` where the project holds `TAYLOR-101` — could cause **all data in the entire record to be deleted** rather than just the named instrument's data. Fixed in 16.0.0 (on 17.5.6, `taylor-101` deleted only the named instrument's data of `TAYLOR-101`). Deletion is irreversible, so on any earlier version match the stored case exactly, and test against a copy of the project first.
 
 ---
 
@@ -161,7 +163,7 @@ print $output;
 On success, the API returns:
 
 - The **number of records deleted** — when no `instrument`, `event`, or `repeat_instance` is specified.
-- The **number of items deleted over the total records specified** — when `instrument`, `event`, and/or `repeat_instance` is provided (e.g., partial record deletion).
+- For partial deletes (`instrument`, `event` and/or `repeat_instance`): also a plain number — the count of records whose data was deleted (records without data in that instrument aren't counted).
 
 On error, the API returns an error message describing the problem (e.g., invalid record ID, missing required parameter, insufficient permissions).
 
@@ -183,7 +185,7 @@ On error, the API returns an error message describing the problem (e.g., invalid
 
 **Q: What happens if I specify a record ID that doesn't exist?**
 
-**A:** The API will skip it and continue with other records. No error is returned for non-existent records.
+**A:** The whole request fails and **nothing is deleted**: HTTP 400 `One or more of the records provided cannot be deleted because they do not exist in the project. The following records do not exist: 999`. Remove unknown IDs from the list (check with Export Records) before deleting.
 
 **Q: Can I delete only a specific repeating instance without removing the whole instrument?**
 

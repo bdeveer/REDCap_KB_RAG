@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §1, §3, §5–§7 live-tested via the API
+  on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS)
+  changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -39,7 +40,7 @@ The Generate Next Record Name API method returns what the next record ID would b
 
 The method works whether or not your project has record auto-numbering enabled.
 
-**Behavior with Data Access Groups (DAGs):** If the project uses DAGs, the returned name follows the DAG-prefixed format (e.g., `223-3`). The method determines the next value for IDs within the DAG of the API user, considering all records in the entire project — including records that were originally created in that DAG but later reassigned to another DAG.
+**Behavior with Data Access Groups (DAGs):** If the API user is in a DAG, the returned name follows the DAG-prefixed format (e.g., `223-3`), where the prefix is the DAG's numeric ID (`data_access_group_id` in Export DAGs). The method determines the next value for IDs within the DAG of the API user, considering all records in the entire project — including records that were originally created in that DAG but later reassigned to another DAG.
 
 ---
 

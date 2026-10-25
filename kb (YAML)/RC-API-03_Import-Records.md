@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 (Data Entry Trigger and Analysis/Cleanup
+  not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line
+  last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -32,6 +33,7 @@ synonyms:
 - api method to write json or csv records
 - overwrite behavior for record import api
 - load data into a project via api
+- import records api one invalid value rejects whole import
 ---
 
 > **Version caveat (below 17.4.0 Standard):** Importing records while a project is in **Analysis/Cleanup** status behaved inconsistently between the API and the user interface. No data could be imported via the API in that status even where the project was set to allow editing of existing records — the UI permitted it, the API did not. Fixed in 17.4.0. If an import script fails only on projects in Analysis/Cleanup, this is the likely cause.
@@ -309,11 +311,11 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 **Forgetting to JSON-encode the data parameter.** The `data` parameter must be a JSON, CSV, or XML string — not a native object or array. Depending on your language, you must serialize the data first using `json.dumps()`, `toJSON()`, or equivalent.
 
-**Using the wrong field names.** Field names in the import data must exactly match the variable names in the data dictionary. A typo or using the field label instead of the variable name will cause the API to ignore that field or return an error.
+**Using the wrong field names.** Field names in the import data must exactly match the variable names in the data dictionary. A typo or using the field label instead of the variable name makes the whole import fail: HTTP 400 `The following fields were not found in the project as real data fields: …`.
 
 **Assuming blank fields don't matter in normal mode.** In normal mode, including blank fields in your import data is harmless — they are ignored. But be aware of this behavior if you're expecting an update to clear a field. Use overwrite mode if you need to explicitly clear values.
 
-**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API will return an error and the import will fail. Validate your data before importing.
+**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API returns an error listing record, field and value, and **nothing** is imported — the valid rows in the same request are rejected too. Validate your data before importing.
 
 **Mixing up record_id and redcap_event_name.** In a longitudinal project, the record ID and event name are separate. `record_id` identifies the participant; `redcap_event_name` identifies the visit or time point. Both are usually required in longitudinal imports.
 

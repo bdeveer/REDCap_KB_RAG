@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md)|
-| **Synonyms** | how do i rename a record via the api; rename record api call; change a record id programmatically; api method to update a record identifier; renumber records using the api; correct a mistaken record id with the api; change primary key value of a record via api; api endpoint to rename a record id |
+| **Synonyms** | how do i rename a record via the api; rename record api call; change a record id programmatically; api method to update a record identifier; renumber records using the api; correct a mistaken record id with the api; change primary key value of a record via api; api endpoint to rename a record id; rename record api returns 200 on error |
 
 ---
 
@@ -136,10 +136,15 @@ print $output;
 
 ## 4. Response
 
-On success, the API returns `"1"`. On failure, it returns an error message string. Common errors include:
-- The record ID does not exist
-- The new record name already exists
-- You lack API Edit permission
+On success, the API returns `1`. Most failures are **also HTTP 200**, with a plain-text message instead of `1` (not a JSON error, whatever `returnFormat` says):
+
+| Case | Response body (HTTP 200) |
+|---|---|
+| New name already exists | `Study ID "1" could not be changed to "2" because that record already exists! Please try again.` |
+| Record doesn't exist | `Current Record does not exists.` |
+| `new_record_name` missing | `New record name must be provided.` |
+
+A missing Rename Record privilege is a real error (non-200). Check that the body is exactly `1`.
 
 ---
 
@@ -163,7 +168,7 @@ On success, the API returns `"1"`. On failure, it returns an error message strin
 
 **Q: What format should the new record name be in?**
 
-**A:** The new record name must be a valid string. It can contain letters, numbers, and special characters, but it must be unique and follow any naming conventions your project enforces. REDCap allows alphanumeric values, underscores, and hyphens.
+**A:** Any unique string. The API doesn't restrict the characters: renaming to `a b` (space) and `x.y` (dot) both succeeded on 17.5.6. Stick to letters, numbers, underscores and hyphens anyway — spaces and dots cause trouble in URLs, file names and piping.
 
 ---
 
@@ -173,7 +178,9 @@ On success, the API returns `"1"`. On failure, it returns an error message strin
 
 **Forgetting the new_record_name.** The new record ID is a required parameter. If you omit it, the API returns an error.
 
-**Not handling non-existent records.** If you attempt to rename a record that doesn't exist, the API returns an error. Your code must verify that the record exists before attempting to rename it.
+**Checking the status code instead of the body.** Renaming a record that doesn't exist, renaming to a name that's taken, or leaving out `new_record_name` all return HTTP 200 with an explanatory message. Treat anything other than a body of `1` as a failure.
+
+**Not handling non-existent records.** If you attempt to rename a record that doesn't exist, the API returns a message instead of `1`. Your code must verify that the record exists before attempting to rename it.
 
 **Duplicate new_record_name.** If the new record name already exists in the project, the rename operation fails. Always check for uniqueness first.
 
