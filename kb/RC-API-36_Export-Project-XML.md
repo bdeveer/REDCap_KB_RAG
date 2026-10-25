@@ -7,9 +7,9 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §3, §5 (admin token; export-rights and DAG-member behaviour not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.18 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -67,7 +67,7 @@ Project features that allow data collection forms or time points to be repeated 
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'` (default: `'xml'`). The response itself is always CDISC ODM XML. |
 | `exportSurveyFields` | Optional | `'true'` to include survey identifier and timestamp fields; `'false'` (default) to omit. Note: if imported via API, these pseudo-fields are ignored. |
 | `exportDataAccessGroups` | Optional | `'true'` to include the `redcap_data_access_group` field; `'false'` (default) to omit. Only applies when the API user is **not** in a data access group — if the user is in a DAG, this flag is ignored and reverts to `'false'`. |
-| `filterLogic` | Optional | Logic string (e.g., `[age] > 30`) to filter which records are returned. Only records where the logic evaluates as TRUE are included. Invalid syntax returns an error. |
+| `filterLogic` | Optional | Logic string (e.g., `[age] > 30`) to filter which records are returned. Only records where the logic evaluates as TRUE are included. Invalid syntax is **not** reported: the logic is ignored and every record is returned (HTTP 200). |
 | `exportFiles` | Optional | `'true'` to embed uploaded File Upload and Signature field files in the XML; `'false'` (default) to omit. Setting to `'true'` can produce very large exports that may fail to complete on file-heavy projects. |
 
 > **Note:** All optional filtering parameters (`records`, `fields`, `events`, `filterLogic`, `exportSurveyFields`, `exportDataAccessGroups`, `exportFiles`) only apply to data. All metadata is always exported regardless.
@@ -206,6 +206,8 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 **`returnFormat` controls errors, not the response:** The response is always CDISC ODM XML. `returnFormat` only affects the format of any error messages returned. Don't confuse it with a general format selector.
 
 **DAG flag ignored for DAG members:** `exportDataAccessGroups=true` only works if the API token belongs to a user who is not in a data access group. If the user is in a DAG, the flag silently reverts to `'false'`.
+
+**Invalid `filterLogic` returns everything:** A typo in the logic (e.g. an unbalanced parenthesis) does not produce an error — the filter is dropped and the export contains all records, as with Export Records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)). Test new logic on a small project, or check the record count, before relying on it.
 
 **`exportFiles=true` can break large exports:** Including file attachments significantly increases export size and may cause the request to fail or time out on projects with many or large files.
 

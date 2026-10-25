@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | Projects with repeating instruments or repeating events |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Label column name (`custom_form_label`) live-tested on v17.5.6 (Standard), 2026-10 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) |
-| **Synonyms** | import repeating instruments and events api method; how do i set instruments to repeat via the api; api call to configure repeating instruments and events; designate forms or events as repeating through the api; programmatically set up repeating instruments with the api; api method to define which events repeat; import repeating instrument configuration via api |
+| **Synonyms** | import repeating instruments and events api method; how do i set instruments to repeat via the api; api call to configure repeating instruments and events; designate forms or events as repeating through the api; programmatically set up repeating instruments with the api; api method to define which events repeat; import repeating instrument configuration via api; custom_form_label import repeating instruments api; repeating instrument label not saved via api |
 
 ---
 
@@ -39,7 +39,7 @@ An instrument (form) designated to allow multiple instances per record. Configur
 An entire event in a longitudinal project designated to repeat. Configured by submitting a row with blank form_name and the event_name specified.
 
 #### Custom Repeat Label
-An optional display label for the instances table header, provided in the custom_repeat_instrument_label field.
+An optional display label for the instances table header, provided in the custom_form_label field.
 
 ---
 
@@ -83,7 +83,7 @@ The `data` payload follows the same structure as the export response from [RC-AP
 |---|---|
 | `event_name` | The unique event name (longitudinal projects only; leave blank for classic projects). |
 | `form_name` | The instrument's internal name. **Leave blank/null to indicate a repeating event** rather than a repeating instrument. |
-| `custom_repeat_instrument_label` | Optional custom label for the repeating instrument instance header. Leave empty to use the default. |
+| `custom_form_label` | Optional custom label for the repeating instrument instance header. Leave empty to use the default. Older documentation calls this column `custom_repeat_instrument_label`; that name is ignored on import (see Common Mistakes). |
 
 **JSON example — classic project:**
 ```json
@@ -91,12 +91,12 @@ The `data` payload follows the same structure as the export response from [RC-AP
   {
     "event_name": "",
     "form_name": "adverse_events",
-    "custom_repeat_instrument_label": "Adverse Event"
+    "custom_form_label": "Adverse Event"
   },
   {
     "event_name": "",
     "form_name": "medications",
-    "custom_repeat_instrument_label": ""
+    "custom_form_label": ""
   }
 ]
 ```
@@ -107,12 +107,12 @@ The `data` payload follows the same structure as the export response from [RC-AP
   {
     "event_name": "visit_arm_1",
     "form_name": "lab_results",
-    "custom_repeat_instrument_label": "Lab Draw"
+    "custom_form_label": "Lab Draw"
   },
   {
     "event_name": "follow_up_arm_1",
     "form_name": "",
-    "custom_repeat_instrument_label": ""
+    "custom_form_label": ""
   }
 ]
 ```
@@ -136,7 +136,7 @@ data = [
     {
         "event_name": "",
         "form_name": "adverse_events",
-        "custom_repeat_instrument_label": "Adverse Event"
+        "custom_form_label": "Adverse Event"
     }
 ]
 
@@ -162,7 +162,7 @@ library(RCurl)
 library(jsonlite)
 
 data <- toJSON(list(
-    list(event_name="", form_name="adverse_events", custom_repeat_instrument_label="Adverse Event")
+    list(event_name="", form_name="adverse_events", custom_form_label="Adverse Event")
 ))
 
 result <- postForm(
@@ -182,7 +182,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=repeatingFormsEvents&format=json&data=[{\"event_name\":\"\",\"form_name\":\"adverse_events\",\"custom_repeat_instrument_label\":\"Adverse Event\"}]"
+DATA="token=$API_TOKEN&content=repeatingFormsEvents&format=json&data=[{\"event_name\":\"\",\"form_name\":\"adverse_events\",\"custom_form_label\":\"Adverse Event\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -X POST \
@@ -201,7 +201,7 @@ $data = json_encode(array(
     array(
         'event_name' => '',
         'form_name' => 'adverse_events',
-        'custom_repeat_instrument_label' => 'Adverse Event'
+        'custom_form_label' => 'Adverse Event'
     )
 ));
 
@@ -279,6 +279,8 @@ On failure, an error message is returned in the format specified by `returnForma
 **Using instrument labels instead of internal names.** The `form_name` field must be the internal instrument name from the Data Dictionary (e.g., `adverse_events`), not the human-readable label (e.g., `Adverse Events`). Using the label causes a validation error.
 
 **Omitting event_name in longitudinal projects.** In a longitudinal project, each repeating instrument entry must include the correct `event_name`. Omitting it or providing a wrong event name will result in an error or misassignment.
+
+**Using the old column name `custom_repeat_instrument_label`.** The label column is `custom_form_label`. An import that uses the older name still succeeds (HTTP 200, count returned), but the label is silently dropped and the instrument ends up with no custom label. Export the configuration afterwards ([RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md)) to confirm the labels were saved.
 
 **Misreading the return value.** The method returns a count of imported entries, not a success/failure boolean. A return of `0` may indicate that no items were actually processed — verify your payload if you receive an unexpected zero.
 

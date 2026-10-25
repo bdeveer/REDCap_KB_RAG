@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md); [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)|
-| **Synonyms** | how do i export the data dictionary via the api; export metadata api call; download the data dictionary through the api; api method to get project field definitions; retrieve metadata for all fields and forms via api; pull branching logic and validation rules with the api; api endpoint to export project structure; get the data dictionary programmatically |
+| **Synonyms** | how do i export the data dictionary via the api; export metadata api call; download the data dictionary through the api; api method to get project field definitions; retrieve metadata for all fields and forms via api; pull branching logic and validation rules with the api; api endpoint to export project structure; get the data dictionary programmatically; export metadata forms parameter returns all fields |
 
 ---
 
@@ -212,7 +212,7 @@ The method returns the complete data dictionary in the requested format. Each ro
 
 ## 6. Common Mistakes & Gotchas
 
-**Passing the form display label instead of the form name in the `forms` parameter.** The `forms` parameter takes the unique instrument name as it appears in Column B of the data dictionary (e.g., `baseline_survey`), not the human-readable label shown in the UI (e.g., `Baseline Survey`). Passing the label will return no results without an error.
+**Passing the form display label instead of the form name in the `forms` parameter.** The `forms` parameter takes the unique instrument name as it appears in Column B of the data dictionary (e.g., `baseline_survey`), not the human-readable label shown in the UI (e.g., `Baseline Survey`). REDCap does not match it and does not filter either: on 17.5.6, `forms[0]=Lab Results` returned the **entire** data dictionary with HTTP 200 and no warning. Check that the response contains only the instruments you asked for. (Export Records, by contrast, rejects an unknown form name with an error.)
 
 **Assuming metadata is lightweight.** For large projects with hundreds of fields and instruments, the metadata response can be large (megabytes). Plan accordingly in your code, especially for network-constrained environments.
 

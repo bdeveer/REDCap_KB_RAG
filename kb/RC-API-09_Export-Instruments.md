@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§8 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)|
-| **Synonyms** | how do i export the list of instruments via the api; export instruments api call; get all form names through the api; api method to list project instruments; discover instrument names programmatically; retrieve the forms in a project via api; api endpoint to export instrument list; list data collection forms using the api |
+| **Synonyms** | how do i export the list of instruments via the api; export instruments api call; get all form names through the api; api method to list project instruments; discover instrument names programmatically; retrieve the forms in a project via api; api endpoint to export instrument list; list data collection forms using the api; export instruments api includes unmapped instruments |
 
 ---
 
@@ -178,9 +178,9 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **A:** Yes. The instrument_name returned by this method is the same value you use in the `forms` parameter when exporting records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) or in the form_name column when working with the data dictionary.
 
-**Q: Does this method include disabled or hidden instruments?**
+**Q: Does this method include instruments that aren't used anywhere?**
 
-**A:** No, this method returns only active instruments. Instruments that have been disabled are not included in the response.
+**A:** Yes. REDCap has no setting to disable an instrument, so every instrument in the project's data dictionary is returned. In a longitudinal project that includes instruments not designated to any event. To see which instruments are actually in use per event, call [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md).
 
 **Q: In a longitudinal project, are instruments listed per event?**
 

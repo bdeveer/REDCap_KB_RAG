@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §1, §5–§7 (admin token; role-assigned
+  users not yet tested) live-tested via the API on a sandbox project (2026-10); LTS
+  line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-10
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -31,11 +32,12 @@ synonyms:
 - get unique_role_name per user using the api
 - api method to audit user role membership
 - programmatically export user-role assignments with the api
+- user role assignments api blank unique_role_name
 ---
 
 # 1. Overview
 
-The Export User-Role Assignments API method retrieves the current mapping between users and their assigned roles in a project. Each record in the response contains a username and the `unique_role_name` of the role they are assigned to. Users who are not assigned to any role are not included in the response.
+The Export User-Role Assignments API method retrieves the current mapping between users and their assigned roles in a project. Each record in the response contains a username and the `unique_role_name` of the role they are assigned to. Every project user is listed: users who are not assigned to a role have a blank `unique_role_name`.
 
 Use this method to audit which users belong to which roles, verify role assignments before making changes, or build external reporting on project access structure.
 
@@ -149,12 +151,21 @@ print $output;
 
 # 5. Response
 
-On success, the method returns the list of user-role assignments in the requested format. Each record contains two fields:
+On success, the method returns one row per project user in the requested format. Each record contains three fields:
 
 - `username` — The REDCap username of the assigned user.
 - `unique_role_name` — The system-generated role ID the user is assigned to (e.g., `U-527D39JXAC`). Use the Export User Roles method ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) to look up what role name and privileges correspond to each ID.
 
-Users who have no role assignment are not included in the response.
+- `data_access_group` — The user's Data Access Group (unique group name); blank when the user is not in a DAG.
+
+Users without a role are included with a blank `unique_role_name`:
+
+```json
+[
+  {"username": "jane.smith", "unique_role_name": "U-527D39JXAC", "data_access_group": ""},
+  {"username": "admin_user", "unique_role_name": "", "data_access_group": ""}
+]
+```
 
 ---
 
@@ -170,7 +181,7 @@ Users who have no role assignment are not included in the response.
 
 **Q: Are users without a role assignment included?**
 
-**A:** No. Only users currently assigned to a role are returned. Users with individually-set permissions (not via a role) will not appear in this export.
+**A:** Yes. Every project user is returned; users with individually-set permissions (not via a role) have an empty `unique_role_name`. Filter on a non-empty `unique_role_name` to list role members only.
 
 **Q: Can I use this export to feed an import?**
 
@@ -182,7 +193,7 @@ Users who have no role assignment are not included in the response.
 
 **Confusing this method with Export User Roles.** Export User Roles ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) returns role *definitions* (what permissions each role has). This method returns role *assignments* (which users are in which role). Both are needed for a full picture of project access.
 
-**Expecting users without roles to appear.** If a user has direct individual permissions rather than a role assignment, they will not appear in this export. Use Export Users ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) to capture all users regardless of assignment method.
+**Treating every row as a role member.** Users with individual permissions are in the response too, with a blank `unique_role_name`. Skip those rows when you only want role assignments, and before passing the export to Import User-Role Assignments.
 
 **Interpreting `unique_role_name` directly.** The `unique_role_name` is a system ID (e.g., `U-527D39JXAC`), not a human-readable label. You need to cross-reference it against Export User Roles to get the `role_label`.
 

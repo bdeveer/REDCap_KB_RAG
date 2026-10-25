@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §3, §5, §7 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Synonyms** | how do i export users via the api; export users api call; get the list of project users and permissions through the api; api method to retrieve usernames and rights; pull user permission flags with the api; audit project users programmatically; api endpoint to export users; list who has access to a project via api |
+| **Synonyms** | how do i export users via the api; export users api call; get the list of project users and permissions through the api; api method to retrieve usernames and rights; pull user permission flags with the api; audit project users programmatically; api endpoint to export users; list who has access to a project via api; forms_export in export users api; where is data_export in export users api |
 
 ---
 
@@ -133,7 +133,9 @@ On success, the method returns an array (JSON, CSV, or XML) of user objects. Eac
 
 ### 5.1 Returned attributes
 
-`username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `data_access_group_id`, `data_access_group_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `data_export`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+`username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `data_access_group_id`, `data_access_group_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+> **Note:** There is no project-level `data_export` attribute. Data export rights are set per instrument, so they are returned per instrument in `forms_export` (e.g. `{"demographics": 1, "lab_results": 0}`).
 
 > **Note:** `data_access_group_id` (numeric DAG ID) and `data_access_group_label` (human-readable DAG name) are informational fields. REDCap uses `data_access_group` (the unique DAG name) as the functional key for DAG assignment.
 
@@ -141,7 +143,7 @@ On success, the method returns an array (JSON, CSV, or XML) of user objects. Eac
 
 | Attribute | Values |
 |---|---|
-| `data_export` | `0` = No Access, `1` = Full Data Set, `2` = De-Identified, `3` = Remove Identifier Fields |
+| `forms_export` (per instrument) | `0` = No Access, `1` = Full Data Set, `2` = De-Identified, `3` = Remove Identifier Fields |
 | Form-level rights (REDCap < 15.6) | `0` = No Access, `1` = View & edit records (survey responses read-only), `2` = Read Only, `3` = Edit Survey Responses |
 | Form-level rights (REDCap ≥ 15.6) | `128` = No Access, `129` = Read Only, `130` = View & edit records (survey responses read-only); add `8` to also grant Edit Survey Responses; add `16` to also grant Delete |
 | All other permission attributes | `0` = No Access, `1` = Access |
@@ -156,9 +158,9 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 
 **A:** The Export Users method always returns all users in the project. To extract a single user, filter the API response in your code using the username field.
 
-**Q: What's the difference between `data_export` and `api_export`?**
+**Q: What's the difference between `forms_export` and `api_export`?**
 
-**A:** `data_export` allows the user to export data via the REDCap interface (Data Export tool). `api_export` allows the user to call API methods that export data. A user may have one permission but not the other.
+**A:** `forms_export` holds the user's data export rights per instrument, which apply to exports via the REDCap interface (and limit what API exports return). `api_export` allows the user to call API methods that export data. A user may have one permission but not the other.
 
 **Q: Are expired users included in the export?**
 
@@ -182,7 +184,7 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 
 **Attempting to export users from a project where you lack API Export right.** If your API token does not include the API Export right, the method will fail with an authentication error. Verify your token permissions in the API Credentials settings.
 
-**`data_export` vs. `data_export_tool`.** This endpoint uses `data_export` for the export rights field. The sibling Roles endpoints ([RC-API-26 — Import User Roles API](RC-API-26_Import-User-Roles.md) / [RC-API-27 — Delete User Roles API](RC-API-27_Delete-User-Roles.md)) use `data_export_tool` for the same permission. Using the wrong field name in role import calls will silently fail to set the intended permission.
+**Looking for a project-level `data_export` field.** Older scripts read `data_export` (or `data_export_tool`) for a user's export rights. Neither is returned: export rights are per instrument, in `forms_export`. When importing users or roles, set `forms_export` too — a role imported with only `data_export=2` kept No Access on every instrument.
 
 ---
 

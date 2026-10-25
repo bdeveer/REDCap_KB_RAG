@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on
+  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +30,7 @@ synonyms:
 - audit user roles programmatically
 - api endpoint to export user roles
 - list role templates in a project via api
+- forms_export in export user roles api
 ---
 
 # 1. Overview
@@ -145,7 +146,7 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 | Attribute | Value meanings |
 |---|---|
-| `data_export` | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
+| `forms_export` (per instrument) | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
 | `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses |
 | `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only); add 8 to also grant Edit Survey Responses; add 16 to also grant Delete rights |
 | All other attributes | 0 = No Access, 1 = Access |
@@ -180,7 +181,9 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 **Confusing role_label with unique_role_name.** The `unique_role_name` is a system ID (e.g., `U-527D39JXAC`); the `role_label` is the human-readable name (e.g., `'Project Manager'`). Use the correct field depending on whether you need the system ID or display name.
 
-**Assuming permission fields match export fields exactly.** Some field names differ slightly between Export Users and Export User Roles. For example, Import User Roles uses `data_export_tool` instead of `data_export`. Consult [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for the exact field names.
+**Looking for a project-level export right.** Roles have no `data_export` (or `data_export_tool`) attribute; export rights are per instrument, in `forms_export`. A role imported with only `data_export=2` kept No Access on every instrument — set `forms_export` instead.
+
+**Comparing values as integers.** In this export the permission flags are strings (`"0"`/`"1"`), while Export Users ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) returns them as integers. `forms` and `forms_export` values are integers in both. Normalise the type before comparing roles with users.
 
 **Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. If your token lacks User Rights, the export will fail with an authentication error.
 

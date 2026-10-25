@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §3, §5, §7 (admin token) live-tested
+  via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7
+  (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -26,6 +27,8 @@ synonyms:
 - api method to query log entries by type or date
 - download project logs for compliance via api
 - programmatically pull the logging history with the api
+- export logging api record filter returns other entries
+- export logging api fields returned
 ---
 
 # 1. Overview
@@ -47,7 +50,7 @@ A chronological record of all actions taken in a REDCap project, including data 
 A category of logged events such as 'export', 'manage', 'record_edit', 'record_delete', 'user', 'page_view', etc. Filtering by log type reduces result sets and improves query performance.
 
 ### Timestamp
-The date and time when an action was logged, stored in the REDCap server's local timezone. Format: `YYYY-MM-DD HH:MM:SS` in responses; filter format: `YYYY-MM-DD HH:MM`.
+The date and time when an action was logged, stored in the REDCap server's local timezone. Format: `YYYY-MM-DD HH:MM` (no seconds), both in responses and in the `beginTime`/`endTime` filters.
 
 ### Logging Privilege
 A user-level permission that grants access to view audit trail entries via API or the web interface. Must be combined with API Export privilege to use this method.
@@ -67,7 +70,7 @@ Optional parameters (username, record, DAG, date range) that restrict which log 
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to match `format` if omitted. Not applicable when using a background process. |
 | `logtype` | Optional | Filter by event type: `'export'`, `'manage'`, `'user'`, `'record'`, `'record_add'`, `'record_edit'`, `'record_delete'`, `'lock_record'`, `'page_view'` (empty string = all types). Note: `'record'` is an API-only aggregate that returns all record-related events (add, edit, delete) and has no corresponding UI dropdown option. |
 | `user` | Optional | Filter by username (exact match). If not specified, returns events for all users. |
-| `record` | Optional | Filter by record name (exact match). Only applicable for record-related events. If not specified, returns events for all records. |
+| `record` | Optional | Filter by record name (exact match). It matches the log entry's key, so non-record entries with the same key can appear too (e.g. `record=2` also returns File Repository actions on folder ID 2). Combine with `logtype=record` to get record events only. If not specified, returns events for all records. |
 | `dag` | Optional | Filter by DAG `group_id`. If not specified, returns events for all DAGs. |
 | `beginTime` | Optional | Return only events logged *after* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, no begin cutoff is applied. |
 | `endTime` | Optional | Return only events logged *before* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, uses current server time. |
@@ -175,29 +178,23 @@ print $output;
 
 # 5. Response
 
-The API returns an array of log entries with action details:
+The API returns an array of log entries, newest first. Each entry has five fields: `timestamp`, `username`, `action`, `details` and `record` (blank for entries that don't concern a record). For record changes, `action` names the change, the source and the record, and `details` holds the changed values; other actions are logged as `Manage/Design` with a description in `details`.
 
 ```json
 [
   {
-    "timestamp": "2024-06-15 14:23:45",
+    "timestamp": "2026-10-25 00:28",
     "username": "admin_user",
-    "action": "Export records",
-    "details": "Exported 150 records in JSON format",
-    "pk": "record_id_123",
-    "event": "event_1_arm_1",
-    "record": "123",
-    "data_values": ""
+    "action": "Manage/Design ",
+    "details": "Export Logging (API)",
+    "record": ""
   },
   {
-    "timestamp": "2024-06-15 14:20:12",
-    "username": "data_coordinator",
-    "action": "Create record",
-    "details": "Created new record",
-    "pk": "record_id_124",
-    "event": "",
-    "record": "124",
-    "data_values": ""
+    "timestamp": "2026-10-25 00:26",
+    "username": "admin_user",
+    "action": "Create record (API) 124",
+    "details": "record_id = '124', first_name = 'Ann'",
+    "record": "124"
   }
 ]
 ```
@@ -228,6 +225,10 @@ The API returns an array of log entries with action details:
 **Timestamp format errors:** The correct format for `beginTime` and `endTime` is `YYYY-MM-DD HH:MM` (e.g., `2020-10-06 17:37`). Using other formats such as `M/D/YYYY HH:MM` will cause the filter to fail silently and return unfiltered results.
 
 **Empty filter strings vs. omitted parameters:** An empty string (`''`) for logtype, user, or record means "no filter on that field." Omitting the parameter entirely has the same effect, but always be explicit.
+
+**Each logging export is itself logged:** Every call to this method adds a `Manage/Design` entry ("Export Logging (API)"), and other API calls log their own entries too. Counts of all entries change between calls; filter with `logtype` when comparing results.
+
+**`record=` is not limited to record events:** The record filter matches the log entry's key, so unrelated entries with the same key (for example a File Repository folder with ID 2 when filtering `record=2`) are returned as well. Add `logtype=record` when you only want a record's history.
 
 **Assuming local timezone:** Timestamps in logs are stored in the REDCap server's timezone. Verify your server timezone when comparing logs with external events.
 

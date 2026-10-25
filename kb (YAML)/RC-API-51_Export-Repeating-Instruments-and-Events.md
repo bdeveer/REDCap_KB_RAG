@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - Projects with repeating instruments or repeating events
 requires: Any supported version
-verified_against: REDCap v17.5.5 (Standard) — empty-configuration error observed on
-  a live project, 2026-10; rest from changelog review of v17.4.1 (Standard) / v17.3.7
-  (LTS)
+verified_against: REDCap v17.5.6 (Standard) — §1, §7, §8 live-tested via the API on
+  a sandbox project (2026-10; empty-configuration error also seen on v17.5.5); Project
+  Setup/Design right requirement not re-tested; LTS line last reviewed against the
+  v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
+version: '1.2'
 last_updated: 2026-10
 source: REDCap API official documentation
 related:
@@ -36,6 +37,7 @@ synonyms:
 - export repeating events setup using the api
 - api method to read the repeating instruments configuration
 - programmatically get repeating forms and events with the api
+- custom_form_label repeating instruments api
 ---
 
 # 1. Overview
@@ -186,22 +188,20 @@ The method returns results ordered according to their order in the project. Each
 
 | Field | Description |
 |---|---|
-| `event_name` | The unique event name (longitudinal projects only; blank for classic projects) |
+| `event_name` | The unique event name. **Longitudinal projects only** — in a classic project this column is not returned at all. |
 | `form_name` | The instrument's internal name. **Blank/null if this row represents a repeating event** (rather than a repeating instrument). |
-| `custom_repeat_instrument_label` | The custom label configured for this repeating instrument. Empty if no custom label was set. |
+| `custom_form_label` | The custom label configured for this repeating instrument. Empty if no custom label was set. Older documentation calls this column `custom_repeat_instrument_label`; the API returns and accepts `custom_form_label`. |
 
 **JSON format — classic project (repeating instruments only):**
 ```json
 [
   {
-    "event_name": "",
     "form_name": "adverse_events",
-    "custom_repeat_instrument_label": "Adverse Event"
+    "custom_form_label": "Adverse Event"
   },
   {
-    "event_name": "",
     "form_name": "medications",
-    "custom_repeat_instrument_label": ""
+    "custom_form_label": ""
   }
 ]
 ```
@@ -212,12 +212,12 @@ The method returns results ordered according to their order in the project. Each
   {
     "event_name": "visit_arm_1",
     "form_name": "lab_results",
-    "custom_repeat_instrument_label": "Lab Draw"
+    "custom_form_label": "Lab Draw"
   },
   {
     "event_name": "follow_up_arm_1",
     "form_name": "",
-    "custom_repeat_instrument_label": ""
+    "custom_form_label": ""
   }
 ]
 ```
@@ -242,13 +242,13 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 **Q: Does this method work for classic (non-longitudinal) projects?**
 
-**A:** Yes. For classic projects, the `event_name` field will be blank, and the response will list only repeating instruments. Repeating events are only applicable to longitudinal projects.
+**A:** Yes. For classic projects the response has no `event_name` column (only `form_name` and `custom_form_label`), and it lists only repeating instruments. Repeating events are only applicable to longitudinal projects.
 
 **Q: Why does this call fail with an HTTP 400 error on a project that has no repeating instruments?**
 
 **A:** When nothing in the project is set to repeat, REDCap does not return an empty list. It returns HTTP 400 with `{"error":"You cannot export repeating instruments and events because the project does not contain any repeating instruments and events"}`. Treat that specific response as "no repeating setup", not as a failure. To check first without triggering the error, use the `has_repeating_instruments_or_events` flag from Export Project Information ([RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)).
 
-**Q: What is the custom_repeat_instrument_label?**
+**Q: What is the custom_form_label?**
 
 **A:** When a project designer enables repeating for an instrument, they can optionally provide a custom label that will appear in the repeating instances table header in the data entry UI (e.g., "Adverse Event" instead of the generic "Repeat Instrument"). This field returns that label. If none was set, the field is empty.
 

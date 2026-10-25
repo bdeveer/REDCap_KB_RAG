@@ -1633,6 +1633,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-06 — Export Field Names API
 - RC-API-09 — Export Instruments API
 - RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-36 — Export Project XML API
 - RC-API-38 — Export Reports API
 - RC-API-43 — Export Survey Participants API
 - RC-API-51 — Export Repeating Instruments and Events API
@@ -2006,6 +2007,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-20 — Import Events API
 - RC-API-21 — Delete Events API
+- RC-API-34 — Export Project Info API
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
@@ -2073,8 +2075,6 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-25 — Export User Roles API
-- RC-API-26 — Import User Roles API
-- RC-API-27 — Delete User Roles API
 - RC-API-23 — Import Users API
 - RC-API-24 — Delete Users API
 
@@ -2183,7 +2183,6 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
-- RC-API-22 — Export Users API
 - RC-API-23 — Import Users API
 - RC-API-25 — Export User Roles API
 - RC-API-27 — Delete User Roles API
@@ -2212,7 +2211,6 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-22 — Export Users API
 
 **Inbound links (referenced by):**
-- RC-API-22 — Export Users API
 - RC-API-25 — Export User Roles API
 - RC-API-26 — Import User Roles API
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
@@ -2393,6 +2391,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-04 — Project Setup: Additional Customizations
 
 **Inbound links (referenced by):**
+- RC-API-19 — Export Events API
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
 - RC-API-37 — Import Project (Create Project) API
@@ -2424,6 +2423,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info API
 - RC-API-37 — Import Project (Create Project) API
+- RC-API-02 — Export Records API
 - RC-FD-01 — Form Design Overview
 - RC-FD-03 — Data Dictionary
 

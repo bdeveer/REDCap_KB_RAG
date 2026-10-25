@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §1–§6 live-tested via the API on a sandbox
+  project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +30,8 @@ synonyms:
 - retrieve export-specific field names with the api
 - map field names for export and import using api
 - api endpoint for field name list
+- are calc fields in export field names api
+- form complete fields in the export field names list
 ---
 
 # 1. Overview
@@ -38,7 +40,7 @@ The Export Field Names API method returns the export/import-specific version of 
 
 For non-checkbox fields, the export field name is identical to the original field name.
 
-**Note:** The following field types are automatically excluded from the returned list because they cannot be used during data import: `calc`, `file`, and `descriptive`.
+**Note:** File Upload (`file`) and `descriptive` fields are excluded from the returned list. Calculated (`calc`) fields **are** included, and so is each instrument's form status field (`<instrument_name>_complete`), listed after that instrument's last field.
 
 When to use this method: When you need to construct correct field name references for checkbox fields during data exports or imports, or when you want a lightweight list of importable field names without pulling the full data dictionary.
 
@@ -214,7 +216,7 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Q: Are calculated fields included in the field list?**
 
-**A:** No. The method automatically excludes `calc`, `file`, and `descriptive` field types from the returned list because these fields cannot be used during data import. If you need to see those field names, use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) instead.
+**A:** Yes. Calculated fields are returned like any other field (export name = variable name). Only `file` and `descriptive` fields are left out; to see those, use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)). The list also contains each instrument's `<instrument_name>_complete` status field.
 
 ---
 
@@ -222,11 +224,11 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Querying a non-existent field returns an error, not empty results.** If you pass an invalid field name via the `field` parameter, the API returns an error response. Validate field names against the project's data dictionary before calling this method with a specific field.
 
-**Assuming field parameters are case-insensitive.** Field names are case-sensitive in the API. If you query `'First_Name'` but the field is actually `'first_name'`, the query returns empty results.
+**Assuming field parameters are case-insensitive.** Field names are case-sensitive in the API. If you query `'First_Name'` but the field is actually `'first_name'`, the API returns HTTP 400 `{"error":"Invalid field"}` — the same error as for a field that doesn't exist.
 
 **Forgetting to specify format.** The `format` parameter controls the output format. Always explicitly set it to `'json'`, `'csv'`, or `'xml'` based on your needs.
 
-**Expecting calc, file, or descriptive fields in the response.** These three field types are automatically excluded from the returned list. If your code relies on finding a calculated field's name here, it won't appear — use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) if you need those field names.
+**Expecting file or descriptive fields in the response — or not expecting calc and `_complete` fields.** File Upload and descriptive fields are left out; use Export Metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) if you need them. Calculated fields and the `<instrument_name>_complete` status fields *are* in the list, so a script that treats every returned name as an importable data field must skip calc fields itself.
 
 **Using the response for data export.** This method returns only field names, not field data. To export actual record data, use [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (Export Records).
 

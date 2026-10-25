@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - Longitudinal REDCap projects only
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on
+  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +30,8 @@ synonyms:
 - pull unique event names with the api
 - api endpoint to export events
 - list events for an arm via the api
+- export events api missing day_offset
+- event_id in export events api
 ---
 
 # 1. Overview
@@ -142,26 +144,30 @@ print $output;
 
 # 4. Response
 
-The method returns a JSON array (or CSV) containing all events in the project.
+The method returns all events in the project in the requested format. Each event has `event_name`, `arm_num`, `unique_event_name`, `custom_event_label` and `event_id` (the numeric event ID). The scheduling columns `day_offset`, `offset_min` and `offset_max` are returned **only when the Scheduling module is enabled** for the project; with scheduling off they are left out entirely.
 
-Example JSON response:
+Example JSON response (Scheduling enabled):
 ```json
 [
   {
     "event_name": "Event 1",
     "arm_num": 1,
-    "unique_event_name": "event_1_arm_1",
     "day_offset": 0,
     "offset_min": 0,
-    "offset_max": 0
+    "offset_max": 0,
+    "unique_event_name": "event_1_arm_1",
+    "custom_event_label": "",
+    "event_id": 41
   },
   {
     "event_name": "Event 2",
     "arm_num": 1,
-    "unique_event_name": "event_2_arm_1",
     "day_offset": 7,
-    "offset_min": -3,
-    "offset_max": 3
+    "offset_min": 3,
+    "offset_max": 3,
+    "unique_event_name": "event_2_arm_1",
+    "custom_event_label": "",
+    "event_id": 42
   }
 ]
 ```
@@ -184,7 +190,7 @@ Example JSON response:
 
 **Q: What do the offset fields mean?**
 
-**A:** The `day_offset` is the expected number of days after enrollment that the event should occur. The `offset_min` and `offset_max` define the acceptable window around the target date (e.g., ±3 days). These are used to track visit windows in longitudinal studies. Note that the API returns `offset_min` as a **negative integer** (e.g., `-3` for a 3-day early window), while the CSV events upload format uses a **positive number** for both columns. If you are building an upload CSV from API output, convert `offset_min` to its absolute value.
+**A:** The `day_offset` is the expected number of days after enrollment that the event should occur. The `offset_min` and `offset_max` define the acceptable window around the target date (e.g., ±3 days). These are used to track visit windows in longitudinal studies. Both window values are returned as **positive** numbers of days (a 3-day early window is `offset_min: 3`), the same way they are entered on the Define My Events page and in an events import, so API output can be re-imported as is. The three columns only appear when the Scheduling module is enabled.
 
 **Q: Can I use the `day_offset` values to calculate expected visit dates for a participant?**
 
@@ -197,6 +203,8 @@ Example JSON response:
 **Calling Export Events on a classic project.** Events are a longitudinal-only feature. This method will fail on classic projects. Always verify your project is longitudinal before calling this method.
 
 **Using `event_name` instead of `unique_event_name` in other API calls.** When you reference an event in other API methods (e.g., Export Records), use the `unique_event_name`, not the `event_name`. The `unique_event_name` is the system identifier.
+
+**Expecting offsets when Scheduling is off.** `day_offset`, `offset_min` and `offset_max` are only returned when the project has the Scheduling module enabled. Code that reads them unconditionally fails on other longitudinal projects — treat them as optional, or check `scheduling_enabled` in Export Project Info ([RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)) first.
 
 **Assuming events are always sequential.** Do not assume event numbers or unique_event_names follow a sequential pattern. Always parse the response and use the actual values returned.
 

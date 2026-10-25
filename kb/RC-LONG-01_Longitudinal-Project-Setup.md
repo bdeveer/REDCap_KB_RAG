@@ -7,9 +7,9 @@
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Export Events offset values live-tested on v17.5.6 (Standard), 2026-10 |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
@@ -194,7 +194,7 @@ Full column order (scheduling active): `event_name`, `arm_num`, `day_offset`, `o
 | `event_name` | Free text | Display label for the event. **Values containing spaces or special characters are wrapped in double quotes** in the CSV (e.g., `"3 Month"`, `"End of Study"`). |
 | `arm_num` | Positive integer | Must match an existing arm. In multi-arm projects, every event must appear as a separate row for each arm — there is no single row that spans multiple arms. A 2-arm, 6-event project produces 12 rows in the events CSV. |
 | `day_offset` | Integer ≥ 0 | Days from the reference date (e.g., enrollment). REDCap sorts events by `day_offset` ascending. |
-| `offset_min` | Integer ≥ 0 | Early scheduling window (days before the target date). Expressed as a positive number in the CSV — e.g., `3` means the window opens 3 days before the target date. Note: the API Export Events endpoint returns this value as a negative integer (e.g., `-3`); if building a CSV from API output, convert to its absolute value. |
+| `offset_min` | Integer ≥ 0 | Early scheduling window (days before the target date). Expressed as a positive number in the CSV — e.g., `3` means the window opens 3 days before the target date. The API Export Events endpoint returns it the same way (positive), and only when the Scheduling module is enabled. |
 | `offset_max` | Integer ≥ 0 | Late scheduling window (days after the target date). Expressed as a positive number. Symmetric windows (e.g., ±14 days) appear as the same value in both columns. |
 | `unique_event_name` | Snake_case string | May be left blank on upload — REDCap auto-generates from the event name and arm number. **Recommended: leave blank and let REDCap generate.** See derivation rule below. |
 | `custom_event_label` | Free text or blank | Piped event label. Leave blank if not used. The column is always present in exports — even when all values are empty. |
