@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - Longitudinal REDCap projects only
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction
+  and rights not re-tested) live-tested via the API on a sandbox project (2026-10);
+  LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,13 +31,14 @@ synonyms:
 - bulk delete events with the api
 - api endpoint to delete events
 - delete timepoints from an arm programmatically
+- delete events api returns 0
 ---
 
 # 1. Overview
 
 The Delete Events API method removes one or more events from a longitudinal REDCap project. You specify the unique event names to delete, and REDCap will remove them along with all data stored in those events.
 
-> **Important:** Events exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project. Additionally, deleting events will permanently remove all data stored in those events. This action cannot be undone.
+> **Important:** Events exist only in longitudinal projects. On a classic project the call is not rejected — it returns `0`. Additionally, deleting events will permanently remove all data stored in those events. This action cannot be undone.
 
 > **Important:** Because of this method's destructive nature, it is only available for projects in **Development** status. It cannot be used on projects in Production or Analysis/Cleanup status.
 
@@ -155,7 +157,7 @@ Example response:
 
 **Q: Can I delete an event on a classic project?**
 
-**A:** No. Events are a longitudinal-only feature. This method will fail on classic projects.
+**A:** No. Events are a longitudinal-only feature; on a classic project the call returns `0` (HTTP 200).
 
 **Q: My project is in Production. Can I use Delete Events?**
 
@@ -187,9 +189,9 @@ Example response:
 
 **Calling Delete Events on a Production project.** This method is restricted to Development status by design — deleting events causes irreversible data loss and REDCap blocks this on Production projects. If you get an unexpected error, check your project's status first.
 
-**Using `event_name` instead of `unique_event_name`.** Always use the `unique_event_name` (e.g., `event_1_arm_1`), not the `event_name` (e.g., "Baseline Visit"). Using the wrong name will cause the delete to fail.
+**Using `event_name` instead of `unique_event_name`.** Always use the `unique_event_name` (e.g., `event_1_arm_1`), not the `event_name` (e.g., "Baseline Visit"). Using the wrong name deletes nothing — and there's no error: the call returns HTTP 200 with `0`. Check that the count matches the number of events you meant to delete.
 
-**Misformatting the `events` parameter.** The `events` parameter must be an array. In URL encoding, use `events[0]=event_1_arm_1&events[1]=event_2_arm_1`. Do not send `events=event_1_arm_1` or `events="event_1_arm_1,event_2_arm_1"` as these will not be parsed correctly.
+**Misformatting the `events` parameter.** The `events` parameter must be an array. In URL encoding, use `events[0]=event_1_arm_1&events[1]=event_2_arm_1`. Do not send `events=event_1_arm_1` or `events="event_1_arm_1,event_2_arm_1"`: nothing is deleted and the call quietly returns `0`.
 
 ---
 

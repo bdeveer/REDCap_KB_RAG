@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)|
-| **Synonyms** | how do i delete events via the api; delete events api call; remove events from a longitudinal project through the api; api method to delete unique event names; remove events and their data via api; bulk delete events with the api; api endpoint to delete events; delete timepoints from an arm programmatically |
+| **Synonyms** | how do i delete events via the api; delete events api call; remove events from a longitudinal project through the api; api method to delete unique event names; remove events and their data via api; bulk delete events with the api; api endpoint to delete events; delete timepoints from an arm programmatically; delete events api returns 0 |
 
 ---
 
@@ -22,7 +22,7 @@
 
 The Delete Events API method removes one or more events from a longitudinal REDCap project. You specify the unique event names to delete, and REDCap will remove them along with all data stored in those events.
 
-> **Important:** Events exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project. Additionally, deleting events will permanently remove all data stored in those events. This action cannot be undone.
+> **Important:** Events exist only in longitudinal projects. On a classic project the call is not rejected — it returns `0`. Additionally, deleting events will permanently remove all data stored in those events. This action cannot be undone.
 
 > **Important:** Because of this method's destructive nature, it is only available for projects in **Development** status. It cannot be used on projects in Production or Analysis/Cleanup status.
 
@@ -141,7 +141,7 @@ Example response:
 
 **Q: Can I delete an event on a classic project?**
 
-**A:** No. Events are a longitudinal-only feature. This method will fail on classic projects.
+**A:** No. Events are a longitudinal-only feature; on a classic project the call returns `0` (HTTP 200).
 
 **Q: My project is in Production. Can I use Delete Events?**
 
@@ -173,9 +173,9 @@ Example response:
 
 **Calling Delete Events on a Production project.** This method is restricted to Development status by design — deleting events causes irreversible data loss and REDCap blocks this on Production projects. If you get an unexpected error, check your project's status first.
 
-**Using `event_name` instead of `unique_event_name`.** Always use the `unique_event_name` (e.g., `event_1_arm_1`), not the `event_name` (e.g., "Baseline Visit"). Using the wrong name will cause the delete to fail.
+**Using `event_name` instead of `unique_event_name`.** Always use the `unique_event_name` (e.g., `event_1_arm_1`), not the `event_name` (e.g., "Baseline Visit"). Using the wrong name deletes nothing — and there's no error: the call returns HTTP 200 with `0`. Check that the count matches the number of events you meant to delete.
 
-**Misformatting the `events` parameter.** The `events` parameter must be an array. In URL encoding, use `events[0]=event_1_arm_1&events[1]=event_2_arm_1`. Do not send `events=event_1_arm_1` or `events="event_1_arm_1,event_2_arm_1"` as these will not be parsed correctly.
+**Misformatting the `events` parameter.** The `events` parameter must be an array. In URL encoding, use `events[0]=event_1_arm_1&events[1]=event_2_arm_1`. Do not send `events=event_1_arm_1` or `events="event_1_arm_1,event_2_arm_1"`: nothing is deleted and the call quietly returns `0`.
 
 ---
 

@@ -5,12 +5,11 @@ domain: API
 applies_to:
 - Projects with repeating instruments or repeating events
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured. Label column name (`custom_form_label`) live-tested on v17.5.6
-  (Standard), 2026-10
+verified_against: REDCap v17.5.6 (Standard) — §4–§10 live-tested via the API on a
+  sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
+version: '1.2'
 last_updated: 2026-10
 source: REDCap API official documentation
 related:
@@ -77,7 +76,7 @@ Only `POST` is supported.
 
 To call this method, the API token's owner must have both **API Import/Update** privilege **and** **Project Setup/Design** privilege in the project. Both are required; neither alone is sufficient.
 
-Super API Tokens (issued by a REDCap administrator via the API Tokens page in the Control Center) can also be used for this method in place of a project-level API token.
+A Super API Token cannot be used for this method: it returns HTTP 403 `You do not have permissions to use the API`. Use the project's own token.
 
 ---
 
@@ -85,7 +84,7 @@ Super API Tokens (issued by a REDCap administrator via the API Tokens page in th
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token (or Super API Token). Requires API Import/Update and Project Setup/Design rights. |
+| `token` | Required | Your project API token. Requires API Import/Update and Project Setup/Design rights. (A Super API Token is refused.) |
 | `content` | Required | Always `'repeatingFormsEvents'` for this method. |
 | `format` | Optional | Format of the data being submitted: `'csv'`, `'json'`, or `'xml'` (default). |
 | `data` | Required | The repeating instrument/event definitions to import, in the format specified. |
@@ -280,9 +279,9 @@ On failure, an error message is returned in the format specified by `returnForma
 
 **A:** The integer returned is the count of repeating instrument or event entries successfully imported — not the number of records or instances affected.
 
-**Q: What is a Super API Token, and when would I use it here?**
+**Q: Can I use a Super API Token for this method?**
 
-**A:** A Super API Token is a special token issued by a REDCap administrator that grants cross-project API access. It is typically used in administrative or automation scripts. For most users, a standard project-level API token is appropriate.
+**A:** No. A Super API Token only works for creating projects ([RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md)); here it returns HTTP 403. Use the project-level token — for example the one Create Project returns.
 
 **Q: How do I indicate a repeating event vs. a repeating instrument?**
 

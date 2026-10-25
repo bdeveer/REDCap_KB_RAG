@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §3, §5–§7 (production behaviour not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
 | **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project) |

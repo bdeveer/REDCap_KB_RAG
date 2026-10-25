@@ -5,13 +5,14 @@ domain: API
 applies_to:
 - Longitudinal REDCap projects only
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4, §6–§8 (Production-status restriction
+  and rights not re-tested) live-tested via the API on a sandbox project (2026-10);
+  LTS line last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
 - RC-API-10 — Export Instrument-Event Mappings API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -45,7 +46,7 @@ When to use this method: When you need to programmatically assign instruments to
 
 # 2. Important Notes
 
-- **Longitudinal Only:** This method only works with longitudinal projects. Using it on a classic project returns an error.
+- **Longitudinal Only:** Mappings only mean something in longitudinal projects. On a classic project the call is not rejected — it returns HTTP 200 with a count — so check the project type yourself first.
 - **Development Status Only:** This method is only available for projects in Development status. It cannot be used on projects in Production or Analysis status.
 - **Requires API Import/Update AND Project Design/Setup:** You must have both API Import/Update privileges and Project Design/Setup privileges in the project. API Import/Update alone is not sufficient.
 - **Replaces Existing Mappings:** This method replaces the entire mapping structure. All existing mappings are removed and replaced with the provided data.
@@ -302,6 +303,8 @@ On success, the method returns the number of instrument-event mappings imported 
 **Using only API Import/Update right without Project Design/Setup.** Both privileges are required. A user with only API Import/Update will get a permissions error even though that right sounds sufficient for an import operation.
 
 **Forgetting to format data as JSON array.** The data must be a JSON-encoded array, even if you're only importing a few mappings. Single mapping objects must be wrapped in an array.
+
+**Calling it on a classic project and trusting the response.** The call returns a count (HTTP 200) even on a classic project, where it does nothing useful. Check `is_longitudinal` in Export Project Info ([RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md)) first.
 
 **Using incorrect event names.** Event names are case-sensitive. If you reference `'event_1_arm_1'` but the actual event is `'Event_1_Arm_1'`, the import fails with a validation error.
 

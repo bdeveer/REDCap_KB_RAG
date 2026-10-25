@@ -7,9 +7,9 @@
 | **Domain** | API |
 | **Applies To** | All REDCap instances (requires Super API Token) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Section 4.5, the plain-text token response and the `purpose_other` error tested live on v16.0.49 |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Section 4.5, the plain-text token response and the `purpose_other` error tested live on v16.0.49; §1, §3, §5, §7 live-tested on v17.5.6 (Standard), 2026-10 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
+| **Version** | 1.1 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -274,7 +274,7 @@ On success, the API returns the newly created project's 32-character API token a
 A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6
 ```
 
-Read the response body as a string and trim whitespace rather than parsing it as JSON.
+Read the response body as a string and trim whitespace rather than parsing it as JSON — the response is labelled `Content-Type: application/json` but contains only the token.
 
 On error, you receive an error message:
 
@@ -323,7 +323,7 @@ On error, you receive an error message:
 
 **Renaming the form after creating it with survey settings:** Survey settings are tied to the form name. If the data dictionary you import afterwards uses a different form name, the new instrument is not a survey. Keep the form name from the XML.
 
-**Project title length limits:** Project titles cannot exceed 255 characters. Validation will fail silently if you exceed this length.
+**Project title length:** a 307-character title was accepted and stored in full on 17.5.6, so the API doesn't enforce a 255-character limit. Keep titles short anyway — they appear in menus, emails and file names.
 
 **Importing complete XML vs. minimal fields:** To clone a project, provide complete XML from Export Project XML ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)). To create a simple project quickly, provide only basic fields like `project_title` and `purpose`.
 

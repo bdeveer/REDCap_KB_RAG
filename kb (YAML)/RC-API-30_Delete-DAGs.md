@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects with Data Access Groups enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §1, §2, §4–§6 live-tested via the API
+  on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS)
+  changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -30,6 +31,8 @@ synonyms:
 - clean up unused data access groups programmatically
 - api endpoint to delete data access groups
 - remove data access groups via api
+- records missing after deleting dag api
+- delete dags api non-existent dag error
 ---
 
 # 1. Overview
@@ -140,7 +143,7 @@ print $output;
 
 # 4. Response
 
-On success, the API returns a count of DAGs deleted. For example: `1` means one DAG was removed from the project. If a DAG name does not exist in the project, it is ignored and does not affect the response.
+On success, the API returns a count of DAGs deleted. For example: `1` means one DAG was removed from the project. If any DAG name in the list does not exist, the whole call fails (HTTP 400) and **no** DAGs are deleted.
 
 Example response: `1`
 
@@ -150,7 +153,7 @@ Example response: `1`
 
 **Q: What happens to data records assigned to a deleted DAG?**
 
-**A:** The records are not deleted. However, they lose their DAG assignment. In most cases, they become accessible to users with all-DAG view permissions. If your project uses strict data isolation, ensure you reassign records or users before deleting a DAG.
+**A:** The records are not deleted, but on 17.5.6 they **disappear from exports**: after the DAG is deleted, Export Records and Export Project XML no longer return them, even for a user with access to all DAGs. The data is still in the project (Generate Next Record Name still counts the records, and re-importing a value brings the whole record back without a DAG). Reassign or unassign the records (`redcap_data_access_group` blank in an import) **before** deleting the DAG.
 
 **Q: What is the `unique_group_name`?**
 
@@ -158,7 +161,7 @@ Example response: `1`
 
 **Q: What if I try to delete a DAG that doesn't exist?**
 
-**A:** The API ignores the DAG name and does not report an error. If you delete a DAG and the API returns 0, it means the DAG was not found in the project.
+**A:** The call fails with HTTP 400 `One or more of the dags provided are not valid unique group names that do not exist in this project. Note: No dags were deleted. DAGs that do not exist: …` — and any valid DAGs in the same call are not deleted either.
 
 **Q: Can I delete multiple DAGs at once?**
 
@@ -176,11 +179,11 @@ Example response: `1`
 
 # 6. Common Mistakes & Gotchas
 
-**Deleting a DAG without reassigning its users or records.** Users and records assigned to a deleted DAG will lose the DAG association. Before deleting a DAG in production, export users and records to identify what is affected. If users need to retain data isolation, reassign them to alternative DAGs or adjust record assignments.
+**Deleting a DAG without reassigning its users or records.** Users lose the DAG association. Records still assigned to the DAG vanish from exports (see Common Questions), so unassign them first. Before deleting a DAG in production, export users and records to identify what is affected. If users need to retain data isolation, reassign them to alternative DAGs or adjust record assignments.
 
 **Confusing DAG display names with unique group names.** The `unique_group_name` is the system ID (e.g., `'boston_site'`), not the human-readable label (e.g., `'Boston Site'`). Use the ID, not the label, in the delete request.
 
-**Expecting an error when deleting a non-existent DAG.** The API does not return an error if a DAG is not found; it simply returns 0. Check the response count to verify the expected number of DAGs were deleted.
+**Including a DAG name that doesn't exist.** One unknown unique group name makes the whole call fail with HTTP 400, and nothing is deleted. Export the DAGs first and only send names from that list.
 
 **Forgetting the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only one is not sufficient — the deletion will fail if either is missing.
 

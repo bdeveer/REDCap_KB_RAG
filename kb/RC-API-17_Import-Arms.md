@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md); [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md)|
-| **Synonyms** | how do i import arms via the api; import arms api call; create or rename study arms through the api; api method to add arm numbers and names; configure longitudinal arms programmatically; bulk update arms with the api; api endpoint to import arms; add arms to a multi-arm project via api |
+| **Synonyms** | how do i import arms via the api; import arms api call; create or rename study arms through the api; api method to add arm numbers and names; configure longitudinal arms programmatically; bulk update arms with the api; api endpoint to import arms; add arms to a multi-arm project via api; imported arm not showing in export arms |
 
 ---
 
@@ -26,7 +26,7 @@ The `override` parameter controls behavior: when set to `0`, the method adds or 
 
 > **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status. Note: even if your REDCap administrator has enabled the "Allow Normal Users to Add or Modify Events and Arms in Production" setting, that applies to UI-based editing only — the Import Arms API endpoint remains restricted to Development status regardless.
 
-> **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project.
+> **Important:** Arms exist only in longitudinal projects. On a classic project this method does **not** return an error (HTTP 200 with a count), so check the project type first.
 
 **Permissions required:** The API token used must have both **API Import/Update** privileges *and* **Project Design/Setup** privileges in the project.
 
@@ -40,7 +40,7 @@ The `override` parameter controls behavior: when set to `0`, the method adds or 
 | `content` | Required | Always `'arm'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
 | `format` | Required | `'csv'`, `'json'`, or `'xml'`. Default is `'xml'` if omitted. |
-| `override` | Required | `0` = add/modify arms without deleting others (default); `1` = delete all existing arms and replace with provided arms. |
+| `override` | Required | `0` = add/modify arms without deleting others (default; also what happens if you leave it out); `1` = delete all existing arms — with their events and data — and replace with provided arms. |
 | `data` | Required | Arms to import, in the format specified by `format`. Each arm must have `arm_num` and `name`. |
 | `returnFormat` | Optional | `'csv'`, `'json'`, or `'xml'` — specifies the format of error messages. Defaults to the value of `format` if not specified. Not applicable when using a background process (`backgroundProcess=true`), which always returns `success:true` or `success:false`. |
 
@@ -186,7 +186,7 @@ This number reflects how many arms were created or renamed, not the total number
 
 **Q: Can I use this method on a classic project?**
 
-**A:** No. Arms are a longitudinal-only feature. This method will fail on classic projects.
+**A:** No. Arms are a longitudinal-only feature. The call isn't rejected (it returns a count), but it has no use there.
 
 **Q: What happens if I import an arm with an `arm_num` that already exists?**
 
@@ -194,7 +194,11 @@ This number reflects how many arms were created or renamed, not the total number
 
 **Q: Can I have non-sequential arm numbers (e.g., 1, 3, 5)?**
 
-**A:** Technically yes, but this is not recommended. REDCap expects arm numbers to be sequential integers starting from 1. Using non-sequential numbers may cause unexpected behavior in the UI and in other API methods.
+**A:** Yes — arm 5 next to arms 1 and 2 is accepted. Sequential numbering is still easier to work with in the UI and in scripts.
+
+**Q: I imported an arm but Export Arms doesn't show it. Why?**
+
+**A:** An arm without events is not listed by Export Arms ([RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)). Add at least one event to it with Import Events ([RC-API-20 — Import Events API](RC-API-20_Import-Events.md)) and it appears.
 
 **Q: What does `returnFormat` control?**
 
@@ -208,11 +212,11 @@ This number reflects how many arms were created or renamed, not the total number
 
 ## 6. Common Mistakes & Gotchas
 
-**Calling Import Arms on a classic project.** Arms are a longitudinal-only feature. If your project is classic, this method will fail. Always confirm your project is longitudinal before calling this method.
+**Calling Import Arms on a classic project.** Arms are a longitudinal-only feature, but the call returns HTTP 200 with a count on a classic project instead of failing. Always confirm your project is longitudinal before calling this method.
 
 **Forgetting to JSON-encode the `data` parameter.** The `data` parameter must be a valid JSON array of objects. It is not a plain string. Use `json.dumps()` in Python, `toJSON()` in R, or `json_encode()` in PHP to properly format it.
 
-**Using `override=1` when you only want to add a new arm.** The `override=1` flag deletes all existing arms and replaces them. If you only want to add a single arm, use `override=0` instead.
+**Using `override=1` when you only want to add a new arm.** The `override=1` flag deletes all existing arms — and their events and all record data in them — and replaces them. If you only want to add a single arm, use `override=0` instead.
 
 **Assuming arm numbers start from 0.** ARM numbers in REDCap are 1-indexed: the first arm is arm 1, not arm 0. If you submit `arm_num: 0`, it may be interpreted as invalid.
 

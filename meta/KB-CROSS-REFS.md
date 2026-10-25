@@ -1848,6 +1848,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-20 — Import Events API
 - RC-API-07 — Export Metadata (Data Dictionary) API
 - RC-API-08 — Import Metadata (Data Dictionary) API
+- RC-API-34 — Export Project Info API
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
@@ -1968,6 +1969,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-16 — Export Arms API
 - RC-API-18 — Delete Arms API
+- RC-API-20 — Import Events API
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
@@ -2037,6 +2039,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-17 — Import Arms API
 - RC-API-19 — Export Events API
 - RC-API-21 — Delete Events API
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
@@ -2391,6 +2394,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-04 — Project Setup: Additional Customizations
 
 **Inbound links (referenced by):**
+- RC-API-11 — Import Instrument-Event Mappings API
 - RC-API-19 — Export Events API
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
@@ -2452,6 +2456,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-34 — Export Project Info API
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
+- RC-API-53 — Import Repeating Instruments and Events API
 
 ---
 
@@ -2750,6 +2755,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-09 — Export Instruments API
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-LONG-02 — Repeated Instruments & Events Setup
+- RC-API-37 — Import Project (Create Project) API
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist

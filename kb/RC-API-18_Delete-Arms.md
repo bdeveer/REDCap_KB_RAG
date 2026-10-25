@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md); [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md)|
@@ -24,7 +24,7 @@ The Delete Arms API method removes one or more arms from a longitudinal REDCap p
 
 > **Important:** This method is only available for projects in **Development status**. It will not work on projects in Production or Analysis/Cleanup status.
 
-> **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project. Deleting an arm permanently deletes all events in that arm and all data collected under those events — this cannot be undone.
+> **Important:** Arms exist only in longitudinal projects. On a classic project the call is not rejected (HTTP 200), so check the project type first. Deleting an arm permanently deletes all events in that arm and all data collected under those events — this cannot be undone.
 
 ---
 
@@ -142,7 +142,11 @@ Example response:
 
 **Q: Can I delete an arm on a classic project?**
 
-**A:** No. Arms are a longitudinal-only feature. This method will fail on classic projects.
+**A:** No. Arms are a longitudinal-only feature; the call returns HTTP 200 on a classic project but has no use there.
+
+**Q: What if one of the arm numbers doesn't exist?**
+
+**A:** The whole call fails and **no** arms are deleted: HTTP 400 `…Note: No arms were deleted. Arm numbers that do not exist: 9`.
 
 **Q: Can I delete arms on a project that is in Production status?**
 
@@ -170,7 +174,7 @@ Example response:
 
 **Not backing up data before deletion.** Deleting an arm deletes all events and data in that arm. There is no undo. Always export your project data before deleting arms if you may need it later.
 
-**Calling Delete Arms on a classic project.** Arms are a longitudinal-only feature. This method will fail on classic projects. Verify your project is longitudinal before calling this method.
+**Calling Delete Arms on a classic project.** Arms are a longitudinal-only feature, but the call doesn't fail on a classic project (HTTP 200). Verify your project is longitudinal before calling this method.
 
 **Assuming arm deletion does not affect data.** Arm deletion cascades to events and data. All records, field values, and survey responses in those events are permanently deleted.
 

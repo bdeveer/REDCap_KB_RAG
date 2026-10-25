@@ -7,14 +7,14 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§7 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) |
-| **Synonyms** | how do i import dags via the api; import data access groups api call; create or update dags through the api; api method to add data access group names; bulk create dags with the api; migrate data access groups programmatically; api endpoint to import data access groups; add data access groups to a project via api |
+| **Synonyms** | how do i import dags via the api; import data access groups api call; create or update dags through the api; api method to add data access group names; bulk create dags with the api; migrate data access groups programmatically; api endpoint to import data access groups; add data access groups to a project via api; rename dag changes unique group name api; set unique group name new dag api |
 
 ---
 
@@ -155,7 +155,7 @@ print $output;
 
 ## 4. Response
 
-On success, the API returns the count of DAGs created or updated. For example: `2` means two DAGs were imported. If a `unique_group_name` is provided and already exists, that DAG is updated; otherwise, a new DAG is created.
+On success, the API returns the count of DAGs created or updated. For example: `2` means two DAGs were imported. If a `unique_group_name` is provided and already exists, that DAG is updated — and its unique name is **regenerated from the new label**. A blank `unique_group_name` creates a new DAG; a unique name that doesn't exist yet is an error.
 
 Example response: `2`
 
@@ -170,7 +170,7 @@ When submitting the `data` payload as CSV (`format='csv'`), the file uses the fo
 | **Column** | **Type** | **Required** | **Notes** |
 |---|---|---|---|
 | `data_access_group_name` | Free text | Required | Human-readable display name for the DAG (e.g., `Boston Site`). Shown in the REDCap UI. Values containing spaces or commas must be enclosed in double quotes. |
-| `unique_group_name` | Alphanumeric/underscore | Optional | System identifier used in all API calls and data entry. Leave blank to let REDCap auto-generate it from the display name (lowercase, spaces converted to underscores — e.g., `"New Haven"` → `new_haven`). If provided, must be unique within the project. |
+| `unique_group_name` | Alphanumeric/underscore | Optional | System identifier used in all API calls and data entry. Leave blank to create a new DAG — REDCap generates it from the display name (lowercase, other characters to underscores — e.g., `"New Haven Clinic #2"` → `new_haven_clinic_2`). Fill it in only to update an existing DAG; you can't choose it for a new one. |
 
 Example CSV (two new DAGs, auto-generated unique names):
 ```
@@ -194,7 +194,7 @@ Seattle,seattle
 
 **Q: Do I have to provide a `unique_group_name` when importing?**
 
-**A:** No. If you omit the field or leave it empty, REDCap auto-generates a unique ID based on the display name. If you provide a `unique_group_name`, it will be used; if one with that name already exists, the DAG will be updated.
+**A:** For a new DAG, leave it blank — REDCap generates it from the display name. A `unique_group_name` that doesn't exist yet is rejected: HTTP 400 `Unique group name "my_custom" does not exist in the project. NOTE: The unique group name is auto-generated…`. Provide it only to update an existing DAG.
 
 **Q: Can I import multiple DAGs in a single call?**
 
@@ -202,7 +202,7 @@ Seattle,seattle
 
 **Q: What happens if a DAG with the same `unique_group_name` already exists?**
 
-**A:** The existing DAG is updated with the new `data_access_group_name`. Users assigned to that DAG are not affected.
+**A:** The existing DAG gets the new `data_access_group_name`, and its unique name is regenerated from it (`site_one` + "Site One Renamed" → `site_one_renamed`). Users and records keep the DAG, but anything that uses the old unique name — scripts, logic, filters — must be updated.
 
 **Q: What format should the `unique_group_name` have?**
 
@@ -225,6 +225,8 @@ Seattle,seattle
 **Not URL-encoding the `data` field in cURL.** In shell scripts, ensure special characters in JSON (like `"` and spaces) are properly encoded or escaped.
 
 **Misunderstanding what `format` controls.** The `format` parameter governs both the format of the `data` payload you send **and** the response format. You can submit `data` as JSON, CSV, or XML — just ensure the `format` parameter matches the format of your payload.
+
+**Renaming a DAG changes its unique name.** Updating the display name of `site_one` also renames the unique group name. Update every reference to it afterwards, or leave the display name alone.
 
 **Trying to update a DAG by display name alone.** You must use the `unique_group_name` to target an existing DAG for updates. If you omit it, a new DAG is created instead.
 

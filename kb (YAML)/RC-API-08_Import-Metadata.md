@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.5.6 (Standard) — §2, §4, §6–§8 (Production-status restriction
+  not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line
+  last reviewed against the v17.3.7 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -28,6 +29,8 @@ synonyms:
 - bulk update metadata using the api
 - api endpoint to change project structure
 - load data dictionary into a project via api
+- import metadata api deletes fields not included
+- import metadata api returns number
 ---
 
 # 1. Overview
@@ -43,7 +46,7 @@ When to use this method: When you need to programmatically create or modify the 
 - **Development status only:** This method is restricted to projects in Development status. Attempting to use it on a Production or Analysis/Cleanup project will fail. This restriction exists because of the method's destructive potential.
 - **Dual permission requirement:** You must have both API Import/Update privileges and Project Design/Setup privileges. Either one alone is not sufficient.
 - **Metadata Validation:** REDCap validates the metadata before import. Invalid field definitions will be rejected with error messages.
-- **Destructive Operation:** This method can overwrite or remove existing field definitions. Always test on a development project, and export a backup of the current metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) before importing.
+- **Destructive Operation:** The import replaces the whole data dictionary: fields left out of the import are deleted, together with their data. Always test on a development project, and export a backup of the current metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)) before importing.
 
 ---
 
@@ -155,13 +158,11 @@ print $output;
 
 # 6. Response
 
-The method returns a count of fields that were successfully created or modified, along with any validation errors.
+On success the method returns the number of fields in the imported dictionary as a plain number (e.g. `5`), not a JSON object. On failure it returns the validation errors.
 
-**Successful response (JSON):**
-```json
-{
-  "count": 1
-}
+**Successful response:**
+```
+5
 ```
 
 **Response with errors (JSON):**
@@ -185,11 +186,11 @@ The method returns a count of fields that were successfully created or modified,
 
 **Q: What happens if I try to import a field that already exists?**
 
-**A:** If the field name and form name match an existing field, the existing field is updated with the new properties. If only the name is the same but form differs, it is treated as a new field.
+**A:** The field is updated with the new properties. Field names are unique in a project, so importing an existing field name under a different `form_name` moves that field to the other form; it doesn't create a second field.
 
 **Q: Can I delete fields using this method?**
 
-**A:** No, this method only creates or updates fields. To delete fields, you must do so manually in the REDCap interface or use project editing features not available via this API method.
+**A:** Yes — by leaving them out. The import works like a Data Dictionary upload: what you send becomes the project's dictionary, and any field not in it is deleted, with its data. To change a few fields, export the current metadata first ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)), edit it, and import the complete set.
 
 **Q: What field types are supported?**
 
@@ -205,7 +206,9 @@ The method returns a count of fields that were successfully created or modified,
 
 **Attempting to import on a Production or Analysis/Cleanup project.** This method is restricted to Development status only. If your project has already moved to Production, the API call will fail. You must either use the GUI to make changes in Production (which requires a move-to-production request) or move the project back to Development if your institution allows it.
 
-**Not formatting data as JSON array.** The data must be a JSON-encoded array, even if you're only importing one field. Single objects must be wrapped in an array: `json_encode([field_object])`.
+**Not formatting data as JSON array.** The data must be a JSON-encoded array, even if you're only importing one field. Single objects must be wrapped in an array: `json_encode([field_object])`. A bare object crashes REDCap with a PHP fatal error page (HTTP 400) instead of a validation message.
+
+**Importing only the fields you changed.** Fields missing from the import are deleted, with their data. Always import the complete dictionary.
 
 **Forgetting form_name for each field.** Every field must belong to a form (instrument). The form_name is required, even for the primary identifier record_id field. If you omit it, import fails.
 
