@@ -23,3 +23,6 @@ LOCAL_REDCAP_SETUP.md
 ServiceNow ETL/REDCap_KB_ServiceNow_Import.xlsx
 
 skill-zips/
+
+# Claude Code local settings (permissions) — per machine
+.claude/settings.local.json
