@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.6 (Standard) — §1, §3, §5–§7 (report created for the test) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -64,7 +64,7 @@ The character used to separate fields in CSV output. Options include comma (defa
 | `rawOrLabel` | Optional | `'raw'` (default) for raw coded values, `'label'` for display labels |
 | `rawOrLabelHeaders` | Optional | For CSV flat format only: `'raw'` (default) for field variable names, `'label'` for field labels in headers |
 | `exportCheckboxLabel` | Optional | `'true'` to export checkbox option labels when checked (blank if unchecked); `'false'` (default) exports `'Checked'`/`'Unchecked'`. Only applies when `rawOrLabel=label`. |
-| `csvDelimiter` | Optional | CSV delimiter: `','` (default), `'tab'`, `';'`, `'\|'`, or `'^'`. On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). |
+| `csvDelimiter` | Optional | CSV delimiter: `','` (default), `'tab'`, `';'`, `'\|'`, or `'^'`. Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21. |
 | `decimalCharacter` | Optional | Force decimal format: `'.'` or `','`. If blank, uses each field's native format. Applies to calc fields and number-validated text fields. |
 
 ---
@@ -206,7 +206,7 @@ The API returns data rows as configured in the report, ordered first by record (
 
 ## 7. Common Mistakes & Gotchas
 
-**`csvDelimiter=tab` crashes the export:** On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`).
+**`csvDelimiter=tab` crashes the export:** Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21.
 
 **Incorrect report_id format:** Report IDs are numeric. Passing a string like `"my_report"` will fail. Always use the numeric ID from the URL or report list.
 

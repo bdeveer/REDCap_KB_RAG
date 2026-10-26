@@ -236,6 +236,7 @@ The 17.4.2 → 17.5.4 window (2026-08-20 to 2026-10-08) carried an unusually hea
 | 17.5.1 / 17.3.14 / 16.0.52 | Major | 2FA authenticator secrets generated from a non-cryptographic random source (all versions) | Attackers targeting TOTP |
 | 17.5.1 / 17.3.14 / 16.0.52 | Major | Two MyCap SQL injections (13.0.0+); further Control Center configuration tampering | Authenticated users / config admins |
 | 17.5.4 / 17.3.18 / 16.0.55 | Major | SSRF in content fetching; project-settings authorization weakness; stored XSS in record-locking text; PHP-type upload block | Authenticated users |
+| 17.5.7 / 17.3.21 / 16.0.57 | Major | Project XML API export ignored per-instrument export rights when the user had Full Data Set rights on any one instrument | Authenticated users with API Export and mixed per-instrument export rights |
 
 Two consequences reach beyond patching:
 

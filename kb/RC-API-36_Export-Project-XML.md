@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.6 (Standard) — §1, §3, §5 (admin token; export-rights and DAG-member behaviour not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.18 (LTS) changelog |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-10 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
@@ -29,6 +29,8 @@ By default, the export includes both metadata and data. Setting `returnMetadataO
 This method requires only the API Export right.
 
 > **Version caveat (below 17.4.5 Standard / 17.3.11 LTS / 16.0.50 LTS):** The Project XML export endpoint could **bypass the full data export privilege check**, so a user with limited export rights could receive more data than their rights allow. A major security fix; on older instances, treat API Export on any account with restricted export rights as potentially full export through this method.
+
+> **Version caveat (below 17.5.7 Standard / 17.3.21 LTS / 16.0.57 LTS):** A second, separate gap: a user with **Full Data Set** export rights on **at least one** instrument could export data from **every** instrument through this method, including instruments where their export rights were De-Identified, Remove All Identifier Fields or No Access. The Data Exports page in the UI was not affected. A major security fix (Ticket #286969); from these versions, a data export through this method requires Full Data Set rights on all requested fields, and metadata-only exports (`returnMetadataOnly=true`) are unaffected. On older instances, treat API Export on any account with mixed per-instrument export rights as full export through this method.
 
 ---
 
@@ -201,7 +203,7 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 
 **Data included by default:** `returnMetadataOnly` defaults to `'false'`, meaning data is exported unless you explicitly opt out. If you only want the project structure, always pass `returnMetadataOnly='true'`.
 
-**Data export rights apply to returned data:** If your account has De-Identified or Remove All Identifier Fields export rights, those restrictions are enforced on any data returned by this method. Use Full Data Set rights to avoid unexpected field omissions.
+**Data export rights apply to returned data:** If your account has De-Identified or Remove All Identifier Fields export rights, those restrictions are enforced on any data returned by this method. Use Full Data Set rights to avoid unexpected field omissions. From 17.5.7 Standard / 17.3.21 LTS / 16.0.57 LTS, a data export needs Full Data Set rights on **all** requested fields; with mixed per-instrument rights, export only the instruments you have full rights to with Export Records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)), or use `returnMetadataOnly=true`. Before those versions, mixed rights were not enforced here at all (see the version caveat in §1).
 
 **`returnFormat` controls errors, not the response:** The response is always CDISC ODM XML. `returnFormat` only affects the format of any error messages returned. Don't confuse it with a general format selector.
 

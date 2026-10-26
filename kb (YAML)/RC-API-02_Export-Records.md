@@ -10,7 +10,7 @@ verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 (survey fields an
   line last reviewed against the v17.3.18 (LTS) changelog
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.5'
+version: '1.6'
 last_updated: 2026-10
 source: REDCap API v16.1.3 official documentation examples
 related:
@@ -71,7 +71,7 @@ When to use this method: When you need to read record data from REDCap in an aut
 | `filterLogic` | Optional | A logic string (e.g., `[age] > 30`) to filter returned records. Only records where the logic evaluates as TRUE are returned. Invalid logic does **not** return an error — it returns every record (see Gotchas). In longitudinal projects the filter is not evaluated per event the way branching logic is (see Gotchas). |
 | `dateRangeBegin` | Optional | Return only records created or modified **after** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, no lower bound is applied. |
 | `dateRangeEnd` | Optional | Return only records created or modified **before** this timestamp. Format: `YYYY-MM-DD HH:MM:SS` (server time). If omitted, uses the current server time. |
-| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
+| `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21. The UI Data Import Tool exposes only Comma, Tab, and Semicolon. |
 | `decimalCharacter` | Optional | Forces all numeric values (calc fields and number-validated text fields) to use a consistent decimal separator: `','` or `'.'`. If omitted, numbers use their native format. |
 | `exportBlankForGrayFormStatus` | Optional | `true` or `false` (default). If `true`, instrument complete status fields with a gray (unstarted) icon export as blank instead of `0`. Recommended when data will be re-imported into REDCap. |
 | `combineCheckboxOptions` | Optional | `true` or `false` (default). If `true`, all checked options for a checkbox field are combined into a single column instead of exporting as separate `variable___code` columns. |
@@ -274,7 +274,7 @@ The method returns records in the requested format (JSON, CSV, XML, or ODM), ord
 
 **`exportDataAccessGroups` is silently overridden for DAG members.** If the token belongs to a user who is assigned to a DAG, this parameter is ignored and the column is not included — even if you set it to `true`. Only tokens from users outside any DAG will include the DAG column.
 
-**`csvDelimiter=tab` crashes CSV exports.** On 17.5.6, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). The error page names `fputcsv(): Argument #3 ($separator) must be a single character`. Imports accept `tab` normally.
+**`csvDelimiter=tab` crashes CSV exports.** Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21. The error page names `fputcsv(): Argument #3 ($separator) must be a single character`. Imports accept `tab` normally.
 
 **`exportBlankForGrayFormStatus` matters for round-trip imports.** If you export data and plan to re-import it, set this to `true`. Otherwise, gray-status instruments will export as `0` (Incomplete), and re-importing will convert those gray statuses to explicit Incomplete — changing the project's data.
 
