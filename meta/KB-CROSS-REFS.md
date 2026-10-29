@@ -4285,6 +4285,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
+- RC-MOB-01 — REDCap Mobile App
 
 ---
 
@@ -4513,6 +4514,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-DE-13 — Record Administration: Choose Action for Record
 - RC-LOCK-01 — Record Locking & E-Signatures
+- RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-05 — MyCap: App Settings & Participant Management
 
 ---
@@ -4757,6 +4759,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide
+- RC-LOG-01 — Logging — Project Audit Trail
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-NAV-UI-01 — Project Navigation UI

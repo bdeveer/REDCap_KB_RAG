@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - None
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-10
 related:
 - id: RC-AT-11
   title: 'Action Tags: Mobile App Action Tags'
@@ -21,6 +21,10 @@ related:
   title: 'User Rights: Overview & Three-Tier Access'
 - id: RC-CC-06
   title: 'Control Center: Modules & Services Configuration'
+- id: RC-IMP-04
+  title: Record Data CSV Import — Column Reference and Format Guide
+- id: RC-LOG-01
+  title: Logging — Project Audit Trail
 tags:
 - mobile
 synonyms:
@@ -32,6 +36,10 @@ synonyms:
 - mobile app api token and initialization code
 - reset a mobile app user pin
 - sync offline records back to the redcap server
+- mobile app emergency data dump save to device
+- mobile app sync failed uploading the document has failed
+- get unsynced data off an ipad in the redcap app
+- mobile app outdated ios version will not sync
 ---
 
 # 1. Overview
@@ -208,9 +216,13 @@ If multiple users need to access the same project, each must set up the project 
 Download the REDCap Mobile App from the Apple App Store (iOS) or Google Play Store (Android). Search for "REDCap" — the publisher is Vanderbilt University Medical Center.
 
 Minimum OS requirements:
-- iOS: version 9.0 or later (iPhone 4 and up, iPad 2 and up)
-- Android: version 4.3 or later
+- iOS / iPadOS: version 15.0 or later for the current app (v5.31.3 on the App Store as of October 2026)
+- Android: check the Google Play listing for the current minimum
 - The device must support encryption. Amazon Fire devices are not supported.
+
+The minimum OS rises over time, so check the store listing before buying or redeploying devices. A device that can't reach the required OS stays on whatever app version it last installed and stops getting fixes. Examples: the iPad Air (1st generation) can't go past iOS 12.5.x, and the iPad (5th generation) can't go past iPadOS 16.7.x. Badly outdated app and OS versions are a common cause of sync failures (see 9.7). Retire devices that can no longer run a current app version.
+
+> **Important:** Upload all new and modified data to the server **before** updating the device's OS or the app. The app's own App Store release notes give the same advice.
 
 ## 7.2 Add a Project to the App
 
@@ -275,7 +287,7 @@ Sync requires an active internet connection. Tap **Send Data** (or the sync butt
 
 ## 9.3 Partial Sends
 
-A partial set of records can be sent instead of all pending drafts. This is recommended when a large number of records have accumulated and a full sync would be slow.
+A partial set of records can be sent instead of all pending drafts. This is recommended when a large number of records have accumulated and a full sync would be slow. Sending a few records at a time can also get data through a slow or unstable connection, such as a satellite link or a remote field site, where one large upload keeps dropping. The Emergency Data Dump offers the same choice through **Select records manually** (see 9.6).
 
 ## 9.4 Post-Sync Refresh
 
@@ -287,7 +299,58 @@ If the same record was edited both in the app and on the REDCap server between s
 
 ## 9.6 Emergency Data Dump
 
-If something prevents the app from syncing normally (e.g., a network error that cannot be resolved in the field), use **Send Emergency Data Dump** to transmit data to the server as a raw CSV file. The file appears under the **Mobile App File Archive** tab in the project. This is a fallback mechanism; normal sync should be used whenever possible since the CSV requires manual review and import.
+If something prevents the app from syncing normally (e.g., a network error that cannot be resolved in the field), use **Send Emergency Data Dump** to export the device's data as a CSV file. It can be sent to the server, saved on the device, or both. This is a fallback mechanism; use normal sync whenever possible, because the CSV has to be reviewed and imported by hand.
+
+**Steps in the app:**
+
+1. Open the project in the app. On the project home screen, scroll to the bottom and tap **Send Emergency Data Dump**.
+2. Choose which records to include:
+
+| Option | Use when |
+|---|---|
+| **New/Modified Only** | The usual choice. Covers the records that are not yet on the server. |
+| **All Records** | You're unsure which records are missing from the server. |
+| **Select records manually** | You want to pick specific records, for example to send a large backlog in smaller batches. |
+
+3. Tap **Proceed with Emergency Send**. This screen also offers to send the project logs (see 10.4).
+4. Under **Choose file destination**, pick one:
+
+| Destination | What happens |
+|---|---|
+| **Send to Server** | The CSV is uploaded to the project. This still needs a working, reasonably strong internet connection. |
+| **Save to Device** | The CSV is written to the device only. It never reaches the server. |
+| **Both** | Saves a copy on the device and also tries the upload. This is the safest choice when the connection is in doubt. |
+
+5. A confirmation screen shows where the data went.
+
+**Save to Device:** the app warns that the saved file is **not encrypted**, unlike the app's own storage. To get the file off the device, the app says to connect the device to a computer and look for the file in the **redcap** folder. On iOS the dump is written inside the app's documents area, in a `collector` folder, as a file named `<timestamp>.data.csv`. Treat the file as study data: move it straight to institution-approved storage, never email it, and delete the copies on the device and the computer once it's safely stored.
+
+> **Institution-specific:** Where a saved dump may be stored (for example an institutional OneDrive), and whether unencrypted study data may sit on a device at all, depends on your institution's data security policy and your IRB protocol. Confirm with your REDCap administrator.
+
+**On the server:** a dump sent to the server appears on the project's **REDCap Mobile App** page (left-hand menu, under Applications) on the **App Data Dumps** tab. Logs sent with it appear on the **App Logs** tab. Earlier versions of this article called this area the **Mobile App File Archive**. **Import Data from File** imports the dump into the project. Always review the data before you confirm the import, so that no existing fields are overwritten. This matters most in projects with auto-numbering, where record IDs created offline can collide with records already on the server. A dump saved to the device and brought in by hand is imported through the Data Import Tool with the same care (see [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md)).
+
+> **Critical:** Do not run **Refresh Setup & Data** on the device until you have confirmed the data is on the server, through a sync or an imported dump. A refresh permanently erases the data stored on the device.
+
+## 9.7 Troubleshooting a Failed Sync
+
+**Error: "Uploading the document has failed"** with a detail line like `{"code":3,"source":"file:///…/collector/<timestamp>.data.csv",…}` and `fids.length === 0`. The connection failed before the server answered: the upload started, the connection dropped or was refused, and the server never returned a file ID. The same error can appear for a normal sync and for **Send to Server** in the Emergency Data Dump.
+
+**Check whether the requests reach the server.** Open the project's **Logging** page (see [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md)) and filter on the app user's username. A successful sync first logs **Export REDCap version (API)**, **Export project information (API)** and **Download data dictionary (API)**, then **Create record (API)** and **Update record (API)** entries for the uploaded records. If none of these appear around the failed attempts, the requests never reached REDCap, and the problem is on the device or the network, not in the project.
+
+**Likely causes, most common first:**
+
+1. **Outdated app and OS.** An old app version, or an OS too old to run a current one, can lose the ability to connect securely to an updated server. The device shows it's online, but every upload fails before reaching REDCap. Compare the app version shown in the app (top right of the screen, or under Settings) with the current store version, and check the device's OS against the app's minimum (see 7.1).
+2. **Network blocking or unstable links.** Firewalls, regional filtering, or slow and unstable connections (satellite, remote field sites) can block or drop the upload. Try a different network or an institutional VPN, and send records in smaller batches (see 9.3).
+3. **Rights or token changes.** Check that the user still has the **REDCap Mobile App** privilege and access to every instrument, and that the account isn't expired or suspended (see 6.2). Also check the device list on the Mobile App page to make sure the device hasn't been blocked (see 10.2).
+
+**Recovery order when the app or OS is the cause:**
+
+1. Run an Emergency Data Dump with **Save to Device** or **Both** (see 9.6), and copy the file to institution-approved storage.
+2. Confirm the file is complete before anything else changes on the device.
+3. Update the OS, then the app, and try a normal sync.
+4. If the device can't be updated, import the saved dump instead, and retire the device from data collection.
+
+Don't delete or reinstall the app, remove the project, log out, or run **Refresh Setup & Data** at any point in this process. Records that haven't synced exist only on the device.
 
 ---
 
@@ -313,7 +376,7 @@ Two levels of remote lockout are available:
 
 ## 10.4 Activity Log
 
-The Mobile App Activity Log is stored in the **Mobile App File Archive** within the project. It records:
+Mobile App activity logs sent from a device appear on the **App Logs** tab of the project's REDCap Mobile App page (earlier versions of this article called this area the **Mobile App File Archive**). The log records:
 
 - Record creation, modification, and uploads
 - Record renaming, deletion, and viewing
@@ -394,7 +457,19 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 
 **Q: What is the Emergency Data Dump?**
 
-**A:** Emergency Data Dump is a fallback sync method. If normal sync fails (e.g., a persistent network error in the field), the user taps Send Emergency Data Dump to transmit locally stored data to the server as a raw CSV file. The file appears in the Mobile App File Archive tab in the project and must be reviewed and manually imported. Use normal sync whenever possible.
+**A:** Emergency Data Dump is a fallback for when normal sync fails, for example because of a persistent network error in the field. The user taps **Send Emergency Data Dump**, chooses which records to include, and picks a destination: **Send to Server**, **Save to Device**, or **Both**. A dump sent to the server appears on the **App Data Dumps** tab of the project's REDCap Mobile App page, and has to be reviewed and imported by hand. Use normal sync whenever possible. See 9.6.
+
+**Q: Can I get the data off the device if neither sync nor the emergency data dump will upload?**
+
+**A:** Yes. Run the Emergency Data Dump and choose **Save to Device** (or **Both**). The CSV is written to the device without contacting the server. Connect the device to a computer, find the file in the app's **redcap** folder, and copy it to institution-approved storage. The file is not encrypted, so handle it as study data. It's then imported into the project after review. See 9.6.
+
+**Q: What does "Uploading the document has failed … code 3 … fids.length === 0" mean?**
+
+**A:** The upload failed at the connection level, and the server never returned a file ID. Check the project's Logging for the app user. If no API entries appear around the failed attempts, the requests never reached REDCap. The usual causes are a badly outdated app or OS, or the network. See 9.7.
+
+**Q: Is it safe to update the iPad or the app while there is unsynced data on it?**
+
+**A:** Get the data off the device first, through a successful sync or an Emergency Data Dump saved to the device and copied somewhere safe. The app's release notes recommend uploading all new and modified data before an OS update. Only update once the data is confirmed. See 7.1 and 9.7.
 
 ---
 
@@ -412,6 +487,12 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 
 **Using personal devices for app data collection.** The Mobile App stores PHI or sensitive study data locally on the device. Using personal devices is a data security risk and may violate IRB or institutional data governance policies. Always use study team–owned, managed devices.
 
+**Running Refresh Setup & Data after a failed sync.** Refresh is routine after a *successful* sync, so staff may run it out of habit. After a failed sync it permanently erases every record that hasn't reached the server. When a sync fails, stop, run an Emergency Data Dump to the device, and refresh only once the data is confirmed on the server.
+
+**Updating the OS or the app to fix a sync problem before the data is safe.** An outdated app or OS is often the cause, so updating looks like the obvious fix. But an update is a change to the device while unsynced data sits on it. Save an Emergency Data Dump to the device and copy it to safe storage first, then update.
+
+**Keeping devices that can no longer run a current app version.** Devices stuck on an old OS (for example iOS 12) can't install current app releases. Sooner or later they stop syncing with an upgraded server, and that tends to happen at a remote site with weeks of data on them. Check the app's minimum OS when assigning devices, and retire devices that fall below it.
+
 **Renaming records without understanding the consequence.** For projects with auto-numbering disabled, renaming a record in the app causes it to appear as a new record on sync. The original record on the server must then be manually deleted. If users rename records without following this cleanup step, duplicate records will accumulate on the server.
 
 ---
@@ -426,3 +507,5 @@ The REDCap Mobile App stores project data locally on the device, introducing ris
 - [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG support in the Mobile App mirrors the user's server-side DAG assignment)
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (system-level Mobile App enable/disable and server-wide settings)
+- [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md) (importing an Emergency Data Dump CSV)
+- [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md) (checking whether app sync requests reach the server)
