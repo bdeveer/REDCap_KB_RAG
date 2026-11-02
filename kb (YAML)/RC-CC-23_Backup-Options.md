@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators and project managers
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  the Other Functionality button labels in §3.1 only; downloads and restores were
+  not run; v17.3.7 (LTS) — changelog review only'
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-API-36
   title: Export Project XML API
@@ -64,9 +65,12 @@ A standardized XML format used for clinical trial data and metadata. REDCap expo
 
 ## 3.1 Accessing the Export from the Project UI
 
-The project XML export is available from the **Project Setup** page under the **Other Functionality** tab. Look for the option labeled **Download a backup of the entire project (as a .zip archive)**. Clicking this generates and downloads a ZIP file containing the ODM XML of the project.
+The project XML export is available from the **Project Setup** page under the **Other Functionality** tab, in the **Copy or Back Up the Project** section. On 17.5.6 there are two buttons:
 
-By default, the ZIP export includes both metadata and all data records. A metadata-only option is available if you only need to back up the project structure.
+- **Download metadata only (XML)** — the project structure, with no data records
+- **Download metadata & data (XML)** — the structure and the data records
+
+> **Version caveat:** Earlier versions of this article described a single **Download a backup of the entire project (as a .zip archive)** option. The 17.5.6 labels above were read from the page; the downloads themselves were not run.
 
 > **Note:** This option requires the user to have appropriate project access. A project-level administrator or a user with Data Export rights can perform this action. Check with your REDCap administrator if the option is not visible.
 
@@ -124,7 +128,7 @@ Restoring from a project XML backup means creating a new REDCap project using th
 
 1. Go to the REDCap home page and click **New Project**.
 2. On the Create Project page, select the option to **Upload a REDCap project XML file** (or equivalent wording — the upload option appears alongside the blank project and template options).
-3. Upload the `.xml` file (or the `.zip` containing it) from your backup.
+3. Upload the `.xml` file from your backup. If your backup came from an older version as a `.zip`, the same step may accept it; this was not tested.
 4. Complete the project creation form (title, purpose, etc.) and submit.
 5. The new project will be created with the structure and data from the backup.
 
@@ -191,7 +195,7 @@ REDCap does not provide a native scheduled backup feature accessible from the pr
 # 8. Common Questions
 
 **Q: How do I back up my REDCap project?**
-**A:** Go to Project Setup → Other Functionality and download the project ZIP archive. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) in an automated script.
+**A:** Go to Project Setup → Other Functionality → **Copy or Back Up the Project** and click **Download metadata & data (XML)**. This produces an ODM XML file containing your project structure and data. For recurring backups, use the Export Project XML API ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) in an automated script.
 
 **Q: Can I restore a project from a backup without losing the original?**
 **A:** Yes. Restoring always creates a new project — REDCap does not overwrite an existing project. Your original project remains unchanged, and the restored backup becomes a separate project that you can compare or rename.

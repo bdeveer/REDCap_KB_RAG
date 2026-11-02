@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  Users section tools and the Add Users fields; v17.3.18 (LTS) — changelog review
+  only'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-03
   title: 'Control Center: Security & Authentication'
@@ -46,12 +47,14 @@ The **Users** section of the Control Center gives administrators tools to manage
 The Users section contains the following tools:
 
 - **Browse Users** — search and view all user accounts; edit account attributes
+- **Add Users (Table-based Only)** — create accounts one at a time or from a CSV file
 - **User Allowlist** — restrict system access to pre-approved usernames (for external auth only)
 - **Email Users** — send system-level emails to filtered subsets of users
 - **API Tokens** — view and manage API tokens across all projects and users
 - **Banned IP Addresses** — view and manage IP addresses blocked from the instance
 - **Administrator Privileges** — grant or revoke REDCap super user status
-- **Access Control Groups** — (institutional configuration dependent)
+- **Project Administrator Groups** — REDCap+ only; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md)
+- **Access Control Groups** — optional ceiling on grantable rights; see below
 
 ---
 
@@ -122,6 +125,28 @@ Typical uses: a name change, or moving an account to a new SSO identifier format
 ### View User List By Criteria
 
 In addition to individual user search, administrators can switch to a **View User List By Criteria** mode to filter and browse users in bulk based on attributes or activity.
+
+---
+
+## Add Users (Table-based Only)
+
+Creates accounts for Table-based authentication. The page has two tabs.
+
+**Create single user** — fields:
+
+| Field | Notes |
+| --- | --- |
+| Username, First name, Last name | |
+| Primary, Secondary and Tertiary email | |
+| Frequency of new-message email notifications | 2-, 4-, 6-, 8- or 12-hour digest, Daily digest, or None |
+| Instant notifications for 'Important' messages | Checkbox |
+| Phone number, Mobile phone number | |
+| Institution ID, User's sponsor | |
+| Expiration Date, Miscellaneous comments | |
+| Display user on 'Email Users' page? | Checkbox |
+| Allow this user to create or copy projects? | Checkbox |
+
+**Create users (bulk upload)** — upload a CSV file of new users. A checkbox sets whether all users in the file may create or copy projects.
 
 ---
 

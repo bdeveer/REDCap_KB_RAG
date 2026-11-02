@@ -7,10 +7,10 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
 | **Requires** | REDCap v17.0.0+ — REDCap+ does not exist below this version. The article itself is informational and useful on any version |
-| **Verified Against** | REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a live unsubscribed instance; feature list from release notes through 17.5.4 Standard |
+| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
 | **Synonyms** | what is redcap plus; redcap+ paid subscription tier; how much does redcap plus cost; difference between redcap core and redcap plus; premium redcap features subscription; do i need redcap+ to use my features; redcap plus vs free redcap; which features require a redcap+ subscription |
@@ -113,7 +113,7 @@ Delegates routine administrative work — project creation approvals, production
 
 ### Email Verification & Email Unsubscribe *(17.3.0)*
 
-Lets participants verify their email address and opt out of all emails from a project, via four Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+Lets participants verify their email address and opt out of all emails from a project, via six Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
 
 ### REDCap Login Protection *(17.5.0)*
 
@@ -133,6 +133,7 @@ REDCap+ features are visible in the interface on an unsubscribed instance, but *
 | --- | --- | --- |
 | **Cosmetic** | Settings render normally and are then disabled in the browser. The full set of options and help text is readable | Reward Services on the Modules/Services Configuration page |
 | **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* | Project Administrator Groups |
+| **Shell only** | The menu item and the page's introduction appear, followed by a differently worded notice — *"NOTICE: This feature is not available because it requires a REDCap+ subscription."* No working content is shown | Verified & Unsubscribed Emails (project-level) on 17.5.6 |
 | **Open** | The page works, because it is not subscriber-only | Project Migration Dashboard, which any institution may use |
 
 > **Note:** Do not infer one page's behaviour from another's. A REDCap+ section being fully readable in one place does not mean the next one will be.

@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  General Configuration fields and the record limit default; v17.3.18 (LTS) — changelog
+  review only'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -45,7 +46,7 @@ The **General Configuration** page is the central hub for REDCap instance-level 
 
 ---
 
-> **API token fields are masked (17.5.0+).** Every API token field on the General Configuration page is shown as a password mask, so third-party service tokens are not exposed to anyone looking at the screen.
+> **API key fields are masked, with one exception (17.5.0+).** The Mandrill, SendGrid and Mailgun API key fields are shown as a password mask, so those keys are not exposed to anyone looking at the screen. On 17.5.6 the **Azure Communication Services API Key** field is still a plain text field, so its value is visible on the page.
 
 The **General Configuration** page contains the core technical and operational settings that govern how REDCap runs at the instance level. It is organized into three sub-sections: **Server Configuration Settings**, **Configuration for Outgoing Emails**, and **Other System Settings**. A separate **Configuration Check** tool also lives under System Configuration.
 
@@ -151,14 +152,14 @@ The redirect instructions were refined again: the Apache test also recognises th
 
 > **Note — clear the Rapid Retrieval cache after removing old version directories.** Cached pages written while REDCap was on a previous version can reference images and links under that version's path, and will 404 once the directory is gone.
 
-## Fix Legacy Image/File URL *(17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS)*
+## Fix Legacy Image/File URLs *(17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS)*
 
 A security fix in **17.3.11 LTS / 17.4.5 Standard** (and 16.0.50 LTS) changed the document-hash algorithm used in image and file-download links. Links created before an instance reached **15.7.3** — typically images uploaded through the rich text editor into field labels, survey instructions or emails, and file-download links that someone copied and pasted as static text — stopped working.
 
-- **Manual tool (17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS):** a Control Center page, **Fix Legacy Image/File URL**, regenerates a valid URL from a broken one. When a user reports a broken image or download link, they send the URL to an administrator, who generates the replacement and gives it back for pasting in place of the old one.
+- **Manual tool (17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS):** a Control Center page, **Fix Legacy Image/File URLs** (in the **Projects** section of the menu), regenerates a valid URL from a broken one. When a user reports a broken image or download link, they send the URL to an administrator, who generates the replacement and gives it back for pasting in place of the old one.
 - **Automatic repair (17.3.14 LTS / 17.5.1 Standard onward):** the upgrade process rewrites broken legacy URLs across the system itself. Coverage was extended to Community Platform Software posts in 17.5.3 Standard / 17.3.16 LTS and completed in **17.3.18 LTS / 17.5.4 Standard**, where earlier passes had missed some URLs. Nothing needs to be done by users or admins.
 
-> **Version caveat (17.3.11–17.3.17 LTS / 17.4.5–17.5.3 Standard):** Some legacy image and file links may still be broken. Upgrade to 17.3.18 LTS / 17.5.4 Standard, which repairs them during the upgrade, or fix individual links with the Fix Legacy Image/File URL page.
+> **Version caveat (17.3.11–17.3.17 LTS / 17.4.5–17.5.3 Standard):** Some legacy image and file links may still be broken. Upgrade to 17.3.18 LTS / 17.5.4 Standard, which repairs them during the upgrade, or fix individual links with the Fix Legacy Image/File URLs page.
 
 ## Easy Upgrade
 
@@ -234,7 +235,7 @@ An optional **custom offline message** can be set — the text shown to users wh
 
 ## Language Displayed for Global Pages
 
-Sets the default language for system-level pages (login page, home page, and other non-project pages). English is the standard default. Language files can be downloaded from the REDCap Community Language Library or created using the built-in Language File Creator/Updater tool.
+Sets the default language for system-level pages (login page, home page, and other non-project pages). English is the standard default. Language files can be downloaded from the REDCap Community Language Library or created using the built-in **Language File Updater** tool (Administrator Resources). Older documentation may call it the Language File Creator/Updater.
 
 > Changing the global language does not automatically change the default language for existing or new projects. That default is set separately on the Default Project Settings page.
 
@@ -353,7 +354,7 @@ Controls whether the Field Comment Log is enabled by default for all newly creat
 
 ## Record Limit for Development Projects
 
-Sets a maximum number of records that can be created in a project while it is in Development status. A value of `0` means no limit. When the limit is exceeded, users see a warning and cannot create additional records until the project moves to Production. A project-level override is available on the Edit Project Settings page. At the project level, `0` means "use this global default" rather than "no limit directly" — see [RC-CC-24](RC-CC-24_Control-Center-Edit-Project-Settings.md) for project-level override behavior.
+Sets a maximum number of records that can be created in a project while it is in Development status. A new installation starts at `50` (17.5.6 install values); an upgraded instance keeps whatever value it already holds. A value of `0` means no limit. When the limit is exceeded, users see a warning and cannot create additional records until the project moves to Production. A project-level override is available on the Edit Project Settings page. At the project level, `0` means "use this global default" rather than "no limit directly" — see [RC-CC-24](RC-CC-24_Control-Center-Edit-Project-Settings.md) for project-level override behavior.
 
 > This setting is useful for preventing development projects from accumulating large amounts of test data, but use with care — teams occasionally need many test records for complex projects.
 

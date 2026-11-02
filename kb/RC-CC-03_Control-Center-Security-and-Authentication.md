@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: Security & Authentication fields, the clickjacking default and the e-signature label; v17.3.18 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md)|
 | **Synonyms** | control center authentication settings; configure two-factor authentication for redcap; set up single sign on shibboleth or saml; table-based authentication login settings; google oauth2 or microsoft entra id login; control center login security policies; how do users authenticate to redcap; system-wide authentication method configuration |
@@ -128,7 +128,7 @@ Allows users to substitute their 2FA PIN (or Duo push) for their password when p
 | --- | --- |
 | Allow e-signing with 2FA PIN or Duo push | Disabled (default) / Enabled |
 
-This is commonly used for 21 CFR Part 11 compliance in FDA-regulated trials. Note: not compatible with the Duo two-factor option.
+This is commonly used for 21 CFR Part 11 compliance in FDA-regulated trials. On 17.5.6 the setting is labeled for both the 2FA PIN and Duo push, so Duo users can e-sign this way too; see the version notes in §3.8.
 
 #### 3.6.1 E-Sign Once Per Session
 
@@ -179,7 +179,7 @@ Uses the Duo Security service for push notification or app-based verification. R
 - Duo Secret Key
 - Duo API Hostname
 
-> Note: The Duo option is not compatible with the 2FA e-signature PIN feature (sections 3.6 and 3.6.1).
+> Note: The e-signature settings in sections 3.6 and 3.6.1 cover Duo push as well as the PIN on 17.5.6. The once-per-session behaviour for Duo push arrived in 16.1.2 (§3.8).
 
 ---
 
@@ -459,12 +459,12 @@ Controls whether REDCap pages can be embedded inside `<iframe>` elements on exte
 
 | Setting | Technical Effect |
 | --- | --- |
-| Allow external websites to embed REDCap pages | No HTTP header restriction added |
-| Prevent clickjacking (default) | Adds `X-Frame-Options: SAMEORIGIN` HTTP header |
+| Allow external websites to embed REDCap pages (default) | No HTTP header restriction added |
+| Prevent clickjacking / prevent external websites from embedding REDCap | Adds `X-Frame-Options: SAMEORIGIN` HTTP header |
 
-The "Prevent clickjacking" option is selected by default and is the recommended setting. It allows REDCap pages to be embedded only within the same domain, preventing malicious actors from overlaying REDCap pages on external sites to trick users into unintended clicks.
+A new 17.5.6 installation starts on **Allow external websites to embed REDCap pages** (`clickjacking_prevention` = `0`), so protection is **off** until an administrator turns it on. An instance that was set up or changed earlier keeps its stored value, so check yours on this page. The "Prevent" option allows REDCap pages to be embedded only within the same domain, preventing malicious actors from overlaying REDCap pages on external sites to trick users into unintended clicks.
 
-> Note: Enabling clickjacking prevention may affect legitimate use cases such as embedding surveys in external websites. Evaluate this trade-off based on your institution's security requirements.
+> Note: Turning on clickjacking prevention may affect legitimate use cases such as embedding surveys in external websites. Evaluate this trade-off based on your institution's security requirements.
 
 ### 12.3 Security Headers Set by REDCap
 
@@ -508,7 +508,7 @@ A: The Email option (section 3.7.2) requires no third-party service and is recom
 A: After completing 2FA, the user is given the option to mark their browser/device as trusted. During the trust period, they only need to enter their username and password — the second factor is skipped. After the trust period expires, they must complete 2FA again.
 
 **Q: Does clickjacking prevention affect survey embedding?**
-A: Yes. If you embed REDCap public surveys in external websites using iframes, the "Prevent clickjacking" setting will block that embedding. You would need to set the option to "Allow external websites to embed REDCap pages" to support survey embedding.
+A: Yes. If you embed REDCap public surveys in external websites using iframes, the "Prevent clickjacking" option will block that embedding. Embedding needs "Allow external websites to embed REDCap pages", which is the install default on 17.5.6.
 
 **Q: What is the difference between OpenID Connect "username" and "preferred_username" attributes?**
 A: Both map to OIDC standard claims, but `preferred_username` is the human-readable login name as preferred by the user, while `username` is the canonical account identifier. The correct choice depends on what your OIDC provider populates. If the selected attribute is empty for a user, REDCap falls back to the user's email address.
@@ -540,7 +540,7 @@ Yes. The "Shibboleth & Table-based" option (section 2.1) presents a splash page 
 
 **Misconfiguring the OAuth2 redirect URI or OIDC metadata endpoint.** A common issue with Google OAuth2 and OIDC configurations is entering the wrong redirect URL or metadata endpoint. Google must have the exact REDCap base URL in its Authorized Redirect URIs, and the OIDC metadata endpoint must point to the correct `.well-known/openid-configuration` path. Double-check these values and test login before rolling out to production users.
 
-**Leaving clickjacking prevention disabled when embedding surveys.** The default setting (section 12.2) prevents clickjacking attacks by adding the `X-Frame-Options: SAMEORIGIN` HTTP header. If surveys need to be embedded in iframes on external websites, this setting must be disabled, but be aware that this removes clickjacking protection and should only be used when the embedding is intentional and necessary.
+**Assuming clickjacking prevention is on by default.** On a new 17.5.6 installation it is off (section 12.2): the default allows external websites to embed REDCap pages. If nothing needs to be embedded, choose the "Prevent" option, which adds the `X-Frame-Options: SAMEORIGIN` HTTP header. If surveys must be embedded in iframes on external websites, leave embedding allowed deliberately, knowing that this leaves pages without clickjacking protection.
 
 ---
 

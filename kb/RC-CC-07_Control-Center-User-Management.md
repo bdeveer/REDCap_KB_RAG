@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: Users section tools and the Add Users fields; v17.3.18 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md); [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
 | **Synonyms** | control center browse and manage user accounts; system-level user account administration; user allowlist to restrict redcap access; email a filtered group of users; manage api tokens across all projects; edit a user account at the instance level; control center users section tools; find and edit user accounts admin; how do i change a redcap username; rename a user account in the control center |
@@ -24,12 +24,14 @@ The **Users** section of the Control Center gives administrators tools to manage
 The Users section contains the following tools:
 
 - **Browse Users** — search and view all user accounts; edit account attributes
+- **Add Users (Table-based Only)** — create accounts one at a time or from a CSV file
 - **User Allowlist** — restrict system access to pre-approved usernames (for external auth only)
 - **Email Users** — send system-level emails to filtered subsets of users
 - **API Tokens** — view and manage API tokens across all projects and users
 - **Banned IP Addresses** — view and manage IP addresses blocked from the instance
 - **Administrator Privileges** — grant or revoke REDCap super user status
-- **Access Control Groups** — (institutional configuration dependent)
+- **Project Administrator Groups** — REDCap+ only; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md)
+- **Access Control Groups** — optional ceiling on grantable rights; see below
 
 ---
 
@@ -100,6 +102,28 @@ Typical uses: a name change, or moving an account to a new SSO identifier format
 #### View User List By Criteria
 
 In addition to individual user search, administrators can switch to a **View User List By Criteria** mode to filter and browse users in bulk based on attributes or activity.
+
+---
+
+### Add Users (Table-based Only)
+
+Creates accounts for Table-based authentication. The page has two tabs.
+
+**Create single user** — fields:
+
+| Field | Notes |
+| --- | --- |
+| Username, First name, Last name | |
+| Primary, Secondary and Tertiary email | |
+| Frequency of new-message email notifications | 2-, 4-, 6-, 8- or 12-hour digest, Daily digest, or None |
+| Instant notifications for 'Important' messages | Checkbox |
+| Phone number, Mobile phone number | |
+| Institution ID, User's sponsor | |
+| Expiration Date, Miscellaneous comments | |
+| Display user on 'Email Users' page? | Checkbox |
+| Allow this user to create or copy projects? | Checkbox |
+
+**Create users (bulk upload)** — upload a CSV file of new users. A checkbox sets whether all users in the file may create or copy projects.
 
 ---
 

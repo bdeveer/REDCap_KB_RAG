@@ -7,13 +7,13 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page header, process columns, refresh options and the kill setting's default; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md); [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)|
-| **Synonyms** | control center database activity monitor; view active mysql queries in redcap; real-time database process list; diagnose slow or long-running database queries; see what queries are running on the db server; mariadb process list monitor admin; database performance troubleshooting tool; monitor live database activity |
+| **Synonyms** | control center database activity monitor; view active mysql queries in redcap; real-time database process list; diagnose slow or long-running database queries; see what queries are running on the db server; mariadb process list monitor admin; database performance troubleshooting tool; enable the kill process button; allow_kill_mysql_process; monitor live database activity |
 
 ---
 
@@ -32,7 +32,7 @@ The Database Activity Monitor is located in the REDCap Control Center under "Das
 ## 3. Display Information
 
 The page header shows:
-- Database server hostname
+- Database server hostname and database name
 - Current server timestamp
 - Total active processes (queries) at the time of the last refresh
 
@@ -42,6 +42,7 @@ The page header shows:
 
 For each active database process, the monitor displays:
 
+- **MySQL Process ID** and **PHP Process ID** — the identifiers of the database connection and the PHP process
 - **REDCap Project ID** — the project associated with the query (if applicable)
 - **User** — the REDCap username of the user whose action triggered the query
 - **URL** — the REDCap page URL being executed (e.g., `/DataEntry/record_status_dashboard.php?pid=XXXX`)
@@ -53,7 +54,7 @@ For each active database process, the monitor displays:
 
 ## 5. Query Display Modes
 
-Administrators can toggle between:
+Administrators can toggle between these with the **Show full queries** button:
 
 - **Partial queries** (default) — truncated for readability
 - **Full queries** — complete SQL text for each process
@@ -63,17 +64,21 @@ Administrators can toggle between:
 ## 6. Auto-Refresh
 
 The page automatically reloads at a configurable interval. Administrators can select from:
+- Every 2 seconds
+- Every 5 seconds
 - Every 10 seconds
 - Every 30 seconds
 - Every 60 seconds
 
-The page continues auto-refreshing until the browser tab is closed or refreshed manually.
+A **Refresh** button reloads the page on demand. The page continues auto-refreshing until the browser tab is closed or refreshed manually.
 
 ---
 
 ## 7. Killing a Process
 
-Administrators can kill (terminate) a running MySQL process by clicking the kill button for that process. A confirmation dialog warns that:
+> **Off by default.** The kill option is not available until someone with database access enables it, as the page explains: `UPDATE redcap_config SET value = '1' WHERE field_name = 'allow_kill_mysql_process';`. A new 17.5.6 installation starts with this value at `0`, so the kill behaviour below was not exercised on the test instance.
+
+Once enabled, administrators can kill (terminate) a running MySQL process by clicking the kill button for that process. A confirmation dialog warns that:
 
 - Killing a process will prevent that query from completing
 - It may affect other queries in the same script

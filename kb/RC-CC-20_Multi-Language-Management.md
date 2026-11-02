@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: Settings tab labels and page tabs; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md)|
 | **Synonyms** | control center multi-language management; define system-level languages for projects; mlm administrator settings instance-wide; add a new ui language for redcap projects; manage available languages admin; system language management for translations; enable languages projects can adopt; instance-wide multi-language configuration |
@@ -79,7 +79,7 @@ This tab is where the actual translation strings are entered and managed for eac
 
 **Filtering and tools:**
 - **Hide translated items** — filter to show only untranslated items, making it easier to find gaps.
-- **Highlight untranslated text** — enabled from the Settings tab; highlights untranslated items across the page as a visual audit tool.
+- **Highlight translation fallbacks** — enabled from the Settings tab as **Highlight translation fallbacks on non-project pages**; a visual audit tool for finding untranslated items.
 - **Translate using AI** — available per category; uses the AI translation feature to auto-fill untranslated strings (requires the AI features to be enabled; see [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md)).
 
 **Subscribed system languages:** If a language is designated as a "subscribed" system language, its UI items cannot be edited directly. However, administrators can still provide **selective overrides** for individual items while leaving the rest managed by the subscription.
@@ -118,6 +118,7 @@ System-level controls that apply to how projects can use MLM.
 
 | Setting | Notes |
 | --- | --- |
+| **Highlight translation fallbacks on non-project pages** | Visual audit tool for untranslated items on non-project pages. |
 | **Disable multi-language support for all projects** | Turns off MLM system-wide immediately. **WARNING: affects all projects.** |
 | **Require admin activation in projects** | When enabled, an administrator must explicitly enable MLM in each project before it can be used. Projects that already have MLM enabled are unaffected. |
 | **Disable project language initialization from a file** | Prevents project managers from importing a new language from a file. |

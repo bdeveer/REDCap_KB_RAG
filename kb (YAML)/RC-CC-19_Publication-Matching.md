@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  tabs and Setup settings; the module was off, so searches and emails were not run;
+  v17.3.7 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-CC-21
   title: 'Control Center: Overview & Navigation'
@@ -80,6 +81,11 @@ General configuration for the module. Key settings include:
 
 - **Enable/disable Publication Matching** — toggles the entire module
 - **P.I. Emailing** — controls whether PIs receive email notifications about matched publications. PIs are **not** emailed until this setting is explicitly enabled, even if the module is running
+- **Days between emails** — install value `7`
+- **Email Limit** — install value `3`
+- **Email Subject** — a 17.5.6 test instance showed *[REDCap] Action Requested - Confirm REDCap Supported Publication*
+- **Email Text** — the message body sent to PIs
+- **Institution Keywords** — institution names used in the search. The install value is `Vanderbilt` and `Meharry`, so **replace these with your own institution's names** before enabling the module
 
 ## 4.2 To-Do List
 
@@ -111,7 +117,7 @@ Displays matched publications organized by REDCap project. Use this tab to revie
 
 REDCap runs the PubMed search automatically each night. The search uses:
 - The PI's last name and first name (and alias, if provided)
-- The PI's affiliated institution (derived from the REDCap instance configuration)
+- The institution names in the **Institution Keywords** setting on the Setup tab
 - The project creation date as the earliest allowable publication date
 
 Results are added to the P.I.-Pub Matches and Project-Pub Matches tabs for review. The module does not automatically confirm or reject matches — administrator review is always required.
@@ -146,6 +152,8 @@ Yes. All matched publications are surfaced for administrator review in the P.I.-
 ---
 
 # 8. Common Mistakes & Gotchas
+
+**Leaving the default Institution Keywords in place.** The install values name other institutions, so searches would use them unless you replace them on the Setup tab.
 
 **Enabling PI emailing before completing PI records.** PI emailing is disabled by default. If you enable it before ensuring that all PI records are complete (first name, last name, valid email), PIs may receive emails with incomplete or incorrect information about publication matches. Always complete and verify PI data in the To-Do List and Manage Projects tabs before enabling PI emailing.
 

@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  filters and result columns; v17.3.7 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-CC-12
   title: 'Control Center: User Activity Log'
@@ -65,7 +65,9 @@ Administrators can configure the report using the following parameters:
 
 - **Begin time** — Sets the start of the analysis window. Only data collected since this time point is available for reporting.
 
-- **CPU time percentage minimum threshold** — Filters out entries below a specified CPU contribution percentage. This reduces noise by excluding low-utilization items from the results, allowing focus on the most significant consumers of resources.
+- **End time** — Sets the end of the analysis window.
+
+- **CPU time percentage minimum threshold** — Starts at `1` on 17.5.6. Filters out entries below a specified CPU contribution percentage. This reduces noise by excluding low-utilization items from the results, allowing focus on the most significant consumers of resources.
 
 - **Include incomplete HTTP requests** — Optional toggle to include requests that did not complete normally. Incomplete requests may indicate errors or client disconnections.
 
@@ -73,7 +75,7 @@ Administrators can configure the report using the following parameters:
 
 # 5. Report Contents
 
-The report surfaces the "top" entries across multiple categories:
+The results table has these columns on 17.5.6: Type, Identifier, CPU Time (hours), Percent of Total CPU Time, Call Count, Percent of Total Calls, and Average Seconds Per Call. The report surfaces the "top" entries across multiple categories:
 
 - **Most active projects** — Ranked by request count or CPU time consumption, showing which projects are driving the most activity.
 

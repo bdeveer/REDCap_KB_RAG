@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-01
   title: 'Piping: Basics, Syntax & Field Types'
@@ -132,9 +132,9 @@ If a project uses REDCap's MyCap mobile application for participant data collect
 
 ## 3.13 Email Verification & Unsubscribe *(REDCap+, 17.3.0+)*
 
-Four Smart Variables supporting participant email verification and opt-out: `[email-verify-link]` and `[email-verified]`, `[email-unsubscribe-link]` and `[email-unsubscribed]`. Each pair is a link to place in an email plus a flag to use in alert or ASI trigger logic.
+Six Smart Variables supporting participant email verification and opt-out: `[email-verify-url]`, `[email-verify-link]` and `[email-verified]`; `[email-unsubscribe-url]`, `[email-unsubscribe-link]` and `[email-unsubscribed]`. Each set is a URL and a link to place in an email, plus a flag to use in alert or ASI trigger logic.
 
-> **Note:** These appear only on instances with an active REDCap+ subscription running 17.3.0+, and only while the feature is enabled in the Control Center. If it is disabled there, REDCap hides them from the Smart Variable documentation as well as from use. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+> **Note:** These need 17.3.0+ and an active REDCap+ subscription to work, and the feature must be enabled in the Control Center. On a 17.5.6 instance without a subscription they are still listed in the Smart Variable documentation. If the feature is disabled in the Control Center, REDCap hides them from the documentation as well as from use. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
 
 ## 3.14 Miscellaneous
 

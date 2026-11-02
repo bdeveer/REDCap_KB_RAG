@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: the menu structure and privilege list; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md)|
 | **Synonyms** | control center overview and navigation; what is the redcap control center; how do i access the control center; admin hub for system-wide settings; who can access the control center; control center sidebar navigation; super user administrative area redcap; intro to the control center for admins |
@@ -32,13 +32,13 @@ From the Control Center, an administrator can configure system-wide settings, ma
 The Control Center is organized into several top-level sections, each accessible from a sidebar menu. The sections and their primary purposes are:
 
 ### Control Center Home
-The landing page of the Control Center. Displays system notifications, recent errors, and a to-do list for items that may need administrator attention. No configurable settings live here — it is an informational dashboard. See **[RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)** for full details on the Notifications & Reporting dashboard, and **[RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)** for the To-Do List.
+The landing page of the Control Center, **Notifications & Reporting**, displays server information, system notifications and stats reporting. No configurable settings live here. The **To-Do List** and **REDCap+** are separate pages in this section; **Recent Errors** is under Dashboards & Activity. See **[RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)** for full details on the Notifications & Reporting dashboard, and **[RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)** for the To-Do List.
 
 > **REDCap Plus** — A subscription add-on visible in the Control Center Home menu that unlocks premium features. See **[RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md)** for details.
 
 ### Administrator Resources
 Links to REDCap community resources, training materials, API documentation, and plugin/hook documentation. Also includes:
-- **Language File Creator/Updater** — for managing system language files
+- **Language File Updater** — for managing system language files
 - **URL Shortener** — a utility for generating shortened URLs from any link in the system (see **[RC-CC-10 — Control Center: URL Shortener](RC-CC-10_URL-Shortener.md)**)
 
 ### Dashboards & Activity
@@ -49,7 +49,7 @@ Read-only statistical and monitoring views. Includes:
 - **FHIR Statistics** — activity metrics for Clinical Data Interoperability Services (FHIR) if enabled
 - **Map of Users** — geographic distribution of user accounts (see **[RC-CC-14 — Control Center: Map of Users](RC-CC-14_Map-of-Users.md)**)
 - **Top Usage Report** — engagement summary across projects and users (see **[RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)**)
-- **Recent Errors** — system error log
+- **Recent Errors** — system error log; opens in the Database Query Tool, so it stays locked until that tool is enabled
 - **Database Activity Monitor** — in-depth query-level monitoring of the database (see **[RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md)**)
 - **Database Query Tool** — allows administrators to run SQL queries directly against the REDCap database (see **[RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md)**)
 
@@ -58,21 +58,26 @@ Tools for looking up and managing individual projects:
 - **Browse Projects** — search and view any project on the instance
 - **Edit Project Settings** — modify settings for a specific project directly; individual project defaults are configured in other sections of the Control Center
 - **Link Lookup** — reverse-lookup which project and record a given REDCap link belongs to. Rebranded from "Survey Link Lookup" in 15.9.0 and expanded beyond survey links to also search **survey queue links, public report links and public project dashboard links**
+- **Fix Legacy Image/File URLs** — regenerates a working URL from a broken legacy link (see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md))
+- **Project Migration Dashboard** — REDCap+ label; monitors migrations into this server (see [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md))
 
 ### Users
 Administrative tools for user account management. See **[RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)** for full details. Includes:
 - Browse Users
+- Add Users (Table-based Only)
 - User Allowlist
 - Email Users
 - API Tokens
 - Banned IP Addresses
 - Administrator Privileges
+- Project Administrator Groups (REDCap+; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md))
 - [Access Control Groups](RC-CC-25_Access-Control-Groups.md)
 
 ### Miscellaneous Modules
 Configuration for optional or institution-specific modules:
 - **Multi-Language Management (MLM)** — Control Center configuration covered in **[RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md)**; full feature documentation in [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md)
 - **Clinical Data Interoperability Services (CDIS)** — integration with clinical data sources (e.g., EHR systems)
+- **REDCap SHARE** — REDCap+ label; participant-driven sharing of EHR data (see [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md))
 - **Dynamic Data Pull (DDP)** — custom real-time data pull from external systems
 - **Custom Application Links** — add institution-specific links to the left-hand project menu (e.g., help desk, training portal, external applications). See [RC-CC-18 — Control Center: Custom Application Links](RC-CC-18_Custom-Application-Links.md).
 - **Publication Matching** — automated nightly PubMed search to associate research projects with PI publications. See [RC-CC-19 — Control Center: Publication Matching](RC-CC-19_Publication-Matching.md).
@@ -82,18 +87,23 @@ The largest section of the Control Center, containing all system-wide behavioral
 
 | Sub-page | KB Article | Summary |
 | --- | --- |---|
+| Configuration Check | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Diagnostic tests for the installation |
+| MyCap Configuration Check | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Diagnostic tests for MyCap |
 | General Configuration | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Server settings, email config, system-wide text and branding |
 | Security & Authentication | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) | Authentication method, 2FA, login rules, security settings |
 | User Settings | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) | Project creation permissions, user defaults, public report access |
 | File Upload Settings | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md) | Storage method, upload limits, file type-specific settings |
 | Modules/Services Configuration | [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) | Feature toggles, SMS services, e-Consent, external modules |
+| AI Configuration Settings | [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) | Named AI configurations and their scope |
 | Field Validation Types | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) | Enabled/disabled validation types, custom validations |
 | Home Page Settings | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) | Contact info, announcement text, grant display |
 | Project Templates | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) | Default templates available to users when creating new projects |
 | Default Project Settings | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) | Language, encoding, logo, date format defaults for all projects |
 | Footer Settings (All Projects) | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) | Links and text displayed in the footer across all projects |
 | Cron Jobs | — | View and manage scheduled background tasks (cron job list; max concurrency configured in [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)) |
-| External Modules | — | See your institution's External Modules policy |
+
+### External Modules
+A separate section of the menu with two pages: **Manage** (enable, configure and update modules) and **View Logs**. See [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md).
 
 ---
 
@@ -101,7 +111,7 @@ The largest section of the Control Center, containing all system-wide behavioral
 
 The Control Center is visible **only to REDCap administrators** (super users). On the left navigation, regular users will not see the Control Center link. Administrator accounts are managed under **Users → Administrator Privileges** in the Control Center itself (see [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)).
 
-Different tiers of administrator access may exist depending on instance configuration — for example, some administrators may have full system access while others are granted limited privileges for specific environments (development, test, production).
+Administrator access is split into seven separate privileges, and a user can hold any mix of them. See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
 
 ---
 
@@ -111,7 +121,7 @@ Different tiers of administrator access may exist depending on instance configur
 Most Control Center changes take effect immediately. For example, disabling a feature, enabling a module, or changing email settings updates the behavior system-wide right away. However, some changes may require users to log out and log back in to see the effect, or may only apply to new data created after the change. Always document when you make changes so you can explain timing to affected users.
 
 **Q: Can I restrict certain administrators to have limited Control Center access (e.g., only certain sections)?**
-REDCap administrators at the instance level typically have full Control Center access. However, some institutions configure role-based or tiered administrator access through the "Administrator Privileges" section. Check with your REDCap administrator team or instance configuration to see if limited administrative roles are available. Project-level admins never have Control Center access.
+Yes. The **Administrator Privileges** page has seven separate privileges, such as Manage user accounts and Modify system configuration pages, granted per user. Project-level admins never have Control Center access.
 
 **Q: What happens if two administrators make changes to the Control Center settings at the same time?**
 REDCap typically handles concurrent changes gracefully, but if two administrators save contradictory settings simultaneously, the last save will overwrite the previous one. To avoid confusion, coordinate major changes with your administration team or use a change management log to document who is making what changes and when.

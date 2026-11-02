@@ -163,11 +163,13 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-MOB-01 — REDCap Mobile App
 - RC-MYCAP-01 — MyCap: Overview & Enabling
+- RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-INTG-01 — Data Entry Trigger
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
 - RC-TXT-02 — Texting: Administrator Setup
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe
+- RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-PLUS-03 — REDCap+: Reward Services
 
 **Inbound links (referenced by):**
@@ -223,6 +225,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-API-01 — REDCap API
+- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-CC-02 — Control Center: General System Configuration
 
 **Inbound links (referenced by):**
@@ -249,6 +252,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-DE-05 — Field Validations
 - RC-FD-02 — Online Designer
+- RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 **Inbound links (referenced by):**
@@ -482,6 +486,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-15 — Control Center: Top Usage Report
 - RC-CC-16 — Control Center: Database Activity Monitor
 - RC-CC-17 — Control Center: Database Query Tool
+- RC-PLUS-02 — REDCap+: Project Migration Tool
+- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-MLM-01 — Multi-Language Management
 - RC-CC-18 — Control Center: Custom Application Links
@@ -490,7 +496,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-26 — Control Center: AI Configuration Settings
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-EM-01 — External Modules: Overview & Manager
 
 **Inbound links (referenced by):**
 - RC-CC-15 — Control Center: Top Usage Report
@@ -605,6 +613,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 
@@ -980,6 +989,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CALC-01 — Special Functions Reference
 
 **Inbound links (referenced by):**
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-OPS-01 — Using REDCap as an Operational Request Management System
 - RC-API-34 — Export Project Info API
@@ -3515,6 +3525,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
 - RC-CC-25 — Control Center: Access Control Groups
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
@@ -3997,6 +4008,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DE-05 — Field Validations
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DSGN-01 — REDCap Project Design Best Practices
 - RC-AT-01 — Action Tags: Overview
 - RC-FD-07 — Field Embedding
@@ -6286,6 +6298,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-02 — Control Center: General System Configuration
 
 **Inbound links (referenced by):**
+- RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-21 — Control Center: Overview & Navigation
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-PLUS-01 — REDCap+: Overview and Subscription
 - RC-PLUS-03 — REDCap+: Reward Services
@@ -6328,6 +6342,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INFRA-03 — REDCap Versions, Release Lines & Patching
 
 **Inbound links (referenced by):**
+- RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-21 — Control Center: Overview & Navigation
 - RC-CC-25 — Control Center: Access Control Groups
 - RC-DAG-01 — Data Access Groups
 - RC-PLUS-01 — REDCap+: Overview and Subscription

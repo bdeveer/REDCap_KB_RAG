@@ -5,12 +5,14 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators only
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  the dropdown and switcher fields, the help popover and the code that defines the
+  targets; no view-as-user session or target navigation was run; v17.3.7 (LTS) — changelog
+  review only'
 prerequisites:
 - 'RC-CC-21 — Control Center: Overview & Navigation'
-version: '1.0'
-last_updated: '2026-04-25'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-CC-07
   title: 'Control Center: Users & Access Management'
@@ -31,6 +33,8 @@ synonyms:
 - admin troubleshooting tool for user rights
 - reproduce a user issue without their password
 - go directly to a project using project id
+- project switcher target codes
+- keyboard shortcut to jump to a project
 ---
 
 # 1. Overview
@@ -106,7 +110,60 @@ The Project Switcher appears in two places:
 
 Type the PID of the target project into the input field and press Enter. REDCap navigates immediately to that project's home page.
 
-> **Tip:** The Project Switcher also supports shortcuts for common admin destinations. For example, entering a PID followed by `eps` (e.g., `1234 eps`) jumps directly to the Edit Project Settings page for that project in the Control Center. See [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md) for details.
+Inside a project the field shows **Enter PID to go to project**; on non-project pages it shows **PID**. A help icon beside the field opens a **Navigate to page** popover listing the target codes below.
+
+## 3.4 Target Codes
+
+Enter a PID, or `cc` for the Control Center, optionally followed by a space and a target code. For example, `1234 eps` opens Edit Project Settings for that project, and `cc bu` opens Browse Users. See [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md).
+
+**Project codes (after a PID):**
+
+| Code | Destination | Code | Destination |
+| --- | --- | --- | --- |
+| `aer` | Add / Edit Records | `fcl` | Field Comment Log |
+| `an` | Alerts & Notifications | `fr` | File Repository |
+| `api` | API | `log` | Logging |
+| `apg` | API Playground | `mlm` | Multi-Language Management |
+| `cal` | Calendar | `od` | Online Designer |
+| `cb` | Data Dictionary Codebook | `oeo` | Other Export Options |
+| `cc` | Control Center | `of` | Other Functionality |
+| `dag` | Data Access Groups | `pd` | Project Dashboards |
+| `dd` | Data Dictionary | `ph` | Project Home |
+| `ders` | Data Exports, Reports, and Stats | `pl` | Participant List |
+| `dit` | Data Import Tool | `ps` | Project Setup |
+| `dq` | Data Quality | `prh` | Project Revision History |
+| `el` | Email Logging | `psl` | Public Survey Link |
+| `eml` | External Module Logs | `rhp` | Record Home Page |
+| `emm` | External Modules - Project Module Manager | `rsd` | Record Status Dashboard |
+| `eps` | Edit Project Settings | `sdt` | Survey Distribution Tools |
+| `sil` | Survey Invitation Log | `ur` | User Rights |
+
+**Control Center codes (after `cc`):**
+
+| Code | Destination | Code | Destination |
+| --- | --- | --- | --- |
+| `ap` | Administrator Privileges | `fs` | Footer Settings (All Projects) |
+| `apidoc` | API Documentation | `fvt` | Field Validation Types |
+| `bp` | Browse Projects | `gc` | General Configuration |
+| `bu` | Browse Users | `hookdoc` | Plugin, Hook, & External Module Documentation |
+| `cal` | Custom Application Links | `hps` | Home Page Settings |
+| `cdis` | Clinical Data Interoperability Services | `info` | redcap_info() |
+| `cron` | Cron Jobs | `ll` | Link Lookup |
+| `dam` | Database Activity Monitor | `mlm` | Multi-Language Management |
+| `ddp` | Dynamic Data Pull (DDP) | `msc` | Modules/Services Configuration |
+| `dps` | Default Project Settings | `pt` | Project Templates |
+| `dqt` | Database Query Tool | `sa` | Security & Authentication |
+| `emdoc` | External Modules Documentation | `tokens` | API Tokens |
+| `eml` | External Module Logs | `ual` | User Activity Log |
+| `emm` | External Modules - Module Manager | `us` | User Settings |
+| `eu` | Email Users | | |
+| `fus` | File Upload Settings | | |
+
+The 17.5.6 code also defines `hf` (Help & FAQ), `home` (Home), `mp` (My Projects), `np` (New Project) and `sd` (Sponsor Dashboard). The list can change between versions, so the popover is the reference for your instance.
+
+## 3.5 Keyboard Shortcuts
+
+In the 17.5.6 code, **Ctrl+Alt+N** (or **Cmd+Alt+N** on a Mac) moves focus to the field, and **Ctrl+Enter** opens the destination in a new tab. These were read from the code, not tried in a browser.
 
 ---
 
@@ -142,7 +199,7 @@ The PID appears in the URL when you are inside a project (e.g., `...redcap.php?p
 
 **Entering an invalid PID in the Project Switcher.** If the PID does not correspond to an existing project, the switcher will either produce an error or land on an unexpected page. Double-check the PID before navigating, especially if entering it from memory.
 
-**Using the Project Switcher shortcut syntax unintentionally.** Appending certain suffixes (like `eps`) to a PID in the Project Switcher triggers a redirect to a specific admin page rather than the project home. If you find yourself unexpectedly in the Control Center, you may have used a shortcut unintentionally.
+**Using the Project Switcher target codes unintentionally.** Appending certain suffixes (like `eps`) to a PID in the Project Switcher triggers a redirect to a specific admin page rather than the project home. If you find yourself unexpectedly in the Control Center, you may have used a shortcut unintentionally.
 
 ---
 

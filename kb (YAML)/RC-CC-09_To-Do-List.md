@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  page sections, the email checkbox and Export list; no requests were present, so
+  request handling was not exercised; v17.3.18 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.1'
-last_updated: 2026-10
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -25,6 +26,8 @@ synonyms:
 - where do i review user requests in redcap
 - approve project move to production
 - admin approval queue control center
+- export the to-do list
+- low priority pending requests
 - list of tasks awaiting administrator review
 - handle pending requests from users
 ---
@@ -35,9 +38,11 @@ The To-Do List is the REDCap administrator's task queue for pending action items
 
 ---
 
-# 2. Active Requests
+# 2. Pending Requests
 
-The main section of the To-Do List displays all pending tasks awaiting administrator action. 
+The main section, **Pending Requests**, displays all pending tasks awaiting administrator action. Older documentation may call it Active Requests. A separate **Low Priority Pending Requests** section sits below it. Each section heading shows its count.
+
+Above the lists are an **Enable email notifications for administrators** checkbox and an **Export list** button.
 
 **When empty:** If there are no pending items, the section displays "No requests to view."
 
@@ -72,7 +77,7 @@ To complete a task, administrators select the request to open it.
 - Administrators can approve or reject the proposed changes
 - Feedback can be provided to the requesting user if changes are rejected
 
-After the administrator takes action (approve or reject), the request moves from the Active Requests section to the Completed & Archived section.
+After the administrator takes action (approve or reject), the request moves from the Pending Requests section to the Completed & Archived section.
 
 ---
 
@@ -119,7 +124,7 @@ The To-Do List often displays a count of pending items in the sidebar or on the 
 Yes. When reviewing draft changes, administrators can reject the proposal and provide feedback to the requesting user. The user will then need to revise their proposal and resubmit it for approval. Rejected changes do not take effect and must be resubmitted.
 
 **Q: What happens to a completed request in the To-Do List?**
-After an administrator takes action on a request (approves or rejects it), the request automatically moves from the Active Requests section to the Completed & Archived Requests section. The archived entry remains in the system for audit purposes, showing when and by whom the task was completed.
+After an administrator takes action on a request (approves or rejects it), the request automatically moves from the Pending Requests section to the Completed & Archived Requests section. The archived entry remains in the system for audit purposes, showing when and by whom the task was completed.
 
 **Q: How long are completed requests retained in the archive?**
 Completed requests are retained indefinitely in the system for audit and compliance purposes. You can access the full history of past requests at any time, filtered by date or other criteria. This historical record is important for documenting institutional review and approval workflows.
@@ -131,7 +136,7 @@ Tasks are generated automatically by REDCap when specific actions occur (such as
 
 # 8. Common Mistakes & Gotchas
 
-**Missing draft change notifications.** Administrators may not realize that draft changes have been submitted if they don't check the To-Do List regularly and have not configured email notifications. Establish a routine to check the To-Do List daily, or configure your system to send email alerts when production projects have pending changes awaiting review.
+**Missing draft change notifications.** Administrators may not realize that draft changes have been submitted if they don't check the To-Do List regularly and have not configured email notifications. Establish a routine to check the To-Do List daily, or tick **Enable email notifications for administrators** at the top of this page.
 
 **Accidentally rejecting changes without clear feedback.** If you reject a draft change proposal without providing detailed feedback, the requesting user may resubmit the same changes without understanding why they were rejected. Always include specific feedback explaining what needs to change or why the proposal was not approved.
 

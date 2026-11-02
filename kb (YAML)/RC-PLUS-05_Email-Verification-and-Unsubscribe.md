@@ -6,13 +6,14 @@ applies_to:
 - Study teams sending participant emails
 - REDCap Administrators (§3)
 requires: REDCap v17.3.0+ and a REDCap+ subscription
-verified_against: REDCap 17.3.6 (LTS) — the system-level setting (§3) verified against
-  a live instance. The Smart Variables, dashboard page and participant-facing pages
-  are from the 17.3.0 release notes and are not yet verified
+verified_against: 'REDCap v17.5.6 (Standard) — on an unsubscribed test instance: Smart
+  Variable definitions, menu item and page notice, read-only; 17.3.6 (LTS) — system-level
+  setting (§3). Participant-facing pages and suppression behaviour are from the 17.3.0
+  release notes and are not yet verified'
 prerequisites:
 - 'RC-PLUS-01 — REDCap+: Overview and Subscription'
-version: '1.0'
-last_updated: 2026-08
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-03
   title: 'Smart Variables: Overview'
@@ -33,14 +34,16 @@ synonyms:
 - let participants opt out of emails
 - verify participant email address
 - email-verify-link
+- email-verify-url
 - email-unsubscribe-link
+- email-unsubscribe-url
 - email-verified smart variable
 - stop sending emails to a participant
 - verified and unsubscribed emails page
 - opt out link in survey invitations
 ---
 
-> **Scope note.** The system-level setting in §3 is verified against a live instance running **17.3.6 LTS**. The Smart Variables, the project dashboard page and the participant-facing verify/unsubscribe pages are described from REDCap's **17.3.0** release notes and have not been verified — they require an active REDCap+ subscription to exist. See [RC-PLUS-01 §4a](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) on what is and is not observable without one.
+> **Scope note.** The system-level setting in §3 is verified against a live instance running **17.3.6 LTS**. On **17.5.6** without a subscription, the Smart Variable definitions (§2) could be read in REDCap's Smart Variables documentation, and the project menu item and page introduction (§6) could be seen. How the links, flags, suppression and dashboard table actually behave needs an active subscription, so that part still comes from the **17.3.0** release notes and has not been verified. See [RC-PLUS-01 §4a](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) on what is and is not observable without one.
 
 ---
 
@@ -51,7 +54,7 @@ Two related REDCap+ features, introduced together in **17.3.0**:
 - **Email Verification** — a participant confirms that an email address they supplied actually reaches them.
 - **Email Unsubscribe** — a participant opts out of all emails from a project.
 
-Both work through a suite of four **Smart Variables** plus a project dashboard page. Both are **entirely opt-in**: enabling the feature at system level makes the Smart Variables and the dashboard *available*, but nothing changes in any project until a user deliberately puts one of the Smart Variables into an email, an alert, or trigger logic.
+Both work through a suite of six **Smart Variables** plus a project dashboard page. Both are **entirely opt-in**: enabling the feature at system level makes the Smart Variables and the dashboard *available*, but nothing changes in any project until a user deliberately puts one of the Smart Variables into an email, an alert, or trigger logic.
 
 > **This is a build-it-yourself feature, not a switch.** REDCap does not add an unsubscribe link to your emails, and does not start verifying addresses, because you turned the feature on. It gives you the links and the flags; where they go and what they gate is your design decision. A project that never uses the Smart Variables behaves exactly as it did before.
 
@@ -59,20 +62,24 @@ The one thing REDCap *does* enforce on your behalf is the suppression itself —
 
 ---
 
-# 2. The Four Smart Variables
+# 2. The Six Smart Variables
 
 | Smart Variable | Type | Purpose |
 | --- | --- | --- |
-| `[email-verify-link]` | Link | Generates a link the participant clicks to verify their email address |
+| `[email-verify-url]` | URL | The web address that verifies the participant's email address, without the link HTML |
+| `[email-verify-link]` | Link | Generates a link the participant clicks to verify their email address. Default link text: "Verify Email Address" |
 | `[email-verified]` | Flag | `1` if the participant's address has been verified, `0` if not. For use in logic |
-| `[email-unsubscribe-link]` | Link | Generates a link the participant clicks to unsubscribe from the project |
+| `[email-unsubscribe-url]` | URL | The web address that unsubscribes the participant, without the link HTML |
+| `[email-unsubscribe-link]` | Link | Generates a link the participant clicks to unsubscribe from the project. Default link text: "Unsubscribe" |
 | `[email-unsubscribed]` | Flag | `1` if the participant has unsubscribed, `0` if not. For use in logic |
 
 The two link variables accept custom link text — for example `[email-verify-link:Please click here]` renders as a link reading "Please click here".
 
-The pattern is consistent: **a link variable to put in an email, and a flag variable to put in logic.** They are designed to be used as a pair.
+> **Note:** If the current participant has no associated email address in the project, all six return nothing: no URL, no link and no flag value.
 
-Full definitions live in REDCap's own Smart Variables documentation, which is where the flags' exact behaviour in edge cases will be stated. See [RC-PIPE-03 — Smart Variables: Overview](RC-PIPE-03_Smart-Variables-Overview.md).
+The pattern is consistent: **a link or URL variable to put in an email, and a flag variable to put in logic.** They are designed to be used together.
+
+These definitions match REDCap's own Smart Variables documentation on 17.5.6. See [RC-PIPE-03 — Smart Variables: Overview](RC-PIPE-03_Smart-Variables-Overview.md).
 
 ---
 
@@ -144,6 +151,8 @@ REDCap's own suggested pattern: create an alert whose logic is **only** `[email-
 
 Every project gains a dashboard page named **"Verified & Unsubscribed Emails"**, listing which email addresses in the project have been verified and which have unsubscribed.
 
+> **Without a subscription (17.5.6):** The menu item appears and the page shows its introduction, then *"NOTICE: This feature is not available because it requires a REDCap+ subscription."* No table is shown.
+
 **Access is restricted.** Only users with **Survey Distribution Tools** privileges *or* **Alerts & Notifications** privileges can view and manage the page. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md).
 
 > **Note:** The page is hidden entirely when the feature is disabled at system level (§3).
@@ -209,7 +218,7 @@ No defects specific to these features appear in the Standard or LTS changelogs t
 
 **Q: Why don't the Smart Variables appear in our Smart Variable documentation?**
 
-**A:** Either the feature is disabled at system level, which hides them from the documentation, or the instance has no REDCap+ subscription, or it is below 17.3.0.
+**A:** Either the feature is disabled at system level, which hides them from the documentation, or the instance is below 17.3.0. On a 17.5.6 instance without a subscription, the documentation still lists them while the feature is enabled.
 
 ---
 
@@ -233,7 +242,7 @@ No defects specific to these features appear in the Standard or LTS changelogs t
 
 # 11. Related Articles
 
-- [RC-PIPE-03 — Smart Variables: Overview](RC-PIPE-03_Smart-Variables-Overview.md) — where the four Smart Variables sit in the wider set
+- [RC-PIPE-03 — Smart Variables: Overview](RC-PIPE-03_Smart-Variables-Overview.md) — where the six Smart Variables sit in the wider set
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) — trigger logic, where the flag variables belong
 - [RC-SURV-06 — Automated Survey Invitations](RC-SURV-06_Automated-Survey-Invitations.md) — ASIs are subject to the same schedule-versus-send distinction
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) — the system-level setting

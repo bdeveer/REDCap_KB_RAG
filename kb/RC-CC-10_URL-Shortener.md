@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page form and buttons; no short URL was created; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)|
 | **Synonyms** | control center url shortener tool; create a short redirect link in redcap; shorten a survey or project url; generate a custom short url alias; random short url for distribution; make a tiny link for a redcap survey; admin url shortening service; shorten a long destination link |
@@ -19,7 +19,7 @@
 
 ## 1. Overview
 
-The URL Shortener creates short redirect links for distribution. This service is provided externally and is hosted outside the local REDCap server. It is accessible from the Administrator Resources section of the Control Center sidebar.
+The URL Shortener creates short redirect links beginning with `https://redcap.link/` for distribution. The service is provided by Vanderbilt, hosted on AWS rather than on the local REDCap server, and the page recommends using it for REDCap-related matters only. It is accessible from the Administrator Resources section of the Control Center sidebar.
 
 ---
 
@@ -29,8 +29,8 @@ The Random Short URL option generates a randomly assigned short URL that redirec
 
 To use this feature:
 1. Navigate to the URL Shortener tool in the Control Center
-2. Select the "Random Short URL" option
-3. Enter the full destination URL you wish to shorten
+2. Enter the full destination URL in the web address box
+3. Click **Create a random short URL**
 4. The system will generate a short URL with a random alphanumeric string
 5. Copy and distribute the shortened URL as needed
 
@@ -42,9 +42,9 @@ The Custom Alias option allows administrators to define a custom alphanumeric st
 
 To use this feature:
 1. Navigate to the URL Shortener tool in the Control Center
-2. Select the "Custom Alias" option
-3. Enter the full destination URL
-4. Define your desired custom alias (alphanumeric characters only; special characters and spaces are not permitted)
+2. Enter the full destination URL in the same web address box
+3. Under **OPTION 2: Define a custom alias**, enter your custom ending (alphanumeric characters only; special characters and spaces are not permitted)
+4. Click **Create a custom short URL**
 5. The system validates that your alias is not already in use
 6. If validation passes, the custom shortened URL is created and ready to share
 

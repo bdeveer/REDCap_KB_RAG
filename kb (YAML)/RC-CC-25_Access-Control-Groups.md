@@ -5,13 +5,14 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  page tabs and ACG table columns; the feature was off, so enforcement was not exercised;
+  v17.3.7 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
 - familiarity with REDCap user rights
-version: '1.3'
-last_updated: 2026-08
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-CC-07
   title: 'Control Center: Users & Access Management'
@@ -30,6 +31,7 @@ synonyms:
 - prevent certain users from getting export or delete rights
 - restrict grantable privileges instance-wide
 - acg setup in the control center
+- full list of acg permission columns
 - compliance control over user rights
 - cap user permissions at the system level
 ---
@@ -163,6 +165,10 @@ Before import, REDCap displays a **review dialog** showing all proposed ACG chan
 # 6. Configuring an ACG — Rights Categories
 
 When you edit an ACG, you set the maximum allowed value for each privilege category. The categories mirror the user rights options available in project-level User Rights management. What you configure here is not the value the user will have — it is the highest value they can be given.
+
+On 17.5.6 the ACG table has 34 permission columns: Create Project; Project Design and Setup; User Rights; Data Access Groups; Data Viewing Rights; Data Export Rights; Alerts & Notifications; Add/Edit Reports; Stats & Charts; Survey Distribution Tools; Calendar & Scheduling; Data Import Tool; Data Comparison Tool; Logging; Email Logging; File Repository; Double Data Entry; Record Locking Customization; Lock/Unlock Entire Records; Lock/Unlock Records; Randomization; Data Quality (create/edit rules); Data Quality (execute rules); Data Resolution Workflow; API; REDCap Mobile App; Mobile App Download Data; CDP/DDP Setup / Mapping; CDP/DDP Adjudicate Data; DTS; Manage MyCap Participants; Create Records; Rename Records; Delete Records.
+
+The subsections below explain the categories that have several levels or special rules. They do not cover every column.
 
 ## User Rights
 

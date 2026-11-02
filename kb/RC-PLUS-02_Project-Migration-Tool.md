@@ -9,8 +9,8 @@
 | **Requires** | REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required on the **destination** instance only — see §2 |
 | **Verified Against** | REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against a live instance. The migration workflow itself (§3–4) is from release notes only and **cannot be verified without a REDCap+ subscription** — see the scope note |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
 | **Synonyms** | move a project with the redcap+ migration tool; project migration tool redcap plus; migrate a whole project including logs and files; migration key redcap; move project between institutions with all data; transfer a redcap project to another instance; does project migration include randomization and logging; project migration dashboard; what does the project migration tool actually copy |
@@ -144,7 +144,7 @@ The PMT is a young feature and several defects affected what actually arrived at
 
 ### 6.1 Who may migrate projects in
 
-Settings on the **Modules/Services Configuration** page in the Control Center govern migration into the instance. Administrators can allow users to migrate projects in **on their own**, or require **administrator approval** for each migration. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
+Settings on the **Modules/Services Configuration** page in the Control Center govern migration into the instance. On 17.5.6 the page states that an administrator must approve **every** migration request, even where users can normally create projects without approval. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
 
 There is also a system-level setting **"Allow users to use the Project Migration Tool to move projects TO THIS SERVER?"**. When it is Disabled, the Project Migration Dashboard link is hidden from the Control Center menu (from 17.4.1).
 

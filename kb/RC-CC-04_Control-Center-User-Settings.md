@@ -7,13 +7,13 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: User Settings fields and the two install values quoted; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Synonyms** | control center user settings and defaults; who can create projects in redcap; system-wide default preferences for new accounts; restrict user features across the instance; require approval for user actions; default settings applied to all users; control center user behavior controls; instance-level user permission defaults |
+| **Synonyms** | control center user settings and defaults; who can create projects in redcap; system-wide default preferences for new accounts; restrict user features across the instance; require approval for user actions; default settings applied to all users; control center user behavior controls; instance-level user permission defaults; allow adding users without an account to a project; prevent printing forms without export rights |
 
 ---
 
@@ -159,7 +159,7 @@ Controls visibility of the "suggest variable name" feature in the Add Field popu
 
 These settings define the starting state of new user accounts. They primarily affect users created via external authentication methods (LDAP, Shibboleth, etc.). Table-based user accounts have these values set manually by an administrator at account creation.
 
-**Allow new users to create projects by default**
+**Allow new users to create or request projects by default**
 - *No* — New users cannot create projects until an administrator grants that right
 - *Yes* — New accounts immediately have project creation rights
 
@@ -203,6 +203,29 @@ Controls whether project-level administrators can generate public URLs for proje
 Sets a system-level floor on the number of data points required before a Smart Chart, Smart Table, or Smart Function will display on a public project dashboard, public report, or survey page. If a chart or function has fewer data points than the minimum, it will show the message `[INSUFFICIENT AMOUNT OF DATA FOR DISPLAY]` instead.
 
 This setting does not apply when viewing charts/reports from inside a REDCap project — only via their public links. It can be overridden per project on the 'Edit Project Settings' page.
+
+---
+
+## Adding Users Who Do Not Have an Account Yet *(16.1.5+)*
+
+Two settings at the bottom of the page control what happens when someone adds a person without a REDCap account to a project, through the User Rights page or the API.
+
+| Setting | Options | Install value (17.5.6) |
+| --- | --- | --- |
+| **Allow adding non-existent users to projects?** | *No, only allow users to be added to projects if they have an account* / *Yes* | No |
+| **Custom error when adding a user** | Rich text shown with the error | Blank |
+
+> **Note:** On a Table-based 17.5.6 test instance the first setting was shown as disabled, so its Yes behaviour was not tested.
+
+---
+
+## Printing Forms Without Export Rights *(17.0.4+)*
+
+**Prevent printing forms if the user lacks Full Data Set export rights.** Options:
+- *No, allow printing forms regardless of data export rights*
+- *Yes, prevent printing forms if user does not have data export rights*
+
+A new 17.5.6 installation starts on *Yes*. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history.
 
 ---
 

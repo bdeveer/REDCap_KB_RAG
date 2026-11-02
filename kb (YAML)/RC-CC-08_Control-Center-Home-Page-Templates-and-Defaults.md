@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  Home Page, Project Templates, Default Project, Footer and Field Validation pages,
+  with the install values quoted; v17.3.18 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-02
   title: 'Control Center: General System Configuration'
@@ -46,7 +47,7 @@ The Home Page Settings control what users see on the REDCap landing page (before
 **Contact Information**
 - Contact name — Displayed on the Home page as the REDCap support contact (typically a team name, not an individual)
 - Contact email — The email address linked to the support contact name
-- Contact URL — An optional link (e.g., a help desk landing page) displayed alongside the contact information
+- Contact URL — An optional link (e.g., a ticket system) used on the Home page and login page *instead of* the contact email
 
 **Grant Information**
 - Grant name — If the REDCap instance is funded by a grant, the grant name or award number can be displayed on the Home page
@@ -74,7 +75,6 @@ Administrators can manage which templates are available, add new templates from 
 
 | Template | Description |
 | --- | --- |
-| Base Project with eConsent | Starter project incorporating the e-Consent framework |
 | Basic Demography | Single instrument for capturing basic demographic information |
 | Classic Database | Six forms: demography, baseline, three monthly follow-ups, and a completion form |
 | Field Embedding Example Project | Demonstrates the Field Embedding feature |
@@ -91,6 +91,8 @@ Administrators can manage which templates are available, add new templates from 
 | Repeating Instruments | Demonstrates the Repeating Instruments feature |
 | Single Survey | Single survey showcasing all field types |
 
+> **Version caveat:** Earlier versions of this article also listed **Base Project with eConsent**. It is not among the 15 templates in the 17.5.6 install scripts or on a 17.5.6 test instance.
+
 > **Tip:** Templates are most effective after your instance has been in use for a while and common project patterns have emerged. Over time, the default templates can be supplemented or replaced with institution-specific ones that incorporate standard fields, user role structures, and instrument configurations common at your organization.
 
 ---
@@ -106,10 +108,10 @@ The default language for text displayed within projects (e.g., button labels, er
 The character encoding used for CSV exports from projects. UTF-8 is the standard default and handles special characters and international characters correctly.
 
 **Display Custom Logo and Institution Name**
-Controls whether the institutional logo (configured in General Configuration) and institution name appear in the project header on every page. Typically enabled to maintain consistent institutional branding.
+Controls whether the institutional logo (configured in General Configuration) and institution name appear in the project header on every page. A new 17.5.6 installation starts on **No**, so set it to Yes if you want institutional branding in new projects.
 
 **Display the Today/Now Button**
-When enabled, a "Today" button (for date fields) and a "Now" button (for datetime fields) appears on all forms and surveys by default. Project administrators can override this per field if needed.
+When enabled, a "Today" button (for date fields) and a "Now" button (for datetime fields) appears on all forms and surveys by default. Each project can change this in Additional Customizations, which applies to the whole project. See [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) §10, which also covers the `@HIDEBUTTON` action tag for a single field.
 
 **Enable File Version History for 'File Upload' Fields**
 When enabled, REDCap tracks version history for files uploaded to File Upload fields across all projects. Users can view previous file versions from the record. This setting can also be overridden at the project level via Additional Customizations on the Project Setup page.
@@ -129,7 +131,7 @@ A text block (with optional link) that appears at the bottom of all survey pages
 Configures links and text that appear in the footer of every REDCap project page.
 
 **Footer Links**
-Up to several URL + display name pairs can be added. These links appear in the footer across all projects and are typically used for institutional resources (e.g., institutional home page, IT help desk, data governance page).
+Enter one link per line, as the URL followed by a comma and then the link text, for example `https://example.edu/help, Help Desk`. These links appear in the footer across all projects and are typically used for institutional resources (e.g., institutional home page, IT help desk, data governance page).
 
 **Footer Text**
 A text block displayed in the footer alongside the links. Commonly contains the institution's official name, address, and contact phone number.
@@ -138,7 +140,7 @@ A text block displayed in the footer alongside the links. Commonly contains the 
 
 # 6. Field Validation Types
 
-This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can enable or disable individual validation types, and can add custom validations developed for the institution.
+This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can publish or disable individual validation types, and can add custom validations developed for the institution.
 
 > **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways. In 17.4.0–17.4.2 the help tooltips for **Data Type** and **Display Name** on the add form were swapped; trust the field labels, not the tooltips (fixed 17.4.3).
 
@@ -147,7 +149,7 @@ Two consequences of custom validation types worth knowing, both independent of v
 - **Copying an instrument fails if the target server lacks the validation type.** Copying an instrument whose text field uses a validation type that does not exist on that REDCap server returns a vague error. The same applies to Data Dictionary uploads and Project XML imports moved between instances. If you rely on custom validations, they must exist on every server a project travels to.
 - **Custom validations with an `email` datatype can be used for the Designated Email Field** and for survey invitation addresses (16.0.7), which makes them useful for institution-specific address formats rather than only for display validation.
 
-Administrators can enable or disable any validation type. Once enabled, it appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
+Each row has a **Publish** or **Disable** action. Once published, a type appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
 
 **Important:** Disabling a validation type that is already in use in a project does not break it; the validation continues to function. The disable only prevents new fields from selecting it via the Online Designer.
 
@@ -191,13 +193,14 @@ Administrators can enable or disable any validation type. Once enabled, it appea
 | Postal Code (UK) | `postalcode_uk` |
 | Code Postal 5 caractères (France) | `postalcode_french` |
 | Social Security Number (U.S.) | `ssn` |
-| MRN (7 digits) | `mrn_7d` |
 | MRN (10 digits) | `mrn_10d` |
 | MRN (generic) | `mrn_generic` |
 | Vanderbilt MRN | `vmrn` |
 
+> **Version caveat:** Earlier versions of this article also listed **MRN (7 digits)** (`mrn_7d`). It is not in the 17.5.6 install scripts or on a 17.5.6 test instance.
+
 **Custom Validation Types**
-REDCap administrators can develop and register custom validation types for institution-specific needs. Custom validations use JavaScript-based pattern matching or range checking. Once registered here, they become available in the validation type dropdown alongside standard types.
+REDCap administrators can develop and register custom validation types for institution-specific needs. The **Add Custom Validation Type** form on 17.5.6 asks for a **Data type**, **Display name**, **Internal name**, a server-side (PHP) regex pattern and a **JavaScript regex pattern**, plus **Case sensitive** and **Unicode** checkboxes. Once registered here, a type becomes available in the validation type dropdown alongside standard types.
 
 ---
 
@@ -213,7 +216,7 @@ When a user clicks "Create New Project," they are offered the option to start fr
 No. Disabling a validation type hides it from the Online Designer dropdown (preventing new fields from selecting it), but existing fields with that validation type continue to function normally. The validation rules already applied to projects remain in effect. Users can still enter validation types directly via Data Dictionary CSV upload even if disabled.
 
 **Q: What happens when I change the default survey footer text?**
-The new footer text applies to all survey pages in all projects going forward. Existing surveys created before the change already have the footer text embedded; they do not retroactively update unless the project administrator manually changes the survey footer in that specific project.
+From 15.9.0 this setting is the default for **new** projects only. Existing projects keep their current footer. To change one, an administrator edits it for that project on Edit Project Settings.
 
 **Q: Can I use HTML in the announcement text and footer text fields?**
 Yes. The announcement text, bottom-of-page text, and custom survey footer text all support HTML. You can include styled text, hyperlinks, images, and other HTML elements. Test your HTML in a development project before deploying to production.
@@ -233,7 +236,7 @@ Institution-specific templates allow you to standardize data collection across p
 
 **HTML injection in announcement text poses security risks.** While HTML is supported in announcement and footer text, malicious HTML (scripts, forms, etc.) could compromise security. Always vet HTML content carefully and limit who can edit these fields. Never allow untrusted users to edit announcement or footer text.
 
-**Survey footer text applies instance-wide, affecting all surveys.** Custom survey footer text is a global setting. If you change it, the new footer appears on all survey pages across all projects. Consider your institution's branding and legal requirements before making changes, as the footer may include disclaimers or compliance notices.
+**Expecting a new survey footer to reach existing projects.** The setting here is a default for new projects. If the footer carries disclaimers or compliance notices, existing projects must be updated one at a time on Edit Project Settings.
 
 ---
 

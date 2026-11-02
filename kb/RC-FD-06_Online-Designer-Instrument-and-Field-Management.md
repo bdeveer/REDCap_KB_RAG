@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how to add edit move or delete fields; rename copy or reorder instruments; manage fields in the online designer; all redcap field types explained; create a matrix of fields; drag and drop logic builder for branching; delete an instrument in the designer; online designer field management tasks |
@@ -156,7 +156,7 @@ Throughout the instrument editor, you will see a cluster of buttons between fiel
 | **Add Matrix of Fields** | Opens the matrix editor to create a group of fields in a grid layout. See Section 10. |
 | **Add CDE Field** | Opens the CDE Library — a searchable catalog of Common Data Elements from external repositories. Select a catalog (the default is the NIH CDE Repository), enter a keyword, review the results, and click **Add Field** next to any result to import that standardized field into your instrument. See Section 6.4 for details. |
 
-> **Naming note:** The CDE Library button was previously labeled **Import from Field Bank**. You may see "Field Bank" referenced in older documentation or training materials — it refers to the same feature.
+> **Naming note:** The CDE Library button was previously labeled **Import from Field Bank**. You may see "Field Bank" referenced in older documentation or training materials — it refers to the same feature. The Control Center setting calls it the **Standardized Field (CDE) feature in Online Designer**, and the 16.0.7 release notes call it **Standardized Field (CDE) search**. All of these names mean the same feature.
 
 ### 6.3 Field-Level Actions
 

@@ -7,12 +7,13 @@ applies_to:
 - REDCap Licensed Institutions
 requires: REDCap v17.0.0+ — REDCap+ does not exist below this version. The article
   itself is informational and useful on any version
-verified_against: REDCap 17.3.6 (LTS) — the gating behaviour in §4a observed on a
-  live unsubscribed instance; feature list from release notes through 17.5.4 Standard
+verified_against: REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour
+  in §4a observed on live unsubscribed instances; feature list from release notes
+  through 17.5.4 Standard
 prerequisites:
 - Existing REDCap License (REDCap Core installation)
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-PLUS-02
   title: 'REDCap+: Project Migration Tool'
@@ -133,7 +134,7 @@ Delegates routine administrative work — project creation approvals, production
 
 ## Email Verification & Email Unsubscribe *(17.3.0)*
 
-Lets participants verify their email address and opt out of all emails from a project, via four Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+Lets participants verify their email address and opt out of all emails from a project, via six Smart Variables and a per-project dashboard. Entirely opt-in and **enabled by default** at system level. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
 
 ## REDCap Login Protection *(17.5.0)*
 
@@ -153,6 +154,7 @@ REDCap+ features are visible in the interface on an unsubscribed instance, but *
 | --- | --- | --- |
 | **Cosmetic** | Settings render normally and are then disabled in the browser. The full set of options and help text is readable | Reward Services on the Modules/Services Configuration page |
 | **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* | Project Administrator Groups |
+| **Shell only** | The menu item and the page's introduction appear, followed by a differently worded notice — *"NOTICE: This feature is not available because it requires a REDCap+ subscription."* No working content is shown | Verified & Unsubscribed Emails (project-level) on 17.5.6 |
 | **Open** | The page works, because it is not subscriber-only | Project Migration Dashboard, which any institution may use |
 
 > **Note:** Do not infer one page's behaviour from another's. A REDCap+ section being fully readable in one place does not mean the next one will be.

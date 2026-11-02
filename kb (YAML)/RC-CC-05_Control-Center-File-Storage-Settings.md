@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  File Upload Settings fields and the install values quoted; v17.3.18 (LTS) — changelog
+  review only'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -60,7 +61,7 @@ Files are stored in an AWS S3 bucket. Required configuration: AWS Access Key, AW
 For REDCap instances hosted on Google Cloud Platform. Requires two GCS buckets: one for permanent file storage and one for temporary file storage (they must be different buckets). The subfolder-by-project-ID option (see below) also applies to this storage type.
 
 **Google Cloud Storage using API Service Account**
-For non-App Engine GCP hosting. Requires a GCP Project ID, bucket name, and service account secret key. Includes an independent setting for organizing files into subfolders by project ID; this setting defaults to *Enabled* for this storage type (unlike the Local Storage version, which defaults to *Disabled*).
+For non-App Engine GCP hosting. Requires a GCP Project ID, bucket name, and service account secret key. Includes an independent setting for organizing files into subfolders by project ID; this setting starts as *Enabled* on a new 17.5.6 installation, the same as the Local Storage version.
 
 **Microsoft Azure Blob Storage**
 Files are stored in a Microsoft Azure Blob Storage container. Required configuration: storage account name, storage account key, and container name.
@@ -87,7 +88,7 @@ An alternative directory path can be specified for local file storage. If left b
 **Organize Stored Files into Subfolders by Project ID**
 When enabled, each new project's files are stored in a dedicated subfolder named by its REDCap project ID. This applies only to projects created after the setting is enabled — existing projects are not moved. If REDCap cannot create the subfolder due to permissions, it falls back to storing files in the main storage directory.
 
-Options: *Disabled* / *Enabled*
+Options: *Disabled* / *Enabled*. A new 17.5.6 installation starts on *Enabled*; an upgraded instance keeps its stored value.
 
 > This setting also applies to Google Cloud Storage for App Engine hosting.
 
@@ -136,7 +137,7 @@ These are server-executable formats. They are blocked in code, not by the settin
 
 Upload limits and enable/disable controls are set independently for each file upload context in REDCap.
 
-> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The server default is typically 1024 MB unless changed — this is the PHP-level ceiling. REDCap's own application-level upload limits (configured in project settings) default to 128 MB and can be raised up to but not exceeding this ceiling. Per-context limits in REDCap can only be set *lower* than the server default.
+> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The value depends on the server: one 17.5.6 test instance reported 64 MB. On a new 17.5.6 installation REDCap's own per-context limits below are **blank**, which means the server default applies. Per-context limits in REDCap can only be set *lower* than the server default.
 
 ## File Repository
 
@@ -149,7 +150,7 @@ Options: *Disabled* / *Enabled*
 Maximum size (in MB) for a single file uploaded by a user to the File Repository. If left blank, the server default applies.
 
 **File Repository: File Storage Limit Per Project (in MB)**
-Sets a cap on total storage per project within the File Repository, counting only user-uploaded files (not system-generated files like exports or eConsent PDFs). Set to blank or `0` to disable the limit. This value can be overridden per project via the 'Edit Project Settings' page.
+The on-page label reads "for all projects", but the limit is applied to each project separately. Sets a cap on total storage per project within the File Repository, counting only user-uploaded files (not system-generated files like exports or eConsent PDFs). Set to blank or `0` to disable the limit. This value can be overridden per project via the 'Edit Project Settings' page.
 
 **File Repository: Allow Users to Share Files via Public Links**
 When enabled, project users can generate a unique public URL for any file in the File Repository. Anyone with the link can download the file without authenticating to REDCap.

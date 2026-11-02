@@ -12,8 +12,8 @@ verified_against: REDCap 17.3.6 (LTS) — Project Migration Dashboard verified a
   and **cannot be verified without a REDCap+ subscription** — see the scope note
 prerequisites:
 - 'RC-PLUS-01 — REDCap+: Overview and Subscription'
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-PROJ-05
   title: 'Project Migration: Moving a Project Between REDCap Installations'
@@ -166,7 +166,7 @@ The PMT is a young feature and several defects affected what actually arrived at
 
 ## 6.1 Who may migrate projects in
 
-Settings on the **Modules/Services Configuration** page in the Control Center govern migration into the instance. Administrators can allow users to migrate projects in **on their own**, or require **administrator approval** for each migration. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
+Settings on the **Modules/Services Configuration** page in the Control Center govern migration into the instance. On 17.5.6 the page states that an administrator must approve **every** migration request, even where users can normally create projects without approval. See [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md).
 
 There is also a system-level setting **"Allow users to use the Project Migration Tool to move projects TO THIS SERVER?"**. When it is Disabled, the Project Migration Dashboard link is hidden from the Control Center menu (from 17.4.1).
 

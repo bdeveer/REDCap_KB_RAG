@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: project status rows and the practice-project wording; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md); [RC-CC-13 — Control Center: User Activity Graphs](RC-CC-13_User-Activity-Graphs.md)|
 | **Synonyms** | control center system statistics page; how many projects and users on the instance; redcap usage and infrastructure snapshot; export system statistics to csv; instance configuration and usage counts; where do i see total record or project counts; system-wide statistics dashboard admin; redcap server stats overview |
@@ -32,8 +32,10 @@ The System Statistics page displays statistics across multiple categories:
 - **Development**: Count of projects in development status (not yet in production)
 - **Production**: Count of active production projects
 - **Analysis/Cleanup**: Count of projects in analysis or cleanup phase
-- **Archived**: Count of archived projects
-- **Total**: Overall count of all projects on the instance
+- **Completed**: Count of projects marked Completed
+- **Total**: Count of projects on the instance, **excluding 'practice' projects**. The Modules utilized counts exclude them too
+
+> **Note:** On 17.5.6 the page lists Production, Development, Analysis/Cleanup and Completed. Older documentation may say Archived.
 
 ### User Activity
 

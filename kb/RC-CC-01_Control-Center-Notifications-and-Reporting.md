@@ -7,10 +7,10 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page sections and actions; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-11 — Control Center: System Statistics](RC-CC-11_System-Statistics.md)|
 | **Synonyms** | control center notifications and reporting dashboard; redcap system health warnings page; control center server configuration alerts; where do i see redcap update alerts; consortium reporting tools in control center; main control center landing page; temp directory and web server warnings; admin notifications and warnings section |
@@ -59,6 +59,8 @@ The Easy Upgrade feature allows administrators to upgrade REDCap to a newer vers
 
 **Important Limitation:** Easy Upgrade cannot be used in load-balanced environments where the REDCap web server uses multiple application servers. In these environments, the downloaded source code would only be deployed to a single server, leaving other servers running outdated code. Load-balanced installations require manual upgrade procedures or coordination with server administrators.
 
+> **Easy Upgrade is not recommended on production servers (16.1.4+).** It needs REDCap to be able to write to its own main directory, which the Configuration Check warns against. Read the warning in [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) before enabling it.
+
 ---
 
 ## 5. Reporting Stats to the Consortium
@@ -86,6 +88,8 @@ REDCap administrators are expected to report usage statistics to the REDCap Cons
 ---
 
 ## 6. Other System Information
+
+A **Server info** line at the top of the page shows the REDCap version, the PHP version and server operating system type, and the MySQL version.
 
 The Notifications & Reporting page displays additional system configuration information at the bottom of the notifications section:
 

@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  project status rows and the practice-project wording; v17.3.7 (LTS) — changelog
+  review only'
 prerequisites:
 - REDCap administrator access
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-CC-01
   title: 'Control Center: Notifications & Reporting (Dashboard)'
@@ -46,8 +47,10 @@ The System Statistics page displays statistics across multiple categories:
 - **Development**: Count of projects in development status (not yet in production)
 - **Production**: Count of active production projects
 - **Analysis/Cleanup**: Count of projects in analysis or cleanup phase
-- **Archived**: Count of archived projects
-- **Total**: Overall count of all projects on the instance
+- **Completed**: Count of projects marked Completed
+- **Total**: Count of projects on the instance, **excluding 'practice' projects**. The Modules utilized counts exclude them too
+
+> **Note:** On 17.5.6 the page lists Production, Development, Analysis/Cleanup and Completed. Older documentation may say Archived.
 
 ## User Activity
 

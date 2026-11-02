@@ -7,19 +7,27 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: the disabled notice and its default only, not the enabled tool; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
-| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line |
+| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line; enable the database query tool; database query tool is disabled |
 
 ---
 
 ## 1. Overview
 
 The Database Query Tool allows REDCap administrators to run read-only SQL queries directly against REDCap's MySQL/MariaDB database from the browser. It is accessible under "Dashboards & Activity" in the Control Center sidebar and is intended for investigative queries, support troubleshooting, and ad-hoc data lookups without requiring command-line database access.
+
+---
+
+> **Off by default.** A new 17.5.6 installation has the tool disabled (`database_query_tool_enabled` = `0`). Both the **Database Query Tool** and **Recent Errors** menu links open a notice saying the tool is currently disabled, with the query to run in the MySQL database:
+>
+> `UPDATE redcap_config SET value = '1' WHERE field_name = 'database_query_tool_enabled';`
+>
+> Reload the page afterward. This needs someone with database access; there is no setting for it in the Control Center. The rest of this article describes the tool once enabled, and was not re-checked on 17.5.6.
 
 ---
 

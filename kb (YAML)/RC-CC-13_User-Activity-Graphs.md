@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  time ranges and chart titles; v17.3.7 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-CC-11
   title: 'Control Center: System Statistics'
@@ -27,6 +27,7 @@ synonyms:
 - visual charts of redcap usage over time
 - usage trend graphs for administrators
 - chart of logins and activity by date
+- database usage and page hits graph
 - system usage visualization control center
 - graph of active users over time
 - activity trend charts admin dashboard
@@ -57,12 +58,18 @@ Switching between time ranges reloads all charts for the selected period.
 
 # 3. Available Charts
 
-Charts are loaded dynamically. Based on REDCap v16.x, the charts include (but may not be limited to):
+Charts are loaded dynamically. REDCap 17.5.6 shows ten charts:
 
 - **Concurrent Users/Respondents**: the number of users simultaneously active in REDCap, including survey respondents
+- **Database Usage (MB)**: database size
+- **Usage by Uploaded Files (MB)**: storage used by uploaded files
+- **Daily User Logins**: logins per day
+- **Projects Created**: new projects
 - **Projects Moved to Production**: the count of projects transitioning from Development to Production status over the selected period
+- **Active Users**: users active in the period
 - **First-Time Visitors**: new unique users logging into REDCap for the first time during the period
-- Additional charts covering logins, data entry activity, survey submissions, and other system metrics
+- **Logged Events**: entries written to logging
+- **Page Hits**: page requests
 
 Charts show "Loading chart..." until the data query completes. The exact set of charts may vary by REDCap version.
 

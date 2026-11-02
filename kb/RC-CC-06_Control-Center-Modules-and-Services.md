@@ -7,19 +7,19 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.3.6 (LTS) and v16.0.39 (LTS) |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields, the Project Migration Tool settings and the REDCap+ badge; v17.3.6 (LTS) and v16.0.39 (LTS) — earlier verification |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
-| **Synonyms** | control center modules and services configuration; enable or disable surveys api or randomization; configure twilio or mosio sms integration; set up sendgrid email delivery; enable external modules framework; turn redcap features on or off instance-wide; configure ai services on older redcap versions; module activation request workflow setting |
+| **Synonyms** | control center modules and services configuration; enable or disable surveys api or randomization; configure twilio or mosio sms integration; set up sendgrid email delivery; enable external modules framework; turn redcap features on or off instance-wide; configure ai services on older redcap versions; project migration tool settings; module activation request workflow setting |
 
 ---
 
 ## 1. Overview
 
-The **Modules/Services Configuration** page is the control panel for enabling/disabling major REDCap features and configuring third-party service integrations. This is the largest and most feature-rich configuration page in the Control Center, where administrators control whether features like Surveys, the API, External Modules, Randomization, and various AI services are available to users across the instance. It also includes configuration for SMS services (Twilio, Mosio), email providers (SendGrid), and specialized features like e-Consent, CATs, and Data Transfer Services.
+The **Modules/Services Configuration** page is the control panel for enabling/disabling major REDCap features and configuring third-party service integrations. This is the largest and most feature-rich configuration page in the Control Center, where administrators control whether features like Surveys, the API, External Modules and Randomization are available to users across the instance. It also includes configuration for SMS services (Twilio, Mosio), email providers (SendGrid), and specialized features like e-Consent, CATs, and Data Transfer Services.
 
 ---
 
@@ -54,12 +54,12 @@ The following features can be enabled or disabled system-wide. When a feature is
 | **MyCap Mobile App** | Enables MyCap participant mobile app support. When enabled, a per-project toggle determines whether individual projects use MyCap. A sub-setting controls whether project users can enable MyCap themselves or whether an administrator must do so. See [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md). **Note on limitations:** MyCap does not support piping, smart variables, field embedding, special functions, calculated fields, or most action tags (@HIDDEN and @MC-prefixed tags *are* supported). Branching logic is partially supported (simple single-statement logic only — no AND, OR, or special functions) |
 | **External Modules Alternate Directory** | Allows loading external modules from a non-default directory path. Useful for staging or internal module development. Multiple directories can be separated with a pipe \| |
 | **File Version History for 'File Upload' Fields** | When enabled, users can upload a new file to a File Upload field without deleting the current one — previous versions are preserved and accessible from the Data History popup. If disabled, users must delete the current file before uploading a replacement. Can be enabled or disabled per project on the Project Setup page |
-| **Field Bank in the Online Designer** | Enables the 'Import from Field Bank' button in the Online Designer, allowing users to pull fields from standardized instrument catalogs. If disabled, the button is hidden for all users |
+| **Standardized Field (CDE) feature in the Online Designer** | Formerly Field Bank. Lets users pull fields from standardized catalogs in the Online Designer. If disabled, the feature is hidden for all users. See [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) |
 | **Video Embedding on Forms & Surveys** | Allows a video URL to be attached to a Descriptive field, displaying a play button that opens the video in a popup. Compatible with most hosting services; most reliable with YouTube and Vimeo |
 | **Text-to-Speech for Surveys** | Enables text-to-speech on survey pages, reading survey text aloud via the IBM Watson Text-to-Speech API hosted by Vanderbilt University. Requires the REDCap server to be able to make outbound HTTP requests to `https://redcap.vumc.org` |
 | **Auto-Suggest for Biomedical Ontologies** | Enables the BioPortal ontology lookup service for fields on forms and surveys. Requires a valid BioPortal API token and outbound HTTP access to `https://data.bioontology.org/` |
 | **Data Entry Trigger** | Enables the Data Entry Trigger feature for all projects. When enabled, users can configure a URL that REDCap will POST to whenever a record is created or modified via normal data entry or a survey response. **Not triggered by** API imports, data imports via the import tool, or Mobile App imports; see [RC-INTG-01 — Data Entry Trigger](RC-INTG-01_Data-Entry-Trigger.md) |
-| **Project XML Export** | Enables project backup/export as a single XML file in CDISC ODM format, available on the Project Setup page and the Data Exports page. The exported file can optionally include data and be used to clone the project |
+| **Project XML Export** | Enables project backup/export as a single XML file in CDISC ODM format, available on the Project Setup page under **Other Functionality** and on the Data Exports page. The exported file can optionally include data and be used to clone the project |
 | **Protected Email Mode** | Prevents identifying data (PHI/PII) from being included in the body of outgoing emails for alerts, survey invitations, and survey confirmation emails. When enabled at the system level, project users can activate it per project. In protected mode, recipients receive a surrogate email with a secure link to view the original message on a REDCap-hosted page; a one-time security code is required on first access (or after more than 30 days on the same device). Optionally, protection can be scoped to only emails that pipe identifier fields |
 | **Email Logging** | When enabled, users with User Rights privileges in a project can opt in to the Email Logging page to search all outgoing project emails. **Note:** Outgoing emails are always stored in the backend database regardless of this setting; this toggle controls only whether users can access them through the interface |
 | **Bulk Record Delete** | When enabled, users with Delete Records privileges can delete multiple records at once, or delete specific instrument data for a selected set of records |
@@ -199,11 +199,27 @@ Supported external storage methods are identical to those for the File Upload Fi
 | --- | --- | --- |
 | Email Verification and Email Unsubscribe Features | Disabled / Enabled | **Enabled** |
 
-When enabled, a suite of four Smart Variables and a per-project **Verified & Unsubscribed Emails** dashboard page become available, letting participants verify their email address or unsubscribe from all emails from a project.
+When enabled, a suite of six Smart Variables and a per-project **Verified & Unsubscribed Emails** dashboard page become available, letting participants verify their email address or unsubscribe from all emails from a project.
 
 > **Note:** Disabling this hides the dashboard page from every project **and** removes the related Smart Variables from the Smart Variable documentation. Because the setting is Enabled by default, projects may already be relying on it — audit usage before disabling, since live alert and ASI trigger logic can depend on these variables.
 
 See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+
+---
+
+## Project Migration Tool *(REDCap+ for moves into this server)*
+
+Three settings control the tool. See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) for the workflow.
+
+| Setting | Options | Install value (17.5.6) |
+| --- | --- | --- |
+| Allow users to use the Project Migration Tool to move projects **FROM THIS SERVER**? | Disabled: Hidden from everyone / Enabled: Visible only to administrators / Enabled: Visible to all users | Visible to all users |
+| Completion Action setting | Do not display "Leave as is" option / Display "Leave as is" option | Display |
+| Allow users to use the Project Migration Tool to move projects **TO THIS SERVER**? | Disabled: Hidden from everyone / Enabled: Visible only to administrators / Enabled: Visible to all users | Visible to all users |
+
+The **FROM** setting adds a button on the Project Setup **Other Functionality** page, where users get a migration key. No subscription is needed for this direction. The **Completion Action** setting decides whether "Leave as is" is offered as the choice for what happens to the source project after migration.
+
+The **TO** setting adds a choice on the **Create New Project** page and requires a REDCap+ subscription. Without one, the control is shown but disabled. The page states that an administrator must approve every migration request, even where users can normally create projects without approval.
 
 ---
 

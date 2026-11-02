@@ -5,12 +5,13 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
+  first-use state only; the map itself was not displayed; v17.3.18 (LTS) — changelog
+  review only'
 prerequisites:
 - REDCap administrator access
-version: '1.1'
-last_updated: 2026-10
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-CC-12
   title: 'Control Center: User Activity Log'
@@ -40,6 +41,8 @@ The Map of Users displays a geographic map showing where users are accessing RED
 ---
 
 # 2. How It Works
+
+**First use:** The page can open with a setup test and a **Test web service** button instead of the map. That is what a 17.5.6 test instance showed, so the map and its controls below were not exercised there.
 
 REDCap resolves user IP addresses to approximate geographic coordinates using an IP geolocation service. IP addresses are processed in batches (asynchronously) to avoid long page load times. A progress counter updates as batches complete, showing the number of IPs processed. This asynchronous approach ensures the page remains responsive while geolocation data is being collected and mapped.
 

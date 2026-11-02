@@ -7,13 +7,13 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields for one project and the install values in §9; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md); [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
-| **Synonyms** | how do i override settings for one project as admin; change project status online or offline; admin edit project settings page; enable twilio or gdpr erasure for a project; override file size limit for a project; set a per-project ai endpoint; difference between default settings and edit project settings; admin-only project configuration overrides |
+| **Synonyms** | how do i override settings for one project as admin; change project status online or offline; admin edit project settings page; enable twilio or gdpr erasure for a project; override file size limit for a project; select an ai configuration for a project; set a per-project ai endpoint; difference between default settings and edit project settings; admin-only project configuration overrides |
 
 ---
 
@@ -26,7 +26,7 @@ This page is distinct from two similar-sounding areas:
 - **Default Project Settings** ([RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)) — sets system-wide defaults applied when *new* projects are created
 - **Additional Customizations** in Project Setup ([RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md)) — project-level settings accessible to *project administrators* (users with Design & Setup rights)
 
-Edit Project Settings exposes a superset of those settings, including ones only REDCap admins can touch (online/offline status, Twilio toggle, GDPR erasure features, per-project AI endpoint override, and system-value overrides like contact name, logo URL, and file size limits).
+Edit Project Settings exposes a superset of those settings, including ones only REDCap admins can touch (online/offline status, Twilio toggle, GDPR erasure features, the project's AI configuration, and system-value overrides like contact name, logo URL, and file size limits).
 
 ---
 
@@ -42,13 +42,13 @@ Edit Project Settings exposes a superset of those settings, including ones only 
 
 **Date Shifting** — A de-identification export option that shifts all date values for a record by a random number of days within a defined range. The range is configured on this page.
 
-**Rapid Retrieval** — An internal REDCap caching mechanism that stores certain pages in temporary cache to accelerate load time when no data or metadata has changed recently. This is automated and not directly configurable.
+**Rapid Retrieval** — An internal REDCap caching mechanism that stores certain pages in temporary cache to accelerate load time when no data or metadata has changed recently. It is automated per project, with no setting on this page. The system-level settings are on Modules/Services Configuration ([RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)), and each project has a **Clear all record & page caches** button on Project Setup → Other Functionality.
 
 ---
 
 ## 3. Accessing the Page and Project Info Panel
 
-Navigate to **Control Center → Projects → Edit Project Settings**. On first load, a search box appears to select a project by PID or name. Once a project is selected, the full settings form loads.
+Navigate to **Control Center → Projects → Edit Project Settings**. On first load, a **Select a project** dropdown lists the projects by name. Once a project is selected, the full settings form loads.
 
 At the top of the form, REDCap displays diagnostic information about the selected project:
 
@@ -81,7 +81,7 @@ These settings control fundamental project behavior.
 
 ## 5. GDPR / Data Privacy Settings
 
-This section contains three settings intended to support compliance with data privacy regulations (such as GDPR) that may require "right to erasure."
+This section contains three settings. Two of them (5.1 and 5.2) support compliance with data privacy regulations (such as GDPR) that may require "right to erasure." The third (5.3) is the survey footer, often used for privacy notices.
 
 ### 5.1 Delete Record's Logging When Deleting the Record
 
@@ -117,7 +117,7 @@ A text block displayed at the bottom of all survey pages in this specific projec
 
 The section contains a single **Select AI Configuration** drop-down. It offers the AI configurations an administrator has already defined on the **AI Configuration Settings** page — see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md). REDCap's wording on the page: *if one or more AI Configuration settings are added globally, then one may select one of them at project level so that the respective AI resource/endpoint values will be utilized for this project.*
 
-Selecting a configuration here applies that configuration's service and credentials to this project. The project can also be set to use no AI at all, overriding a system-wide default.
+Selecting a configuration here applies that configuration's service and credentials to this project. The project can also be set to use no AI at all, overriding a system-wide default. On 17.5.6 the section also shows the selected configuration's details and which AI features it offers.
 
 > **Note:** The drop-down only lists configurations that already exist. An empty drop-down means none have been created yet on the AI Configuration Settings page — it does not mean AI is unavailable.
 
@@ -208,7 +208,7 @@ When disabled: only e-Consent governed PDF Snapshots are sent to the Vault for t
 
 ### 8.1 Display Custom Logo and Institution Name
 
-Controls whether the institution's logo and name (configured globally in General Configuration) appear at the top of every page in this project. Default: Yes.
+Controls whether the institution's logo and name (configured globally in General Configuration) appear at the top of every page in this project. A new 17.5.6 installation defaults to No; see [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md).
 
 ### 8.2 Custom Text for Project Home Page
 
@@ -232,16 +232,16 @@ The fields in this section override system-wide values for this specific project
 | Name of Organization at Institution | Sub-unit or department name | Configured in General Configuration |
 | Name of Grant to Cite | Displayed when users export data; leave blank if no grant | Configured in General Configuration |
 | URL for Custom Logo | URL of a project-specific header logo (max 650px wide) | System logo URL |
-| Min. data points for Smart Charts/Tables on public surfaces | Minimum record count before Smart Charts, Smart Tables, or Smart Functions display on public dashboards, public report instructions, survey queue text, or survey pages | 8 |
-| Upload max file size — file fields | Maximum file size (MB) for File Upload fields on forms/surveys | 128 MB |
-| Upload max file size — general attachments | Maximum file size (MB) for Descriptive field attachments and Data Resolution Workflow attachments | 128 MB |
-| File Repository upload max file size | Maximum file size (MB) for files uploaded to the File Repository | 128 MB |
+| Min. data points for Smart Charts/Tables on public surfaces | Minimum record count before Smart Charts, Smart Tables, or Smart Functions display on public dashboards, public report instructions, survey queue text, or survey pages | 5 |
+| Upload max file size — file fields | Maximum file size (MB) for File Upload fields on forms/surveys | Blank (server default applies) |
+| Upload max file size — general attachments | Maximum file size (MB) for Descriptive field attachments and Data Resolution Workflow attachments | Blank (server default applies) |
+| File Repository upload max file size | Maximum file size (MB) for files uploaded to the File Repository | Blank (server default applies) |
 | File Repository total storage limit | Total MB cap for all files in the project's File Repository; set to 0 or blank to disable the cap | Blank (no limit) |
-| Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default (if the global default is itself 0, no limit applies) | 0 |
+| Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default (if the global default is itself 0, no limit applies) | 50 |
 
 > **Note:** Changes to any of these fields take effect immediately for this project only. They do not affect other projects or the system-wide default.
 
-> **Note:** The 128 MB defaults above are REDCap application-level defaults, not the PHP server ceiling. The server ceiling (set via `upload_max_filesize` / `post_max_size` in PHP.INI) is typically 1024 MB. Per-context REDCap limits cannot exceed the server ceiling. See [RC-CC-05](RC-CC-05_Control-Center-File-Storage-Settings.md) for server-level configuration.
+> **Note:** The global defaults in this table are the values a new 17.5.6 installation starts with; your instance may hold different ones, and the page shows the current value beneath each field. Blank upload limits fall back to the server's own limit, set via `upload_max_filesize` / `post_max_size` in PHP.INI, and per-context REDCap limits cannot exceed it. See [RC-CC-05](RC-CC-05_Control-Center-File-Storage-Settings.md) for server-level configuration.
 
 ---
 
@@ -262,11 +262,11 @@ Existing values remain as-is. Going forward, calculations will only update when 
 **Q: What does setting Online Status to OFFLINE actually do?**
 Any user who is not a REDCap administrator will be unable to access the project — they will see an access-denied message. Administrators retain full access. This is useful for maintenance, archiving, or preventing accidental data entry without permanently removing user access rights.
 
-**Q: If I set a project-level AI endpoint, does it affect the AI tools for all users in that project?**
+**Q: If I select an AI configuration for a project, does it affect the AI tools for all users in that project?**
 Yes. The project-level AI configuration applies to all AI-powered features within the project (writing tools, summarization, translations) for all users. It replaces the system-level AI configuration specifically for that project.
 
 **Q: Can I enable GDPR log deletion without also enabling the auto-delete of Data Export Files?**
-Yes. The two GDPR settings are independent of each other. You can enable deletion of logging upon record deletion, enable auto-deletion of export files, or enable both — they operate separately.
+Yes. The two erasure settings are independent of each other. You can enable deletion of logging upon record deletion, enable auto-deletion of export files, or enable both — they operate separately.
 
 **Q: How does the Date Shift Range interact with the Data Export Tool?**
 When a user exports data from the Data Exports, Reports & Stats page and selects the date-shifting de-identification option, REDCap randomly shifts each record's date values by 0 to N days, where N is the Date Shift Range configured here (default: 364 days). Each record gets a different random shift, which is applied consistently to all date fields in that record during that export.
@@ -281,7 +281,7 @@ When a user exports data from the Data Exports, Reports & Stats page and selects
 
 **Setting an auto-delete interval too short for export files.** The cron runs every 12 hours. Setting the interval to 1 day means export files created before yesterday could disappear within hours of being created. Users expecting to return to a file the next day may find it gone. Choose an interval that accommodates your team's actual data review workflow.
 
-**Leaving project-level AI credentials blank when system AI is configured.** If you enter an API Endpoint URL but leave the API Key blank (and the service requires one), AI tools will silently fail for users in this project. The page does not validate connectivity at save time — test the configuration after saving.
+**Leaving project-level AI credentials blank when system AI is configured (below 17.2.0).** If you enter an API Endpoint URL but leave the API Key blank (and the service requires one), AI tools will silently fail for users in this project. The page does not validate connectivity at save time — test the configuration after saving.
 
 **Assuming record limit applies to production projects.** The Record Limit setting on this page applies only while the project is in **Development** status. It has no effect once the project is moved to Production. It is intended to prevent test databases from growing excessively large during development.
 

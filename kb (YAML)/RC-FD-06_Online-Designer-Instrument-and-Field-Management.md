@@ -12,8 +12,8 @@ prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-version: '1.4'
-last_updated: 2026-10
+version: '1.5'
+last_updated: 2026-11
 related:
 - id: RC-FD-02
   title: Online Designer
@@ -174,7 +174,7 @@ Throughout the instrument editor, you will see a cluster of buttons between fiel
 | **Add Matrix of Fields** | Opens the matrix editor to create a group of fields in a grid layout. See Section 10. |
 | **Add CDE Field** | Opens the CDE Library — a searchable catalog of Common Data Elements from external repositories. Select a catalog (the default is the NIH CDE Repository), enter a keyword, review the results, and click **Add Field** next to any result to import that standardized field into your instrument. See Section 6.4 for details. |
 
-> **Naming note:** The CDE Library button was previously labeled **Import from Field Bank**. You may see "Field Bank" referenced in older documentation or training materials — it refers to the same feature.
+> **Naming note:** The CDE Library button was previously labeled **Import from Field Bank**. You may see "Field Bank" referenced in older documentation or training materials — it refers to the same feature. The Control Center setting calls it the **Standardized Field (CDE) feature in Online Designer**, and the 16.0.7 release notes call it **Standardized Field (CDE) search**. All of these names mean the same feature.
 
 ## 6.3 Field-Level Actions
 
