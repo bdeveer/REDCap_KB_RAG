@@ -11,7 +11,7 @@
 | **Prerequisite** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md) |
 | **Version** | 1.1 |
 | **Last Updated** | 2026-08 |
-| **Author** | REDCap Support |
+| **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md) |
 | **Synonyms** | how do i delete a record; lock or unlock an entire record; rename a record id; download a pdf of a record; assign a record to a data access group; choose action for record menu options; record-level administrative actions; what does the choose action button do |
 

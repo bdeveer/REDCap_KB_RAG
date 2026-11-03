@@ -13,7 +13,7 @@
 | **Prerequisite** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) |
 | **Version** | 1.2 |
 | **Last Updated** | 2026-11 |
-| **Author** | REDCap Support |
+| **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
 | **Synonyms** | how to run redcap on a synology nas; redcap docker compose setup on synology container manager; install a redcap sandbox on a nas with docker; self-host redcap with https and vpn mesh access; redcap docker stack with mail catcher and database gui; wire redcap ai features to a provider in docker; step by step redcap nas deployment; build a redcap sandbox on a ds220 synology box; my redcap install page is blank; which redcap versions are known bad to install |
 

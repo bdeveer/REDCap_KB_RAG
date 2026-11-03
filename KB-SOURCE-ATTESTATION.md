@@ -10,29 +10,49 @@ Every KB article's `Author` metadata field reads `See KB-SOURCE-ATTESTATION.md`.
 
 ### Bas de Veer — Original Training Materials
 
-[Bas de Veer](https://www.linkedin.com/in/basdeveer), REDCap Manager, authored a set of training documents (`.docx` and `.pdf`) that served as primary source material for a large number of articles. These are original instructional materials written from hands-on REDCap experience. Most of these documents include a REDCap version number, which reflects the version of REDCap the training material was written against. The version applicable to each article can be found in the individual article's metadata header. Source files are stored in `original docx files/`.
+[Bas de Veer](https://www.linkedin.com/in/basdeveer), REDCap Manager, authored a set of training documents (`.docx` and `.pdf`) that served as primary source material for a large number of articles. These are original instructional materials written from hands-on REDCap experience. Most of these documents include a REDCap version number, which reflects the version of REDCap the training material was written against. The original source documents are not kept in this repository.
 
 Articles primarily derived from Bas de Veer's training materials include the Randomization series (RC-RAND-01 through RC-RAND-03), the Project Navigation UI series (RC-NAV-UI-01, RC-NAV-UI-02), and most articles in the Data Entry, Form Design, Export, Branching Logic, Record Navigation, Survey, Alert, Action Tag, Piping, and Import domains.
 
+### Bas de Veer — Direct Input and Project Analysis
+
+Bas de Veer also shaped many articles directly, through explanations, corrections, and captures of REDCap pages provided while the articles were written. RC-INFRA-01 and RC-INFRA-02 document Bas de Veer's own self-hosted REDCap setup.
+
+Some articles also include lessons learned from project analysis, in which Claude evaluated a REDCap project through the MCP server and the findings were added to the KB.
+
 ### Official REDCap Documentation
 
-A significant portion of the KB was derived from REDCap's official online documentation, accessed as HTML pages from REDCap's built-in help system and public documentation site. Where a specific REDCap version is identifiable, it is noted in the individual article's metadata header (e.g., the AI Tools series references v15.5.3; FAQ-sourced content references v16.1.3).
+A significant portion of the KB was derived from REDCap's official online documentation, accessed as HTML pages from REDCap's built-in help system and public documentation site. The MyCap series also draws on the public MyCap website (projectmycap.org). The versions used varied (e.g., v15.5.3 for the original AI Tools series and v16.1.3 for FAQ-sourced content). Articles have been revised since, so each article's `Requires` and `Verified Against` metadata rows show the REDCap versions that currently apply.
 
 ### REDCap API Official Documentation
 
-The API reference series (RC-API-01 through RC-API-54) was derived from REDCap's official API documentation. Articles in this series include a `Source` metadata field specifying the version. The main overview article (RC-API-01) covers general API concepts; individual method articles (RC-API-03 and above) each correspond to a single API endpoint.
+The API reference series (RC-API-01 through RC-API-56) was derived from REDCap's official API documentation. Articles in this series include a `Source` metadata field naming the documentation and, where recorded, its version. The main overview article (RC-API-01) covers general API concepts; individual method articles (RC-API-02 and above) each correspond to a single API endpoint.
 
 ### REDCap Control Center HTML Pages
 
 The Control Center series (RC-CC-01 through RC-CC-21) and the Clinical Data Interoperability Services series (RC-CDIS-01 through RC-CDIS-04) were derived from Control Center pages captured as HTML from a REDCap v16.1.3 installation. The source was reviewed and sanitized to remove all institution-specific references, URLs, usernames, and server names before knowledge extraction.
 
-The External Modules articles (RC-EM-01 and RC-EM-02) were also derived from the Control Center External Module Manager page (`ExternalModules/manager/control_center.php`). Module descriptions are reproduced from the module metadata as displayed in the Manager UI, authored by the respective module developers. The institution-specific IRB Validator module was excluded from the catalog.
+RC-CC-22 through RC-CC-25 were also written from Control Center HTML captures. Other later additions were written from captures of newer versions: RC-CC-26 from LTS 16.0.39 and 17.3.6, RC-CDIS-05 from LTS 17.3.6 and the 17.3.0 and 17.3.1 release notes, and part of RC-PLUS-02 from LTS 17.3.6.
+
+The External Modules overview (RC-EM-01) was also derived from the Control Center External Module Manager page (`ExternalModules/manager/control_center.php`). The module catalogs (RC-EM-02 through RC-EM-04) are templates for each institution to complete and contain no module descriptions.
+
+### REDCap Change Logs
+
+REDCap's Standard and LTS change logs were used to review the KB against new releases, including bug and security fixes. These reviews covered releases up to v17.4.1 Standard / v17.3.7 LTS, then v17.5.4 Standard / v17.3.18 LTS. Articles corrected or checked this way say so in their `Verified Against` metadata row, and the working notes are in `meta/`.
+
+### Live Verification
+
+Some articles were checked against running REDCap instances and corrected where they differed: read-only on a test instance, or through the API on a sandbox project, on v17.5.6 Standard. Some version notes also come from a read-only comparison of the Control Center on v16.0.59 LTS with v17.5.6. These articles say what was checked in their `Verified Against` metadata row.
+
+### This Repository's Own Tooling
+
+RC-MCP-01 documents the MCP server in this repository and was derived from its code (`MCP server/`).
 
 ### Training Collaboration Committee (TCC)
 
 Several articles draw on source material from the [REDCap Training Collaboration Committee (TCC)](https://redcap.vumc.org/plugins/redcap_consortium/training_materials.php) repository. The TCC is a REDCap Consortium committee that periodically reviews training materials to ensure alignment with current REDCap standards, institutional policies, and best practices. Outdated or redundant resources are archived; new contributions are evaluated for clarity, accuracy, and usability.
 
-Access to the TCC repository requires a REDCap Community account, which is typically reserved for REDCap administrators.
+The repository's materials are shared for use by the REDCap community. Access to the TCC repository requires a REDCap Community account, which is typically reserved for REDCap administrators.
 
 The following source documents from the TCC repository were used:
 
