@@ -6,10 +6,10 @@
 |---|---|
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
-| **Requires** | REDCap v17.0.0+ — REDCap+ does not exist below this version. The article itself is informational and useful on any version |
-| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard |
+| **Requires** | REDCap v17.0.0+ — the subscription and its features start at this version. Below it, 16.0.59 LTS shows only a **REDCap Plus** menu item and a "coming soon" page. The article itself is informational and useful on any version |
+| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
@@ -24,7 +24,7 @@
 
 ## 1. Overview
 
-REDCap+ is an optional, paid subscription tier that unlocks advanced features on top of the standard REDCap platform (referred to as REDCap Core). It became available in April 2026 starting with REDCap v17.0.0.
+REDCap+ is an optional, paid subscription tier that unlocks advanced features on top of the standard REDCap platform (referred to as REDCap Core). It became available in April 2026 starting with REDCap v17.0.0. Earlier versions can't subscribe: on 16.0.59 LTS the Control Center's **REDCap Plus** page is headed "REDCap+ is coming soon!" and offers only information and links.
 
 REDCap Core remains fully free and fully functional for all licensed institutions, exactly as it always has been. REDCap+ is strictly additive — choosing not to subscribe has no effect on REDCap Core functionality, security updates, or access to incremental enhancements.
 

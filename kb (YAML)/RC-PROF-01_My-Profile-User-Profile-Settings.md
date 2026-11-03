@@ -6,11 +6,12 @@ applies_to:
 - All REDCap users
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. The username answer was checked on v17.5.6 and v16.0.59 test instances,
+  read-only
 prerequisites:
 - Active REDCap user account
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-03
   title: 'Control Center: Security & Authentication'
@@ -33,6 +34,7 @@ synonyms:
 - manage notification settings for my account
 - access my profile page
 - update my personal account information
+- can i change my redcap username
 ---
 
 # 1. Overview
@@ -227,7 +229,7 @@ API tokens are listed in the API Tokens section of My Profile. You will see one 
 User preferences affect how dates and numbers are displayed in the data entry interface and similar views. Some system-generated outputs (such as exported files or reports) may use a fixed format regardless of your personal preference setting. If a specific downstream tool requires a particular date or CSV format, use the export options at the time of download rather than relying solely on your profile preference.
 
 **Q: Can I change my REDCap username?**
-In most REDCap installations, usernames cannot be changed after the account is created. If you need a username change, contact your REDCap administrator — it typically requires direct database intervention and should be considered exceptional.
+You can't change it yourself, but a REDCap administrator can. From REDCap 17.5.0, administrators have a **Change Username** button on the user's Browse Users page. On earlier versions, including 16.0.59 LTS, the page has no such option, and a change typically requires direct database intervention. Either way, contact your REDCap administrator and treat it as exceptional.
 
 **Q: Can I delete my own account?**
 No. User account deletion is an administrator function. Contact your REDCap administrator if you need your account removed.

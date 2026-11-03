@@ -6,10 +6,11 @@ applies_to:
 - REDCap administrators
 requires: Any supported version
 verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  the menu structure and privilege list; v17.3.7 (LTS) — changelog review only'
+  the menu structure and privilege list; v17.3.7 (LTS) — changelog review only; v16.0.59
+  (LTS) — checked live on a test instance, read-only: the menu'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-CC-01
@@ -33,6 +34,7 @@ synonyms:
 - control center sidebar navigation
 - super user administrative area redcap
 - intro to the control center for admins
+- control center menu differences on lts 16
 ---
 
 # 1. Overview
@@ -49,6 +51,8 @@ From the Control Center, an administrator can configure system-wide settings, ma
 
 The Control Center is organized into several top-level sections, each accessible from a sidebar menu. The sections and their primary purposes are:
 
+> **Version caveat (16.0.59 LTS):** The menu has no **AI Configuration Settings** (AI is on Modules/Services Configuration), **Project Migration Dashboard**, **Project Administrator Groups** or **REDCap SHARE**. Three items also have older labels: **REDCap Plus** (REDCap+), **Language File Creator/Updater** (Language File Updater) and **Fix Legacy Image/File URL** (Fix Legacy Image/File URLs).
+
 ## Control Center Home
 The landing page of the Control Center, **Notifications & Reporting**, displays server information, system notifications and stats reporting. No configurable settings live here. The **To-Do List** and **REDCap+** are separate pages in this section; **Recent Errors** is under Dashboards & Activity. See **[RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)** for full details on the Notifications & Reporting dashboard, and **[RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)** for the To-Do List.
 
@@ -56,7 +60,7 @@ The landing page of the Control Center, **Notifications & Reporting**, displays 
 
 ## Administrator Resources
 Links to REDCap community resources, training materials, API documentation, and plugin/hook documentation. Also includes:
-- **Language File Updater** — for managing system language files
+- **Language File Updater** — for managing system language files. On 17.5.6 it also has **Validate a Language File**, which checks an uploaded or pasted `.ini` file's syntax in the browser. 16.0.59 LTS doesn't have the validator
 - **URL Shortener** — a utility for generating shortened URLs from any link in the system (see **[RC-CC-10 — Control Center: URL Shortener](RC-CC-10_URL-Shortener.md)**)
 
 ## Dashboards & Activity

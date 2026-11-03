@@ -6,10 +6,11 @@ applies_to:
 - REDCap administrators
 requires: Any supported version
 verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  Settings tab labels and page tabs; v17.3.7 (LTS) — changelog review only'
+  Settings tab labels and page tabs; v17.3.7 (LTS) — changelog review only; v17.5.6
+  and v16.0.59 (LTS) source — the Use system value button'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-MLM-01
@@ -31,6 +32,7 @@ synonyms:
 - system language management for translations
 - enable languages projects can adopt
 - instance-wide multi-language configuration
+- reset a ui translation override to the system value
 ---
 
 # 1. Overview
@@ -98,7 +100,7 @@ This tab is where the actual translation strings are entered and managed for eac
 - **Highlight translation fallbacks** — enabled from the Settings tab as **Highlight translation fallbacks on non-project pages**; a visual audit tool for finding untranslated items.
 - **Translate using AI** — available per category; uses the AI translation feature to auto-fill untranslated strings (requires the AI features to be enabled; see [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md)).
 
-**Subscribed system languages:** If a language is designated as a "subscribed" system language, its UI items cannot be edited directly. However, administrators can still provide **selective overrides** for individual items while leaving the rest managed by the subscription.
+**Subscribed system languages:** If a language is designated as a "subscribed" system language, its UI items cannot be edited directly. However, administrators can still provide **selective overrides** for individual items while leaving the rest managed by the subscription. On 17.5.6, a **Use system value** button resets an override; 16.0.59 LTS doesn't have this button. The label and its action come from the page's code, and the button itself has not been tested.
 
 **Saving:** Use **Save Changes** or the keyboard shortcut **CTRL-S**. The page does not auto-save.
 

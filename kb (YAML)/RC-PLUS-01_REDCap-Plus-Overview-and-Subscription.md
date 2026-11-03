@@ -5,14 +5,15 @@ domain: REDCap+
 applies_to:
 - REDCap Administrators
 - REDCap Licensed Institutions
-requires: REDCap v17.0.0+ — REDCap+ does not exist below this version. The article
-  itself is informational and useful on any version
+requires: REDCap v17.0.0+ — the subscription and its features start at this version.
+  Below it, 16.0.59 LTS shows only a **REDCap Plus** menu item and a "coming soon"
+  page. The article itself is informational and useful on any version
 verified_against: REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour
   in §4a observed on live unsubscribed instances; feature list from release notes
-  through 17.5.4 Standard
+  through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only
 prerequisites:
 - Existing REDCap License (REDCap Core installation)
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-PLUS-02
@@ -45,7 +46,7 @@ synonyms:
 
 # 1. Overview
 
-REDCap+ is an optional, paid subscription tier that unlocks advanced features on top of the standard REDCap platform (referred to as REDCap Core). It became available in April 2026 starting with REDCap v17.0.0.
+REDCap+ is an optional, paid subscription tier that unlocks advanced features on top of the standard REDCap platform (referred to as REDCap Core). It became available in April 2026 starting with REDCap v17.0.0. Earlier versions can't subscribe: on 16.0.59 LTS the Control Center's **REDCap Plus** page is headed "REDCap+ is coming soon!" and offers only information and links.
 
 REDCap Core remains fully free and fully functional for all licensed institutions, exactly as it always has been. REDCap+ is strictly additive — choosing not to subscribe has no effect on REDCap Core functionality, security updates, or access to incremental enhancements.
 

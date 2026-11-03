@@ -7,10 +7,11 @@ applies_to:
 requires: Any supported version
 verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
   page fields for one project and the install values in §9; v17.3.7 (LTS) — changelog
-  review only'
+  review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the File
+  Repository upload override''s absence'
 prerequisites:
 - 'RC-CC-21 — Control Center: Overview & Navigation'
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-CC-08
@@ -257,7 +258,7 @@ The fields in this section override system-wide values for this specific project
 | Min. data points for Smart Charts/Tables on public surfaces | Minimum record count before Smart Charts, Smart Tables, or Smart Functions display on public dashboards, public report instructions, survey queue text, or survey pages | 5 |
 | Upload max file size — file fields | Maximum file size (MB) for File Upload fields on forms/surveys | Blank (server default applies) |
 | Upload max file size — general attachments | Maximum file size (MB) for Descriptive field attachments and Data Resolution Workflow attachments | Blank (server default applies) |
-| File Repository upload max file size | Maximum file size (MB) for files uploaded to the File Repository | Blank (server default applies) |
+| File Repository upload max file size *(16.1.0+)* | Maximum file size (MB) for files uploaded to the File Repository | Blank (server default applies) |
 | File Repository total storage limit | Total MB cap for all files in the project's File Repository; set to 0 or blank to disable the cap | Blank (no limit) |
 | Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default (if the global default is itself 0, no limit applies) | 50 |
 

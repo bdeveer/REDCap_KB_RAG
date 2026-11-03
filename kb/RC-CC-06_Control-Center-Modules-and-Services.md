@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields, the Project Migration Tool settings and the REDCap+ badge; v17.3.6 (LTS) and v16.0.39 (LTS) — earlier verification |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields, the Project Migration Tool settings and the REDCap+ badge; v17.3.6 (LTS) and v16.0.39 (LTS) — earlier verification; v16.0.59 (LTS) — checked live on a test instance, read-only: the AI Services fields, and that the Project Migration Tool settings don't appear |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
@@ -207,7 +207,7 @@ See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-
 
 ---
 
-## Project Migration Tool *(REDCap+ for moves into this server)*
+## Project Migration Tool *(17.0.0+; REDCap+ for moves into this server)*
 
 Three settings control the tool. See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) for the workflow.
 

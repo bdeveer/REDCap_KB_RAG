@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields for one project and the install values in §9; v17.3.7 (LTS) — changelog review only |
+| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields for one project and the install values in §9; v17.3.7 (LTS) — changelog review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the File Repository upload override's absence |
 | **Prerequisite** | [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md); [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
@@ -235,7 +235,7 @@ The fields in this section override system-wide values for this specific project
 | Min. data points for Smart Charts/Tables on public surfaces | Minimum record count before Smart Charts, Smart Tables, or Smart Functions display on public dashboards, public report instructions, survey queue text, or survey pages | 5 |
 | Upload max file size — file fields | Maximum file size (MB) for File Upload fields on forms/surveys | Blank (server default applies) |
 | Upload max file size — general attachments | Maximum file size (MB) for Descriptive field attachments and Data Resolution Workflow attachments | Blank (server default applies) |
-| File Repository upload max file size | Maximum file size (MB) for files uploaded to the File Repository | Blank (server default applies) |
+| File Repository upload max file size *(16.1.0+)* | Maximum file size (MB) for files uploaded to the File Repository | Blank (server default applies) |
 | File Repository total storage limit | Total MB cap for all files in the project's File Repository; set to 0 or blank to disable the cap | Blank (no limit) |
 | Record Limit (development projects) | Maximum number of records allowed while project is in Development status; users see a warning once the limit is reached; 0 = use global default (if the global default is itself 0, no limit applies) | 50 |
 

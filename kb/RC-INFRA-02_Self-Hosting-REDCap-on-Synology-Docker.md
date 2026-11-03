@@ -9,12 +9,12 @@
 | **Domain** | Self-Hosting, Deployment & Release Management |
 | **Applies To** | Synology NAS (DSM 7.2+) with Container Manager; non-production REDCap |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS); AI settings location only: v17.5.6 and v16.0.59 test instances, read-only |
 | **Prerequisite** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | REDCap Support |
-| **Related Topics** | [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
+| **Related Topics** | [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-INFRA-01 — Self-Hosting a Private REDCap Instance](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) |
 | **Synonyms** | how to run redcap on a synology nas; redcap docker compose setup on synology container manager; install a redcap sandbox on a nas with docker; self-host redcap with https and vpn mesh access; redcap docker stack with mail catcher and database gui; wire redcap ai features to a provider in docker; step by step redcap nas deployment; build a redcap sandbox on a ds220 synology box; my redcap install page is blank; which redcap versions are known bad to install |
 
 ---
@@ -126,7 +126,9 @@ litellm_settings:
 ```
 Two keys go in `.env`: the **provider API key** (`ANTHROPIC_API_KEY`) and a **master key** (`LITELLM_MASTER_KEY`) that REDCap uses to authenticate to the proxy. The master key is read from the env var automatically — do **not** also set it under `general_settings` with an `os.environ/` reference, which isn't resolved there and causes 401s.
 
-In **Control Center → Modules/Services → AI Services**:
+**On REDCap 17.2.0 and higher,** the AI settings are on **Control Center → AI Configuration Settings**, and Modules/Services no longer has an AI Services section. Choose **Add New AI Configuration**, pick the service type for an OpenAI-compatible server, and enter the same endpoint URL, key and model name listed below. Map the configuration to the AI features you want, then select it in the scope drop-downs at the top of the page. See [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md).
+
+**Below 17.2.0, including 16.0.x LTS,** use **Control Center → Modules/Services → AI Services**:
 - Enable system-wide AI services? → **Enabled using OpenAI Service**
 - API Endpoint URL: `http://litellm:4000/v1`
 - API Key: the `LITELLM_MASTER_KEY` value
@@ -223,5 +225,6 @@ Two common causes: the proxy is missing `drop_params: true` (REDCap sends params
 - [RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation](RC-INFRA-01_Self-Hosting-a-Private-REDCap-Instance.md) (the platform-agnostic concepts behind this build)
 - [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) (AI Services and email provider configuration)
 - [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) (Configuration Check, cron jobs, base URL, SSL)
+- [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md) (where the proxy is set up on 17.2.0 and higher)
 - [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md) (the AI features the proxy powers)
 - [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md) (read-only by design; why Adminer is added)

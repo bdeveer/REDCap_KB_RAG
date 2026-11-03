@@ -7,10 +7,12 @@ applies_to:
 requires: Any supported version
 verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
   page fields, the Project Migration Tool settings and the REDCap+ badge; v17.3.6
-  (LTS) and v16.0.39 (LTS) — earlier verification'
+  (LTS) and v16.0.39 (LTS) — earlier verification; v16.0.59 (LTS) — checked live on
+  a test instance, read-only: the AI Services fields, and that the Project Migration
+  Tool settings don''t appear'
 prerequisites:
 - REDCap administrator access
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-CC-05
@@ -237,7 +239,7 @@ See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-
 
 ---
 
-# Project Migration Tool *(REDCap+ for moves into this server)*
+# Project Migration Tool *(17.0.0+; REDCap+ for moves into this server)*
 
 Three settings control the tool. See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) for the workflow.
 

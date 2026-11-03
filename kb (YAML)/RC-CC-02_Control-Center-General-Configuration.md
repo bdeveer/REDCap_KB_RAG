@@ -7,10 +7,12 @@ applies_to:
 requires: Any supported version
 verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
   General Configuration fields and the record limit default; v17.3.18 (LTS) — changelog
-  review only'
+  review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the cron
+  setting''s absence and the Language File label, with the cron default from its install
+  file'
 prerequisites:
 - REDCap administrator access
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-CC-01
@@ -235,7 +237,7 @@ An optional **custom offline message** can be set — the text shown to users wh
 
 ## Language Displayed for Global Pages
 
-Sets the default language for system-level pages (login page, home page, and other non-project pages). English is the standard default. Language files can be downloaded from the REDCap Community Language Library or created using the built-in **Language File Updater** tool (Administrator Resources). Older documentation may call it the Language File Creator/Updater.
+Sets the default language for system-level pages (login page, home page, and other non-project pages). English is the standard default. Language files can be downloaded from the REDCap Community Language Library or created using the built-in **Language File Updater** tool (Administrator Resources). On 16.0.59 LTS the menu still reads Language File Creator/Updater, and older documentation may use that name too.
 
 > Changing the global language does not automatically change the default language for existing or new projects. That default is set separately on the Default Project Settings page.
 
@@ -362,6 +364,8 @@ Sets a maximum number of records that can be created in a project while it is in
 
 Sets the maximum number of REDCap cron jobs that may run simultaneously across the entire system. Allowed range: 1–50; default: 10. Increasing this value allows more background jobs to run in parallel but increases server load. Monitor system resources for a few days after any increase.
 
+> **Version caveat (16.0.x LTS):** On 16.0.59 this setting is not on the page, and the install default is 20. REDCap's 16.1.2 upgrade script sets the value to 10.
+
 ## Rate Limiter: Page Hit Threshold
 
 Sets the maximum number of web requests per minute allowed from a single IP address before that IP is **permanently banned**. The default is 600 requests/minute. When an IP is banned, an administrator email notification is sent and the IP appears on the Banned IP Addresses page. Set to `0` to disable the rate limiter entirely.
@@ -419,7 +423,7 @@ When the page loads, REDCap reports:
 | Server type | Windows or Linux/Unix |
 | Last cron job ran at | Timestamp of the most recent successful cron execution |
 | Cron job status | **Good** if the cron ran recently; a warning or error if overdue |
-| Max concurrent cron jobs | The limit set on General Configuration (default: 10) |
+| Max concurrent cron jobs | The limit set on General Configuration (default: 10). Not shown on 16.0.59 LTS |
 | Active cron processes | How many cron workers are currently running |
 | Available memory | RAM available to the cron worker (cron runs with a higher memory limit than normal pages) |
 

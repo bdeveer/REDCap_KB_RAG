@@ -616,6 +616,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
+- RC-MLM-01 — Multi-Language Management
 
 ---
 
@@ -4441,6 +4443,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Outbound links:**
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
+- RC-CC-26 — Control Center: AI Configuration Settings
 - RC-INFRA-03 — REDCap Versions, Release Lines & Patching
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-02 — Control Center: General System Configuration
@@ -4723,6 +4726,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Prerequisites:** None
 
 **Outbound links:**
+- RC-CC-26 — Control Center: AI Configuration Settings
 - RC-SURV-01 — Surveys – Basics
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-AT-11 — Action Tags: Mobile App Action Tags
