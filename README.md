@@ -80,6 +80,9 @@ REDCap_KB_RAG/
 ├── build_dependency_graph.py         # Script: refreshes the data in both copies of the dependency graph
 ├── KB-GAPS-TODO.md                   # Tracked knowledge gaps and planned articles
 ├── KB-SOURCE-ATTESTATION.md          # Source document provenance for KB articles
+├── LICENSING.md                      # Which license covers which files, and what is not licensed
+├── LICENSE-CC-BY-4.0                 # License text for content
+├── LICENSE-MIT                       # License text for code
 ├── PROJECT-TODO.md                   # Running dev task list for the KB/RAG project (non-article work)
 ├── STYLE-GUIDE.md                    # Redirect stub: the style guide moved to RC-DSGN-01
 └── README.md
@@ -267,6 +270,10 @@ git push
 ```
 
 Pushing to `main` also rebuilds and deploys the website through GitHub Actions.
+
+## License
+
+Content is licensed under [CC BY 4.0](LICENSE-CC-BY-4.0) and code under the [MIT License](LICENSE-MIT). Material from other authors and official REDCap sources is not covered; see [LICENSING.md](LICENSING.md) for what applies to which files.
 
 ## Disclaimer
 

@@ -1,5 +1,6 @@
 site_name: REDCap Knowledge Base
 site_description: Structured REDCap documentation for support and reference
+copyright: 'Copyright &copy; 2026 Bas de Veer. <a href="https://github.com/bdeveer/REDCap_KB_RAG/blob/main/LICENSING.md">Licensing and exceptions</a>'
 docs_dir: kb
 exclude_docs: KB-REFERENCE-MAP.md
 theme:
