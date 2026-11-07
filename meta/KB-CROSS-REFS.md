@@ -1490,6 +1490,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Outbound links:**
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-PIPE-04 — Piping: Emails, Notifications & Logic Features
+- RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide
 - RC-PIPE-03 — Smart Variables Overview
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
@@ -4316,6 +4317,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-ALERT-02 — Alert Management & Notification Log
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 
 ---

@@ -10,13 +10,15 @@ verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog revie
   not re-captured
 prerequisites:
 - 'RC-ALERT-01 — Alerts & Notifications: Setup'
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-ALERT-01
   title: 'Alerts & Notifications: Setup'
 - id: RC-PIPE-04
   title: 'Piping: Emails, Notifications & Logic Features'
+- id: RC-IMP-05
+  title: Alerts & Notifications CSV — Column Reference and Format Guide
 tags:
 - alerts & notifications
 synonyms:
@@ -25,6 +27,7 @@ synonyms:
 - cancel a scheduled alert send
 - copy or deactivate an existing alert
 - re-evaluate alerts in redcap
+- queue an alert for records that already meet its logic
 - view history of sent alerts
 - edit alerts on the management page
 - what is a unique alert id
@@ -159,13 +162,13 @@ Reusing an existing ID isn't limited to literal in-place edits — it's also the
 | `alert-trigger` | `SUBMIT` = completion or combination trigger (fires on instrument save). `LOGIC` = logic trigger (fires when logic becomes true regardless of save source). |
 | `unique-form-name` | The instrument's variable name (not its display label). Required for `SUBMIT` triggers. |
 | `unique-event-name` | Event unique name (longitudinal projects only). Leave blank for classic projects. |
-| `saved-with-form-status` | `COMPLETE` = fire only when instrument status is Complete. Blank = fire on any save. |
+| `saved-with-form-status` | `COMPLETE` = fire only when instrument status is Complete. `ANY` (what exports write) or blank = fire on any save. |
 | `alert-condition` | Branching logic expression. Leave blank if no condition (completion trigger only). |
 | `ensure-logic-still-true` | `Y` / `N`. Re-checks logic immediately before sending. Recommended when a time delay is set. |
 | `alert-stop-type` | `RECORD` = once per record. Other options control per-event or per-instance limits. |
-| `send-on` | `NOW` = immediately. `TIME_LAG` = after a defined delay. `NEXT_DAY` = next occurrence of a day type. `DATE` = specific date/time. |
+| `send-on` | `NOW` = immediately. `TIME_LAG` = after a defined delay. `NEXT_DAY` = next occurrence of a day type. `DATE` = specific date/time, set in `send-on-date` (server time; check the date in the UI after upload, see [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md)). |
 | `send-on-time-lag-days` / `send-on-time-lag-hours` / `send-on-time-lag-minutes` | Numeric values defining the delay when `send-on` is `TIME_LAG`. |
-| `alert-send-how-many` | `ONCE` = send a single time. `MULTIPLE` = recurring sends (requires `repeat-for` and `repeat-for-max`). |
+| `alert-send-how-many` | `ONCE` = send a single time. `SCHEDULE` = recurring sends (requires `repeat-for`, `repeat-for-units` and `repeat-for-max`; the max counts the first send). Not `MULTIPLE`, which is rejected (observed on 17.5.10). |
 | `alert-type` | `EMAIL` (standard). `SMS` and `VOICE` if enabled on your installation. |
 | `email-from` | Sender email address. Must be associated with a project user account. |
 | `email-to` | Recipient(s). Accepts static addresses, piped variables (e.g., `[contact_email]`), or event-prefixed variables in longitudinal projects (e.g., `[baseline_arm_1][contact_email]`). |
@@ -270,6 +273,8 @@ Both exports can be generated multiple times without restriction.
 
 **Assuming the Notification Log covers ASI emails.** Automated Survey Invitation emails do not appear in the Notification Log. If you are looking for a sent survey invitation and it was configured as an ASI rather than an alert, check the ASI's own send log, not the Notification Log.
 
+**Switching on an alert and expecting it to queue sends for existing records.** Logic is checked when a record is saved or imported, not when an alert is activated. For records that already meet the logic, save or import them after activating the alert, or run **Re-evaluate Alerts** (Section 4.1) with Test Run first.
+
 **Using the search box to find alerts by message content.** The search box on the management page filters by alert title only. If you need to find an alert based on a recipient address, subject line, or trigger logic content, you must review each alert individually or use the Notification Log's Subject column as an indirect reference.
 
 ---
@@ -280,3 +285,4 @@ Both exports can be generated multiple times without restriction.
 - [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) (piping and smart variable usage in alert messages)
 - [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) (reference for smart variables used in alert message bodies)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (context for trigger limits and repeated-instrument alert behavior)
+- [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md) (full column reference for the alerts CSV upload)

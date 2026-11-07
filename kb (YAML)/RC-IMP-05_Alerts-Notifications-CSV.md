@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - 'RC-ALERT-01 — Alerts & Notifications: Setup'
-version: '1.2'
-last_updated: '2026-07-27'
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-IMP-03
   title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
@@ -31,6 +31,9 @@ synonyms:
 - export and re-import alerts and notifications
 - duplicate alerts across projects without rebuilding
 - a&n csv column reference
+- recurring alert reminders in the alerts csv
+- send-on-date format for alert upload
+- alert date imported as the wrong month
 ---
 
 # 1. Overview
@@ -60,12 +63,12 @@ Each row in the file represents one alert. The table below documents every colum
 | `alert-trigger` | Yes | `SUBMIT` — completion or combination trigger (fires on instrument save). `LOGIC` — logic trigger (fires when logic becomes true, regardless of save source, including imports and API writes). |
 | `unique-form-name` | Yes (SUBMIT) | The instrument's unique name (variable name, not display label). Required for `SUBMIT` triggers; specifies which instrument save activates the alert. |
 | `unique-event-name` | No | The event's unique name (e.g., `baseline_arm_1`). Leave blank for classic (non-longitudinal) projects. When blank in a longitudinal project, the alert applies to any event where the instrument appears. Event context for recipients and message content is specified via piping syntax inside `email-to` and `alert-message` instead. |
-| `saved-with-form-status` | No | `COMPLETE` — fires only when the instrument is saved with Complete status (value 2). Leave blank to fire on any save status. |
+| `saved-with-form-status` | No | `COMPLETE` — fires only when the instrument is saved with Complete status (value 2). `ANY` — fires on any save status; this is what an export writes for `LOGIC` alerts. Blank is also accepted for any status. |
 | `alert-condition` | No | Logic expression string (same syntax as branching logic). Required for combination triggers and logic triggers. Leave blank for pure completion triggers. |
 | `ensure-logic-still-true` | Yes | `Y` or `N`. When `Y`, REDCap re-evaluates the trigger logic immediately before sending. If the logic is no longer true at send time, the queued alert is cancelled. Most useful when the alert has a scheduled delay. |
 | `do-not-clear-recurrences` | Yes | `Y` or `N`. Controls whether a new trigger event clears previously queued recurrences for the same record. |
 | `alert-stop-type` | Yes | Trigger limit — how many times the alert can fire per record. `RECORD` — once per record. Additional values for longitudinal/repeated projects include `EVENT` (once per event), `INSTANCE` (once per repeat instance), and `EVENT_INSTANCE` (once per event-instance combination). |
-| `send-on` | Yes | When to send after the trigger fires. `NOW` — immediately. `TIME_LAG` — after a specified delay (configure with `send-on-time-lag-days`, `send-on-time-lag-hours`, `send-on-time-lag-minutes`). `NEXT_DAY` — next occurrence of a specified day type (configure with `send-on-next-day-type` and `send-on-next-time`). `EXACT_DATE` — at a specific date/time (configure with `send-on-date`). `FIELD` — relative to a date stored in a project field (configure with `send-on-field`). |
+| `send-on` | Yes | When to send after the trigger fires. `NOW` — immediately. `TIME_LAG` — after a specified delay (configure with `send-on-time-lag-days`, `send-on-time-lag-hours`, `send-on-time-lag-minutes`). `NEXT_DAY` — next occurrence of a specified day type (configure with `send-on-next-day-type` and `send-on-next-time`). `DATE` — at a specific date/time (configure with `send-on-date`). `FIELD` — relative to a date stored in a project field (configure with `send-on-field`). |
 | `send-on-next-day-type` | Conditional | Day-type value for `NEXT_DAY` sends (e.g., weekday, Monday). Leave blank otherwise. |
 | `send-on-next-time` | Conditional | Time component (HH:MM) for `NEXT_DAY` sends. Leave blank otherwise. |
 | `send-on-time-lag-days` | Conditional | Number of days for `TIME_LAG` delay. All three lag columns (`days`, `hours`, `minutes`) must be specified together — use `0` for units not needed. |
@@ -73,11 +76,11 @@ Each row in the file represents one alert. The table below documents every colum
 | `send-on-time-lag-minutes` | Conditional | Minutes component of `TIME_LAG` delay. Use `0` if not needed. |
 | `send-on-field-after` | Conditional | Direction for `TIME_LAG` sends: `after` (send N days/hours/minutes after the trigger). Leave blank for `NOW` sends. |
 | `send-on-field` | Conditional | The project field name used as a reference date for `FIELD` sends. Leave blank otherwise. |
-| `send-on-date` | Conditional | Specific date/time for `EXACT_DATE` sends (server time zone applies). Leave blank otherwise. |
-| `alert-send-how-many` | Yes | `ONCE` — send a single time per trigger event. `MULTIPLE` — send on a recurring basis (configure with `every-time-type`, `repeat-for`, `repeat-for-units`, `repeat-for-max`). |
-| `every-time-type` | Conditional | Required when `alert-send-how-many` = `MULTIPLE`. The unit for the recurrence interval. |
+| `send-on-date` | Conditional | Specific date/time for `DATE` sends, as `M/D/Y H:M` according to the error message, in the server's time zone. Observed on REDCap 17.5.10 (Standard), the upload read the date **day-first** and the export writes it month-first: see Common Mistakes. Always check the date in the UI after uploading. Leave blank otherwise. |
+| `alert-send-how-many` | Yes | `ONCE` — send a single time per trigger event. `SCHEDULE` — send on a recurring basis (configure with `repeat-for`, `repeat-for-units`, `repeat-for-max`). **Not `MULTIPLE`**: Observed on REDCap 17.5.10 (Standard) it is rejected. |
+| `every-time-type` | Conditional | Not needed for `SCHEDULE` recurring sends: Observed on REDCap 17.5.10 (Standard), a working recurring alert was uploaded and exported with this column blank. Its exact use is unconfirmed; leave it blank unless an export from a working alert fills it. |
 | `repeat-for` | Conditional | Numeric interval between recurring sends. |
-| `repeat-for-units` | Conditional | Unit for `repeat-for` (days, hours, or minutes). |
+| `repeat-for-units` | Conditional | Unit for `repeat-for`: `DAYS`, `HOURS` or `MINUTES`. |
 | `repeat-for-max` | Conditional | Maximum number of sends including the first. **Always set this** — leaving it blank causes REDCap to send indefinitely. |
 | `alert-expiration` | No | Date/time after which REDCap will not send any further instances of this alert, and will cancel any already-queued ones. |
 | `alert-type` | Yes | `EMAIL` — standard email (always available). `SMS` — text message (if enabled). `VOICE` — voice call (if enabled). `SENDGRID` — SendGrid delivery (if configured). |
@@ -126,6 +129,12 @@ A-2483,"Invite 3 months",SUBMIT,screening,,COMPLETE,,N,N,RECORD,TIME_LAG,,,90,0,
 **Omitting the event prefix in `alert-message` survey links.** `[survey-link:phq9]` without an event prefix is ambiguous in a longitudinal project where the instrument appears at multiple events. Always write `[event_name][survey-link:instrument_name:Link text]`.
 
 **Specifying only `send-on-time-lag-days` for a TIME_LAG send.** All three lag columns — days, hours, and minutes — must be present. Use `0` for the units you don't need; don't leave them blank.
+
+**Using `MULTIPLE` for recurring sends.** The value for "Multiple times on a recurring basis" is `SCHEDULE`. Observed on REDCap 17.5.10 (Standard): a row with `MULTIPLE` is rejected with "repeat-for should be 0 or blank if alert-send-how-many='ONCE'", because REDCap doesn't recognise the value and treats the row as `ONCE`. Use `SCHEDULE` with `repeat-for`, `repeat-for-units` and `repeat-for-max`. `repeat-for-max` counts the first send: 3 means the first send plus two reminders.
+
+**Trusting the error message about the `send-on-date` format.** If the date can't be parsed, the upload error says "Date must be in the M/D/Y H:M format". Observed on REDCap 17.5.10 (Standard): an uploaded `11/10/2026 06:00`, meant as 10 November in M/D/Y, was stored as **11 October**, so the value was read day-first. The export, though, writes the date month-first (that same alert exported as `10/11/2026 06:00`), so an exported file can't safely be re-uploaded unchanged when the day is 12 or lower. The likely cause is that the upload reads dates in the uploading user's date-format preference (My Profile); this hasn't been confirmed. After every upload, open the alert and check the date and time it shows, and remember the time is server time.
+
+**Expecting a newly activated alert to pick up records that already meet its logic.** A `LOGIC` alert is checked when a record is saved or imported, so switching an alert on, or uploading it, doesn't queue anything for records that were already true. Either save or import those records after the alert is active (an API import that sets the trigger field works), or use **Re-evaluate Alerts** on the management page, with Test Run first. See [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md).
 
 **Leaving `alert-send-how-many` blank or omitting the repeat cap.** For recurring alerts, always set `repeat-for-max`. Without it, REDCap sends indefinitely.
 
