@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: the disabled notice and its default only, not the enabled tool; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
-| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line; enable the database query tool; database query tool is disabled |
+| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line; enable the database query tool; database query tool is disabled; query tool only shows 500 rows; database query tool results cut off at 500; return more than 500 rows from the query tool; raise the query tool row limit |
 
 ---
 
@@ -52,6 +52,8 @@ A "Use query context" option allows the query to be run in the context of a spec
 ## 4. Entering and Running Queries
 
 Administrators type their SQL into the query text box and execute it. Results are displayed in a table directly on the page. Multiple query rows can be added for running several queries in sequence.
+
+> **Results are capped at 500 rows by default.** A query with no `LIMIT` clause returns at most 500 rows, and the query still runs without an error, so it's easy to miss that a longer result was cut off. If a query returns exactly 500 rows, assume the list is incomplete. To get more, end the query with your own `LIMIT` and a higher number, for example `LIMIT 100000`. An explicit `LIMIT` replaces the 500-row default, and results run past 500 rows.
 
 **Example queries:**
 
@@ -154,6 +156,7 @@ Because the Database Query Tool provides direct database access, be mindful of p
 
 - **Avoid large, unfiltered queries** — `SELECT * FROM redcap_log_event` without a WHERE clause can put significant load on the database server, especially if the audit log is large
 - **Use LIMIT** — especially when exploring unfamiliar data, start with `LIMIT 100` or `LIMIT 10` to test before retrieving thousands of rows
+- **Expect at most 500 rows** — the tool shows 500 rows by default (section 4), so for full lists check whether you hit the cap
 - **Index awareness** — queries that filter on indexed columns (e.g., project_id, user_id) will perform much better than those filtering on unindexed fields
 - **Avoid joins on large tables** — joining `redcap_data` with `redcap_log_event` without specific filtering can be slow
 - **Run exploratory queries during off-peak hours** if possible
@@ -195,6 +198,9 @@ Yes. The tool supports saving named custom queries. Add or edit custom queries t
 **Q: What is "Use query context" and when should I use it?**
 The query context option allows a query to be run within the scope of a specific project. This may affect how certain variables or calculations are resolved. Use this option if you are running a query that depends on project-specific settings or variables. For most queries, this is optional.
 
+**Q: Why does my query stop at exactly 500 rows?**
+The Database Query Tool shows at most 500 rows by default when the query has no `LIMIT` clause. A result of exactly 500 rows is almost always cut off. Add your own `LIMIT` with a higher number at the end of the query (for example `LIMIT 100000`) and run it again. An explicit `LIMIT` replaces the default, so the full result comes back.
+
 **Q: How do I export the results of my query?**
 The Database Query Tool displays results in a table on the page. You can select the table data and copy it, or take a screenshot. The tool does not have a built-in export button, but you can paste the results into a spreadsheet or text file.
 
@@ -203,6 +209,8 @@ The Database Query Tool displays results in a table on the page. You can select 
 ## 12. Common Mistakes & Gotchas
 
 **Running very large or unfiltered queries without a LIMIT clause.** A query like `SELECT * FROM redcap_log_event` with no WHERE clause or LIMIT can retrieve millions of rows, which will freeze your browser, consume significant memory, and put load on the database server. Always start with a LIMIT clause (e.g., `LIMIT 100`) when exploring unfamiliar data, and use specific WHERE clauses to narrow results.
+
+**Treating a 500-row result as complete.** The tool shows 500 rows by default, and the cut is easy to miss. Notification lists, user audits and inventories are the usual victims: people past row 500 are missing. For any query meant to return a complete list, end it with an explicit `LIMIT` well above the number of rows you expect (for example `LIMIT 100000`). To be sure, check the total with `SELECT COUNT(*)` on the same `FROM` and `WHERE`.
 
 **Forgetting to filter on indexed columns.** Queries that filter on indexed columns (such as `project_id` or `user_id`) will perform much faster than queries that filter on unindexed fields. If a query takes a very long time, try restructuring it to filter on indexed columns first, or run the query during off-peak hours when database load is lower.
 
