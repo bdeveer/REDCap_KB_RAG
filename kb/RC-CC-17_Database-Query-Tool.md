@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: the disabled notice and its default only, not the enabled tool; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-16 — Control Center: Database Activity Monitor](RC-CC-16_Database-Activity-Monitor.md); [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md)|
-| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line; enable the database query tool; database query tool is disabled; query tool only shows 500 rows; database query tool results cut off at 500; return more than 500 rows from the query tool; raise the query tool row limit |
+| **Synonyms** | control center database query tool; run read-only sql against the redcap database; query redcap mysql from the browser; ad-hoc sql lookups for troubleshooting; which sql statements are allowed in the query tool; investigate data with a database query; admin sql query interface redcap; read-only database access without command line; enable the database query tool; database query tool is disabled; query tool only shows 500 rows; database query tool results cut off at 500; return more than 500 rows from the query tool; raise the query tool row limit; export database query tool results to csv; download sql query results from the control center |
 
 ---
 
@@ -51,7 +51,7 @@ A "Use query context" option allows the query to be run in the context of a spec
 
 ## 4. Entering and Running Queries
 
-Administrators type their SQL into the query text box and execute it. Results are displayed in a table directly on the page. Multiple query rows can be added for running several queries in sequence.
+Administrators type their SQL into the query text box and execute it. Results are displayed in a table directly on the page, and the **Export CSV** button downloads them as a CSV file (see Common Questions). Multiple query rows can be added for running several queries in sequence.
 
 > **Results are capped at 500 rows by default.** A query with no `LIMIT` clause returns at most 500 rows, and the query still runs without an error, so it's easy to miss that a longer result was cut off. If a query returns exactly 500 rows, assume the list is incomplete. To get more, end the query with your own `LIMIT` and a higher number, for example `LIMIT 100000`. An explicit `LIMIT` replaces the 500-row default, and results run past 500 rows.
 
@@ -202,7 +202,7 @@ The query context option allows a query to be run within the scope of a specific
 The Database Query Tool shows at most 500 rows by default when the query has no `LIMIT` clause. A result of exactly 500 rows is almost always cut off. Add your own `LIMIT` with a higher number at the end of the query (for example `LIMIT 100000`) and run it again. An explicit `LIMIT` replaces the default, so the full result comes back.
 
 **Q: How do I export the results of my query?**
-The Database Query Tool displays results in a table on the page. You can select the table data and copy it, or take a screenshot. The tool does not have a built-in export button, but you can paste the results into a spreadsheet or text file.
+The tool has an **Export CSV** button for query results. Click it after the query runs to download the results as a CSV file. Results of an unsaved query download with a generic, timestamped filename such as `query_tool_export_2026-11-18_1755.csv`; results of a saved custom query include the query's title in the filename. If you run the same query on several servers, rename the files or add a column that identifies the server, because the generic filenames don't say where the data came from.
 
 ---
 
