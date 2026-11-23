@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. The AI setup location and Language File label were checked on v17.5.6 and v16.0.59 test instances, read-only |
 | **Prerequisite** | None |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md); [RC-CC-20 — Control Center: Multi-Language Management](RC-CC-20_Multi-Language-Management.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
@@ -202,6 +202,8 @@ The **MyCap** tab (only shown when MyCap is active in the project) translates My
 ### 5.8 User Interface Overrides
 
 The **User Interface** tab allows project-level overrides of UI strings (buttons, system messages) for a given language, unless the administrator has restricted this. If a language is subscribed to a system language, UI items cannot be edited and the tab displays a notice.
+
+**Randomization text is translatable from 17.5.4 Standard.** The Randomize button on data entry forms and the text of its randomization dialogs are listed under a **Randomization** group on this tab (seen on 17.5.9).
 
 **REDCap's cookie policy text is translatable from 15.8.1** — both the cookie link text and the dialog text, found under this tab.
 

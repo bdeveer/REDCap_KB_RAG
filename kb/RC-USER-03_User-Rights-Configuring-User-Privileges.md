@@ -9,11 +9,11 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) |
-| **Synonyms** | how do i configure user privileges; what does each user rights setting do; give a user export or import permissions; set per-instrument data access; restrict a user to view-only access; limit who can see reports or dashboards; configure permissions in the privileges popup; explain basic privileges settings |
+| **Related Topics** | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) |
+| **Synonyms** | how do i configure user privileges; what does each user rights setting do; give a user export or import permissions; set per-instrument data access; restrict a user to view-only access; limit who can see reports or dashboards; configure permissions in the privileges popup; explain basic privileges settings; can the randomization dashboard right unblind users |
 
 ---
 
@@ -118,6 +118,15 @@ Two separate rights:
 - *Download data for offline use* — allows the user to download project data to a mobile device for offline data collection.
 
 If the mobile app is not part of your project's data collection workflow, leave both unchecked.
+
+**Randomization**
+
+Three separate rights, shown only when randomization is enabled on the project. Each carries more exposure than its name suggests:
+- *Setup* — define the randomization model and upload **and download** allocation tables. Downloading a table reveals the full allocation sequence.
+- *Dashboard* — view allocation progress (used / not used). The dashboard also shows which records went to each group, so in a blinded study it **can unblind** the user.
+- *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields and lets the user set them **even without form-level rights** to those fields; if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights.
+
+See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) for who should get each right.
 
 ### 3.4 Record Settings
 
@@ -302,6 +311,7 @@ This approach is flexible but should be used deliberately. It creates implicit a
 - [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md)
 - [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) (editing, suspending, removing users)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md)
+- [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) (who should get the Setup, Dashboard and Randomize rights)
 - [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md) (system-level ceiling on the privileges documented in this article; if a right appears unavailable when assigning a user, the user's ACG may be restricting it)
 - [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
 - [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md)

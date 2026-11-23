@@ -7,13 +7,15 @@ applies_to:
 - REDCap Administrators (Section 7)
 - requires project in Production with a configured randomization model
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
+verified_against: REDCap v17.6.1 (Standard) — built-in Help & FAQ, smart-variable
+  help and move-to-production / Copy Project code read on v17.5.9; Standard changelog
+  reviewed to 17.6.1; LTS changelog not reviewed since v17.3.18; Randomization pages
   not re-captured
 prerequisites:
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-RAND-01
   title: Randomization Concepts & Terminology
@@ -25,6 +27,12 @@ related:
   title: 'Data Export: Overview & Workflow'
 - id: RC-ALERT-01
   title: 'Alerts & Notifications: Setup'
+- id: RC-USER-03
+  title: 'User Rights: Configuring User Privileges'
+- id: RC-PLUS-02
+  title: 'REDCap+: Project Migration Tool'
+- id: RC-MOB-01
+  title: REDCap Mobile App
 tags:
 - randomization
 synonyms:
@@ -36,6 +44,8 @@ synonyms:
 - view randomization assignments
 - troubleshoot randomization in a live project
 - randomize a subject into a treatment arm
+- does deleting a randomized record free its allocation
+- copy a randomized project without losing assignments
 ---
 
 # 1. Overview
@@ -93,9 +103,10 @@ replaced in the UI by a Randomize button.
 | --- | --- |
 | **Record not yet randomized** | A Randomize button appears where the randomization variable field would be. |
 | **User clicks Randomize button** | A confirmation popup appears showing the record and group assignment that will be made. Click the Randomize button in the popup to confirm. |
+| **Result message** | After you confirm, a message states the record was randomized and the value assigned. Dismiss it with the **Close** button inside the message itself (not in the dialog's bottom button bar), which matters if you script UAT against the form. |
 | **Record successfully randomized (open)** | The randomization variable shows the assigned group label (e.g., 'Intervention'). |
 | **Record successfully randomized (blinded)** | The randomization variable shows an opaque code. The study team cannot determine the group from this value. |
-| **Stratification or DAG values missing** | REDCap displays a prompt listing the missing values before allowing randomization. Complete those fields and retry. |
+| **Stratification or DAG values missing** | REDCap displays a prompt listing the missing values before allowing randomization. Complete those fields and retry. The dialog lets a user with the Randomize right see and set the strata even without form-level rights to those fields, so a PHI stratum is visible to them. |
 
 > **Note:** *In Development mode, REDCap shows a yellow banner warning
 > not to randomize real participants. This warning does not appear in
@@ -111,6 +122,9 @@ instead of) the manual button.
 | --- | --- |
 | **Trigger logic — users with Randomize rights only** | All three conditions must be true simultaneously: (1) the trigger option is set to this mode, (2) the defined trigger logic evaluates to true, (3) a user with Randomize rights saves the defined instrument/event. |
 | **Trigger logic — all users including survey respondents** | Both conditions must be true: (1) the defined trigger logic evaluates to true, (2) any user saves the form OR a survey respondent completes the survey form. Randomize rights are NOT required to trigger this mode. |
+
+A record is randomized only once. Saving the form again while the
+trigger logic is still true does not re-randomize it.
 
 > **Note:** *Even with automatic triggers configured, a user with
 > Randomize rights can still manually click the Randomize button at any
@@ -129,7 +143,7 @@ design and is not a bug.
 
 # 3a. Version Caveats Affecting Allocation Integrity
 
-Four defects affected randomization itself. For a randomised trial these matter more than most, because the allocation table is the auditable record of assignment.
+Five defects affected randomization itself. For a randomised trial these matter more than most, because the allocation table is the auditable record of assignment.
 
 > **Critical — deleted records did not free their allocation (below 15.0.26 Standard; present since 14.7.0).** In a longitudinal project with multiple arms, deleting a record **after it had been randomized** left its allocation in place in the allocation table. The slot was never returned to the pool.
 >
@@ -141,7 +155,17 @@ Four defects affected randomization itself. For a randomised trial these matter 
 
 > **Version caveat (below 16.0.23 Standard):** In the randomization dialog on a data entry form, clicking the **choice label** of a strata field — rather than the radio button itself — did not register the selection. A user could believe they had set a stratum and randomize against a different value than intended. Fixed in 16.0.23.
 
+> **Version caveat (below 17.5.7 Standard; LTS fix version not checked):** Randomizing a record that already had an allocation, or two randomize requests for the same record arriving at the same moment (e.g., a double click, or a trigger and a manual click together), could cause a database error, and one request could **overwrite the allocation** another had just assigned. A record could end up holding a different allocation from the one first shown. Upgrade to 17.5.7+; on older versions, reconcile as below.
+
 If your project randomized records on any of these versions, the allocation table and the randomization log are the two places to reconcile against each other.
+
+Three older defects can also explain a mismatch you find while reconciling:
+
+> **Version caveat (below 15.6.0 Standard):** The administrator **Auto-fill** option on a data entry form also filled the randomization field, giving the record a value no allocation explains.
+
+> **Version caveat (below 15.5.5 Standard):** If a stratum value broke a custom Data Quality rule with real-time execution, randomization could fail part-way and leave the record inconsistent.
+
+> **Version caveat (below 15.7.0 Standard):** With automatic triggers, **Erase all data** in development (or deleting all records on the move to production) left the "Randomize record" log events behind, so the log shows randomizations with no matching records.
 
 ---
 
@@ -204,6 +228,13 @@ See Section 7 for administrator actions.
 - **Record IDs are clickable:** Use the dashboard to navigate directly
     to randomized records for quick auditing.
 
+- **Export the table:** A **CSV Export** button above the dashboard
+    table (17.3.0+) downloads the current counts and assignments.
+
+- **The dashboard unblinds:** It shows which records went to which
+    group. In a blinded study, give the Dashboard right only to people
+    who may be unblinded.
+
 ---
 
 # 6. Randomization Smart Variables
@@ -218,9 +249,10 @@ to create an audit trail or trigger downstream logic.
 | **\[rand-utc-time\]** | Date and time in Coordinated Universal Time (UTC)            Use this for cross-timezone consistency or international studies. |
 | **\[rand-number\]** | The randomization allocation number assigned to the record   For blinded randomization: equivalent to piping the randomization field. For open randomization: the randomization number from the allocation table (optional field in table setup). |
 
-> **Note:** *For projects with multiple randomization models, each smart
-> variable can be targeted to a specific model. Consult the REDCap smart
-> variable documentation within REDCap for the exact syntax.*
+> **Note:** *For projects with multiple randomization models, add `:n`
+> for model n: `[rand-number:2]`, `[rand-time:2]`, `[rand-utc-time:2]`,
+> and `[rand-time:2:value]` for the raw value. With no number, model 1
+> is used. See [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md).*
 
 ---
 
@@ -250,6 +282,15 @@ of allocation slots in production.
     existing slots + uploading 100 more = 200 total slots. Can be done
     as many times as needed, one file at a time.
 
+- **Existing rows are locked:** Once the project is in production, the
+    rows already in the table cannot be changed by upload. Appending
+    only adds rows; the per-slot actions in 7.2 are the only way to
+    change an individual slot.
+
+- **Audit trail:** From 17.5.7 Standard, the randomization log entry
+    also records the primary key of the allocation-table row assigned,
+    which helps when querying the log at the database level.
+
 - **File format:** Same format as a regular allocation table. Download
     a fresh template from the setup page if needed.
 
@@ -270,9 +311,17 @@ up to four action icons; assigned slots have one.
 
 ## 7.2a Moving a project with randomized records to production
 
-If records have already been randomized when you click **Move project to Production**, REDCap shows an additional warning in the dialog (17.4.4+) about the consequences. Records randomized in development were allocated from the **development** allocation table, which is not the table your production study runs on. Decide deliberately whether to keep those records; normally, delete test data on the move and randomize real participants only in production.
+If records have already been randomized when you click **Move project to Production**, REDCap shows an additional warning in the dialog (17.4.4+) about the consequences. Records randomized in development were allocated from the **development** allocation table, which is not the table your production study runs on. Decide deliberately whether to keep those records. If you keep them, REDCap keeps the records and their other data but **clears the randomization variable on its event for every model** and frees any production slots marked used, so the records are un-randomized and will draw from the production table when randomized again. Normally, delete test data on the move and randomize real participants only in production.
 
 From 17.5.0 Standard / 17.3.13 LTS, administrators can no longer upload a **development** allocation table (Randomization Setup, Step 3) once the project is in production. Before that, the buttons only *looked* disabled for administrators and could still be clicked.
+
+## 7.2b Deleting a randomized record
+
+Deleting a randomized record, whatever its position in the sequence, returns its allocation to the pool for a future record. This is normal behaviour (the 15.0.26 defect in Section 3a was the exception). The consequence in production: deleting test or duplicate records that were randomized gives their slots back, and the next matching record will take one of them.
+
+## 7.2c Viewing allocations in Analysis/Cleanup status
+
+Allocation tables cannot be viewed while the project is in Analysis/Cleanup status. Below 17.6.0 Standard the message shown gave the wrong reason; the block itself is expected.
 
 ## 7.3 Redoing a randomization model in production
 
@@ -287,13 +336,40 @@ are limited and all have significant consequences.
 > project and starting over. Neither is straightforward. This reinforces
 > why thorough testing before production is essential.*
 
+If you clone with **Copy Project** and copy the records, the randomization variable is **not** copied (15.8.4+): every copied record starts un-randomized in the new project. To move a project to another REDCap instance with its randomization assignments and allocation tables intact, use the Project Migration Tool instead ([RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md), REDCap+ only).
+
+> **Version caveat (below 15.8.4 Standard):** Copy Project could fail outright (redirecting to Home) for a project using randomization together with PDF Snapshots or e-Consent.
+
 ---
 
 # 8. Questions & Answers
 
+**Q: If I delete a randomized record, is its allocation lost?**
+
+No. Its allocation is freed and will be used by a future record. Be careful deleting randomized records in production for that reason.
+
+**Q: Can I randomize from the Mobile App?**
+
+No. The app works offline and cannot reach the allocation table, so it does not show the Randomize button. See [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md).
+
+**Q: Where do I cite REDCap's randomization module in a manuscript?**
+
+When randomization is set up, the data export dialog (15.5.0+) names the REDCap randomization publication to cite alongside the standard REDCap citation.
+
 ---
 
 # 9. Common Mistakes & Gotchas
+
+**Reading the randomization field from the wrong event**
+
+- **What happens:** The instrument with the randomization field is also
+    designated on later events (e.g., annual visits). A report or logic
+    that reads the field from a later event finds it blank or `0`, and
+    randomized participants show as "not randomized".
+
+- **Prevention:** Always reference the randomization field on the
+    randomization event, e.g. `[baseline_arm_1][rand_group]`, and filter
+    reports on that event.
 
 **Confusing the randomization dashboard with project dashboards**
 
@@ -369,7 +445,7 @@ reason properly**
 | **REDCap Version** | **Notes** |
 | --- | --- |
 | **15.4.4+** | Randomization 2.0: automatic trigger options available. Smart variable behavior and dashboard columns consistent with this document. Verified compatible through REDCap 17. |
-| **Pre-15.x** | Automatic triggers not available. Section 4.2 (automatic trigger behavior) does not apply. Manual-only randomization. Smart variables \[rand-time\], \[rand-utc-time\], \[rand-number\] — verify availability in your version. |
+| **Pre-15.x** | Automatic triggers not available. Section 3.2 (automatic trigger behavior) does not apply. Manual-only randomization. Smart variables \[rand-time\], \[rand-utc-time\], \[rand-number\] — verify availability in your version. |
 
 REDCap LLM Knowledge Base \| [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md) \| Working with & Managing
 Randomization
@@ -384,3 +460,6 @@ Randomization
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)
 - [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md)
 - [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md)
+- [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
+- [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md)
+- [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md)

@@ -11,7 +11,7 @@ verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance
 prerequisites:
 - REDCap administrator access
 - familiarity with REDCap user rights
-version: '1.4'
+version: '1.5'
 last_updated: 2026-11
 related:
 - id: RC-CC-07
@@ -229,6 +229,8 @@ Controls access to the randomization module:
 | Setup + Dashboard + Perform | Full randomization access |
 
 There is also a separate **Randomization (Setup)** right that controls access to the randomization setup independently.
+
+> **Version caveat (below 16.1.0 Standard):** When importing ACG assignments by CSV, the review dialog misreported changes to **API** and **Randomization** privileges. Check those columns on the User Rights page after an import on an older version rather than trusting the review summary.
 
 ## API Access
 

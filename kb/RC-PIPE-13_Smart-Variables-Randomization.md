@@ -7,13 +7,13 @@
 | **Domain** | Piping |
 | **Applies To** | Projects with REDCap Randomization module enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.1 (Standard) — smart-variable help text and piping code read on v17.5.9; Standard changelog reviewed to 17.6.1; LTS changelog not reviewed since v17.3.7 |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
-| **Synonyms** | [rand-number] smart variable; how to pipe a randomization number with [rand-number]; randomization smart variables for the time randomized [rand-time]; [rand-utc-time] randomization timestamp smart variable; show when a record was randomized using [rand-time:value]; reference a specific randomization model with [rand-number:n]; pipe the randomization assignment time into a field or email; randomization-related smart variables |
+| **Synonyms** | [rand-number] smart variable; how to pipe a randomization number with [rand-number]; randomization smart variables for the time randomized [rand-time]; [rand-utc-time] randomization timestamp smart variable; show when a record was randomized using [rand-time:value]; reference a specific randomization model with [rand-number:n]; pipe the randomization assignment time into a field or email; randomization-related smart variables; is [rand-time] shown in the user's timezone or the server's |
 
 ---
 
@@ -47,7 +47,7 @@ The server date and time at which the record was randomized. REDCap records this
 
 **UTC Time**
 
-Coordinated Universal Time (UTC), also called GMT. REDCap records randomization in UTC and provides conversion to the user's local timezone for display purposes.
+Coordinated Universal Time (UTC), also called GMT. REDCap stores both the server time and the UTC time of each randomization. Neither is converted to the viewing user's timezone: only the display **format** follows the user's date/time preferences.
 
 **Multiple Randomizations**
 
@@ -88,7 +88,7 @@ Use the `:value` format in calculated fields, branching logic, and anywhere exac
 
 **Server Time vs. UTC Time**
 
-`[rand-time]` is the server's local time (displayed according to the user's timezone preference). `[rand-utc-time]` is the same moment expressed in UTC/GMT. They represent the same instant but in different timezones. Use the server time for user-facing display; use UTC if you need an absolute, timezone-independent reference.
+`[rand-time]` is the REDCap **server's** local time. It is not converted to the viewing user's timezone; only its display format (date order, 12/24-hour clock) follows the user's date/time preferences. `[rand-utc-time]` is the same moment expressed in UTC/GMT. They represent the same instant but in different timezones. Use the server time for user-facing display when your users share the server's timezone; use UTC if you need an absolute, timezone-independent reference. A user in another timezone sees the server's clock time, not their own.
 
 **Multiple Randomizations**
 
@@ -124,7 +124,7 @@ If a record has not been randomized, all randomization smart variables return bl
 
 **Q: What is the difference between `[rand-time]` and `[rand-utc-time]`?**
 
-**A:** Both record the moment of randomization, but in different timezones. `[rand-time]` displays in the user's local timezone (adjusted per their profile preferences). `[rand-utc-time]` displays in UTC/GMT, which is independent of timezone. For most user-facing display, use `[rand-time]`. Use UTC if you need an absolute reference time.
+**A:** Both record the moment of randomization, but in different timezones. `[rand-time]` is the REDCap server's local time; it is not shifted to the viewing user's timezone, and only its date/time format follows their profile preferences. `[rand-utc-time]` is the same moment in UTC/GMT. For most user-facing display, use `[rand-time]`. Use UTC if you need an absolute reference time.
 
 **Q: I want to show the randomization date in a calculated field. Should I use `:value`?**
 
@@ -156,9 +156,9 @@ If a record has not been randomized, all randomization smart variables return bl
 
 **Not accounting for blank values when randomization hasn't occurred.** If you use `[rand-number]` in a form or email before a record is randomized, it displays blank. Use conditional logic or the `:hideunderscore` modifier to handle this gracefully.
 
-**Using `:value` format in user-facing display.** The `:value` format (raw YYYY-MM-DD HH:MM:SS) is for calculations and logic, not user display. It ignores the user's timezone preferences and locale settings. For display, omit `:value` and let REDCap format the timestamp appropriately.
+**Using `:value` format in user-facing display.** The `:value` format (raw YYYY-MM-DD HH:MM:SS) is for calculations and logic, not user display. It ignores the user's date/time display format preference. For display, omit `:value` and let REDCap format the timestamp appropriately.
 
-**Mixing up randomization time and UTC time.** `[rand-time]` is server/local time; `[rand-utc-time]` is UTC. If you are storing or comparing timestamps across different timezones, use UTC. For display to users in your institution's timezone, use server time.
+**Mixing up randomization time and UTC time.** `[rand-time]` is the server's time, not the user's local time; `[rand-utc-time]` is UTC. If you are storing or comparing timestamps across different timezones, use UTC. For display to users in your institution's timezone, use server time.
 
 **Assuming multiple randomizations without verifying project setup.** If you use `[rand-number:2]` in a project with only one randomization configured, the variable returns blank. Verify that your project actually has multiple randomizations before relying on these references.
 

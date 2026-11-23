@@ -10,8 +10,8 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.0'
-last_updated: '2025'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-EXPRT-02
   title: 'Data Export: Export Formats'
@@ -142,6 +142,7 @@ the report type or export format selected.
 | *Why can't I see the Data Exports, Reports, and Stats application in my menu?* | The application only appears if you have at least one of the following: any Data Export right above No Access, or the Add/Edit/Organize Reports right. If neither is granted, the application is hidden entirely. |
 | *Can I export data from multiple instruments at once?* | Yes. Use the Selected Instruments/Events report to choose which instruments to include. For longitudinal projects, you must also select one or more events. See [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md) for details on report types. |
 | *What happens if I close the export dialog before downloading my files?* | The files are still saved in the File Repository. Navigate there to download them at any time. |
+| *Why does the export dialog mention a randomization paper?* | When the project uses the Randomization module, the export dialog (15.5.0+) names the REDCap randomization publication, which you may need to cite in manuscripts alongside the standard REDCap citation. See [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md). |
 
 ---
 

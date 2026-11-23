@@ -3607,6 +3607,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+- RC-RAND-03 — Working with & Managing Randomization
 - RC-API-01 — REDCap API
 - RC-API-02 — Export Records API
 - RC-API-38 — Export Reports API
@@ -4792,6 +4793,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-03 — Working with & Managing Randomization
 
 ---
 
@@ -5596,6 +5599,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DAG-01 — Data Access Groups
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-MOB-01 — REDCap Mobile App
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
@@ -5610,6 +5615,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-RAND-02 — Randomization Setup Guide
 - RC-RAND-03 — Working with & Managing Randomization
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 ---
 
@@ -5644,11 +5650,15 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-ALERT-01 — Alerts & Notifications: Setup
+- RC-USER-03 — User Rights: Configuring User Privileges
+- RC-PLUS-02 — REDCap+: Project Migration Tool
+- RC-MOB-01 — REDCap Mobile App
 - RC-PIPE-13 — Smart Variables: Randomization
 
 **Inbound links (referenced by):**
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-API-52 — Randomize Record API
+- RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-02 — Randomization Setup Guide
 
@@ -6143,6 +6153,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-CC-25 — Control Center: Access Control Groups
+- RC-RAND-01 — Randomization Concepts & Terminology
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-API-01 — REDCap API
 - RC-API-22 — Export Users API
@@ -6183,6 +6194,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-LOG-01 — Logging — Project Audit Trail
 - RC-LOCK-01 — Record Locking & E-Signatures
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
+- RC-RAND-01 — Randomization Concepts & Terminology
+- RC-RAND-03 — Working with & Managing Randomization
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
@@ -6307,6 +6320,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+- RC-RAND-03 — Working with & Managing Randomization
 - RC-PLUS-01 — REDCap+: Overview and Subscription
 - RC-PLUS-03 — REDCap+: Reward Services
 

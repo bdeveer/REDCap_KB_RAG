@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page tabs and ACG table columns; the feature was off, so enforcement was not exercised; v17.3.7 (LTS) — changelog review only |
 | **Prerequisite** | REDCap administrator access; familiarity with REDCap user rights |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -210,6 +210,8 @@ Controls access to the randomization module:
 | Setup + Dashboard + Perform | Full randomization access |
 
 There is also a separate **Randomization (Setup)** right that controls access to the randomization setup independently.
+
+> **Version caveat (below 16.1.0 Standard):** When importing ACG assignments by CSV, the review dialog misreported changes to **API** and **Randomization** privileges. Check those columns on the User Rights page after an import on an older version rather than trusting the review summary.
 
 ### API Access
 
