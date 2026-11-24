@@ -7,11 +7,11 @@ applies_to:
 - requires User Rights privilege
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured. Randomization rights checked against source code of v17.6.5 (Standard)
-  / v17.3.31 and v16.0.61 (LTS)
+  not re-captured. Randomization rights and all other user privileges checked against
+  source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-USER-02
@@ -39,6 +39,9 @@ synonyms:
 - configure permissions in the privileges popup
 - explain basic privileges settings
 - can the randomization dashboard right unblind users
+- what rights does a new user get by default
+- does the mobile app bypass export rights
+- why can't my users e-sign
 ---
 
 # 1. Overview
@@ -93,9 +96,9 @@ This setting is most useful for temporary contributors such as students, interns
 
 These three settings give users broad administrative power within the project. Best practice is to limit them to one or two users — typically those actively building or managing the project.
 
-- **Project Design and Setup** — grants the ability to modify project structure, including adding, editing, and removing variables; enabling or disabling project features; copying the project; and creating backups. Users with this right can change what the project collects and how it behaves.
+- **Project Design and Setup** — grants the ability to modify project structure, including adding, editing, and removing variables; enabling or disabling project features; copying the project; and creating backups. Users with this right can change what the project collects and how it behaves. While the project is in Development they can also erase all records and delete the project, so treat this right as carefully as User Rights.
 
-- **User Rights** — grants access to the User Rights menu. A user with this right can modify any user's rights in the project, including their own. This is effectively a super-admin right for the project and should be assigned with care.
+- **User Rights** — grants access to the User Rights menu. It has three levels: **No Access**, **Read Only** (can see everyone's rights but cannot add users, change rights or assign roles) and **Full Access**. A user with Full Access can modify any user's rights in the project, including their own. This is effectively a super-admin right for the project and should be assigned with care. A User Rights manager who is assigned to a Data Access Group can only manage users in their own DAG.
 
 - **Data Access Groups** — grants access to the DAG management page, where the user can create, edit, and delete DAGs and assign users to them. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md).
 
@@ -109,7 +112,7 @@ Several options have additional behavior worth noting:
 
 **Add/Edit/Organize Reports**
 
-Grants the ability to create and manage reports and to see all reports in the project. If this option is disabled, the user may still have access to individual reports — each report has its own access controls that can grant visibility to specific users, roles, or DAGs independent of this privilege. See Section 6 for report-level rights.
+Grants the ability to create and manage reports and to see all reports in the project. If this option is disabled, the user may still have access to individual reports — each report has its own access controls that can grant visibility to specific users, roles, or DAGs independent of this privilege. A user who has this privilege sees every report, whatever the report-level access settings say. See Section 6 for report-level rights.
 
 **Manage MyCap Participants**
 
@@ -119,11 +122,11 @@ Grants access to the MyCap Participant Management page, including the ability to
 
 Split into two separate rights:
 - *Create & edit rules* — allows the user to write custom data quality rules.
-- *Execute rules* — allows the user to run any rule defined in the project, including custom rules created by others. Users without form-level access to an instrument referenced in a rule will not see results for that instrument.
+- *Execute rules* — allows the user to run any rule defined in the project, including custom rules created by others. If a rule uses a field on an instrument the user has No Access to, the user cannot view the results for that rule at all; REDCap shows a message instead.
 
 **Data Resolution Workflow**
 
-Disabled by default in most projects and hidden unless the feature is enabled. When enabled, multiple options appear covering different levels of participation in the data query process (view only, respond to queries, open queries, close queries). The default is view-only. Any project using this feature must review and configure these settings for all users.
+Disabled by default in most projects and hidden unless the feature is enabled. When enabled, six options appear: No Access, View only, Respond only to opened queries, Open queries only, Open and respond to queries, and Open, close, and respond to queries. The default is view-only. Any project using this feature must review and configure these settings for all users.
 
 > **Tip:** If roles are in use, updating the role propagates the data resolution workflow settings to all users in that role simultaneously — you do not need to update each user individually.
 
@@ -133,13 +136,15 @@ Two separate rights:
 - *API Export* — allows the user to pull data from REDCap programmatically via an API token.
 - *API Import/Update* — allows the user to push data into REDCap via an API token.
 
-> **Important:** API rights are scoped by the user's other rights. A user with API Export access can only export the data they would be able to export manually. Their API token does not grant additional access beyond their user rights configuration.
+> **Important:** API rights are scoped by the user's other rights. API record exports follow the user's **Data Export Rights** (not their Data Viewing Rights): fields on instruments set to No Access for export are left out, and De-identified or Remove All Identifier Fields rights strip fields in the same way as a manual export. API imports need **View & Edit** on each instrument being written to. The token does not grant more than this, with one exception: the Mobile App right (below).
 
 **Mobile App**
 
 Two separate rights:
 - *Use mobile app* — allows the user to use the REDCap mobile app with this project.
 - *Download data for offline use* — allows the user to download project data to a mobile device for offline data collection.
+
+> **Important — PHI exposure:** A user with the Mobile App right can download all data on every instrument through the app (which uses the API), whatever their Data Export Rights and API rights say. Their DAG still applies. Treat granting the Mobile App right as granting Full Data Set export, and do not rely on export rights or on leaving *Download data for offline use* unticked to limit what such a user can take off the server. REDCap shows a warning about this when you tick the right.
 
 If the mobile app is not part of your project's data collection workflow, leave both unchecked.
 
@@ -150,7 +155,7 @@ Three separate rights, shown only when randomization is enabled on the project. 
 - *Dashboard* — view allocation progress (used / not used) per stratum, with the records in each. For an open model (dropdown or radio randomization variable) it also breaks this down by group. For a blinded model (text randomization variable) it never shows the group. A study that is meant to be blinded but uses an open variable **can be unblinded** through the dashboard.
 - *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields with their current values **even without form-level rights** to those fields, so if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights. Strata on instruments set to **No Access** are shown but can't be changed. Users with **Read Only** access to that instrument can set them in the dialog.
 
-Users get none of the three rights by default. The only exception is the project creator, who gets all three when **Randomization** is ticked at project creation. Enabling the module later in Project Setup grants them to nobody. The **Randomization** link appears in the project menu only for users with Setup or Dashboard.
+Enabling the module later in Project Setup grants none of the three rights to existing users, including the creator. The project creator gets all three only if **Randomization** was ticked when the project was created. Once randomization is enabled, the Add User popup pre-ticks **Randomize** (not Setup or Dashboard) for each new user added that way, so untick it for users who should not randomize. The **Randomization** link appears in the project menu only for users with Setup or Dashboard.
 
 See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) for who should get each right.
 
@@ -170,18 +175,34 @@ These three settings govern how a user can interact with records globally across
 Record locking is useful for larger projects where completed instruments should be protected from further edits, or where a formal sign-off process is required.
 
 - **Record locking customization** — grants access to the locking configuration page where the project's overall record locking behavior is defined.
-- **Lock/unlock records (instrument level)** — the first two options allow locking and unlocking individual instruments in a record. The third option adds the ability to apply an e-signature, which requires the user to enter their password to confirm each lock or unlock action.
+- **Lock/unlock records (instrument level)** — three options: **No Access**; **Locking / Unlocking**, which allows locking and unlocking individual instruments in a record; and **Locking / Unlocking with E-signature authority**, which adds the ability to e-sign, confirmed by re-entering credentials. Granting e-signature authority does not switch the e-signature on: it must also be enabled per instrument (**Display E-signature Option**) on the Record Locking Customization page.
 - **Lock/Unlock entire records** — grants the ability to lock or unlock a complete record (all instruments at once).
 
 > **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. Plan your locking roles carefully.
 >
-> **Important:** The e-signature option requires local password re-entry for every action. It is **not compatible** with Shibboleth (SAML) or OAuth2 authentication — those methods delegate credential verification externally, so REDCap cannot perform the required re-entry step. If your institution uses either of these authentication methods, the e-signature option will not be available to your users. Note that certain external modules are available that provide alternative e-signature workflows compatible with federated authentication — contact your REDCap administrator for options.
+> **Important:** E-signing requires REDCap to re-check the user's identity, so it is only available when the administrator has enabled e-signatures for the installation and one of these applies:
+> - REDCap uses table-based, LDAP or LDAP/table-based authentication (or no authentication), or the user has a table-based account;
+> - REDCap uses Shibboleth and the administrator has configured Shibboleth for e-signatures;
+> - two-factor authentication is on with the option to e-sign using a 2FA PIN, which works with any authentication method.
+>
+> Otherwise (for example, OAuth2, or Shibboleth without the e-signature configuration and no 2FA PIN) users cannot e-sign. Certain external modules also provide alternative e-signature workflows. Contact your REDCap administrator to find out which applies at your institution.
 
 ## 3.6 Administrator-Granted Rights
 
 Certain advanced features — such as Clinical Data Pull or SMS texting integrations (Twilio, Mosio) — require an administrator to enable and in some cases to assign at the user level. These will appear in the privileges popup only if enabled for your installation.
 
 > **Institution-specific:** The features available through administrator-granted access vary by installation. Contact your REDCap administrator to learn which elevated permissions are available and how to request them.
+
+## 3.7 Default Rights for New Users and the Project Creator
+
+**Users added in the Add User popup** start with these rights ticked: Create Records, Add/Edit/Organize Reports, Stats & Charts, Calendar, File Repository, Survey Distribution Tools and Manage MyCap Participants (where those features are on), plus Randomize if randomization is enabled. Data Resolution Workflow starts at view only. Everything else, including the highest-level privileges, API, record deletion and locking, starts off. Instrument-level defaults depend on project status:
+
+- **Development:** View & Edit and Full Data Set export on every instrument, plus Edit Survey Responses on survey instruments where your administrator allows it.
+- **Production:** **No Access** for both Data Viewing and Data Export on every instrument. Set instrument rights before the user starts work, or they will see no forms.
+
+Users added through the API or a user CSV upload get only the rights included in the upload; anything left out is off.
+
+**The project creator** gets full rights: User Rights, Project Design and Setup, Data Access Groups, View & Edit and Full Data Set export on every instrument, and most other privileges. A few start switched off: Delete Records, Rename Records, record locking, API Export and Import, and Edit Survey Responses. Because the creator holds the User Rights privilege, they can switch these on for themselves in User Rights when needed. Randomization rights are included only if Randomization was ticked at creation, and Mobile App rights only if the mobile app and API are enabled for the installation.
 
 ---
 
@@ -195,17 +216,17 @@ There are three access levels for each instrument:
 |---|---|
 | **No Access** | The entire instrument is hidden from the user. It will not appear during data entry or browsing. |
 | **Read Only** | The user can see and navigate the instrument but cannot edit any data. |
-| **View & Edit** | The user can both view and modify data in the instrument. This is the default. |
+| **View & Edit** | The user can both view and modify data in the instrument. This is the default for new users while the project is in Development (see Section 3.7 for Production). |
 
-For instruments enabled as surveys, a fourth option appears:
+For instruments enabled as surveys, an extra option appears (if your administrator allows it): an **Edit Survey Responses** checkbox that goes with View & Edit. In Development it is ticked by default for new users.
 
-| Level | Description |
+| Option | Description |
 |---|---|
 | **Edit Survey Responses** | Allows the user to edit data that was entered via the survey interface. Without this right, survey responses are locked from editing through the project's data entry view. The user must manually put the survey into edit mode using a button on the instrument. Users without this right will not see that button. |
 
 > **Note for longitudinal projects:** Data viewing rights apply at the instrument level across all events and repeating instances. A user with Read Only access to an instrument will have that restriction across every event and every repeating instance.
 
-> **Best practice:** When a new instrument is added to the project, immediately review user rights and role configurations to ensure the new instrument has the correct access levels for all users.
+> **Best practice:** REDCap adds every new instrument to all users and roles automatically. In Development they get View & Edit and Full Data Set export on it. In Production (instruments added in Draft Mode) they get whatever a Control Center setting specifies: No Access, View & Edit with Full Data Set export (the default) or View & Edit with De-identified export. An Access Control Group can lower this. So the risk is over-granting, not under-granting: review user rights and role configurations immediately after adding an instrument, especially one that collects PHI.
 
 ---
 
@@ -220,15 +241,15 @@ There are four export access levels for each instrument:
 | Level | Description |
 |---|---|
 | **No Access** | The user cannot export any data from this instrument. |
-| **De-identified** | The user can export data with all identifier fields removed, all free-text fields removed, and all date/time fields removed. |
+| **De-identified** | Identifier fields, unvalidated text fields, notes fields and date/datetime fields are removed. Text fields with validation (other than dates) and time fields are kept. On the Data Exports page the user may shift dates instead of removing them. |
 | **Remove All Identifier Fields** | Similar to De-identified, but only designated identifier fields are stripped. Free-text and date/time fields are included. |
-| **Full Data Set** | The user can export all data from this instrument without restriction. This is the default. The user can optionally apply de-identification settings during the export process. |
+| **Full Data Set** | The user can export all data from this instrument without restriction. This is the default for new users while the project is in Development; in Production new users start with No Access (see Section 3.7). The user can optionally apply de-identification settings during the export process. |
 
 See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) and [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) for how export rights interact with the export workflow.
 
 > **Note for longitudinal projects:** Like data viewing rights, export rights apply per instrument across all events and repeating instances.
 
-> **Important — PHI exposure:** The "De-identified" and "Remove All Tagged Identifier Fields" export levels depend entirely on correct identifier tagging in the project design. If PHI fields have not been tagged as identifiers, they will appear in supposedly de-identified exports. Always mark all PHI fields as identifiers and restrict export access to Full Data Set only for users who genuinely need it. Once data is downloaded, the user is responsible for securing it according to institutional policies (e.g., HIPAA). Data Export Rights are independent of Data Viewing Rights — a user can have Full Data Set export rights even with Read Only viewing rights, or vice versa.
+> **Important — PHI exposure:** The "De-identified" and "Remove All Identifier Fields" export levels depend entirely on correct identifier tagging in the project design. If PHI fields have not been tagged as identifiers, they will appear in supposedly de-identified exports. Always mark all PHI fields as identifiers and restrict export access to Full Data Set only for users who genuinely need it. Once data is downloaded, the user is responsible for securing it according to institutional policies (e.g., HIPAA). Data Export Rights are independent of Data Viewing Rights — a user can have Full Data Set export rights even with Read Only viewing rights, or vice versa.
 
 ---
 
@@ -272,8 +293,10 @@ Smart variables in this category reflect properties of the logged-in user — th
 **Example:** To hide a specific field from a user with the username `test_user`, add this branching logic to that field:
 
 ```
-[user_name]<>'test_user'
+[user-name]<>'test_user'
 ```
+
+> **Important:** Branching logic and Form Display Logic only hide things on screen. They are not access controls: the hidden data still appears in reports, exports and the API according to the user's Data Viewing and Data Export Rights. Use instrument-level rights for anything that must stay confidential.
 
 This approach is flexible but should be used deliberately. It creates implicit access rules that are not visible in the standard User Rights page, making the project harder to audit. Use it when standard user rights do not provide the granularity you need.
 
@@ -283,7 +306,7 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **Q: Some options don't appear in the user rights popup for my project — why?**
 
-**A:** REDCap hides options for features that are not enabled in the project. For example, Survey Distribution Tools only appears if surveys are on, and the Mobile App options only appear if mobile app support is enabled. If you expect an option to be there and it isn't, the feature may need to be turned on under Project Setup.
+**A:** REDCap hides options for features that are not enabled in the project. For example, Survey Distribution Tools only appears if surveys are on, and the Mobile App options only appear if your administrator has enabled the mobile app and the API for the installation. If you expect an option to be there and it isn't, the feature may need to be turned on under Project Setup, or (for system-level features such as the Mobile App and API) by your administrator.
 
 **Q: Can a user see data they can't export, or export data they can't see?**
 
@@ -295,11 +318,11 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **Q: Does giving a user API Export rights give them access to data they can't see manually?**
 
-**A:** No. API rights are scoped by the user's other rights. If a user doesn't have viewing rights for an instrument, they cannot export it via the API either.
+**A:** No. API exports follow the user's Data Export Rights, not their viewing rights: if a user has No Access export rights for an instrument, the API leaves that instrument's fields out, and De-identified rights strip fields as in a manual export. The exception is the Mobile App right, which lets the user download all data on every instrument through the app (DAG restrictions still apply).
 
 **Q: What is the difference between "De-identified" and "Remove All Identifier Fields" in export rights?**
 
-**A:** "De-identified" removes identifier fields, all free-text fields, and all date/time fields. "Remove All Identifier Fields" removes just the designated identifier fields but leaves free text and dates intact. The correct choice depends on your data governance requirements.
+**A:** "De-identified" removes identifier fields, unvalidated text and notes fields, and date/datetime fields (time fields and validated text fields stay). "Remove All Identifier Fields" removes just the designated identifier fields but leaves free text and dates intact. The correct choice depends on your data governance requirements.
 
 **Q: Can I use smart variables instead of standard user rights to control data access?**
 
@@ -311,13 +334,13 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **Granting the User Rights privilege too broadly.** A user with the User Rights privilege can change anyone's rights in the project — including giving themselves any privilege they want. Treat this right like a project administrator role. Limit it to one or two users.
 
-**Forgetting to review rights after adding a new instrument.** New instruments inherit no special access configuration. When you add an instrument, check the user rights for all users (or roles) to make sure the new instrument has the correct viewing and export access levels.
+**Forgetting to review rights after adding a new instrument.** REDCap gives every user and role access to a new instrument automatically: View & Edit and Full Data Set export in Development, and the Control Center default (usually the same) in Production. When you add an instrument, check the user rights for all users (or roles) to make sure the new instrument has the correct viewing and export access levels.
 
-**Expecting the API to bypass user rights.** API rights are bounded by the user's other project rights. A user cannot use the API to access data or features their user rights would normally prevent.
+**Expecting the API to bypass user rights.** API rights are bounded by the user's other project rights; record exports follow Data Export Rights. A user cannot use the API to access data or features their user rights would normally prevent, except through the Mobile App right, which gives full data download through the app.
 
-**Enabling e-signature when your institution uses federated authentication.** The e-signature option requires local password re-entry and is not available to institutions using Shibboleth (SAML) or OAuth2 authentication. Confirm your institution's authentication method before enabling e-signature on a project. If federated authentication is in use, certain external modules provide alternative e-signature workflows — contact your REDCap administrator for options.
+**Planning on e-signatures without checking your authentication method.** E-signing needs REDCap to re-check the user's credentials. It works with table-based and LDAP logins, with Shibboleth only if your administrator has configured it for e-signatures, and with any login method if two-factor authentication with a 2FA PIN for e-signing is on. Confirm with your REDCap administrator before building a sign-off process around it; certain external modules provide alternative e-signature workflows.
 
-**Setting export rights to Full Data Set by default without reviewing.** The default for data export rights is Full Data Set, meaning all users start with unrestricted export access. If your project handles sensitive data, actively review and restrict export rights to De-identified or No Access for users who should not have full export capability.
+**Setting export rights to Full Data Set by default without reviewing.** While the project is in Development, the default for data export rights is Full Data Set, meaning users added then start with unrestricted export access (and keep it when the project moves to Production). If your project handles sensitive data, actively review and restrict export rights to De-identified or No Access for users who should not have full export capability.
 
 ---
 

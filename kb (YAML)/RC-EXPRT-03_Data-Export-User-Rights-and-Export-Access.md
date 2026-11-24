@@ -6,11 +6,12 @@ applies_to:
 - All REDCap project types
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Export rights behaviour checked against source code of v17.6.5
+  (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-EXPRT-01 — Data Export: Overview & Workflow'
-version: '1.1'
-last_updated: '2025'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-EXPRT-01
   title: 'Data Export: Overview & Workflow'
@@ -30,6 +31,7 @@ synonyms:
 - difference between data viewing and export rights
 - set export privileges per instrument
 - user cannot download data
+- de-identified export user can see identifiers in report
 ---
 
 # 1. Overview
@@ -50,7 +52,9 @@ configuring access for project team members.
 Controls what a user can see within REDCap's data entry and reporting
 interface. A user may have the right to view data on screen without
 being permitted to export it. Data Viewing Rights and Data Export Rights
-are configured independently.
+are configured independently. Data Viewing Rights, not Data Export
+Rights, decide what a user sees when they open a report or Stats &
+Charts in the browser.
 
 **Data Export Rights**
 
@@ -69,8 +73,8 @@ custom reports, and vice versa.
 **Data Access Group (DAG)**
 
 A record-level partitioning feature. Users assigned to a DAG can only
-view and export records within their DAG. Users not assigned to any DAG
-can export all records in the project. DAG membership affects exports
+view and export records within their current DAG. Users not assigned to
+any DAG can export all records in the project. DAG membership affects exports
 even when a user has Full Data Set export rights.
 
 **Identifier Field**
@@ -93,17 +97,47 @@ determines what the export dialog shows and what options are available.
 | **Level** | **What the user can export** |
 | --- | --- |
 | **No Access** | No data from this instrument can be exported in any form. The instrument's variables are excluded from all exports, including All Data and custom reports. |
-| **De-identified** | Exports the instrument with unvalidated free-form text fields, date/time fields, and identifier-flagged fields automatically removed. Validated text fields (e.g., those with number or email validation) are retained. The de-identification options in the export dialog become required rather than optional. The user cannot choose to export identified data. |
-| **Remove All Identifier Fields** | Exports all fields except those flagged as identifiers. The user can optionally apply further de-identification in the export dialog (see [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md)). Free-form text and date fields are included unless the user elects to remove them. |
+| **De-identified** | Removes identifier-flagged fields, unvalidated text fields (including @CALCTEXT fields, which are text fields without validation) and notes (paragraph text) fields. Date and datetime fields are either removed or date-shifted: in the Data Exports dialog the user must pick one (shifting is the default), while API exports and PDFs always remove them. Kept unless flagged as identifiers: calculated fields, multiple-choice fields, sliders, validated text fields (e.g., number, email or phone validation), time-only fields and file upload fields. The user cannot choose to export identified data. |
+| **Remove All Identifier Fields** | Removes only fields flagged as identifiers. Text, notes and date fields are included unless the user elects to remove them in the export dialog (see [RC-EXPRT-04 — Data Export: De-identification & Formatting Options](RC-EXPRT-04_Data-Export-De-identification-and-Formatting-Options.md)). |
 | **Full Data Set** | Exports all fields including identifiers. The user can choose to export in identified or de-identified form. All de-identification options in the export dialog are optional. |
+
+**Record ID and files.** The record ID variable is never removed. If the
+record ID is itself flagged as an identifier and the user has De-identified
+or Remove All Identifier Fields rights on the first instrument (the one
+that holds the record ID), REDCap replaces it with a hashed value, both in
+the Data Exports dialog and in the API. When file upload fields are
+exported as a ZIP, only fields from instruments where the user has more
+than No Access are included, and identifier-flagged file fields are left
+out for De-identified and Remove All Identifier Fields users.
+
+**Where export rights apply.** Data Export Rights govern data leaving
+REDCap through the Data Exports page, the API, the Mobile App and PDFs of
+instruments containing record data. They do not govern what a user sees
+on screen (see section 4b).
+
+> **Note:** REDCap administrators are not restricted by Data Export
+> Rights. Test a user's export access by checking their rights, not by
+> exporting as an administrator.
+
+> **Important — Mobile App right.** A user with the Mobile App right
+> who is allowed to download all data to the app gets all data on every
+> instrument through the app, whatever their Data Export Rights. Their
+> DAG still applies. Grant the Mobile App right only to users who may
+> hold the full data set — see
+> [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md).
 
 ---
 
 # 4. How Rights Affect the Export Dialog
 
-The export dialog adapts based on the user's rights. Users with
-restricted rights see fewer options, and some options become mandatory
-rather than optional.
+The export dialog adapts based on the user's rights. Options are only
+pre-checked and locked when the user has the **same** restricted level
+on every instrument. A user with mixed rights (for example Full Data Set
+on one instrument and De-identified on another) sees unlocked options
+and a notice that some fields may be removed automatically based on
+their instrument-level Data Export Rights. REDCap still removes those
+fields instrument by instrument when it builds the file, and any option
+the user ticks is applied to all remaining fields.
 
 ## 4.1 Full Data Set users
 
@@ -113,25 +147,49 @@ de-identified form.
 
 ## 4.2 Remove All Identifier Fields users
 
-The Remove All Identifier Fields de-identification option is pre-checked
-and cannot be unchecked. Additional de-identification options remain
-optional. The user can further restrict but cannot export identifiers.
+When every instrument is at this level, the Remove All Identifier Fields
+option is pre-checked and cannot be unchecked. Additional
+de-identification options remain optional. The user can further restrict
+but cannot export identifiers.
 
 ## 4.3 De-identified users
 
-All de-identification options (remove identifiers, remove free-form
-text, remove dates) are pre-checked and locked. The user sees a
-restricted export dialog with no ability to include identified data.
+When every instrument is at this level, these options are pre-checked
+and locked: Remove All Identifier Fields, removal of unvalidated text
+fields, and removal of notes fields. For dates the user must choose
+either to remove them or to shift them; shifting is selected by default.
+The option to hash the record ID is locked on only if the record ID is
+flagged as an identifier. The user has no way to include identified
+data.
 
 ## 4.4 No Access users
 
 Instruments where the user has No Access are excluded from the export
-entirely. If all instruments are set to No Access and the user also
-lacks the Add/Edit/Organize Reports right, the Data Exports, Reports,
-and Stats application may not appear in the menu at all.
+entirely. The Data Exports, Reports, and Stats application still appears
+in the menu if the user has export rights above No Access on any
+instrument, the Add/Edit/Organize Reports right, or the Stats & Charts
+right. Reports shared with the user are also listed in the left-hand
+Reports panel whatever their export rights.
 
 
-> **Tip:** To remove the Data Exports, Reports, and Stats application from a user's menu entirely, set their export rights to No Access for all instruments and uncheck the Add/Edit/Organize Reports right.
+> **Tip:** To remove the Data Exports, Reports, and Stats application from a user's menu, set their export rights to No Access for all instruments and uncheck both the Add/Edit/Organize Reports and the Stats & Charts rights. Reports shared with them can still be opened from the left-hand menu; to stop them seeing data, restrict their Data Viewing Rights (see section 4b).
+
+---
+
+# 4b. Viewing Reports in the Browser
+
+Data Export Rights only control downloads. When a user opens a report or
+Stats & Charts on screen, REDCap filters what they see by their **Data
+Viewing Rights** and their DAG, not by their export rights. A user with
+De-identified export rights and View & Edit or Read Only viewing rights
+on an instrument sees that instrument's identifier fields, free text and
+dates on screen, even though they could not export them.
+
+> **Important:** De-identified export rights are not a privacy control
+> for on-screen access. If a user must not see identifiers at all, set
+> their Data Viewing Rights to No Access for the instruments holding
+> those fields, or move the identifiers to an instrument they cannot
+> view.
 
 
 ---
@@ -146,7 +204,16 @@ Printing a data entry form through the browser is a way of taking data out of RE
 | **17.0.2** | Users **without** Full Data Set export privileges for that instrument see an error on the print version of the page instead of the form |
 | **17.0.4 and higher** | The 17.0.2 change was **reverted** and replaced by a system-level setting on the **User Settings** page in the Control Center, applying to all users in all projects |
 
-> **Important — verify the setting after upgrading.** Because 17.0.4 reverted a behaviour that 17.0.2 had introduced and moved it behind an administrative setting, an instance that upgraded across both versions may not be in the state its administrators expect. Check the setting on the Control Center User Settings page rather than assuming — see [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md).
+The setting is labelled **Prevent users from printing data entry forms
+via their browser if they lack Full Data Set export privileges for the
+form?** When it is set to Yes, the check is made per instrument: a user
+can print an instrument only if they have Full Data Set export rights on
+that instrument. Otherwise they see an error saying they are not allowed
+to print/export the form.
+
+> **Version caveat (16.0 LTS):** The setting does not exist in 16.0 LTS (checked in 16.0.61). Any user who can view a form can print it. Treat browser printing as uncontrolled on 16.0 LTS and restrict Data Viewing Rights where printing must be prevented.
+
+> **Important — verify the setting after upgrading.** Instances that upgraded to 17.0.4 or later have the setting switched **off** (printing allowed); new installations start with it switched on. Check the setting on the Control Center User Settings page rather than assuming, and set it to Yes if your instance wants the deterrent — see [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md).
 
 > **Critical — this is a deterrent, not a control.** REDCap states the restriction plainly: it "is not meant to be a completely impenetrable feature since all client-side solutions for this can be subverted and thus are inherently bypassable." It is designed to stop users *accidentally* exporting data by printing to PDF. It does not stop a determined user, and it must not be relied on as a safeguard for data a user should not be able to see at all. If a user must not have the data, restrict Data Viewing Rights — see [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md).
 
@@ -157,30 +224,32 @@ Printing a data entry form through the browser is a way of taking data out of RE
 DAG membership limits which records a user can export, regardless of
 their Data Export Rights level.
 
-- A user assigned to one or more DAGs can only export records that
-    belong to those DAGs.
+- A user assigned to a DAG can only export records in their current
+    DAG. A user who has access to several DAGs through the DAG switcher
+    exports only the DAG that is active at the time; to export another
+    DAG's records they switch to it first.
 
 - A user not assigned to any DAG can export all records in the
     project.
 
 - DAG filtering applies to all export types — All Data, Selected
-    Instruments, and custom reports.
+    Instruments, and custom reports — and to reports viewed on screen.
 
 
-> **Important:** If a user reports that their export is missing records, check whether they are assigned to a DAG. Their export rights may be Full Data Set, but DAG membership still limits which records they can access.
+> **Important:** If a user reports that their export is missing records, check whether they are assigned to a DAG, and for DAG switcher users, which DAG is active. Their export rights may be Full Data Set, but DAG membership still limits which records they can access.
 
 
 ---
 
 # 6. Common Questions
 
-| *Why can't I see the Data Exports, Reports, and Stats application in the menu?* | The application only appears if you have at least one instrument with export rights above No Access, or if the Add/Edit/Organize Reports right is enabled. If neither applies, the application is hidden. Contact your project administrator to review your rights. |
+| *Why can't I see the Data Exports, Reports, and Stats application in the menu?* | The application only appears if you have at least one instrument with export rights above No Access, the Add/Edit/Organize Reports right, or the Stats & Charts right. If none applies, the application is hidden. Contact your project administrator to review your rights. |
 | --- | --- |
-| *I have Full Data Set rights but my export is missing some records. Why?* | You are likely assigned to a Data Access Group. DAG membership restricts exports to records in your DAG regardless of your export rights level. Contact your project administrator if you need access to records outside your DAG. |
+| *I have Full Data Set rights but my export is missing some records. Why?* | You are likely assigned to a Data Access Group. DAG membership restricts exports to records in your current DAG regardless of your export rights level. If you use the DAG switcher, switch to the other DAG and export again. Contact your project administrator if you need access to records outside your DAG. |
 | *Can I have different export rights for different instruments?* | Yes. Data Export Rights are configured per instrument. You may have Full Data Set rights for one instrument and De-identified rights for another within the same project. |
-| *What is the difference between Data Viewing Rights and Data Export Rights?* | Data Viewing Rights control what you can see in REDCap's interface during data entry and reporting. Data Export Rights control whether and how you can download that data. A user can have full viewing rights with no export rights, or vice versa. |
+| *What is the difference between Data Viewing Rights and Data Export Rights?* | Data Viewing Rights control what you can see in REDCap's interface during data entry and reporting. Data Export Rights control whether and how you can download that data. A user can have full viewing rights with no export rights, or vice versa. Reports opened in the browser follow viewing rights, so a user with De-identified export rights can still see identifiers on screen. |
 | *I need to create a custom report but don't see the option. What right do I need?* | The Add/Edit/Organize Reports right must be enabled for your account. This is separate from Data Export Rights. Contact your project administrator to request this right. |
-| *Does the De-identified export level remove all sensitive data automatically?* | It removes unvalidated free-form text fields, date/time fields, and fields flagged as identifiers. Validated text fields (e.g., number or email format) are retained. However, de-identification depends on the project designer having correctly flagged identifier fields. If identifier flagging was incomplete during project design, some sensitive fields may still appear in de-identified exports. |
+| *Does the De-identified export level remove all sensitive data automatically?* | It removes fields flagged as identifiers, unvalidated text fields (including @CALCTEXT) and notes fields. Dates and datetimes are removed or date-shifted (in the export dialog the user chooses, with shifting as the default; API exports and PDFs always remove them). Validated text fields (e.g., number, email or phone format), time-only fields, calculated and multiple-choice fields and file uploads are retained unless flagged as identifiers. The export rights also do not limit what the user sees on screen. However, de-identification depends on the project designer having correctly flagged identifier fields. If identifier flagging was incomplete during project design, some sensitive fields may still appear in de-identified exports. |
 
 ---
 
@@ -202,13 +271,22 @@ before granting de-identified export access as a privacy safeguard.
 **Confusing Data Viewing Rights and Data Export Rights.** A user who can
 see data on screen is not automatically allowed to export it. These are
 independently configured rights. When troubleshooting export issues,
-check both.
+check both. The reverse also holds: a user with De-identified export
+rights but viewing access to an instrument sees its identifiers on
+screen in data entry forms and reports.
 
 **Not removing the application from the menu when export should be fully
 blocked.** Setting export rights to No Access for all instruments still
-leaves the application visible if the Add/Edit/Organize Reports right is
-enabled. To hide the application entirely, both conditions must be
-addressed.
+leaves the application visible if the Add/Edit/Organize Reports right or
+the Stats & Charts right is enabled. To hide the application, all three
+must be addressed. Reports shared with the user remain reachable from the
+left-hand menu.
+
+**Assuming the export dialog locks options for mixed rights.** The
+de-identification options are only locked when the user has the same
+restricted level on every instrument. With mixed rights the checkboxes
+look optional, but REDCap still removes fields per instrument. Check the
+exported file, not the dialog, when confirming what a user receives.
 
 ---
 
@@ -220,6 +298,9 @@ addressed.
     (how de-identification options work in the export dialog)
 
 - [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md)
+
+- [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG
+    assignment and the DAG switcher)
 
 - [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (DAG
     filtering behavior)

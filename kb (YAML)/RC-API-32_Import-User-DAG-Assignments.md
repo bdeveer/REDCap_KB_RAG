@@ -6,11 +6,12 @@ applies_to:
 - All REDCap projects with Data Access Groups enabled
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. DAG assignment model checked against source code of v17.6.5 (Standard)
+  / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -226,7 +227,7 @@ In this example, `jsmith` and `test person` are assigned to the `new_haven` DAG,
 
 **Q: Can I assign a user to multiple DAGs?**
 
-**A:** Not through this API endpoint. Each user has one primary DAG assignment, which is what this endpoint manages. The REDCap UI does provide a **DAG Switcher** feature that allows a user to be associated with additional DAGs for read access beyond their primary assignment — but Switcher assignments cannot be managed through this import endpoint. To grant multi-DAG access, use the DAG Switcher on the DAG management page in the UI. If you need a user to access all records across all DAGs without a Switcher configuration, assign them an empty `redcap_data_access_group` value (or omit it from the import).
+**A:** Not through this API endpoint. Each user has exactly one current DAG assignment, which is what this endpoint manages. The REDCap UI does provide a **DAG Switcher** feature that lets a user switch their current assignment between several allowed DAGs. They see one DAG at a time, and switching changes the assignment this endpoint manages — but the list of DAGs a user may switch between cannot be managed through this import endpoint. To grant multi-DAG access, use the DAG Switcher on the DAG management page in the UI. If you need a user to access all records across all DAGs without a Switcher configuration, assign them an empty `redcap_data_access_group` value (or omit it from the import).
 
 **Q: How do I remove a user from a DAG assignment?**
 

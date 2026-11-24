@@ -212,7 +212,7 @@ version on every article, because each source-reviewed article gets a pinned
 |---|---|---|
 | Pilot: randomization | 4 + rights in USER-03 | Done 2026-11-24 (8080071) |
 | 0 Set-up and TODOs | 5 open TODOs → 13 articles edited | Done 2026-11-24 |
-| 1 Access & exposure | 8 + sweep | — |
+| 1 Access & exposure | 8 + 4 from the sweep | Done 2026-11-24 |
 | 2 Production & integrity | ~15 | — |
 | 3 Compliance | 6 | — |
 | 4 Logic engine | ~38 | — |

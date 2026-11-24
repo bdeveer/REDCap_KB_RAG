@@ -7,11 +7,12 @@ applies_to:
 requires: Any supported version. The Project Migration Tool alternative requires v17.0.0+
   on both instances — see §1
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Date-shift option checked against source code of v17.6.5 (Standard)
+  / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-PROJ-01
   title: 'Project Lifecycle: Status and Settings'
@@ -174,7 +175,7 @@ When exporting metadata and data together, REDCap offers additional options to c
 - *Remove unvalidated text fields* — Strips text fields with no validation rule defined.
 - *Remove Notes/Essay box fields* — Strips all Notes fields due to the difficulty of verifying their contents.
 - *Remove all date and datetime fields* — Strips all date/datetime-validated fields.
-- *Shift all dates by 0–364 days* — Adds a random offset to all dates, preserving relative date relationships while obscuring absolute values.
+- *Shift all dates* — Moves every date in a record back in time by the same random number of days, up to the project's maximum (364 days unless an administrator has changed it). Relative date relationships within a record are preserved while absolute values are obscured.
 
 **Advanced formatting options:**
 

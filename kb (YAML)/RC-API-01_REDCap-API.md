@@ -6,11 +6,12 @@ applies_to:
 - All REDCap projects
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. API core behaviour (tokens, rights, formats, errors, rate limiting)
+  checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-03 — User Rights: Configuring User Privileges'
-version: '1.4'
-last_updated: 2026-09
+version: '1.5'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation
 related:
 - id: RC-INTG-01
@@ -34,6 +35,7 @@ synonyms:
 - how does the redcap api work over http
 - enable api access for a project
 - introduction to redcap api methods
+- redcap api http error codes and ip rate limit ban
 ---
 
 # 1. Overview
@@ -42,7 +44,7 @@ The REDCap API (Application Programming Interface) allows external applications 
 
 Common use cases include automated nightly data pulls into a statistical analysis environment, populating REDCap records from an external clinical system, and building custom dashboards or integrations that read from or write to REDCap without manual steps. Programmers can use the API to build applications, websites, scripts, and automated workflows that interact with REDCap directly.
 
-Access to the API requires both a user right assignment and a project-specific API token. All API tokens are scoped to the access level of the user they belong to — the API cannot grant broader access than the user has in the REDCap interface.
+Access to the API requires both a user right assignment and a project-specific API token. All API tokens are scoped to the access level of the user they belong to — the API cannot grant broader access than the user has in the REDCap interface. There is one important exception: a user with the **Mobile App** right gets full data access through the app's API calls whatever their data export rights (see §9a). REDCap administrators are not limited by project rights at all.
 
 ---
 
@@ -54,7 +56,7 @@ A defined, standardized way for software programs to communicate with each other
 
 **API Token**
 
-A unique, project-specific authentication key assigned to a REDCap user. The token is included in every API request in place of a username and password. Tokens are per-user and per-project: a user who is in five projects needs five separate tokens. Tokens inherit the requesting user's access rights — an export token cannot retrieve data the user cannot see in the interface.
+A unique, project-specific authentication key assigned to a REDCap user. The token is included in every API request in place of a username and password. Tokens are per-user and per-project: a user who is in five projects needs five separate tokens. A project token is 32 characters long. Tokens inherit the requesting user's access rights, and REDCap checks those rights afresh on every call, so a rights change takes effect on the next request. Which fields a call returns follows the user's **data export** rights for each instrument, not their data viewing rights — an instrument set to **No Access** for export is left out of API exports even if the user can view it on screen. The Mobile App right is the exception noted in §9a.
 
 **API Method (Endpoint)**
 
@@ -66,7 +68,7 @@ The network request type used by the REDCap API for all methods. Both data impor
 
 **API Playground**
 
-A built-in REDCap tool, accessible from every project's left-hand menu, that lets users explore API methods interactively and generate sample code without writing any code themselves. The Playground is the recommended starting point for anyone new to the REDCap API.
+A built-in REDCap tool, linked from the project's left-hand menu when the API is enabled and you hold an API right in the project, that lets users explore API methods interactively and generate sample code without writing any code themselves. The Playground is the recommended starting point for anyone new to the REDCap API.
 
 **Format**
 
@@ -74,11 +76,11 @@ The data format the API uses to deliver or receive data. The three main formats 
 
 **API Export Right / API Import Right**
 
-Two separate user rights that control API access. API Export allows programmatic data export; API Import allows programmatic data import and other write operations. A user can hold one or both. Both must be granted by a project administrator on the User Rights page before an API token can be requested.
+Two separate user rights that control API access. **API Export** allows programmatic data export; **API Import/Update** (called API Import in this article) allows programmatic data import and other write operations. A user can hold one or both. A third right, **External Modules API**, controls only whether the token can call API methods provided by External Modules. At least one of these rights must be granted on the User Rights page (by someone with the User Rights privilege) before the API and API Playground links appear and a token can be requested.
 
 **Super API Token**
 
-A special token required to use the **Create Project** API method. Super tokens are 64 characters long (regular tokens are 32 characters). Each REDCap user can hold at most one super token. Super tokens must be requested from your REDCap administrator and are granted only to users who need to create projects programmatically.
+A special token required to use the **Create Project** API method. Super tokens are 64 characters long (regular tokens are 32 characters). Each REDCap user can hold at most one super token. A super token works only with Create Project (and Export REDCap Version); it cannot be used in place of a project token for any project-level method. Only a REDCap administrator can create one, and an administrator can give one to any user, so ask your administrator if you need to create projects programmatically. Create Project returns the new project's own token in its response.
 
 ---
 
@@ -89,22 +91,34 @@ A special token required to use the **Create Project** API method. Super tokens 
 Before requesting a token:
 
 1. Confirm that API access is enabled at the system level — the REDCap API must be enabled by an administrator in the Control Center (System Configuration → Modules/Services Configuration — see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). If the API link is missing from the project menu entirely, the API may be disabled instance-wide.
-2. Verify that you have been granted the **API Export** and/or **API Import** user right in the project (User Rights → your user → API section).
+2. Verify that you have been granted the **API Export** and/or **API Import/Update** user right in the project (User Rights → your user → API section). Either one is enough to get a token.
 
 ## 3.2 Requesting a Token
 
 1. Open the project and select **API** in the Applications section of the left-hand menu.
-2. On the API page, select **Request API Token** to submit a request to your REDCap administrator.
-3. Once approved, your token is displayed on the same API page. Copy it and store it securely — treat it like a password.
+2. On the API page, select **Request API token** (or **Create API token now** / **Generate API token** if you are allowed to create one yourself).
+3. Your token is displayed on the same API page once it exists. Copy it and store it securely — treat it like a password.
 
-> **Note:** If you do not see an **API** link in the left-hand menu, you have not been granted API privileges for that project. Ask a project administrator to assign the API Export and/or API Import user right to your account via the User Rights page.
+Whether step 2 needs approval depends on the Control Center setting **Allow normal users to auto-generate API tokens for their projects?**:
+
+| Setting | What happens |
+|---|---|
+| No — an administrator must approve | The request goes to the administrators' To-Do List and by email. You receive an email when it is approved. |
+| **Yes, allow ALL users to generate API tokens on their own** | The token is created immediately. |
+| **Yes, allow SELECTED users to generate API tokens on their own** | Users given this privilege on their account create tokens immediately; everyone else requests approval. |
+
+REDCap administrators can always create their own tokens without approval.
+
+> **Institution-specific:** Which of these options is set varies by installation. Check with your REDCap administrators whether token requests need approval and how long approval usually takes.
+
+> **Note:** If you do not see an **API** link in the left-hand menu, either the API is disabled on your instance or you have not been granted an API right in that project. Ask someone with the User Rights privilege to assign the API Export and/or API Import/Update right to your account via the User Rights page.
 
 ## 3.3 Token Security
 
 - **Never share your token.** Anyone with your token has the same access to that project's data as you do.
 - **Never include your token in code that is stored in a public repository** (e.g., GitHub). Use environment variables or a secrets manager instead.
 - **Use HTTPS.** Always send API requests to the HTTPS version of your REDCap URL. Sending tokens over plain HTTP exposes them in transit.
-- If you believe a token has been compromised, contact your REDCap administrator to have it revoked and regenerated.
+- If you believe a token has been compromised, regenerate or delete it yourself on the project's API page — the old token stops working at once. Your REDCap administrator can also revoke or regenerate it from the Control Center, and should be told about the possible leak.
 
 > **From 17.0.7 the token is masked on screen.** The project API page no longer displays your token in plain text on load — select the unmasking button beside it to reveal it. This mainly protects against shoulder-surfing and against tokens appearing in screenshots and screen-shares, which is a common accidental disclosure route. Note that [RC-PROF-01 — My Profile: User Profile Settings](RC-PROF-01_My-Profile-User-Profile-Settings.md) warns separately about API tokens appearing in profile screenshots.
 
@@ -143,6 +157,19 @@ Force your API script to validate REDCap's SSL certificate before sending any re
 
 > **Important:** While REDCap has many built-in security layers, it is your responsibility to ensure that your API scripts follow secure practices. Validating the SSL certificate is one of the most effective steps you can take to protect your data and your token.
 
+## 3.6 What Happens to a Token When Rights or Accounts Change
+
+Because rights are checked on every call, a token is only as useful as the account behind it at that moment:
+
+- **API rights removed:** the token stops working, but it is not deleted. If the right is granted again later, the **same** token works again. If the token may have been shared or copied while it was unused, regenerate it after re-granting.
+- **User removed from the project:** the token is deleted.
+- **Account suspended:** calls with the token are rejected.
+- **Account expiration date reached:** the API does not check the expiration date itself; it keeps accepting the token until REDCap's scheduled job suspends the account. Expect a short delay rather than an instant cut-off.
+- **Project access expired** (the expiration date on the user's project rights): calls are rejected with 403.
+- **Project deleted, marked Completed, or taken Offline,** or the API disabled system-wide: calls are rejected with 400.
+
+When someone leaves a study, remove them from the project rather than only removing their API rights, so their token is deleted. An administrator can transfer a token to another user from the Control Center **API Tokens** page if an integration must keep running.
+
 ---
 
 # 4. Available API Methods
@@ -153,7 +180,7 @@ The REDCap API organizes its functionality into method groups. The methods avail
 
 | Method | Description |
 |---|---|
-| Export Records | Retrieve some or all records, with optional filtering by form, event, field, or DAG |
+| Export Records | Retrieve some or all records, with optional filtering by record, form, event, or field. There is no DAG filter; an option only adds a `redcap_data_access_group` column, and a DAG-assigned user automatically gets only their own DAG's records |
 | Import Records | Add new records or update existing ones |
 | Delete Records | Permanently remove records from the project |
 | Rename Record | Change a record's ID value |
@@ -176,6 +203,8 @@ The REDCap API organizes its functionality into method groups. The methods avail
 | Import Arms | Add or modify arms |
 | Delete Arms | Remove arms |
 
+> **Important — design methods in Production:** **Import Metadata** is refused in a Production project (error 400); it does not go through Draft Mode. Make Production design changes in Draft Mode through the Online Designer or a Data Dictionary upload instead. **Import Instrument-Event Mappings** is also refused in Production. **Import/Delete Events** and **Import/Delete Arms** are refused in Production unless an administrator has allowed event changes in Production and the request explicitly asks to override. Import Metadata also needs the **Project Design and Setup** right; without it the call fails with 400.
+
 ## 4.3 Users and Access
 
 | Method | Description |
@@ -193,6 +222,10 @@ The REDCap API organizes its functionality into method groups. The methods avail
 | Delete DAGs | Remove DAGs |
 | Export DAG Assignments | See which users are assigned to which DAGs |
 | Import DAG Assignments | Update DAG user assignments |
+
+> **Note:** Users who are themselves assigned to a DAG cannot use the DAG methods; they get 403.
+
+> **Important — deleting a role through the API:** Unlike the User Rights page, **Delete User Roles** is not blocked when users are still assigned to the role. Those users stay in the project with only their leftover individual rights. For users who were added straight into a role, those leftovers are REDCap's defaults, which can include the **User Rights** privilege. After deleting a role through the API, review the rights of every user who was in it.
 
 ## 4.4 Files
 
@@ -228,18 +261,18 @@ The REDCap API organizes its functionality into method groups. The methods avail
 
 The API Playground is the best place to start with the REDCap API. It requires no programming setup and provides an interactive, guided way to test any API method.
 
-**Accessing the Playground:** Open your project and select **API** in the left-hand menu (under Applications). The Playground opens with a list of all available methods on the left.
+**Accessing the Playground:** Open your project and select **API Playground** in the left-hand menu (under Applications). The link appears only when the API is enabled on your instance and you hold the API Export or API Import/Update right in the project; without one of those rights the Playground will not open. It shows a list of all available methods on the left.
 
 **How the Playground works:**
 
 1. Select a method (e.g., "Export Records").
 2. Fill in the parameters using the form fields provided — the Playground explains each parameter inline.
 3. Select **Execute** to run the request and see the raw response.
-4. Switch to the **Code** tab to see ready-to-copy sample code in PHP, Python, R, Ruby, Java, cURL, or Perl.
+4. Switch to the **Code** tab to see ready-to-copy sample code in PHP, Perl, Python, Ruby, Java, R, C#, or cURL.
 
 The Playground uses your existing token automatically, so you can run real requests against real project data to verify what the API returns before writing a script.
 
-> **Note:** Requests executed through the Playground are real — they affect live project data. Use a test project or development environment when testing import or delete methods.
+> **Note:** Requests executed through the Playground are real — they affect live project data and are recorded in the project's Logging like any other API call. Use a test project or development environment when testing import or delete methods.
 
 ---
 
@@ -248,9 +281,11 @@ The Playground uses your existing token automatically, so you can run real reque
 When exporting records or reports, you can specify the format and type of returned data:
 
 **Format options:**
-- **JSON** — Default. Easily consumed by Python, R (via jsonlite), and most modern programming languages.
+- **JSON** — Easily consumed by Python, R (via jsonlite), and most modern programming languages. Not the default: you must ask for it with `format=json`.
 - **CSV** — Flat text file, compatible with Excel, R (via read.csv), and SAS. Familiar format for analysts who use manual exports.
-- **XML** — Available as standard XML or as CDISC ODM, which includes full metadata and can be re-imported into REDCap or other EDC systems.
+- **XML** — The default when `format` is omitted. Available as standard XML or as CDISC ODM, which includes full metadata and can be re-imported into REDCap or other EDC systems.
+
+Always set `format` explicitly, so a script never receives XML when it expects JSON or CSV.
 
 **Type options (for record export):**
 - **flat** — One row per record (classic projects) or one row per record-event combination (longitudinal).
@@ -270,17 +305,17 @@ Every API response includes an HTTP status code indicating whether the request s
 | Code | Meaning | What it indicates |
 |---|---|---|
 | 200 | OK | Request succeeded. |
-| 400 | Bad Request | The request was invalid. An accompanying message explains why. |
-| 401 | Unauthorized | The API token was missing or incorrect. |
-| 403 | Forbidden | Your account does not have permission to use the API for this project. |
-| 404 | Not Found | The URL is invalid or the requested resource does not exist. |
-| 406 | Not Acceptable | The data being imported was formatted incorrectly. |
+| 400 | Bad Request | The request was invalid: an unknown `content` or `action` value, malformed import data, a method not allowed in the project's current status (e.g. Import Metadata in Production), a project that is deleted, Completed or Offline, or the API disabled on the instance. Some missing-rights cases also return 400, for example Import Metadata without the Project Design and Setup right. The message explains which. |
+| 403 | Forbidden | The token is missing, invalid, or belongs to an account that cannot use it (suspended, expired project access, no API right for this method, or **No Access** export rights on every instrument). DAG-assigned users calling DAG methods also get 403. |
+| 429 | Too Many Requests | Your IP address has been banned by the rate limiter (see §7.3). |
 | 500 | Internal Server Error | REDCap encountered an error processing your request. |
-| 501 | Not Implemented | The requested method is not supported. |
+| 501 | Not Implemented | The request was not sent as an HTTP POST. |
+
+REDCap itself does not send 401, 404 or 406 for API errors (a 404 can still come from your web server if the URL path is wrong). A bad token is 403 and badly formatted import data is 400, so scripts should read the error message rather than branch on those codes.
 
 ## 7.2 Error Message Format
 
-When an API request fails, REDCap returns the error message in the same format you specified using the `returnFormat` parameter. If no format was specified, REDCap uses its default format. For example, an error from an XML request looks like:
+When an API request fails, REDCap returns the error message in the format you specified using the `returnFormat` parameter. If `returnFormat` is not set, REDCap uses the `format` value, and if neither is set, XML. For example, an XML error looks like:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -289,7 +324,18 @@ When an API request fails, REDCap returns the error message in the same format y
 </hash>
 ```
 
-JSON and CSV requests return errors in their respective formats. Always log or surface the full response body when debugging — the error message text typically identifies the exact problem (e.g., invalid parameter name, field not found, insufficient rights).
+JSON requests return the message as JSON. CSV requests return plain text in the form `ERROR: detailed error message`. Always log or surface the full response body when debugging — the error message text typically identifies the exact problem (e.g., invalid parameter name, field not found, insufficient rights).
+
+## 7.3 Rate Limiting
+
+REDCap limits how many requests a single IP address may make per minute. The limit is set by the administrator in the Control Center (**Rate Limiter: Page hit threshold for a single IP address**, default 600 requests per minute) and counts API calls and normal page use together, so a script and a browser on the same machine share it.
+
+If the limit is exceeded, REDCap **bans that IP address permanently** — it is not a short cool-down — and emails an administrator. Every further request from the address, API or browser, fails with 429 until an administrator lifts the ban.
+
+- Do not run tight loops of small requests. Batch records into fewer, larger calls, and pause between calls in long-running jobs.
+- If a script that worked suddenly gets 429 for every call, stop it and contact your REDCap administrator; retrying does not help.
+
+> **Institution-specific:** The threshold, and whether any addresses (such as known integration servers) are exempt, vary by installation. Ask your REDCap administrators before running high-volume jobs.
 
 ---
 
@@ -297,11 +343,11 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Q: Do I need a separate token for each project?**
 
-**A:** Yes. API tokens are scoped to a single project. Each project you need API access to requires its own token request and administrator approval. There is no single token that works across all projects (except administrator super tokens, which are not available to regular users).
+**A:** Yes. API tokens are scoped to a single project. Each project you need API access to requires its own token (and, on instances that require it, administrator approval). There is no single token that works across all projects. A super token is not one either: it works only for Create Project and Export REDCap Version, not for project-level methods.
 
 **Q: What data can my API token access?**
 
-**A:** Only what your REDCap user account can access. If you have restricted DAG access, your token can only see records in your DAG. If you lack rights to a specific instrument, the API will not return its fields. Tokens do not elevate or bypass your user rights.
+**A:** Only what your REDCap user account can access, checked on every call. If you are assigned to a DAG, your token can only see records in your DAG. Fields follow your **data export** rights per instrument: an instrument set to **No Access** for export is left out, even if you can view it on screen, and if every instrument is No Access the call is refused with 403. The exception is the **Mobile App** right, which gives full data access through the app whatever your export rights (your DAG still applies) — see §9a. REDCap administrators are not limited by project rights.
 
 **Q: Can the API trigger the Data Entry Trigger (DET)?**
 
@@ -313,11 +359,11 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Q: I requested a token but don't see it on the API page. What's wrong?**
 
-**A:** Token requests require administrator approval and do not appear until approved. If the request has been pending for longer than expected, contact your REDCap administrator. Also verify that you have the API Export or API Import user right assigned — without a user right, the API page will not display a token field.
+**A:** On instances where administrators approve token requests, the token does not appear until the request is approved; you get an email when it is. If the request has been pending for longer than expected, contact your REDCap administrator. Some instances let users create tokens themselves, in which case the page shows a button to create one instead (§3.2). Also verify that you have the API Export or API Import/Update user right assigned — without one, the API page will not display a token field.
 
 **Q: Can I use the API in a project that is in Production?**
 
-**A:** Yes. The API works in all project statuses. Metadata import (uploading a modified data dictionary) in a Production project is subject to the same draft-mode review and approval process as any other design change.
+**A:** Yes, for data: record, file, report and user methods work in Production. Design methods do not go through Draft Mode. **Import Metadata** (uploading a modified data dictionary) and **Import Instrument-Event Mappings** are refused in Production, and arm and event changes are refused unless an administrator allows them (§4.2). Make Production design changes in Draft Mode in the interface. Projects that are Completed, Offline or deleted refuse all API calls.
 
 **Q: How do I export data from a specific instrument only?**
 
@@ -325,11 +371,11 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Q: What is the difference between the Export Records and Export Reports methods?**
 
-**A:** Export Records pulls data directly from the project's full record set, with parameters to control which fields, events, records, and DAGs are included. Export Reports runs a pre-defined saved report by its report ID, using the field selection, filtering, and ordering that was configured when the report was built. Both return record-level data; the report method is easier to use when a researcher has already set up a report that matches the data subset they need.
+**A:** Export Records pulls data directly from the project's full record set, with parameters to control which fields, events, and records are included (DAG scoping comes from the user's own DAG assignment, not a parameter). Export Reports runs a pre-defined saved report by its report ID, using the field selection, filtering, and ordering that was configured when the report was built. Both return record-level data; the report method is easier to use when a researcher has already set up a report that matches the data subset they need.
 
 **Q: Is there a limit on how many records or how much data I can pull at once?**
 
-**A:** There is no hard row limit documented for standard API exports, but very large datasets can time out or cause performance issues. For large projects, it is best practice to paginate exports using the `records` or `events` parameters to pull data in batches rather than all at once.
+**A:** There is no hard row limit documented for standard API exports, but very large datasets can time out or cause performance issues. For large projects, it is best practice to paginate exports using the `records` or `events` parameters to pull data in batches rather than all at once. There is, however, a limit on how **often** you can call: a per-IP limit on requests per minute (default 600), shared with normal page use. Exceeding it bans your IP address until an administrator lifts the ban (§7.3), so keep batches reasonably large rather than making thousands of tiny calls.
 
 ---
 
@@ -347,13 +393,17 @@ JSON and CSV requests return errors in their respective formats. Always log or s
 
 **Confusing `instrument` (variable name) with the instrument's label.** API parameters that reference instruments — such as the `forms` parameter in Export Records — require the instrument's unique variable name (e.g., `demographics`), not its display label (e.g., `Demographics`). The variable name is found in the Online Designer or data dictionary. These often match, but not always, especially if an instrument was renamed after creation.
 
+**Looping over records one call at a time.** A script that exports or imports one record per request, or retries failures in a tight loop, can exceed the per-IP rate limit within a minute. REDCap then bans the IP address — for the browser as well as the script — until an administrator lifts it (§7.3). Batch records and add a pause between calls.
+
+**Expecting 401 for a bad token.** REDCap returns 403 for a missing or invalid token and 400 for most malformed requests (§7.1). Error handling that only checks for 401 will treat a token problem as something else.
+
 **Not handling repeating instrument data correctly.** When exporting from a project with repeating instruments or events, each instance appears as a separate row identified by `redcap_repeat_instrument` and `redcap_repeat_instance`. Code that assumes one row per record will produce incorrect results. Always inspect the structure of export output from repeating projects before building a processing pipeline.
 
 ---
 
 # 9a. Rights Enforcement in API Methods
 
-API access is scoped by the calling user's project rights — the token grants no more than the user already has. That principle has needed enforcing in several specific places, and the fixes matter because each one silently returned data the caller should not have received.
+API access is scoped by the calling user's project rights — the token grants no more than the user already has, with the Mobile App exception below. That principle has needed enforcing in several specific places, and the fixes matter because each one silently returned data the caller should not have received.
 
 | Issue | Fixed in |
 | --- | --- |
@@ -365,15 +415,22 @@ API access is scoped by the calling user's project rights — the token grants n
 
 > **Important for anyone auditing API access.** These were not permission-configuration errors — the rights were set correctly and the API returned the data anyway. If your institution has relied on DAG separation or instrument-level export rights to constrain API users on an older instance, the boundary was not fully enforced. Reviewing the version history against these fixes is the way to establish whether it applied to you.
 
+> **Important — the Mobile App right overrides export rights.** A user with the **Mobile App** right can download all data on every instrument through the REDCap Mobile App, which uses the API, whatever their API rights and data export rights are — including instruments set to **No Access** or **De-Identified** for export. Their DAG assignment still applies. REDCap shows a warning to this effect when the right is ticked. Grant the Mobile App right only to users who may see the full data set for their DAG.
+
 Data Access Group behaviour is documented in [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); export rights levels in [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md).
 
 ---
 
 # 10. Administrator Configuration
 
-The REDCap API must be enabled at the system level before any project can use it. This is done in the Control Center under System Configuration → Modules/Services Configuration. When disabled system-wide, the API link does not appear in any project's left-hand menu, and no tokens can be requested or used.
+The REDCap API must be enabled at the system level before any project can use it. This is done in the Control Center under System Configuration → Modules/Services Configuration. When disabled system-wide, the API link does not appear in any project's left-hand menu, no tokens can be requested, and API calls are refused with 400.
 
-Administrators can also manage and revoke API tokens for any user from the Control Center under Users → API Tokens. Super tokens (required for the Create Project method) must be granted there as well.
+Administrators can also manage, view, regenerate, transfer and revoke API tokens for any user from the Control Center under Users → API Tokens. Super tokens (required for the Create Project method) must be granted there as well; any administrator can give one to any user.
+
+Two other Control Center settings shape API use:
+
+- **Allow normal users to auto-generate API tokens for their projects?** — whether token requests need administrator approval, or all or selected users can create tokens themselves (§3.2). Requests that need approval arrive on the To-Do List and by email.
+- **Rate Limiter: Page hit threshold for a single IP address** — the per-IP requests-per-minute limit (default 600), shared by API calls and page views. An IP address that exceeds it is banned permanently and an administrator is emailed; an administrator must lift the ban (§7.3).
 
 > **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 

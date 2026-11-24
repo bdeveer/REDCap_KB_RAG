@@ -7,11 +7,12 @@ applies_to:
 - requires User Rights privilege
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Adding users, roles and user/role CSV formats behaviour checked
+  against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-USER-01
   title: 'User Rights: Overview & Three-Tier Access'
@@ -51,7 +52,7 @@ This article covers how to add users to a REDCap project, how to use roles to ap
 
 **User Rights Menu**
 
-The section of a REDCap project where users are added, rights are configured, and roles are managed. Access to this menu is itself a user right — only users with the "User Rights" privilege can see it.
+The section of a REDCap project where users are added, rights are configured, and roles are managed. Access to this menu is itself a user right — only users with the "User Rights" privilege can see it. The privilege has two levels: full access, and a read-only level that lets the user view the page but not add, edit or assign users.
 
 **Individual User Rights**
 
@@ -63,7 +64,7 @@ A named, saved set of user rights that can be assigned to multiple users. When a
 
 **Ghost User**
 
-An entry in the user list that looks like a real user but is not tied to an actual REDCap account. Ghost users are created by skipping the step of selecting a user from the search results dropdown and instead pressing Enter or clicking Add with a free-typed name.
+An entry in the user list that looks like a real user but is not tied to an actual REDCap account. Ghost users are created when a free-typed name that does not match any account is added (pressing Enter or clicking Add without selecting from the search results), on installations that allow adding usernames that do not exist yet — see Section 6.
 
 **DAG (Data Access Group)**
 
@@ -77,12 +78,14 @@ A feature accessible from the User Rights page that allows downloading and uploa
 
 # 3. Prerequisites for Adding a User
 
-Two conditions must be true before you can add someone to your project:
+Check two things before you add someone to your project:
 
-1. **The user must have an active account in the REDCap installation.** They cannot be added if they have no account or if their account has been suspended system-wide.
-2. **You must have the "User Rights" privilege in that project.** If you do not see the User Rights menu, you do not have this privilege and cannot add users.
+1. **The user should have an account in the REDCap installation.** Whether REDCap enforces this depends on the version and the installation (see the caveat below). A **suspended** account can still be added by typing its exact username — suspended users are only hidden from the search results — and the user list shows them as suspended. They cannot use the project until an administrator unsuspends the account.
+2. **You must have full "User Rights" privilege in that project.** If you do not see the User Rights menu, you do not have this privilege and cannot add users. With the read-only level you can see the page but cannot add or assign users. If you are yourself assigned to a Data Access Group, you can manage only users in your own DAG and cannot add new users to the project.
 
-If the User Rights menu is visible in the project's application menu or on the Project Setup page, you have the necessary access.
+If the User Rights menu is visible in the project's application menu or on the Project Setup page, you have at least some access to it.
+
+> **Version caveat (17.x vs 16.0 LTS): adding usernames with no account.** On 17.x, a Control Center setting, **Allow adding non-existent users to projects?**, decides whether a username with no account can be added. It is always No for installations using REDCap's own (table-based) logins, is No on fresh installs, and is Yes on many installations that upgraded through 16.1.5. When it is No, REDCap refuses the username with an error. On 16.0 LTS, REDCap refuses unknown usernames only for table-based logins; with LDAP or SSO logins any typed username is accepted. Where unknown usernames are accepted, you can add a colleague before their first login (they get access once they log in with that exact username), but a typo creates a ghost user. Ask your REDCap administrators which applies to you.
 
 ---
 
@@ -95,27 +98,41 @@ There are two methods for adding users to a project: individually with custom ri
 Use this method when you want to configure a user's rights specifically, without applying a role.
 
 1. Navigate to the **User Rights** menu.
-2. In the section labeled "Add new user," enter the user's name, email address, or username in the search box.
+2. In the section labeled "Add new user," enter the user's username, first name or last name in the search box.
 3. Select the correct user from the dropdown list of search results that appears.
 4. Click **+ Add with custom rights**.
-5. Configure the user's rights in the popup. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
+5. Configure the user's rights in the popup, including an optional Data Access Group assignment. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md)
 6. Click **Add user** in the bottom right of the popup.
 
 If successful, the project will appear in the user's My Projects page.
 
-> **Important:** Always select the user from the dropdown list — do not type a name and press Enter without selecting from the results. Partial names are accepted; REDCap will return all matching users. Skipping the selection step creates a ghost user (see Section 6).
+> **Important:** Always select the user from the dropdown list — do not type a name and press Enter without selecting from the results. Partial names are accepted. The search matches username, first name and last name (not email address), shows at most 10 results, and leaves out people who are already in the project; if the person you want is not listed, type more of the name. Skipping the selection step can create a ghost user (see Section 6).
+
+**Starting rights in the popup.** The rights a new user starts with depend on the project status:
+
+| Right | Development | Production |
+|---|---|---|
+| Data viewing rights on every instrument | View & Edit (plus Edit Survey Responses on survey instruments, if the installation pre-ticks it) | **No Access** |
+| Data export rights on every instrument | Full Data Set | **No Access** |
+| Create Records, Reports & Report Builder, Stats & Charts, Calendar, File Repository, Survey Distribution Tools, MyCap participant management (when MyCap is on) | On | On |
+| Randomize (when randomization is enabled; Setup and Dashboard stay off) | On | On |
+| Everything else (including User Rights, Project Design and Setup, Data Access Groups, API, locking, Delete and Rename Records, logging) | Off | Off |
+
+> **Important (Production):** a user added in Production gets **No Access** to every instrument until you set their data viewing and export rights. Set the instrument-level rights in the popup before clicking **Add user**, or the user will see the project but no data.
+
+The **Notify user via email** checkbox also appears in the custom-rights popup, but only when the username belongs to an existing account that has an email address.
 
 ## 4.2 Role Method
 
 Use this method when you want to add a user with a predefined set of rights (a role). This is faster when onboarding multiple users who need the same level of access.
 
 1. Navigate to the **User Rights** menu.
-2. In the section labeled "Assign new user to role," enter the user's name, email address, or username in the search box.
+2. In the section labeled "Assign new user to role," enter the user's username, first name or last name in the search box (email addresses are not searched).
 3. Select the correct user from the dropdown list of search results.
 4. Click **Assign to role**.
 5. In the popup, select the desired role from the **Select role** dropdown.
 6. Optionally, assign the user to a Data Access Group using the **Assign to DAG** dropdown. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) for more on DAGs.
-7. The **Notify user via email** checkbox is checked by default. This sends the user an automated email confirming they have been added to a new project. This email is a useful way to confirm you selected the right user.
+7. The **Notify user via email** checkbox is checked by default. This sends the user an automated email confirming they have been added to a new project. This email is a useful way to confirm you selected the right user. The checkbox appears only when the username belongs to an existing account with an email address.
 8. Click **Assign** in the bottom right of the popup.
 
 If successful, the project will appear in the user's My Projects page.
@@ -147,17 +164,19 @@ Click the role name on the User Rights page to open the role's edit popup. Chang
 Within the role edit popup, you have options to copy or delete the role.
 
 - **Copy:** Creates a new role with the same rights configuration. Useful for creating a variant of an existing role.
-- **Delete:** Permanently removes the role. REDCap will not allow deletion if any users are currently assigned to that role — remove all users from the role first.
+- **Delete:** Permanently removes the role. The User Rights page will not allow deletion if any users are currently assigned to that role — remove all users from the role first.
+
+> **Warning: deleting a role through the API is not blocked.** Unlike the User Rights page, the API Delete User Roles method deletes a role even when users are assigned to it. Those users stay in the project, without a role, and keep only their leftover individual rights. For users who were added straight into a role (**Assign to role**), those leftover rights are REDCap's defaults, which can include the **User Rights** privilege. After deleting a role through the API, open User Rights and review every former member's rights, or reassign them to a role before deleting it.
 
 ---
 
 # 6. Ghost Users
 
-A ghost user is an entry in the user list that is not tied to a real REDCap account. Ghost users are created when someone types a name into the "Add new user" or "Assign new user to role" box and activates the action without selecting an account from the search results dropdown.
+A ghost user is an entry in the user list that is not tied to a real REDCap account. Ghost users are created when someone types a name into the "Add new user" or "Assign new user to role" box and activates the action without selecting an account from the search results dropdown, and the typed text does not match any account. Typing an existing username exactly adds the real account. Whether an unmatched name is accepted at all depends on your version and installation (see the caveat in Section 3): where REDCap refuses usernames with no account, you get an error instead of a ghost user.
 
 Ghost users can look nearly identical to legitimate users in the list. The way to distinguish them is to look for the user's real name in parentheses after their username. A properly added user will have this (e.g., `jsmith123 (Jane Smith)`). A ghost user will not.
 
-Ghost users have no real account attached and are harmless in terms of data access, but they clutter the user list and should be cleaned up. Remove a ghost user the same way you would remove a real user — see [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) — User Management.
+Ghost users have no real account attached and give no one access while no account with that username exists, but they clutter the user list and should be cleaned up. If an account with that exact username is created later, its owner gets the ghost entry's rights on first login, which is another reason to remove typos promptly. Remove a ghost user the same way you would remove a real user — see [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md) — User Management.
 
 ---
 
@@ -170,27 +189,30 @@ The **Upload or download users, roles, and assignments** button (top right of th
 
 This is useful for large projects, for migrating a user configuration from one project to another, or for onboarding many users at once without editing each individually.
 
-**Upload behavior:** Additive/update — new entries are added and existing entries are updated to match the uploaded file. Users present in the project but absent from the uploaded file are **not** removed.
+**Upload behavior:** Additive/update — new entries are added and existing entries are updated to match the uploaded file. Users present in the project but absent from the uploaded file are **not** removed. Within a row, however, the file sets the rights it contains: a rights column that is present but blank is set to 0 (off), and an instrument left out of the `forms` or `forms_export` list gets **No Access**. In the User Roles file, a column left out of the file entirely is also set to 0; in the Users file, a column left out entirely is left unchanged for existing users.
 
-> **Golden rule:** Always download first, then edit the downloaded file. The CSV formats contain encoded values (especially for form-level permissions) that are impractical to construct from scratch. Starting from a downloaded template avoids column order mistakes and encoding errors.
+Users added by CSV upload (or by the API) are **not** sent the "project access granted" email. Tell them yourself.
+
+> **Golden rule:** Always download first, then edit the downloaded file. The CSV formats contain encoded values (especially for instrument-level permissions, explained below) and columns that appear only when a feature is enabled. Starting from a downloaded template avoids missing columns, column order mistakes and encoding errors.
 
 ## 7.1 Users CSV
 
 **Filename produced by download:** `[ProjectName]_Users_[Date].csv`
 
-Each row represents one project user. The full column set:
+Each row represents one project user. A user who is assigned to a role cannot have rights set through this file — the upload rejects that row. Change role members' rights by editing the role, or remove them from the role first. The column set:
 
 | Column | Type | Description |
 |---|---|---|
-| `username` | string | REDCap username. Must match an existing account in this installation. Required. |
-| `expiration` | date (`YYYY-MM-DD`) | Account expiration date. Leave blank for no expiration. |
+| `username` | string | REDCap username. Must match an existing account in this installation, unless your installation accepts usernames with no account (see Section 3). Required. |
+| `expiration` | date (`YYYY-MM-DD`) | The user's expiration date **in this project** (not their REDCap account). Leave blank for no expiration. |
 | `data_access_group` | string | Unique DAG name (not the label) to assign the user to a DAG. Leave blank if not in a DAG. |
 | `data_access_group_id` | integer | Numeric ID of the DAG. Informational — REDCap uses `data_access_group` as the key. |
 | `data_access_group_label` | string | Human-readable DAG label. Informational only. |
 | `design` | 0/1 | Project Design & Setup rights. |
 | `alerts` | 0/1 | Alerts & Notifications access. |
-| `user_rights` | 0/1 | Ability to manage other users' rights. |
+| `user_rights` | 0/1/2 | User Rights privilege: 0 = none, 1 = full access, 2 = read-only. |
 | `data_access_groups` | 0/1 | Ability to create and manage DAGs. |
+| `data_export` | — | Legacy overall export column. It can appear in downloads but is ignored on upload; set export rights per instrument in `forms_export`. |
 | `reports` | 0/1 | Create and edit reports. |
 | `stats_and_charts` | 0/1 | View Stats & Charts. |
 | `manage_survey_participants` | 0/1 | Manage survey participants and distribution. |
@@ -205,18 +227,31 @@ Each row represents one project user. The full column set:
 | `api_export` | 0/1 | API token with export rights. |
 | `api_import` | 0/1 | API token with import/write rights. |
 | `api_modules` | 0/1 | Access to API playground and modules. |
-| `mobile_app` | 0/1 | Access the REDCap Mobile App. |
+| `mobile_app` | 0/1 | Access the REDCap Mobile App. A user with this right can download all data on every instrument through the app, whatever their data export rights; their DAG still applies. |
 | `mobile_app_download_data` | 0/1 | Allow data download via Mobile App. |
 | `record_create` | 0/1 | Create new records. |
 | `record_rename` | 0/1 | Rename existing records. |
 | `record_delete` | 0/1 | Delete records. |
 | `lock_records_all_forms` | 0/1 | Lock/unlock records across all forms. |
-| `lock_records` | 0/1 | Lock/unlock individual records. |
+| `lock_records` | 0/1/2 | Record Locking & E-signatures: 0 = disabled, 1 = locking/unlocking, 2 = locking/unlocking with E-signature authority. |
 | `lock_records_customization` | 0/1 | Customize locking behavior per form. |
-| `forms` | encoded string | Per-form data-entry access. Quoted, comma-separated list of `form_name:access_level` pairs (e.g., `"screening:130,demographics:130"`). See note on form encoding below. |
-| `forms_export` | encoded string | Per-form export access. Same format as `forms`, using `1` to grant export access (e.g., `"screening:1,demographics:1"`). Leave blank to deny export access on all forms. |
+| `forms` | encoded string | Per-instrument data viewing rights. Quoted, comma-separated list of `form_name:value` pairs (e.g., `"screening:130,demographics:129"`). See the encoding table below. |
+| `forms_export` | encoded string | Per-instrument data export rights. Same format as `forms` (e.g., `"screening:1,demographics:2"`): 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove All Identifier Fields. An instrument left out, or a blank column, means No Access. |
 
-**Form access encoding.** The integer values in the `forms` column are REDCap's internal encoded permission levels — they are not simple 0/1 flags. Values observed in downloaded files include `130` (read/write) and `138` (a different access variant, likely read-only or a survey-specific permission). Do not attempt to construct these values from memory; always use a downloaded file as your template and modify only the specific forms you need to change.
+**Conditional columns.** Some columns appear only when the matching feature is enabled in the project or installation: `mycap_participants` (MyCap), `data_quality_resolution` (Data Resolution Workflow), `double_data` (Double Data Entry), `random_setup`, `random_dashboard` and `random_perform` (Randomization), and on 17.x `redcap_share` (CDIS data sharing). A file downloaded from one project may therefore lack columns another project expects; when you reuse it elsewhere, check those rights after the upload.
+
+**Data viewing rights encoding (`forms`).** The values are not simple 0/1 flags:
+
+| Value | Meaning |
+|---|---|
+| `128` | No Access |
+| `129` | Read Only |
+| `130` | View & Edit |
+| `138` | View & Edit + Edit Survey Responses |
+| `146` | View & Edit + Delete (instrument-level delete) |
+| `154` | View & Edit + Edit Survey Responses + Delete |
+
+The older values `0` (No Access), `1` (View & Edit), `2` (Read Only) and `3` (View & Edit + Edit Survey Responses) are still accepted on upload. **Any instrument you leave out of `forms` is set to No Access** — list every instrument the user should see, not only the ones you are changing.
 
 ## 7.2 User Roles CSV
 
@@ -224,7 +259,7 @@ Each row represents one project user. The full column set:
 
 Each row represents one custom user role. Columns are nearly identical to the Users CSV with these differences:
 
-1. **First column is `unique_role_name`** — the system-generated role identifier (format: `U-XXXXXXXXX`). Do not modify this value when editing an existing role; REDCap uses it to match the import row to the correct role. To create a new role via import, you can leave this blank — REDCap will assign an ID.
+1. **First column is `unique_role_name`** — the system-generated role identifier: `U-` followed by ten characters (e.g., `U-594WK7W9KY`). Do not modify this value when editing an existing role; REDCap uses it to match the import row to the correct role, and rejects a row whose ID does not exist in the project. To create a new role via import, you can leave this blank — REDCap will assign an ID.
 2. **Second column is `role_label`** — the human-readable role name shown in the UI (e.g., `"demo role"`).
 3. **No user-level columns** — `expiration`, `data_access_group`, `data_access_group_id`, and `data_access_group_label` are absent. Those are per-user settings, not role-level settings.
 
@@ -234,14 +269,18 @@ Each row represents one custom user role. Columns are nearly identical to the Us
 
 **Filename produced by download:** `[ProjectName]_UserRoleAssignments_[Date].csv`
 
-The simplest of the three files — just two columns:
+The simplest of the three files:
 
 | Column | Description |
 |---|---|
-| `username` | REDCap username. Must match a user already in the project. |
-| `unique_role_name` | System-generated role ID (e.g., `U-594WK7W9KY`). Leave blank if the user is not assigned to any role (individual rights). |
+| `username` | REDCap username. |
+| `unique_role_name` | System-generated role ID (e.g., `U-594WK7W9KY`). Leave blank if the user is not assigned to any role (individual rights). An ID that does not exist in the project is rejected. |
+| `data_access_group` | Present when the project has Data Access Groups. Unique DAG name to place the user in; blank leaves the DAG as it is. |
 
-All project users appear in this file, including those without a role assignment (their `unique_role_name` is blank). Uploading this file assigns or clears role assignments — it does not add or remove users from the project.
+All project users appear in this file, including those without a role assignment (their `unique_role_name` is blank). Uploading this file assigns or clears role assignments. It never removes users from the project, but it **does add** users who are not yet in it:
+
+- **A username that is not in the project is added**, with every individual right off, and put in the role you named. If you leave `unique_role_name` blank for that row, the user is added with no rights at all. Check the usernames carefully before uploading.
+- **Clearing `unique_role_name` for a current role member does not copy the role's rights to them.** This differs from **Remove from role** on the User Rights page (see Section 8). The user keeps whatever individual rights were left over from before — for a user added straight into a role, those are REDCap's defaults, which can include the User Rights privilege. After clearing roles by upload, review each affected user's rights.
 
 > **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** Usernames with **leading or trailing spaces** were accepted by the upload, creating assignments that could not be removed from the User Rights page. Usernames are now trimmed. On the fixed versions, removing one of those space-containing assignments also removes the matching trimmed one — re-add that user to the project afterwards if needed. On older versions, trim usernames before uploading.
 
@@ -253,7 +292,7 @@ All project users appear in this file, including those without a role assignment
 
 **Q: I entered a user's name but they didn't appear in the search results — what's wrong?**
 
-**A:** The user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added to any project. See **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
+**A:** The search matches username, first name and last name only (not email address), shows at most 10 results, and leaves out people already in the project. Try the exact username or more of the name, and check whether they are already listed on the User Rights page. A suspended account is also hidden from the search, though it can still be added by typing the exact username. If none of these apply, the user does not have an account in this REDCap installation. They need to register or be provisioned before they can be added (or, where your installation accepts usernames with no account, you can add their exact username in advance — see Section 3). See **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
 
 **Q: Can I add someone to multiple projects at once?**
 
@@ -265,7 +304,7 @@ All project users appear in this file, including those without a role assignment
 
 **Q: Can I assign a user to a role and also give them custom individual rights on top of it?**
 
-**A:** No. A user is either in a role or has individual rights — not both simultaneously. If you remove a user from a role, they retain the role's rights as their individual rights, which you can then edit.
+**A:** No. A user is either in a role or has individual rights — not both simultaneously. If you remove a user from a role with **Remove from role** on the User Rights page, they retain the role's rights as their individual rights, which you can then edit. Clearing the role through a User–Role Assignments upload does **not** copy the role's rights (see Section 7.3).
 
 **Q: Can a user be in multiple roles at once?**
 
@@ -281,13 +320,13 @@ All project users appear in this file, including those without a role assignment
 
 **Skipping the dropdown selection and creating ghost users.** This is the most common error when adding users. Always wait for the search results to appear and click the correct user from the list. Never press Enter or click Add without selecting a result. Ghost users do not have real accounts and contribute nothing except confusion.
 
-**Trying to edit individual rights for a role user.** If a user is in a role, you cannot edit their rights directly. The popup will tell you to either reassign them to another role or remove them from the role first. If you need a one-off adjustment for a specific user, remove them from the role and edit their individual rights.
+**Trying to edit individual rights for a role user.** If a user is in a role, you cannot edit their rights directly. Clicking their name offers only **Re-assign to role** and **Remove from role**; there is no Edit option. If you need a one-off adjustment for a specific user, remove them from the role and edit their individual rights.
 
-**Deleting a role before removing its users.** REDCap blocks role deletion if any users are assigned to it. Remove all users from the role first, then delete it.
+**Deleting a role before removing its users.** The User Rights page blocks role deletion if any users are assigned to it. Remove all users from the role first, then delete it. The API Delete User Roles method does **not** block this: the role's users are left with only their leftover individual rights, which can include the User Rights privilege (see Section 5.4). Review their rights after any API role deletion.
 
-**Not reviewing rights after adding a new instrument.** When a new instrument is added to the project, existing user rights do not automatically update to include it. Review all user rights (or role configurations) after adding instruments to ensure access is set correctly for the new instrument.
+**Not reviewing rights after adding a new instrument.** When a new instrument is added, REDCap adds it to every user's and role's rights automatically. In Development, everyone gets **View & Edit** and **Full Data Set** export on it. In Production, the rights given when the draft changes are approved follow a Control Center setting, which by default also gives full access. The risk is therefore over-granting: a new instrument holding sensitive data becomes visible and exportable to every user, including those you had restricted on other instruments. Review all user rights (or role configurations) after adding instruments and lower access to the new instrument where needed.
 
-**Renaming a role that is referenced in branching logic.** REDCap allows branching logic to reference the current user's role by name using the `[user-role-label]` smart variable — for example, to restrict a sensitive field to a specific reviewer role. This is useful for enforcing role-based access within a form, but it creates a hidden dependency: the role's display name as shown in User Rights becomes a hard-coded string in the data dictionary. If that role is later renamed (even a capitalisation change, e.g., `"data manager"` → `"Data Manager"`), every branching condition referencing the old name silently breaks — the field becomes invisible or permanently visible to everyone in that role, with no error message. Before renaming any role, search the data dictionary for its name in branching logic, calculated fields, and action tags. Treat role names referenced in logic as frozen identifiers for the life of the project, and document them separately from the User Rights configuration so the dependency is visible.
+**Renaming a role that is referenced in branching logic.** REDCap allows branching logic to reference the current user's role by name using the `[user-role-label]` smart variable — for example, to restrict a sensitive field to a specific reviewer role. This is useful for enforcing role-based access within a form, but it creates a hidden dependency: the role's display name as shown in User Rights becomes a hard-coded string in the data dictionary. If that role is later renamed (even a capitalisation change, e.g., `"data manager"` → `"Data Manager"`), every branching condition referencing the old name silently breaks — the field becomes invisible or permanently visible to everyone in that role, with no error message. Before renaming any role, search the data dictionary for its name in branching logic, calculated fields, and action tags. Treat role names referenced in logic as frozen identifiers for the life of the project, and document them separately from the User Rights configuration so the dependency is visible. Alternatively, reference the role's unique role name with `[user-role-name]` (e.g., `U-594WK7W9KY`, shown in the User Roles CSV), which does not change when the role is renamed.
 
 **Querying per-user rights columns directly without accounting for roles.** When pulling user rights from the backend database (rather than the web interface), the per-user permission columns on `redcap_user_rights` are unreliable for users assigned to a role. Resolve effective rights by coalescing with `redcap_user_roles` — see [Querying User Rights in the Backend Database](#querying-user-rights-in-the-backend-database) below. A query that reads only the per-user columns will return the wrong set of users.
 

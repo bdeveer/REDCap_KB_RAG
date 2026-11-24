@@ -7,10 +7,10 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version. The Project Migration Tool alternative requires v17.0.0+ on both instances — see §1 |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Date-shift option checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
 | **Synonyms** | how do i move a project to another redcap server; project xml or project migration tool which should i use; migrate a project between installations; export and re-import a full project backup; transfer a project to a different institution; copy a project design to a colleague at another site; back up and restore a redcap project; what is included in a project export; project migration pitfalls |
@@ -154,7 +154,7 @@ When exporting metadata and data together, REDCap offers additional options to c
 - *Remove unvalidated text fields* — Strips text fields with no validation rule defined.
 - *Remove Notes/Essay box fields* — Strips all Notes fields due to the difficulty of verifying their contents.
 - *Remove all date and datetime fields* — Strips all date/datetime-validated fields.
-- *Shift all dates by 0–364 days* — Adds a random offset to all dates, preserving relative date relationships while obscuring absolute values.
+- *Shift all dates* — Moves every date in a record back in time by the same random number of days, up to the project's maximum (364 days unless an administrator has changed it). Relative date relationships within a record are preserved while absolute values are obscured.
 
 **Advanced formatting options:**
 

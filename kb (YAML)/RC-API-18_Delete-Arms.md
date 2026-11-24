@@ -7,11 +7,12 @@ applies_to:
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction
   and rights not re-tested) live-tested via the API on a sandbox project (2026-10);
-  LTS line last reviewed against the v17.3.7 (LTS) changelog
+  LTS line last reviewed against the v17.3.7 (LTS) changelog. Default format checked
+  against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -50,7 +51,7 @@ The Delete Arms API method removes one or more arms from a longitudinal REDCap p
 | `token` | Required | Your project API token. Requires API Import/Update right **and** Project Design/Setup right. |
 | `content` | Required | Always `'arm'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `format` | Optional | Set to `'json'` or `'csv'`. Default is JSON. |
+| `format` | Optional | `'xml'`, `'json'` or `'csv'`. Default is XML, as for every API method. |
 | `arms` | Required | An array of arm numbers (integers) to delete. E.g., `arms[0]=1&arms[1]=2` in URL encoding, or a JSON array in JSON mode. |
 
 ---

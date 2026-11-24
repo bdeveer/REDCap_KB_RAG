@@ -2232,6 +2232,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
+- RC-USER-04 — User Rights: User Management
 
 ---
 
@@ -3104,6 +3105,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DE-12 — Data Resolution Workflow
 - RC-DE-13 — Record Administration: Choose Action for Record
 - RC-DQ-01 — Data Quality Module
+- RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 - RC-EXPRT-08 — Custom Reports: Management & Organization
@@ -3664,9 +3666,11 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
+- RC-MOB-01 — REDCap Mobile App
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+- RC-DAG-01 — Data Access Groups
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 
 **Inbound links (referenced by):**
@@ -4790,6 +4794,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
 - RC-INST-03 — Institution-Specific Settings & Policies — Development
+- RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
@@ -6217,6 +6222,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-DAG-01 — Data Access Groups
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
+- RC-API-27 — Delete User Roles API
 - RC-API-01 — REDCap API
 - RC-API-22 — Export Users API
 - RC-API-23 — Import Users API

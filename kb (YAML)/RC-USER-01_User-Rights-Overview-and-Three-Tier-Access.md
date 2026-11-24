@@ -6,11 +6,12 @@ applies_to:
 - All REDCap project types
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. User access model behaviour checked against source code of v17.6.5
+  (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-USER-02
   title: 'User Rights: Adding Users & Managing Roles'
@@ -40,6 +41,8 @@ synonyms:
 - access control overview in redcap
 - troubleshoot why someone can't log in to a project
 - intro to user rights and permissions
+- project missing from my projects list
+- user access expired on project
 ---
 
 # 1. Overview
@@ -80,7 +83,7 @@ The set of permissions that control what a user can do within a specific project
 
 **User Role**
 
-A named, reusable set of user rights that can be assigned to multiple users. Roles standardize access configuration and simplify bulk management.
+A named, reusable set of user rights that can be assigned to multiple users. Roles standardize access configuration and simplify bulk management. While a user is assigned to a role, the role's rights replace their individual rights; only their Data Access Group and expiration date stay set per user.
 
 ---
 
@@ -101,7 +104,7 @@ Some installations also require two-factor authentication as an additional layer
 
 > **Institution-specific:** Authentication methods vary by installation (e.g., institutional SSO, local accounts, Shibboleth). Contact your REDCap administrator to learn which login method is in use and who handles account creation or access issues.
 
-A suspended account (disabled at the system level by an administrator) will receive a suspension message at login and cannot access any projects.
+A suspended account (disabled at the system level by an administrator) will receive a suspension message at login and cannot access any projects. Suspended users are also refused by the API, even if they hold a valid API token. Some installations suspend accounts automatically after a period of inactivity set in the Control Center, so a user who has not logged in for a long time may find their account suspended.
 
 ## 3.2 Tier 2: Project-Level Access
 
@@ -109,13 +112,26 @@ REDCap strictly separates data by project. A user with a valid account cannot se
 
 A user can be added to any number of projects, or to none at all. There are three ways a user ends up on a project:
 
-- **By another project user** — any user with the "User Rights" privilege can add others from within the project's User Rights menu. This is the most common method.
+- **By another project user** — a user with full access to the "User Rights" privilege can add others from within the project's User Rights menu. This is the most common method. The read-only level of User Rights lets a user view the page but not add or assign users, and a User Rights manager who is assigned to a Data Access Group can only manage users in their own group.
 - **Automatically upon creation** — when a user creates or requests a new project, they are automatically added with full rights.
 - **By a REDCap administrator** — administrators can add users to any project. In practice, this is typically done only when there are no other active users on a project to perform the task themselves.
 
+> **Note:** "Full rights" for the project creator is true in practice, because the creator holds User Rights and can switch on anything else for themselves. A few rights start switched off, though: Delete Records, Rename Records, record locking, API Export and API Import, and Edit Survey Responses. If the creator needs any of these, they open User Rights and grant them to themselves. Randomization rights are granted at creation only if randomization was chosen when the project was created. A user who creates a project by copying another one keeps the rights they had in the original project, with User Rights and Project Design forced on.
+
+Administrators can also reach projects without being added to them. An administrator who holds the admin privilege **Access to all projects and data with maximum user privileges** can open any project with maximum rights, unrestricted by Data Access Groups or expiration dates. Such projects still do not appear in that administrator's "My Projects" list unless they are a member; "My Projects" lists only the projects a user has been added to.
+
 ## 3.3 Tier 3: Project-Level User Rights
 
-Having project access does not mean having full access. Within a project, user rights define exactly what a user can see and do: which instruments they can view or edit, whether they can export data, whether they can modify the project design, and much more.
+Having project access does not mean having full access. Within a project, user rights define exactly what a user can see and do: which instruments they can view or edit, whether they can export data, whether they can modify the project design, and much more. If the user is assigned to a Data Access Group, they also see only the records in that group.
+
+User rights are not the last word. The project's status can switch off actions that a user's rights allow:
+
+| Project status | Effect on users, whatever their rights |
+|---|---|
+| **Analysis/Cleanup** | No new records can be created. |
+| **Analysis/Cleanup** with data set to **Read-only / Locked** (under "Modify data locking mode?") | Data entry is read-only; renaming, deleting and importing records (including API import) and record locking are all switched off. |
+
+When a user's rights look correct but an action is still unavailable, check the project status before changing their rights.
 
 This is the most complex tier. User rights are highly configurable and differ from project to project. The remaining articles in this series cover the details:
 
@@ -136,9 +152,11 @@ When a user reports they cannot access a project or perform an expected action, 
 
 2. **Can they log in successfully?** Ask if they can reach their "My Projects" page after logging in. If they cannot, the problem is at Tier 1 — an account or authentication issue.
 
-3. **Do they see the project in their "My Projects" list?** If the project is absent, the user has not been added to it (or the project is archived). This is a Tier 2 problem.
+3. **Do they see the project in their "My Projects" list?** If the project is absent, the user has not been added to it, the project has been marked **Completed**, or the user has moved it to **My Hidden Projects**. This is a Tier 2 problem.
 
-4. **When in the project, can they perform the action they need?** If they can see the project but are blocked from a specific action, the issue is at Tier 3 — their user rights for that project need review.
+4. **Can they open the project?** If the project is listed but the user is refused entry, check the expiration date on their user rights. Once that date passes, REDCap denies access even though the project may still appear in "My Projects." Remove or extend the expiration date in User Rights.
+
+5. **When in the project, can they perform the action they need?** If they can see the project but are blocked from a specific action, the issue is at Tier 3. Review their user rights (or their role's rights, if they are in a role, since the role overrides individual rights), their Data Access Group, and the project status.
 
 ---
 
@@ -146,7 +164,7 @@ When a user reports they cannot access a project or perform an expected action, 
 
 **Q: A user can log in but cannot find the project — what's wrong?**
 
-**A:** They have not been added to the project, or the project has been archived. Someone with User Rights access in that project needs to add them. Archived projects do not appear in the standard project list.
+**A:** They have not been added to the project, the project has been marked Completed, or they have hidden it themselves (check **My Hidden Projects**). If they were never added, someone with User Rights access in that project needs to add them. Completed projects do not appear in the standard project list.
 
 **Q: A user's password stopped working — who do they contact?**
 
@@ -154,15 +172,17 @@ When a user reports they cannot access a project or perform an expected action, 
 
 **Q: Can a user be added to a project without having a REDCap account first?**
 
-**A:** No. A user must have an active account in the REDCap installation before they can be added to any project. If the user doesn't have an account, they need to get one through the local registration or provisioning process.
+**A:** Usually not. On installations using table-based (REDCap-managed) accounts, the user must have an account first. On installations using LDAP or SSO, an administrator can allow adding a username that has not logged in yet, using the Control Center setting **Allow adding non-existent users to projects?**; the user gets access when they first log in. If adding the user is refused, they need an account through the local registration or provisioning process, or need to log in once before being added.
+
+> **Version caveat (16.0 LTS):** 16.0 has no **Allow adding non-existent users to projects?** setting. It blocks unknown usernames only under table-based authentication; under LDAP or SSO any username can be added, so a typo silently creates a project user who does not exist. Double-check usernames before adding them on 16.0. On 17.x the setting is off on fresh installs, but installations upgraded from older versions may have it on; ask your administrator which applies.
 
 **Q: Can a user with a valid account access any project they want?**
 
-**A:** No. Project access is strictly controlled. A user can only see and access projects they have been explicitly added to by another user or an administrator.
+**A:** No. Project access is strictly controlled. A user can only see and access projects they have been explicitly added to by another user or an administrator. The exception is administrators who hold **Access to all projects and data with maximum user privileges**, who can open any project.
 
 **Q: Does user rights configuration carry over between projects?**
 
-**A:** No. User rights are configured independently in each project. A user might have full rights in one project and read-only access in another.
+**A:** No. User rights are configured independently in each project. A user might have full rights in one project and read-only access in another. The exception is copying a project: the copy can bring over the original project's users and roles if you choose that option.
 
 **Q: What happens if a user is added to a project by an administrator vs. another user — is there a difference in their rights?**
 
@@ -177,6 +197,12 @@ When a user reports they cannot access a project or perform an expected action, 
 **Assuming account access equals project access.** A user who can log in but cannot find a project has a Tier 2 problem, not a Tier 1 problem. They need to be added to the project — they do not need a new account or a password reset.
 
 **Assuming project access equals full rights.** Being added to a project does not mean a user can do everything in it. User rights at Tier 3 may restrict their view, editing ability, or access to features. Always check the user's actual rights configuration when troubleshooting capability problems.
+
+**Editing individual rights for a user who is in a role.** A role's rights replace the user's individual rights, so changes need to be made to the role (or the user removed from it). Only the Data Access Group and expiration date are set per user.
+
+**Deleting a role through the API.** Unlike the User Rights page, the API Delete User Roles method does not refuse to delete a role that still has users assigned. Those users keep only their leftover individual rights. For users who were added straight into a role, those are REDCap's defaults, which can include the User Rights privilege. Review the former role members' rights immediately after deleting a role through the API.
+
+**Overlooking the Mobile App right.** A user with the Mobile App right can download all data on every instrument through the REDCap Mobile App, whatever their data export rights. Their Data Access Group still applies. Grant it only to users who may see all project data.
 
 ---
 
