@@ -884,6 +884,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+- RC-FD-02 — Online Designer
+- RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-FD-07 — Field Embedding
 - RC-MOB-01 — REDCap Mobile App
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
@@ -1669,6 +1672,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-02 — Export Records API
 - RC-API-04 — Delete Records API
 - RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-13 — Import File API
 - RC-INTG-01 — Data Entry Trigger
 - RC-IMP-01 — Data Import Overview
 - RC-DAG-01 — Data Access Groups
@@ -1907,6 +1911,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-03 — Import Records API
 
 **Inbound links (referenced by):**
+- RC-API-03 — Import Records API
 - RC-API-12 — Export File API
 - RC-API-14 — Delete File API
 - RC-API-45 — Create Folder (File Repository) API
@@ -3846,11 +3851,16 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Outbound links:**
 - RC-FD-01 — Form Design Overview
+- RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-FD-07 — Field Embedding
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-FD-03 — Data Dictionary
 - RC-FD-05 — Codebook
 - RC-SURV-01 — Surveys – Basics
 - RC-SURV-02 — Survey Settings: Basic Options & Design
 - RC-FD-04 — Instrument Library & Zip Files
+- RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
+- RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-07 — Survey Queue
 - RC-SURV-10 — Survey Login
@@ -4007,6 +4017,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-04 — Instrument Library & Zip Files
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-SURV-11 — Accessibility in REDCap Surveys & Forms
 - RC-MLM-01 — Multi-Language Management
 - RC-CALC-02 — Calculated Fields
@@ -4019,6 +4030,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-DSGN-01 — REDCap Project Design Best Practices
 - RC-AT-01 — Action Tags: Overview
+- RC-FD-02 — Online Designer
 - RC-FD-07 — Field Embedding
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
@@ -4036,12 +4048,14 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-AT-01 — Action Tags: Overview
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 
 **Inbound links (referenced by):**
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-DE-08 — Field Comment Log
+- RC-FD-02 — Online Designer
 - RC-FD-09 — Field Embedding: Advanced Layout Patterns & Workflow Design
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
 
@@ -4077,6 +4091,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-08 — Import Metadata (Data Dictionary) API
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-CALC-02 — Calculated Fields
+- RC-FD-02 — Online Designer
 - RC-FD-05 — Codebook
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
@@ -4148,6 +4163,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-DE-02 — Basic Data Entry
+- RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management (alignment codes cross-reference)
 
 ---
@@ -4184,6 +4200,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
 - RC-API-02 — Export Records API
+- RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-API-03 — Import Records API
 
@@ -4303,6 +4320,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+- RC-IMP-01 — Data Import Overview
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-MOB-01 — REDCap Mobile App

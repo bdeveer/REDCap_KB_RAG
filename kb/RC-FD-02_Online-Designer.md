@@ -7,12 +7,12 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Online Designer behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2025 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
-| **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-05 — Codebook](RC-FD-05_Codebook.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
+| **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-05 — Codebook](RC-FD-05_Codebook.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) |
 | **Synonyms** | what is the online designer; build instruments point and click; create fields one at a time; drag and drop form builder; online designer in development vs production mode; add a field using the designer interface; guided instrument building tool; how to use redcap online designer |
 
 ---
@@ -36,22 +36,33 @@ A web-based, wizard-style interface for creating and editing REDCap
 instruments and variables. Changes made in the Online Designer are
 validated in real time — REDCap checks that field configurations are
 internally consistent (e.g., that branching logic references valid
-variable names) before saving them.
+variable names) before saving them. Branching logic and calculations
+are checked again by the server when you save.
 
 **Development Mode vs. Production Mode (Design Context)**
 
 In Development mode, Online Designer changes are applied immediately and
-are visible in data entry right away. In Production mode, changes are
-queued as a pending draft. The draft must be reviewed and approved
-before it takes effect — either automatically or by a REDCap
-administrator, depending on institutional policy.
+are visible in data entry right away. In Production mode, you must first
+select **Enter Draft Mode**; your field and instrument changes then
+collect in a draft. The draft must be submitted and approved before it
+takes effect — either automatically or by a REDCap administrator,
+depending on institutional policy.
 
-**Change Queue (Production Mode)**
+**Draft Mode (Production Mode)**
 
-The set of pending Online Designer edits that have been submitted but
-not yet applied to the live project. The change queue can be reviewed
-and, if necessary, cancelled before approval. Once approved, changes
-cannot be rolled back through the interface.
+The single set of drafted edits to fields and instruments that has not
+yet been applied to the live project. It is not a queue of separate
+changes: there is one draft per project, and saving a field again simply
+updates the draft. While you are still drafting, you can undo a change by
+re-editing it, or discard the whole draft. Once you submit the draft for
+review you can no longer edit it; only a REDCap administrator can reject
+or reset it. Once approved, changes cannot be rolled back through the
+interface (see Section 7 for the recovery path).
+
+Only field and instrument design goes through Draft Mode. Survey
+settings, enabling an instrument as a survey, the Survey Queue,
+Automated Invitations, Survey Login, survey notifications and similar
+project options take effect immediately, even in Production.
 
 **Guardrails**
 
@@ -70,8 +81,9 @@ to the research team.
     Designer button in the Design Your Data Collection Instruments
     section.
 
-- From the Project Home page (Production mode or alternate path):
-    select Designer in the left-hand menu, then select Online Designer.
+- From any project page (Production mode or alternate path):
+    select **Designer** in the left-hand menu. This opens the Online
+    Designer directly.
 
 - The Online Designer opens to a list of all existing instruments in
     the project. From here you can add a new instrument, open an
@@ -83,13 +95,39 @@ to the research team.
 
 ### 4.1 Instrument-Level Actions
 
-- Create a new instrument.
+- Create a new instrument. REDCap builds the instrument's unique name
+    from the label you type: lowercase letters, digits and underscores
+    only, starting with a letter, not ending in an underscore, at most 50
+    characters, and unique in the project (a random suffix is added if
+    needed). In Development mode, all existing users get full rights to a
+    new instrument; review User Rights afterwards if access should be
+    restricted.
 
-- Rename an existing instrument.
+- Rename an existing instrument. In Production mode only the
+    instrument's display label can change; the unique instrument name of
+    a live instrument stays fixed.
+
+- Copy an instrument (see [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)).
 
 - Reorder instruments within the project.
 
-- Delete an instrument. REDCap will warn you before proceeding, but deletion is allowed regardless of whether the instrument contains saved data — the instrument and all its records' data are permanently removed and cannot be recovered.
+- Delete an instrument. REDCap asks you to confirm, but deletion is
+    allowed whether or not the instrument contains saved data. You
+    cannot delete a project's only instrument. See the warning below for
+    what is lost.
+
+> **Warning — deleting an instrument or field:** The saved values stop
+> being accessible: they disappear from data entry forms, reports and
+> exports. REDCap does not purge them, and they can reappear if a field
+> with the same variable name is created again. So deleting a field or
+> instrument is **not** a way to remove sensitive data, and you should
+> avoid reusing old variable names for new questions. Some things tied to
+> the instrument are permanently lost when it is deleted (or its unique
+> instrument name changes): locking records, e-signatures, event
+> designations, repeating instrument settings, MyCap tasks and
+> instrument-level user rights. Files in deleted File Upload fields are
+> marked for deletion once the change takes effect. Download a Data
+> Dictionary and a data export as a backup before deleting anything.
 
 - Export an instrument as a zip file for backup or reuse (see
     [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md)).
@@ -105,12 +143,38 @@ to the research team.
 
 - Reorder variables within an instrument by dragging.
 
-- Delete a variable (only if the project is in Development mode, or if
-    the field contains no data).
+- Move fields to another instrument or to a new instrument with
+    **Move field(s)** — this is how you split an instrument in the Online
+    Designer.
+
+- Select several fields on one instrument and apply one change to all
+    of them (for example alignment, identifier, required, branching
+    logic, action tags, question numbers or choices), or move, copy or
+    delete them together (see [RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS](RC-FD-11_Advanced-Online-Designer-Options.md)).
+
+- Delete a variable. This is allowed in Development mode and, through
+    Draft Mode, in Production mode — even when the field contains data.
+    The exceptions are fields used by randomization (including strata)
+    and a MyCap baseline date field. In Production, deleting a field that
+    has data prevents the draft from being auto-approved under most
+    policies. See the warning in Section 4.1 for what happens to the data.
 
 - Flag a variable as an identifier.
 
 - Open the branching logic editor for a specific variable.
+
+Variable names are reduced to lowercase letters, digits and underscores,
+and REDCap blocks duplicate and reserved names. In Production mode, the
+variable name of a field that is already live cannot be changed in the
+Online Designer.
+
+For field types, matrix rules and field embedding, see
+[RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)
+(Sections 8 and 10), [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md),
+and the column rules in [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md).
+
+In Production, **Draft Preview Mode** lets you try your drafted changes on
+data entry forms before submitting them (see [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md), Section 6.5).
 
 ### 4.3 Survey-Level Options
 
@@ -125,16 +189,27 @@ When surveys are enabled for the project, a **Survey options** section appears a
 
 These project-level buttons are distinct from the per-instrument buttons that appear in the instrument row when an instrument has been enabled as a survey. Each instrument row has its own **Survey settings** button (which opens the Survey Settings page for that instrument) and an **Automated Invitations** button (which configures the ASI for that specific instrument).
 
+> **Important:** None of these survey options go through Draft Mode. In a
+> Production project, a change to survey settings, the Survey Queue,
+> Automated Invitations, Survey Login or survey notifications takes effect
+> as soon as you save it.
+
+The Online Designer also gives access to other project-wide form options,
+depending on your REDCap version and what your administrators have
+enabled — for example PDF Snapshots, Form Display Logic, downloading a
+PDF of all instruments, Descriptive Popups and Instance Embedding. Like
+the survey options, these are not part of Draft Mode.
+
 ### 4.4 What the Online Designer Cannot Do
 
-- Split one instrument into two or more instruments — use the Data
-    Dictionary for this ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)).
+- Edit variables across many instruments at once, or rename dozens of
+    variables in one step — multi-field edits work on one instrument at a
+    time. Use the Data Dictionary for bulk edits
+    ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)).
 
-- Edit many variables at once — use the Data Dictionary for bulk
-    edits ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)).
-
-- Bypass the Production mode change queue — all changes in
-    Production require review.
+- Bypass Draft Mode in Production — every field and instrument change
+    in Production goes through a draft that must be approved
+    (automatically or by an administrator).
 
 ---
 
@@ -142,14 +217,17 @@ These project-level buttons are distinct from the per-instrument buttons that ap
 
 | **Action** | **Development Mode** | **Production Mode** |
 | --- | --- | --- |
-| Making a change | Applied immediately | Added to the pending change queue |
-| Seeing the change | Visible in data entry right away | Not visible until the change is approved |
-| Cancelling a change | Edit and re-save or delete the field | Cancel the pending change from the change queue before approval |
+| Making a change | Applied immediately | Select **Enter Draft Mode** first; field and instrument changes are saved to the project's draft |
+| Seeing the change | Visible in data entry right away | Not visible until the draft is approved (use Draft Preview Mode to try it first) |
+| Cancelling a change | Edit and re-save or delete the field | Before submitting: re-edit the field in the draft, or discard the whole draft. After submitting: only an administrator can reject or reset the draft |
+| Deleting a field with data | Allowed after a confirmation prompt | Allowed in the draft (except randomization and MyCap baseline date fields); counts against auto-approval |
 | Approval required | No | Yes — automatic or administrator, per institutional policy |
-| Rollback | Re-edit or re-upload a saved Data Dictionary | Cancel before approval; no rollback after approval |
+| Rollback | Re-edit or re-upload a saved Data Dictionary | No rollback after approval; make the reverse change in a new draft |
 
 
-> **Important:** The level of automatic approvals in Production mode is set centrally by your institution's REDCap support team. Some institutions allow minor changes (adding a new field) to be auto-approved, while others require administrator review for any change. For this installation's specific policy, see **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
+> **Institution-specific:** The level of automatic approval in Production mode is set by your REDCap administrators. Options range from never auto-approving, to auto-approving drafts that only add new fields, to auto-approving changes that carry no critical risk flags. Deleting fields that contain data typically needs administrator review. For this installation's specific policy, see **[RC-INST-01 — Institution-Specific Settings & Policies](RC-INST-01_Institution-Specific-Settings-and-Policies.md)**.
+
+> **Note:** Survey settings and other survey options (Section 4.3) are not part of this workflow; in Production they take effect immediately.
 
 
 ---
@@ -175,7 +253,9 @@ Consider switching to the Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-
 
 - You need to define a large number of variables at once.
 
-- You need to split, merge, or restructure instruments.
+- You need to restructure many instruments at once. (Moving a few
+    fields to another or new instrument works fine in the Online Designer
+    with **Move field(s)**.)
 
 - You are comfortable with REDCap's variable definition schema and
     want faster bulk editing.
@@ -187,18 +267,22 @@ Consider switching to the Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-
 **Q: I saved a change in the Online Designer but it isn't showing up in
 my data entry forms. Why?**
 
-**A:** Your project is in Production mode. Changes do not take effect until
-they pass through the change queue review process. Depending on your
-institution's policy, approval may be automatic or may require a REDCap
-administrator. Check the pending change queue to confirm your change was
-submitted.
+**A:** Your project is in Production mode. Field changes are saved to a
+draft and do not take effect until the draft is submitted and approved.
+Depending on your institution's policy, approval may be automatic or may
+require a REDCap administrator. Check the Online Designer to see whether
+your draft is still being edited or has been submitted for review.
 
 **Q: Can I delete a variable that already has data in it?**
 
-**A:** In Production mode, variables with data cannot be deleted through the
-Online Designer. In Development mode, deleting a variable with test data
-is allowed, but the data is permanently lost. Always confirm whether a
-variable contains real or test data before attempting deletion.
+**A:** Yes, in both modes — in Production through Draft Mode, where the
+deletion usually needs administrator review. Fields used by randomization
+and a MyCap baseline date field cannot be deleted. After deletion the
+data is no longer accessible in forms, reports or exports. REDCap does not
+purge it, and it can reappear if a field with the same variable name is
+created again — so deleting a field is not a way to remove sensitive
+data, and avoid reusing old variable names. Download a backup (Data
+Dictionary and data export) before deleting.
 
 **Q: Does the Online Designer check whether my branching logic is
 correct?**
@@ -226,40 +310,52 @@ Dictionary for bulk restructuring on the same project.
 is auto-approved before I catch it?**
 
 **A:** Once an Online Designer change is approved in Production, it cannot
-be rolled back through the interface. The recovery path is to re-edit
-the variable manually in the Online Designer, or to re-upload a
-previously saved Data Dictionary snapshot that predates the erroneous
-change. This reinforces why saving a Data Dictionary backup before any
-significant change is critical.
+be rolled back through the interface. The recovery path is to enter Draft
+Mode again and reverse the change, or to re-upload a Data Dictionary that
+predates the erroneous change. **Project Revision History** lets you
+download the Data Dictionary as it stood at each earlier approved
+revision, and also lists the automatic snapshots REDCap takes before every
+Data Dictionary upload and API metadata import. If a field was deleted,
+re-creating it with the same variable name brings its data back. Saving
+your own Data Dictionary backup before any significant change is still
+the safest habit.
 
 ---
 
 ## 8. Common Mistakes & Gotchas
 
-- Expecting changes in Production to appear immediately: changes in
-    Production mode go through a review queue. If a change isn't
-    visible after saving, check the pending change queue rather than
-    saving it again.
+- Expecting field changes in Production to appear immediately: they
+    stay in the draft until it is submitted and approved. If a change
+    isn't visible, check whether the draft has been submitted. Re-saving
+    a field only updates the same draft; it does not create a second
+    pending change. Once the draft is submitted, it is locked for
+    editing until an administrator approves or rejects it.
 
-- Submitting the same change multiple times in Production: if the
-    change appears to do nothing, it may be in the queue waiting for
-    approval. Submitting again creates a duplicate pending change. Check
-    the queue first.
+- Assuming survey changes in Production wait for approval: survey
+    settings, the Survey Queue, Automated Invitations, Survey Login and
+    notifications are not part of Draft Mode and go live as soon as you
+    save them.
 
 - Assuming the Online Designer validates study design: the guardrails
     catch technical errors (invalid logic syntax, duplicate variable
     names), not scientific ones. The appropriateness of your instrument
     for your study goals is not validated by REDCap.
 
-- Deleting a variable in Development without realizing it has test
-    data: deleting a variable permanently removes its data. In
-    Development mode this is allowed without warning. Always check
-    whether the field contains data you intend to keep before deleting.
+- Deleting a variable without checking for data: the confirmation
+    prompt (**"Are you sure you wish to delete the field(s)..."**) does
+    not tell you whether the field has data. Afterwards REDCap lists any
+    calculations or branching logic that referenced the field — fix those
+    next. Check the field's data before deleting.
+
+- Treating deletion as data removal, or reusing an old variable name:
+    deleted fields' values are hidden, not purged, and they come back if
+    a new field gets the same variable name. Give new questions new
+    variable names.
 
 - Not using the Data Dictionary for large restructuring jobs: the
-    Online Designer is not efficient for moving many variables between
-    instruments or renaming dozens of variables at once. Switch to the
-    Data Dictionary for those tasks.
+    Online Designer is not efficient for renaming dozens of variables or
+    reorganising many instruments at once. Switch to the Data Dictionary
+    for those tasks.
 
 ### API Access
 
@@ -279,6 +375,12 @@ significant change is critical.
 
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the alternative tool for bulk and
     advanced changes)
+
+- [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) (field types, Edit Field menu, matrix of fields)
+
+- [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md) (placing fields inside other fields' labels)
+
+- [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (Draft Mode, change risk flags and Draft Preview Mode)
 
 - [RC-FD-04 — Instrument Library & Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) (importing and exporting
     instruments from within the Online Designer)

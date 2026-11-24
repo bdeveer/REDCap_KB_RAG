@@ -7,12 +7,13 @@ applies_to:
 - requires Project Design and Setup user rights
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Instrument and field management behaviour checked against source
+  code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-version: '1.5'
+version: '1.6'
 last_updated: 2026-11
 related:
 - id: RC-FD-02
@@ -33,6 +34,7 @@ synonyms:
 - drag and drop logic builder for branching
 - delete an instrument in the designer
 - online designer field management tasks
+- convert existing fields into a matrix group
 ---
 
 # 1. Overview
@@ -124,6 +126,8 @@ Open the **Instrument Actions** dropdown next to the instrument and select **Ren
 
 **Best practice:** Keep instrument names unique within the project. REDCap allows two instruments to share a display name, but will internally assign a unique system name for use in the code book and data dictionary — this can cause confusion. Avoid duplicate display names.
 
+> **Note:** Renaming changes the display name only. The **unique instrument name** (used in exports, logic and the API) can be changed only while the project is in Development, or in Production for an instrument created in the current draft. Changing a unique instrument name permanently drops instrument-level settings tied to the old name: locking records, e-signatures, event designations, repeating-instrument settings, MyCap tasks and instrument-level user rights. Re-check all of these after the change.
+
 ## 5.3 Copying an Instrument
 
 Open the **Instrument Actions** dropdown and select **Copy**. REDCap will prompt you to:
@@ -132,11 +136,30 @@ Open the **Instrument Actions** dropdown and select **Copy**. REDCap will prompt
 
 The suffix requirement exists because every variable name must be unique across the entire project. All fields in the original instrument will have the suffix appended to their variable names in the copy.
 
+What else to expect from a copy:
+
+- The **Record ID** field is not copied.
+- Variable names that would exceed 100 characters with the suffix are truncated. If a new name still collides with an existing variable, REDCap appends a random suffix, so check the copied variable names before you use them in logic or exports.
+- References between fields inside the copied instrument (branching logic, calculations, piping) are rewritten to point at the copied fields.
+- Survey settings and MyCap settings for the instrument are copied too.
+- An instrument with no fields cannot be copied.
+
 ## 5.4 Deleting an Instrument
 
 Open the **Instrument Actions** dropdown and select **Delete**.
 
-> **Warning:** Deleting an instrument permanently deletes the instrument itself and all data collected for any records in that instrument. This action cannot be undone. Exercise extreme caution when the project is in Production mode or contains real participant data.
+> **Warning:** Once an instrument is deleted, the data collected in its fields is no longer accessible in forms, reports or exports. REDCap does not purge that data, and it can reappear if a field with the same variable name is created again — so deleting an instrument is not a way to remove sensitive data, and avoid reusing old variable names. Other things tied to the instrument **are** lost for good: its locking records, e-signatures, event designations, repeating-instrument settings, MyCap tasks and instrument-level user rights (immediately in Development; when the draft is approved in Production). Files uploaded to its file upload fields are marked as deleted. Download a backup (data export and data dictionary) before deleting; REDCap's Project Revision History also keeps an automatic data dictionary snapshot before each data dictionary upload.
+
+Deletion is not always available:
+
+| Situation | Effect |
+| --- | --- |
+| Production project not in Draft Mode | Instruments can be deleted only in Development, or in Production while in Draft Mode (the deletion takes effect when the draft is approved). |
+| Only instrument in the project | Cannot be deleted. |
+| MyCap baseline instrument | Cannot be deleted. |
+| Instrument holds randomization or stratification fields | Cannot be deleted. |
+
+After a deletion, REDCap lists any calculations or branching logic elsewhere in the project that still reference the deleted fields. Fix those references, or they will stop working. If you delete the **first** instrument, REDCap moves the Record ID field to the instrument that becomes first.
 
 ## 5.5 Downloading an Instrument as a Zip File
 
@@ -144,7 +167,7 @@ Open the **Instrument Actions** dropdown and select **Download instrument zip**.
 
 ## 5.6 Reordering Instruments
 
-Drag and drop instruments in the list to change their order. The new order is saved automatically. The order of instruments affects how they appear in the Record Home Page and other navigation views.
+Drag and drop instruments in the list to change their order. The new order is saved automatically. The order of instruments affects how they appear in the Record Home Page and other navigation views. Because the Record ID must stay the first field of the first instrument, moving a different instrument into first position moves the Record ID field into it (see the Q&A in Section 11).
 
 ## 5.7 Opening an Instrument
 
@@ -163,6 +186,7 @@ Every REDCap project is created with one instrument that contains exactly one fi
 You may edit limited aspects of the Record ID field (such as its label), but:
 - Do not rename or restructure the Record ID field after real data has been collected. Doing so can result in **orphaned records** — records that remain in the backend database but no longer appear in the project interface.
 - The Record ID field cannot be moved to a different instrument.
+- If the Record ID's variable name changes while records exist, REDCap shows a warning that the record identifier has changed, but it does not stop you. Treat that warning as a stop sign.
 
 ## 6.2 Field Creation Buttons
 
@@ -184,9 +208,9 @@ Each field in the instrument editor has the following controls:
 | --- | --- |
 | **Edit** (pencil icon) | Opens the field editor for that field. See Section 7. |
 | **Copy** | Duplicates the field. REDCap automatically assigns a new unique variable name to the copy. All other field settings are preserved. **Ctrl-click (Cmd-click on Mac)** instead copies the field to your clipboard for pasting elsewhere — see 6.3.1. |
-| **Move** | Opens a dialog to move the field to a specific position within the instrument, or to a different instrument in the project entirely. |
+| **Move** | Opens a dialog to move the field to a specific position within the instrument, to a different instrument in the project, or into a new instrument. |
 | **Drag handle** | Drag and drop the field to reorder it within the instrument. Note: drag-and-drop cannot move a field to a different instrument — use the Move button for that. |
-| **Delete** (trash icon) | Permanently deletes the field and all data collected in records for that field. In Production mode, REDCap will block deletion of fields that contain data. In Development mode, deletion is immediate and permanent with no warning. |
+| **Delete** (trash icon) | Removes the field after a confirmation prompt ("Are you sure you wish to delete the field(s)..."). Its data is no longer accessible in forms, reports or exports, but REDCap does not purge it, and it can reappear if a field with the same variable name is created again (see Section 12). In Development the deletion takes effect immediately. In Production you can delete fields only in Draft Mode — **REDCap does not block deleting fields that contain data**; the draft review lists deleted fields with their record counts, and, depending on a Control Center setting, a draft that deletes fields is not approved automatically. Fields used for randomization cannot be deleted. |
 | **Branching Logic** (fork icon) | Opens the branching logic editor for this field. See Section 9. |
 
 ### 6.3.1 Copy/Paste Fields *(17.2.0+)*
@@ -202,6 +226,8 @@ Multiple fields can be selected and copied together using **Quick-Modify Fields*
 This makes a single field portable. Previously, moving one field between projects meant carrying an entire instrument via a Zip file, or a whole project via Data Dictionary or Project XML — a lot of machinery for one well-built field with fussy validation and action tags.
 
 > **Note:** Because the clipboard payload is JSON, the receiving instance must understand it. Pasting into an instance below 17.2.0 will not work.
+
+> **Version caveat (LTS 16.0.x):** Copy/Paste Fields does not exist on the 16.0 LTS line; it is available on 17.3 LTS and current Standard releases. On 16.0, move single fields between projects with an instrument zip file or the Data Dictionary.
 
 > **Version caveat (17.2.0–17.2.0):** The on-screen hint said "Ctrl" on Mac where it should have said "Cmd" (fixed 17.2.1), and a field pasted to the very **top** of an instrument might not appear until the page was refreshed — or, in a production project in draft mode, until the drafted changes were approved (also 17.2.1).
 
@@ -247,9 +273,12 @@ The imported field appears in your instrument like any other field. You can edit
 
 After creating or editing a field, REDCap displays a preview of it within the instrument editor. The preview shows the field label, variable name, answer choices (if applicable), whether the field is required, and any branching logic attached to it.
 
-## 6.6 Preview Instrument
+## 6.6 Testing an Instrument
 
-The **Preview Instrument** button (available in the instrument editor toolbar) collapses the exploded design view into a rendering that more closely resembles the final data entry form. Note that branching logic is not active in this preview — it only reflects the form layout. To test branching logic in context, create a test record and complete data entry.
+The instrument editor has no **Preview Instrument** button, and branching logic is not applied in the editor's design view. To test layout, branching logic and calculations:
+
+- **Development:** create a test record and complete data entry on the instrument.
+- **Production in Draft Mode:** use **Draft Preview Mode** from the Online Designer to try the drafted changes on your existing forms without saving any data. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6.5.
 
 ---
 
@@ -289,9 +318,12 @@ At least one choice must be defined before the field can be saved.
 The internal identifier for the field. Variable names:
 - Must be unique across the entire project (not just within the instrument).
 - Are limited to lowercase letters, numbers, and underscores; no spaces or special characters.
+- Can be up to 100 characters long (REDCap recommends 26 or fewer).
 - REDCap enforces these rules automatically and will alert you if a name is invalid or already in use.
 
 **Best practice:** Keep variable names short but human-readable. For example, use `dob` rather than `date_of_birth`. Variable names are permanent identifiers used in exports, branching logic syntax, and API calls — changing them after data collection has started can break downstream references.
+
+> **Important — renaming a field with data orphans its data.** Saved values belong to the variable name, not the field. In Development, if you rename **any** field that already has data (not only the Record ID), the existing values stay under the old name: they disappear from forms, reports and exports, and they reappear if a field with the old name is created later. In Production, the variable names of existing fields are read-only, even in Draft Mode. Never reuse an old variable name for a new question — the old values would show up as answers to it.
 
 ## 7.5 Required
 
@@ -509,7 +541,12 @@ REDCap will display the equivalent branching logic syntax below the builder. Thi
 
 A matrix groups a set of fields together in a grid layout, where each row is an individual field and all rows share a common set of column options (answer choices).
 
-> **Important:** You cannot group or ungroup existing individual fields into a matrix directly in the Online Designer. If you need to restructure existing fields as a matrix, use the Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)).
+Existing fields can be grouped into a matrix or split back out in the Online Designer:
+
+- **Group:** select the fields with their **Quick-Modify** checkboxes and choose **Convert to matrix group** (see [RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS](RC-FD-11_Advanced-Online-Designer-Options.md)).
+- **Ungroup:** open the matrix in **Edit Matrix of Fields** and click **Save & split matrix into separate fields**.
+
+> **Critical — Convert to matrix group can re-code your data.** All rows of a matrix share one set of choices, so REDCap keeps the choices of the **first** selected field and overwrites the choices of every other field with them. It also clears those fields' field notes and custom alignment. Values already saved are not changed, so if another field used different codes (say `0 = No, 1 = Yes` against a first field's `1 = Yes, 2 = No`), its existing data now reads with the wrong labels, or matches no choice at all. Before converting, check that every selected field has exactly the same codes and labels in the same order; if they differ and the fields hold data, do not convert. The Data Dictionary ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)) is an alternative way to restructure fields as a matrix, with the same rule that all fields in a matrix group must have identical choices.
 
 ## 10.1 Opening the Matrix Editor
 
@@ -572,7 +609,8 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 | Can I have two instruments with the same name? | Technically yes, but it is not recommended. REDCap will assign unique system names internally, which can cause confusion in the code book and data dictionary. Keep display names unique. |
 | Which field types allow multiple selections? | Only the **Checkbox** field type and **Checkbox matrix** allow multiple selections per field. All other selection types (dropdown, radio, yes-no, true-false) are single-select. |
 | Can I move a field from one instrument to another? | Yes — use the **Move button** on the field (not drag-and-drop). The Move button opens a dialog that allows you to select a target instrument. Drag-and-drop only repositions a field within the same instrument. |
-| What happens if I delete a field that has data in it? | The data is permanently lost. In Development mode, deletion is allowed without warning. In Production mode, fields with data cannot be deleted. Always verify whether a field contains real data before deleting. |
+| What happens if I delete a field that has data in it? | After a confirmation prompt, the field is removed and its data is no longer accessible in forms, reports or exports. REDCap does not purge the data, and it can reappear if a field with the same variable name is created again, so deleting a field is not a way to remove sensitive data, and you should avoid reusing old variable names. In Production, deletion happens through Draft Mode and is **not** blocked for fields with data; the draft review shows how many records have data in each deleted field. Download a backup before deleting. |
+| I renamed a field in Development and its data disappeared. Is it gone? | No. Saved values stay under the old variable name and are no longer shown. Renaming the field back to its old name brings them back. |
 | Can I edit the Record ID field? | You can edit some aspects of the Record ID field (such as its label), but you should not restructure or rename it after real data collection has begun, as this can create orphaned records in the backend database. |
 | What is the difference between "Add Field" and "Add CDE Field"? | **Add Field** creates a new field from scratch via the field editor — you define the label, type, choices, and all other settings yourself. **Add CDE Field** (formerly "Import from Field Bank") opens the CDE Library, where you search a catalog of standardized Common Data Elements and import a pre-built field definition. CDE fields are useful when your study requires data harmonization, when your funder mandates specific CDEs, or when you want to adopt a validated field definition without building it from scratch. |
 | What is Bio-Medical Ontology and is it a field type? | No. Biomedical ontology lookup is an optional enhancement to the **Text Box** field type — not a standalone field type. It converts a text box into an ontology search input. It must be enabled by your REDCap administrator. |
@@ -595,9 +633,9 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 
 ## Deleting an answer choice instead of retiring it
 - The user deletes an answer choice from a dropdown, radio, or checkbox field after data has been collected using that choice.
-- All records that selected the deleted choice lose the associated data — it is permanently removed from the field.
+- REDCap warns "Data MIGHT be lost due to deleted choice(s)". The stored codes are not erased, but records that selected the deleted choice now hold a code with no matching choice, so the value no longer displays and is effectively lost from forms, reports and exports.
 - **Prevention:** Use the action tag **@HIDECHOICE** to retire an answer choice without deleting it. @HIDECHOICE hides the choice from new data entry but preserves it in records where it was already selected.
-- **Recovery:** None through the interface. Contact your REDCap administrator — data may be recoverable from a database backup.
+- **Recovery:** Add the choice back with the **same code**; the existing values display again.
 
 ## Using duplicate variable names
 - The user creates two fields with the same variable name in different instruments.
@@ -607,9 +645,9 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 
 ## Deleting an instrument or field with real data
 - The user deletes an instrument or field without realizing it contains participant data.
-- The data is permanently lost and cannot be recovered through the interface.
-- **Prevention:** Before any deletion, check whether the instrument or field contains data. In Production mode, REDCap will block deletion of fields with data; in Development mode it will not.
-- **Recovery:** None through the interface. Contact your REDCap administrator — data may be recoverable from a database backup depending on your institution's backup policy.
+- The data is no longer accessible in forms, reports or exports. REDCap does not purge it, and it can reappear if a field with the same variable name is created again — so deleting is not a way to remove sensitive data, and reusing an old variable name for a new question exposes the old values. For a deleted instrument, its locking records, e-signatures, event designations, repeating-instrument settings, MyCap tasks and instrument-level user rights are lost for good.
+- **Prevention:** Before any deletion, check whether the instrument or field contains data and download a backup (data export and data dictionary). REDCap does **not** block deleting fields that contain data in either Development or Production (Draft Mode); in Production, read the record counts in the draft review before the draft is approved.
+- **Recovery:** Re-creating a field with the identical variable name makes its data accessible again. Data dictionary snapshots on **Project Revision History** help you rebuild the exact field definitions. Lost locking and e-signature history cannot be restored through the interface; contact your REDCap administrator.
 
 ## Modifying the Record ID field after data collection
 - The user renames or restructures the Record ID field after real records have been created.
@@ -637,10 +675,15 @@ Each matrix row is an independent field and supports its own branching logic. Cl
 - The data entry interface looks inconsistent, which can confuse users.
 - **Prevention:** Agree on an alignment standard at the start of project design and apply it consistently.
 
-## Expecting the Preview Instrument button to test branching logic
-- The user uses the Preview Instrument view to verify that branching logic works correctly.
-- Branching logic is not active in the Preview Instrument view — it only shows the form layout.
-- **Prevention:** Always test branching logic by creating a test record and entering data through the standard data entry interface.
+## Expecting the instrument editor to test branching logic
+- The user checks the instrument in the Online Designer to verify that branching logic works correctly.
+- Branching logic is not active in the design view — it only shows the form layout.
+- **Prevention:** Test branching logic by creating a test record and entering data through the standard data entry interface, or, for a Production project in Draft Mode, with **Draft Preview Mode**.
+
+## Converting fields with different choices into a matrix group
+- The user selects several existing fields with data and uses **Convert to matrix group**.
+- REDCap keeps only the first field's choices and overwrites the others', so existing values in the other fields can end up with the wrong labels or no matching choice.
+- **Prevention:** Convert only fields whose choices are identical in codes, labels and order. See Section 10.
 
 ---
 

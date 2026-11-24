@@ -8,11 +8,12 @@ applies_to:
 - requires Project Design and Setup rights
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Preview options checked against source code of v17.6.5 (Standard)
+  / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-FD-02 — Online Designer
-version: '1.5'
-last_updated: 2026-08
+version: '1.6'
+last_updated: 2026-11
 related:
 - id: RC-FD-02
   title: Online Designer
@@ -117,7 +118,7 @@ It is possible to embed a descriptive field inside another field. Because descri
 
 **Testing embedded fields:**
 
-The Preview Instrument button in the Online Designer provides a limited preview of how field embedding will look, but it is less accurate than viewing the actual instrument for a real or test record. Always test in a real record before finalizing the layout.
+The Online Designer has no separate preview button. Check embedding layouts by opening the instrument for a test record, or, for drafted changes in Production, with Draft Preview Mode (see [RC-PROJ-01](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)). Always test in a real record before finalizing the layout.
 
 ---
 

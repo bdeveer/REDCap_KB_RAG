@@ -7,10 +7,10 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; works on both instruments and surveys; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Preview options checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.5 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.6 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | what is field embedding; put a field inside another fields label; reposition a field on a form; embed a text box next to an answer choice; arrange fields in a grid or table layout; curly brace field references in labels; change where a field appears on a survey; how to use field embedding in redcap |
@@ -100,7 +100,7 @@ It is possible to embed a descriptive field inside another field. Because descri
 
 **Testing embedded fields:**
 
-The Preview Instrument button in the Online Designer provides a limited preview of how field embedding will look, but it is less accurate than viewing the actual instrument for a real or test record. Always test in a real record before finalizing the layout.
+The Online Designer has no separate preview button. Check embedding layouts by opening the instrument for a test record, or, for drafted changes in Production, with Draft Preview Mode (see [RC-PROJ-01](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)). Always test in a real record before finalizing the layout.
 
 ---
 

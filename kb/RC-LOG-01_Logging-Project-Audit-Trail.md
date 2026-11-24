@@ -7,10 +7,10 @@
 | **Domain** | Logging |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Project Logging behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md); [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md) |
 | **Synonyms** | how do i view the project audit trail; who changed this data and when; see a history of all actions in my project; filter and export the logging records; redcap audit log for compliance; track record creation deletion and exports; data history popup clock icon; difference between logging and email logging |
@@ -19,9 +19,9 @@
 
 ## 1. Overview
 
-This article explains REDCap's project-level Logging module — the built-in audit trail that records every action taken within a project. Logging captures data changes, record creation and deletion, user access, exports, API calls, project configuration changes, and page views. It provides a tamper-evident, timestamped record that supports data integrity verification, user activity review, and regulatory compliance. This article covers how to access Logging, how to read log entries, how to use the filter and export options, and how the project-level log relates to other audit tools in REDCap.
+This article explains REDCap's project-level Logging module — the built-in audit trail that records every action taken within a project. Logging captures data changes, record creation and deletion, user and user-rights changes, exports, API calls, project configuration changes, and page views. User logins are not recorded in project Logging. It provides a timestamped record that project users cannot edit that supports data integrity verification, user activity review, and regulatory compliance. This article covers how to access Logging, how to read log entries, how to use the filter and export options, how the project-level log relates to other audit tools in REDCap, and the specific REDCap actions that remove or rewrite log entries (Section 9.1).
 
-> **Note:** Email Logging is a separate application in REDCap (also under the Applications menu) that tracks outgoing emails sent by the project. It is not the same as the audit trail Logging module covered here. See Section 8.5 for more detail.
+> **Note:** Email Logging is a separate application in REDCap (also under the Applications menu) that tracks outgoing emails sent by the project. It is not the same as the audit trail Logging module covered here. See Section 8.6 for more detail.
 
 ---
 
@@ -31,19 +31,19 @@ This article explains REDCap's project-level Logging module — the built-in aud
 The project-level application in REDCap that displays a searchable, filterable history of all actions taken within a single project. Accessible from the left-hand Applications menu when the user has the Logging user right.
 
 #### Audit Trail
-The complete, chronological record of project activity stored by REDCap. Every save, export, import, login, and configuration change generates at least one log entry. The audit trail cannot be edited or deleted by any project user or administrator.
+The complete, chronological record of project activity stored by REDCap. Every save, export, import, and configuration change generates at least one log entry (logins are not part of project Logging). Log entries cannot be edited from the Logging page, but a small number of REDCap actions — Erase all data, moving to production with data deletion, deleting a record when record-logging deletion is enabled, and renaming a record — remove or rewrite existing entries. See Section 9.1.
 
 #### Log Entry
 A single record in the audit trail. Each entry captures: the timestamp of the action, the username of the person who performed it, an action category and description, and — for data changes — the specific field and value details.
 
 #### Logging User Right
-A project-level user permission that grants access to the Logging module. Users without this right do not see the Logging link in the left menu. It is separate from the field-level field history ('H' button), which is available to all users who can open an instrument.
+A project-level user permission that grants access to the Logging module. Users without this right do not see the Logging link in the left menu. Because the log shows every saved value, the right is in effect read access to all data ever saved in the project (see Section 3.3). It is separate from the field-level field history ('H' button), which is available to all users who can open an instrument.
 
 #### Data History Popup
 A project-level setting (enabled under Project Setup → Additional Customizations) that adds a clock icon next to every field on every instrument. Clicking the icon opens a popup showing a chronological history of all values that field has held for that record — including the previous value, who made each change, and the timestamp. This is the per-field complement to the project-level Logging module. The Data History popup must be enabled for the File Version History feature to work. See [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
 #### Server Timestamp
-All log entries record the date and time as reported by the REDCap server, not the user's local browser time. For multi-time-zone teams, confirm the server's timezone with your administrator when reviewing time-sensitive entries.
+All log entries record the date and time as reported by the REDCap server, not the user's local browser time. The Logging page displays it in each user's own date/time format preference; the CSV export always uses YYYY-MM-DD HH:MM. For multi-time-zone teams, confirm the server's timezone with your administrator when reviewing time-sensitive entries.
 
 #### Page Views
 A distinct event type that records every URL visited within the project by each user. Page views are **excluded from the default Logging view** and must be selected explicitly via the event type filter. They can produce a very high volume of entries.
@@ -56,7 +56,7 @@ A distinct event type that records every URL visited within the project by each 
 
 The Logging module is accessible from the left-hand navigation menu under **Applications**. If you do not see a "Logging" link, you have not been granted the Logging user right for this project. Contact your project administrator to request access.
 
-> **Note:** In projects where you have administrator or project design rights, Logging access is typically granted by default. For data entry accounts, it must be granted explicitly.
+> **Note:** The Logging right is not tied to Project Design and Setup. The user who creates a project receives all rights, including Logging; every other user or role must be granted it explicitly. Copying a project copies the users' rights, including Logging.
 
 ### 3.2 Default View
 
@@ -69,9 +69,11 @@ A notice at the top of the log confirms this: "By default, only the logged event
 
 ### 3.3 Required User Rights
 
-The Logging user right is a single checkbox in **User Rights** (left menu → User Rights) labeled "Logging." Granting this right gives the user full read access to the project's audit trail — there is no partial or filtered access at the user-rights level.
+The Logging user right is a single checkbox in **User Rights** (left menu → User Rights) labeled "Logging." Granting this right gives the user full read access to the project's audit trail — there is no partial or filtered access at the user-rights level, with one exception: users assigned to a Data Access Group see only log entries for records in their DAG (this also applies to the **All logging** export), and page views only from users in the same DAG.
 
-To use the API Export Logging endpoint programmatically, the user must also have **API Export** privilege. Both rights are required; neither alone is sufficient for API access. See [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
+> **Important:** Logging ignores instrument-level rights and data export rights. Every saved value — including identifiers and values on instruments the user has **No Access** to — appears in the data column. Granting Logging is therefore effectively granting read access to all data ever saved in the project (within the user's DAG, if any). Treat it as a data-access decision, not an administrative convenience.
+
+To use the API Export Logging endpoint programmatically, the user must also have **API Export** privilege. Both rights are required; neither alone is sufficient for API access. The API also refuses users whose Data Export right is **No Access**. See [RC-API-39 — Export Logging API](RC-API-39_Export-Logging.md).
 
 > **Institution-specific:** [Note any local policy about who routinely receives the Logging right — leave blank until confirmed with your REDCap support team]
 
@@ -89,6 +91,8 @@ To use the API Export Logging endpoint programmatically, the user must also have
 
 The 17.0.0 change is worth noting for anyone using the log as evidence of what left the project: previously a PDF download was recorded without saying *which* instrument or event it covered, so the entry established that an export happened but not what it contained.
 
+> **Version caveat (user-rights detail, 17.6.5 Standard vs. 17.3.x and 16.0.x LTS):** On 17.6.5, adding, editing or deleting a user, role or DAG assignment logs a full snapshot of the saved rights, and automatic role changes are also logged. On the 17.3.x and 16.0.x LTS lines these entries record only the user or role name, not which rights were set. If you need evidence of exactly which rights a user held on an LTS instance, keep your own dated record of the **User Rights** page alongside the log.
+
 > **Version caveat (below 17.0.2 Standard):** Filtering the log by **Page Views** could return entries **not in reverse chronological order**, which is easy to misread as a gap in activity. Fixed in 17.0.2.
 
 ---
@@ -101,7 +105,7 @@ The log table has four columns:
 
 | Column | Description |
 |---|---|
-| **Time / Date** | Timestamp in server local time (format: MM/DD/YYYY H:MMam/pm in the UI; YYYY-MM-DD HH:MM in the CSV export) |
+| **Time / Date** | Timestamp in server local time (shown in your own date/time format preference in the UI; YYYY-MM-DD HH:MM in the CSV export) |
 | **Username** | REDCap username of the person who performed the action, or `[survey respondent]` for unauthenticated survey submissions, `[mycap respondent]` for MyCap task submissions (17.5.3+), or `SYSTEM` for automated system actions |
 | **Action** | Action category and description (see Section 4.2 for examples) |
 | **List of Data Changes OR Fields Exported** | For data entry actions: every changed field and its new value. For exports and API calls: what was exported. For page views: the full URL visited. |
@@ -128,6 +132,10 @@ The event name and arm are shown in parentheses for longitudinal projects. Auto-
 `(Admin only) View project as user "[username]"`
 `(Admin only) Stop viewing project as user "[username]"`
 
+The "View project as user" entries are shown only to administrators; other users with the Logging right do not see them.
+
+**Record administration actions:** deleting a record is logged as a **Delete record** event; assigning a record to, or removing it from, a DAG is logged as **Update record**.
+
 **Page Views:**
 `Page View` — shown in blue text; data column contains the full URL accessed
 
@@ -147,6 +155,8 @@ For **repeating instrument** instances, the entry begins with `[instance = N]`:
 
 For **alert modifications**, the full alert configuration is captured in the data column (all parameters, including message body, schedule settings, and recipient addresses).
 
+If the project requires a reason for changes, the reason appears in a separate **Reason for Data Change(s)** column in the Logging table and CSV (and as the `reason` field in the API export).
+
 > **Note:** The data column shows the **values as saved** at the time of the action, not old-vs-new comparisons. To see what a value was before an edit, use the field-level 'H' button on the data entry form. See [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md).
 
 ---
@@ -155,15 +165,15 @@ For **alert modifications**, the full alert configuration is captured in the dat
 
 ### 5.1 Filter Controls
 
-All filters are displayed in a blue panel at the top of the Logging page. Every filter can be combined with others.
+All filters are displayed in a blue panel at the top of the Logging page. Every filter can be combined with others. Results are shown 100 rows per page.
 
 | Filter | Description |
 |---|---|
 | **Filter by event** | Dropdown — select an event type (see Section 5.2). Defaults to "All event types (excluding page views)" |
-| **Filter by user** | Dropdown — lists all users who have activity in the project; includes `SYSTEM` and `[survey respondent]`. From 15.9.3, `SYSTEM` is **always** offered rather than appearing only when system activity happens to exist |
-| **Filter by record** | Dropdown — lists all record IDs in the project |
+| **Filter by user** | Dropdown — lists the project's **current** users, plus `[survey respondent]` (if surveys are enabled) and `SYSTEM`. From 15.9.3, `SYSTEM` is **always** offered. Users who have been removed from the project cannot be selected, even though their earlier entries remain in the log; to isolate them, export the log and filter the Username column, or use the Export Logging API's user parameter |
+| **Filter by record** | Dropdown — lists all record IDs in the project. When a record is selected, only data-related events for that record are shown (project-level rows such as instrument-event mapping changes are hidden) |
 | **Filter by time range** | Date/time range with quick-select buttons (see Section 5.3) |
-| **DAG filter** | Available via URL parameter (`dag`); filters by Data Access Group |
+| **Filter by records in a DAG:** | Dropdown — shown only when the project has DAGs and you are not assigned to one; limits results to records in the selected DAG |
 
 ### 5.2 Event Type Options
 
@@ -175,26 +185,27 @@ The "Filter by event" dropdown contains these options (internal API values in pa
 | Data export | `export` |
 | Manage/Design | `manage` |
 | User or role created-updated-deleted | `user` |
+| Record created-updated-deleted | `record` |
 | Record created (only) | `record_add` |
 | Record updated (only) | `record_edit` |
 | Record deleted (only) | `record_delete` |
 | Record locking & e-signatures | `lock_record` |
 | Page Views | `page_view` |
 
-> **Note:** The API `logtype` parameter also accepts `'record'` (not available as a UI dropdown option), which returns all record-related events — equivalent to combining `record_add`, `record_edit`, and `record_delete`.
+> **Note:** "Record created-updated-deleted" (`record`) returns all record-related events — equivalent to combining `record_add`, `record_edit`, and `record_delete`.
 
 > **Important:** Page Views are deliberately excluded from the default "all event types" view. On active projects, page view logging can generate thousands of entries. Select "Page Views" explicitly when you need to trace which pages a specific user accessed and when.
 
 ### 5.3 Time Range Quick Buttons
 
-Below the date fields, five quick-select buttons pre-fill the time range:
+Below the date fields, six quick-select buttons pre-fill the time range:
 
 - **Custom range** — clears buttons and lets you type dates manually
 - **Past Day** — from 24 hours ago to now
 - **Past Week** — from 7 days ago to now *(default on page load)*
-- **Past Month** — from 30 days ago to now
-- **Past Year** — from 365 days ago to now
-- **No limit** — clears both date fields, returning all log entries
+- **Past Month** — from the same date one calendar month ago to now
+- **Past Year** — from the same date one calendar year ago to now
+- **No limit** — from the project's creation to now, returning all log entries
 
 ---
 
@@ -210,11 +221,13 @@ Three CSV export buttons appear in the upper-right corner of the Logging page:
 | **All pages using current filters** | All entries matching the current event type, user, record, and date filters — ignores pagination |
 | **Current page** | Only the entries visible in the current page of results |
 
+The CSV uses the delimiter set in your user profile preferences. Downloading the log is itself logged.
+
 For compliance purposes, "All pages using current filters" is usually the most useful: it applies your date range and event type filter while returning all matching rows, not just the visible page.
 
 ### 6.2 CSV Column Structure
 
-The exported CSV has five columns:
+The exported CSV contains these columns (plus **Reason for Data Change(s)** when the project uses reasons for change):
 
 | Column | Notes |
 |---|---|
@@ -239,7 +252,7 @@ REDCap's audit trail is frequently cited in regulated research environments as a
 - **ICH E6(R2) Good Clinical Practice (GCP):** Section 5.18.4(n) requires that all changes to source data be documented, and that original data and audit trails be preserved.
 - **21 CFR Part 11 (FDA electronic records):** Requires computer-generated, time-stamped audit trails that record when operator entries and actions create, modify, or delete records.
 
-REDCap's logging meets these requirements at the data capture level: every field save is recorded automatically with a timestamp and username, and the record cannot be altered. However, Part 11 compliance also involves controls outside REDCap (system validation, access control policies, training records). The audit log alone does not constitute full regulatory compliance.
+REDCap's logging supports these requirements at the data capture level: every field save is recorded automatically with a timestamp and username, and entries cannot be edited from the Logging page. However, some REDCap actions remove or rewrite log entries (Section 9.1); your SOPs should control who may perform them, and you should export the log before any of them is used on a study project. However, Part 11 compliance also involves controls outside REDCap (system validation, access control policies, training records). The audit log alone does not constitute full regulatory compliance.
 
 ### 7.2 Preparing an Audit Package
 
@@ -262,7 +275,7 @@ A common workflow for a formal audit or inspection:
 |---|---|---|
 | **Scope** | Single project only | All projects on the REDCap instance |
 | **Who can access** | Users with Logging right in the project | REDCap system administrators only |
-| **Filter options** | Event type, user, record, DAG, date range | Project title, date range |
+| **Filter options** | Event type, user, record, DAG (users not in a DAG), date range | Project title, date range |
 | **Use case** | Project-level audit, compliance, user activity review | Instance-wide monitoring, security investigation |
 | **Access location** | Project left menu → Applications → Logging | Control Center → Dashboards & Activity → User Activity Log |
 
@@ -290,7 +303,7 @@ See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 The **Require a Reason When Making Changes to Existing Records** setting (Project Setup → Additional Customizations) adds a prompt whenever a user saves an instrument that already contains data. The user must enter a short explanation (up to 200 characters) before the save completes.
 
-That reason text is stored in the project's Logging and appears in the data column of the relevant log entry — alongside the field values that were changed. Reviewers can see both what changed and why in a single log entry. The prompt fires on UI saves only; data imported via the Data Import Tool or API does not trigger it.
+That reason text is stored in the project's Logging and appears in the **Reason for Data Change(s)** column of the relevant log entry, next to the field values that were changed. Reviewers can see both what changed and why in a single log entry. The Data Import Tool also requires a reason for each imported record that already has data on the affected instruments. API imports do not prompt for one.
 
 This setting is commonly used in studies with regulatory requirements for audit trails. Enable it under Project Setup → Additional Customizations. See [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
@@ -305,21 +318,43 @@ This setting is commonly used in studies with regulatory requirements for audit 
 - Alerts & Notifications
 - REDCap 2-step login emails
 
-Email Logging supports keyword search across subject, body, sender, and recipient, and includes a "Resend" option for individual messages. It does not record data changes — it is an email delivery log, not an audit trail.
+It also covers other outgoing message types, such as To-Do List, two-factor and SMS messages, and results can be narrowed by these categories.
+
+Email Logging supports keyword search across subject, body, sender, and recipient, and includes a "Resend" option for individual messages (attachments are not resent). It does not record data changes — it is an email delivery log, not an audit trail.
+
+Access requirements:
+
+- An administrator must enable Email Logging at system level.
+- The user needs the separate **Email Logging** user right.
+- Each user must agree to an on-screen disclaimer before first use; the agreement is logged.
+
+> **Important:** Email Logging has **no DAG restriction**. A user with the Email Logging right sees outgoing emails for all DAGs, including any record data piped into message subjects and bodies. In projects with DAGs, grant it only to users who may see every DAG's data.
 
 ---
 
 ## 9. Log Retention and Immutability
 
-### 9.1 Entries Cannot Be Deleted
+### 9.1 When REDCap Removes or Rewrites Log Entries
 
-REDCap's audit trail is immutable at the project level. No project user, including users with project design rights, can delete, modify, or suppress log entries. This is a core requirement for data integrity and regulatory compliance.
+There is no way to edit or delete individual entries from the Logging page. However, the following REDCap features do remove or rewrite existing log content:
+
+| Action | Who can do it | Effect on the log |
+|---|---|---|
+| **Erase all data** (Project Setup → Other Functionality) | Users with Project Design and Setup while in Development; administrators in any status | Deletes all data-related log entries. Entries for user and user-rights changes are kept |
+| **Move project to production** with the option to delete all records ticked | The user moving the project, or the administrator approving the request | Same as Erase all data |
+| **Delete a record** when the per-project setting **"Delete a record's logging activity when deleting the record?"** is enabled | The user deleting the record, who is asked whether to also delete its logging and must type DELETE to confirm. Only an administrator can enable the setting | Logged values for that record (in the current arm) are replaced with `[*DATA REMOVED*]`, and the record's Email Logging content is scrubbed. Through the API, when the setting is on, record deletion also deletes the logging unless the request explicitly asks to keep it |
+| **Rename a record** | Users who can rename records | The record name on all earlier log entries is rewritten to the new name, so the log no longer shows the old ID |
+| **Randomization rolled back** by a real-time Data Quality rule violation | Automatic | That randomization's log entries are deleted |
+
+> **Important:** If your study relies on the log as an audit trail, download **All logging** (CSV) before erasing data, moving to production with data deletion, or deleting records in a project where record-logging deletion is enabled. Ask your administrator whether that setting is on for your project, and record renames (old and new ID) in your study documentation.
 
 > **Note:** At the system administrator level, a REDCap system admin with direct database access could theoretically alter the underlying database. In practice, this is outside normal operations and would represent a serious compliance deviation. Institutional policies typically prohibit this.
 
 ### 9.2 Retention Period
 
-REDCap does not apply a default expiration to project-level log entries. Logs persist for the life of the project on the server.
+REDCap does not apply a default expiration to project-level log entries. Apart from the actions in Section 9.1, logs persist for the life of the project on the server.
+
+Projects moved from another REDCap server with the Project Migration Tool keep the source server's history on a separate **Legacy Logging** tab of the Logging page, with its own **Download legacy logging (CSV)** button.
 
 > **Institution-specific:** [Note any local retention or archival policy for project logs — leave blank until confirmed with your REDCap support team]
 
@@ -328,7 +363,7 @@ REDCap does not apply a default expiration to project-level log entries. Logs pe
 ## 10. Common Questions
 
 **Q: I don't see "Logging" in the left menu. Why?**
-You have not been granted the Logging user right for this project. Contact your project administrator. Users with project design or admin rights typically have it by default; data entry accounts usually do not.
+You have not been granted the Logging user right for this project. Contact your project administrator. The right is separate from Project Design and Setup: only the project creator has it automatically, and everyone else must be granted it.
 
 **Q: The log only shows entries from the past week. How do I see older data?**
 The default view limits results to the past week to keep the page fast. Use the time range buttons (Past Month, Past Year, No limit) or type a custom start date to expand the range. Click the "No limit" button to remove all date restrictions.
@@ -337,10 +372,10 @@ The default view limits results to the past week to keep the page fast. Use the 
 Yes — select "Page Views" from the event type dropdown. Each page view entry shows "Page View" in the Action column and the full URL accessed in the data column. Page views are excluded from the default "all event types" view because of their high volume.
 
 **Q: Can I delete entries from the log?**
-No. The audit trail is immutable — no project user or administrator can delete or edit log entries. To correct a data entry error, fix the field value (which creates a new log entry showing the correction) and document the circumstances per your study's SOPs.
+Not from the Logging page — individual entries cannot be edited or deleted. However, Erase all data, moving to production with data deletion, deleting a record when record-logging deletion is enabled, and renaming a record do remove or rewrite log content (see Section 9.1). To correct a data entry error, fix the field value (which creates a new log entry showing the correction) and document the circumstances per your study's SOPs.
 
 **Q: How do I find all changes made by a specific user?**
-Select the user's name from the "Filter by user" dropdown (all users with activity in the project are listed). Set a date range if needed. To narrow by type, also select "Record updated (only)" from the event type dropdown.
+Select the user's name from the "Filter by user" dropdown (only current project users are listed; for a removed user, export the log and filter the Username column, or use the Export Logging API). Set a date range if needed. To narrow by type, also select "Record updated (only)" from the event type dropdown.
 
 **Q: Why do some entries show `[mycap respondent]` as the user?**
 From 17.5.3 (Standard), task submissions from the MyCap app are logged under `[mycap respondent]`, with the description suffix **(MyCap - API)** rather than **(API)**. The Data History popup on the form shows the same label. This separates participant submissions from staff API use. On earlier versions, including the 17.3.x LTS line, MyCap submissions appear as ordinary API activity, so filter on the record and timestamp rather than the user.
@@ -371,9 +406,13 @@ When an alert is created or modified, REDCap logs the full configuration includi
 
 **Assuming the data column shows old vs. new values.** The data column shows the field values as saved in that transaction — not a before/after comparison. To see what a value was before an edit, use the 'H' button next to the field in the data entry form.
 
-**Granting Logging rights without awareness of its scope.** The Logging right gives the user full read access to all audit entries in the project — including other users' activity, export history, and full alert configurations. Grant it deliberately and per your project's data access plan.
+**Granting Logging rights without awareness of its scope.** The Logging right gives the user full read access to all audit entries in the project — including other users' activity, export history, and full alert configurations. Grant it deliberately and per your project's data access plan. It also shows every saved data value, including identifiers and instruments the user cannot open — instrument-level and export rights do not limit it.
 
-**Expecting deleted records to be visible in the log.** The deletion event itself is logged, but the record's data is gone. If you need the data values from a deleted record, they cannot be recovered from the audit trail — the log shows the deletion event, not the data that was deleted.
+**Assuming deleting a record removes its data from the log.** By default, a deleted record's earlier saved values remain visible in Logging. They are removed only if the project has "Delete a record's logging activity when deleting the record?" enabled and the user chooses to delete the logging (values become `[*DATA REMOVED*]`). Erase all data and moving to production with data deletion also remove data-related log entries. Do not rely on record deletion to remove sensitive data from the log, and do not assume the log will always hold a deleted record's history.
+
+**Searching the log by a record's old ID after a rename.** Renaming a record rewrites the record name on all earlier log entries, so searching for the old ID finds nothing.
+
+**Assuming Email Logging respects DAGs.** It does not; see Section 8.6.
 
 ---
 
@@ -386,7 +425,7 @@ When an alert is created or modified, REDCap logs the full configuration includi
 - [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) (separate query/response log within records)
 - [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (field-level comments, separately accessible)
 - [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md) *(coming soon)* (lock/unlock events selectable via "Record locking & e-signatures" event type filter)
-- [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md) (coming soon)* (record rename, delete, DAG move — all logged under Manage/Design)
+- [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md) (coming soon)* (record rename, delete, DAG move — delete is logged as a Delete record event, DAG assignment as Update record; a rename rewrites the record ID on earlier entries)
 - [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (export actions are logged; relevant for compliance packages)
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (alert create/modify events appear in detail in the Logging module)
 - [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (Data History Popup and Reason for Change settings)

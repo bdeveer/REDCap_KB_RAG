@@ -7,18 +7,20 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 (Data Entry Trigger and Analysis/Cleanup not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 (Data Entry Trigger and Analysis/Cleanup not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog. Import Records behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-04 — Delete Records API](RC-API-04_Delete-Records.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)|
-| **Synonyms** | how do i import records via the api; import records api call; create or update records through the api; push data into redcap programmatically; bulk upload record data with the api; api method to write json or csv records; overwrite behavior for record import api; load data into a project via api; import records api one invalid value rejects whole import |
+| **Synonyms** | how do i import records via the api; import records api call; create or update records through the api; push data into redcap programmatically; bulk upload record data with the api; api method to write json or csv records; overwrite behavior for record import api; load data into a project via api; import records api one invalid value rejects whole import; api import rights per instrument create records |
 
 ---
 
-> **Version caveat (below 17.4.0 Standard):** Importing records while a project is in **Analysis/Cleanup** status behaved inconsistently between the API and the user interface. No data could be imported via the API in that status even where the project was set to allow editing of existing records — the UI permitted it, the API did not. Fixed in 17.4.0. If an import script fails only on projects in Analysis/Cleanup, this is the likely cause.
+**Projects in Analysis/Cleanup status:** on current versions the API accepts imports that update existing records, provided the project's data is not set to Read-only/Locked. It refuses the import when the data is Read-only/Locked or `forceAutoNumber=true` is sent, and it never creates new records in this status.
+
+> **Version caveat (below 17.4.0 Standard; 16.0 LTS):** Older versions refuse every API record import while the project is in **Analysis/Cleanup** (HTTP 403), even where the project allows editing of existing records — the UI permits it, the API does not. Fixed in 17.4.0 Standard; 17.3.31 LTS already behaves like current Standard, but 16.0.61 LTS still refuses. If an import script fails only on projects in Analysis/Cleanup, this is the likely cause: upgrade, or run the import while the project is still in Production.
 
 ## 1. Overview
 
@@ -34,17 +36,17 @@ When to use this method: When you need to load data from an external system into
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update right. |
+| `token` | Required | Your project API token. Requires the API Import/Update right. Instrument-level rights and Create Records are not applied — see §7. |
 | `content` | Required | Always `'record'` for this method. |
 | `format` | Required | Data format: `'json'`, `'csv'`, `'xml'` (default), or `'odm'` (CDISC ODM XML v1.3.1). Must match the structure of the `data` parameter. |
 | `type` | Optional | Data structure: `'flat'` (default; one row per record) or `'eav'` (entity-attribute-value; one row per data point). Non-longitudinal EAV has columns `record`, `field_name`, `value`; longitudinal adds `redcap_event_name`. |
 | `overwriteBehavior` | Optional | `'normal'` (default; blank/empty values are ignored) or `'overwrite'` (blank/empty values are valid and will overwrite existing data). |
-| `forceAutoNumber` | Optional | `false` (default; record names in the request are used as-is) or `true` (REDCap ignores the provided record names and assigns new auto-numbers). When `true`, set `returnContent` to `'auto_ids'` to see how provided names map to new names (e.g., `323,10` means new ID 323 was assigned to provided ID 10). |
-| `backgroundProcess` | Optional | `0`/`false` (default; synchronous import) or `1`/`true` (run as background process). When background, the response is `success:true` or `success:false` regardless of `returnContent` or `returnFormat`. |
+| `forceAutoNumber` | Optional | `false` (default; record names in the request are used as-is) or `true` (REDCap ignores the provided record names and assigns new auto-numbers). Silently ignored unless **Record auto-numbering** is enabled in Project Setup. Rows that share the same supplied record name are kept together under one new ID. When `true`, set `returnContent` to `'auto_ids'` to see how provided names map to new names (e.g., `323,10` means new ID 323 was assigned to provided ID 10). |
+| `backgroundProcess` | Optional | `0`/`false` (default; synchronous import) or `1`/`true` (run as background process). When background, the response is `success:true` or `success:false` regardless of `returnContent` or `returnFormat`. `success:true` only means the job was queued; a background import is **not** all-or-nothing (see §4). |
 | `data` | Required | The record data to import as a JSON, CSV, or XML string. For repeating instruments or events, you can auto-number new instances by setting `redcap_repeat_instance` to `'new'` (flat type only — does not work for EAV). For EAV imports, checkbox fields must use `variable___optionCode` as the `field_name` and `'0'` or `'1'` as the value (e.g., `field_name='icecream___4'`, `value='1'` to check the option coded as `4`). |
-| `dateFormat` | Optional | Format for date and datetime field values: `'YMD'` (default; YYYY-MM-DD with dashes), `'MDY'` (MM/DD/YYYY with slashes), or `'DMY'` (DD/MM/YYYY with slashes). |
+| `dateFormat` | Optional | Format for date and datetime field values: `'YMD'` (default; YYYY-MM-DD with dashes), `'MDY'` (MM/DD/YYYY with slashes), or `'DMY'` (DD/MM/YYYY with slashes). Case-sensitive: any value other than exactly `MDY` or `DMY` (e.g. `mdy`) is treated as `YMD`. |
 | `csvDelimiter` | Optional | Delimiter for CSV format only. Options: `','` (default), `'tab'`, `';'`, `'|'`, `'^'`. |
-| `returnContent` | Optional | What to return on success: `'count'` (default; number of records imported), `'ids'` (list of all imported record IDs), or `'auto_ids'` (only when `forceAutoNumber=true`; pairs of new ID and provided ID, e.g., `323,10`). Not applicable when `backgroundProcess=true`. |
+| `returnContent` | Optional | What to return on success: `'count'` (default; number of records imported), `'ids'` (list of all imported record IDs), `'auto_ids'` (only when `forceAutoNumber=true`; pairs of new ID and provided ID, e.g., `323,10`), or `'nothing'` (empty response with HTTP 200). An unrecognised value, or `'auto_ids'` without `forceAutoNumber=true`, returns the count. Not applicable when `backgroundProcess=true`. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified. Not applicable when `backgroundProcess=true`. |
 
 ---
@@ -220,13 +222,21 @@ print $output;
 
 On success, the API returns content based on the `returnContent` parameter (not applicable for background process imports):
 
-- **`returnContent='count'` (default):** The number of records imported (e.g., `1`).
+- **`returnContent='count'` (default):** The number of records imported. In JSON this is an object, e.g. `{"count": 1}`.
 - **`returnContent='ids'`:** A list of all record IDs that were imported.
-- **`returnContent='auto_ids'`:** (Only when `forceAutoNumber=true`) A list of pairs showing new auto-assigned ID and the original provided ID, comma-delimited (e.g., `323,10`).
+- **`returnContent='auto_ids'`:** (Only when `forceAutoNumber=true`) A list of pairs showing new auto-assigned ID and the original provided ID, comma-delimited (e.g., `323,10`). In CSV the header row is `id,original_id`.
+- **`returnContent='nothing'`:** An empty response with HTTP 200.
 
-When `backgroundProcess=true`, the response is always `success:true` (on success) or `success:false` (on failure) in the requested format, regardless of `returnContent` or `returnFormat`.
+When `backgroundProcess=true`, the response is `success:true` or `success:false` in the requested format, regardless of `returnContent` or `returnFormat`. It reports only whether the job could be queued:
 
-On error, the API returns an error message describing what went wrong (e.g., missing required fields, invalid field names, validation errors).
+- `success:true` means **queued**, not imported. Validation errors are not returned in the response.
+- The background job processes the data record by record. Records with errors are skipped and the rest are imported — unlike a synchronous import, it is not all-or-nothing.
+- When the job finishes, REDCap emails the user the counts of imported and failed records, with a link to download the errors.
+- `success:false` means the data could not be queued at all.
+
+On error, a synchronous import returns an error message describing what went wrong (e.g., missing required fields, invalid field names, validation errors), and nothing is imported.
+
+Warnings are not returned. For example, values sent for calculated fields, `@CALCTEXT` or `@CALCDATE` fields are skipped with a warning, so the import reports success while those values are dropped.
 
 **EAV XML input format:**
 ```xml
@@ -277,7 +287,15 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 **Q: How many records can I import in a single request?**
 
-**A:** The API has no hard limit, but very large imports (thousands of records) may timeout. If your import is large, consider splitting it into batches or using `backgroundProcess=true`.
+**A:** The API has no hard limit, but very large imports (thousands of records) may timeout. If your import is large, consider splitting it into batches or using `backgroundProcess=true`. Remember that a background import skips records with errors and imports the rest, so check the completion email for failed records. Projects in Development status are also subject to the instance's maximum number of records for development projects.
+
+**Q: Does my token need rights to each instrument, or Create Records?**
+
+**A:** No. The API Import/Update right is the only rights gate; DAG rules and locking still apply (§7). Instrument-level rights and Create Records are not applied to API imports. Grant API Import/Update only to users who may edit every instrument.
+
+**Q: Can I upload files to file upload fields with this method?**
+
+**A:** Not with JSON, CSV or flat XML — file upload fields are skipped. Use [RC-API-13 — Import File API](RC-API-13_Import-File.md), or the CDISC ODM format, which can carry file contents.
 
 **Q: How do I add new repeating instrument instances without knowing how many already exist?**
 
@@ -297,19 +315,50 @@ On error, the API returns an error message describing what went wrong (e.g., mis
 
 **Assuming blank fields don't matter in normal mode.** In normal mode, including blank fields in your import data is harmless — they are ignored. But be aware of this behavior if you're expecting an update to clear a field. Use overwrite mode if you need to explicitly clear values.
 
-**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), the API returns an error listing record, field and value, and **nothing** is imported — the valid rows in the same request are rejected too. Validate your data before importing.
+**Not handling validation errors.** If your import data contains invalid values (e.g., text in a numeric field, an invalid date, or a non-existent choice code), a synchronous import returns an error listing record, field and value, and **nothing** is imported — the valid rows in the same request are rejected too. Validate your data before importing. A background import (`backgroundProcess=true`) behaves differently: it imports the valid records and skips the failing ones.
 
 **Mixing up record_id and redcap_event_name.** In a longitudinal project, the record ID and event name are separate. `record_id` identifies the participant; `redcap_event_name` identifies the visit or time point. Both are usually required in longitudinal imports.
 
 **Wrong date format default.** The default `dateFormat` is `'YMD'` (YYYY-MM-DD with dashes), not MDY. If your source data uses MM/DD/YYYY, you must explicitly pass `dateFormat='MDY'`; otherwise dates will be misread or rejected.
 
-**`backgroundProcess=true` ignores returnContent and returnFormat.** When running as a background process, the response is always `success:true` or `success:false`. Do not expect a record count or ID list back — check the response success flag and implement separate verification if needed.
+**`backgroundProcess=true` ignores returnContent and returnFormat.** When running as a background process, the response is always `success:true` or `success:false`. Do not expect a record count or ID list back. `success:true` means only that the job was queued — records with errors are later skipped while the rest are imported, and the details arrive by email. Verify the result separately (e.g., export the records) before relying on it.
+
+**Expecting calculated values to import.** Values for calculated fields, `@CALCTEXT` and `@CALCDATE` fields are skipped, and the warning is not returned by the API. REDCap recalculates dependent calculations after the import instead, unless auto-calculations are disabled for the project.
+
+**Granting API Import to users with restricted instrument rights.** An API Import/Update token can write to any instrument, including ones the user can only view or cannot see, and can create records even without Create Records. Grant it only to users who may edit every instrument.
 
 **Auto-numbering instances only works with flat type.** Setting `redcap_repeat_instance` to `'new'` for auto-numbering only applies to `type=flat`. In EAV imports, `'new'` is not recognized and the import will fail or behave unexpectedly.
 
 ---
 
-## 7. Related Articles
+## 7. Rights, Rules and Side Effects of an Import
+
+**User rights.** The API Import/Update right is the only rights gate; DAG rules and locking are also enforced. Instrument-level rights and **Create Records** are not applied to API imports:
+
+- the token can write to instruments the user can only view, or has no access to;
+- it can create new records even if the user lacks Create Records.
+
+Grant API Import/Update only to users who may edit every instrument.
+
+**What blocks or changes an import:**
+
+| Situation | What happens |
+|---|---|
+| User is a Double Data Entry user | HTTP 403: `Record imports are not available to Double Data Entry users.` |
+| User is in a Data Access Group | New records are assigned to the user's DAG automatically and auto-numbered IDs get the DAG prefix. The user cannot import into records outside their DAG. Including the `redcap_data_access_group` column is an error — that column is only for users who are not in a DAG. |
+| `redcap_data_access_group` cell is blank | Ignored, even with `overwriteBehavior=overwrite`. An import cannot remove a record from its DAG. |
+| Locked record or instrument in the data | Error; in a synchronous import the whole request is rejected. |
+| Completed e-Consent instrument | Its saved values cannot be changed by import. |
+| Randomized record | The randomization fields (the randomization field and strata) are protected and cannot be changed. |
+| Calculated, `@CALCTEXT`, `@CALCDATE` fields | Skipped with a warning the API does not return. |
+| File upload fields | Skipped for JSON, CSV and flat/EAV XML; only CDISC ODM imports write them. |
+| Other errors that reject the request | Project deleted, marked Completed or offline; Development record limit reached; repeating-instrument columns sent to a project without repeating instruments/events; duplicate rows for the same record; record names over 100 characters or containing `+`, `&`, `#`, `'` or line breaks. |
+
+**What an import triggers.** A successful import is treated like a save: Automated Survey Invitations are scheduled, alerts and PDF snapshot triggers fire, and dependent calculated fields are recalculated unless auto-calculations are disabled for the project. The Data Entry Trigger is the exception — it does not fire (§1).
+
+---
+
+## 8. Related Articles
 
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
 - [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (reading data from REDCap)

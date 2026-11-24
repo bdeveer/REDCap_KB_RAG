@@ -8,10 +8,11 @@ applies_to:
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
   not re-captured. Randomization rights and all other user privileges checked against
-  source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
+  source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS). API import rights
+  checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.4'
+version: '1.5'
 last_updated: 2026-11
 related:
 - id: RC-USER-02
@@ -136,7 +137,7 @@ Two separate rights:
 - *API Export* — allows the user to pull data from REDCap programmatically via an API token.
 - *API Import/Update* — allows the user to push data into REDCap via an API token.
 
-> **Important:** API rights are scoped by the user's other rights. API record exports follow the user's **Data Export Rights** (not their Data Viewing Rights): fields on instruments set to No Access for export are left out, and De-identified or Remove All Identifier Fields rights strip fields in the same way as a manual export. API imports need **View & Edit** on each instrument being written to. The token does not grant more than this, with one exception: the Mobile App right (below).
+> **Important:** API rights are scoped by the user's other rights. API record exports follow the user's **Data Export Rights** (not their Data Viewing Rights): fields on instruments set to No Access for export are left out, and De-identified or Remove All Identifier Fields rights strip fields in the same way as a manual export. API imports are different: the **API Import/Update** right lets the token write to **any** instrument, including ones the user can only view or cannot see, and create new records even without **Create Records**. Only DAG restrictions and record locking still apply. Grant API Import/Update only to users who may edit every instrument. On the export side the one exception is the Mobile App right (below).
 
 **Mobile App**
 
@@ -336,7 +337,7 @@ This approach is flexible but should be used deliberately. It creates implicit a
 
 **Forgetting to review rights after adding a new instrument.** REDCap gives every user and role access to a new instrument automatically: View & Edit and Full Data Set export in Development, and the Control Center default (usually the same) in Production. When you add an instrument, check the user rights for all users (or roles) to make sure the new instrument has the correct viewing and export access levels.
 
-**Expecting the API to bypass user rights.** API rights are bounded by the user's other project rights; record exports follow Data Export Rights. A user cannot use the API to access data or features their user rights would normally prevent, except through the Mobile App right, which gives full data download through the app.
+**Expecting the API to bypass user rights.** API rights are bounded by the user's other project rights; record exports follow Data Export Rights. For reading data, a user cannot use the API to get more than their rights allow, except through the Mobile App right, which gives full data download through the app. For writing data it is the other way round: API Import/Update lets a token write to any instrument and create records, so grant it only to users who may edit every instrument.
 
 **Planning on e-signatures without checking your authentication method.** E-signing needs REDCap to re-check the user's credentials. It works with table-based and LDAP logins, with Shibboleth only if your administrator has configured it for e-signatures, and with any login method if two-factor authentication with a 2FA PIN for e-signing is on. Confirm with your REDCap administrator before building a sign-off process around it; certain external modules provide alternative e-signature workflows.
 

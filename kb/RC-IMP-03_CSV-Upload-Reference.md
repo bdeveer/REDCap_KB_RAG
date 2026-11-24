@@ -7,14 +7,14 @@
 | **Domain** | Data Import |
 | **Applies To** | All REDCap project types; required rights vary per feature |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. CSV upload behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md) |
 | **Skill Level** | Intermediate |
-| **Version** | 2.0 |
-| **Last Updated** | 2026-05-07 |
+| **Version** | 2.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-IMP-01 — Data Import Overview](RC-IMP-01_Data-Import-Overview.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
-| **Synonyms** | what can i upload via csv in redcap; list of all csv upload options; bulk upload settings with a csv file; import users dags or events from csv; which redcap features support csv upload; move configuration between projects via csv; csv upload behavior additive vs replace; comprehensive csv upload reference |
+| **Synonyms** | what can i upload via csv in redcap; list of all csv upload options; bulk upload settings with a csv file; import users dags or events from csv; which redcap features support csv upload; move configuration between projects via csv; csv upload behavior additive vs replace; comprehensive csv upload reference; which csv uploads replace or overwrite; empty csv deleted all survey settings |
 
 ---
 
@@ -33,25 +33,27 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 | **What you're uploading** | **Location in REDCap** | **Upload behavior** | **Rights required** | **Format reference** |
 |---|---|---|---|---|
 | Data Dictionary | Project Setup or Online Designer | **Replaces** all instruments and fields | Project Design and Setup | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| Arms | Define My Events | **Additive** — adds new arms, existing unchanged | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
-| Events | Define My Events | **Additive** — adds new events, existing unchanged | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
+| Arms | Define My Events | **Adds and updates** — new arms are added; an arm whose number matches an existing arm is renamed. Never deletes | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
+| Events | Define My Events | **Adds and updates** — new events are added; an event whose unique event name matches has its name, day offset, offset range and custom event label updated. Never deletes | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
 | Instrument–Event Mappings | Designate Instruments for My Events | **Replaces** entire mapping | Project Design and Setup | [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md) |
-| Record Data | Applications → Data Import Tool | Additive by default; can overwrite with setting | Data Entry rights | [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md) |
-| Users | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
-| User Roles | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
-| User–Role Assignments | User Rights | Additive/update | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
-| Data Access Groups (DAGs) | DAGs / User Rights | Additive/update | Data Access Groups | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
-| User–DAG Assignments | DAGs / User Rights | Additive/update | Data Access Groups | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
-| Alerts & Notifications | Alerts & Notifications | Additive — imports alert definitions | Project Design and Setup | [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md) |
-| Automated Survey Invitations (ASI) | Online Designer → Automated Survey Invitations button | Additive/update | Project Design and Setup | [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md) |
-| Survey Queue | Online Designer → Survey Queue button | Additive/update | Project Design and Setup | [RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md) |
-| Survey Settings | Online Designer → Survey Settings button | Additive/update | Project Design and Setup | [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md) |
-| Form Display Logic | Online Designer → Form Display Logic | Additive/update | Project Design and Setup | [RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide](RC-IMP-08_Form-Display-Logic-CSV.md) |
-| Data Quality Rules | Data Quality module | Additive/update | Project Design and Setup | [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) |
-| Language Setups (MLM) | Multi-Language Management | Additive/update | Project Design and Setup | [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) |
-| Randomization Allocation Table | Randomization module | Replaces active allocation table | Randomization Setup rights | [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) |
+| Record Data | Applications → Data Import Tool | **Adds and updates** — by default, non-blank file values overwrite existing values and blank cells are skipped; with the overwrite option, blank cells also erase existing values | Data Import Tool | [RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide](RC-IMP-04_Record-Data-CSV-Import.md) |
+| Users | User Rights | Adds and updates; never deletes | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| User Roles | User Rights | Adds and updates; never deletes | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| User–Role Assignments | User Rights | Adds and updates; never deletes | User Rights | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) |
+| Data Access Groups (DAGs) | DAGs / User Rights | Adds and updates — blank unique group name creates a DAG; an existing unique group name renames that DAG | Data Access Groups | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
+| User–DAG Assignments | DAGs / User Rights | Adds and updates; a blank DAG cell removes the user from their DAG | Data Access Groups (users assigned to a DAG cannot run it) | [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) |
+| Alerts & Notifications | Alerts & Notifications | **Adds and updates** — blank alert ID creates a new alert; an existing alert ID updates that alert | Alerts & Notifications | [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md) |
+| Automated Survey Invitations (ASI) | Online Designer → Automated Survey Invitations button | Adds and updates, matched on survey + event | Project Design and Setup | [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md) |
+| Survey Queue | Online Designer → Survey Queue button | Adds and updates, replacing the settings for each survey/event in the file. **An empty file can delete the whole queue** | Project Design and Setup | [RC-IMP-10 — Survey Queue CSV — Column Reference and Format Guide](RC-IMP-10_Survey-Queue-CSV.md) |
+| Survey Settings | Online Designer → Survey Settings button | Adds and updates (can enable surveys). **An empty file can delete all survey settings** | Project Design and Setup | [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md) |
+| Form Display Logic | Online Designer → Form Display Logic | **Replaces** all form display logic conditions. **An empty file can delete them all** | Project Design and Setup | [RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide](RC-IMP-08_Form-Display-Logic-CSV.md) |
+| Data Quality Rules | Data Quality module | Additive — new rules are appended | Data Quality — create/edit rules (download: either Data Quality right) | [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) |
+| Language Setups (MLM) | Multi-Language Management | Additive by default; optional overwrite | Project Design and Setup | [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md) |
+| Randomization Allocation Table | Randomization module | **Replaces** the allocation table (an administrator upload in Production appends) | Randomization Setup rights | [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) |
 
 > **Download-only:** The Logging module supports CSV *download* but not upload.
+
+> **Empty-file uploads delete everything (Survey Settings, Survey Queue, Form Display Logic).** Uploading an empty file makes REDCap ask whether to delete ALL existing settings of that type — for Survey Settings the prompt reads "Delete ALL existing Survey settings?". Confirming does exactly that. For Survey Settings the deletion cascades: participant lists, response tracking, Automated Survey Invitations, the survey queue, e-Consent settings and PDF archive entries for those surveys are removed too (the response data itself is kept). This needs only Project Design and Setup rights and works in Production without review. Always download the current file first, and click Cancel if you see this prompt unexpectedly.
 
 ---
 
@@ -63,9 +65,9 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 
 **What it does:** Defines all variables and instruments in the project. A single CSV file represents the complete instrument configuration — every field, label, choice, validation rule, branching logic expression, and instrument assignment lives here.
 
-**Upload behavior — Replace:** Uploading a Data Dictionary **replaces the entire current configuration**. Variables present in the project but absent from the uploaded file are deleted, along with any data they contain.
+**Upload behavior — Replace:** Uploading a Data Dictionary **replaces the entire current configuration**. Variables present in the project but absent from the uploaded file are deleted. Their data is no longer accessible in forms, reports or exports; REDCap does not purge it, and it can reappear if a field with the same variable name is created again — so deleting a field is not a way to remove sensitive data, and avoid reusing old variable names. If the upload removes a whole instrument, that instrument's event designations and form-level user rights are permanently lost.
 
-**Key safety practice:** Always download and save a snapshot of the current Data Dictionary before uploading a modified version. This is your only recovery path if a bad upload needs to be rolled back.
+**Key safety practice:** Always download and save a copy of the current Data Dictionary before uploading a modified version. REDCap also takes an automatic Data Dictionary snapshot before every upload (and every API metadata import); these are listed on the Project Revision History page and can be downloaded to roll back a bad upload.
 
 **Full details:** [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)
 
@@ -74,6 +76,10 @@ This article is a comprehensive index of every REDCap setting that supports CSV 
 ## 4. Longitudinal Setup (Arms, Events, Instrument-Event Mappings)
 
 Arms, events, and instrument-event mappings are always used together and must be uploaded in sequence. The column reference, upload order, and common mistakes for all three are covered in a single dedicated article.
+
+- **Arms and events uploads add and update, never delete.** Arms are matched on arm number (a match is renamed); events are matched on unique event name (a match has its name, day offset, offset range and custom event label updated).
+- **The mapping upload replaces the whole designation grid.** The file needs `arm_num`, `unique_event_name` and `form` columns. It fails if it would remove a mapping that a MyCap task schedule uses.
+- **Production:** users who are not administrators can upload arms, events or mappings only if a Control Center setting allows it, and even then cannot remove (un-designate) an existing mapping. Otherwise they get an error and must ask an administrator.
 
 **Full format reference:** [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md)
 
@@ -87,7 +93,7 @@ Arms, events, and instrument-event mappings are always used together and must be
 
 **What it does:** The bulk user management feature lets you download the current configuration of all users, roles, and role assignments as structured files, then upload modified versions to apply changes in bulk. This is useful for large projects or migrating a user configuration from another project.
 
-**Upload behavior:** Additive/update — new users are added, existing user configurations are updated to match the file.
+**Upload behavior:** Additive/update — new users are added, existing user configurations are updated to match the file. Users, roles or assignments missing from the file are left alone; the upload never deletes them.
 
 **Rights required:** User Rights privilege.
 
@@ -104,19 +110,20 @@ Arms, events, and instrument-event mappings are always used together and must be
 - **DAGs upload** — creates DAG definitions (group names). Useful for initial setup of a multi-site project.
 - **User–DAG assignments upload** — assigns users to DAGs in bulk.
 
-**Upload behavior:** Additive/update — new DAGs or assignments are added; existing ones may be updated.
+**Upload behavior:** Additive/update — new DAGs or assignments are added; existing ones may be updated. Nothing is deleted.
 
-**Rights required:** Data Access Groups privilege.
+**Rights required:** Data Access Groups privilege. Users who are themselves assigned to a DAG cannot run the User–DAG assignments upload (administrators excepted).
 
-**DAGs CSV columns:** `data_access_group_name`, `unique_group_name`
+**DAGs CSV columns:** `data_access_group_name`, `unique_group_name` (both columns must be present)
 
 - `data_access_group_name` — Human-readable display name (e.g., `Boston Site`). Quote values that contain spaces or commas.
-- `unique_group_name` — System identifier used in all API and data entry operations. Leave blank to let REDCap auto-generate it (lowercase, spaces → underscores). Exports include a third column, `data_access_group_id`, which is read-only and ignored on import.
+- `unique_group_name` — System identifier used in all API and data entry operations. Leave blank to create a new DAG; REDCap auto-generates the unique name (lowercase, spaces → underscores) and you cannot choose it. A non-blank value must match an existing DAG in the project — that DAG is renamed to the display name in the file; a value that doesn't exist gives an error. Exports include a third column, `data_access_group_id`, which is read-only and ignored on import.
+- **Copying DAGs to another project:** clear the `unique_group_name` column before uploading to the target project, otherwise every row errors because those names don't exist there yet.
 
 **User–DAG assignments CSV columns:** `username`, `redcap_data_access_group`
 
 - `username` — REDCap login name; must match an existing project user.
-- `redcap_data_access_group` — The `unique_group_name` of the target DAG (not the display name). Leave blank to remove the user from all DAGs (grants all-DAG access).
+- `redcap_data_access_group` — The `unique_group_name` of the target DAG (not the display name). Leave blank to remove the user from all DAGs (grants all-DAG access). Duplicate username rows are an error.
 
 **Full details:** [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md); [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md), Section 7
 
@@ -125,6 +132,10 @@ Arms, events, and instrument-event mappings are always used together and must be
 ## 6. Records (Participant Data)
 
 **Location:** Applications → Data Import Tool.
+
+**Upload behavior:** Not purely additive. New records are created, and for existing records any non-blank value in the file **overwrites** the stored value; blank cells are skipped by default. If you choose the option to overwrite existing values with blanks, blank cells also **erase** stored values. Review the comparison screen before committing.
+
+**Rights required:** the Data Import Tool user right.
 
 The record data CSV has a detailed column-by-column format reference, including handling of longitudinal projects, repeating instruments, checkbox fields, and system columns. See the dedicated article:
 
@@ -140,9 +151,9 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Exports all alert definitions from a project as a CSV file and allows importing alert configurations — useful for copying a set of alerts from one project to another or for making bulk edits outside of REDCap.
 
-**Upload behavior:** Additive — imported alerts are added to the existing list.
+**Upload behavior:** Adds and updates — rows with a blank alert unique ID (the `A-nnn` value) create new alerts; rows with an existing alert ID update that alert. An ID that does not exist in the project gives the error "Unique Alert ID does not exists." — so when copying alerts to another project, clear the alert ID column first.
 
-**Rights required:** Project Design and Setup.
+**Rights required:** the Alerts & Notifications user right (for both upload and download).
 
 **Full format reference:** [RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide](RC-IMP-05_Alerts-Notifications-CSV.md)
 
@@ -154,9 +165,11 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Exports all ASI configurations for the project as a CSV and allows re-importing them — useful for copying a complex invitation schedule from one project to another or for batch-editing invitation logic outside of REDCap.
 
-**Upload behavior:** Additive/update — ASIs matching the `form_name`/`event_name` key are updated; others are left unchanged.
+**Upload behavior:** Additive/update — ASIs matching the `form_name`/`event_name` key are updated; others are left unchanged. An invalid or missing `event_name` does not cause an error: the row is silently applied to the project's first event, so check event names carefully. A repeating ASI copied to a project where that survey/event is not repeating has its recurrence reset.
 
 **Rights required:** Project Design and Setup (at least one survey must be enabled in the project).
+
+> **Version caveat (17.x vs 16.0 LTS):** The 17.x ASI file adds a `condition_reevaluate_send_time` column that 16.0 LTS files do not have. When moving ASI files between instances on different release lines, start from a file downloaded from the target instance.
 
 **Full format reference:** [RC-IMP-06 — Automated Survey Invitations CSV — Column Reference and Format Guide](RC-IMP-06_Automated-Survey-Invitations-CSV.md)
 
@@ -168,7 +181,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Exports the survey queue configuration as a CSV and allows re-importing it. The survey queue defines the order and conditional logic governing which surveys are presented to a participant after completing a prior survey.
 
-**Upload behavior:** Additive/update.
+**Upload behavior:** Additive/update — each survey/event in the file has its queue settings replaced; surveys not in the file are unchanged. Duplicate survey/event rows and invalid events are errors. **An empty file prompts to delete the entire survey queue** (see the warning in Section 2).
 
 **Rights required:** Project Design and Setup.
 
@@ -182,9 +195,13 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Exports the survey settings for all survey-enabled instruments in the project as a CSV and allows re-importing them. Useful for replicating settings across projects without reconfiguring each instrument manually.
 
-**Upload behavior:** Additive/update — imported rows overwrite the current settings for the instruments named in the file.
+**Upload behavior:** Additive/update — imported rows overwrite the current settings for the instruments named in the file, and a row for an instrument that is not yet a survey enables it as a survey. Every row must include every column; rows with the wrong number of columns are rejected.
+
+> **Warning — empty file:** Uploading an empty Survey Settings file prompts "Delete ALL existing Survey settings?". Confirming removes the survey settings for every instrument along with their participant lists, response tracking, ASIs, survey queue, e-Consent settings and PDF archive entries (response data is kept). This works in Production with only Project Design and Setup rights. Click Cancel unless you really intend this.
 
 **Rights required:** Project Design and Setup (at least one instrument must be survey-enabled in the project).
+
+> **Version caveat (17.x vs 16.0 LTS):** The 17.x Survey Settings file adds a column (`end_survey_redirect_redcap_share_before_next_survey`). Because rows with the wrong column count are rejected, a file exported from 16.0 LTS will probably fail on 17.x (and vice versa). Download a fresh template from the target instance and copy your values into it.
 
 **Full format reference:** [RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide](RC-IMP-07_Survey-Settings-CSV.md)
 
@@ -196,7 +213,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Exports the Form Display Logic (FDL) configuration for a project as a CSV and allows re-importing it. FDL controls which entire instruments are enabled or disabled to users based on field values or user attributes — distinct from branching logic, which operates at the field level.
 
-**Upload behavior:** Additive/update — imported rules replace or update the existing FDL configuration.
+**Upload behavior — Replace:** The uploaded file **replaces all** existing Form Display Logic conditions; any condition not in the file is removed. Download the current file first. An empty file prompts to delete all conditions (see the warning in Section 2).
 
 **Rights required:** Project Design and Setup.
 
@@ -212,7 +229,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Upload behavior:** Additive — imported rules are appended to the existing custom rule list; existing rules are not replaced.
 
-**Rights required:** Project Design and Setup.
+**Rights required:** Uploading needs the Data Quality right to create/edit rules; downloading needs either Data Quality right (create/edit or execute).
 
 **Column reference:**
 
@@ -232,7 +249,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Location:** Applications → Multi-Language Management → Export/Import buttons per language row (Languages tab), or per-instrument export icons (Forms/Surveys tab).
 
-**File format:** JSON (not CSV). REDCap calls these "Language Setups" in the UI but all MLM files are JSON. Two distinct file types exist: **translation files** (one per language) and a **settings file** (project-wide). Both are included in a **snapshot ZIP**.
+**File format:** JSON or CSV. REDCap calls these "Language Setups" in the UI. Translation files can be exported and imported as JSON or as CSV (CSV columns: `section`, `type`, `name`, `index`, `kind`, `text`; you choose the delimiter on export). The settings file and the snapshot contents are JSON. Two distinct file types exist: **translation files** (one per language) and a **settings file** (project-wide). Both are included in a **snapshot ZIP**. The JSON structure is described below.
 
 **Rights required:** Project Design and Setup (Draft Mode required for Production projects).
 
@@ -240,7 +257,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 #### Translation File
 
-**Filename pattern:** `REDCapTranslation_{langID}_{pid}_{timestamp}.json`
+**Filename pattern:** `REDCapTranslation_{langID}_pid{pid}_{timestamp}.json` (or `.csv`)
 
 **What it does:** Carries all translated strings for one language. Export to send to an external translator or back up a language's current state; import to load translated strings back into the project. Imports are **additive by default** — existing translations are preserved unless "Overwrite existing translations" is selected. This means partial imports (e.g., a single instrument's export) are safe.
 
@@ -285,7 +302,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 #### Settings File
 
-**Filename pattern:** `REDCapTranslation_Settings_{pid}_{timestamp}.json`
+**Filename pattern:** `REDCapTranslation_Settings_pid{pid}_{timestamp}.json`
 
 **What it does:** Captures the full project-level MLM configuration — which languages are active, which instruments are enabled per language, field/alert exclusions, language sources, and admin-controlled flags. Useful for replicating a project's MLM setup to a new project or for backup/restore of configuration (not translation content). Import via the **Import General Settings** button on the Languages tab.
 
@@ -323,7 +340,7 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 #### Snapshot ZIP
 
-**Filename pattern:** `REDCap_MLM_Snapshot_{pid}_{timestamp}.zip`
+**Filename pattern:** `REDCap_MLM_Snapshot_pid{pid}_{timestamp}.zip`
 
 **Contents:** One translation JSON per language in the project plus one settings JSON. Snapshots are created automatically when a project first moves to Production and each time drafted MLM changes are approved. They can also be created manually via the **Create Snapshot** button on the Languages tab. Individual files can be extracted and re-imported to restore a previous state.
 
@@ -337,11 +354,11 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **What it does:** Uploads the randomization allocation table — the pre-generated schedule that defines which treatment arm each randomized subject receives. The allocation table is produced externally by a statistician and uploaded to REDCap before randomization begins.
 
-**Upload behavior — Replace:** The uploaded file replaces the current allocation table for that model. Once randomization has begun in Production, the table is locked and cannot be replaced without resetting randomization (which requires administrator involvement).
+**Upload behavior — Replace:** The uploaded file replaces the current allocation table for that model. Once randomization has begun in Production, the table is locked and cannot be replaced without resetting randomization (which requires administrator involvement). In Production, an administrator can upload additional allocation rows; these are **appended** to the existing table rather than replacing it.
 
 **Rights required:** Randomization Setup rights.
 
-> **Always use the downloaded template as the starting point.** REDCap dynamically generates the template based on the model's configuration — the column headers, stratification variables, and DAG column are specific to each project and model. Do not build this file from scratch.
+> **Always use the downloaded template as the starting point.** REDCap dynamically generates the template based on the model's configuration — the column headers, stratification variables, and DAG column are specific to each project and model, and which columns are required depends on the model. Do not build this file from scratch.
 
 **Column reference:**
 
@@ -379,25 +396,29 @@ The following are download-only or not file-based:
 
 **Q: Which CSV uploads replace the existing configuration, and which just add to it?**
 
-**A:** The table in Section 2 lists the behavior for every upload. The critical ones to remember are the two that **replace**: the Data Dictionary (replaces all instruments and fields) and the Instrument–Event Mapping (replaces the entire designation matrix). Every other CSV upload is additive or update-only. For the two replace-type uploads, always download the current version first so you can recover from an unintended change.
+**A:** The table in Section 2 lists the behavior for every upload. Four uploads **replace**: the Data Dictionary (replaces all instruments and fields), the Instrument–Event Mapping (replaces the entire designation matrix), Form Display Logic (replaces all conditions) and the Randomization Allocation Table (except an administrator upload in Production, which appends). The other uploads add and update, but "update" matters: Arms, Events, Alerts, ASIs, Survey Settings, Survey Queue and DAG uploads change existing items that match, and a record data import overwrites existing values. In addition, an **empty** Survey Settings, Survey Queue or Form Display Logic file offers to delete everything of that type. Always download the current version first so you can recover from an unintended change.
 
 **Q: Can I use these CSV uploads to copy a project setup from one project to another?**
 
-**A:** For most configuration areas, yes — download the CSV from the source project, then upload it into the target project. This works well for Arms, Events, Instrument–Event Mappings, Alerts, Data Quality Rules, User Roles, and DAG definitions. For the Data Dictionary, you can also download from one project and upload to another, but be aware that branching logic referencing specific event names or variable names will need to be validated after the upload. For a full project copy including all data, use the XML backup feature (Project Setup → Other Functionality → Copy or back up the project).
+**A:** For most configuration areas, yes — download the CSV from the source project, then upload it into the target project. This works well for Arms, Events, Instrument–Event Mappings, Data Quality Rules and User Roles. Two need a tweak first: for **Alerts**, clear the alert unique ID column (otherwise the upload fails with "Unique Alert ID does not exists."); for **DAGs**, clear the `unique_group_name` column so REDCap creates new DAGs instead of erroring. For ASIs, check that every `event_name` exists in the target — an unknown event silently falls back to the first event. For the Data Dictionary, you can also download from one project and upload to another, but be aware that branching logic referencing specific event names or variable names will need to be validated after the upload. For a full project copy including all data, use the XML backup feature (Project Setup → Other Functionality → Copy or back up the project).
 
 **Q: Is there a way to undo a CSV upload?**
 
-**A:** There is no undo button. For replace-type uploads (Data Dictionary, Instrument–Event Mappings), the recovery path is to re-upload the version you downloaded before making changes — which is why downloading a backup first is essential. For additive uploads (Arms, Events, Users, DAGs), reverting means manually removing the items that were added.
+**A:** There is no undo button. For replace-type uploads (Data Dictionary, Instrument–Event Mappings, Form Display Logic), the recovery path is to re-upload the version you downloaded before making changes — which is why downloading a backup first is essential. For the Data Dictionary, REDCap also keeps an automatic snapshot taken before every upload, downloadable from Project Revision History. For add-and-update uploads (Arms, Events, Users, DAGs, Alerts), reverting means manually removing the items that were added and re-uploading your earlier file to restore items that were changed.
 
 **Q: Do CSV uploads go through the change review queue in Production mode?**
 
-**A:** It depends on the feature. Data Dictionary uploads in Production mode go through the same change queue review process as Online Designer changes — they are not live until a project administrator approves them. Most other CSV uploads (Users, DAGs, Alerts, Data Quality Rules, etc.) take effect immediately regardless of project mode, because they do not modify instrument or field definitions.
+**A:** It depends on the feature. Data Dictionary uploads in Production mode go through the same change queue review process as Online Designer changes — they are not live until a project administrator approves them. Most other CSV uploads (Users, DAGs, Alerts, Data Quality Rules, Survey Settings, Survey Queue, Form Display Logic, etc.) take effect immediately regardless of project mode, because they do not modify instrument or field definitions — including the empty-file "delete all" option for Survey Settings, Survey Queue and Form Display Logic. Arms, events and instrument–event mappings are different: in Production, non-administrators can upload them only if a Control Center setting allows it.
 
 ---
 
 ## 10. Common Mistakes & Gotchas
 
-**Uploading a Data Dictionary without a backup.** The Data Dictionary upload replaces your entire instrument configuration. If you accidentally omit rows (e.g., by filtering your spreadsheet), those variables and their data are deleted on upload. Always save a dated snapshot before editing.
+**Uploading a Data Dictionary without a backup.** The Data Dictionary upload replaces your entire instrument configuration. If you accidentally omit rows (e.g., by filtering your spreadsheet), those variables are deleted on upload and their data is no longer accessible in forms, reports or exports. REDCap does not purge that data, and it can reappear if a field with the same variable name is created again — so deleting a field is not a way to remove sensitive data, and avoid reusing old variable names. Always save a dated copy before editing; the automatic snapshot on Project Revision History is a second safety net.
+
+**Uploading an empty Survey Settings, Survey Queue or Form Display Logic file.** REDCap treats an empty file as a request to delete everything of that type and asks you to confirm. For Survey Settings, confirming also wipes participant lists, ASIs, the survey queue and e-Consent settings. Click Cancel if you didn't mean it.
+
+**Treating "additive" as "safe".** Arms, events, alerts, ASIs, DAGs and record data uploads update matching existing items. A record import overwrites stored values with any non-blank values in the file.
 
 **Longitudinal structure upload mistakes (arms, events, instrument-event mappings).** The most common mistakes — wrong upload order, hand-typed unique event names, building the mapping file from scratch — are covered in [RC-IMP-09 — Longitudinal Structure CSV — Arms, Events, and Instrument-Event Mappings](RC-IMP-09_Longitudinal-Structure-CSV.md)
 
@@ -423,6 +444,8 @@ Most CSV upload features in REDCap have a corresponding API method that achieves
 | DAGs | [RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md) | [RC-API-29 — Import DAGs API](RC-API-29_Import-DAGs.md) | [RC-API-30 — Delete DAGs API](RC-API-30_Delete-DAGs.md) |
 | User–DAG Assignments | [RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md) | [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md) | — |
 | Survey Participants *(export only in UI)* | [RC-API-43 — Export Survey Participants API](RC-API-43_Export-Survey-Participants.md) | — | — |
+
+> **API arms/events override:** Unlike the UI upload, the Import Arms and Import Events API methods accept an override option that **deletes all existing arms (or events) first** and then imports the file. It is blocked in Production, but in Development it removes anything not in the file. Leave override off unless you mean to rebuild the structure.
 
 > **No API equivalent:** Alerts & Notifications, Automated Survey Invitations, Survey Queue, Survey Settings, Form Display Logic, Data Quality Rules, Multi-Language Management, and Randomization Allocation Tables do not have dedicated API methods. These must be managed through the REDCap UI or CSV upload/download.
 

@@ -7,11 +7,11 @@ applies_to:
 requires: Any supported version. The Project Migration Tool alternative requires v17.0.0+
   on both instances — see §1
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured. Date-shift option checked against source code of v17.6.5 (Standard)
-  / v17.3.31 and v16.0.61 (LTS)
+  not re-captured. Date-shift, project XML export and Copy Project options behaviour
+  checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-PROJ-01
@@ -73,7 +73,7 @@ This article covers:
 - Common pitfalls and how to handle them
 - Alternative migration approaches when a full backup/restore is not feasible
 
-> **Prerequisite rights:** You need **Project Design and Setup** rights in the source project to access the backup feature. You need the ability to create projects in the destination installation to complete the import. If you are unsure whether you can create projects at the destination, contact that installation's REDCap support team before starting.
+> **Prerequisite rights:** **Download metadata only (XML)** needs **Project Design and Setup** rights in the source project. **Download metadata & data (XML)** needs **Data Export** rights; without them the button is disabled. Users with de-identified export rights get a de-identified file (see §3.4). You need the ability to create projects in the destination installation to complete the import. If you are unsure whether you can create projects at the destination, contact that installation's REDCap support team before starting.
 
 ---
 
@@ -119,9 +119,11 @@ Reviewing these policies before you start will prevent surprises at import time.
 
 1. Navigate to the source project's **Project Home** or **Project Setup** page.
 2. Click the **"Other Functionality"** tab.
-3. Locate the **"Back Up the Project"** section.
+3. Locate the **"Copy or Back Up the Project"** section (headed **"Back Up the Project"** when copying is not available to you).
 
 You will see two export options.
+
+> **Institution-specific:** An administrator can hide the whole backup section with a Control Center setting. If you can't see it, ask your REDCap administrators.
 
 ## 3.2 Export Options
 
@@ -149,24 +151,41 @@ Both options produce a single XML file in the **CDISC-ODM format** — a standar
 Before downloading, REDCap presents a checklist of optional components to include in the backup. Items only appear on the list if they are actively in use in the source project:
 
 - User roles
+- Data Access Groups
+- Surveys and survey settings
+- Survey Queue
+- Automated Survey Invitations
+- Alerts & Notifications
 - Custom record status dashboards
 - Reports and report folders
-- Project dashboards
+- Project dashboards and their folders
 - Data quality rules
-- Alerts & Notifications
-- Project bookmarks
-- Survey Queue and Automated Survey Invitation settings
+- Randomization settings (the setup only; allocation tables and assignments are not included)
+- Descriptive Popups
+- Locking and e-signature settings
+- e-Consent and PDF Snapshot settings
+- Clinical Data Pull (CDP) field mappings and Clinical Data Mart (CDM) settings
 - Form Display Logic settings
 - Multi-Language Management translations
 - MyCap Mobile App configuration
 
-If you exclude any of these, you will need to configure them manually in the destination project (or start with a clean slate for those features).
+> **Version caveat (17.6.5+ Standard):** The checklist also offers AI Chatbot, Instance Embedding (REDCap+), Rewards and SHARE settings. These options are not on 17.3 or 16.0 LTS; if you export from an LTS instance, set those features up by hand at the destination.
+
+**The checklist applies to "Download metadata only (XML)".** "Download metadata & data (XML)" always includes every component that is in use, whatever is ticked.
+
+**Alerts and Automated Survey Invitations arrive switched off.** Unless you tick **"Leave Alerts enabled (unless disabled)"** and **"Leave ASIs enabled (unless disabled)"** (both unchecked by default), every alert and ASI is deactivated in the new project. This applies to both download options. Review and re-enable them at the destination when you are ready, so participants are not contacted from both projects during a parallel run.
+
+If you exclude any of these, you will need to configure them manually in the destination project (or start with a clean slate for those features). Project bookmarks are not in the XML at all — see §3.5.
 
 ## 3.4 Data Export Options (Metadata & Data Only)
 
 When exporting metadata and data together, REDCap offers additional options to control the data included:
 
 **Include uploaded files and signatures** — Adds all file-type field contents and signature images to the export. If the project contains many files, this may produce a very large archive and in rare cases can cause the export to fail. If that happens, export files separately.
+
+**Export Data Access Group name** — Adds each record's DAG to the file, so records land in the matching DAG at the destination. Only users not in a DAG are offered this option; leave it unticked and records arrive with no DAG.
+
+> **Note:** Survey identifiers and survey timestamps are never included in a whole-project data export, so completion timestamps do not transfer. If you need them, export them in a separate report before migrating.
 
 **De-identification options:**
 
@@ -176,6 +195,8 @@ When exporting metadata and data together, REDCap offers additional options to c
 - *Remove Notes/Essay box fields* — Strips all Notes fields due to the difficulty of verifying their contents.
 - *Remove all date and datetime fields* — Strips all date/datetime-validated fields.
 - *Shift all dates* — Moves every date in a record back in time by the same random number of days, up to the project's maximum (364 days unless an administrator has changed it). Relative date relationships within a record are preserved while absolute values are obscured.
+
+If your export rights are **De-Identified**, REDCap applies de-identification for you: the record ID is hashed if it is flagged as an identifier, and survey timestamps are shifted. The resulting file is not a full copy of the project's data.
 
 **Advanced formatting options:**
 
@@ -191,6 +212,9 @@ Certain items are excluded by design because they are tied to the source install
 |---|---|
 | **Logging** | Logging can be downloaded separately but cannot be imported into a different installation |
 | **Individual users and their rights** | User accounts exist per-installation; users must be re-added manually at the destination |
+| **Project bookmarks** | Not part of the XML. Only **Copy the Project** copies them; otherwise re-create them at the destination |
+| **Survey participant lists** | Participant List entries and their survey access codes stay in the source project; re-enter participants at the destination |
+| **Randomization allocations and assignments** | Only the randomization setup travels; upload a new allocation table at the destination |
 | **Project folders** | Folder organization is user- and installation-specific |
 | **External Module configurations** | Module settings are per-installation and per-project; must be reconfigured at destination |
 | **Survey links** | Links are composed of the source installation's base URL plus a unique token — neither transfers |
@@ -211,6 +235,15 @@ Certain items are excluded by design because they are tied to the source install
 7. Click **"Create Project"**.
 8. Once created, open the new project and verify that all settings, instruments, and configurations transferred correctly.
 9. Add users to the new project. (They did not transfer — see Section 3.5.)
+10. Switch on any alerts and Automated Survey Invitations you want active (they arrive off unless you ticked the "Leave ... enabled" options — see §3.3).
+
+Things that can stop or change the import:
+
+- **File size limit.** The upload is capped by the server's maximum upload size. A file over it fails with **"ERROR: CANNOT UPLOAD FILE!"**. Ask the destination administrators, or export without uploaded files.
+- **Development record limit.** If the destination limits the number of records in Development projects, a non-administrator can't create a project from an XML file holding more records than that. An administrator can do the import, or use the Project Migration Tool.
+- **Attachment warning.** If the file includes uploaded files, REDCap warns about them before it creates the project.
+
+The API project export (Export Entire Project as XML) always includes every component, the same as the metadata & data download.
 
 ## 4.2 Policy Variations at the Destination
 
@@ -387,7 +420,7 @@ Use these targeted exports when you only need to transfer specific components, o
 
 **Q: Can I use the backup feature to clone a project within the same installation?**
 
-**A:** Yes, that works fine. However, for cloning within the same installation, the dedicated **"Copy the Project"** function (Project Setup → Other Functionality) is generally easier — see **[RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)** for details on that feature.
+**A:** Yes, that works fine. However, for cloning within the same installation, prefer the dedicated **"Copy the Project"** function (Project Setup → Other Functionality). It can also carry things the XML cannot: user rights, project folders, External Module settings and project bookmarks — see **[RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)** for details on that feature.
 
 ---
 

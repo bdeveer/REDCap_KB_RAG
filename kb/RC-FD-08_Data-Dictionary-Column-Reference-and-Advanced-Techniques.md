@@ -7,10 +7,10 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Data dictionary column rules behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Version** | 1.7 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.8 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) |
 | **Synonyms** | set slider range min max in data dictionary; what does each data dictionary column mean; data dictionary column reference; which columns are required in the data dictionary; allowed values for choices and validation columns; advanced excel tips for large data dictionaries; meaning of the 18 data dictionary fields; format reference for data dictionary csv; how to fill in each dictionary column correctly; make a redcap slider horizontal or vertical |
@@ -38,7 +38,16 @@ REDCap classifies each column into one of four tiers:
 - **Non-Mandatory:** Optional enrichment — the project functions correctly without these values, but they improve usability and data quality.
 - **Matrix Fields:** Applicable only to variables that are part of a matrix group.
 
-The mandatory columns are A (Variable Name), B (Form Name), D (Field Type), and E (Field Label). Column F (Choices, Calculations, or Slider Labels) is conditionally mandatory depending on field type.
+The mandatory columns are A (Variable Name), B (Form Name), D (Field Type), and E (Field Label). Column F (Choices, Calculations, or Slider Labels) is conditionally mandatory depending on field type. A blank A, B or D is an upload error; a blank Field Label (E) is only a warning, so the upload goes through and the variable has no visible question text.
+
+### Errors vs. Warnings on Upload
+
+REDCap's upload check reports two kinds of problem, and the difference decides whether your file goes in:
+
+- **Errors** block the upload. Nothing is changed until you fix them and upload again.
+- **Warnings** do not block it. Many warnings mean REDCap has **changed your value for you** (for example, converting a variable name to lowercase, or blanking a cell it does not recognise). Read every warning before you commit: the design REDCap saves may differ from the file you wrote.
+
+The rules in Section 5 say which outcome applies to each column.
 
 ### Field Type
 
@@ -54,7 +63,7 @@ Action tags are special codes entered in the Field Annotation column (Column R) 
 
 ### Identifier Flag
 
-Marking a variable as an identifier (Column K) does not change how data is entered or stored within REDCap. It affects the data export: variables flagged as identifiers are excluded by default when users export de-identified data. The flag is a documentation and governance tool, not an access control.
+Marking a variable as an identifier (Column K) does not change how data is entered or stored within REDCap. It does change what users can export: users whose data export rights are **De-Identified**, or who choose **Remove All Identifier Fields** when exporting, get exports with the flagged variables removed. Because of that, the flag works as part of access control through export rights, not just as documentation — a variable that holds identifying data but is not flagged will reach users with de-identified export rights. In Production, flagging new identifiers in a draft can also stop the changes from being approved automatically.
 
 ---
 
@@ -87,6 +96,16 @@ Despite its name, the Data Dictionary does not define every aspect of a REDCap p
 
 > **Important:** If your project includes events, surveys, or other configuration elements, those must be set up or maintained separately. Uploading a Data Dictionary will not touch them, but it also will not recreate them if they depend on variables that you remove or rename.
 
+> **Critical — removing or renaming an instrument is the exception.** When an upload removes an instrument (no rows left with that Form Name) or renames one (its rows now carry a new Form Name), REDCap permanently deletes the settings tied to the old instrument:
+>
+> - its event designations (in longitudinal projects)
+> - its locking labels, locked-record status and e-signatures
+> - its repeating instrument setting
+> - instrument-level user rights for that instrument
+>
+> These are not restored if you change the name back. A survey on the **first** instrument follows a rename. In a classic (non-longitudinal) project, new instruments are designated automatically. Before renaming instruments in a project that has data, check what locking, e-signatures, event designations and user rights you would need to redo.
+
+
 ---
 
 ## 4. Data Dictionary Structure
@@ -95,8 +114,10 @@ Despite its name, the Data Dictionary does not define every aspect of a REDCap p
 
 Each row in the Data Dictionary defines exactly one variable. Exceptions:
 
-- **Row 1** contains the column headers. Do not edit or delete row 1.
-- **Row 2** defines the REDCap Record ID variable. This row is mandatory in every project. The Record ID variable is always the first variable in the first form and must be of field type `text`.
+- **Row 1** contains the column headers. Do not edit or delete row 1. REDCap skips the first row and reads the columns **by position**, not by header text, so a missing header row means your first variable is skipped, and an inserted or reordered column shifts every value into the wrong column.
+- **Row 2** defines the REDCap Record ID variable. This row is mandatory in every project. The Record ID variable is always the first variable in the first form. REDCap treats it as a plain `text` field whatever you enter in Column D, and clears any Section Header (Column C) on it.
+
+> **Important:** Whichever variable is in row 2 becomes the record ID. If records already exist and row 2 names a different variable, REDCap shows only a **warning**, not an error, so the upload can go through and change the record ID field. Check row 2 before every upload to a project with data. Uploads through the API do not show warnings at all.
 
 ### 4.2 Column Overview
 
@@ -132,15 +153,22 @@ The Data Dictionary has exactly 18 columns. The table below lists each column, i
 The Variable Name is the unique internal identifier used throughout REDCap to store and reference the variable. It appears in branching logic expressions, calculation formulas, exports, API calls, piping, and smart variables.
 
 **Rules:**
-- Use only lowercase letters, numbers, and underscores.
-- Must be at least 2 characters long.
-- Must be unique across the entire project (not just within an instrument).
-- Maximum recommended length: 26 characters.
+
+| Rule | Result if broken |
+|---|---|
+| Lowercase letters, numbers and underscores only | **Warning** — REDCap converts the name for you (uppercase to lowercase, spaces to underscores, other characters removed; in Development, double underscores become single). Check the converted name in the warning. |
+| Must not start with a number or an underscore | Error |
+| Must not end with an underscore | Error |
+| Must not contain three underscores in a row (`___`) — reserved for checkbox export columns | Error |
+| Must be unique across the entire project (not just within an instrument) | Error |
+| Longer than 26 characters | Warning (allowed, but discouraged) |
+| Longer than 100 characters | Error |
+| Must not be a REDCap reserved name, or an instrument name followed by `_complete` or `_timestamp` | Error |
+
+There is no minimum length: a one-letter variable name is accepted.
 
 **Do not:**
-- Start the name with a number.
-- Use special characters (`#`, `$`, `%`, `!`, `?`, spaces, etc.).
-- Change a variable name after data collection has begun — renaming creates a new variable and deletes the old one, including its data.
+- Change a variable name after data collection has begun. To REDCap, a renamed variable is a new, empty variable, and the old one is removed. The old variable's data is no longer accessible in forms, reports or exports. REDCap does not purge it, though, and it can come back if a variable with the old name is created again.
 
 **Example from practice:**
 `date_enrolled`, `first_name`, `dob`, `bmi`
@@ -152,13 +180,13 @@ The Variable Name is the unique internal identifier used throughout REDCap to st
 The Form Name determines which instrument a variable belongs to. All variables sharing the same Form Name are grouped together as one instrument. The order of instruments in REDCap is determined by the order in which new Form Names first appear in the Data Dictionary.
 
 **Rules:**
-- Use lowercase letters, numbers, and underscores in the CSV. REDCap allows the display name to be changed to include spaces and capitalization after import.
-- Must be at least 2 characters long.
+- Use lowercase letters, numbers, and underscores in the CSV. REDCap allows the display name to be changed to include spaces and capitalization after import. If the name contains other characters, starts with a number, or has leading, trailing or double underscores, REDCap cleans it up and reports a **warning** with the new name.
+- Longer than 50 characters is a warning; longer than 64 characters is an error (unless the instrument already exists with that name).
 - All variables belonging to the same instrument must be grouped together sequentially.
 
 **Do not:**
-- Use special characters.
-- Interleave rows from different instruments — all rows for a given form must be contiguous.
+- Use special characters — REDCap will rename the instrument, which may not be the name you expected.
+- Interleave rows from different instruments — all rows for a given form must be contiguous. Interleaved rows are an upload **error**.
 
 **Tip:** To split one instrument into two, change the Form Name for a subset of variables to a new value. REDCap creates the new instrument automatically on upload. To merge two instruments, change all variables in the second instrument to match the Form Name of the first.
 
@@ -215,11 +243,16 @@ raw_value, Display Label | raw_value, Display Label | raw_value, Display Label
 
 Example: `0, No | 1, Yes | 98, Unknown`
 
-- Raw values must be numeric or alphanumeric; do not include commas within a raw value.
+- REDCap splits each choice at its **first** comma: everything before it is the raw value, everything after it is the label. Commas inside a label are therefore fine (`1, Yes, confirmed` gives raw value `1` and label `Yes, confirmed`), but a raw value can never contain a comma.
+- Raw values must be a number (negative and decimal numbers are allowed) or contain only letters, numbers, periods, underscores and hyphens. Any other character (a space, for example) is an upload **error**, and REDCap suggests a corrected code.
+- Duplicate raw values within one variable are an **error**.
+- A `dropdown` or `radio` with only one choice gets a **warning** (a single-choice `checkbox` is accepted silently).
+- A blank Column F on a `dropdown`, `radio` or `checkbox` is a **warning**, not an error: the upload goes through and the variable has no choices to select.
 - Labels can contain any text, including HTML.
 - The raw value is what is stored in the database and used in logic; the label is what participants and data entry users see.
+- For `notes`, `file`, `yesno`, `truefalse` and `descriptive` fields, REDCap clears anything you put in Column F.
 
-**For `calc` fields:** Enter a calculation formula using the same syntax as branching logic. The formula must resolve to a numeric value, not a true/false statement.
+**For `calc` fields:** Enter a calculation formula using the same syntax as branching logic. The formula must resolve to a numeric value, not a true/false statement. A blank formula is an **error**, and so is a reference to a variable that is not in Column A, unbalanced brackets or parentheses, or a syntax error in the formula.
 
 Example: `round(datediff([dob],'today','y'),0)` (calculates age in years)
 
@@ -231,8 +264,8 @@ Left label | Middle label | Right label
 ```
 
 **Do not:**
-- Leave this column blank for dropdown, radio, or checkbox fields — the upload will fail or produce unusable fields.
-- Include a comma within a raw value — this will break the CSV parsing.
+- Leave this column blank for dropdown, radio, or checkbox fields — the upload goes through with only a warning, leaving a variable nobody can answer.
+- Include a comma within a raw value — REDCap treats everything after the first comma as the label.
 
 ---
 
@@ -268,12 +301,21 @@ For `text` fields, this column sets the validation format. REDCap will only acce
 | `mrn_10d` | 10-digit medical record number |
 | `signature` | Marks a `file` field as a classic (drawn) Signature field |
 | `enhanced_signature` | Marks a `file` field as an Enhanced Signature field — typed or drawn *(17.1.0+)* |
+| `audio` / `video` | Marks a `file` field as an audio or video recording field *(newer Standard releases only — see the caveat below)* |
+| `autocomplete` | On a `dropdown` field, turns the drop-down into a type-ahead search box |
+
+- Codes are case-insensitive in the file: REDCap converts them to lowercase and reports a **warning**.
+- The older codes `int`, `float`, `date`, `datetime` and `datetime_seconds` are still accepted and converted to `integer`, `number`, `date_ymd`, `datetime_ymd` and `datetime_seconds_ymd`.
+- Validation types that your administrator has hidden from the Online Designer list are still accepted on upload.
+- An unknown code is an upload **error**.
+
+> **Version caveat (file field codes differ by release):** Which Column H values a `file` field accepts depends on the version. 16.0 LTS accepts only `signature`. 17.3 LTS also accepts `enhanced_signature`. 17.6 Standard also accepts `audio` and `video`. Anything else on a `file` field is an upload **error**, so a dictionary exported from a newer instance can fail on an older one. Before moving a dictionary between instances, check the target's version and clear or change any Column H values on `file` rows that it does not support.
 
 > **Note:** The date codes describe the *entry and display* format enforced on the instrument, not the storage format. REDCap stores all dates as YYYY-MM-DD and the API returns them that way regardless of which validation code the field carries — a `date_mdy` field exports as `2026-04-30`. (Verified by API export, REDCap v17, 2026-09.) A user's own date display preference can change how dates appear in an interface download, but not what is stored or what the API returns.
 
 For `slider` fields, entering `number` in this column displays the current numeric value next to the slider handle.
 
-> **Important:** Leave this column empty for field types other than `text`, `slider` and `file`.
+> **Important:** Leave this column empty for field types other than `text`, `slider`, `file` and (for `autocomplete` only) `dropdown`. A value on any other field type is an upload **error**.
 >
 > The `file` case is the one people miss: signature fields are **not** a separate field type. A **classic Signature** is `file` + `signature`, and an **Enhanced Signature** is `file` + `enhanced_signature`. Converting between them is a change to this column alone — the field type stays `file`. See [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) §8.8.
 
@@ -286,11 +328,15 @@ These two columns define acceptable lower and upper bounds for validated `text` 
 **For `slider` fields:** the columns set the slider's lower and upper bound — e.g. `0` and `10` for a 0–10 scale. Left empty, a slider runs from 0 to 100. The Column F labels (left, middle, right) are placed along whatever range you set. (Verified by Data Dictionary export, REDCap 16.0.49 LTS, 2026-10.)
 
 **Rules:**
-- The value entered must match the validation type. For a `date_ymd` field, enter dates in YYYY-MM-DD format; for a `number` or `integer` field, enter numeric values.
+- The value entered must match the validation type. For a `date_ymd` field, enter dates in YYYY-MM-DD format; for a `number` or `integer` field, enter numeric values. A value that does not match is an upload **error**.
+- Date and datetime min/max can also be typed as M/D/Y or D/M/Y (with slashes). REDCap converts them using the date format you pick on the upload page, so make sure that choice matches your file.
+- Instead of a fixed value, a `text` field's min or max can be `today`, `now`, or a variable in square brackets such as `[visit_date]`.
+- A `slider`'s min and max must be whole numbers; anything else is an **error**.
+- Min or max on a `text` field with **no** validation type in Column H is an **error**.
 - Build in a reasonable buffer to accommodate outliers rather than setting hard biological or logical limits that legitimate data could exceed.
 
 **Do not:**
-- Populate these columns for field types other than validated `text` and `slider`.
+- Populate these columns for field types other than validated `text` and `slider`. On other types (`radio`, `checkbox`, `calc` and so on) the upload does not fail, but the values are stored and ignored, which misleads anyone reading the dictionary later.
 
 **Example from practice:** A height field validated as `number` might have a min of `130` and a max of `215` (centimeters). A pain-rating slider might use `0` and `10`, with Column F labels `No pain | | Worst pain`.
 
@@ -298,15 +344,15 @@ These two columns define acceptable lower and upper bounds for validated `text` 
 
 ### 5.9 Column K — Identifier? (Non-mandatory)
 
-Flagging a variable as an identifier affects how data is handled during export. Identifier-flagged variables are excluded from de-identified data exports by default.
+Flagging a variable as an identifier affects how data is handled during export. Identifier-flagged variables are removed from exports for users with **De-Identified** export rights and whenever **Remove All Identifier Fields** is chosen.
 
 **Allowed values:**
-- `y` — flag as identifier
+- `y` or `Y` — flag as identifier
 - Blank — not an identifier
 
 **Do not:**
 - Mark every variable as an identifier. Apply the flag only to variables that directly identify a participant: name, date of birth, contact information, addresses, government IDs, and similar.
-- Use any value other than `y`.
+- Use any value other than `y`. Anything else (`yes`, `1`, `x`) is blanked with a **warning**, so the variable ends up *not* flagged.
 
 ---
 
@@ -316,10 +362,10 @@ Branching logic controls whether a variable is displayed based on the value of o
 
 **Key syntax rules:**
 - Reference variable values with square brackets: `[variable_name]`
-- Use single quotes for string comparisons: `[sex] = '0'`
-- Do not use double quotes — REDCap will not accept the upload.
+- Use single quotes for string comparisons: `[sex] = '0'`. Double quotes are also accepted as long as they are balanced; an odd number of quote marks is an upload **error**. Single quotes are still the safer habit, because they avoid CSV escaping problems.
 - Combine conditions with `and` / `or`.
 - For longitudinal projects, reference event-specific values: `[baseline_arm_1][dob]`
+- Every variable referenced in square brackets must exist in Column A (or be an instrument's `_complete` status field); a reference to a missing variable is an upload **error**, as is a syntax error in the logic.
 
 **Tip:** For bulk logic changes, use Excel's Find & Replace or cell references to craft logic across many rows efficiently. See Section 7 for advanced Excel techniques.
 
@@ -329,14 +375,20 @@ Branching logic controls whether a variable is displayed based on the value of o
 
 ### 5.11 Column M — Required Field? (Non-mandatory)
 
-Marking a variable as required prevents the instrument from being saved as Complete until the variable has a value. It does not affect data exports.
+Marking a variable as required makes REDCap check that the variable has a value when the instrument is saved. It does not affect data exports. The check behaves differently on data entry forms and surveys:
+
+- **Data entry forms:** a missing required value does **not** stop the save. The record is saved, and REDCap then tells the user which required fields are empty.
+- **Surveys:** the participant cannot move on or submit the page until the required fields are answered.
+
+For a `checkbox` field, "has a value" means at least one box is checked. This is enforced on both forms and surveys.
 
 **Allowed values:**
-- `y` — required
+- `y` or `Y` — required
 - Blank — optional
 
+Any other value is blanked with a **warning** (the variable ends up optional). `y` on a `descriptive` field is also blanked with a warning, since there is nothing to answer.
+
 **Do not:**
-- Make `checkbox` fields required — REDCap cannot enforce "at least one selected" as a required constraint.
 - Make a variable required without providing a clearly labeled "not applicable" or exit option for cases where a valid answer genuinely cannot be given.
 
 ---
@@ -395,7 +447,7 @@ When the Enhanced Radios and Checkboxes survey setting is active (see [RC-SURV-0
 - For `radio` and `checkbox`, choose H vs. V based on the number of choices: short lists (2–4 choices) are readable horizontally; longer lists are cleaner vertically.
 - Consistency across an instrument improves readability. Mixing Left and Right fields in the same instrument can create a visually fragmented layout.
 
-> **Important:** Use only these four codes exactly as written. Any other value will cause the upload to fail.
+> **Important:** Use only these four codes, in uppercase, exactly as written. Any other value — including lowercase `lh` or `rv` — does not fail the upload: REDCap blanks it with a **warning**, and the variable falls back to the default `RV`.
 
 > **Cross-reference:** See the project STYLE-GUIDE.md for team conventions on default alignment choices. See [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md) for documentation of the Enhanced Radio Buttons and Checkboxes survey setting.
 
@@ -403,12 +455,15 @@ When the Enhanced Radios and Checkboxes survey setting is active (see [RC-SURV-0
 
 ### 5.13 Column O — Question Number (Non-mandatory, surveys only)
 
-Question numbering adds a custom number prefix to a variable when displayed in survey mode. This is purely cosmetic and has no effect on data entry mode.
+Question numbering adds a custom number prefix to a variable when displayed in survey mode. This is purely cosmetic and has no effect on data entry mode. The numbers are shown only on instruments enabled as surveys whose survey settings use custom question numbering; with automatic numbering, Column O is ignored.
+
+**Rules:**
+- Up to 10 characters. Longer values are cut to the first 10.
 
 **Tip:** When branching logic creates conditional variables, use sub-numbers (e.g., `1a`, `1b`) to maintain a logical numbering sequence even when some questions are hidden.
 
 **Do not:**
-- Add question numbers to variables in non-survey instruments — they will appear in data entry mode, where they are irrelevant and confusing.
+- Expect question numbers on non-survey instruments — they are not shown in data entry mode, so values there only clutter the dictionary.
 
 ---
 
@@ -417,11 +472,12 @@ Question numbering adds a custom number prefix to a variable when displayed in s
 The Matrix Group Name groups radio or checkbox variables into a matrix (grid) display. All variables sharing the same Matrix Group Name are rendered as rows in a table, with the answer choices as columns.
 
 **Rules:**
-- Use only lowercase letters, numbers, and underscores.
-- Must be at least 2 characters long.
+- Use only lowercase letters, numbers, and underscores. Other characters are cleaned up with a **warning**.
+- Longer than 60 characters is an **error**.
 - Must be unique within the project (separate from variable names).
-- All matrix variables must be sequential in the Data Dictionary.
+- All matrix variables must be sequential in the Data Dictionary; a group split by other rows is an **error**.
 - All variables in a matrix must share the same answer choices defined in Column F.
+- All variables in a matrix should share one field type. If a group mixes `radio` and `checkbox` rows, REDCap converts them to one type and reports a **warning** — check which type it chose.
 - A section header placed on the first variable in a matrix becomes the matrix header.
 
 **Do not:**
@@ -435,8 +491,10 @@ The Matrix Group Name groups radio or checkbox variables into a matrix (grid) di
 Flags whether a radio matrix is a ranking matrix, where participants assign each row a unique rank.
 
 **Allowed values:**
-- `y` — ranking matrix
+- `y` or `Y` — ranking matrix
 - Blank — standard matrix
+
+Any other value is blanked with a **warning**. Every row in the group must carry the same Column Q value; a group where some rows say `y` and others are blank is an upload **error**.
 
 **Do not:**
 - Apply ranking to `checkbox` matrices — ranking is only supported for radio matrices.
@@ -469,6 +527,10 @@ The Field Annotation column serves two purposes: it stores designer notes visibl
 
 > **Important:** Format the cell as plain text before typing an action tag in Excel. If the cell is formatted as General and you type `@`, Excel may interpret it as a formula prefix and flag an error.
 
+On upload through the Data Dictionary page, REDCap removes **one** leading space in front of an `@` (the space Excel users add to stop `@` being read as a formula). `@CALCTEXT` and `@CALCDATE` expressions in Column R are syntax-checked on upload; an invalid one is an **error**.
+
+> **Version caveat (exported Column R cells, 16.0 LTS vs 17.3+):** When you download the Data Dictionary, REDCap protects spreadsheet users by putting an apostrophe in front of Column R cells that start with `=`, `+`, `-` or `@`. In 16.0 LTS this includes action tags, so exported cells look like `'@HIDDEN`. From 17.3 LTS, action tags are left alone. Either way, REDCap strips the added apostrophe when you upload the file again, so you do not need to remove it by hand — but do not add your own apostrophes, and expect the `'` when you open a 16.0 export in a text editor.
+
 > **Cross-reference:** See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) for a complete action tag reference.
 
 ---
@@ -482,7 +544,7 @@ The recommended Data Dictionary workflow has four stages:
 1. **Download and back up** — download the current Data Dictionary from the Project Setup page or the Online Designer. Save a local copy labeled with the date before making any edits.
 2. **Modify** — make changes in a spreadsheet application. Work only in one mode at a time (Data Dictionary or Online Designer) to prevent overwrites.
 3. **Upload** — navigate to the Data Dictionary upload interface, select your modified CSV, and click Upload. REDCap validates the file and reports any errors with row-level detail. Correct errors and re-upload as needed.
-4. **Commit** — once no critical errors are reported, review REDCap's change summary and confirm. Changes take effect immediately in Development mode. In Production mode, changes enter the pending approval queue.
+4. **Commit** — once no critical errors are reported, review REDCap's change summary and confirm. Changes take effect immediately in Development mode. In Production mode, you must first enter **Draft Mode**; the upload changes the draft, and the draft then goes through the usual review and approval.
 
 ### 6.2 Using Snapshots
 
@@ -500,18 +562,31 @@ All project history revisions are accessible from Project Setup → Project Revi
 
 A snapshot comment that names *why* the structure is about to change ("Before amendment 3 — adding AE follow-up instrument") is far more useful a year later than the timestamp alone.
 
+**Automatic snapshots:** REDCap also takes a snapshot of the current design automatically just before it commits any Data Dictionary upload (and before any metadata import through the API). These appear on **Project Revision History** too, so if an upload goes wrong you can download the pre-upload Data Dictionary from there and upload it again to restore the design.
+
 > **Note:** Snapshots are a convenience feature, not a substitute for downloading and storing local backups. Always maintain at least one local copy of the pre-edit Data Dictionary.
 
 ### 6.3 Validation Errors
 
-REDCap's upload validator catches technical errors — invalid field type codes, malformed choice syntax, duplicate variable names, and similar issues. It does not assess whether the instrument design is clinically appropriate or logically sound. Common validation errors include:
+REDCap's upload validator catches technical errors — invalid field type codes, malformed choice syntax, duplicate variable names, and similar issues. It does not assess whether the instrument design is clinically appropriate or logically sound. Common validation **errors** (which block the upload) include:
 
-- Invalid characters in Variable Name (Column A)
-- Unknown field type code in Column D
-- Missing choices for dropdown, radio, or checkbox fields (Column F)
-- Invalid validation code in Column H
-- Validation min/max populated for a non-validated field type
+- A variable name that starts with a number or underscore, ends with an underscore, contains `___`, or is reserved (Column A)
 - Duplicate variable names within the project
+- Unknown field type code in Column D
+- Rows from one instrument interleaved with another (Column B)
+- Illegal or duplicate raw values in a choice list, or a blank or invalid calculation (Column F)
+- Invalid validation code in Column H, or a Column H value on a field type that does not use it
+- Min/max on a `text` field with no validation type, or a min/max that does not match the validation type (Columns I/J)
+- Branching logic or calculations that reference a variable not in Column A
+
+Common **warnings** (the upload goes through, often with REDCap changing your value) include:
+
+- Uppercase letters, spaces or special characters in a variable, form or matrix group name (converted automatically)
+- Variable names longer than 26 characters
+- Blank Field Label, or blank choices on a `dropdown`, `radio` or `checkbox`
+- Unrecognised values in Columns K, M, N or Q (blanked)
+
+> **Version caveat (16.0 LTS):** In 16.0 LTS, REDCap administrators (super users) uploading a dictionary get some branching logic syntax errors reported as warnings instead, so an administrator's upload can succeed where a regular user's would be blocked. If an administrator uploads on your behalf on 16.0, review branching logic afterwards.
 
 ---
 
@@ -533,7 +608,7 @@ With B2 selected as the anchor, Row 1 (headers) and Column A (variable names) re
 
 Sorting on Form Name (Column B) groups all variables by instrument, making bulk changes faster. Sorting on Field Type (Column D) lets you quickly locate and modify all variables of a given type.
 
-> **Warning:** Always save a backup before sorting. If you sort and accidentally delete rows before re-saving, the upload will delete those variables from REDCap. Verify row counts before uploading after any sort operation.
+> **Warning:** Always save a backup before sorting. If you sort and accidentally delete rows before re-saving, the upload will remove those variables from the project, and their data will no longer be accessible in forms, reports or exports. Verify row counts before uploading after any sort operation.
 
 ### 7.3 Find and Replace
 
@@ -573,7 +648,7 @@ REDCap instruments are often accessed on smartphones and tablets, particularly i
 
 In longitudinal projects, the Data Dictionary defines the variables and instruments but does not assign instruments to events. Event assignment is managed separately in the longitudinal setup. Keep these points in mind when working with the Data Dictionary in a longitudinal project:
 
-- **Splitting and merging instruments** is done in the Data Dictionary by changing Form Name (Column B). This is the only way to restructure instruments in bulk — the Online Designer cannot move variables between instruments.
+- **Splitting and merging instruments** is done in the Data Dictionary by changing Form Name (Column B). This is the fastest way to restructure instruments in bulk. The Online Designer can also move individual fields, or a whole matrix, to another instrument or to a new one.
 - **The Record ID variable** must always be in the first instrument and must be assigned to the first event in longitudinal setup. Do not move it.
 - **Branching logic in longitudinal projects** often needs event identifiers: `[baseline_arm_1][dob]` references the value of `dob` collected at the `baseline_arm_1` event. Without the event identifier, REDCap uses the value from the current event, which may not be the intended behavior.
 
@@ -583,7 +658,9 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 
 **Q: What exactly does REDCap delete when I upload a Data Dictionary that is missing some rows?**
 
-**A:** Any variable present in the current project but absent from the uploaded CSV is deleted — including any data collected for that variable. REDCap warns you during the upload review if variables with existing data are about to be removed, but the deletion is irreversible once confirmed. Always verify your row count before uploading.
+**A:** Any variable present in the current project but absent from the uploaded CSV is removed from the project. Its data is no longer accessible in forms, reports or exports. REDCap does not purge it, and it can reappear if a field with the same variable name is created again — so deleting a field is not a way to remove sensitive data, and avoid reusing old variable names for something new.
+
+In Production, the draft review warns you if variables that hold data are about to be removed; in Development there is no such warning. If an upload removed variables by mistake, download the automatic snapshot taken just before the upload from **Project Revision History** and upload it again (see Section 6.2). Removing or renaming an *instrument* is different: its event designations, locking, e-signatures, repeating setting and instrument-level user rights are deleted permanently (see Section 3.2). Always download a backup and verify your row count before uploading.
 
 **Q: What is the difference between `dropdown` and `radio`?**
 
@@ -595,15 +672,15 @@ In longitudinal projects, the Data Dictionary defines the variables and instrume
 
 **Q: Can I use the Data Dictionary to rename an instrument?**
 
-**A:** Partially. Changing the value in Column B (Form Name) changes the internal instrument identifier. REDCap also allows you to separately set a display name (with spaces and capitalization) in the Online Designer after import. If you change the Form Name for an existing instrument, REDCap treats it as a new instrument — the old one is deleted if no variables remain assigned to it.
+**A:** Partially. Changing the value in Column B (Form Name) changes the internal instrument identifier. REDCap also allows you to separately set a display name (with spaces and capitalization) in the Online Designer after import. If you change the Form Name for an existing instrument, REDCap treats it as a new instrument — the old one is deleted if no variables remain assigned to it. The variables and their data carry over, but the old instrument's event designations, locking records, e-signatures, repeating setting and instrument-level user rights are deleted (see Section 3.2). To change only the name people see, rename the instrument in the Online Designer instead.
 
 **Q: My upload was rejected with a validation error in Column F. What is the most likely cause?**
 
-**A:** The most common causes are: (1) a comma embedded in a raw value (e.g., `1, Yes, confirmed` has a comma in the label preceding a pipe separator), (2) the column is blank for a dropdown, radio, or checkbox field, or (3) the choice list uses incorrect syntax (missing commas between raw values and labels, or missing pipe separators between choices).
+**A:** The most common causes are: (1) a raw value containing a character other than letters, numbers, periods, underscores and hyphens (a space, for example — remember that REDCap splits each choice at its first comma, so `yes no, Yes or no` gives the illegal raw value `yes no`), (2) the same raw value used twice in one list, or (3) a calc field with a blank or invalid formula. A comma inside a *label* (`1, Yes, confirmed`) is fine, and a blank choices column on a dropdown, radio or checkbox is only a warning.
 
 **Q: My branching logic worked in the Online Designer but REDCap rejected it in the Data Dictionary upload. Why?**
 
-**A:** The most common cause is using double quotes instead of single quotes around string values. The Online Designer accepts double quotes, but the Data Dictionary validator requires single quotes. Replace all `"` with `'` in Column L before uploading.
+**A:** The most common causes are a reference to a variable that is not in Column A of your file (for example, one you renamed or removed), and quote marks that do not pair up. Balanced double quotes are accepted, but CSV escaping in a spreadsheet can easily leave an odd number of `"` in the cell; using single quotes for string values avoids the problem.
 
 **Q: Can I include HTML in the Field Label or Field Note columns?**
 
@@ -621,15 +698,15 @@ REDCap has progressively widened the set of permitted tags in user input such as
 
 **Sorting or filtering without verifying row count before save.** Sorting a filtered view can move rows out of the visible range, and re-saving a file while a filter is active may save only the visible rows. Before uploading, clear all filters, verify the total row count matches expectations, and check that Row 1 (headers) is still in position 1.
 
-**Changing variable names after data collection begins.** Renaming a variable in Column A creates a new variable and deletes the old one — including all collected data for that variable. Variable names must be treated as permanent once data collection is underway. Use the Field Annotation (Column R) for designer notes if you need to document what a variable represents without changing its name.
+**Changing variable names after data collection begins.** Renaming a variable in Column A creates a new, empty variable and removes the old one. The old variable's data is no longer accessible in forms, reports or exports; REDCap does not purge it, and it can reappear if a variable with the old name is created again. Variable names must be treated as permanent once data collection is underway. Use the Field Annotation (Column R) for designer notes if you need to document what a variable represents without changing its name.
 
-**Interleaving rows from different instruments.** All variables belonging to the same instrument must appear as a contiguous block in the Data Dictionary. If rows from two instruments are interleaved (e.g., `form_a`, `form_b`, `form_a`), REDCap may create multiple instruments or assign variables incorrectly. Sort by Form Name (Column B) to verify grouping before uploading.
+**Interleaving rows from different instruments.** All variables belonging to the same instrument must appear as a contiguous block in the Data Dictionary. If rows from two instruments are interleaved (e.g., `form_a`, `form_b`, `form_a`), REDCap rejects the upload with an error. Sort by Form Name (Column B) to verify grouping before uploading.
 
 **Using the Data Dictionary and Online Designer simultaneously.** If you download a Data Dictionary, make edits in Excel, and then someone else makes changes in the Online Designer while you are editing, uploading your file will overwrite the Online Designer changes. Use only one design mode at a time and communicate with other project designers to avoid conflicts.
 
-**Setting validation min/max for the wrong field type.** Populating Columns I or J for a field type that does not support validation (e.g., `radio`, `checkbox`, `calc`) will cause the upload to fail. These columns apply only to `text` fields that also have a validation type set in Column H.
+**Setting validation min/max for the wrong field type.** Columns I and J apply only to `text` fields that have a validation type set in Column H, and to `slider` fields. Min/max on a `text` field with no validation type is an upload error. On other types (`radio`, `checkbox`, `calc`) the upload does not fail, but the values are stored and ignored, so the range you meant to enforce is not enforced.
 
-**Marking a checkbox field as required.** REDCap silently ignores the `y` value in Column M (Required Field?) on `checkbox` fields. The required flag has no effect — REDCap cannot enforce "at least one option selected" using this column, on data entry forms or on surveys. A survey will submit with an empty required checkbox. This is a common mistake. There is no action tag that imposes a minimum either: `@MAXCHECKED` caps the maximum number of boxes and has no minimum behaviour. Completeness has to be caught after the fact, with a validation calc field that flags the empty case or a Data Quality rule that finds the affected records.
+**Expecting "required" to block saving on data entry forms.** On a data entry form, a required variable left empty does not stop the save: the record is saved and the user is then told which required fields are missing. Only surveys hold the participant until required fields are answered. For a required `checkbox`, at least one box must be checked; this is enforced on both forms and surveys. If you need more than one box checked, no Column M value or action tag sets a minimum (`@MAXCHECKED` only caps the maximum), so catch it with a Data Quality rule or a validation calc field.
 
 ---
 
@@ -647,9 +724,9 @@ AL, Alabama | AK, Alaska | AZ, Arizona | ...
 
 The raw value (`AL`) is what gets stored in the database and referenced in branching logic: `[contact_state] = 'AL'`. The label (`Alabama`) is what the user sees. Either convention (numeric codes or string codes) is valid — pick one and be consistent within a project.
 
-### 11.2 `@CALCTEXT` on a Text Field (Not a Descriptive Field)
+### 11.2 `@CALCTEXT` on a Text Field
 
-`@CALCTEXT` is commonly described as a descriptive-field tag, but it also works on `text` fields. When applied to a text field, the calculated value is displayed in the field but is not saved to the database. This is intentional — use it when you need a computed label visible to the data entry user (e.g., a severity category derived from a score), but do not need the value stored separately.
+`@CALCTEXT` is the action tag for `text` fields that need a calculated *text* result. The calculated value is displayed in the field and **saved**, just like a `calc` field's value, so it appears in reports and exports and can be used in logic. Use it when you need a computed label (e.g., a severity category derived from a score) that a numeric `calc` field cannot produce.
 
 ```
 Field type:  text
@@ -670,6 +747,8 @@ Column L (logic):   [soc_smoking_status] = '2' or [soc_smoking_status] = '3' or 
 ```
 
 The calc runs only when the participant is a former or current smoker; for never-smokers the field is hidden and the value is blank rather than zero.
+
+> **Important:** Branching logic only controls what is *shown* on forms and surveys. When REDCap recalculates on the server (after a data import, or when you run the Data Quality rule that fixes incorrect calculated values), it ignores branching logic, so a hidden calc field can still hold a value. Write the condition into the formula itself (for example `if([soc_smoking_status] >= 2, [soc_smoking_packs_per_day] * [soc_smoking_years], '')`) if the value must be blank whenever the field is hidden.
 
 ### 11.4 Leading Whitespace in Column R Is Valid
 

@@ -7,9 +7,9 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. API core behaviour (tokens, rights, formats, errors, rate limiting) checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. API core behaviour (tokens, rights, formats, errors, rate limiting) checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS). API import rights checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation |
@@ -24,7 +24,7 @@ The REDCap API (Application Programming Interface) allows external applications 
 
 Common use cases include automated nightly data pulls into a statistical analysis environment, populating REDCap records from an external clinical system, and building custom dashboards or integrations that read from or write to REDCap without manual steps. Programmers can use the API to build applications, websites, scripts, and automated workflows that interact with REDCap directly.
 
-Access to the API requires both a user right assignment and a project-specific API token. All API tokens are scoped to the access level of the user they belong to — the API cannot grant broader access than the user has in the REDCap interface. There is one important exception: a user with the **Mobile App** right gets full data access through the app's API calls whatever their data export rights (see §9a). REDCap administrators are not limited by project rights at all.
+Access to the API requires both a user right assignment and a project-specific API token. For exports, a token is scoped to the access level of the user it belongs to and cannot return more than the user could export in the REDCap interface. **Imports are not scoped the same way:** with **API Import/Update**, a token can write to any instrument, including ones the user can only view or cannot see, and can create records without the **Create Records** right; DAG restrictions and record locking still apply. Grant API Import/Update only to users who may edit every instrument. There is one important export exception: a user with the **Mobile App** right gets full data access through the app's API calls whatever their data export rights (see §9a). REDCap administrators are not limited by project rights at all.
 
 ---
 
@@ -327,7 +327,7 @@ If the limit is exceeded, REDCap **bans that IP address permanently** — it is 
 
 **Q: What data can my API token access?**
 
-**A:** Only what your REDCap user account can access, checked on every call. If you are assigned to a DAG, your token can only see records in your DAG. Fields follow your **data export** rights per instrument: an instrument set to **No Access** for export is left out, even if you can view it on screen, and if every instrument is No Access the call is refused with 403. The exception is the **Mobile App** right, which gives full data access through the app whatever your export rights (your DAG still applies) — see §9a. REDCap administrators are not limited by project rights.
+**A:** Only what your REDCap user account can access, checked on every call. If you are assigned to a DAG, your token can only see records in your DAG. Fields follow your **data export** rights per instrument: an instrument set to **No Access** for export is left out, even if you can view it on screen, and if every instrument is No Access the call is refused with 403. The exception is the **Mobile App** right, which gives full data access through the app whatever your export rights (your DAG still applies) — see §9a. REDCap administrators are not limited by project rights. **Writing is different:** an API Import/Update token can write to any instrument and create records, whatever your instrument rights (DAG and locking still apply).
 
 **Q: Can the API trigger the Data Entry Trigger (DET)?**
 

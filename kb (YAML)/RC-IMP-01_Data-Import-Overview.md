@@ -5,15 +5,16 @@ domain: Data Import
 applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights for instrument/metadata imports
-- requires Data Entry rights for record data imports
+- requires the Data Import Tool user right for record data imports
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Data Import Tool behaviour checked against source code of v17.6.5
+  (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-FD-01 — Form Design Overview
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.8'
-last_updated: '2026-04-10'
+version: '1.9'
+last_updated: 2026-11
 related:
 - id: RC-FD-04
   title: Instrument Library & Zip Files
@@ -74,7 +75,7 @@ A compressed archive file. In REDCap, zip files are used exclusively for importi
 
 **Coordinate Variable**
 
-A column in a CSV import file that tells REDCap where a data point belongs within the project structure, beyond just the Record ID. Required for longitudinal projects (event name), repeated instruments (repeat instrument name and instance number), and DAG-assigned users (DAG name). Without the correct coordinate variables, the import will fail or map data to the wrong location.
+A column in a CSV import file that tells REDCap where a data point belongs within the project structure, beyond just the Record ID. Required for longitudinal projects (event name) and repeated instruments (repeat instrument name and instance number). The DAG column (`redcap_data_access_group`) is optional and can only be used by users who are not assigned to a DAG. Without the correct coordinate variables, the import will fail or map data to the wrong location.
 
 **Record ID**
 
@@ -86,7 +87,7 @@ The character used to separate values in a CSV file. The REDCap default is a com
 
 **Blank Values Overwrite**
 
-An import setting that controls whether empty cells in the upload file overwrite existing data in REDCap. When set to Yes, a blank cell replaces a stored value with nothing. The default is No. This setting should only be changed to Yes when blanking out existing data is intentional.
+An import setting that controls whether empty cells in the upload file overwrite existing data in REDCap. When set to Yes, a blank cell replaces a stored value with nothing. The default is No ("No, ignore blank values"). This setting should only be changed to Yes when blanking out existing data is intentional. Blank cells in the `redcap_data_access_group` column are ignored even when this is Yes, so an import cannot remove a record from its DAG.
 
 ---
 
@@ -202,34 +203,47 @@ The Data Import Tool allows you to import participant record data in bulk. REDCa
 
 ## 8.1 Uploading a CSV Data File
 
-| 1 | Navigate to **Project → Applications menu → Data Import Tool**. If you do not see this option, check your user rights. |
+| 1 | Navigate to **Project → Applications menu → Data Import Tool**. If you do not see this option, you do not have the **Data Import Tool** user right — ask a project user with User Rights access to grant it. |
 |---|---|
 | 2 | Review and confirm the import settings before uploading. The available settings are described in the table below. In most cases, the standard settings are correct — but always verify the delimiter matches your file and confirm the date format. |
-| 3 | Select your CSV file. (Pro tip: you can drag and drop the file directly onto the "Choose File" button.) |
+| 3 | Select your CSV file (the file must have a `.csv` extension). (Pro tip: you can drag and drop the file directly onto the "Choose File" button.) |
 | 4 | Select the **"Upload File"** button. |
-| 5 | REDCap processes the file and displays a results preview. |
+| 5 | In real-time mode, REDCap processes the file and displays a results preview. |
 | 6 | Review the results window carefully for any errors or warnings. If issues are found, select **Cancel**, fix the CSV file, and upload again. If everything looks correct, scroll down and select the **"Import Data"** button to commit the upload. |
 
-> **Important:** Selecting "Upload File" does not import the data — it only stages a preview. The data is not saved to the project until you select "Import Data" at the bottom of the results screen. This is the most common reason users do not see their records after uploading.
+> **Important:** In **real-time** mode, selecting "Upload File" does not import the data — it only stages a preview. The data is not saved to the project until you select "Import Data" at the bottom of the results screen. This is the most common reason users do not see their records after uploading. In **background** mode there is no preview: after a quick check of the header row and a confirmation prompt, the file is queued and imported without a further "Import Data" step.
+
+> **Important — real-time imports are all-or-nothing.** If any row in a real-time upload has an error, nothing in the file is imported; the staged file is discarded and you must fix the errors and upload again. Warnings (for example, values outside a soft range) do not block the import. Background imports work per record instead: records without errors are imported and the failed records are reported (see Section 8.2).
+
+**Who can import:** access is controlled by the **Data Import Tool** user right. Because a bulk import can change values on any instrument in the file, grant this right only to users who are trusted to edit data across the project.
 
 ### Import Settings Reference
 
 | **Setting** | **Options** | **Notes** |
 |---|---|---|
-| Import mode | Real time / Background process | Real time imports complete immediately in the browser. Background imports run asynchronously — better for large files, but may take longer overall. REDCap emails you when the background import finishes. See Section 8.3 for error handling in background mode. |
-| Display data comparison table | Yes / No | When Yes, REDCap displays a side-by-side comparison of uploaded values vs. existing values before you commit the import. For records that already exist, the table shows the current stored value alongside the new value that will overwrite it — useful for catching unexpected changes before they are committed. The downside is that rendering the table can be slow for large imports. Disable this option when importing a large number of values and you are confident the file is correct. |
+| Import mode | Real time / Background process | Real time imports show a preview and complete in the browser after you select Import Data. Background imports are queued and run asynchronously — better for large files, but may take longer overall. REDCap suggests background mode for files larger than about 1 MB, and emails you when the background import finishes. See Section 8.2 for error handling in background mode. |
+| Rename Imported Records? (auto-numbering) | No / Yes | Relates to record auto-numbering; offered on both the CSV and CDISC ODM tabs. When Yes, **every row is treated as a new record** — the record IDs in the file are replaced with the next available record names, and the results show a table of old ID → new ID (record names are prefixed with the DAG number where DAGs apply). Never use Yes to update existing records: it creates duplicates instead. |
+| Display data comparison table | Yes (default) / No | Not available in background mode. Always shown when the project requires a reason for change, so that you can enter the reasons for changed records. When Yes, REDCap displays a side-by-side comparison of uploaded values vs. existing values before you commit the import. For records that already exist, the table shows the current stored value alongside the new value that will overwrite it — useful for catching unexpected changes before they are committed. The downside is that rendering the table can be slow for large imports. Disable this option when importing a large number of values and you are confident the file is correct. |
 | Overwrite data with blank values | No (default) / Yes | When Yes, empty cells in the import file overwrite and erase existing stored values in the project. Leave at No unless you specifically intend to clear data — with No, blank cells are ignored and existing values are preserved. |
-| CSV delimiter | Comma / Tab / Semicolon (pipe `\|` and caret `^` are also accepted when importing via the API — see [RC-API-02](RC-API-02_Export-Records.md)) | Must match the actual delimiter used in your file. |
-| Date format | MM/DD/YYYY or YYYY-MM-DD / DD/MM/YYYY or YYYY-MM-DD | Must match how dates are formatted in your file. Both US and European date formats are supported. |
+| CSV delimiter | Comma / Tab / Semicolon (pipe `\|`, caret `^` and space are also accepted when importing via the API — see [RC-API-02](RC-API-02_Export-Records.md)) | Must match the actual delimiter used in your file. |
+| Date format | MM/DD/YYYY or YYYY-MM-DD / DD/MM/YYYY or YYYY-MM-DD | Both options accept YYYY-MM-DD dates. The option only matters for slash-separated dates: it tells REDCap whether `03/04/2025` means March 4 or 3 April. Dash-separated month-first or day-first dates (e.g., `03-04-2025`) fail under either option — use slashes or YYYY-MM-DD. |
 | Records formatted as | Rows (default) / Columns | Controls whether records run across rows or down columns. Rows is the standard format. The Data Import Template can be downloaded in either format. |
 
 ## 8.2 Background Import and Error Handling
 
 When the background import option is selected, REDCap processes the file asynchronously rather than in the browser. This is better suited for large data files, though it may take longer to complete overall than a real-time import of the same file. REDCap sends an email notification when the import finishes.
 
-If any rows fail during a background import, REDCap reports the errors and provides the option to re-download only the rows that failed. You can then fix the errors in that subset file and re-import it without reprocessing the rows that already imported successfully.
+Background imports are committed record by record: records without errors are saved, and records with errors are skipped. REDCap reports the errors and provides the option to download the failed data — the file contains **all rows of each failed record**, not just the rows that had an error. You can then fix the errors in that file and re-import it without reprocessing the records that already imported successfully. Only the user who submitted the import (or a REDCap administrator) can download the error and failed-data files.
 
-Background imports in progress or recently completed can be reviewed via the **View background imports** link at the top of the Data Import Tool page. Each background import appears as its own row in the table, with the following columns:
+Other background-mode behaviour:
+
+- A background import can be cancelled while it is queued or processing.
+- The data for a single record in a background file is limited to 25 MB.
+- If the project requires a reason for change, the one reason you enter when submitting is applied to every existing record the import changes.
+
+> **Version caveat (16.0 LTS vs 17.x):** REDCap works through queued background imports in batches. On 16.0 LTS batches run roughly every 3 minutes and are smaller (about 50–3,000 records); on 17.x they run roughly every 5 minutes with larger batches (about 100–5,000 records). Large background imports can therefore take noticeably different times on different servers — plan for the import to take several cycles and check the **View background imports** tab rather than re-submitting the file.
+
+Background imports in progress or recently completed can be reviewed on the **View background imports** tab of the Data Import Tool page. Each background import appears as its own row in the table, with the following columns:
 
 | **Column** | **Description** |
 |---|---|
@@ -241,7 +255,7 @@ Background imports in progress or recently completed can be reviewed via the **V
 | Records provided | Total number of records in the uploaded file |
 | Records imported | Number of records successfully imported |
 | Total import time (minutes) | How long the import took to complete |
-| Errors | Number of records or rows that failed to import |
+| Errors | Total number of errors found (a single record can have several errors, so this can be higher than the number of failed records). The details dialog lists the errors and the failed records separately. |
 
 ## 8.3 Partial vs. Full Uploads
 
@@ -256,12 +270,34 @@ REDCap can import record data from a CDISC ODM XML file produced by a REDCap exp
 | 1 | Navigate to **Project → Applications menu → Data Import Tool**, then select the **CDISC ODM (XML) import** tab. |
 |---|---|
 | 2 | Select **Browse** or **Choose File** to select the ODM XML file on your computer. |
-| 3 | Set the **Overwrite data with blank values** option as appropriate (see Import Settings Reference in Section 8.1). |
+| 3 | Set the **Overwrite data with blank values** option as appropriate, and leave **Rename Imported Records?** at No unless every record in the file is new (see Import Settings Reference in Section 8.1). |
 | 4 | Select **Upload File**. |
 | 5 | REDCap checks the file for errors and displays the data for review — the data is not immediately imported. Review for any errors or warnings. |
 | 6 | If the data looks correct, select **Import Data** to commit. If errors are found, select **Cancel**, correct the file, and upload again. |
 
-> **Note:** Unlike the CSV import, the ODM import does not offer a background processing option. The import runs in real time in the browser.
+> **Note:** Unlike the CSV import, the ODM import does not offer a background processing option. The import runs in real time in the browser, so any error in the file blocks the whole import.
+
+## 8.5 What an Import Does and Does Not Trigger
+
+An import saves data differently from entering it on a form. Check this list before importing into a project that relies on automation:
+
+| **Feature** | **On import** |
+|---|---|
+| Calculated fields | Recalculated for the imported records (unless auto-calculations are disabled for the project). Values in the file for calculated, @CALCTEXT and @CALCDATE fields are ignored with a warning. |
+| Automated Survey Invitations, Alerts & Notifications, PDF Snapshots | Triggered, as if the data had been saved on a form. |
+| Data Entry Trigger, real-time randomization | **Not** triggered. |
+| @DEFAULT, @SETVALUE, @CHARLIMIT, real-time Data Quality rules | **Not** applied. |
+| File Upload fields | Ignored in CSV imports. |
+| Form timestamp columns | Ignored, with a warning. |
+| Locked forms or records | The import is rejected with an error for that data — locked data is never silently skipped. |
+| Values that break a field's rules | Rejected as errors: invalid choice codes, validation failures, hard min/max limits, duplicate values in the secondary unique field, and other blocked values (see [RC-IMP-04 — Record Data CSV Import](RC-IMP-04_Record-Data-CSV-Import.md)). |
+
+**Project status limits:**
+
+- In **Development**, a Control Center setting can cap the number of records a project may have; an import that would exceed the cap is rejected.
+- In **Analysis/Cleanup** with data locked, imports are rejected.
+
+> **Version caveat (16.0 LTS vs 17.x):** On 17.x, imports cannot create new records in a project in **Analysis/Cleanup** status. 16.0 LTS has no such block, so an import file containing unknown record IDs will create new records there. On 16.0 LTS, check the record IDs in your file against the project before importing into an Analysis/Cleanup project.
 
 ---
 
@@ -287,7 +323,7 @@ If your project uses features beyond the basic setup, you will need additional c
 | Event ID (unique event name) | Required for longitudinal projects. The value follows the format `uniqueeventname_arm_N` — for example, `baseline_arm_1` or `followup_arm_2`. Find all unique event name values for your project in **Project Setup → Define My Events**. The unique event name is shown in the "Unique event name" column of that page. |
 | Repeat Instrument | Required when uploading data for a repeated instrument. Leave this column **empty** when the row contains data for a repeating event (as opposed to a repeating instrument within a non-repeating event). |
 | Repeat Instance | Required when uploading data for a repeated instrument or a repeated event; specifies which instance number. When `redcap_repeat_instrument` is empty but `redcap_repeat_instance` has a value, REDCap interprets the row as belonging to a repeating event. When `redcap_repeat_instrument` is filled, REDCap interprets the row as a specific instance of a repeating instrument within the event. |
-| Data Access Group (DAG) | Optional if the uploading user is not assigned to any DAG; **required** if the uploading user belongs to one or more DAGs |
+| Data Access Group (`redcap_data_access_group`) | Optional, and **only for users who are not assigned to a DAG**. Enter the DAG's unique group name to assign or move a record. Blank cells are ignored, even with "Overwrite data with blank values" set to Yes, so an import cannot remove a record from a DAG. If you are assigned to a DAG, do **not** include this column — the import fails with an error — and new records you import are placed in your DAG automatically. |
 
 > **Tip — Auto-numbering repeating instances:** When importing data for a repeating instrument or repeating event, you do not need to determine how many instances already exist before importing. Set the `redcap_repeat_instance` column value to `new` for any row you want REDCap to assign the next available instance number automatically. This avoids overwrite errors caused by instance number conflicts.
 
@@ -297,8 +333,8 @@ Instructions for working with event IDs, repeated instruments, and repeated inst
 
 Two methods are available to determine what coordinate variables and column headers your project requires:
 
-- **Download the Data Import Template** from within the Data Import Tool. The template contains no data rows — it is a header-only file with the correct column names for your project's current setup, including all required coordinate variables.
-- **Do a full data export** from the **Data Exports, Reports & Stats** application. The export uses the exact same header structure as the Data Import Template and can be used directly as an import file. If records already exist in the project, the export will also contain example data showing how correctly formatted values look.
+- **Download the Data Import Template** from within the Data Import Tool. The template contains no data rows — it is a header-only file with the correct column names for your project's current setup, including all required coordinate variables. It leaves out calculated, File Upload and descriptive fields, because those cannot be imported.
+- **Do a full data export** in **raw** format (coded values, not labels) from the **Data Exports, Reports & Stats** application. The export uses the exact same header structure as the Data Import Template and can be used directly as an import file. If records already exist in the project, the export will also contain example data showing how correctly formatted values look.
 
 ## 9.3 Multi-Row Structure in Longitudinal and Repeating Projects
 
@@ -353,11 +389,11 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 
 **Q: How do I import participant data into REDCap in bulk?**
 
-**A:** Use the Data Import Tool, accessible from the project's Applications menu. Prepare your data as a CSV file with a header row of REDCap variable names and a Record ID column. Upload the file, review the preview for errors, then select "Import Data" to commit. Any REDCap data export in CSV format can be used directly as an import file.
+**A:** Use the Data Import Tool, accessible from the project's Applications menu. Prepare your data as a CSV file with a header row of REDCap variable names and a Record ID column. Upload the file, review the preview for errors, then select "Import Data" to commit (in real-time mode; background imports are queued without a preview). Any REDCap data export in CSV format can be used directly as an import file.
 
 **Q: Why didn't my records appear in REDCap after I uploaded my CSV file?**
 
-**A:** The most common reason is selecting "Upload File" without completing the second step. Uploading stages a preview only — the data is not saved until you scroll to the bottom of the results screen and select "Import Data."
+**A:** In real-time mode, the most common reason is selecting "Upload File" without completing the second step. Uploading stages a preview only — the data is not saved until you scroll to the bottom of the results screen and select "Import Data." Also check whether the file had any errors: a real-time import with even one error imports nothing. If you used background mode, there is no Import Data step; check the **View background imports** tab for the import's status and any failed records.
 
 **Q: What column headers does my CSV import file need?**
 
@@ -387,7 +423,7 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 
 # 12. Common Mistakes & Gotchas
 
-**Selecting "Upload File" but not "Import Data."** The upload step only stages a preview — data is not saved until you scroll down and select "Import Data." If you navigate away after uploading without selecting Import Data, nothing is imported. This is the single most common import support question.
+**Selecting "Upload File" but not "Import Data."** In real-time mode, the upload step only stages a preview — data is not saved until you scroll down and select "Import Data." If you navigate away after uploading without selecting Import Data, nothing is imported. This is the single most common import support question.
 
 **Selecting the wrong delimiter.** If the delimiter selected in the Data Import Tool does not match the actual delimiter in your CSV file, REDCap may reject the file outright or, worse, misread the columns and map data to the wrong variables. Always confirm the delimiter before uploading — open your file in a text editor if unsure.
 
@@ -395,9 +431,13 @@ For a detailed, field-by-field reference of every CSV upload option listed above
 
 **Missing coordinate variables for longitudinal or repeated projects.** Importing into a longitudinal project without the event name column, or into a project with repeated instruments without the repeat instrument and repeat instance columns, will cause import errors or map data to the wrong event or instance. Download the Data Import Template from the tool to confirm which coordinate variables your project requires.
 
-**Using the wrong date format.** If the date format selected in the import settings does not match how dates are formatted in your CSV file, REDCap will either reject the rows with date errors or import the dates incorrectly. For example, selecting MM-DD-YYYY when your file uses YYYY-MM-DD will cause mismatches. Confirm the date format in your file before uploading.
+**Using the wrong date format.** Both date-format options accept YYYY-MM-DD, so ISO dates always work. For slash-separated dates, the option decides whether `03/04/2025` is read as March 4 or 3 April — choosing the wrong one can import the wrong dates. Dash-separated month-first or day-first dates such as `03-04-2025` are rejected under either option. Convert dates to YYYY-MM-DD before uploading when in doubt.
 
 **Using choice labels instead of raw coded values for dropdown, radio, or checkbox fields.** REDCap only accepts the numeric or text code assigned to each choice — not the human-readable label. For example, if a Yes/No field is coded as `1=Yes | 0=No`, the import file must contain `1` or `0`, not `Yes` or `No`. Using labels causes those rows to fail. Look up the correct codes in the project Codebook before building your import file.
+
+**Setting "Rename Imported Records?" to Yes when updating existing records.** With this option on, every row is imported as a new record with a new auto-numbered ID, so an update file creates duplicate records instead of changing the existing ones. Use it only for files of brand-new records, and check the old → new ID table in the results.
+
+**Including the DAG column as a DAG-assigned user.** Only users who are not in a DAG can use the `redcap_data_access_group` column. If you are in a DAG, remove the column; your new records go to your DAG automatically.
 
 **Importing a zip file from a non-REDCap source.** REDCap only accepts zip files for instrument import if they were generated by another REDCap project. Zip files created manually, from other software, or from other sources will be rejected. If you need to import an instrument from outside REDCap, use the Data Dictionary CSV method instead.
 

@@ -8,12 +8,13 @@ applies_to:
 - requires Project Design and Setup rights
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Multi-field Delete and Convert behaviour checked against source
+  code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-FD-03
   title: Data Dictionary
@@ -77,8 +78,8 @@ The toolbar is organized into two rows. The top row contains the primary structu
 | --- | --- | --- |
 | **Copy** | Copies all selected fields and inserts them at a position you choose | Provides a prompt to place the copies; you will need to rename variable names afterward since all names must be unique |
 | **Move** | Moves all selected fields to a position you choose | Certain field-type combinations cannot be moved together; matrix group fields can only be moved to positions within their own matrix group |
-| **Delete** | Permanently deletes all selected fields | Irreversible; fields with data in Production cannot be deleted |
-| **Convert** | Converts selected fields into a matrix group | Fields must be adjacent to each other, must all be of type Radio or Checkbox, and must not already belong to a matrix group |
+| **Delete** | Deletes all selected fields | Asks for confirmation. In Production the deletion goes into the draft and needs review if the fields hold data. The data is no longer accessible but is not purged, and it can reappear if a field with the same variable name is created again (see [RC-FD-06](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)) |
+| **Convert** | Converts selected fields into a matrix group | Fields must be adjacent to each other, must all be of type Radio or Checkbox, and must not already belong to a matrix group. Only the first field's choices are kept: the other fields' choices are overwritten, and their field notes and alignment are cleared, so check that all choices are identical first |
 | **Edit Branching Logic** | Opens the branching logic editor pre-populated with the selected fields | Lets you write or update the same logic across multiple fields in sequence |
 | **Edit Action Tags** | Opens the action tag editor for all selected fields | Useful for applying the same tag (e.g., `@HIDDEN-SURVEY`) to many fields at once |
 | **Edit Choices** | Opens a bulk choices editor | Only available when all selected fields are choice-type fields (radio, dropdown, checkbox, yes-no, true-false) |
