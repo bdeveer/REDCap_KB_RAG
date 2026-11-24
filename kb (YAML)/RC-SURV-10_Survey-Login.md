@@ -8,12 +8,13 @@ applies_to:
 requires: 'Any supported version (Enforce REDCap login protection, §5: REDCap v17.5.0+
   and a REDCap+ subscription)'
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured. §5 is from the 17.5.0 release notes only
+  not re-captured. §5 is from the 17.5.0 release notes only; §5 REDCap login protection
+  checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
-version: '1.1'
-last_updated: 2026-10
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-SURV-01
   title: Surveys – Basics
@@ -101,7 +102,7 @@ Survey Login behavior depends on whether a record exists for the respondent at t
 
 This means Survey Login has no effect on the very first interaction for a new respondent. It becomes active on all subsequent survey accesses once a record has been created — whether by the respondent completing a prior survey, by staff data entry, or by data import.
 
-> **Important:** Survey Login **cannot** be applied to a Public Survey (the first survey in a project accessible via the public survey link). A Public Survey by definition has no record to validate against when a new respondent arrives. Survey Login applies to all other survey access methods.
+> **Important:** Field-value Survey Login **cannot** be applied to a Public Survey (the first survey in a project accessible via the public survey link). A Public Survey by definition has no record to validate against when a new respondent arrives. Survey Login applies to all other survey access methods. REDCap login protection (Section 5) is different: it does cover the Public Survey link.
 
 ## 3.2 Where to Configure Survey Login
 
@@ -165,13 +166,23 @@ If no custom message is provided, REDCap displays a generic error.
 # 5. Enforce REDCap Login Protection *(REDCap+, 17.5.0+)*
 
 > **⚠️ REDCap+ Feature Tag**
-> Enforce REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription on the installation. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
+> Enforce REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription on the installation. It is not in LTS 17.3 or 16.0. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
 
-> **Scope note:** This section is written from the REDCap 17.5.0 release notes. It has not been checked against a live subscribed instance, so exact labels and dialog layout may differ.
+> **Version caveat (LTS 17.3 and 16.0):** REDCap login protection is not available on the LTS 17.3 or 16.0 lines; the option does not exist there. On those servers, use field-value Survey Login (Section 4) to control who can open a survey.
+
+> **Scope note:** This section's behaviour was checked against REDCap source code. It has not yet been checked on a live subscribed instance, so exact dialog layout may differ.
 
 ## 5.1 What It Does
 
 When **Enforce REDCap login protection** is selected in the Survey Login settings, REDCap uses its standard login flow instead of asking the respondent for stored field values. A respondent who is already logged in to REDCap goes straight to the survey; anyone else is sent through the instance's normal authentication first.
+
+**Which links are covered.** Protection applies to all surveys or to selected surveys, using the same **Apply survey login to** choice as Section 4.4. On a protected survey it covers both the **Public Survey link** and participant-list (private) links. The **Survey Queue** page itself is not protected, but each protected survey opened from the queue asks for login.
+
+**How long the login lasts.** Access lasts for the instance's auto-logout timer (30 minutes if none is set), within the respondent's REDCap session. A logged-in respondent who moves on to another protected survey is not asked to log in again while their REDCap session is active.
+
+**Gating is enforced on the server.** Without an active REDCap+ subscription the option cannot be saved.
+
+> **Warning — subscription lapse:** If the installation's REDCap+ subscription lapses, REDCap login protection silently switches off. Protected surveys (and protected public reports and dashboards, Section 5.5) open to anyone with the link again, while the setting still shows as on. Before letting a subscription lapse, list the projects that rely on REDCap login protection and switch their surveys to field-value Survey Login (Section 4), or take the links out of circulation.
 
 Use it when respondents are institutional users — staff surveys, internal evaluations, training sign-offs — where knowing *which user account* completed the survey matters more than matching record data.
 
@@ -180,12 +191,15 @@ Use it when respondents are institutional users — staff surveys, internal eval
 | Respondent proves identity with | 1–3 values stored in their record | Their REDCap / institutional credentials |
 | Needs record data before login | Yes | No |
 | Subscription | None | REDCap+ |
-| Minimum version | Any supported | 17.5.0 (Standard) |
+| Minimum version | Any supported | 17.5.0 (Standard); not on LTS 17.3 or 16.0 |
+| Covers the Public Survey link | No | Yes |
 | Can prefill user details | No | Yes (Section 5.2) |
 
 ## 5.2 Prefilling Fields from the Logged-in User
 
-Optionally, project fields on **page 1** of the survey can be prefilled with attributes REDCap obtains at login, where available — the REDCap username, first name, last name, email address and others.
+Optionally, project fields on **page 1** of the survey can be prefilled with attributes REDCap obtains at login: username, first name, last name, email, phone, employee ID, and alternative username, each where the instance has it.
+
+An option lets you prefill **only empty fields**, so values already saved in the record are not overwritten.
 
 Prefilled fields are ordinary fields and remain editable unless you prevent it. To lock them, add `@READONLY` (still visible) or `@HIDDEN-SURVEY` (not shown) — see [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md).
 
@@ -199,17 +213,17 @@ This option does not appear on instances that use only one authentication method
 
 ## 5.4 Who Can Get In
 
-Under any authentication method **other than Table-based**, a person who has never used REDCap and has no REDCap account can still reach the survey, provided they pass the institution's authentication (for example, the institutional SSO). REDCap login protection therefore means "anyone who can authenticate to this REDCap instance", not "existing REDCap users" or "users of this project". Project user rights are not checked.
+Under any authentication method **other than Table-based**, a person who has never used REDCap and has no REDCap account can still reach the survey, provided they pass the institution's authentication (for example, the institutional SSO). REDCap login protection therefore means "anyone who can authenticate to this REDCap instance", not "existing REDCap users" or "users of this project". The respondent does not need to be a user of the project, and project user rights are not checked. The REDCap account must be active, however: a suspended or expired account cannot get in.
 
 > **Institution-specific:** Who can pass authentication depends on how the instance's SSO or LDAP is scoped — sometimes the whole institution, sometimes a subset, sometimes affiliates too. Ask your REDCap administrator before relying on REDCap login protection to restrict a survey to a particular group.
 
 ## 5.5 Public Reports and Public Dashboards
 
-The same protection can be applied to any **public report** or **public project dashboard**. Once the report or dashboard is public, a button immediately beneath it (labelled **"Enabled REDCap login protection"** in the 17.5.0 release notes) turns it on. Viewers then have to log in to REDCap, if not already logged in, before the report or dashboard is displayed. See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) §4.2 and [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md) §5.
+The same protection can be applied to any **public report** or **public project dashboard**. Once the report or dashboard is public, a button immediately beneath it, **Enable REDCap login protection**, turns it on. Viewers then have to log in to REDCap, if not already logged in, before the report or dashboard is displayed. See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) §4.2 and [RC-PROJ-03 — Project Dashboards](RC-PROJ-03_Project-Dashboards.md) §5.
 
 ## 5.6 Save & Return Later
 
-A respondent who logs in does not need a Return Code to resume a survey with **Save & Return Later** enabled.
+A respondent who logs in does not need a Return Code to resume a survey with **Save & Return Later** enabled, **provided they use a participant-specific (private) link**. On the Public Survey link, a Return Code is still needed to resume. If respondents will need to come back to a partial response, send them participant-specific links.
 
 > **Version caveat (17.5.0–17.5.3 Standard):** REDCap login protection could still ask the respondent for a **Return Code** on surveys with Save & Return Later enabled. Fixed in 17.5.4.
 
@@ -235,13 +249,13 @@ The number of minutes a respondent remains locked out after exceeding the failed
 Verify that the login field values stored in their record exactly match what they are entering. Pay attention to field validation — for example, if the date field uses a specific date format, the respondent must enter the date in that format. Also check whether the respondent has been locked out due to too many failed attempts; lockout status can be checked and cleared through the Survey Distribution Tools.
 
 **Q: Will Survey Login interrupt a Survey Queue flow?**
-No. Once a respondent has logged in, REDCap will not prompt them again for any survey in the same project within the 30-minute authentication window. A respondent moving through a Survey Queue will only log in once at the start and then proceed through the queue without interruption.
+No. Once a respondent has logged in, REDCap will not prompt them again for any survey in the same project within the 30-minute authentication window. A respondent moving through a Survey Queue will only log in once at the start and then proceed through the queue without interruption. Under REDCap login protection, the queue page itself opens without login; the first protected survey asks for it, and later protected surveys do not ask again while the respondent's REDCap session is active.
 
 **Q: Can I use Survey Login on a Public Survey?**
-No, not in field-value mode. Survey Login cannot be applied to the Public Survey (the survey accessible via the public survey link). Because public surveys are designed for first-time respondents who do not yet have a record, there is no data to validate against. Survey Login applies once a record exists. REDCap login protection (Section 5) does not need record data, but the 17.5.0 release notes do not say whether it covers the Public Survey — test it on your instance before relying on it.
+No, not in field-value mode. Survey Login cannot be applied to the Public Survey (the survey accessible via the public survey link). Because public surveys are designed for first-time respondents who do not yet have a record, there is no data to validate against. Survey Login applies once a record exists. REDCap login protection (Section 5) does not need record data and does cover the Public Survey link, on REDCap+ instances at 17.5.0 or higher (not LTS 17.3 or 16.0).
 
 **Q: Can I make people log in with their REDCap account to take a survey?**
-Yes, on REDCap+ instances at 17.5.0 or higher — select **Enforce REDCap login protection** in the Survey Login settings (Section 5). Without REDCap+, the only built-in option is field-value Survey Login.
+Yes, on REDCap+ instances at 17.5.0 or higher — select **Enforce REDCap login protection** in the Survey Login settings (Section 5). Without REDCap+, or on LTS 17.3 and 16.0, the only built-in option is field-value Survey Login.
 
 **Q: Can I capture who completed a survey without asking them to type their name and email?**
 With REDCap login protection, yes: prefill page-1 fields with the logged-in user's username, name and email, and lock them with `@READONLY` or `@HIDDEN-SURVEY` (Section 5.2).
@@ -271,7 +285,9 @@ Set **Apply survey login to** to *Only selected surveys*, then enable Survey Log
 
 **Choosing login fields with inconsistent formatting.** Fields like phone numbers or addresses can be stored in many formats. If your project was populated from an external source, values may have inconsistent formatting (e.g., "01-01-1980" vs "1980-01-01"). This causes legitimate respondents to fail authentication. Use fields with controlled, predictable values — especially validated date or number fields.
 
-**Expecting Survey Login to work on a Public Survey.** A common misconception is that Survey Login can be used to gate who can fill out the first survey. It cannot — Survey Login only activates once a record exists. For access control on initial enrollment, consider using a different approach such as a unique access code managed outside of REDCap.
+**Expecting Survey Login to work on a Public Survey.** A common misconception is that Survey Login can be used to gate who can fill out the first survey. It cannot — Survey Login only activates once a record exists. For access control on initial enrollment, consider REDCap login protection (Section 5), which does cover the Public Survey link on REDCap+ instances, or a different approach such as a unique access code managed outside of REDCap.
+
+**Letting the REDCap+ subscription lapse without checking protected surveys.** REDCap login protection switches off silently when the subscription ends, while the setting still shows as on (Section 5.1). Move those surveys to field-value Survey Login before the subscription lapses.
 
 **Setting the minimum required fields too low for sensitive data.** A minimum of 1 out of 3 configured fields means a respondent only needs to get one field right to gain access. For studies with sensitive data, set the minimum to 2 or 3 to require more than a single correct value.
 

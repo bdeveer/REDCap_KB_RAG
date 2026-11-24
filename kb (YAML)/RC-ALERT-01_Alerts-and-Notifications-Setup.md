@@ -7,11 +7,12 @@ applies_to:
 - requires Project Design and Setup rights
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. §3.3 `datediff` behaviour checked against source code of v17.6.5
+  (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
-version: '1.6'
-last_updated: 2026-10
+version: '1.7'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-01
   title: 'Piping: Basics, Syntax & Field Types'
@@ -151,13 +152,15 @@ The fourth parameter is optional and defaults to `false`, which makes the result
 
 **Static comparison:**
 ```
-datediff("01/01/2025", "01/07/2025", "d")
+datediff("2025-01-01", "2025-01-07", "d")
 ```
-Returns `7`. The result never changes because both dates are hard-coded.
+Returns `6`. The result never changes because both dates are hard-coded.
+
+> **Write hard-coded dates as year-month-day.** A date typed into `datediff` must use the `YYYY-MM-DD` form, whatever display format the date fields use. A value such as `"01/07/2025"` makes `datediff` return blank, so the logic is never true and the alert never fires. Test any hard-coded date in the logic editor before relying on it.
 
 **Dynamic comparison using "today":**
 ```
-datediff("01/01/2025", "today", "d")
+datediff("2025-01-01", "today", "d")
 ```
 Returns the number of days since January 1, 2025, and increases by 1 each day.
 

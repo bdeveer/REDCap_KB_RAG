@@ -7,11 +7,12 @@ applies_to:
 - requires Add/Edit/Organize Reports privilege
 requires: Any supported version
 verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+  not re-captured; §4.2 public-report login protection checked against source code
+  of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-EXPRT-05 — Data Export: Report Types & Other Export Options'
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-CC-04
   title: 'Control Center: User Settings & Defaults'
@@ -92,7 +93,7 @@ The report name is required. It appears in the report list and in any export fil
 
 ## 4.2 Public Reports
 
-The public report option, when enabled, generates a shareable URL that allows anyone with the link to view the report — no REDCap login required. This is useful for sharing non-sensitive lists (e.g., a public sign-up sheet) with people outside your project.
+The public report option, when enabled, generates a shareable URL that allows anyone with the link to view the report — no REDCap login required unless login protection (below) is turned on. This is useful for sharing non-sensitive lists (e.g., a public sign-up sheet) with people outside your project.
 
 Before a report can be made public, REDCap automatically checks three criteria:
 
@@ -121,13 +122,19 @@ The code can be retrieved programmatically with the `[report-access-code:unique_
 > **⚠️ REDCap+ Feature Tag**
 > REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
 
-Once a report is public, a button immediately beneath the public-report setting (labelled **"Enabled REDCap login protection"** in the 17.5.0 release notes) makes viewers log in to REDCap before the report is displayed. Anyone already logged in sees it straight away.
+Once a report is public, a button immediately beneath the public-report setting (labelled **"Enable REDCap login protection"**) makes viewers log in to REDCap before the report is displayed. Anyone already logged in sees it straight away.
 
-Unlike an access code, this does authenticate the viewer. It does **not** restrict the report to project users: under SSO or LDAP, anyone who can authenticate to the instance can view it, including people with no prior REDCap account. The same feature for surveys is described in [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5, including who can get in (§5.4).
+Unlike an access code, this does authenticate the viewer. It does **not** restrict the report to project users: the viewer does not need to be a user on the project, but must log in with an active REDCap account (a suspended or expired account is refused). Under SSO or LDAP, anyone who can authenticate to the instance can view it, including people with no prior REDCap account. The check is enforced by the server, not just in the browser. The same feature for surveys is described in [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5, including who can get in (§5.4).
 
-> **Scope note:** Written from the 17.5.0 release notes; not checked against a live subscribed instance.
+**Access code or login protection, not both.** The two are offered as alternatives: once one is set on a report, the button for the other is disabled. To switch, remove the current protection first.
 
-> **Important:** Never make a report public if it contains sensitive, identifiable, or protected information. Some REDCap installations have disabled the public report feature entirely to comply with data privacy requirements.
+> **Version caveat (17.3 and 16.0 LTS):** REDCap login protection for public reports does not exist in 17.3.x or 16.0.x LTS; it is present in 17.6.x Standard. On an LTS instance the only protection available for a public report is the access code. If you need authenticated viewers on LTS, do not make the report public; grant project access instead, or ask your administrator when your instance will move to a release that has the feature.
+
+> **⚠️ Warning — protection switches off silently if REDCap+ lapses.** If the instance's REDCap+ subscription ends, REDCap stops enforcing login protection, but the setting still shows as on. The public report becomes viewable by anyone with the link again, with no warning to the project. Action: if your instance's REDCap+ status changes (ask your administrator), review every public report that relied on login protection and either add an access code or turn public access off.
+
+> **Scope note:** This section's behaviour was checked against REDCap source code; not yet checked on a live subscribed instance.
+
+> **Important:** Never make a report public if it contains sensitive, identifiable, or protected information. Public reports have **no small-count (minimum data point) suppression**: every row and value is shown, however few records match. The identifier restriction above is the only content check REDCap applies. Some REDCap installations have disabled the public report feature entirely to comply with data privacy requirements.
 
 > **Institution-specific:** Whether public reports are enabled varies by installation. Contact your REDCap administrator to confirm availability and any applicable data governance requirements before sharing report links externally.
 
@@ -223,7 +230,7 @@ These options appear below the field list and apply to the full report. The defa
 **A:** Yes. You can mix variables from any combination of instruments in a single report. Use the Quick Add method or the Look Up method to add variables from different instruments.
 
 **Q: What does "public report" actually mean — who can see it?**
-**A:** Anyone who has the public link can view the report, with no login required. There is no authentication barrier. Only make a report public if the data it contains is safe for unrestricted public access.
+**A:** By default, anyone who has the public link can view the report, with no login required. An access code only gates the link; it does not identify the viewer. REDCap login protection (REDCap+, not on 17.3 or 16.0 LTS) requires an active REDCap account but not project membership, and stops being enforced if the REDCap+ subscription lapses. Public reports do not suppress small counts. Only make a report public if the data it contains is safe for unrestricted public access.
 
 **Q: Why does adding a large instrument slow down the report builder?**
 **A:** REDCap is loading all the variable rows into your browser's interface. The slowdown is a client-side rendering issue, not a server problem. For very large instruments, use Quick Add and select only the variables you need instead of using Choose Instrument.

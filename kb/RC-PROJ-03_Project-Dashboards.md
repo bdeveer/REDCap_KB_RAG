@@ -7,10 +7,10 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. §5 public-dashboard threshold and login protection checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | None |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md); [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md); [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) |
 | **Synonyms** | how do i create a project dashboard; display summary statistics and charts for my project; make a dashboard public for stakeholders; add charts and tables to a dashboard page; build a project summary page with smart variables; share project data without a redcap account; configure dashboard access; project dashboard vs record status dashboard; require redcap login to view a public dashboard |
@@ -51,7 +51,7 @@ The full syntax reference for all three types is in [RC-PIPE-11 — Smart Variab
 
 **Public Dashboard**
 
-A dashboard that has been made accessible via a direct URL to users who do not have a REDCap account. Public dashboards can optionally require an access code.
+A dashboard that has been made accessible via a direct URL to users who do not have a REDCap account. Public dashboards can optionally require an access code or, on REDCap+ servers, a REDCap login (Section 5.5).
 
 **Dashboard Unique Name**
 
@@ -155,7 +155,7 @@ By default a dashboard is private — only users with project access can view it
 
 Once public, the dashboard is accessible via its unique URL to anyone with the link (and the access code, if one is set). There is no REDCap login required unless REDCap login protection is turned on (Section 5.5).
 
-> **Important:** As a privacy safeguard, Smart Functions, Smart Tables, and Smart Charts will **not render** on the public version of a dashboard unless they are displaying at least **8 data points**. Widgets that fall below this threshold appear blank to external viewers, even if they render correctly when viewed inside the project. This threshold applies only to public (unauthenticated) views — internal project users see all content regardless of data point count.
+> **Important:** As a privacy safeguard, Smart Functions, Smart Tables, and Smart Charts will **not render** on the public version of a dashboard unless they are displaying at least a minimum number of data points. In place of the content, viewers see a message saying there are fewer than N data points. The minimum is a system-wide setting in the Control Center, which can be overridden for an individual project. Its default is **5** on a freshly installed server and **11** on servers that were upgraded through REDCap 11.0.0, so check with your REDCap administrator for the value on your instance. The threshold applies to every view through the public dashboard URL, including viewers who logged in through REDCap login protection (Section 5.5). Project users viewing the dashboard inside the project see all content regardless of data point count.
 
 ### 5.2 Access Codes
 
@@ -185,11 +185,17 @@ Each dashboard has its own user access privilege settings, configurable in the d
 > **⚠️ REDCap+ Feature Tag**
 > REDCap login protection requires REDCap 17.5.0 (Standard) or higher and an active REDCap+ subscription. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md).
 
-Once a dashboard is public, a button immediately beneath it (labelled **"Enabled REDCap login protection"** in the 17.5.0 release notes) makes viewers log in to REDCap before the dashboard is displayed. Anyone already logged in sees it straight away.
+> **Version caveat (LTS 17.3.x and 16.0.x):** REDCap login protection is not present in the 17.3 or 16.0 LTS lines (checked on 17.3.31 and 16.0.61); it is present in 17.6.5 (Standard). If your server runs LTS, use an access code (Section 5.2) and keep public content aggregate-only, or ask your administrator about moving to a Standard release with REDCap+.
 
-This is real authentication, unlike an access code, but it is not a project user list: under SSO or LDAP, anyone who can authenticate to the instance can view the dashboard, including people with no prior REDCap account. The internal user access settings in Section 5.4 do not apply to the public version. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5 for the same feature on surveys.
+Once a dashboard is public, a button immediately beneath it labelled **Enable REDCap login protection** makes viewers log in to REDCap before the dashboard is displayed. Anyone already logged in sees it straight away. The check is enforced by the server, not just hidden in the page.
 
-> **Scope note:** Written from the 17.5.0 release notes; not checked against a live subscribed instance. In particular, the release notes do not say whether the 8-data-point threshold for public views (Section 5.1) still applies once a viewer has logged in.
+Access code and login protection are alternatives: once one is set, the button for the other is disabled. To switch, remove the current one first.
+
+This is real authentication, unlike an access code, but it is not a project user list: the viewer does not need to be a user on the project, only to have an active (not suspended or expired) REDCap account. Under SSO or LDAP, anyone who can authenticate to the instance can view the dashboard, including people with no prior REDCap account. The internal user access settings in Section 5.4 do not apply to the public version. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5 for the same feature on surveys.
+
+> **Important:** If the project's REDCap+ subscription lapses, login protection silently switches off. The setting still looks enabled, but the dashboard becomes public again to anyone with the URL. If a dashboard relies on login protection, confirm the subscription is renewed before it expires, and if it does lapse, turn off public access or set an access code until it is restored.
+
+> **Scope note:** Originally written from the 17.5.0 release notes. The behaviour in this section, including that the minimum-data-point threshold (Section 5.1) still applies to logged-in viewers, has since been checked against source code but not yet on a live subscribed instance.
 
 ---
 
@@ -260,7 +266,7 @@ For the full smart variable syntax used in each of these contexts, see [RC-PIPE-
 
 **Sharing a dashboard access code without the URL.** An access code alone does not allow users to reach the dashboard — they also need the URL. Always share both together, or use the `[dashboard-link]` smart variable, which bundles the URL and accepts an optional code prompt. See [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) for pairing the link and access code in a single communication.
 
-**Smart Functions and charts appearing blank on a public dashboard.** Public dashboards enforce a minimum threshold of 8 data points before rendering any Smart Function, Smart Table, or Smart Chart. If a widget looks correct when viewed inside the project but shows blank externally, the underlying data likely has fewer than 8 data points. This is an intentional privacy safeguard — not a bug. Either wait until sufficient data exists, or reconsider whether the metric is appropriate for public display at this stage of the project.
+**Smart Functions and charts not showing on a public dashboard.** Public dashboards enforce a minimum number of data points before rendering any Smart Function, Smart Table, or Smart Chart. The minimum is set by your administrator (default 5 on new servers, 11 on servers upgraded through 11.0.0) and can be overridden per project. If a widget looks correct when viewed inside the project but shows a "fewer than N data points" message on the public URL, the underlying data is below that minimum. This applies to logged-in viewers on the public URL too. This is an intentional privacy safeguard — not a bug. Either wait until sufficient data exists, or reconsider whether the metric is appropriate for public display at this stage of the project.
 
 **Using dashboard aggregate functions outside of a dashboard context.** Aggregate functions (e.g., `[aggregate-mean:age]`) are designed for use on Project Dashboards. While technically usable in field labels, their performance and rendering in that context is not guaranteed. Use them on dashboards where they are fully supported.
 

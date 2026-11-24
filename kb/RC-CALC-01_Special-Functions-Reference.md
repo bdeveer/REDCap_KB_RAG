@@ -7,10 +7,10 @@
 | **Domain** | Calculations & Special Functions |
 | **Applies To** | All REDCap project types; functions are available wherever REDCap logic or calculations are used |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions; data entry form and API import compared); blank handling in `sum()` and `+` also tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions; data entry form and API import compared); blank handling in `sum()` and `+` also tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the v17.3.7 (LTS) changelog. §5.1 `datediff()` signature, sign and date handling checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Synonyms** | list of redcap special functions; how do i use datediff in redcap; calculate the difference between two dates; redcap functions for logic and calculations; round sum and if functions in calc fields; what functions can i use in calculated fields; text and date manipulation functions; redcap built-in function reference; plus sign calculation blank when one field is empty; ismissingcode wrong after data import |
@@ -104,7 +104,11 @@ Calculates the difference between two dates or datetimes.
 
 The `returnSignedValue` parameter must be `true` or `false` (default: `false`). When `false`, the result is always positive regardless of which date is larger. When `true`, the result is negative if `date2` is earlier than `date1`.
 
-You may use the literal `'today'` or `'now'` as either date parameter.
+You may use the literal `'today'` or `'now'` as either date parameter. A date typed directly into the expression must be written `'YYYY-MM-DD'` (for example `'2025-01-31'`), whatever display format the date field uses. Any other form, such as `'01/31/2025'`, makes `datediff()` return blank.
+
+Older expressions sometimes carry a date-format argument (`'ymd'`, `'mdy'` or `'dmy'`) between the units and the sign flag, as in `datediff([date1], [date2], 'd', 'mdy', true)`. REDCap still accepts this form and ignores the format argument, so both forms give the same result. New expressions don't need it.
+
+With units `'d'`, the result is rounded to whole days when both values are dates. When either value has a time, the result can be fractional.
 
 **Common use:** `datediff([date1], 'today', 'd')` — number of days between a field's date and today.
 

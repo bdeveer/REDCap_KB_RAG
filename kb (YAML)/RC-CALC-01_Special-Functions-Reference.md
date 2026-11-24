@@ -9,11 +9,12 @@ requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions;
   data entry form and API import compared); blank handling in `sum()` and `+` also
   tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the
-  v17.3.7 (LTS) changelog
+  v17.3.7 (LTS) changelog. §5.1 `datediff()` signature, sign and date handling checked
+  against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-BL-01 — Branching Logic: Overview & Scope'
-version: '1.4'
-last_updated: 2026-10
+version: '1.5'
+last_updated: 2026-11
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -123,7 +124,11 @@ Calculates the difference between two dates or datetimes.
 
 The `returnSignedValue` parameter must be `true` or `false` (default: `false`). When `false`, the result is always positive regardless of which date is larger. When `true`, the result is negative if `date2` is earlier than `date1`.
 
-You may use the literal `'today'` or `'now'` as either date parameter.
+You may use the literal `'today'` or `'now'` as either date parameter. A date typed directly into the expression must be written `'YYYY-MM-DD'` (for example `'2025-01-31'`), whatever display format the date field uses. Any other form, such as `'01/31/2025'`, makes `datediff()` return blank.
+
+Older expressions sometimes carry a date-format argument (`'ymd'`, `'mdy'` or `'dmy'`) between the units and the sign flag, as in `datediff([date1], [date2], 'd', 'mdy', true)`. REDCap still accepts this form and ignores the format argument, so both forms give the same result. New expressions don't need it.
+
+With units `'d'`, the result is rounded to whole days when both values are dates. When either value has a time, the result can be fractional.
 
 **Common use:** `datediff([date1], 'today', 'd')` — number of days between a field's date and today.
 

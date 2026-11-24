@@ -7,10 +7,10 @@
 | **Domain** | Alerts & Notifications |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. §3.3 `datediff` behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) |
-| **Version** | 1.6 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.7 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-ALERT-02 — Alert Management & Notification Log](RC-ALERT-02_Alert-Management-and-Notification-Log.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
 | **Synonyms** | how do I send an automated email in REDCap; email reminders; automatic notifications when a form is saved; send an email when a survey is completed; staff notification email; confirmation email to participant; conditional email alert; trigger an email based on logic; difference between alerts and ASIs; set up alerts and notifications; SMS or text message notification |
@@ -123,13 +123,15 @@ The fourth parameter is optional and defaults to `false`, which makes the result
 
 **Static comparison:**
 ```
-datediff("01/01/2025", "01/07/2025", "d")
+datediff("2025-01-01", "2025-01-07", "d")
 ```
-Returns `7`. The result never changes because both dates are hard-coded.
+Returns `6`. The result never changes because both dates are hard-coded.
+
+> **Write hard-coded dates as year-month-day.** A date typed into `datediff` must use the `YYYY-MM-DD` form, whatever display format the date fields use. A value such as `"01/07/2025"` makes `datediff` return blank, so the logic is never true and the alert never fires. Test any hard-coded date in the logic editor before relying on it.
 
 **Dynamic comparison using "today":**
 ```
-datediff("01/01/2025", "today", "d")
+datediff("2025-01-01", "today", "d")
 ```
 Returns the number of days since January 1, 2025, and increases by 1 each day.
 

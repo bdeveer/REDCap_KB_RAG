@@ -7,9 +7,9 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
 | **Requires** | REDCap v17.0.0+ — the subscription and its features start at this version. Below it, 16.0.59 LTS shows only a **REDCap Plus** menu item and a "coming soon" page. The article itself is informational and useful on any version |
-| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only |
+| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only; §4 login protection and gating behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
@@ -117,7 +117,9 @@ Lets participants verify their email address and opt out of all emails from a pr
 
 ### REDCap Login Protection *(17.5.0)*
 
-Adds an **Enforce REDCap login protection** option to Survey Login, so respondents authenticate through the instance's normal REDCap login instead of entering stored field values. Page-1 survey fields can be prefilled with the logged-in user's username, name and email. The same protection can be applied to public reports and public project dashboards. Under SSO or LDAP it admits anyone who can authenticate to the instance, not only existing REDCap users. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5.
+Adds an **Enforce REDCap login protection** option to Survey Login, so respondents authenticate through the instance's normal REDCap login instead of entering stored field values. It can cover all surveys or selected ones, and it applies to the public survey link as well as participant-list links. The Survey Queue page itself is not protected, but each protected survey opened from it is. Page-1 survey fields can be prefilled with the logged-in user's username, name and email. The same protection can be applied to public reports and public project dashboards. A public dashboard still applies its small-cell threshold to logged-in viewers; the threshold is a configurable setting (default 5, or 11 on servers upgraded through 11.0.0). Public reports have no small-cell threshold. Under SSO or LDAP it admits anyone who can authenticate to the instance, not only existing REDCap users. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5.
+
+> **Version caveat (LTS 17.3.31 and 16.0.61):** login protection is not present on these LTS versions; it is present on 17.6.5 Standard. On an LTS server, use Survey Login with stored field values, or plan an upgrade to a Standard release that has the feature.
 
 ### Additional Community Portal Seats
 
@@ -135,6 +137,11 @@ REDCap+ features are visible in the interface on an unsubscribed instance, but *
 | **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* | Project Administrator Groups |
 | **Shell only** | The menu item and the page's introduction appear, followed by a differently worded notice — *"NOTICE: This feature is not available because it requires a REDCap+ subscription."* No working content is shown | Verified & Unsubscribed Emails (project-level) on 17.5.6 |
 | **Open** | The page works, because it is not subscriber-only | Project Migration Dashboard, which any institution may use |
+
+Two pages sit between these styles:
+
+- **REDCap SHARE:** the Control Center page opens for administrators without a subscription, but the **Configuration Settings** tab is hidden and participant links do not work.
+- **Project Migration:** the dashboard works without a subscription, but the project-level Migration menu link is still greyed out on an unsubscribed 17.6.5 instance.
 
 > **Note:** Do not infer one page's behaviour from another's. A REDCap+ section being fully readable in one place does not mean the next one will be.
 
@@ -192,6 +199,13 @@ REDCap+ subscribers receive both a production and a non-production subscription 
 ### What Happens When a Subscription Expires
 
 When the REDCap+ subscription key expires, all REDCap+ features are immediately deactivated for that installation — for both existing projects that used those features and any new projects. The installation reverts to REDCap Core. Data is not lost, but REDCap+-dependent workflows will stop functioning until the subscription is renewed.
+
+Two features do not simply stop:
+
+- **Login protection switches off silently.** Surveys, public reports and public dashboards that were protected become open again without a REDCap login, while their settings still show protection as on.
+- **Project Administrator Group admins keep their elevated rights** inside the projects assigned to their group, even though the Project Administrator Groups page locks and can no longer be used to change assignments.
+
+> **Important:** Before letting REDCap+ lapse, review which surveys, reports and dashboards rely on login protection (switch them to another access method or take them offline), and remove Project Administrator Group assignments while the management page is still available.
 
 ### Per-Project Purchasing
 

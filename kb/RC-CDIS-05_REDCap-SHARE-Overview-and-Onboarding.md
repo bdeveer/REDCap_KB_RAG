@@ -7,10 +7,10 @@
 | **Domain** | Clinical Data Interoperability Services |
 | **Applies To** | REDCap Administrators (Sections 4–6); study teams evaluating participant-mediated EHR data collection. Requires a REDCap+ subscription |
 | **Requires** | REDCap v17.3.0+ (Standard); LTS 17.3.x and higher. REDCap+ subscription required |
-| **Verified Against** | REDCap v17.3.6 (LTS) |
+| **Verified Against** | REDCap v17.3.6 (LTS); Control Center and project SHARE pages checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md); [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md); [RC-CDIS-04 — CDP vs CDM: Feature Comparison](RC-CDIS-04_CDP-vs-CDM-Feature-Comparison.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
 | **Synonyms** | what is redcap share; how do participants share ehr data with a study; difference between redcap share and cdis; collect clinical data from outside our own hospital; smart on fhir participant authorization redcap; redcap share onboarding survey and allow list; enable redcap share for a project; does redcap store the participant patient portal password |
@@ -23,9 +23,9 @@
 
 The distinction from REDCap's other EHR integrations is **who holds the relationship with the EHR**. Clinical Data Pull and Clinical Data Mart connect the *institution* to the institution's *own* EHR, so they only reach patients seen within that health system. SHARE is mediated by the participant, so it can retrieve data from supported healthcare organizations anywhere — including providers your institution has no relationship with. For a multisite study, or any study where participants receive care elsewhere, that is the difference between having clinical data and not having it.
 
-This article covers what SHARE is, how it compares with CDP and CDM, and the administrator onboarding path. It is written from the Control Center Information page and the release notes.
+This article covers what SHARE is, how it compares with CDP and CDM, and the administrator onboarding path. It was first written from the Control Center Information page and the release notes; the Control Center and project SHARE pages described here have since been checked against source code, but not yet on a subscribed live instance.
 
-> **Version caveat (introduced 17.3.0; reaches LTS with the 17.3.x line):** SHARE does not exist on earlier versions and **requires a REDCap+ subscription**. On a 17.3.x instance without a subscription, the Control Center page still renders and the onboarding information is readable — the feature simply cannot be enabled. Note also that REDCap 17.2.1 fixed a documentation bug where SHARE-related Smart Variables appeared in the Smart Variables reference before the feature had shipped; if you saw them on 17.2.0, they were not usable.
+> **Version caveat (introduced 17.3.0; reaches LTS with the 17.3.x line):** SHARE does not exist on earlier versions and **requires a REDCap+ subscription**. On a 17.3.x+ instance without a subscription, administrators can still open the Control Center SHARE page and read the onboarding information, but the **Configuration Settings** tab and the generated-routes section are hidden. What actually stops is the participant side: SHARE participant links and the SHARE Smart Variables do not work. If you plan to use SHARE, confirm the subscription first rather than judging by whether the Control Center page opens. SHARE is not present in LTS 16.0.x at all, and behaves the same in 17.3.31 LTS and 17.6.5 Standard. Note also that REDCap 17.2.1 fixed a documentation bug where SHARE-related Smart Variables appeared in the Smart Variables reference before the feature had shipped; if you saw them on 17.2.0, they were not usable.
 
 ---
 
@@ -51,9 +51,9 @@ The mechanism by which REDCap registers itself as a client with a supported EHR 
 
 A list, maintained centrally as part of onboarding, of the REDCap base URLs permitted to use SHARE. An instance whose URL is not on it cannot connect, which is why the onboarding survey asks for every instance URL you intend to use.
 
-### Job Diagnostics
+### Job Issues
 
-The administrator tool showing the state of SHARE data-retrieval jobs — the current processing stage, the next eligible run time, and controls to requeue failed EHR requests after fixing a request or an EHR configuration.
+The administrator-only project page (labelled **Job Issues** in the SHARE navigation; the release notes call it job diagnostics) showing the state of SHARE data-retrieval jobs — the current processing stage, the next eligible run time, and controls to requeue failed EHR requests after fixing a request or an EHR configuration.
 
 ---
 
@@ -77,9 +77,9 @@ They are complementary rather than alternatives. An institution can run CDP for 
 SHARE is not self-serve even with a REDCap+ subscription. There is an institutional onboarding step with an external dependency, so allow lead time before a study needs it.
 
 1. **Complete the REDCap SHARE setup survey**, linked from the Control Center SHARE page. It asks for the REDCap **base URL or URLs** of every instance that will use SHARE, so they can be added to the required allow list. Include test and staging instances if you intend to pilot there — an instance not on the list cannot connect.
-2. **Receive your institutional settings.** After the survey is processed, your institution is given the settings needed to connect to supported FHIR systems, **including client IDs for Epic and Oracle Health**.
-3. **Enable SHARE at the system level**, then for individual projects.
-4. **Grant the REDCap SHARE user right** to project users who need it. Without it they cannot reach the SHARE setup pages or dashboards, even in a project where SHARE is enabled.
+2. **Receive your institutional settings.** After the survey is processed, your institution is given the settings needed to connect to supported FHIR systems, **including client IDs for Epic and Oracle Health**. These are entered on the Control Center **Configuration Settings** tab (see Section 5.3).
+3. **Enable SHARE at the system level**, then for individual projects. Only REDCap administrators can enable SHARE for a project; for other users the enable button is disabled.
+4. **Grant the REDCap SHARE user right** to project users who need it. The right only appears in User Rights once SHARE is enabled at both the system and the project level, and administrators have it automatically. Without it, users cannot reach the SHARE setup pages or dashboards, even in a project where SHARE is enabled.
 5. **Test before sending any participant links.** Verify the participant workflow end to end, the project mappings, user rights, and the data that actually lands in the project.
 
 > **Important:** Step 1 gates everything else and depends on an external party, so it is the step to start early. A subscription alone does not make SHARE usable.
@@ -88,12 +88,16 @@ SHARE is not self-serve even with a REDCap+ subscription. There is an institutio
 
 ## 5. The Control Center SHARE page
 
-**Control Center → REDCap SHARE.** The page carries a REDCap+ badge and has two tabs:
+**Control Center → REDCap SHARE.** The page carries a REDCap+ badge. It is open to administrators with Control Center access; saving settings additionally needs the **modify system configuration pages** administrator privilege. Project-level administrators (Project Administrator Groups) are sent away from these pages.
 
-| Tab | Contents |
-|---|---|
-| **Information** | Feature overview, the onboarding prerequisites, links to the Administrator Guide, the onboarding survey and the FAQs, plus the public links below |
-| **Projects** | Projects on this instance in relation to SHARE |
+Which tabs appear depends on subscription and configuration:
+
+| Tab | When it shows | Contents |
+|---|---|---|
+| **Information** | Always | Feature overview, the onboarding prerequisites, links to the Administrator Guide, the onboarding survey and the FAQs, plus the public links below. With a subscription it also shows the generated routes (Section 5.4) |
+| **Projects** | Always | The **Projects using REDCap SHARE** list (Section 5.5) |
+| **Configuration Settings** | Only with a REDCap+ subscription | System-level enable, EHR client IDs and display options (Section 5.3) |
+| **EHR Catalog** | Once SHARE is enabled at system level (non-Vanderbilt sites) | The healthcare organization catalog offered to participants |
 
 ### 5.1 Public SHARE links
 
@@ -104,13 +108,43 @@ Two links on the Information tab point at pages that do not require a Control Ce
 
 ### 5.2 Documentation resources
 
-The Information tab links to the **REDCap SHARE Administrator Guide**, the **onboarding survey**, and the **FAQs**. Testing instructions accompany the guide. Further public information is published by the REDCap consortium at `projectredcap.org/software/share/`.
+The Information tab links to the **REDCap SHARE Administrator Guide**, the **onboarding survey**, and the **FAQs**. Testing instructions accompany the guide. The **FAQs** link opens the public REDCap SHARE page published by the REDCap consortium at `projectredcap.org/software/share/`.
+
+### 5.3 Configuration Settings tab
+
+Shown only with a REDCap+ subscription. It holds:
+
+- The system-level setting that enables SHARE on the instance
+- Four client-ID fields: **Epic** production, **Epic** test, **Oracle Health** production and **Oracle Health** test — where the client IDs received during onboarding are entered
+- **Display REDCap SHARE information on the Project Setup page?** — whether project users see SHARE information on Project Setup
+
+### 5.4 Generated routes
+
+With a subscription, the Information tab lists the routes this instance generates for SHARE:
+
+- The **invitation link** pattern used for participant links
+- The **organisations link** pattern for the healthcare organization list
+- The **SMART OAuth callback** URL, which must be registered with the EHR vendors
+
+### 5.5 Projects tab
+
+Titled **Projects using REDCap SHARE**. It lists every project with SHARE enabled, plus disabled projects that have SHARE history; projects pending deletion are excluded. You can search by PID or project title, and filter by status: **All**, **Enabled**, or **Disabled with SHARE history**. The list is paginated and has three columns:
+
+| Column | Shows |
+|---|---|
+| **Project** | The project |
+| **Current SHARE status** | Whether SHARE is currently enabled |
+| **SHARE evidence** | What SHARE configuration exists: saved settings, mappings, participant links, or no saved configuration yet |
+
+A disabled project with SHARE evidence is worth checking before a study is closed out, since it means SHARE was configured or used there at some point.
 
 ---
 
 ## 6. What SHARE offers in a project
 
-From the release notes; confirm the specifics against a subscribed instance before relying on them operationally.
+**Project SHARE pages.** Once SHARE is enabled for a project, users with the REDCap SHARE user right see these pages: **Home**, **Setup Wizard**, **Metrics**, **Records**, **Mapping**, **Settings** and **Integrity**. Five further pages are visible only to REDCap administrators, regardless of the user right: **Job Issues**, **Tokens**, **FHIR Diagnostics**, **Payloads** and **Docs**.
+
+The capability list below comes from the release notes; confirm the specifics against a subscribed instance before relying on them operationally.
 
 - Connections to **multiple** EHR patient portals, not just one
 - **Configurable mapping** of EHR data to REDCap fields and forms
@@ -121,11 +155,11 @@ From the release notes; confirm the specifics against a subscribed instance befo
 Refinements added in 17.3.1:
 
 - Mapping administrators can select which **Patient identifier** to save by matching its FHIR system or type, using either an exact value or a regular expression
-- SHARE prioritises authorized EHR fetching ahead of retained-payload processing, and **Job Diagnostics** exposes the current stage and the next eligible time
+- SHARE prioritises authorized EHR fetching ahead of retained-payload processing, and the **Job Issues** page exposes the current stage and the next eligible time
 - Provider-specific **CarePlan** searches for Epic and SMART Health IT, with clearer guidance when an EHR requires an unsupported category
 - **System Statistics** distinguishes project participants from EHR-specific REDCap records within the SHARE totals
 
-> **Note — pending confirmation.** Sections 5 and 6 describe the Projects tab and the in-project experience from release notes and the Control Center Information page only. The project-level setup pages, dashboards and mapping interface have not yet been reviewed on a subscribed instance, and this article should be extended once they have.
+> **Note — pending live confirmation.** The Control Center tabs and the project SHARE page list in Sections 5 and 6 were checked against source code, but not yet on a subscribed live instance. The detailed behaviour of the project setup pages, dashboards and mapping interface has not yet been reviewed, and this article should be extended once it has.
 
 ---
 
@@ -149,7 +183,11 @@ Refinements added in 17.3.1:
 
 **Q: A user cannot see the SHARE setup pages in a project where SHARE is enabled. Why?**
 
-**A:** They are missing the **REDCap SHARE user right**. Enabling SHARE for a project does not by itself grant access to its setup pages or dashboards.
+**A:** They are missing the **REDCap SHARE user right**. Enabling SHARE for a project does not by itself grant access to its setup pages or dashboards. The right only appears in User Rights once SHARE is enabled at both the system and the project level. Some pages (**Job Issues**, **Tokens**, **FHIR Diagnostics**, **Payloads**, **Docs**) are administrator-only and stay hidden even with the right.
+
+**Q: Can a project user enable SHARE for their own project?**
+
+**A:** No. Only REDCap administrators can enable SHARE for a project. Ask your REDCap administrators to enable it.
 
 **Q: Which EHR systems does SHARE support?**
 

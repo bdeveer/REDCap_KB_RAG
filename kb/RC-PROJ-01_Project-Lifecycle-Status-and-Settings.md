@@ -7,9 +7,9 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Completed-project listing and access checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | None |
-| **Version** | 1.10 |
+| **Version** | 1.11 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
@@ -72,9 +72,11 @@ From Analysis/Cleanup, a project can return to Production or be moved to Complet
 
 Indicates the project is fully done.
 
-- The project is taken **offline**. It is removed from the main My Projects list for every user, including the project owner.
-- Visibility and access are separate. Users who were members can still see the project **listed** via the **"Show Completed Projects"** link at the bottom of the My Projects page, but they cannot open it.
-- Only a REDCap administrator can open a Completed project or change its status.
+- It is removed from the main My Projects list for every user, including the project owner.
+- Members can still see it under the **"Show Completed Projects"** link at the bottom of the My Projects page, marked **Completed**, and the project name is still a link.
+- Opening it gives a member no access. REDCap removes all of that user's project rights for as long as the project is Completed, so the project menu is essentially empty and no data can be viewed, entered or exported. Their rights are kept, not deleted, and work again if the project is returned to its previous status.
+- REDCap's confirmation message says marking a project Completed takes it **offline**. In practice the project's online/offline setting is not changed: what blocks members is the removal of their rights.
+- Only a REDCap administrator can return a Completed project to its previous status.
 
 > **Note on legacy statuses:** Prior to REDCap version 9.8.0 (standard) / 10.0.5 (LTS), projects used "Inactive" and "Archived" statuses. These were automatically migrated: Inactive → Analysis/Cleanup; Archived → Analysis/Cleanup within the renamed "My Hidden Projects" folder.
 
@@ -320,7 +322,7 @@ Draft Preview Mode lets you test your drafted changes — including branching lo
 
 **Q: Where can I view projects in "Completed" status?**
 
-**A:** On the **My Projects** page, scroll to the bottom and click **"Show Completed Projects."** That lists the Completed projects you were a member of, but it does not restore access to them. A Completed project is offline: only a REDCap administrator can open it or change its status.
+**A:** On the **My Projects** page, scroll to the bottom and click **"Show Completed Projects."** That lists the Completed projects you were a member of. You can click a project's name, but you will have no rights inside it: the menu is essentially empty. Only a REDCap administrator can return it to its previous status.
 
 ---
 

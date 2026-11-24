@@ -6,11 +6,12 @@ applies_to:
 - All REDCap users
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Completed-project listing and access checked against source code
+  of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - None
-version: '1.1'
-last_updated: '2026-09-21'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-PROJ-01
   title: 'Project Lifecycle: Status and Settings'
@@ -120,7 +121,7 @@ REDCap includes a built-in special folder called **My Hidden Projects**. Its beh
 
 Projects in **Completed** status are hidden from the main My Projects list. To see them, scroll to the bottom of the My Projects page and click **"Show Completed Projects."** This lists all projects in Completed status that you were a member of.
 
-The list is visibility only, not access. A Completed project is taken offline: only a REDCap administrator can open it or change its status once it reaches Completed. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details on project statuses and transitions.
+Each one is marked **Completed**, and its name is still a link, but listing is not access. If you open a Completed project, REDCap removes all your project rights for as long as it stays Completed, so the menu is essentially empty and you cannot view, enter or export data. Only a REDCap administrator can return it to its previous status, which gives you your rights back. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details on project statuses and transitions.
 
 ---
 
@@ -170,7 +171,7 @@ On narrow screens (phones and small tablets), the tabular project grid is replac
 
 **Q: Where do Completed projects appear?**
 
-**A:** They are hidden from the main list. Click **"Show Completed Projects"** at the bottom of the My Projects page to see them listed. Listing is not access: a Completed project is offline and can only be opened by a REDCap administrator.
+**A:** They are hidden from the main list. Click **"Show Completed Projects"** at the bottom of the My Projects page to see them listed. Listing is not access: you can open one, but you will have no rights inside it. Only a REDCap administrator can return it to its previous status.
 
 ---
 
