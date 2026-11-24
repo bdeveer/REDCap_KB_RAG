@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.9 |
+| **Version** | 1.10 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) |
@@ -53,7 +53,7 @@ The active data collection state. In Production:
 - This protects existing data from accidental modification or deletion.
 - Surveys, alerts, automated invitations, and all standard features remain fully active.
 
-**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+). If you retain the records, REDCap keeps them but clears the randomization variable for every model, so they are no longer randomized — see [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md).
+**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+ Standard; not in 17.3.31 LTS or 16.0.61 LTS, where only the generic confirmation appears). If you retain the records, REDCap keeps them but clears the randomization variable for every model, so they are no longer randomized — see [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md).
 
 > **Why move to Production?** Moving to Production preserves data accuracy and integrity. The post-production change control process provides a safety check to prevent accidental deletion, recoding, or overwriting of data that has already been collected.
 

@@ -2754,7 +2754,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-03 — Import Records API
 
 **Inbound links (referenced by):**
-*(none)*
+- RC-RAND-03 — Working with & Managing Randomization
 
 ---
 
@@ -5521,6 +5521,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PIPE-03 — Smart Variables Overview
+- RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
 
 ---
@@ -5601,6 +5602,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-MOB-01 — REDCap Mobile App
+- RC-PIPE-13 — Smart Variables: Randomization
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
@@ -5653,6 +5655,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-MOB-01 — REDCap Mobile App
+- RC-API-52 — Randomize Record API
 - RC-PIPE-13 — Smart Variables: Randomization
 
 **Inbound links (referenced by):**

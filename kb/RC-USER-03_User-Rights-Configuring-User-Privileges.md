@@ -7,9 +7,9 @@
 | **Domain** | User Rights |
 | **Applies To** | All REDCap project types; requires User Rights privilege |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Randomization rights checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) |
@@ -122,9 +122,11 @@ If the mobile app is not part of your project's data collection workflow, leave 
 **Randomization**
 
 Three separate rights, shown only when randomization is enabled on the project. Each carries more exposure than its name suggests:
-- *Setup* — define the randomization model and upload **and download** allocation tables. Downloading a table reveals the full allocation sequence.
-- *Dashboard* — view allocation progress (used / not used). The dashboard also shows which records went to each group, so in a blinded study it **can unblind** the user.
-- *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields and lets the user set them **even without form-level rights** to those fields; if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights.
+- *Setup* — define the randomization model and upload **and download** allocation tables. While the project is in Development, downloading a table reveals the full allocation sequence, including the production table prepared for go-live. In Production only an administrator can download the tables.
+- *Dashboard* — view allocation progress (used / not used) per stratum, with the records in each. For an open model (dropdown or radio randomization variable) it also breaks this down by group. For a blinded model (text randomization variable) it never shows the group. A study that is meant to be blinded but uses an open variable **can be unblinded** through the dashboard.
+- *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields with their current values **even without form-level rights** to those fields, so if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights. Strata on instruments set to **No Access** are shown but can't be changed. Users with **Read Only** access to that instrument can set them in the dialog.
+
+Users get none of the three rights by default. The only exception is the project creator, who gets all three when **Randomization** is ticked at project creation. Enabling the module later in Project Setup grants them to nobody. The **Randomization** link appears in the project menu only for users with Setup or Dashboard.
 
 See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) for who should get each right.
 

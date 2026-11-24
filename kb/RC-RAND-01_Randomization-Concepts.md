@@ -7,13 +7,13 @@
 | **Domain** | Randomization |
 | **Applies To** | All REDCap project types with Randomization module enabled; intended for PIs, Study Coordinators, and Project Builders planning a randomized study |
 | **Requires** | REDCap v15.4.4+ (Randomization 2.0 — automatic trigger options) |
-| **Verified Against** | REDCap v17.6.1 (Standard) — built-in Help & FAQ and source read on v17.5.9; Standard changelog reviewed to 17.6.1; LTS changelog not reviewed since v17.3.7; Randomization pages not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — randomization behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | Foundational REDCap knowledge required: project setup, instruments, user rights, and longitudinal mode basics |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md); [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md) |
-| **Synonyms** | what is randomization in redcap; randomization terminology and concepts; how does stratified randomization work; allocation table and randomization model explained; plan a randomized study in redcap; blocked randomization basics; randomization strata and groups concepts; understand randomization before setup; randomize records into separate arms with a pre-randomization arm; can the randomization dashboard unblind a study |
+| **Synonyms** | what is randomization in redcap; randomization terminology and concepts; how does stratified randomization work; allocation table and randomization model explained; plan a randomized study in redcap; blocked randomization basics; randomization strata and groups concepts; understand randomization before setup; randomize records into separate arms with a pre-randomization arm; can the randomization dashboard unblind a study; can development and production randomization allocation tables be the same; what randomization model settings can change after production |
 
 ---
 
@@ -33,8 +33,9 @@ of failed or misconfigured randomization models.
 REDCap's randomization module uses standard statistical terminology
 that is unfamiliar to many research coordinators and project builders.
 The module's setup wizard asks you to make consequential decisions ---
-some of which cannot be changed without deleting and rebuilding the
-entire model — based on these concepts. Understanding them upfront
+some of which cannot be changed without erasing and rebuilding the
+entire model in Development, and cannot be changed at all once the
+project is in Production — based on these concepts. Understanding them upfront
 prevents costly mistakes.
 
 **Important note about Randomization 2.0**
@@ -99,13 +100,13 @@ You must understand them before configuring a randomization model.
 | **Cohorts / Groups / Sub-groups** | The different groups records are divided into. These terms are interchangeable in REDCap. Examples: placebo vs. intervention; control vs. intervention A vs. intervention B. |
 | **Stratification (Stratified Randomization)** | A method of ensuring each randomization group has a similar composition across key variables. For example, stratifying by sex prevents all men from ending up in the control group. REDCap supports up to 14 stratification variables, all of which must be single-choice field types (dropdown, radio button, yes/no, true/false). Calculated fields cannot be strata; see the Q&A below for the workaround. |
 | **Sites / Groups (Multi-site)** | A special form of stratification that separates randomization by study site. The site can come from REDCap's Data Access Group (DAG) feature or from a dedicated single-choice site field. Useful for multi-site trials where site membership should influence allocation. |
-| **Blinding (Blinded Randomization)** | A setup where even the study team does not know which group a participant is assigned to. Requires a plain text randomization variable (no dropdown) so the assigned value is opaque to the UI. The key for decoding group assignments is stored outside REDCap and shared only with designated unblinded individuals (e.g., pharmacy staff). |
-| **Open Randomization (Unblinded)** | A setup where the study team can see which group each participant is assigned to. Uses a dropdown or radio button randomization variable with group labels visible in the interface. |
+| **Blinding (Blinded Randomization)** | A setup where even the study team does not know which group a participant is assigned to. Requires a plain text randomization variable (no dropdown) so the assigned value is opaque to the UI. The key for decoding group assignments is normally kept outside REDCap and shared only with designated unblinded individuals (e.g., pharmacy staff). A blinded allocation table may optionally include the group column; if the statistician includes it, the key is stored inside REDCap, where administrators can see it and it appears in allocation table downloads. Leave the group column out if the key must stay outside REDCap. |
+| **Open Randomization (Unblinded)** | A setup where the study team can see which group each participant is assigned to. Uses a dropdown, radio button, yes/no or true/false randomization variable with group labels visible in the interface. |
 | **Allocation Table** | A pre-generated list of randomization assignments in a specific sequence. REDCap does not generate random assignments on the fly — it works down this list in order, assigning each new randomization to the next available slot. Allocation tables are typically generated by a statistician or statistical software. REDCap provides a downloadable template tailored to your model's settings. The template shows the required format only; its rows must not be used as the allocation for a production study. |
-| **Randomization Variable** | The REDCap field that stores the randomization result for each record. For open randomization: a dropdown or radio button field. For blinded randomization: a plain text field with no validation. This field must be created before setting up the randomization model. |
-| **Randomization Model** | The configuration object in REDCap that defines how randomization works for a given variable — including stratification, blinding, trigger type, and allocation table. Once a model is saved and in production, most settings are locked and can only be changed by a REDCap administrator. |
+| **Randomization Variable** | The REDCap field that stores the randomization result for each record. For open randomization: a dropdown, radio button, yes/no or true/false field. For blinded randomization: a plain text field with no validation and no @CALCTEXT (validated and @CALCTEXT text fields are not offered as blinded targets). This field must be created before setting up the randomization model. Once a model uses it, the field (and every stratification field) is protected: it cannot be deleted in the Online Designer, a data dictionary upload that drops it is rejected, and a blinded target cannot be given validation. |
+| **Randomization Model** | The configuration object in REDCap that defines how randomization works for a given variable and event — including stratification, site/DAG setting, blinding, trigger type, and allocation table. A project can hold more than one model; each has exactly one target event and its own allocation tables. The model's core settings (randomization variable, event, strata and site/DAG setting) lock as soon as the model is saved, even in Development. In Development the model can be erased and rebuilt; in Production nobody, administrators included, can change or erase it through the interface. The trigger option and trigger logic stay editable by users with the Setup right, including in Production. See [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md) for what administrators can still change. |
 | **Allocation Slots** | Individual entries in the allocation table. Each slot corresponds to one randomization event. Running out of slots mid-study requires administrator intervention to append more allocations. |
-| **Smart Variables (Randomization)** | REDCap system variables that capture metadata about the randomization event: \[rand-time\] (server timestamp), \[rand-utc-time\] (UTC timestamp), \[rand-number\] (allocation number assigned). Useful for audit trails and piping into alerts or reports. |
+| **Smart Variables (Randomization)** | REDCap system variables that capture metadata about the randomization event: \[rand-time\] (server timestamp), \[rand-utc-time\] (UTC timestamp), \[rand-number\] (the randomization number in a blinded model; in an open model it returns the optional alternate number, never the group, and is blank if none was uploaded). To show the group, pipe the randomization variable itself. Useful for audit trails and piping into alerts or reports. See [RC-PIPE-13 — Smart Variables: Randomization](RC-PIPE-13_Smart-Variables-Randomization.md). |
 
 **Open vs. Blinded Randomization — Decision Guide**
 
@@ -115,10 +116,10 @@ outside REDCap.
 
 | **Factor** | **Open (Unblinded)**                                **Blinded** |
 | --- | --- |
-| **Randomization variable type** | Dropdown or radio button with group labels          Plain text field, no validation — stores an opaque code |
-| **Group visible in REDCap UI?** | Yes — study team can see group assignment         No — team sees only a code; key stored outside REDCap |
+| **Randomization variable type** | Dropdown, radio button, yes/no or true/false with group labels          Plain text field, no validation, no @CALCTEXT — stores an opaque code |
+| **Group visible in REDCap UI?** | Yes — study team can see group assignment         No — team sees only a code; key kept outside REDCap (unless the group column is included in the allocation table) |
 | **Allocation table format** | Group labels match dropdown options                 Group codes defined by statistician; key held separately |
-| **Who needs the decode key?** | Not applicable                                      Only designated unblinded individuals (e.g., pharmacy). Treat the **Dashboard** and **Setup** rights the same way: both can reveal assignments |
+| **Who needs the decode key?** | Not applicable                                      Only designated unblinded individuals (e.g., pharmacy). The **Dashboard** shows only used/unused counts for a blinded model, never the group. The real risks are allocation table downloads (the **Setup** right before go-live, administrators in Production) and building a "blinded" study on a dropdown or radio field |
 | **Complexity** | Simpler to setup and manage                         More complex; requires external process for key management |
 | **Common use case** | Most open-label trials, operational randomization   Double-blind RCTs, placebo-controlled trials |
 
@@ -143,27 +144,38 @@ pre-audited and reproduced.
     group. There is no functional upper limit to allocation table size.
 
 - **Development vs. production tables:** REDCap maintains separate
-    allocation tables for development and production modes. You can
-    upload the same file to both, but keep in mind that test
-    randomizations in development mode consume development slots.
+    allocation tables for development and production modes. The two
+    tables cannot be identical: while the project is in Development,
+    REDCap rejects an upload that exactly matches the other table, so
+    ask the statistician for two different sequences. Test
+    randomizations in development mode consume development slots only.
 
 - **Running out of slots:** Only a REDCap administrator can append
     additional allocations to a production allocation table. This is a
     recoverable situation, but an avoidable one with proper planning.
-    Appending only adds rows; once in production, the rows already in
-    the table are locked and cannot be edited.
+    In Production, users cannot edit the rows already in the table.
+    Administrators can edit individual rows (un-randomize a record,
+    manually randomize one, mark a slot unavailable or available
+    again, or change the group or number of an unused slot); each
+    change requires a reason and is logged. See
+    [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md).
 
 **Randomization User Rights**
 
 Enabling randomization adds three new user rights to every user and role
-in the project. These must be assigned deliberately — they do not
-default to on.
+in the project. These must be assigned deliberately — they default to
+off. The one exception: if **Randomization** is ticked when the project
+is created, the project creator gets all three automatically. Enabling
+the module later in Project Setup grants the rights to nobody, so
+someone must assign them (including to themselves) on the User Rights
+page. The **Randomization** link in the project menu appears only for
+users with the Setup or Dashboard right.
 
 | **Right** | **What it allows**                                                                                                             **Assign to** |
 | --- | --- |
-| **Setup** | Configure the randomization model — define stratification, select randomization variable, upload and download allocation tables. Downloading the table reveals the full allocation sequence.          Project builders, study coordinators involved in setup. Restrict after setup is complete. |
-| **Randomize** | Click the Randomize button to manually randomize a record. Not required if using the 'all users' automatic trigger option. **Caution:** the randomization dialog shows the stratification fields and lets the user set them, even if the user has no form-level rights to those fields. If a stratum is PHI (e.g., location), this right exposes it.   Data entry staff who perform randomization. Project builders during testing. Not required for survey-only auto-randomization. |
-| **Dashboard** | View the randomization dashboard — see allocation counts, used/remaining slots, and assigned records. **Caution:** the dashboard shows which records went to which group, so in a blinded study it can unblind the user.                        PIs, statisticians, data coordinators, project builders. Anyone needing to monitor randomization progress. |
+| **Setup** | Configure the randomization model — define stratification, select randomization variable, upload and download allocation tables, and change the trigger option and trigger logic (also in Production). Before the project moves to Production, a Setup user can download both the development and production tables, and so can know the production sequence in advance; in Production only administrators can download them. Downloads never contain record names: they reveal the sequence, not which record got which slot.          Project builders, study coordinators involved in setup. Restrict after setup is complete. |
+| **Randomize** | Click the Randomize button to manually randomize a record. Not required if using the 'all users' automatic trigger option. **Caution:** the randomization dialog shows the stratification fields with their current values, even if the user has no form-level rights to those fields. On an instrument where the user has **No Access**, the stratum is shown but disabled (it cannot be set); with **Read Only** access the user can set it. If a stratum is PHI (e.g., location), this right exposes it.   Data entry staff who perform randomization. Project builders during testing. Not required for survey-only auto-randomization. |
+| **Dashboard** | View the randomization dashboard — see allocation counts, used/remaining slots, and assigned records. For a blinded (text-field) model it shows used/unused counts per stratum (and DAG) only, never the group, so it cannot unblind. For an open model it shows the group, which is already visible on the record. Administrators can open a per-slot view that shows the allocated values.                        PIs, statisticians, data coordinators, project builders. Anyone needing to monitor randomization progress. |
 
 **Longitudinal Projects and Randomization**
 
@@ -177,10 +189,14 @@ before building your longitudinal framework:
     logic keyed to the randomization variable to differentiate the
     experience between groups.
 
-- **One randomization event per record:** A randomization field is
-    enabled for randomization on only **one event per record, counting
-    all arms**. You cannot have the same randomization field randomize
-    on an event in arm 1 and again on an event in arm 2.
+- **One randomization event per model:** Each randomization model has
+    exactly **one target event**, so within a model a record is
+    randomized once, counting all arms. REDCap's built-in FAQ states a
+    stricter rule (one event per randomization field across all arms),
+    but what the system actually enforces is that each variable + event
+    pair is used by only one model. A second model can therefore use
+    the same variable on a different event (e.g., an event in arm 2),
+    with its own allocation table.
 
 - **Multi-arm longitudinal projects:** If cohorts require completely
     separate arms (e.g., intervention arm vs. control arm), REDCap
@@ -196,8 +212,10 @@ before building your longitudinal framework:
     REDCap.
 
 - **Per-arm randomization:** If you have multiple arms, you can set up
-    a separate randomization model for each arm. Each model requires its
-    own randomization variable and allocation table.
+    a separate randomization model for each arm. Each model has its own
+    target event and allocation table; it can use its own randomization
+    variable or reuse the same variable on that arm's event. A separate
+    variable per arm is usually easier to report on.
 
 - **Randomization form at later events:** If the instrument holding the
     randomization field is also designated on later events (e.g., annual
@@ -208,9 +226,11 @@ before building your longitudinal framework:
 
 - **Event placement matters:** The randomization variable must be
     assigned to a specific event. This event selection is locked once
-    the model is saved. If you later need to move the randomization
-    variable to a different event, you must delete and rebuild the
-    entire model.
+    the model is saved, even in Development. If you later need to move
+    the randomization variable to a different event, you must erase and
+    rebuild the entire model, which is possible only while the project
+    is in Development. Once a model exists, the project cannot be moved
+    back from Production to Development, even by an administrator.
 
 - **Saving the model erases test values:** When the model is saved,
     any values already entered in the randomization variable (e.g., from
@@ -236,11 +256,11 @@ An allocation table is a pre-generated, sequenced list of group assignments that
 
 **Q: What is the difference between open and blinded randomization?**
 
-Open (unblinded) randomization is a setup where the study team can see which group each participant is assigned to. It uses a dropdown or radio button randomization variable with group labels visible in the interface. Blinded randomization is a setup where even the study team does not know which group a participant is assigned to; it requires a plain text randomization variable with no validation, so the assigned value is opaque. The key for decoding group assignments is stored outside REDCap and shared only with designated unblinded individuals (e.g., pharmacy staff).
+Open (unblinded) randomization is a setup where the study team can see which group each participant is assigned to. It uses a dropdown, radio button, yes/no or true/false randomization variable with group labels visible in the interface. Blinded randomization is a setup where even the study team does not know which group a participant is assigned to; it requires a plain text randomization variable with no validation and no @CALCTEXT, so the assigned value is opaque. The key for decoding group assignments is normally kept outside REDCap and shared only with designated unblinded individuals (e.g., pharmacy staff). A blinded allocation table may optionally include the group column; if it does, the key is stored in REDCap and visible to administrators and in allocation table downloads, so leave that column out if the key must stay outside REDCap.
 
 **Q: Can I randomize records into different arms in a multi-arm longitudinal project?**
 
-Not automatically. REDCap cannot move records between arms based on randomization, and a randomization field randomizes on only one event per record across all arms. The documented workaround is a pre-randomization arm that holds eligibility and the randomization form; after randomization, staff add the record to the study arm that matches its assignment. Note that the Scheduling module schedules a record's events in one arm only. Alternatives are a single-arm design with branching logic keyed to the randomization variable, or randomizing outside REDCap. You can also set up a separate randomization model for each arm, but each model requires its own randomization variable and allocation table.
+Not automatically. REDCap cannot move records between arms based on randomization, and each randomization model randomizes on exactly one event. The documented workaround is a pre-randomization arm that holds eligibility and the randomization form; after randomization, staff add the record to the study arm that matches its assignment. Note that the Scheduling module schedules a record's events in one arm only. Alternatives are a single-arm design with branching logic keyed to the randomization variable, or randomizing outside REDCap. You can also set up a separate randomization model for each arm. Each model has one target event and its own allocation table. REDCap's built-in FAQ says a randomization field can randomize on only one event across all arms, but the system only requires each variable + event pair to be unique, so a second model can reuse the same variable on an event in another arm.
 
 **Q: Can I stratify on a calculated field (e.g., an age group derived from date of birth)?**
 
@@ -252,11 +272,19 @@ No. The Mobile App collects data offline and cannot reach the allocation table, 
 
 **Q: What are the three randomization-specific user rights and who should have them?**
 
-The three rights are: (1) **Setup** — configure the randomization model (assign to project builders and study coordinators involved in setup; restrict after setup is complete); (2) **Randomize** — click the Randomize button to manually randomize a record (assign to data entry staff who perform randomization, and project builders during testing; not required if using automatic trigger options); and (3) **Dashboard** — view the randomization dashboard with allocation counts and assigned records (assign to PIs, statisticians, data coordinators, and anyone needing to monitor progress). In a blinded study, Dashboard shows which records went to each group and can unblind; Setup can download the allocation table; and Randomize shows and lets the user edit the strata fields in the dialog even without form rights to them, which matters if a stratum is PHI.
+The three rights are: (1) **Setup** — configure the randomization model (assign to project builders and study coordinators involved in setup; restrict after setup is complete); (2) **Randomize** — click the Randomize button to manually randomize a record (assign to data entry staff who perform randomization, and project builders during testing; not required if using automatic trigger options); and (3) **Dashboard** — view the randomization dashboard with allocation counts and assigned records (assign to PIs, statisticians, data coordinators, and anyone needing to monitor progress). All three default to off; only the project creator gets them automatically, and only if Randomization was ticked when the project was created. In a blinded study, Dashboard shows used/unused counts only, never the group, so it cannot unblind; the unblinding risks are allocation table downloads (Setup users before go-live, administrators in Production) and building a "blinded" study on a dropdown or radio field. Randomize shows the strata fields in the dialog even without form rights to them (disabled on No Access instruments, editable with Read Only access), which matters if a stratum is PHI.
 
 **Q: What happens if the allocation table runs out of slots before enrollment is complete?**
 
 Only a REDCap administrator can append additional allocations to a production allocation table. This is a recoverable situation but an avoidable one with proper planning. To prevent this, generate at minimum double your target enrollment per group and account for dropout, screen failures, and protocol deviations. Consult your statistician for the appropriate buffer for your specific design.
+
+**Q: Can I upload the same allocation table to development and production?**
+
+No. While the project is in Development, REDCap rejects an allocation table upload that exactly matches the table already uploaded for the other mode. Ask the statistician for two different sequences: a test sequence for development and the real sequence for production.
+
+**Q: What can still be changed in a randomization model after the project moves to production?**
+
+Very little. The randomization variable, event, strata and site/DAG setting lock as soon as the model is saved, even in Development, where the model can still be erased and rebuilt. In Production nobody, administrators included, can change or erase the model through the interface, and the project cannot be moved back to Development. Users with the Setup right can still change the trigger option and trigger logic. Administrators can append allocation rows and edit individual production rows (un-randomize or manually randomize a record, mark a slot unavailable or available, change the group or number of an unused slot); each change requires a reason and is logged.
 
 ---
 
@@ -279,8 +307,9 @@ Only a REDCap administrator can append additional allocations to a production al
     or a blinded randomization is set up with a dropdown — causing
     either data integrity issues or unintended unblinding.
 
-- **Prevention:** Open = dropdown or radio button with group labels.
-    Blinded = plain text field, no validation. Decide blinding status
+- **Prevention:** Open = dropdown, radio button, yes/no or true/false
+    with group labels. Blinded = plain text field, no validation, no
+    @CALCTEXT. Decide blinding status
     before creating the variable.
 
 **Not accounting for dropout in allocation table size**
@@ -313,7 +342,7 @@ Only a REDCap administrator can append additional allocations to a production al
 
 The Randomization module must be enabled at the system level by a REDCap administrator before it is available in any project. This is done in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**). When disabled, the Randomization option does not appear in Project Setup and the Randomize user right is not available.
 
-Once the module is enabled system-wide, randomization is enabled per project by turning on the **Randomization** option in Project Setup → Optional modules. User rights (Randomize and Set Up Randomization) are then assigned on the User Rights page.
+Once the module is enabled system-wide, randomization is enabled per project by turning on the **Randomization** option in Project Setup → Optional modules. This needs the Project Design and Setup right; once the project is in Production, only an administrator can enable it. The three randomization rights (Setup, Randomize, Dashboard) are then assigned on the User Rights page; enabling the module here grants them to nobody, not even the user who enabled it.
 
 > **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 

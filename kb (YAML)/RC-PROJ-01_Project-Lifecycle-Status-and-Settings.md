@@ -9,7 +9,7 @@ verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog revie
   not re-captured
 prerequisites:
 - None
-version: '1.9'
+version: '1.10'
 last_updated: 2026-11
 related:
 - id: RC-CC-04
@@ -75,7 +75,7 @@ The active data collection state. In Production:
 - This protects existing data from accidental modification or deletion.
 - Surveys, alerts, automated invitations, and all standard features remain fully active.
 
-**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+). If you retain the records, REDCap keeps them but clears the randomization variable for every model, so they are no longer randomized — see [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md).
+**To move to Production:** Click the "Move project to Production" button at the bottom of the Project Setup page. REDCap will prompt you to either delete all test data or retain it. Best practice is to delete all test data before going live. If randomization is enabled and records have already been randomized, the dialog shows an extra warning (17.4.4+ Standard; not in 17.3.31 LTS or 16.0.61 LTS, where only the generic confirmation appears). If you retain the records, REDCap keeps them but clears the randomization variable for every model, so they are no longer randomized — see [RC-RAND-03 — Working with & Managing Randomization](RC-RAND-03_Working-with-Randomization.md).
 
 > **Why move to Production?** Moving to Production preserves data accuracy and integrity. The post-production change control process provides a safety check to prevent accidental deletion, recoding, or overwriting of data that has already been collected.
 

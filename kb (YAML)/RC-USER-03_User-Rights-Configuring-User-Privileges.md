@@ -7,10 +7,11 @@ applies_to:
 - requires User Rights privilege
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Randomization rights checked against source code of v17.6.5 (Standard)
+  / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-USER-02
@@ -145,9 +146,11 @@ If the mobile app is not part of your project's data collection workflow, leave 
 **Randomization**
 
 Three separate rights, shown only when randomization is enabled on the project. Each carries more exposure than its name suggests:
-- *Setup* — define the randomization model and upload **and download** allocation tables. Downloading a table reveals the full allocation sequence.
-- *Dashboard* — view allocation progress (used / not used). The dashboard also shows which records went to each group, so in a blinded study it **can unblind** the user.
-- *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields and lets the user set them **even without form-level rights** to those fields; if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights.
+- *Setup* — define the randomization model and upload **and download** allocation tables. While the project is in Development, downloading a table reveals the full allocation sequence, including the production table prepared for go-live. In Production only an administrator can download the tables.
+- *Dashboard* — view allocation progress (used / not used) per stratum, with the records in each. For an open model (dropdown or radio randomization variable) it also breaks this down by group. For a blinded model (text randomization variable) it never shows the group. A study that is meant to be blinded but uses an open variable **can be unblinded** through the dashboard.
+- *Randomize* — randomize records from the form or survey. The randomization dialog shows the stratification fields with their current values **even without form-level rights** to those fields, so if a stratum is PHI (e.g., location), the user sees it regardless of Data Viewing Rights. Strata on instruments set to **No Access** are shown but can't be changed. Users with **Read Only** access to that instrument can set them in the dialog.
+
+Users get none of the three rights by default. The only exception is the project creator, who gets all three when **Randomization** is ticked at project creation. Enabling the module later in Project Setup grants them to nobody. The **Randomization** link appears in the project menu only for users with Setup or Dashboard.
 
 See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) for who should get each right.
 
