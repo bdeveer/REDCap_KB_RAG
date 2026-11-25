@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
 | **Synonyms** | [record-name] smart variable; how to pipe the current record id with [record-name]; record smart variables for the record data access group; [record-dag-name] and [record-dag-label] piping; pipe the calendar link with [calendar-link] or [calendar-url]; reference the current record in a field label or email; [record-dag-id] record-level smart variable; how to show the record id automatically |
@@ -33,9 +33,9 @@ The primary unique identifier for a record in REDCap. The record name is configu
 
 Information about a record managed by REDCap itself, as opposed to data entered by the participant or coordinator. Examples include the record's assigned Data Access Group and calendar information.
 
-**Calendar Feature**
+**Calendar Feed**
 
-An optional REDCap module that generates iCalendar (ICS) feeds for a record, allowing participants to subscribe to event calendars or download calendar events. Calendar variables require that this feature be enabled for the project.
+An iCalendar (ICS) feed generated for a record, allowing participants to subscribe to their scheduled events or download calendar events. Calendar feeds are a server-wide setting that your REDCap administrator enables for the whole installation; they are not switched on per project.
 
 **Data Access Group (DAG) Assignment**
 
@@ -58,9 +58,13 @@ Records, like users, can be assigned to a Data Access Group to restrict who can 
 
 ## 4. Usage Notes
 
-**Calendar Variables Require Feature Enablement**
+**Calendar Variables Require the Calendar Feed Setting**
 
-Calendar smart variables (`[calendar-url]` and `[calendar-link]`) only function if the Calendar module is enabled for the project. If the feature is not enabled, these variables return blank. Check with your REDCap administrator to confirm the Calendar module is active if you plan to use calendar smart variables.
+Calendar smart variables (`[calendar-url]` and `[calendar-link]`) depend on the server-wide calendar feed setting, which your REDCap administrator controls; there is no project-level switch. If calendar feeds are not enabled on your server, these variables return blank. Check with your REDCap administrator to confirm calendar feeds are enabled if you plan to use calendar smart variables.
+
+**Calendar Links Are Meant for Participants**
+
+The calendar link is a feed URL that opens without logging in to REDCap. It is intended for participants — for example, so they can subscribe to their appointments in their own calendar app. Because anyone who has the URL can open that record's feed, share it only with the intended participant (for example, in an email sent to that participant).
 
 **Record DAG Behavior**
 
@@ -73,6 +77,11 @@ When using `[calendar-link:Custom Text]`, replace "Custom Text" with your desire
 **Record Name Context**
 
 `[record-name]` is useful in emails, field notes, and survey invitations to reference the current record's identifier. It always reflects the record being actively viewed or edited at the time the piping is evaluated.
+
+**Records That Do Not Exist Yet**
+
+- **Public survey, before the record is created** — `[record-name]`, the record DAG variables, and the calendar variables are blank, because there is no record yet.
+- **Brand-new record on a data entry form** — `[record-name]` shows the proposed record ID. The record DAG variables may stay blank until the record is saved for the first time.
 
 **Use in Survey Invitations and Confirmation Emails**
 
@@ -97,7 +106,7 @@ The label is usually most user-friendly.
 
 **Q: What is the difference between `[user-dag-label]` and `[record-dag-label]`?**
 
-**A:** `[user-dag-label]` identifies the logged-in user's DAG; `[record-dag-label]` identifies the record's assigned DAG. They may be the same (if the user is viewing a record in their DAG) or different (if you are testing with users in different DAGs). Use the variable that matches what you need to display.
+**A:** `[user-dag-label]` identifies the logged-in user's DAG; `[record-dag-label]` identifies the record's assigned DAG. Users in a DAG only see records in their own DAG, so for them the two match. They differ mainly when the user is not in any DAG (or is an administrator who is not a project user): the user DAG is blank while the record DAG is set. Use the variable that matches what you need to display.
 
 **Q: How do I create a link to a record's calendar in a survey invitation email?**
 
@@ -105,7 +114,7 @@ The label is usually most user-friendly.
 ```
 [calendar-link:View your study calendar events]
 ```
-The email will contain a clickable link with your custom text. Note that the Calendar feature must be enabled in your project.
+The email will contain a clickable link with your custom text. Note that calendar feeds must be enabled on your REDCap server by your administrator. Send the link only to the participant whose calendar it is.
 
 **Q: Can I use record smart variables in branching logic?**
 
@@ -119,11 +128,11 @@ The email will contain a clickable link with your custom text. Note that the Cal
 
 ## 6. Common Mistakes & Gotchas
 
-**Confusing record DAG variables with user DAG variables.** `[record-dag-label]` refers to the record's DAG assignment; `[user-dag-label]` refers to the logged-in user's DAG. If a user from one DAG is viewing a record from another DAG (possible with elevated permissions), these two variables will return different values. Use the correct variable for your intent.
+**Confusing record DAG variables with user DAG variables.** `[record-dag-label]` refers to the record's DAG assignment; `[user-dag-label]` refers to the logged-in user's DAG. Users in a DAG only see records in their own DAG, so in practice the two differ mainly when the user is not in any DAG — or is an administrator who is not a project user — and is viewing a record that is in a DAG: the user DAG is blank while the record DAG is set. Use the correct variable for your intent.
 
-**Assuming calendar smart variables work without the Calendar feature enabled.** If your project does not have the Calendar module enabled, `[calendar-url]` and `[calendar-link]` return blank, producing confusing empty output in your emails or forms. Verify that the Calendar feature is active before using these variables, or use the `:hideunderscore` modifier to hide blank placeholders.
+**Assuming calendar smart variables work without calendar feeds enabled.** If calendar feeds are not enabled on your REDCap server, `[calendar-url]` and `[calendar-link]` return blank, producing confusing empty output in your emails or forms. Ask your REDCap administrator whether calendar feeds are enabled before using these variables, or use the `:hideunderscore` modifier to hide blank placeholders.
 
-**Using calendar smart variables for surveys accessed by participants.** Calendar links work best in administrator-facing emails or forms. If a survey is accessed by an external participant without authentication, calendar smart variables may not function correctly. Test with your actual participants to confirm expected behavior.
+**Sharing calendar links too widely.** The calendar link works without logging in, which is what makes it useful for participants — but it also means anyone with the URL can open that record's feed. Send it only to the intended participant, and do not paste it into shared documents or messages to groups.
 
 **Not accounting for blank record DAG values in conditional logic.** If a record might not be assigned to a DAG, logic like `[record-dag-name]='site_b'` will not display fields for unassigned records. If you need to show content for both assigned and unassigned records, add an OR clause in your logic, or use a separate calculated field.
 

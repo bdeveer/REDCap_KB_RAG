@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | Projects with repeating instruments or repeating events enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) |
 | **Synonyms** | [current-instance] smart variable; how to reference the current repeat instance with [current-instance]; repeating instance smart variables like [first-instance] and [last-instance]; [next-instance] [previous-instance] and [new-instance] piping; [instance-qualifier] for repeating instruments; how to number rows in a repeating instrument or event; pipe a value from a specific repeat instance; smart variables for repeating forms and repeating events |
@@ -53,9 +53,9 @@ A future instance that has not yet been created. The `[new-instance]` smart vari
 |---|---|---|---|
 | Current Instance | `[current-instance]` | The current repeating instance number. Using `[field][current-instance]` is functionally equivalent to using `[field]` alone on the current instance. Can be used standalone or appended to a field variable. `[heart_rate][current-instance]` → 84. | 2 |
 | Previous Instance | `[previous-instance]` | The repeating instance number immediately before the current instance (current minus 1). Can be used standalone or appended to a field variable: `[weight][previous-instance]` → 145. Returns blank if the current instance is 1 (the first instance). | 3 |
-| Next Instance | `[next-instance]` | The repeating instance number immediately after the current instance (current plus 1). Can be used standalone or appended: `[provider][next-instance]` → Harris. Returns a calculated number even at the last instance; there may be no data at that instance yet. | 7 |
+| Next Instance | `[next-instance]` | The repeating instance number immediately after the current instance (current plus 1). Can be used standalone or appended: `[provider][next-instance]` → Harris. Standalone, it is blank unless that instance already exists; appended to a field, it reads instance current+1 and is blank if that instance has not been created yet. For the number of a brand-new instance, use `[new-instance]`. | 7 |
 | First Instance | `[first-instance]` | The first (lowest numbered) repeating instance number for the current record/event context, which is always 1 unless instances have been deleted. Can be used standalone or appended: `[age][first-instance]` → 24. | 1 |
-| Last Instance | `[last-instance]` | The last (highest numbered) repeating instance number for the current record/event context. Can be used standalone or appended: `[glucose][last-instance]` → 119. | 6 |
+| Last Instance | `[last-instance]` | The last (highest numbered) saved repeating instance number for the current record/event context, regardless of form status (Incomplete instances count). Can be used standalone or appended: `[glucose][last-instance]` → 119. | 6 |
 | New Instance | `[new-instance]` | A new, not-yet-created repeating instance (calculated as `[last-instance]` plus 1). Can be used standalone, OR appended ONLY to these smart variables: `[survey-link]`, `[survey-url]`, `[survey-access-code]`, `[form-link]`, `[form-url]`. Example: `[survey-link:repeating_survey:Repeating Survey][new-instance]` → Repeating Survey. Returns a calculated instance number one higher than the current last instance. | 14 |
 
 ---
@@ -76,9 +76,10 @@ Instance smart variables are appended to field variables to retrieve data from a
 
 **Next and Last Instance Behavior**
 
-- `[last-instance]` returns the highest instance number that has been completed.
-- `[next-instance]` calculates `[last-instance]` + 1, which may or may not exist yet.
-- If there is no next instance yet (the user is viewing the last instance), `[next-instance]` still returns a valid number but there may be no data in that instance.
+- `[last-instance]` returns the highest instance number that has been saved, regardless of form status — an Incomplete instance counts just as much as a Complete one.
+- `[next-instance]` is the **current** instance + 1 (not `[last-instance]` + 1).
+- Used standalone, `[next-instance]` is blank unless that instance already exists. Appended to a field (`[field][next-instance]`), it reads the value from instance current+1, which is blank if that instance has not been created yet.
+- For the number of a brand-new instance, use `[new-instance]` instead.
 
 **New Instance Smart Variable Restrictions**
 
@@ -99,11 +100,13 @@ Example: In a repeating survey called "daily_log", you might include a button la
 
 **Repeating Events with Instance Qualifiers**
 
-If your project uses repeating events, instance qualifiers work the same way. They track which repetition of the event you are in. For example, if a "Follow-up Visit" event repeats, `[baseline_arm_1][weight][last-instance]` retrieves the weight from the last instance of the Follow-up Visit event.
+If your project uses repeating events, instance qualifiers work the same way. They track which repetition of the event you are in. For example, if a "Follow-up Visit" event repeats, `[followup_arm_1][weight][last-instance]` retrieves the weight from the last instance of the Follow-up Visit event.
 
 **Instance Qualifiers in Calculated Fields**
 
 Instance smart variables work in calculated fields and can be combined with logic. Example: `if([current-instance]=1, "First response", "Later response")` displays different text depending on whether it is the first or a later instance.
+
+> **Version caveat (LTS 16):** On LTS 16, standalone instance smart variables used in calculations and branching logic on the open form may be treated as text rather than numbers, so arithmetic such as `[current-instance]+1` might not give the expected result. Comparisons with `=` (e.g., `[current-instance]=1`) are unaffected. **Action:** if you are on LTS 16, test any arithmetic on instance numbers before relying on it.
 
 **Longitudinal Projects with Repeating Instruments**
 
@@ -121,15 +124,15 @@ In longitudinal projects with repeating instruments, instance qualifiers and eve
 
 **Q: What is the difference between `[last-instance]` and `[new-instance]`?**
 
-**A:** `[last-instance]` is the instance number of the most recently completed instance (where data exists). `[new-instance]` is the instance number for the next instance that has not yet been created (calculated as `[last-instance]` + 1). Use `[last-instance]` to reference existing data; use `[new-instance]` to link to or pre-populate the upcoming instance.
+**A:** `[last-instance]` is the highest saved instance number (where data exists), whatever its form status. `[new-instance]` is the instance number for the next instance that has not yet been created (calculated as `[last-instance]` + 1). Use `[last-instance]` to reference existing data; use `[new-instance]` to link to or pre-populate the upcoming instance.
 
 **Q: Can I use instance qualifiers in branching logic?**
 
-**A:** Yes. For example, `[mood][current-instance]>5` shows a field only if the current instance's mood score is greater than 5. Or `[is-completed:daily_log][last-instance]=0` shows a field if the last instance is incomplete. Instance qualifiers work in all logic contexts.
+**A:** Yes. For example, `[mood][current-instance]>5` shows a field only if the current instance's mood score is greater than 5. Or `[daily_log_complete][last-instance]<>'2'` shows a field if the last instance is not marked Complete. Instance qualifiers work in all logic contexts.
 
 **Q: How do I create a link to the next instance of a repeating survey?**
 
-**A:** It depends on whether the next instance already exists. To link to an **existing** next instance, use `[survey-link:instrument][next-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][next-instance]`. To link to a **not-yet-created** instance, use `[survey-link:instrument][new-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][new-instance]`. When in doubt, `[new-instance]` is the safer choice for "open the next unfilled instance."
+**A:** It depends on whether the next instance already exists. To link to an **existing** next instance, use `[survey-link:instrument][next-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][next-instance]`. This only works in a repeating context (i.e., when you are already on an instance of a repeating instrument or event). To link to a **not-yet-created** instance, use `[survey-link:instrument][new-instance]` — for example, `[survey-link:daily_log:Fill out tomorrow's log][new-instance]`. When in doubt, `[new-instance]` is the safer choice for "open the next unfilled instance."
 
 **Q: What happens if I use `[previous-instance]` in the first instance?**
 
@@ -151,13 +154,15 @@ In longitudinal projects with repeating instruments, instance qualifiers and eve
 
 **Not handling blank `[previous-instance]` in Instance 1.** If you use `[field][previous-instance]` in a repeating instrument where the first instance is being filled out, it returns blank. Either hide the reference with `:hideunderscore` or use conditional logic to show something like "This is your first entry."
 
-**Assuming `[next-instance]` data exists.** `[next-instance]` returns a calculated number, but the instance may not have data yet. If you pipe `[field][next-instance]` into a field, it will be blank until the next instance is created and filled. Plan your design accordingly.
+**Assuming `[next-instance]` data exists.** `[next-instance]` points to the current instance + 1. Standalone it is blank unless that instance already exists, and `[field][next-instance]` is blank until that instance is created and filled. To get the number for a brand-new instance, use `[new-instance]`.
 
 **Confusing instance qualifiers with event smart variables.** Instance qualifiers (`[current-instance]`, `[previous-instance]`) track repetitions within a repeating instrument or event. Event smart variables (`[previous-event-name]`, `[next-event-name]`) track different events. Do not mix them up; they serve different purposes.
 
 **Not testing repeating designs with different numbers of instances.** A form that works well with 5 instances might display awkwardly if a user creates 20 instances. Test your repeating designs with varying numbers of instances to ensure labels, links, and logic remain functional.
 
-**Using instance qualifiers outside of repeating contexts.** If you use `[current-instance]`, `[previous-instance]`, etc. in a project or form without repeating instruments/events, they return blank. Verify that your project actually uses repeating functionality before relying on instance smart variables.
+**Using instance qualifiers outside of repeating contexts.** On a form that is not repeating, `[previous-instance]`, `[current-instance]` and `[next-instance]` return blank, and so does `[new-instance]`. Standalone `[first-instance]` and `[last-instance]` on a saved non-repeating form return 1. Verify that your form or event actually repeats before relying on instance smart variables.
+
+**Expecting instance values on an unsaved record.** Instance smart variables are blank on a record that has not been saved yet (for example, while a brand-new record is being entered for the first time). Logic or calculations that depend on them only start working after the first save.
 
 **Misunderstanding how `[new-instance]` calculates next instance.** `[new-instance]` is always `[last-instance]` + 1. If the last instance is Instance 5, `[new-instance]` is Instance 6, regardless of whether Instance 6 already exists. It's the calculated next number, not a check for an existing instance.
 

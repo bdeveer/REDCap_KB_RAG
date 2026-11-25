@@ -3,14 +3,15 @@ id: RC-PIPE-09
 title: 'Smart Variables: Event & Arm'
 domain: Piping
 applies_to:
-- Longitudinal projects only
+- Longitudinal projects (classic projects return only their single default arm and
+  event)
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart
+  variable behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-PIPE-03 — Smart Variables Overview
 version: '1.0'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
@@ -41,7 +42,7 @@ Event and Arm smart variables enable dynamic references to events within an arm 
 
 **Longitudinal Project**
 
-A REDCap project with multiple visits, timepoints, or data collection occasions per record. Longitudinal projects are organized into Arms (study branches) and Events (timepoints within an arm). Event and Arm smart variables only function in longitudinal projects.
+A REDCap project with multiple visits, timepoints, or data collection occasions per record. Longitudinal projects are organized into Arms (study branches) and Events (timepoints within an arm). Event and Arm smart variables are designed for longitudinal projects; in a classic (non-longitudinal) project they still resolve, but only to the project's single default arm and event.
 
 **Event**
 
@@ -85,16 +86,16 @@ The specification of which instruments (forms) are assigned to each event. Not a
 | Event Number | `[event-number]` | The ordinal position of the current event within the arm (1st, 2nd, 3rd, etc.). | 4 |
 | Event Name | `[event-name]` | The unique event name of the current event. Can be used standalone or prepended to a field reference. `[event-name][weight]` → 125. | event_2_arm_1 |
 | Event Label | `[event-label]` | The human-readable label of the current event. | Event 2 |
-| Previous Event Name | `[previous-event-name]` | The unique event name of the event immediately before the current event. When standalone, returns the directly preceding event. When prepended to a field variable, returns the closest preceding event where that field's instrument is designated (may differ from directly preceding event). `[previous-event-name][heart_rate]` → 62. Returns blank if current event is first. | visit_4_arm_2 |
-| Previous Event Label | `[previous-event-label]` | The event label of the event immediately before the current event. Returns blank if current event is first. | Visit 4 |
-| Next Event Name | `[next-event-name]` | The unique event name of the event immediately after the current event. When standalone, returns the directly following event. When prepended to a field variable, returns the closest following event where that field's instrument is designated. `[next-event-name][provider]` → Taylor. Returns blank if current event is last. | event_3_arm_5 |
-| Next Event Label | `[next-event-label]` | The event label of the event immediately after the current event. Returns blank if current event is last. | Third Timepoint |
+| Previous Event Name | `[previous-event-name]` | The unique event name of the event immediately before the current event. When standalone, returns the directly preceding event. When prepended to a field variable, returns the closest preceding event where that field's instrument is designated (may differ from directly preceding event). `[previous-event-name][heart_rate]` → 62. Returns blank at the first event of a single-arm project; in multi-arm projects it can cross into the previous arm (see Section 4). | visit_4_arm_2 |
+| Previous Event Label | `[previous-event-label]` | The event label of the event immediately before the current event. Returns blank at the first event of a single-arm project; in multi-arm projects it can cross into the previous arm (see Section 4). | Visit 4 |
+| Next Event Name | `[next-event-name]` | The unique event name of the event immediately after the current event. When standalone, returns the directly following event. When prepended to a field variable, returns the closest following event where that field's instrument is designated. `[next-event-name][provider]` → Taylor. Returns blank at the last event of a single-arm project; in multi-arm projects it can cross into the next arm (see Section 4). | event_3_arm_5 |
+| Next Event Label | `[next-event-label]` | The event label of the event immediately after the current event. Returns blank at the last event of a single-arm project; in multi-arm projects it can cross into the next arm (see Section 4). | Third Timepoint |
 | First Event Name | `[first-event-name]` | The unique event name of the first event in the current arm. When standalone, returns the absolute first event. When prepended to a field variable, returns the first event where that field's instrument is designated. `[first-event-name][heart_rate]` → 74. | visit_1_arm_2 |
 | First Event Label | `[first-event-label]` | The label of the first event in the current arm. | Visit 1 |
 | Last Event Name | `[last-event-name]` | The unique event name of the last event in the current arm. When standalone, returns the absolute last event. When prepended to a field variable, returns the last event where that field's instrument is designated. `[last-event-name][provider]` → Minor. | week_22_arm_1 |
 | Last Event Label | `[last-event-label]` | The label of the last event in the current arm. | Week 22 |
-| Arm Number | `[arm-number]` | The ordinal number of the current arm (1st, 2nd, 3rd, etc.). | 2 |
-| Arm Label | `[arm-label]` | The label (display name) of the current arm. | Drug B |
+| Arm Number | `[arm-number]` | The arm number of the event you are currently in — the number assigned to the arm on the Define My Events page. Arm numbers can skip (e.g., 1, 2, 5), so this is not necessarily the arm's position. | 2 |
+| Arm Label | `[arm-label]` | The label (display name) of the arm of the event you are currently in. | Drug B |
 
 ---
 
@@ -112,13 +113,15 @@ This distinction is important: `[previous-event-name]` and `[previous-event-name
 
 **Event Blank Behavior**
 
-- `[previous-event-name]` and `[previous-event-label]` return blank if the current event is the first event in the arm.
-- `[next-event-name]` and `[next-event-label]` return blank if the current event is the last event in the arm.
-- Plan your designs to handle blank values gracefully (use conditional text or the `:hideunderscore` modifier).
+- In a single-arm project, `[previous-event-name]` and `[previous-event-label]` return blank at the first event, and `[next-event-name]` and `[next-event-label]` return blank at the last event.
+- In a multi-arm project, standalone previous/next event variables do **not** stop at the arm boundary. At the first event of Arm 2, `[previous-event-name]` and `[previous-event-label]` return the last event of Arm 1; at the last event of Arm 1, `[next-event-name]` returns the first event of Arm 2. Survey and form links built with these prefixes (e.g., `[next-event-name][form-link:visit_data_form]`) can therefore point into the other arm.
+- Field values with these prefixes (e.g., `[previous-event-name][weight]`) are usually blank across an arm boundary, simply because the record usually has no data in the other arm.
+- `[first-event-name]` and `[last-event-name]` (and their labels) always stay within the current arm.
+- Plan your designs to handle blank values gracefully (use conditional text or the `:hideunderscore` modifier). In multi-arm projects, guard previous/next references with `[arm-number]` in your logic, or use specific unique event names at the first and last events of each arm.
 
-**Longitudinal-Only**
+**Classic (Non-Longitudinal) Projects**
 
-All event and arm smart variables only function in longitudinal projects. Using them in a non-longitudinal (single-event) project will produce blank values or may cause errors. Always verify your project type before deploying designs using event smart variables.
+Event and arm smart variables are intended for longitudinal projects. A classic project still has one arm and one event behind the scenes, so the variables return those defaults rather than errors — for example, `[event-name]` returns `event_1_arm_1`, `[event-number]` and `[arm-number]` return 1, and the event and arm labels return the default labels. Previous/next event variables return blank. They work, but are rarely useful outside a longitudinal project.
 
 **Event Names in Piping and Logic**
 
@@ -130,7 +133,7 @@ Both approaches work; use smart variables for flexibility and hard-coded event n
 
 **Arm References**
 
-`[arm-number]` and `[arm-label]` are useful for personalizing forms and emails based on which study branch the record belongs to. For example: "You are enrolled in the `[arm-label]` arm of this study."
+`[arm-number]` and `[arm-label]` return the arm of the event you are currently in, which makes them useful for personalizing forms and emails by study branch. For example: "You are enrolled in the `[arm-label]` arm of this study." Note that a record can exist in more than one arm, so these describe the current event's arm, not a single arm assigned to the record. `[arm-number]` is the number you gave the arm on the Define My Events page (numbers can skip), not its position in the list.
 
 ---
 
@@ -154,11 +157,11 @@ Both approaches work; use smart variables for flexibility and hard-coded event n
 
 **Q: What happens if I use an event smart variable in the last event?**
 
-**A:** `[next-event-name]` and `[next-event-label]` return blank because there is no event after the last one. Plan your form design to handle this case — either hide the link to the next event, or use conditional text like "This is your final visit; thank you for your participation."
+**A:** In a single-arm project, `[next-event-name]` and `[next-event-label]` return blank because there is no event after the last one. In a multi-arm project, the last event of an arm (other than the final arm) returns the first event of the next arm instead, so guard with `[arm-number]` or use a specific unique event name. Plan your form design to handle this case — either hide the link to the next event, or use conditional text like "This is your final visit; thank you for your participation."
 
 **Q: Can I use event smart variables for multi-arm studies?**
 
-**A:** Yes. Each record belongs to one arm, and event smart variables resolve based on that arm's event structure. `[arm-label]` tells you which arm the current record belongs to. Note that different arms may have different event sequences; event smart variables adapt accordingly for each arm.
+**A:** Yes, with care at arm edges. `[arm-number]` and `[arm-label]` tell you the arm of the event you are currently in (a record can exist in more than one arm). `[event-number]` is the event's position within its arm and restarts at 1 in each arm, and `[first-event-name]`/`[last-event-name]` stay within the current arm. Standalone previous/next event variables, however, can cross into the neighbouring arm at the first or last event of an arm — guard them with `[arm-number]` in logic, or use specific unique event names there.
 
 **Q: How do I reference a specific event by name?**
 
@@ -168,9 +171,11 @@ Both approaches work; use smart variables for flexibility and hard-coded event n
 
 # 6. Common Mistakes & Gotchas
 
-**Using event smart variables in non-longitudinal projects.** Event smart variables only work in longitudinal projects. If you use them in a single-event project, they return blank or may produce unexpected results. Always verify that your project is set up as longitudinal before relying on event smart variables.
+**Using event smart variables in non-longitudinal projects.** In a classic project, event and arm smart variables return the single default event and arm (e.g., `event_1_arm_1`, event number 1, arm number 1), and previous/next return blank. They will not break anything, but they add little value — reserve them for longitudinal designs.
 
-**Not accounting for blank event references.** If `[previous-event-name]` is used in the first event, it returns blank. If `[next-event-name]` is used in the last event, it returns blank. If you create form links or field references using these variables, they will break in these edge cases. Plan your design to either hide these links conditionally or use conditional text that handles blanks.
+**Not accounting for blank event references.** In a single-arm project, `[previous-event-name]` returns blank at the first event and `[next-event-name]` returns blank at the last event. If you create form links or field references using these variables, they will break in these edge cases. Plan your design to either hide these links conditionally or use conditional text that handles blanks.
+
+**Assuming previous/next stop at the arm boundary.** In multi-arm projects they do not: at the first event of Arm 2, `[previous-event-name]` returns the last event of Arm 1, and at the last event of Arm 1, `[next-event-name]` returns the first event of Arm 2. Links built with these prefixes can send users into the other arm. Guard them with `[arm-number]` in your logic, or use specific unique event names at arm edges.
 
 **Confusing event smart variables with hard-coded event references.** `[previous-event-name][weight]` and `[baseline_arm_1][weight]` are different. The first is dynamic and adapts based on the current event; the second is fixed to a specific event. Use the appropriate approach for your design intent.
 

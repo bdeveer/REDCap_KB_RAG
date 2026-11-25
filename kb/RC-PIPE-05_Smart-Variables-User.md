@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)|
 | **Synonyms** | [user-name] smart variable; how to pipe the logged-in user full name with [user-fullname]; [user-email] smart variable for current user; pipe the current user data access group with [user-dag-name]; user smart variables for [user-role-name] and [user-role-label]; show who is logged in using user smart variables; [user-dag-label] and [user-dag-id] piping; reference the current redcap user in a form or email |
@@ -61,6 +61,8 @@ The human-readable name of a role, as defined by whoever created it. This is the
 | User Role Name | `[user-role-name]` | The unique name (within the current project) of the user role assigned to the logged-in user. Returns blank if not assigned to a role. NOTE: This role name is preserved when a project is copied, making it suitable for use in conditional logic. | U-699N7ET9KR |
 | User Role Label | `[user-role-label]` | The human-readable label of the user role (as defined by whoever created the role). Returns blank if not assigned to a role. | Data Entry Person |
 
+**Access Control Groups variables.** Two further user smart variables, `[user-acg-name]` and `[user-acg-noncompliant-rights]`, relate to Access Control Groups. They appear in the smart variable list only when Access Control Groups is enabled on your REDCap server; if you do not see them, your server does not use that feature.
+
 ---
 
 ## 4. Usage Notes
@@ -72,6 +74,10 @@ User smart variables always return data about the logged-in REDCap user, not the
 **DAG Behavior**
 
 If a user is not assigned to a DAG, `[user-dag-name]`, `[user-dag-id]`, and `[user-dag-label]` all return blank (an empty string). Plan your form labels and logic accordingly. For example, do not assume a DAG smart variable will always contain a value.
+
+**Administrators Who Are Not Project Users**
+
+A REDCap administrator can open a project without being added to its user list. In that case the administrator has no DAG and no role in the project, so the DAG and role smart variables return blank for them, even though their name and email still resolve. Keep this in mind when an administrator tests a form that relies on DAG or role logic.
 
 **Role Behavior**
 
@@ -88,9 +94,25 @@ If you copy a project that contains user roles:
 
 User smart variables are particularly useful in combination with branching logic and conditional fields. For example, you could use `[user-dag-label]` in field notes to remind users which DAG they belong to, or use `[user-role-label]` to conditionally display different instructions based on the user's assigned role.
 
-**Survey Invitation Context**
+**What You Get in Each Context**
 
-User smart variables in survey invitations and confirmation emails resolve based on the person who triggers the invitation (typically an administrator or project coordinator), not the survey respondent. This is because survey invitations are generated server-side before the participant accesses the survey.
+| Context | What user smart variables return |
+|---|---|
+| Data entry form | The logged-in user who has the form open. |
+| Survey page | `[user-name]` shows `[survey respondent]`; the other user smart variables are blank. |
+| Scheduled or background processing | `[user-name]` returns "system"; there is no logged-in user. |
+| API | The owner of the API token used for the request. |
+| An administrator impersonating a user | The impersonated user, not the administrator. |
+
+**Survey Invitation and Alert Context**
+
+What user smart variables show in emails depends on how the email was produced:
+
+- **Manual invitations from the Participant List** — the user who sends them.
+- **Automated Survey Invitations** — the text is filled in when the invitation is scheduled, so the values reflect whatever caused the scheduling: a staff member saving a form (that staff member), a survey submission (the survey respondent), or a scheduled check (the system).
+- **Alerts & Notifications** — behave similarly: the values reflect whatever triggered the alert.
+
+Because the result varies with the trigger, avoid relying on user smart variables in invitation and alert emails. If you need a staff member's name or email in an email, store it in a field and pipe the field instead.
 
 ---
 
@@ -114,7 +136,7 @@ User smart variables in survey invitations and confirmation emails resolve based
 
 **Q: My user is not in any DAG. What happens if I pipe `[user-dag-label]` into a field note?**
 
-**A:** The smart variable returns blank, leaving an empty space in the text. To avoid confusing blank output, you can use the `:hideunderscore` modifier: `[user-dag-label:hideunderscore]`. This suppresses the default six-underscore placeholder and renders the blank invisibly instead.
+**A:** The value is blank, and like any blank piped value in a label or note, it displays as the six-underscore placeholder `______`. To show nothing instead, add the `:hideunderscore` modifier: `[user-dag-label:hideunderscore]`. The same applies to administrators who are not users on the project, who also have no DAG.
 
 **Q: Can I use user smart variables in branching logic?**
 
@@ -130,7 +152,7 @@ User smart variables in survey invitations and confirmation emails resolve based
 
 **Using Role ID in logic when the project will be copied.** If you use `[user-role-id]` in branching logic or calculations and the project is later copied, the Role IDs in the new project will be different, breaking the logic. Use `[user-role-name]` instead to ensure logic remains valid after a copy.
 
-**Misunderstanding survey invitation behavior with user smart variables.** In survey invitation emails, user smart variables resolve to the person who triggered the invitation (usually an administrator), not the survey respondent. Do not expect `[user-fullname]` to be the participant's name in a survey invitation; use a participant data field reference instead.
+**Misunderstanding survey invitation behavior with user smart variables.** In survey invitations and alerts, user smart variables reflect whatever caused the email to be sent or scheduled — a staff member, the survey respondent, or the system — so the output can differ from one record to the next. Do not expect `[user-fullname]` to be the participant's name; use a participant data field reference instead, and avoid user smart variables in emails generally.
 
 **Mixing user and participant identity in emails.** A common mistake in confirmation emails is piping `[user-email]` when you intended to use a participant email field. These are different: the user smart variable is the REDCap user's email; participant email comes from a data field.
 
