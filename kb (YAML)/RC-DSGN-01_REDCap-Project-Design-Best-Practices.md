@@ -11,7 +11,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - None
 version: '1.5'
-last_updated: 2026-10
+last_updated: 2026-11
 related:
 - id: RC-FD-08
   title: 'Data Dictionary: Column Reference & Advanced Techniques'
@@ -415,7 +415,7 @@ These fields use the REDCap `sum()` function (or equivalent logic) across the pe
 
 **Considerations:**
 
-- Calculated fields in this instrument will only reflect values from the same record. For project-wide totals across all records, use Reports or a REDCap dashboard instead — calculated fields cannot aggregate across records.
+- Calculated fields in this instrument will only reflect values from the same record. For project-wide totals across all records, use Reports or a REDCap dashboard instead. A calculated field can use an aggregate smart function (e.g. `[aggregate-sum:field]`), but its stored value only updates when that record is saved or recalculated, so it goes stale as other records change (see [RC-PIPE-11](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md)).
 - This pattern is appropriate for per-record summaries (e.g., total number of children in a family registration) but not for multi-record totals (e.g., total enrollment across all families). For multi-record totals, use the REDCap aggregate smart variables or a custom report.
 - Keep the metrics instrument at the end of the instrument list to avoid cluttering the survey queue or data entry workflow.
 

@@ -5,12 +5,12 @@ domain: Piping
 applies_to:
 - Projects with public reports that have access codes defined
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart
+  variable behaviour and public access checked against source code; pages not re-captured
 prerequisites:
 - RC-PIPE-03 — Smart Variables Overview
 version: '1.0'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
@@ -31,7 +31,7 @@ synonyms:
 
 # 1. Overview
 
-Public Report smart variables provide access codes for reports that have been made public by a project administrator. These variables are useful for sharing report access codes with project stakeholders or embedding them in communications. A public report allows external users (without a REDCap account) to view a filtered data export via a secure URL. If an access code has been defined for the report, the smart variable returns that code for sharing.
+Public Report smart variables provide access codes for reports that have been made public. These variables are useful for sharing report access codes with project stakeholders or embedding them in communications. A public report allows external users (without a REDCap account) to view a filtered data export via a secure URL. If an access code has been defined for the report, the smart variable returns that code for sharing.
 
 ---
 
@@ -39,19 +39,19 @@ Public Report smart variables provide access codes for reports that have been ma
 
 **Public Report**
 
-A data export report in REDCap that has been configured to be publicly accessible. External users can view the report data without a REDCap account, using either a direct URL or an access code.
+A data export report in REDCap that has been configured to be publicly accessible. External users can view the report data without a REDCap account by opening the report's public link (and typing the access code, if one has been set).
 
 **Report Unique Name**
 
-A system-generated identifier for each report in REDCap, in the format `R-XXXXXXXXXX` (R followed by alphanumeric characters). Found on the My Reports & Exports page. This name is used in piping, filtering functions, and when defining access codes.
+A system-generated identifier for each report in REDCap, in the format `R-XXXXXXXXXX` (R followed by alphanumeric characters). Found on the My Reports & Exports page. This name is used in smart variables such as `[report-access-code:R-XXXXXXXXXX]` and as a report filter in aggregate smart functions.
 
 **Report Access Code**
 
-An optional security token that can be required to access a public report. If defined, users must provide the access code to view the report. Access codes provide an additional layer of security for public reports.
+An optional security token that can be required to access a public report. If defined, users must provide the access code to view the report. Access codes provide an additional layer of security for public reports and are case sensitive.
 
 **Report URL**
 
-The direct web address (URL) to access a public report. The URL is unique to each report and includes the necessary parameters for identifying and accessing the report.
+The direct web address (URL) to access a public report: the REDCap survey address with a report parameter. An optional custom short URL can also be created. There is no smart variable for the report URL or link — copy the link from the report's public settings.
 
 ---
 
@@ -59,7 +59,7 @@ The direct web address (URL) to access a public report. The URL is unique to eac
 
 | Smart Variable | Syntax | Description | Example Output |
 |---|---|---|---|
-| Report Access Code | `[report-access-code:unique_report_name]` | The access code for the specified public report, assuming the report has been made public AND an access code has been defined for it. Returns blank if the report is not public or if no access code is configured. The unique report name (R-XXXXXXXXXX) is found on the My Reports & Exports page. | FjB9V5.YQ6A |
+| Report Access Code | `[report-access-code:unique_report_name]` | The access code for the specified report, if one has been set. Returns blank if no access code is configured. An access code can only be set while the report is public, but it stays on the report if the report is later taken off public. The unique report name (R-XXXXXXXXXX) is found on the My Reports & Exports page. | FjB9V5.YQ6A |
 
 ---
 
@@ -69,13 +69,23 @@ The direct web address (URL) to access a public report. The URL is unique to eac
 
 To use the report access code smart variable, you need the unique report name. This is found on the My Reports & Exports page, typically displayed as a code like `R-2554F4TCNT` next to each report. It is not the same as the report's display name or title.
 
-**Report Must Be Public**
+**When the Variable Returns a Code**
 
-The `[report-access-code:unique_report_name]` smart variable only returns a code if:
-1. The report has been made public by the administrator.
-2. An access code has been defined for the report in its settings.
+The `[report-access-code:unique_report_name]` smart variable returns the report's access code whenever one has been set. An access code can only be set while the report is public, but taking a report off public does not remove its code — so the variable can still return it afterwards. If you no longer want the code to be piped, remove it in the report's public settings.
 
-If either condition is not met, the variable returns blank.
+**Who Can Make a Report Public**
+
+Whether users can make reports public is controlled by a system setting on your REDCap server. Depending on that setting, making reports public is not allowed, users may do it themselves, or a REDCap administrator must approve a request. A user making a report public needs the User Rights privilege in the project, and the report cannot contain fields marked as Identifier — including identifiers shown through the secondary unique field or the custom record label. REDCap administrators can make reports public regardless of these restrictions.
+
+> **Version caveat (v17.6 Standard; not in LTS 17.3 or 16):** In v17.6 Standard, on servers with REDCap+, a public report can be protected with REDCap login instead of an access code. The two cannot be combined — a report uses one or the other. Check with your administrator whether this option is available on your server.
+
+**Public Report Behaviour**
+
+- The public link is the REDCap survey address with a report parameter. An optional custom short URL can be created in the report's public settings.
+- There is no smart variable for the report URL or link. Copy the link from the report's public settings and paste it into your message.
+- A public report cannot be edited while it is public. Take it off public to make changes, then make it public again.
+- Access codes are case sensitive. Viewers type the code on an entry page, and it is then remembered for a while.
+- Repeated wrong access code attempts are rate-limited, so a viewer who mistypes the code several times may need to wait before trying again.
 
 **Access Code Requirement**
 
@@ -86,12 +96,12 @@ Not all public reports require an access code. If a public report does not have 
 Public report access codes are useful for:
 - Sharing reports securely with external stakeholders who need data but should not have full REDCap access.
 - Including access codes in project communications, emails, or invitations.
-- Creating QR codes or shortened URLs that users can scan or click to access reports.
+- Creating QR codes or custom short URLs for the report link that users can scan or click (send the access code separately).
 
 **Email and Communication Context**
 
 Report access code smart variables are most useful in emails, invitations, and other communications directed at external audiences or stakeholders:
-- "View the data: [Include the report URL from the My Reports & Exports page] and use code: `[report-access-code:R-2554F4TCNT]`"
+- "View the data: [Paste the report link from the report's public settings] and use code: `[report-access-code:R-2554F4TCNT]`"
 - "Here is your secure data export: [Report link] (Access code: `[report-access-code:R-2554F4TCNT]`)"
 
 **Difference from Aggregate Functions**
@@ -108,7 +118,7 @@ The `[aggregate-*]` smart variables ([RC-PIPE-11 — Smart Variables: Aggregate 
 
 **Q: How do I communicate a public report's access code to external users?**
 
-**A:** Use the smart variable in an email or field note: "Access the report here: [Report URL from My Reports page] using code: `[report-access-code:R-2554F4TCNT]`". This provides both the link and the access code in a clear format.
+**A:** Use the smart variable in an email or field note: "Access the report here: [Report link copied from the report's public settings] using code: `[report-access-code:R-2554F4TCNT]`". This provides both the link and the access code in a clear format.
 
 **Q: What if my public report doesn't have an access code?**
 
@@ -124,7 +134,7 @@ The `[aggregate-*]` smart variables ([RC-PIPE-11 — Smart Variables: Aggregate 
 
 **Q: Can I share report access codes via QR codes or shortened URLs?**
 
-**A:** You can create a QR code that links to a report URL with the access code embedded as a URL parameter. However, embedding the access code in a URL makes it visible in browser history and referrer logs. For sensitive data, consider using other sharing methods (email, direct messaging) that do not expose the code.
+**A:** You can create a QR code or a custom short URL that points to the report's public link, but the access code cannot be put in the URL. Viewers always type the code on an entry page (it is then remembered for a while). If you share a QR code or short URL, send the access code separately — for example, in an email using `[report-access-code:R-XXXXXXXXXX]`.
 
 ---
 
@@ -132,9 +142,9 @@ The `[aggregate-*]` smart variables ([RC-PIPE-11 — Smart Variables: Aggregate 
 
 **Using the report display name instead of the unique report name.** The report display name (e.g., "Weekly Data Export") is human-readable but cannot be used in smart variables. You must use the unique identifier (R-XXXXXXXXXX) found on the My Reports & Exports page.
 
-**Assuming the smart variable returns a URL.** `[report-access-code]` returns only the access code itself, not the full report URL. You must provide the report URL separately. To get the report URL, navigate to My Reports & Exports and copy the public report link.
+**Assuming the smart variable returns a URL.** `[report-access-code]` returns only the access code itself, not the full report URL. There is no smart variable for the report URL or link, so you must provide it separately. Copy the link from the report's public settings.
 
-**Not verifying that the report is actually public.** If a report is not configured as public, `[report-access-code:unique_report_name]` returns blank. Verify in the report settings that "Make this report public" is enabled.
+**Assuming the variable confirms the report is public.** `[report-access-code:unique_report_name]` returns the access code even if the report has since been taken off public, because the code stays on the report. Before sending, verify in the report's public settings that the report is still public, and remove the access code if you no longer want it shared.
 
 **Not checking that an access code is defined.** Even if a report is public, `[report-access-code:unique_report_name]` only returns a value if an access code has been explicitly configured in the report settings. If the report is public but has no access code, the variable returns blank.
 

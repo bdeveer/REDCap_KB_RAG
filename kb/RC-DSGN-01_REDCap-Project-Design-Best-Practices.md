@@ -10,7 +10,7 @@
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | None |
 | **Version** | 1.5 |
-| **Last Updated** | 2026-10 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-OPS-01 — Using REDCap as an Operational Request Management System](RC-OPS-01_REDCap-as-an-Operational-Request-Management-System.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-PIPE-05 — Smart Variables: User](RC-PIPE-05_Smart-Variables-User.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how should i design my redcap project; best practices for building a redcap project; tips for naming variables and instruments; how to structure a project the right way; avoid common redcap design mistakes; project setup recommendations and guidelines; redcap project planning advice; design a clean and maintainable project |
@@ -390,7 +390,7 @@ These fields use the REDCap `sum()` function (or equivalent logic) across the pe
 
 **Considerations:**
 
-- Calculated fields in this instrument will only reflect values from the same record. For project-wide totals across all records, use Reports or a REDCap dashboard instead — calculated fields cannot aggregate across records.
+- Calculated fields in this instrument will only reflect values from the same record. For project-wide totals across all records, use Reports or a REDCap dashboard instead. A calculated field can use an aggregate smart function (e.g. `[aggregate-sum:field]`), but its stored value only updates when that record is saved or recalculated, so it goes stale as other records change (see [RC-PIPE-11](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md)).
 - This pattern is appropriate for per-record summaries (e.g., total number of children in a family registration) but not for multi-record totals (e.g., total enrollment across all families). For multi-record totals, use the REDCap aggregate smart variables or a custom report.
 - Keep the metrics instrument at the end of the instrument list to avoid cluttering the survey queue or data entry workflow.
 

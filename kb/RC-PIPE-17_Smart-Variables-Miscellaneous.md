@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Synonyms** | [project-id] smart variable; how to pipe the project title with [project-title]; project-level smart variables like [project-status] and [project-purpose]; [redcap-version] and [redcap-base-url] smart variables; pipe the project irb number with [project-irb-number]; show the base survey url with [survey-base-url]; miscellaneous project and system smart variables; reference project id title or status in a field or email |
@@ -43,7 +43,7 @@ The Institutional Review Board (IRB) approval number associated with the project
 
 **Data Table**
 
-The name of the specific database table (in REDCap's MySQL database) where a project's data is stored. REDCap distributes records across multiple tables (redcap_data1, redcap_data2, etc.) for performance optimization.
+The name of the specific database table (in REDCap's MySQL database) where a project's data is stored. The original data table is `redcap_data`; installations may add further tables named `redcap_data2`, `redcap_data3` and so on (there is no `redcap_data1`) to spread projects across tables for performance.
 
 **REDCap Installation / Instance**
 
@@ -62,14 +62,14 @@ The version number of the REDCap software running on the current installation (e
 | Project ID | `[project-id]` | The unique numeric Project ID of the current REDCap project. | 39856 |
 | Project Title | `[project-title]` | The title of the current project, as configured in project settings. | Health Progression Study |
 | Project Status | `[project-status]` | The status of the current project: 0 = Development, 1 = Production, 2 = Analysis/Cleanup. Returns the numeric code. | 0 |
-| Project Purpose | `[project-purpose]` | The purpose of the current project: 0 = Practice/Just for fun, 1 = Other, 2 = Research, 3 = Quality Improvement, 4 = Operational Support. Returns the numeric code. | 2 |
-| Project IRB Number | `[project-irb-number]` | The IRB approval number associated with the current project, as configured in project settings. Returns blank if no IRB number is defined. | 2025-1234 |
+| Project Purpose | `[project-purpose]` | The purpose of the current project: 0 = Practice / Just for fun, 1 = Other, 2 = Research, 3 = Quality Improvement, 4 = Operational Support. Returns the numeric code. | 2 |
+| Project IRB Number | `[project-irb-number]` | The IRB approval number associated with the current project, as configured in project settings. Only kept for projects whose purpose is Research, so it is blank for other purposes or if no IRB number is defined. | 2025-1234 |
 | Data Table (Current Project) | `[data-table]` | The name of the database table used by the current project to store record data. | redcap_data3 |
-| Data Table (Specific Project) | `[data-table:PID]` | The name of the database table used by a specific project (identified by Project ID). Replace PID with a numeric project ID. | redcap_data2 |
+| Data Table (Specific Project) | `[data-table:PID]` | The name of the database table used by a specific project (identified by Project ID). Replace PID with a numeric project ID. If the project ID is not valid, returns `redcap_data`. | redcap_data2 |
 | REDCap Base URL | `[redcap-base-url]` | The base web address (URL) of this REDCap installation. | https://redcap.yourinstitution.edu/ |
 | REDCap Version | `[redcap-version]` | The current version number of the REDCap software running on this installation. | 16.1.3 |
 | REDCap Version URL | `[redcap-version-url]` | The base web address (URL) of the current REDCap version directory on this installation. | https://redcap.yourinstitution.edu/redcap_v16.1.3/ |
-| Survey Base URL | `[survey-base-url]` | The base web address (URL) for surveys on this REDCap installation. | https://redcap.yourinstitution.edu/surveys/ |
+| Survey Base URL | `[survey-base-url]` | The base web address (URL) for surveys on this REDCap installation. Uses the alternate survey address if your server has one configured. | https://redcap.yourinstitution.edu/surveys/ |
 
 ---
 
@@ -83,9 +83,9 @@ Most miscellaneous smart variables are intended for use by REDCap administrators
 
 Project status and purpose are returned as numeric codes, not human-readable text:
 - **Project Status:** 0 = Development, 1 = Production, 2 = Analysis/Cleanup
-- **Project Purpose:** 0 = Practice, 1 = Other, 2 = Research, 3 = Quality Improvement, 4 = Operational Support
+- **Project Purpose:** 0 = Practice / Just for fun, 1 = Other, 2 = Research, 3 = Quality Improvement, 4 = Operational Support
 
-To display human-readable text, use a calculated field with conditional logic: `if([project-status]=0, 'Development', if([project-status]=1, 'Production', 'Analysis/Cleanup'))`.
+Because the values are numbers, they work directly in branching logic and calculated fields. To display human-readable text, use a Text Box field with the @CALCTEXT action tag: `@CALCTEXT(if([project-status]=0,'Development',if([project-status]=1,'Production','Analysis/Cleanup')))`. A regular calculated field returns numbers only, so it cannot show the text.
 
 **Data Table References**
 
@@ -102,7 +102,7 @@ Use `[data-table:PID]` to get the data table name for a different project. Repla
 
 **IRB Number Handling**
 
-The `[project-irb-number]` variable returns blank if no IRB number has been entered in project settings. If your project has regulatory requirements, ensure the IRB number is configured in Project Setup if you plan to reference it.
+The `[project-irb-number]` variable returns blank if no IRB number has been entered in project settings. The IRB number is only kept for projects whose purpose is Research, so it is also blank for projects with any other purpose. If your project has regulatory requirements, ensure the purpose is set to Research and the IRB number is configured in Project Setup if you plan to reference it.
 
 **REDCap URLs**
 
@@ -114,7 +114,7 @@ The base URLs (`[redcap-base-url]`, `[redcap-version-url]`, `[survey-base-url]`)
 **Version Information**
 
 The `[redcap-version]` variable is useful for:
-- Checking which version of REDCap is in use (helpful when troubleshooting version-specific features or bugs).
+- Checking which version of REDCap is in use (helpful when troubleshooting version-specific features or behaviour).
 - Documenting the REDCap environment in system integration logs.
 - Alerting when outdated versions are in use.
 
@@ -135,7 +135,7 @@ The `[redcap-version]` variable is useful for:
 
 **Q: How can I tell if my project is in Production or Development status?**
 
-**A:** Use `[project-status]`, which returns a numeric code: 0 = Development, 1 = Production, 2 = Analysis/Cleanup. To display readable text, use a calculated field: `if([project-status]=1, 'Production', 'Not Production')`.
+**A:** Use `[project-status]`, which returns a numeric code: 0 = Development, 1 = Production, 2 = Analysis/Cleanup. To display readable text, use a Text Box field with @CALCTEXT: `@CALCTEXT(if([project-status]=0,'Development',if([project-status]=1,'Production','Analysis/Cleanup')))`. A regular calculated field returns numbers only.
 
 **Q: What version of REDCap is my institution using?**
 
@@ -147,15 +147,15 @@ The `[redcap-version]` variable is useful for:
 
 **Q: Can I use miscellaneous smart variables in branching logic?**
 
-**A:** Yes, but rarely. For example, you could use `[project-status]=0` in logic to show fields only in development projects. In practice, this is not commonly done because these variables represent static project properties rather than participant data.
+**A:** Yes. Because these variables return numbers, they work fine in branching logic and calculations. For example, you could use `[project-status]=0` in logic to show fields only in development projects. In practice, this is not commonly done because these variables represent static project properties rather than participant data.
 
 ---
 
 ## 6. Common Mistakes & Gotchas
 
-**Confusing project status and purpose codes with readable text.** Project status and purpose are returned as numbers (0, 1, 2, etc.), not as words like "Production" or "Research". If you need readable text, use a calculated field to convert the codes.
+**Confusing project status and purpose codes with readable text.** Project status and purpose are returned as numbers (0, 1, 2, etc.), not as words like "Production" or "Research". If you need readable text, use a @CALCTEXT field to convert the codes; a regular calculated field can only return numbers.
 
-**Assuming the IRB number is always defined.** If an IRB number has not been entered in project settings, `[project-irb-number]` returns blank. Do not rely on this variable without first confirming that the IRB number is configured.
+**Assuming the IRB number is always defined.** If an IRB number has not been entered in project settings, or the project's purpose is not Research, `[project-irb-number]` returns blank. Do not rely on this variable without first confirming that the IRB number is configured.
 
 **Referencing data tables in user-facing forms.** Data table names are technical database identifiers and are meaningless to study participants or coordinators. Do not display `[data-table]` in forms or emails intended for users; this variable is for administrators and developers only.
 

@@ -5,12 +5,12 @@ domain: Piping
 applies_to:
 - Projects with Project Dashboards enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart
+  function behaviour and parameters checked against source code; pages not re-captured
 prerequisites:
 - RC-PIPE-03 — Smart Variables Overview
 version: '1.0'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
@@ -31,7 +31,7 @@ synonyms:
 
 # 1. Overview
 
-Aggregate functions, charts, and tables (collectively called "Smart Functions" and "Smart Charts" in REDCap) allow project administrators and power users to display summary statistics and visualizations on Project Dashboards. These smart variables calculate descriptive statistics (min, max, mean, median, sum, count, standard deviation, unique count) across all records and optionally create data visualizations (scatter plots, line charts, bar charts, pie charts, donut charts). They are primarily used by administrators building dashboard analytics rather than by regular data entry coordinators. Optional parameters allow filtering by report, DAG, event, or visualization options.
+Aggregate functions, charts, and tables (collectively called "Smart Functions" and "Smart Charts" in REDCap) allow project administrators and power users to display summary statistics and visualizations on Project Dashboards. These smart variables calculate descriptive statistics (min, max, mean, median, sum, count, standard deviation, unique count) across all records and optionally create data visualizations (scatter plots, line charts, bar charts, pie charts, donut charts). They are primarily used by administrators building dashboard analytics rather than by regular data entry coordinators. Optional parameters allow filtering by report, DAG, event, or visualization options. Aggregate functions are not limited to dashboards and piped text: they also work in calculated fields, @CALCTEXT, @CALCDATE and branching logic (see Usage Notes for the caveat on stored calculated values).
 
 ---
 
@@ -55,7 +55,7 @@ A tabular display of descriptive statistics for specified fields. Each row repre
 
 **Data Aggregation**
 
-The process of combining and summarizing data from all records, all events, and all instances into a single statistic or visualization. Aggregation naturally groups data from the same event and instance.
+The process of combining and summarizing data from all records, all events, and all instances into a single statistic or visualization. Each field is aggregated on its own; values from different fields are only paired by record, event and instance in multi-field scatter plots and line charts.
 
 **Grouping Field**
 
@@ -90,8 +90,8 @@ An optional categorical field (multiple choice, dropdown, radio, or checkbox) us
 | Scatter Plot | `[scatter-plot:x-axis-field,y-axis-field]` or `[scatter-plot:x-axis-field,y-axis-field,grouping-field]` | A scatter plot with points representing records. X-axis must be a number, date, or datetime field; Y-axis must be numeric. Optional grouping field (multiple choice only) adds color coding. If only X-axis provided, random Y values are assigned. | [Chart displayed on page] |
 | Line Chart | `[line-chart:x-axis-field,y-axis-field]` or `[line-chart:x-axis-field,y-axis-field,grouping-field]` | A line chart (scatter plot with connected dots). Same axis requirements and optional grouping as scatter plot. | [Chart displayed on page] |
 | Bar Chart | `[bar-chart:field]` or `[bar-chart:field,grouping-field]` | A bar chart for a single multiple-choice field. Optional color grouping with a second multiple-choice field. Bars default to horizontal; use `bar-vertical` parameter to orient vertically. Can stack bars with `bar-stacked` parameter. | [Chart displayed on page] |
-| Pie Chart | `[pie-chart:field]` | A pie chart for a single multiple-choice field. Shows proportions of each response option. | [Chart displayed on page] |
-| Donut Chart | `[donut-chart:field]` | A donut chart (pie chart with center removed) for a single multiple-choice field. Visually similar to pie chart but with hollow center. | [Chart displayed on page] |
+| Pie Chart | `[pie-chart:field]` | A pie chart for a single multiple-choice field. Shows proportions of each response option. If more than one field is listed, only the first is used. | [Chart displayed on page] |
+| Donut Chart | `[donut-chart:field]` | A donut chart (pie chart with center removed) for a single multiple-choice field. Visually similar to pie chart but with hollow center. If more than one field is listed, only the first is used. | [Chart displayed on page] |
 
 ### 3.3 Tables
 
@@ -102,7 +102,8 @@ An optional categorical field (multiple choice, dropdown, radio, or checkbox) us
 **Syntax Notes:**
 - For stats-table, the default (without specifying columns) displays all 9 columns.
 - Example: `[stats-table:age,weight,height:min,max,median]` displays only Min, Max, and Median columns.
-- Default column order applies if multiple columns are specified; custom ordering is not available.
+- Columns appear in the order you list them, so `[stats-table:age:max,min]` shows Max before Min.
+- The "Export table (CSV)" link below a stats table is not shown when the table appears in a PDF or an email.
 
 ---
 
@@ -112,9 +113,21 @@ An optional categorical field (multiple choice, dropdown, radio, or checkbox) us
 
 All aggregate functions, charts, and tables naturally aggregate across all records, all events, and all repeating instances unless filtering parameters are applied. This means data is combined globally unless you specify a filter (see [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) for filtering options).
 
-**Natural Grouping**
+"All records" means all records in the project, regardless of the viewer's Data Access Group or user rights. A user assigned to a DAG sees whole-project results unless the expression adds `user-dag-name` or uses a report filter (`R-…`) whose report limits the records.
 
-When using multiple fields in a stats-table or chart, data is naturally grouped by the event and repeating instance they come from. For example, `[stats-table:age,weight,height]` displays statistics for age, weight, and height, with data grouped by the context in which they were collected.
+**How Multiple Fields Are Combined**
+
+In a stats table, each field's row is calculated on its own from all of that field's values. For example, `[stats-table:age,weight,height]` shows three independent rows; the values are not matched up by event or instance. Values from different fields are paired by record, event and instance only in multi-field scatter plots and line charts (the X and Y values must come from the same record, event and instance to form a point).
+
+**Where Aggregate Functions Can Be Used**
+
+Besides Project Dashboards and piped text (field labels, notes, survey text), aggregate functions work in calculated fields, @CALCTEXT, @CALCDATE and branching logic. In a calculated field the value is fixed when that record's calculation runs (when the record is saved, or when Data Quality rule H "Fix calcs now" is run). It does not update when other records change, so stored values go stale as data is added elsewhere. Use aggregates in calculations only when that is acceptable, or re-run rule H before relying on the stored values.
+
+**Minimum Data Points, Text Values and Missing Data Codes**
+
+- On public dashboards and on survey and survey queue pages, a minimum number of data points applies (system default 5; it can be changed for each project). Below that number, a privacy message is shown in place of the value, chart or table.
+- `count` and `unique` include text values; the other functions (min, max, mean, median, sum, stdev) ignore non-numeric values.
+- Values saved as missing data codes are excluded from all calculations.
 
 **Field Requirements for Charts**
 
@@ -125,11 +138,11 @@ When using multiple fields in a stats-table or chart, data is naturally grouped 
 
 **Grouping Field Limitations**
 
-Grouping fields must be categorical (multiple choice, radio, dropdown, or checkbox). Numeric and text fields cannot be used as grouping fields. If you specify an invalid grouping field, the chart will display without grouping.
+Grouping fields must be categorical (multiple choice, radio, dropdown, or checkbox). Numeric and text fields cannot be used as grouping fields. If you specify a non-categorical grouping field, it is silently dropped and the chart displays without grouping.
 
 **Chart Display on Dashboards**
 
-Charts and tables are rendered as interactive widgets on Project Dashboards. They display inline on the dashboard page and can be configured with titles, descriptions, and sizing options by the dashboard administrator.
+Charts and tables are rendered as interactive widgets on Project Dashboards. They display inline on the dashboard page and can be configured with titles, descriptions, and sizing options by the dashboard administrator. A dashboard shows a saved snapshot that is kept for up to 10 minutes, so values may lag behind recent data entry (see Common Mistakes & Gotchas).
 
 **Optional Parameters**
 
@@ -169,7 +182,7 @@ REDCap provides a 14-minute video demonstration of Smart Charts, Functions, and 
 
 **Q: Can I use aggregate functions in regular form fields or only on dashboards?**
 
-**A:** Aggregate functions are primarily designed for use on Project Dashboards. Technically, they can be placed in field labels or notes, but they are most useful and performant on dashboards.
+**A:** Both. Aggregate functions can be piped into field labels, notes and survey text, and they also work in calculated fields, @CALCTEXT, @CALCDATE and branching logic. In a calculated field, the stored value is only recalculated when that record is saved or when Data Quality rule H "Fix calcs now" is run, so it can go stale as other records change. Charts and stats tables are display-only and belong on dashboards or in piped text.
 
 ---
 
@@ -179,15 +192,15 @@ REDCap provides a 14-minute video demonstration of Smart Charts, Functions, and 
 
 **Confusing aggregate functions with individual field piping.** `[aggregate-mean:age]` returns the mean age across all records. `[age]` pipes the age value for the current record. Do not mix them up; they serve different purposes. Aggregate functions are for summary statistics; field piping is for individual record data.
 
-**Forgetting to specify the instrument when referencing a field.** If a field name is not unique across your project (e.g., if multiple instruments have an "age" field), specify the field using the unique field name from the Data Dictionary. REDCap will use the correctly named field.
+**Not accounting for blank or missing values in aggregates.** Aggregate functions skip blank and missing values. Count returns the number of non-blank values; Sum skips records with missing data. Values saved as missing data codes are excluded too, and every function except count and unique ignores non-numeric values. If a significant portion of your data is missing, summary statistics may not be representative.
 
-**Not accounting for blank or missing values in aggregates.** Aggregate functions skip blank and missing values. Count returns the number of non-blank values; Sum skips records with missing data. If a significant portion of your data is missing, summary statistics may not be representative.
+**Using grouping fields with incompatible field types.** Grouping fields must be categorical (multiple choice, radio, dropdown, checkbox). If you specify a numeric or text field as a grouping field, it is silently dropped and the chart displays without grouping, with no error message.
 
-**Using grouping fields with incompatible field types.** Grouping fields must be categorical (multiple choice, radio, dropdown, checkbox). If you specify a numeric or text field as a grouping field, the chart will either display without grouping or show an error.
+**Attempting to filter aggregate functions without understanding parameter syntax.** Optional parameters must follow [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) syntax exactly. Unrecognised parameters (such as a mistyped DAG or event name) are silently ignored, so you get the unfiltered, all-records result, which can look perfectly plausible. Only an invalid report name (`R-…`) produces an error. Double-check unique DAG and event names, and test filters in a development environment first.
 
-**Attempting to filter aggregate functions without understanding parameter syntax.** Optional parameters must follow [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md) syntax exactly. Incorrect syntax (e.g., missing colons, typos in DAG names) will cause the function to fail or return blank. Test filters in a development environment first.
+**Assuming charts update in real-time.** Project Dashboards show a saved snapshot that is kept for up to 10 minutes. Reloading the browser page during that time shows the same snapshot, not the latest data. Use the dashboard's refresh link to rebuild it immediately; saving the dashboard also refreshes it. Public dashboards have no refresh link and update only when the snapshot expires.
 
-**Assuming charts update in real-time.** Charts on Project Dashboards are generated when the dashboard is loaded or refreshed. They do not auto-update as records are modified. Refresh the dashboard to see the latest data.
+**Assuming results respect the viewer's DAG or user rights.** Aggregates, charts and stats tables use all records in the project, regardless of the viewer's Data Access Group or user rights. A user in a DAG sees whole-project results unless the expression adds `user-dag-name` or uses a report filter (`R-…`). Consider this before placing aggregates on forms, surveys or dashboards seen by site staff. See [RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions](RC-PIPE-12_Smart-Variables-Optional-Parameters-for-Aggregate-Functions.md).
 
 ---
 

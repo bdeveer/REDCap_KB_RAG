@@ -87,7 +87,7 @@ These smart variables serve two functions: (1) the instance qualifier smart vari
 
 ### 3.7 Aggregate Functions, Charts, and Tables
 
-These smart variables are most often used in Project Dashboards, but are also usable in piped text such as field labels and descriptive text (REDCap's own UI refers to them as "Smart Functions" and "Smart Charts"). They allow project designers to build custom charts and summary tables using aggregated data from the project. The chart and table variables are `[pie-chart]`, `[donut-chart]`, `[bar-chart]`, `[scatter-plot]`, `[line-chart]` and `[stats-table]`.
+These smart variables are most often used in Project Dashboards, but are also usable in piped text such as field labels and descriptive text, and in calculated fields, @CALCTEXT and branching logic (in a calculated field the value only updates when that record is saved or recalculated) (REDCap's own UI refers to them as "Smart Functions" and "Smart Charts"). They allow project designers to build custom charts and summary tables using aggregated data from the project. The chart and table variables are `[pie-chart]`, `[donut-chart]`, `[bar-chart]`, `[scatter-plot]`, `[line-chart]` and `[stats-table]`.
 
 This category is more advanced and is primarily used by administrators and power users building project-level dashboards. Full documentation is available in REDCap's embedded help text.
 

@@ -6,12 +6,12 @@ applies_to:
 - 'Projects using aggregate functions, charts, and tables ([RC-PIPE-11 — Smart Variables:
   Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md))'
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart
+  function behaviour and parameters checked against source code; pages not re-captured
 prerequisites:
 - RC-PIPE-03 — Smart Variables Overview
 version: '1.0'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-03
   title: Smart Variables Overview
@@ -52,7 +52,7 @@ A parameter that modifies how a chart or table displays without changing the und
 
 **Mutually Exclusive**
 
-Parameters that cannot be used together in the same smart variable expression. For example, report name filters cannot be combined with DAG, event, or other filtering parameters.
+Parameters that should not be used together in the same smart variable expression. For example, when a report name filter is present, any DAG, event, or record filtering parameters are silently ignored.
 
 ---
 
@@ -62,21 +62,21 @@ Parameters that cannot be used together in the same smart variable expression. F
 
 | Parameter | Syntax | Description | Example |
 |---|---|---|---|
-| Report Name | `R-XXXXXXXXXX` | Filters results to include only records contained in the specified report. Use the unique report name (found on the My Reports & Exports page) in the format R- followed by alphanumeric characters. IMPORTANT: Report name filters cannot be combined with other filtering parameters (DAG, event, etc.). To combine filters, add filtering to the report definition itself. | `[aggregate-min:age:R-5898NNMYL4]` |
+| Report Name | `R-XXXXXXXXXX` | Filters results to include only records contained in the specified report. Use the unique report name (found on the My Reports & Exports page) in the format R- followed by alphanumeric characters. IMPORTANT: When a report filter is used, any DAG, event and record filtering parameters are silently ignored; only the report's own filters apply. To combine filters, add the filtering to the report definition itself. An invalid report name produces an error. | `[aggregate-min:age:R-5898NNMYL4]` |
 
 ### 3.2 Record / Event Filtering Parameters
 
 | Parameter | Syntax | Description | Example |
 |---|---|---|---|
-| Current Record | `record-name` | Filters results to include data from the current record only. Only works in contexts where a single record is being viewed (survey, data entry form, etc.). | `[aggregate-max:weight:record-name]` |
-| Current Event | `event-name` | Filters results to include data from the current event only (longitudinal projects only). Only works where a single record/event is being viewed. | `[aggregate-max:weight:event-name]` |
+| Current Record | `record-name` | Filters results to include data from the current record only. Only works in contexts where a single record is being viewed (survey, data entry form, etc.). Where there is no current record (e.g., dashboards), it is ignored and the result covers all records. | `[aggregate-max:weight:record-name]` |
+| Current Event | `event-name` | Filters results to include data from the current event only (longitudinal projects only). Only works where a single record/event is being viewed. Where there is no current event (e.g., dashboards), and in classic (non-longitudinal) projects, it is ignored and the result covers all events. | `[aggregate-max:weight:event-name]` |
 | Specific Event(s) | Unique event name(s) | Filters to data from specific events by providing the event's unique event name from the Define My Events page. Multiple events separated by commas. Longitudinal projects only. | `[aggregate-min:weight:visit_1_arm_1]` or `[aggregate-min:weight:visit_1_arm_1,visit_1_arm_2]` |
 
 ### 3.3 Data Access Group (DAG) Filtering Parameters
 
 | Parameter | Syntax | Description | Example |
 |---|---|---|---|
-| Current User's DAG | `user-dag-name` | Filters results to include only records in the current user's Data Access Group. Only works where an authenticated user is assigned to a DAG in the project (does not work on public dashboards or survey pages). | `[aggregate-mean:weight:user-dag-name]` |
+| Current User's DAG | `user-dag-name` | Filters results to include only records in the current user's Data Access Group. Only works where an authenticated user is assigned to a DAG in the project. On public dashboards and survey pages, and for users not in a DAG, it is ignored and the result covers ALL records, not none. | `[aggregate-mean:weight:user-dag-name]` |
 | Specific DAG(s) | Unique DAG name(s) | Filters to records in specific DAGs by providing the DAG's unique group name from the Data Access Groups page. Multiple DAGs separated by commas. | `[aggregate-median:weight:site_a]` or `[aggregate-median:weight:site_a,site_b,site_c]` |
 
 ### 3.4 Visualization Parameters
@@ -115,7 +115,8 @@ For multiple parameters (comma-separated):
 When using a report name filter (`R-XXXXXXXXXX`):
 - NO other filtering parameters (DAG, event, record-name, event-name) can be used simultaneously.
 - To combine report filtering with DAG or event filtering, add those filters directly to the report definition (in the report settings), not in the smart variable.
-- If you attempt to combine a report filter with other parameters, the function may fail or behave unexpectedly.
+- If you combine a report filter with DAG, event or record parameters, those parameters are silently ignored and only the report's own filters apply. There is no error message.
+- Display options such as `bar-vertical`, `bar-stacked` and `no-export-link` still apply alongside a report filter.
 
 **DAG and Event Filters Can Be Combined**
 
@@ -138,15 +139,15 @@ When filtering by DAG, use the unique DAG name (e.g., `site_a`, `site_b`) from t
 
 **Current User vs. Specific User**
 
-The `user-dag-name` parameter filters to the current logged-in user's DAG. It does not work on public dashboards or survey pages where no user is authenticated. To filter to a specific, non-current user's DAG, use the unique DAG name directly instead.
+The `user-dag-name` parameter filters to the current logged-in user's DAG. On public dashboards and survey pages, where no user is logged in, and for users who are not assigned to a DAG, the parameter is ignored and the result covers all records in the project. To filter to a specific DAG regardless of who is viewing, use the unique DAG name directly instead.
 
 **Record-Name and Event-Name Context Requirements**
 
-The `record-name` and `event-name` parameters only function in contexts where a single record/event is active (e.g., in a form field, survey, data entry form). They do not work on dashboards or reports where multiple records are being viewed simultaneously.
+The `record-name` and `event-name` parameters only function in contexts where a single record/event is active (e.g., in a form field, survey, data entry form). Where there is no current record or event, such as on dashboards, they are ignored and the result covers all records (or all events). `event-name` is also ignored in classic (non-longitudinal) projects.
 
 **Multiple Values for DAGs and Events**
 
-To include multiple DAGs or events, use comma separation (no spaces): `[aggregate-count:age:site_a,site_b,site_c]`. This filters to all three DAGs.
+To include multiple DAGs or events, use comma separation: `[aggregate-count:age:site_a,site_b,site_c]`. This filters to all three DAGs. Spaces after the commas are tolerated, but writing the list without spaces remains good practice.
 
 ---
 
@@ -158,7 +159,7 @@ To include multiple DAGs or events, use comma separation (no spaces): `[aggregat
 
 **Q: Can I combine a report filter with a DAG filter?**
 
-**A:** No. Report name filters (`R-XXXXXXXXXX`) are mutually exclusive with other filtering parameters. If you need to combine filters, add the additional filtering logic to the report definition itself (in the report settings), then reference the report in the smart variable.
+**A:** Not in the smart variable. When a report name filter (`R-XXXXXXXXXX`) is present, DAG, event and record parameters are silently ignored. If you need to combine filters, add the DAG or event filtering to the report definition itself (in the report settings), then reference the report in the smart variable.
 
 **Q: How do I display a vertical bar chart instead of horizontal?**
 
@@ -174,7 +175,7 @@ To include multiple DAGs or events, use comma separation (no spaces): `[aggregat
 
 **Q: How do I filter results to the current user's Data Access Group?**
 
-**A:** Use the `user-dag-name` parameter: `[aggregate-mean:age:user-dag-name]`. This filters to whatever DAG the currently logged-in user belongs to. Note that this does not work on public dashboards.
+**A:** Use the `user-dag-name` parameter: `[aggregate-mean:age:user-dag-name]`. This filters to whatever DAG the currently logged-in user belongs to. Note that on public dashboards and surveys, and for users not in a DAG, the parameter is ignored and the result covers all records.
 
 **Q: Can I use multiple visualization parameters in one smart variable?**
 
@@ -188,15 +189,17 @@ To include multiple DAGs or events, use comma separation (no spaces): `[aggregat
 
 # 6. Common Mistakes & Gotchas
 
-**Attempting to combine report filters with other parameters.** Report name filters (`R-XXXXXXXXXX`) cannot be used with DAG, event, or record-name filters. If you need multiple filters, add them to the report definition itself, not the smart variable. A common error is: `[aggregate-mean:age:R-5898NNMYL4,site_a]` (invalid — do not mix report and DAG filters).
+**Attempting to combine report filters with other parameters.** Report name filters (`R-XXXXXXXXXX`) cannot be used with DAG, event, or record-name filters. If you need multiple filters, add them to the report definition itself, not the smart variable. A common error is: `[aggregate-mean:age:R-5898NNMYL4,site_a]`. This does not fail; it simply ignores `site_a` and returns the result for the whole report, which is easy to mistake for a DAG-filtered value. Put the DAG or event filtering into the report itself.
 
 **Using DAG labels instead of DAG names.** The DAG label is the human-readable display name (e.g., "Site A"). The DAG name is the unique identifier (e.g., "site_a"). Always use the DAG name in parameters: `[aggregate-mean:age:site_a]` (correct) not `[aggregate-mean:age:Site A]` (incorrect).
 
 **Using event labels instead of event names.** Similarly, use unique event names (e.g., `baseline_arm_1`) not event labels (e.g., "Baseline"): `[aggregate-mean:weight:baseline_arm_1]` (correct) not `[aggregate-mean:weight:Baseline]` (incorrect).
 
-**Assuming `record-name` and `event-name` work on dashboards.** These parameters only function in contexts where a single record or event is active (form fields, surveys, data entry). They return incorrect or blank results on dashboards where multiple records are visible.
+**Assuming `record-name` and `event-name` work on dashboards.** These parameters only function in contexts where a single record or event is active (form fields, surveys, data entry). On dashboards, where there is no current record or event, they are ignored and the result covers all records. `event-name` is also ignored in classic projects.
 
-**Forgetting commas when specifying multiple events or DAGs.** Use comma separation (no spaces) to specify multiple values: `[aggregate-mean:age:site_a,site_b]` (correct) not `[aggregate-mean:age:site_a site_b]` (incorrect).
+**Forgetting commas when specifying multiple events or DAGs.** Use comma separation to specify multiple values: `[aggregate-mean:age:site_a,site_b]` (correct) not `[aggregate-mean:age:site_a site_b]` (incorrect). A space after a comma is tolerated, but no spaces is the safer habit.
+
+**Assuming `user-dag-name` returns nothing when there is no DAG.** On public dashboards and survey pages, and for users who are not assigned to a DAG, `user-dag-name` is ignored and the result shows all records, not none. Do not rely on it to hide other sites' data in those contexts; use specific unique DAG names or a report filter instead.
 
 **Not accounting for empty results when using strict filters.** If you filter to a DAG or event that has no data, the aggregate function may return 0 or blank. For example, if no records belong to a specific DAG, `[aggregate-count:age:site_a]` returns 0.
 

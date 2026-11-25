@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | Projects with REDCap MyCap module enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Synonyms** | [mycap-participant-link] smart variable; how to pipe a mycap participant link with [mycap-participant-url]; mycap smart variables for the participant code [mycap-participant-code]; [mycap-project-code] mycap join code smart variable; send a mycap enrollment link or code via email; how to share a mycap participant code; mycap participant and project code smart variables; pipe a mycap app link into a notification |
@@ -35,7 +35,7 @@ A unique identifier assigned to each REDCap project that uses MyCap. The project
 
 **Participant Code**
 
-A unique identifier for each record (participant) in a MyCap-enabled project. The participant code is system-generated and allows MyCap to associate the participant's mobile app activity with the correct REDCap record.
+A unique identifier for each record (participant) in a MyCap-enabled project. The participant code is system-generated and allows MyCap to associate the participant's mobile app activity with the correct REDCap record. It is created when the record is first saved in a MyCap-enabled project, not when the participant joins on the app.
 
 **MyCap Enrollment Link**
 
@@ -54,10 +54,11 @@ An HTML link (usually embedded in an email or field note) that directs participa
 | MyCap Project Code | `[mycap-project-code]` | The unique system-generated code for the current REDCap project within the MyCap ecosystem. This code identifies the project when users enroll via MyCap. | P-5CLDRMQ28TSJJXD7KA1K |
 | MyCap Participant Code | `[mycap-participant-code]` | The unique system-generated code for the current record (participant). This code associates the participant's mobile app activity with the correct REDCap record. | U-NEXAXSMQZ3YFTZDMMSEX |
 | MyCap Participant URL | `[mycap-participant-url]` | The web address (URL) for the current record that can be used by the participant to join the project on the MyCap mobile app. The URL includes all necessary enrollment parameters. | https://app.projectmycap.org/... |
-| MyCap Participant Link (Default) | `[mycap-participant-link]` | An HTML web link for the current record that allows the participant to join the project on the MyCap mobile app. Uses the URL as the default link text. | [Clickable link with URL text] |
-| MyCap Participant Link (Custom Text) | `[mycap-participant-link:Custom Text]` | An HTML web link for the current record with custom link text instead of the URL. | [Clickable link labeled "Click this MyCap link"] |
+| MyCap Participant Link | `[mycap-participant-link]` or `[mycap-participant-link:Custom Text]` | An HTML web link for the current record that allows the participant to join the project on the MyCap mobile app. Uses the URL as the link text unless you add optional custom text. | [Clickable link with URL text, or labeled "Click this MyCap link"] |
 
-> **Note:** The URL domain for MyCap App Links is `app.projectmycap.org` (current, as of REDCap v15.3.3+). The legacy Firebase domain (`mycapplusbeta.page.link`) was deprecated August 25, 2025. See [RC-MYCAP-04](RC-MYCAP-04_Participant-Onboarding.md) for domain migration details.
+> **Note:** These are the only four MyCap smart variables: `[mycap-project-code]`, `[mycap-participant-code]`, `[mycap-participant-url]` and `[mycap-participant-link]` (with optional custom text). There is no QR code smart variable — each participant's QR code is available on the MyCap participant management page.
+
+> **Note:** The domain of the join URL depends on which MyCap app the project uses, not on the REDCap version. Projects on (or converted to) the current MyCap app produce `app.projectmycap.org` links; projects still on the legacy MyCap app produce `mycap.link/join` links. The `app.projectmycap.org` domain is current as of REDCap v15.3.3+; the older Firebase domain (`mycapplusbeta.page.link`) was deprecated on August 25, 2025. See [RC-MYCAP-04](RC-MYCAP-04_Participant-Onboarding.md) for details on moving participants to the current app.
 
 ---
 
@@ -75,7 +76,14 @@ MyCap smart variables are designed to be placed in participant-facing communicat
 - Field notes that instruct participants on how to enroll via MyCap.
 - MyCap-specific instructions or documents.
 
-Avoid using MyCap variables in administrator-only forms or data entry contexts.
+Showing the link on a data entry form so staff can share it with the participant (for example, during an enrollment visit) is also a valid use. Just make sure a participant's link is only shown or sent to that participant, never to other participants.
+
+**When the Participant Code Is Created**
+
+The participant code is created when the record is first saved in a MyCap-enabled project, not when the participant joins on the app. Keep in mind:
+- On a record that hasn't been saved yet, `[mycap-participant-code]` is blank, but `[mycap-participant-url]` and `[mycap-participant-link]` are still produced without a participant attached. Don't send the link until the record has been saved.
+- In multi-arm longitudinal projects, the participant is looked up in the arm of the current event. Where no participant exists for that arm, the variables are blank.
+- The @MC-PARTICIPANT-CODE action tag stores the same participant code in a field, if you want it saved as data.
 
 **Unique Codes Per Record**
 
@@ -141,9 +149,9 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 **A:** The project code is a system identifier used by the MyCap app to recognize your project. It is primarily used internally and in troubleshooting. You do not typically need to share it with participants. If a participant is having trouble enrolling, you might reference the project code in a support document.
 
-**Q: Can I create a QR code from the MyCap enrollment link?**
+**Q: Is there a smart variable for the MyCap QR code?**
 
-**A:** Yes. You can generate a QR code from the `[mycap-participant-url]` and include it in print materials, posters, or other physical documents. Participants can scan the QR code with their phone to be directed to the MyCap enrollment page.
+**A:** No. There are only four MyCap smart variables (project code, participant code, participant URL and participant link). Each participant's QR code is available on the MyCap participant management page, where staff can show or print it for the participant. If you need a QR code in your own materials, you can also create one from that participant's `[mycap-participant-url]`.
 
 **Q: What if my project doesn't have MyCap enabled?**
 
@@ -151,7 +159,7 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 **Q: How do participants use the MyCap link?**
 
-**A:** Participants click or tap the link, which directs them to the MyCap enrollment page. They must have the MyCap app already installed on their mobile device. The app will open and guide them through enrollment using the participant code and project code embedded in the link.
+**A:** Participants click or tap the link on their phone. If the MyCap app is installed, the app opens and guides them through joining the project using the codes embedded in the link. If it isn't installed, the link is designed to send them to their device's app store to install it first; on a computer, the link opens a web page instead. It is still a good idea to test the link on a phone before sending it to participants.
 
 ---
 
@@ -163,9 +171,11 @@ This generates a clickable link that will direct the participant to the MyCap en
 
 **Not providing the MyCap link in participant communications.** If participants are not aware that they can enroll via MyCap, they will not use the mobile app. Clearly communicate the MyCap link in emails, invitations, and welcome messages.
 
-**Assuming participants have the MyCap app installed.** Participants must download the MyCap app from their device's app store before they can use a MyCap enrollment link. Provide clear instructions on how to download the app, or consider offering both web-based and MyCap enrollment options.
+**Assuming participants must install the app before using the link.** The join link is designed to send participants who don't have the MyCap app to their app store to install it (on a computer it opens a web page instead). It still helps to tell participants in your message that the study uses the MyCap app, so they know what to expect.
 
-**Using MyCap variables in internal/administrator forms.** MyCap smart variables are designed for participant-facing communications. Placing them in internal forms or administrative contexts is confusing. Use them only in communications directed at participants.
+**Sending the link before the record is saved.** The participant code is created when the record is first saved. On an unsaved record, the URL and link are produced without a participant attached, so don't send them until the record exists.
+
+**Exposing other participants' links.** Showing `[mycap-participant-link]` on a data entry form for staff to share with the participant is fine. Just make sure each participant's link reaches only that participant, not other participants.
 
 **Not testing MyCap links on actual mobile devices.** MyCap links are designed for mobile access. Test enrollment on an actual iOS or Android device before deploying to real participants.
 

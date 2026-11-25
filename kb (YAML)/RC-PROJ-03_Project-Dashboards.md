@@ -246,7 +246,7 @@ For the full smart variable syntax used in each of these contexts, see [RC-PIPE-
 
 **Q: How often does dashboard data update?**
 
-**A:** Dashboard content is generated when the page is loaded or refreshed. There is no automatic background refresh — a viewer must reload the page to see the latest data.
+**A:** REDCap shows a saved snapshot of the dashboard that is kept for up to 10 minutes, so reloading the page within that time shows the same content. Project users can click the dashboard's refresh link to rebuild it immediately; saving the dashboard also refreshes it. Public dashboards have no refresh link and update when the snapshot expires.
 
 **Q: Who can see a private dashboard?**
 
@@ -280,7 +280,7 @@ For the full smart variable syntax used in each of these contexts, see [RC-PIPE-
 
 **Deleting a widget without saving the content elsewhere.** Widget deletion is immediate and irreversible. If a widget contains complex smart variable syntax, copy it before deleting. The dashboard editor does not have an undo function.
 
-**Sharing a dashboard access code without the URL.** An access code alone does not allow users to reach the dashboard — they also need the URL. Always share both together, or use the `[dashboard-link]` smart variable, which bundles the URL and accepts an optional code prompt. See [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) for pairing the link and access code in a single communication.
+**Sharing a dashboard access code without the URL.** An access code alone does not allow users to reach the dashboard — they also need the URL. Always share both together, for example by piping `[dashboard-link]` and `[dashboard-access-code]` into the same message (the link does not include the code). See [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) for pairing the link and access code in a single communication.
 
 **Smart Functions and charts not showing on a public dashboard.** Public dashboards enforce a minimum number of data points before rendering any Smart Function, Smart Table, or Smart Chart. The minimum is set by your administrator (default 5 on new servers, 11 on servers upgraded through 11.0.0) and can be overridden per project. If a widget looks correct when viewed inside the project but shows a "fewer than N data points" message on the public URL, the underlying data is below that minimum. This applies to logged-in viewers on the public URL too. This is an intentional privacy safeguard — not a bug. Either wait until sufficient data exists, or reconsider whether the metric is appropriate for public display at this stage of the project.
 

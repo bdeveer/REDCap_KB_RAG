@@ -7,10 +7,10 @@
 | **Domain** | Piping |
 | **Applies To** | Projects with public Project Dashboards configured |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable behaviour and public access checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
 | **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) |
 | **Synonyms** | [dashboard-link] smart variable; how to pipe a link to a public project dashboard with [dashboard-url]; dashboard smart variables for the access code [dashboard-access-code]; link to a named dashboard with [dashboard-link:unique_dash_name]; share a public project dashboard link via email; [dashboard-url:unique_dash_name] project dashboard smart variable; create a clickable link to a project dashboard; project dashboard link and access code smart variables |
@@ -52,7 +52,7 @@ A dashboard that has been configured to be accessible to users outside of REDCap
 | Smart Variable | Syntax | Description | Example Output |
 |---|---|---|---|
 | Dashboard Access Code | `[dashboard-access-code:unique_dash_name]` | The access code for the specified public project dashboard. Only returns a code if one has been defined for the dashboard. Returns blank if no access code is configured. The unique dashboard name (D-XXXXXXXXXX) is found on the dashboard configuration page. | aHmjK5@ctTqT4 |
-| Dashboard URL | `[dashboard-url:unique_dash_name]` | The web address (URL) of the specified public project dashboard. Includes the base REDCap URL and all necessary parameters. | https://redcap.yourinstitution.edu/surveys/?__dashboard=D-557DRCW87L&... |
+| Dashboard URL | `[dashboard-url:unique_dash_name]` | The web address (URL) of the specified public project dashboard: the REDCap survey address with a single dashboard parameter. | https://redcap.yourinstitution.edu/surveys/?__dashboard=D-557DRCW87L |
 | Dashboard Link (Default) | `[dashboard-link:unique_dash_name]` | An HTML web link to the specified public project dashboard. Uses the dashboard's configured title as the link text by default. | [Clickable link labeled "My Project Dashboard"] |
 | Dashboard Link (Custom Text) | `[dashboard-link:unique_dash_name:Custom Text]` | An HTML web link to the specified public project dashboard with custom link text instead of the dashboard title. | [Clickable link labeled "Click to view our dashboard"] |
 
@@ -70,7 +70,19 @@ The `[dashboard-access-code:unique_dash_name]` smart variable only returns a cod
 
 **Dashboard URL Format**
 
-Dashboard URLs are long and include multiple parameters. They should be treated as opaque strings — do not attempt to parse or modify them. If you need a custom link, use `[dashboard-link]` instead, which generates proper HTML.
+A dashboard URL is the REDCap survey address followed by a single dashboard parameter, so it is short enough to share as-is. Do not edit it by hand. If you want friendlier link text, use `[dashboard-link]` instead, which generates proper HTML. A custom short URL can also be created separately in the dashboard's public settings, but the smart variables always output the standard address.
+
+**Public Access Settings**
+
+Whether dashboards can be made public at all is controlled by a system setting on your REDCap server. If public dashboards are turned off for the whole server, public dashboard links show an error instead of the dashboard. The same system setting can also require a REDCap administrator to approve a request before a dashboard becomes public, so making a dashboard public may not be instant.
+
+**Access Code Entry**
+
+If an access code is set, viewers who open the link see an entry page where they type the code. Once entered, the code is remembered for the rest of their browser session. Repeated wrong attempts are rate-limited, so a viewer who mistypes the code several times may need to wait before trying again.
+
+**Snapshot Refresh**
+
+A public dashboard shows a snapshot of the data that is refreshed at most every 10 minutes, so very recent changes may not appear right away. See [RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables](RC-PIPE-11_Smart-Variables-Aggregate-Functions-Charts-and-Tables.md) for details.
 
 **Link Customization**
 
@@ -143,7 +155,7 @@ Your access code: [dashboard-access-code:D-557DRCW87L]
 
 **Not testing dashboard links in the platform they'll be accessed from.** A dashboard link in an email may render differently than in a field note or survey. Test your dashboard smart variables in the actual context (email, form, survey) before deploying to production.
 
-**Attempting to use dashboard smart variables in projects without public dashboards.** If a project does not have any public dashboards configured, these smart variables return blank or errors. Verify that your project has public dashboards set up before relying on these variables.
+**Piping links to dashboards that are not public.** `[dashboard-url]` and `[dashboard-link]` still output a link when the dashboard is not public. People who open it see a message that the dashboard is no longer public, rather than the dashboard. A mistyped dashboard name, by contrast, gives blank output. Only pipe links to dashboards that are currently public, and test the link before sending it.
 
 **Forgetting to configure dashboard access controls.** If you intend the dashboard to be viewable only by certain users, ensure that access controls are configured properly. A public dashboard with no access code is accessible to anyone with the URL.
 

@@ -1065,6 +1065,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-PIPE-05 — Smart Variables: User
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
 - RC-SURV-01 — Surveys – Basics
 
 **Inbound links (referenced by):**
@@ -5530,6 +5531,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PROJ-03 — Project Dashboards
+- RC-DSGN-01 — REDCap Project Design Best Practices
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-PIPE-12 — Smart Variables: Optional Parameters for Aggregate Functions
 - RC-PIPE-14 — Smart Variables: Project Dashboards
