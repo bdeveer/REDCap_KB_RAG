@@ -132,6 +132,15 @@ return value can be checked against the parser. Mistakes here give silently wron
 data in live projects. These articles also feed the `redcap-syntax` skill, so
 fixes carry over to generated expressions.
 
+Run it as four sub-waves, each with its own report, go-ahead and commit:
+
+| Sub-wave | Articles | Notes |
+|---|---|---|
+| 4a Logic engine | RC-BL-01–05, RC-CALC-01/02, RC-FDL-01 (8) | First: shared parser, most inbound links |
+| 4b Piping | RC-PIPE-01–04, RC-DE-05 (5) | |
+| 4c Smart variables | RC-PIPE-05–17 except PIPE-13 (12) | Two or three articles per agent |
+| 4d Action tags | RC-AT-01–11 (11) | Two or three articles per agent |
+
 ### Wave 5: longitudinal, surveys and automation
 
 **RC-LONG-01/02**, **RC-NAV-REC-02/03**, **RC-DE-10**, **RC-SURV-01/02/04/05/06/07**,
@@ -215,7 +224,10 @@ version on every article, because each source-reviewed article gets a pinned
 | 1 Access & exposure | 8 + 4 from the sweep | Done 2026-11-24 |
 | 2 Production & integrity | 14 + 2 from the sweep | Done 2026-11-24 |
 | 3 Compliance | 6 + 2 from the sweep | Done 2026-11-25 |
-| 4 Logic engine | ~38 | — |
+| 4a Logic engine | 8 | — |
+| 4b Piping | 5 | — |
+| 4c Smart variables | 12 | — |
+| 4d Action tags | 11 | — |
 | 5 Longitudinal & surveys | ~25 | — |
 | 6 Exports & data entry | ~30 | — |
 | 7 API methods | ~40 remaining | — |
