@@ -7,10 +7,10 @@
 | **Domain** | Branching Logic |
 | **Applies To** | Longitudinal REDCap projects; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §3–§8 live-tested in a 2-arm sandbox project (Data Dictionary import, data entry forms, event rename); repeating events, Survey Queue/ASI/alert use and the Missing Data Code caveat not re-tested; LTS line not re-tested, last changelog review v17.3.18 (LTS) |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — longitudinal logic checked against source code; §3–§8 live-tested on v17.5.6; pages not re-captured |
 | **Prerequisite** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) |
 | **Synonyms** | branching logic across events; how do i reference a field from another event in branching logic; cross-event branching logic syntax; branching logic in longitudinal projects; show a field based on data from a previous visit; using event names in branching logic; branching logic with arms and repeating instruments; reference an earlier event in logic; errors exist on this form after renaming an event; hidden fields showing after event rename |
@@ -27,7 +27,7 @@ This article covers how branching logic works in longitudinal REDCap projects �
 
 **Unique Event Name**
 
-The system-generated identifier for an event in a longitudinal project, derived from the arm number and the event label (e.g., `baseline_arm_1`, `followup_4wk_arm_2`). This is the identifier used in cross-event branching logic references. It changes if the event label is renamed.
+The system-generated identifier for an event in a longitudinal project, derived from the arm number and the event label (e.g., `baseline_arm_1`, `followup_4wk_arm_2`). This is the identifier used in cross-event branching logic references. It changes if the event label is renamed (see §3.2 for how it is formed).
 
 **Local Reference**
 
@@ -39,7 +39,9 @@ A logic statement that references a field in a different event. Cross-event refe
 
 **Cross-Event Blank Behavior**
 
-When a cross-event field has not yet been saved for a record, REDCap returns an empty string (`''`), not zero. A field that was never filled in and a field that was filled in with zero are different states and must be tested differently.
+When a cross-event field has not yet been saved for a record, REDCap returns an empty string (`''`), not zero. A field that was never filled in and a field that was filled in with zero are different states and must be tested differently. Checkboxes are the exception: a checkbox option in another event is never blank — an unchecked (or never-saved) option returns `0`, so test it with `[baseline_arm_1][symptoms(1)]='0'`, not `=''`.
+
+Values from other events are loaded when the form or survey page opens. If the other event's data changes while the form is open (for example, another user saves it), the open form does not see the change until the page is reloaded.
 
 ---
 
@@ -88,7 +90,16 @@ The two bracket pairs are written immediately adjacent — no space, no operator
 
 The unique event name is visible in the **Define My Events** table in Project Setup. It appears in the **Unique Event Name** column next to each event. It is auto-generated from the event label and arm number and cannot be manually overridden.
 
-> **Important:** If you rename an event label, the unique event name changes automatically (e.g. `baseline_arm_1` → `screening_arm_1`), but logic that references the old name is **not** updated. On data entry forms REDCap then shows an **ERRORS EXIST ON THIS FORM!** dialog listing the affected fields, and those fields are **displayed regardless of their logic** — questions meant to be hidden become visible. In reports, alerts and other filters the old reference fails silently. Always audit all logic after renaming an event.
+How REDCap forms the unique event name:
+
+- It removes non-alphanumeric characters from the event label (other than spaces and underscores), replaces spaces with `_`, keeps the first 18 characters and lowercases them, then appends `_arm_N` for the event's arm. For example, `Follow-up Visit 1` becomes `followup_visit_1_arm_1`.
+- If two events in the same arm produce the same name, the later ones get a letter added at the end (`b`, `c`, …) in event order, e.g. `visit_arm_1`, `visit_arm_1b`.
+- Changing only the capitalisation of a label does not change the name. The **Custom Event Label** has no effect on it.
+- Deleting or reordering events that share the same label, or changing an arm's number, can change existing unique event names. Re-check the **Unique Event Name** column after any of these changes.
+
+> **Important:** If you rename an event label, the unique event name changes automatically (e.g. `baseline_arm_1` → `screening_arm_1`), but logic that references the old name is **not** updated. On data entry forms REDCap then shows an **ERRORS EXIST ON THIS FORM!** dialog listing the affected fields, and those fields are **displayed regardless of their logic** — questions meant to be hidden become visible. Surveys show **SURVEY ERRORS EXIST: CANNOT CONTINUE!**. Server-side uses — report filters, alert conditions, Automated Survey Invitation logic and Survey Queue conditions — give no error and simply stop working as intended. Always audit all logic after renaming an event, including every report filter.
+
+> **Note:** In a project in Production, only REDCap administrators can rename events; administrators see a warning before doing so. Plan event labels before moving to Production.
 
 ---
 
@@ -107,9 +118,37 @@ This means that arm-specific logic can emerge unintentionally from cross-event r
 
 ### 4.2 Writing Arm-Aware Logic
 
-If a field should appear conditionally depending on which arm a record is in, use smart variables to reference the current arm. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) for syntax details.
+If a field should appear conditionally depending on which arm a record is in, use smart variables to reference the current arm. For example, to show a field only for records in Arm 2:
 
-For most common patterns — gating later events behind earlier answers — the recommended approach is to write separate, arm-specific logic for each arm's version of the instrument, rather than attempting to write one statement that covers all arms.
+```
+[arm-number]='2'
+```
+
+See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md) for syntax details.
+
+Branching logic is stored once per field, not once per arm. If an instrument is shared across arms and the condition differs by arm, the conditions for every arm must live in the same statement, each qualified by the arm:
+
+```
+([arm-number]='1' and [baseline_arm_1][x]='1') or ([arm-number]='2' and [baseline_arm_2][x]='1')
+```
+
+Alternatively, use an arm-relative event smart variable as the event prefix, so one reference works in every arm. `[first-event-name][x]='1'` checks `x` in the first event of the record's own arm.
+
+Both approaches work; they make the logic longer and harder to audit, so test them with a record in every arm.
+
+### 4.3 Event Smart Variables
+
+These smart variables can be used in place of a unique event name, either on their own (e.g. `[event-name]='baseline_arm_1'`) or as an event prefix (e.g. `[previous-event-name][weight]`):
+
+| **Smart Variable** | **Returns** |
+|---|---|
+| `[event-name]` | The current event's unique event name |
+| `[previous-event-name]` | The event before the current one |
+| `[next-event-name]` | The event after the current one |
+| `[first-event-name]` | The first event |
+| `[last-event-name]` | The last event |
+
+`[previous-event-name]`, `[next-event-name]`, `[first-event-name]` and `[last-event-name]` stay within the record's current arm, and skip events where the current instrument is not designated. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md).
 
 ---
 
@@ -176,7 +215,9 @@ In a longitudinal project, prepend the event name:
 [event_name][variable_name][first-instance]
 ```
 
-> **Important:** `[last-instance]` always points to the most recently created instance. Its value changes if new instances are added later. Use it only when dynamic "latest entry" behavior is what you need.
+> **Important:** `[last-instance]` always points to the highest-numbered instance — normally the most recently created one. Its value changes if new instances are added later. Use it only when dynamic "latest entry" behavior is what you need.
+
+> **Important:** When you reference data in a repeating instrument or repeating event **in another event**, always add an instance qualifier (`[1]`, `[first-instance]`, `[last-instance]`). Without one, it is not obvious which instance REDCap evaluates, and the result may not be the one you expect.
 
 #### Within a Repeated Series
 
@@ -184,10 +225,10 @@ When branching logic runs inside a repeated instrument (i.e., the field being sh
 
 | **Smart Variable** | **Target** |
 |---|---|
-| `[previous-instance]` | The instance immediately before the current one |
+| `[previous-instance]` | The current instance number minus 1 |
 | `[next-instance]` | The instance immediately after the current one |
 | `[first-instance]` | The first instance in the series |
-| `[last-instance]` | The most recently created instance |
+| `[last-instance]` | The highest-numbered instance |
 
 **Example** — inside a repeated instrument, show a field only if the previous instance's visit was marked complete:
 
@@ -195,11 +236,11 @@ When branching logic runs inside a repeated instrument (i.e., the field being sh
 [visit_status][previous-instance]='complete'
 ```
 
-If the current instance is the first, `[previous-instance]` returns blank.
+`[previous-instance]` is simply the current instance number minus 1. If that instance does not exist — because the current instance is the first, or because instance numbers have a gap after a deletion — the reference returns blank.
 
-> **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** If the referenced field is a **date or datetime field with a Missing Data Code** saved, logic like `[visit_date][last-instance]<>''` could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was correct, so the same logic could behave differently on the page and in a report.
+> **Version caveat (below 17.5.0 Standard; LTS):** If the referenced field is a **date or datetime field with a Missing Data Code** saved, logic like `[visit_date][last-instance]<>''` could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was correct, so the same logic could behave differently on the page and in a report. Fixed in Standard 17.5.x; not confirmed for 17.3 LTS; not fixed in 16.x LTS. On those versions, test such logic on the form itself, or avoid blank checks on date fields that can hold a Missing Data Code.
 
-> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** On **repeating events**, branching logic on integer and number fields could treat `0` as blank and blank as non-blank. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §6.
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS; all 16.x LTS):** On **repeating events**, branching logic on integer and number fields could treat `0` as blank and blank as non-blank. The fix also covers instance-qualified references (e.g. `[weight][previous-instance]`) and calculated and slider fields. 16.x LTS does not have the fix: on 16.x, test for the positive or non-zero case instead of `=''` or `='0'`, or upgrade. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §6.
 
 > **See also:** [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (Section 8.1) for a broader discussion of how repeated setups affect branching logic; [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (Section 4.2–4.3) for the parallel piping syntax.
 
@@ -259,11 +300,11 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Q: What does a cross-event field return if the referenced event hasn't been filled in yet?**
 
-**A:** It returns an empty string (`''`). REDCap does not return zero or null — it returns blank. Use `<>''` to test whether the field has been filled in at all, and `=''` to test whether it is still empty.
+**A:** It returns an empty string (`''`). REDCap does not return zero or null — it returns blank. Use `<>''` to test whether the field has been filled in at all, and `=''` to test whether it is still empty. The exception is checkboxes: an unchecked checkbox option in another event returns `0`, never blank, so test it with `='0'`.
 
 **Q: What happens if I rename an event after writing cross-event logic?**
 
-**A:** Renaming an event changes its unique event name, and REDCap does not update logic that uses the old name. On data entry forms, every field whose branching logic references the old name triggers an **ERRORS EXIST ON THIS FORM!** dialog when the form opens, and those fields are shown regardless of their logic. Report filters and other server-side uses of the logic fail silently instead (for example, a filter on the old name returns no records). Nothing warns you at the moment of renaming, so audit all logic statements that reference an event's unique name before and after renaming.
+**A:** Renaming an event changes its unique event name, and REDCap does not update logic that uses the old name. On data entry forms, every field whose branching logic references the old name triggers an **ERRORS EXIST ON THIS FORM!** dialog when the form opens, and those fields are shown regardless of their logic; surveys show **SURVEY ERRORS EXIST: CANNOT CONTINUE!**. Report filters, alert conditions, Automated Survey Invitation logic and Survey Queue conditions give no error — they simply stop working as intended. Nothing warns you at the moment of renaming, so audit all logic that references the event's unique name before and after renaming, and re-check every report filter afterwards.
 
 **Q: Can I reference a field from a different arm in my logic?**
 
@@ -271,7 +312,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **Q: Can I write logic that shows a field only in a specific arm?**
 
-**A:** Not with a direct arm-check in branching logic syntax alone. The most practical approach is to use a smart variable that surfaces the current arm, then write logic against it. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md).
+**A:** Yes. Use the `[arm-number]` smart variable: `[arm-number]='2'` shows the field only for records in Arm 2. If the condition differs by arm, combine the arms in one statement, e.g. `([arm-number]='1' and [baseline_arm_1][x]='1') or ([arm-number]='2' and [baseline_arm_2][x]='1')` — see §4.2. See [RC-PIPE-09 — Smart Variables: Event & Arm](RC-PIPE-09_Smart-Variables-Event-and-Arm.md).
 
 **Q: Can I write branching logic that checks a value from a specific instance of a repeated instrument?**
 
@@ -281,7 +322,7 @@ REDCap evaluates the number at baseline and applies the result to the current ev
 
 **A:** Yes. The same cross-event syntax works in any REDCap feature that uses the logic language — Survey Queue conditions, Automated Survey Invitation logic, alert conditions, and reports. The syntax is identical.
 
-The evaluation context is not always identical, though. A form evaluates logic for the event it is open in; a report or API filter (`filterLogic`) returns the rows of the event the logic references. `[baseline_arm_1][enrolled]='1'` used as a filter returns each matching record's **baseline** row, not its follow-up rows. See [RC-API-02 — Export Records API](RC-API-02_Export-Records.md).
+The evaluation context is not always identical, though. A form evaluates logic for the event it is open in. In a report, the option **Show data for all events for each record returned** is ticked by default, so a filter like `[baseline_arm_1][enrolled]='1'` returns **all events** of each matching record; untick it to get only the rows of the events the filter references. An API filter (`filterLogic`) returns only the matching events — here, each matching record's **baseline** row, not its follow-up rows. See [RC-API-02 — Export Records API](RC-API-02_Export-Records.md).
 
 ---
 
@@ -289,13 +330,22 @@ The evaluation context is not always identical, though. A form evaluates logic f
 
 **Omitting the event prefix for cross-event references.** A reference to `[dob]` in a follow-up event will look for `dob` in the *current* event. If `dob` is only collected at baseline, the reference returns blank and the logic evaluates incorrectly. Always include the unique event name prefix when referencing a field from a different event.
 
-**Testing for zero instead of blank on unsaved cross-event fields.** If a referenced field in another event has never been saved, it returns `''` (empty string), not `0`. A condition like `[baseline_arm_1][score]<>0` will evaluate to true for unsaved fields — because blank does not equal zero. Use `<>''` to test whether a cross-event field has been filled in at all.
+**Testing for zero instead of blank on unsaved cross-event fields.** If a referenced field in another event has never been saved, it returns `''` (empty string), not `0`. A condition like `[baseline_arm_1][score]<>0` will evaluate to true for unsaved fields — because blank does not equal zero. Use `<>''` to test whether a cross-event field has been filled in at all. Checkboxes work the other way round: an unchecked option is `0`, never blank, so `[baseline_arm_1][symptoms(1)]=''` is never true.
 
-**Breaking logic by renaming events.** Renaming an event label changes its unique event name without warning, and existing logic keeps the old name. Forms then show an error dialog and display the affected fields unconditionally — hidden questions appear — while reports and alerts that use the old name silently match nothing. After renaming an event, search the Data Dictionary's Branching Logic column for the old unique event name and update every reference before saving the project.
+**Breaking logic by renaming events.** Renaming an event label changes its unique event name without warning, and existing logic keeps the old name. Forms then show an error dialog and display the affected fields unconditionally — hidden questions appear — and surveys cannot continue. Report filters, alerts, Automated Survey Invitations and the Survey Queue give no error but stop working as intended. After renaming an event, search for the old unique event name and update every reference in:
+
+- branching logic and calculations (Data Dictionary download)
+- `@CALCTEXT`, `@CALCDATE`, `@IF` and `@DEFAULT` action tags (Field Annotation column)
+- validation minimum and maximum values
+- report filters
+- Data Quality rules
+- Automated Survey Invitation logic
+- alert conditions
+- Survey Queue conditions
 
 **Referencing arm-specific events from instruments shared across arms.** An instrument designated to both arms that contains `[baseline_arm_1][field]` will work for Arm 1 records but return blank for Arm 2 records. This can cause fields to appear or disappear unexpectedly depending on the record's arm assignment. Validate cross-event logic against test records in every arm where the instrument appears.
 
-**Using `[last-instance]` where a stable reference is needed.** The `[last-instance]` smart variable always points to the most recently created instance. If users add more instances later, what it returns changes. For logic that must evaluate a fixed instance, use a direct instance number (`[variable_name][1]`) rather than `[last-instance]`.
+**Using `[last-instance]` where a stable reference is needed.** The `[last-instance]` smart variable always points to the highest-numbered instance. If users add more instances later, what it returns changes. For logic that must evaluate a fixed instance, use a direct instance number (`[variable_name][1]`) rather than `[last-instance]`.
 
 ---
 

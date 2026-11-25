@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Data dictionary column rules behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Version** | 1.8 |
+| **Version** | 1.9 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) |
@@ -380,7 +380,7 @@ Marking a variable as required makes REDCap check that the variable has a value 
 - **Data entry forms:** a missing required value does **not** stop the save. The record is saved, and REDCap then tells the user which required fields are empty.
 - **Surveys:** the participant cannot move on or submit the page until the required fields are answered.
 
-For a `checkbox` field, "has a value" means at least one box is checked. This is enforced on both forms and surveys.
+For a `checkbox` field, don't rely on **Required** to force a selection: in practice it does not reliably make the user tick at least one option. If at least one option must be chosen, test the behaviour on your own server, or add a separate check (for example a data quality rule or a warning field shown by branching logic when no option is ticked).
 
 **Allowed values:**
 - `y` or `Y` — required

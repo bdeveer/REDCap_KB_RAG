@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — combining
+  logic checked against source code; pages not re-captured
 prerequisites:
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-BL-02
   title: 'Branching Logic: Syntax & Atomic Statements'
@@ -63,10 +63,11 @@ false only when all joined statements are false.
 
 **Parentheses**
 
-Grouping symbols that control the order in which logic statements are
-evaluated. Statements inside parentheses are evaluated first, before
-those outside. Essential when AND and OR are used together in the same
-expression.
+Grouping symbols that control which statements belong together. A
+parenthesized group is treated as a single true/false unit by the
+operator outside it. Parentheses decide the grouping, not the order of
+evaluation: REDCap still works through the expression left to right.
+Essential when AND and OR are used together in the same expression.
 
 **Short-Circuit Evaluation**
 
@@ -200,13 +201,18 @@ Checkbox syntax is covered fully in [RC-BL-04 — Branching Logic: Structured Fi
 
 OR statements are easy to make always-true by accident. A number is
 always either >= 35 or <= 35 — so this statement evaluates to true
-for every possible value:
+for every value that has been entered:
 
 ```
-// ALWAYS TRUE: every number is either >= 35 or <= 35
+// ALWAYS TRUE once [age] has a value: every number is either >= 35 or <= 35
 
 [age]>=35 or [age]<=35
 ```
+
+The one exception is a blank field. While `[age]` is empty, both
+comparisons are false, so the governed field stays hidden until a value
+is entered and then shows for every value. The condition still does
+nothing useful.
 
 !!! note
     Always-true OR statements are harder to spot than always-false AND statements. Be especially careful when using OR with numeric comparison operators.
@@ -248,10 +254,17 @@ used.
 
 ## 5.2 Rules for Parentheses
 
-- Statements inside parentheses are always evaluated first.
-- Parentheses can be nested: the innermost group is evaluated first.
+- A group inside parentheses is resolved as one unit before it is combined with anything outside it.
+- Parentheses can be nested: each inner group is a unit inside the group around it.
 - Every opening parenthesis must have a matching closing parenthesis. Mismatched parentheses cause a syntax error.
 - When in doubt, add more parentheses — extra grouping does not change logic if placed correctly, but prevents misinterpretation.
+
+> **Version caveat (LTS 16.x):** on 16.x LTS, REDCap administrators can
+> save logic with mismatched parentheses: the Online Designer shows a
+> warning but lets them continue, and the logic then fails on the form.
+> On 17.x nobody can save it. If your instance runs 16.x, or a project was
+> built there, count the parentheses in any logic an administrator saved
+> past a warning, and fix it before relying on it.
 
 ## 5.3 Reference: AND vs. OR Behavior
 
@@ -317,8 +330,11 @@ medication.
 **Q: Does REDCap differentiate between uppercase AND/OR and lowercase and/or?**
 
 **A:** No. REDCap accepts both `AND` and `and`, `OR` and `or`. The behavior is
-identical regardless of case. Consistent casing improves readability but
-has no functional effect.
+identical for either form. The operator must be written entirely in
+lowercase or entirely in uppercase, though: mixed case such as `And` or
+`Or` is a syntax error. Each operator also needs a space on each side —
+`([a]='1')and([b]='1')` fails, while `([a]='1') and ([b]='1')` works. A
+line break counts as a space.
 
 **Q: What is the default evaluation order when AND and OR are mixed without parentheses?**
 
@@ -339,13 +355,25 @@ whether a calculated field would be more maintainable.
 statement where the conditions cannot both be true simultaneously (e.g.,
 a value that must be both `>15` and `<10`). Also check whether any of
 the referenced fields are themselves hidden by other branching logic,
-which would prevent the condition from ever being met.
+which would prevent the condition from ever being met on the form.
+Hiding a field does not blank it, though: a value already stored in a
+hidden field (entered earlier, or imported) is still evaluated, so the
+condition can be met by data nobody can currently see.
+
+**Q: One clause of my combined logic has a mistake. Do the other clauses still work?**
+
+**A:** No. An error anywhere in the expression breaks the whole
+expression, not just the clause that contains it. On a data entry form
+the field is listed in the error dialog REDCap shows for the form, and
+its visibility is no longer updated. Fix the error rather than assuming
+the remaining clauses still apply.
 
 **Q: Can I use NOT as a standalone keyword instead of `<>`?**
 
 **A:** REDCap does not support a standalone `NOT` keyword the way some
 programming languages do. Use the `<>` operator to express 'not equal
-to'.
+to'. Avoid `!` as a substitute: it is not a documented NOT operator and
+is easy to misuse, so write the opposite condition out with `<>` instead.
 
 ---
 
@@ -360,6 +388,15 @@ to'.
 - **Expecting REDCap to validate logical correctness:** REDCap only checks syntax — valid brackets, known variable names, recognized operators. Logical impossibilities pass validation silently. Always test with real records.
 
 - **Missing a closing parenthesis:** mismatched parentheses cause a syntax error. Count opening and closing parentheses carefully in complex statements, or build compound logic incrementally and test each step.
+
+> **Version caveat (LTS 16.x):** administrators on 16.x LTS can save
+> mismatched parentheses past a warning; the logic then fails on the
+> form. On 17.x it cannot be saved at all. On 16.x, recount the
+> parentheses in any logic saved past a warning.
+
+- **Writing `And`, `Or` or `)and(`:** mixed-case operators and operators without a space on each side are syntax errors. Use `and`/`AND` or `or`/`OR` with a space (or line break) on both sides.
+
+- **Assuming one bad clause only disables itself:** an error anywhere in a combined expression breaks the whole expression.
 
 ---
 

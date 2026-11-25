@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.3.10 — Data Quality Rules page captured 2026-09-21; the A–I rule set and bulk-execution controls verified directly against it |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.4 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.5 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i check my data for errors; find blank required fields and out of range values; run data quality rules across all records; write a custom data quality rule; automatically flag discrepancies when a form is saved; import and export data quality rules; data quality module how to use; detect calculated field mismatches and hidden field data |
@@ -47,7 +47,7 @@ A record-level flag that suppresses a specific discrepancy from appearing in fut
 
 ### Rule H
 
-The built-in default rule that detects calculated fields whose stored database value differs from their currently computed value. This mismatch can occur after a calculated field's formula is changed or after a data import that affects fields the calculation depends on. Rule H includes an auto-correct function that rewrites all affected stored values project-wide.
+The built-in default rule that detects calculated fields whose stored database value differs from their currently computed value. This mismatch can occur after a calculated field's formula is changed, or when automatic calculations are turned off for the project. Rule H includes a **Fix calcs now** option that rewrites all affected stored values project-wide.
 
 ---
 
@@ -248,18 +248,19 @@ Rule H deserves separate attention because it serves a specific remediation func
 **When Rule H fires:** A calculated field's stored value (what is saved in the database) no longer matches what REDCap would compute if it recalculated the field today. Common causes:
 
 - The calculated field's formula was edited after data was already collected
-- A data import updated fields that calculated fields depend on, but did not trigger recalculation
+- An administrator turned off automatic calculations for the project, so imports and saves on other forms did not recalculate
+- The calculated field sits on a locked form, which server-side recalculation skips
 - Records were created before a calculated field was added to the project
 
 **How to use Rule H:**
 
-1. Execute Rule H. REDCap returns a count of affected records.
+1. Execute Rule H. REDCap returns a count of affected records. Running the rule only lists the discrepancies; nothing is changed yet.
 2. Click **View** to see the specific records and fields.
-3. An **Auto-correct** button appears. Clicking it recalculates and overwrites the stored value for all affected records project-wide.
+3. Click **Fix calcs now** and confirm ("Fix ALL incorrect calculated values?"). REDCap recalculates and overwrites the stored value for all affected records project-wide. Excluded discrepancies and calculated fields on locked forms or records are skipped.
 
-> **Important:** Auto-correct updates all flagged calculated fields simultaneously across the entire project. Review the list of affected records before clicking. This action cannot be undone through the interface — it overwrites stored values.
+> **Important:** Fix calcs now updates all flagged calculated fields simultaneously across the entire project. Review the list of affected records before clicking. This action cannot be undone through the interface — it overwrites stored values.
 
-> **Institution-specific:** Local policy may require supervisor review or audit trail documentation before running auto-correct in Production. Contact your REDCap administrator to confirm any institutional requirements before using this feature on live data.
+> **Institution-specific:** Local policy may require supervisor review or audit trail documentation before using Fix calcs now in Production. Contact your REDCap administrator to confirm any institutional requirements before using this feature on live data.
 
 ---
 
@@ -278,7 +279,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 **A:** No. Real-time execution only fires when a user saves a data entry form through the normal REDCap interface. Survey submissions do not trigger real-time data quality checks.
 
 **Q: My calculated field values look wrong after I changed the formula. What should I do?**
-**A:** Run Rule H. It will identify all records where the stored value no longer matches the current formula. Use the Auto-correct button to update them all at once.
+**A:** Run Rule H. It will identify all records where the stored value no longer matches the current formula. Then click **Fix calcs now** to update them all at once.
 
 **Q: Can a user in a Data Access Group see discrepancies from other groups?**
 **A:** No. Users assigned to a DAG see only discrepancies from their own group's records. Project administrators not assigned to a DAG see discrepancies stratified by group.
@@ -307,11 +308,11 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 **Writing a rule that returns a value instead of true/false.** A custom rule must evaluate to a boolean. Writing `[bmi]` as a rule (which returns a number) will not work as expected. The rule must be a comparison: `[bmi] > 30`. If the rule produces no discrepancies or behaves unexpectedly, check that the logic resolves to true or false, not a numeric or text value.
 
-**Clicking Auto-correct in Rule H without reviewing the affected records first.** Auto-correct rewrites calculated field values for every flagged record simultaneously. If the formula change was intentional but only applies to new records going forward, running Auto-correct will also update historical records — which may not be desired. Always review the Rule H results list before correcting.
+**Clicking Fix calcs now in Rule H without reviewing the affected records first.** Fix calcs now rewrites calculated field values for every flagged record simultaneously. If the formula change was intentional but only applies to new records going forward, using Fix calcs now will also update historical records — which may not be desired. Always review the Rule H results list before correcting.
 
 **Assuming a pop-up means data was not saved.** Real-time execution warnings are advisory. REDCap still saves the record even when a violation is detected. The pop-up is a notification, not a block. Users may dismiss it and continue — the data is already saved.
 
-**Excluding a discrepancy and expecting it to disappear from Rule H.** Rule H exclusions suppress the discrepancy from appearing in results but do not correct the underlying value mismatch. The stored value is still wrong. Use Auto-correct to fix the values; use exclusions only when the mismatch is known and acceptable.
+**Excluding a discrepancy and expecting it to disappear from Rule H.** Rule H exclusions suppress the discrepancy from appearing in results but do not correct the underlying value mismatch. The stored value is still wrong, and Fix calcs now skips excluded discrepancies. Remove the exclusion and use Fix calcs now to fix the values; use exclusions only when the mismatch is known and acceptable.
 
 **Expecting real-time rules to fire on survey completions.** Real-time execution is a data entry feature. Projects that collect data primarily via surveys will not benefit from real-time Data Quality rules unless data entry staff also use the form interface for review or corrections.
 
@@ -328,7 +329,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 - [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) (special functions available in custom rule logic)
 - [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md) (context for Rule H and calculated field behavior)
 - [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (context for real-time execution during form saves)
-- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (audit trail behavior after Auto-correct)
+- [RC-DE-04 — Editing Data & Audit Trail](RC-DE-04_Editing-Data-and-Audit-Trail.md) (audit trail behavior after Fix calcs now)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG filtering of discrepancy results)
 - [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (Data Quality user right)
 - [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Data Quality module appears in the Applications section of the left menu)

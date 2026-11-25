@@ -7,10 +7,10 @@
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§7 live-tested in a sandbox project (Online Designer validator, Data Dictionary upload, server-side logic, data entry form); file upload/signature (§4.2) not tested; LTS line not re-tested, last changelog review v17.3.7 (LTS) |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — structured-field and checkbox logic checked against source code; §4–§7 live-tested on v17.5.6; pages not re-captured |
 | **Prerequisite** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-FD-05 — Codebook](RC-FD-05_Codebook.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
 | **Synonyms** | how do i write branching logic for a checkbox; checkbox branching logic syntax; reference a single checkbox option in logic; branching logic based on dropdown or radio selection; what are raw coded values for branching logic; checkbox sub-variable syntax; show field when a specific checkbox is ticked; branching logic for multiple choice fields; checkbox logic works on form but not in report; test for unchecked checkbox option |
@@ -59,7 +59,8 @@ value.
 **Checkbox Sub-Variable**
 
 The individual variable created for each option in a checkbox field. A
-checkbox with 5 options creates 5 sub-variables. Sub-variables are
+checkbox with 5 options creates 5 sub-variables (plus one per missing
+data code, if the project uses them — see §5.5). Sub-variables are
 referenced in logic using the format \[variable\_name(raw\_value)\].
 Each sub-variable has a value of 1 (checked) or 0 (unchecked).
 
@@ -87,9 +88,20 @@ raw_value, Display Label
 3, Disagree                                      
 ```
 
-Raw values are typically integers, but they can be any text string. The
-raw value is **unique within the field** — no two options in the same
-field can share a raw value.
+Raw values are typically integers, but they do not have to be: a raw
+value is either a number or a short code made of letters, numbers,
+underscores, dashes and dots (for example `US`, `not_sure` or `1.5`).
+Spaces and other characters are not allowed. The raw value is **unique
+within the field** — no two options in the same field can share a raw
+value.
+
+If you enter only labels (one per line, with no raw value and comma),
+the Online Designer and Data Dictionary upload assign the codes
+automatically. Check the Codebook afterwards to see which codes were
+assigned before writing logic against them.
+
+Text codes must be quoted in logic: write \[country\]='US', not
+\[country\]=US. Leaving the quotes off only works for numeric codes.
 
 ### 3.2 Where to Look Up Raw Values
 
@@ -128,9 +140,10 @@ statement pattern.
 
 ### 4.2 Bonus: File Upload and Signature Fields
 
-File Upload and Signature fields do not store a traditional value, but
-you can use them in logic to check whether a file has been attached or a
-signature captured:
+File Upload and Signature fields do not store a traditional value: the
+stored value is an internal reference to the uploaded file (or blank when
+nothing has been uploaded). You can still use them in logic to check
+whether a file has been attached or a signature captured:
 
 ```
 // True when a file has been uploaded
@@ -143,8 +156,10 @@ signature captured:
 [consent_form]=''
 ```
 
-You cannot compare the file contents — only the presence or absence of
-the file.
+You cannot compare the file contents — only the presence or
+absence of the file. If the project uses missing data codes, a code set on
+the field is stored as its value, so \[consent\_form\]<>'' is also true
+when the field has been marked with a missing data code (see §5.5).
 
 ---
 
@@ -157,7 +172,8 @@ is essential for writing correct checkbox logic.
 ### 5.1 How Checkboxes Store Data
 
 A checkbox field with N options creates N separate sub-variables in the
-REDCap dataset — one per option. Each sub-variable stores only two
+REDCap dataset — one per option, plus one per missing data code if the
+project uses them (see §5.5). Each sub-variable stores only two
 values:
 
 - 1 — the option is checked (selected)
@@ -237,6 +253,30 @@ never shown)
 
 > **Warning:** Do not switch a checkbox field to a radio button field (or vice versa) after branching logic has been written that references it. The sub-variable syntax for checkboxes is incompatible with the single-value syntax for radio buttons. Any existing logic referencing that field will break and must be rewritten.
 
+### 5.5 Missing Data Codes and Structured Fields
+
+If the project uses missing data codes ([RC-PROJ-04 — Project Setup:
+Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md)),
+they change what your logic sees:
+
+- **Checkbox fields:** each missing data code adds an extra checkbox
+    option, and so an extra sub-variable — for example \[conditions(NA)\]
+    for a code `NA`. A field tagged `@NOMISSING` does not get them.
+- **"None checked" logic also matches a missing code:** when a checkbox
+    is marked with a missing data code, all of its real options are
+    unchecked. \[conditions(1)\]='0' and \[conditions(2)\]='0' and
+    \[conditions(3)\]='0' is therefore true both for "nothing selected"
+    and for "marked as missing".
+- **File upload, signature, radio, dropdown and other fields:** the code
+    is stored as the field's value. \[consent\_form\]<>'' is true when a
+    missing data code is set, even though no file was uploaded, and
+    \[gender\]<>'' is true when the field holds a code rather than a real
+    answer.
+
+To tell real answers apart from missing data codes, use the
+isblankormissingcode() and ismissingcode() functions — see
+[RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md).
+
 
 ---
 
@@ -255,14 +295,20 @@ Choices section.
 **A:** For numeric raw values, REDCap accepts both quoted and unquoted
 forms. \[gender\]='1' and \[gender\]=1 are functionally equivalent.
 Using single quotes is recommended for consistency, especially when the
-Data Dictionary may be edited in spreadsheet software.
+Data Dictionary may be edited in spreadsheet software. Text raw values
+(for example 'US') must always be quoted — \[country\]=US is a syntax
+error.
 
 **Q: Can I check whether none of the checkbox options are checked?**
 
 **A:** Not directly with a single expression. You must check each option
 individually: \[field(1)\]='0' and \[field(2)\]='0' and
 \[field(3)\]='0'. This evaluates to true only when all listed options
-are unchecked.
+are unchecked. If the project uses missing data codes, it is also true
+when the field is marked with a missing code (§5.5). Where you can, the
+safer habit is to write the logic for the positive case instead — for
+example, show the follow-up when \[field(1)\]='1' or \[field(2)\]='1'
+or \[field(3)\]='1', and phrase the question so that is what you need.
 
 **Q: A radio button option has the label 'Yes' and raw value '1'.
 Should I write \[field\]='Yes' or \[field\]='1'?**
@@ -280,9 +326,17 @@ selected'. Each option is a separate binary sub-variable. To check
 whether any option is selected, you must OR together checks on each
 sub-variable: \[field(1)\]='1' or \[field(2)\]='1' etc.
 
-REDCap does not warn you about this mistake: \[field\]\<\>'' passes the
-logic validator and Data Dictionary upload, but it is never true, even
-when options are checked.
+REDCap does not warn you about this mistake when you save it: \[field\]\<\>''
+passes the logic validator and Data Dictionary upload. It still never
+works. On the data entry form the logic causes an error, and the field
+is listed in the form's error dialog (**ERRORS EXIST ON THIS FORM!**).
+Everywhere the logic is evaluated on the server — reports, alerts,
+automated survey invitations — the whole expression evaluates as false,
+even when options are checked. Using the \[field(code)\] format on a
+field that is not a checkbox, or with a code that does not exist in the
+checkbox (for example a typo), is the same kind of mistake: it is not
+caught when you save, and server-side the whole expression evaluates as
+false.
 
 **Q: I changed a radio button field to a checkbox. Now my branching
 logic is broken. How do I fix it?**
@@ -306,7 +360,14 @@ are affected.
     button syntax. For checkboxes, the correct form uses parentheses —
     \[conditions(1)\]='1' or equivalently \[conditions(1)\]=1 (both
     quoted and unquoted values are accepted). Without the parentheses,
-    the logic will not reference any checkbox sub-variable.
+    the logic will not reference any checkbox sub-variable: it causes an
+    error on the data entry form and evaluates as false in reports,
+    alerts and survey invitations (see §6).
+
+- Forgetting missing data codes: in a project that uses them, "none
+    checked" logic and \[field\]<>'' tests also match records marked
+    with a missing code. Use isblankormissingcode() or ismissingcode()
+    when the difference matters (§5.5).
 
 - Switching field type after logic is written: changing a field from
     radio to checkbox (or vice versa) breaks all existing logic

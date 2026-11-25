@@ -9,12 +9,13 @@ requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §4–§9 live-tested (data entry form and
   API import compared); rule H and Online Designer messages not re-tested; `+` blank
   handling also tested on v16.0.49 (LTS); LTS line otherwise last reviewed against
-  the v17.3.18 (LTS) changelog
+  the v17.3.18 (LTS) changelog; calculation behaviour (§2–§9) checked against source
+  code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-FD-02 — Online Designer
 - 'RC-BL-02 — Branching Logic: Syntax & Atomic Statements'
-version: '1.6'
-last_updated: 2026-10
+version: '1.7'
+last_updated: 2026-11
 related:
 - id: RC-CALC-01
   title: Special Functions Reference
@@ -69,7 +70,7 @@ Calculated fields are read-only for all users, regardless of user rights. Users 
 
 **Data Quality Rule H**
 
-A built-in Data Quality rule that re-evaluates all calculated fields across all records in a project. Running rule H forces recalculation even for records where the form has not been opened recently.
+A built-in Data Quality rule that re-evaluates all calculated fields across all records in a project and lists every stored value that differs from what the formula now gives. Running the rule only lists the incorrect values; they are saved only when you select **Fix calcs now** and confirm. See Section 6.
 
 ---
 
@@ -87,6 +88,8 @@ A built-in Data Quality rule that re-evaluates all calculated fields across all 
 
 > **Tip:** The Online Designer validates formula syntax when you save. If your formula references an unknown variable or has unbalanced brackets, the designer will flag the error and prevent saving. However, it does not verify that the formula logic is correct — test your formula against real or realistic data before going to Production.
 
+> **Version caveat (16.x LTS):** On the 16.x LTS line, REDCap administrators can save an equation that fails the syntax check (for example `[height]^2`); they see a warning instead of a block. On 17.x the equation is refused for everyone. If you are an administrator on 16.x LTS, treat the warning as an error and fix the equation before saving.
+
 ## 3.2 Data Dictionary
 
 In the Data Dictionary CSV, a calculated field is defined as follows:
@@ -98,7 +101,7 @@ In the Data Dictionary CSV, a calculated field is defined as follows:
 | Text Validation Type | Leave blank |
 | Text Validation Min / Max | Leave blank |
 
-The formula goes in the **Choices, Calculations, OR Slider Labels** column — the same column used for answer choices on radio/dropdown fields. Leave all validation columns empty; calculated fields do not support validation.
+The formula goes in the **Choices, Calculations, OR Slider Labels** column — the same column used for answer choices on radio/dropdown fields. Leave all validation columns empty; calculated fields do not support validation. A Text Validation Type on a `calc` row is reported as an error and the upload is refused; Min / Max values are ignored.
 
 > **Important:** When editing a formula in Excel before uploading the Data Dictionary, avoid using double quotation marks inside the formula — Excel may corrupt them during CSV export. Use single quotes for any quoted values within the formula, or verify the exported file in a plain text editor before uploading.
 
@@ -119,11 +122,13 @@ Calculated field formulas use the same syntax as REDCap branching logic:
 |---|---|
 | Sum two scores | `[score_a]+[score_b]` |
 | BMI from kg and cm (1 decimal) | `round(([weight]*10000)/(([height])^(2)), 1)` |
-| Age in whole years | `age_at_date([dob], [visit_date])` |
+| Age in whole years | `age_at_date([dob], [visit_date])` (17.x only; see caveat below) |
 | Days since baseline | `datediff([baseline_date], 'today', 'd')` |
 | Total from three items, blank if any item is blank | `if(isblankormissingcode([item1]) or isblankormissingcode([item2]) or isblankormissingcode([item3]), "", [item1]+[item2]+[item3])` |
 | Total that calculates even with some items blank (blank if all are blank) | `sum([item1], [item2], [item3])` |
 | Score one radio item, recoded (Always = 2, Sometimes = 1, Never = 0, Don't know = left out) | `if([item1]='1', 2, if([item1]='2', 1, if([item1]='3', 0, "")))` |
+
+> **Version caveat (16.x LTS):** `age_at_date()` does not exist on the 16.x LTS line. Use `rounddown(datediff([dob], [visit_date], 'y'), 0)` instead, which gives age in whole years on every version.
 
 > **Scoring radio and dropdown answers.** A formula works on the stored **code** of a choice, not its label. Adding up items directly only gives a meaningful score when the codes were chosen to be the score: ascending in the direction you want, with no "Don't know" or "Not applicable" option coded as a large number such as 99. When the codes don't fit, recode each item first. The most transparent way is one hidden calc field per item using the recode pattern above. It returns blank for "Don't know", because an empty result stores no value. Then total those fields with `sum()`, which leaves out blank items. If the project uses missing data codes, test each item with `isblankormissingcode()` before scoring it.
 
@@ -154,25 +159,37 @@ This constraint has two practical consequences:
 
 # 6. When Values Update
 
-A calculated field's value is recomputed in three contexts:
+A calculated field's value is recomputed in the following contexts:
+
+**When a form is opened.** Opening a data entry form or survey page runs the calculations on that page. A calculated value that differs from the stored value is shown and marked as changed, but it is stored only when the form is saved.
 
 **During data entry (real-time).** When a user is actively entering data on a form, calculated fields update instantly as input values change — without saving the form or refreshing the page. Only calculations that reference the changed field are re-run.
 
-> **Version caveat (below 17.5.3 Standard / 17.3.16 LTS):** Changing certain field types, or submitting the page, re-ran **every** calculated field on the form rather than only those referencing the changed field. Values were correct, but forms with many calculations could become sluggish. Fixed in 17.5.3 / 17.3.16.
+> **Version caveat (below 17.5.3 Standard / 17.3.16 LTS; all 16.x LTS):** Changing certain field types, or submitting the page, re-ran **every** calculated field on the form rather than only those referencing the changed field. Values were correct, but forms with many calculations could become sluggish. Fixed in 17.5.3 / 17.3.16; the 16.x LTS line still behaves the old way. Even on fixed versions, a change that feeds a chain of calculations (a calc that uses another calc) still re-runs every calculation on the form. If a form is slow, reduce chained calculations or split them across instruments.
 
-**During data import.** When records are imported via the Data Import Tool or API, REDCap recalculates all calculated fields whose input variables are included in the import file. Fields not included in the import are not recalculated. Importing values identical to what is already stored changes nothing, so it does not trigger a recalculation either.
+**When a form or survey is saved.** Saving also recalculates, in the background, the calculated fields on **other** instruments and events of the same record that use the fields just saved. A Double Data Entry merge does the same for the merged record.
 
-> **Note (observed on 17.5.6 Standard):** calculations using the Missing Data Code functions (`ismissingcode()`, `isblankormissingcode()`, `hasmissingcode()`) were stored as **false** after an import even when the input held a defined code, while the data entry form computed them correctly. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §7.
+**During data import.** When records are imported via the Data Import Tool or API, REDCap recalculates, for every record in the file, all calculated fields that use any of the imported fields. This happens even when the imported values are identical to what is already stored. Calculations that use another recalculated calc (chained calcs) are recalculated too. Fields that neither appear in the import nor depend on it are not recalculated. Re-importing unchanged input values for a set of records is therefore a way to refresh their stale calculated values.
 
-**When Data Quality rule H is run.** Rule H specifically targets calculated fields across all records in the project. Running rule H forces REDCap to evaluate every calculated field expression for every record, correcting any stale values. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
+Calculated values in the import file itself are not stored: REDCap ignores them, shows a warning, and calculates the field from its formula. Including a calc column in the file therefore just triggers its recalculation.
+
+> **Note (observed on 17.5.6 Standard):** calculations using the Missing Data Code functions (`ismissingcode()`, `isblankormissingcode()`, `hasmissingcode()`) were stored as **false** after an API import even when the input held a defined code, while the data entry form computed them correctly. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §7.
+
+**When Data Quality rule H is run and fixed.** Rule H evaluates every calculated field expression for every record and **lists** each stored value that differs from the current result. Running the rule alone changes nothing. To save the corrections, select **Fix calcs now** in the rule H results and confirm **Fix ALL incorrect calculated values?**. Results you have marked as excluded, and locked forms or records, are skipped. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
+
+**Exceptions that apply to every background recalculation.** Background recalculation (on save of another form, on import, on DDE merge and on rule H fix) never changes a value on a **locked** form or record; it is skipped without a message. A calc value saved in the background also does not change the form status of an instrument that has not been started (gray). Background recalculation ignores branching logic (see Section 8).
+
+> **Institution-specific:** REDCap administrators can turn off the project setting **Enable auto-calculations for calc fields?**. When it is off, calculated fields are computed only on the open form or survey page; saving other forms, imports and DDE merges do not recalculate them. Check with your REDCap administrators if calculated values are not updating outside the form.
 
 > **Version caveat (below 15.5.8 Standard) — rule H and import recalculation skipped fields in longitudinal projects.** Rule H and the auto-calculations performed during data imports **did not run at all** for calc and CALCTEXT fields in longitudinal projects **unless those fields sat on a repeating instrument or repeating event**. REDCap classified this as "major/near-critical".
 >
 > The consequence is that a data-cleaning pass on an affected version could return a clean result while leaving stale calculated values untouched. A clean rule H run from that period is not evidence the calculations were correct. Fixed across 15.0.37 and 15.5.8. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
 
-> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Calculations containing **inline comments**, or static text with an **apostrophe or quotation mark**, could fail to evaluate on the form or survey. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3 and §3.6.
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS; probably all 16.x LTS):** Calculations containing **inline comments**, or static text with an **apostrophe or quotation mark**, could fail to evaluate on the form or survey. The fix does not appear to be in the 16.x LTS line, so on 16.x avoid inline comments and apostrophes or quotation marks in static text within calculations. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3 and §3.6.
 
-> **Note:** Calculated fields are not updated when you edit a branching logic condition, rename a field, or make other project design changes. Run Data Quality rule H after any design changes that affect a formula to ensure all stored values are current.
+> **Note:** Calculated fields are not updated when you edit a branching logic condition, rename a field, or make other project design changes. Run Data Quality rule H and select **Fix calcs now** after any design changes that affect a formula to ensure all stored values are current.
+
+> **Note:** While the project is in Development, editing the equation of a calculated field that already has data shows the notice **Calculation was changed - Data is affected!**. No such notice appears in Production, so after a formula change there, run rule H yourself.
 
 ---
 
@@ -184,7 +201,7 @@ A calculated field's value is recomputed in three contexts:
 
 **Read-only.** All users see a calculated field as read-only regardless of their user rights. The field appears with a grey background or as non-editable text. There is no user right or project setting that makes a calculated field editable.
 
-**Storage.** The computed value is stored in the database when the form is saved. The formula itself is not stored per-record — only the numeric result is. If you later change the formula, existing records retain the old computed value until Data Quality rule H is run or the record is opened and re-saved.
+**Storage.** The computed value is stored in the database when the form is saved. The formula itself is not stored per-record — only the numeric result is. If you later change the formula, existing records retain the old computed value until the corrections are saved with Data Quality rule H (**Fix calcs now**), the form is opened and re-saved, or another recalculation (see Section 6) reaches the record.
 
 ---
 
@@ -204,11 +221,18 @@ A calculated field's value is recomputed in three contexts:
 
 **Q: Does changing a formula update all existing records automatically?**
 
-**A:** No. Changing a formula in the Online Designer updates how future calculations are performed but does not retroactively recalculate existing records. To update all existing records after a formula change, run Data Quality rule H from the Data Quality module.
+**A:** No. Changing a formula in the Online Designer updates how future calculations are performed but does not retroactively recalculate existing records. To update all existing records after a formula change, run Data Quality rule H from the Data Quality module, then select **Fix calcs now** and confirm **Fix ALL incorrect calculated values?**. Running the rule alone only lists the incorrect values. Excluded results and locked forms or records are not fixed.
 
 **Q: Can I use branching logic to control whether a calculated field is visible?**
 
-**A:** Yes. Branching logic can be applied to a calculated field just like any other field — if the logic is false, the field is hidden and its stored value is cleared. Be careful: if branching logic hides a calculated field after a value has been computed, the stored value is deleted.
+**A:** Yes. Branching logic can be applied to a calculated field just like any other field. A hidden calc that already holds a value is not simply deleted:
+
+- **On a data entry form**, REDCap asks the user before erasing values in fields that branching logic has just hidden.
+- **On a survey**, hidden values are erased automatically.
+- If the project option that prevents branching logic from hiding fields that have values is turned on, the field stays visible and keeps its value.
+- **Background recalculation ignores branching logic.** Imports, the rule H fix and saving other forms recalculate the calc whether or not it is hidden, so an erased value can come back.
+
+If a calc must be blank when a condition is false, build the condition into the formula itself, for example `if([condition]='1', [a]+[b], "")`, rather than relying on branching logic to clear it.
 
 **Q: Can a calculated field reference fields from other instruments?**
 
@@ -232,9 +256,11 @@ A calculated field's value is recomputed in three contexts:
 
 **Adding up coded answers that weren't coded as scores.** `sum([q1], [q2], [q3])` on radio fields adds the raw codes. With choices coded `1, Always | 2, Sometimes | 3, Never | 99, Don't know`, a higher total means *less* of the thing being measured, and a single "Don't know" adds 99 and makes the score meaningless. REDCap gives no warning, because the formula is valid. Before writing a total, check the codes in the Codebook. If they aren't already in score order without high "unknown" codes, recode each item (see the scoring note in Section 4). Changing the codes on a production field with data instead changes the meaning of existing responses, so don't fix it that way.
 
-**Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the record is opened and saved, or until rule H is run. After any formula change in a project with existing data, run rule H to synchronize all records.
+**Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the form is opened and saved, the inputs are re-imported, or the rule H corrections are saved. After any formula change in a project with existing data, run rule H and select **Fix calcs now** to synchronize all records; running the rule without fixing only lists the incorrect values.
 
-**Forgetting parentheses in exponentiation.** REDCap requires both the base and the exponent to be individually wrapped in parentheses: `([base])^([exponent])`. Writing `[height]^2` is a syntax error — the Online Designer and Data Dictionary upload refuse the equation. The correct form is `([height])^(2)`.
+**Forgetting parentheses in exponentiation.** REDCap requires both the base and the exponent to be individually wrapped in parentheses: `([base])^([exponent])`. Writing `[height]^2` is a syntax error — on 17.x the Online Designer and Data Dictionary upload refuse the equation for everyone. The correct form is `([height])^(2)`.
+
+> **Version caveat (16.x LTS):** On the 16.x LTS line, REDCap administrators can still save `[height]^2` and other equations with syntax errors (warning only). The saved calculation then fails to evaluate. Administrators on 16.x should correct the equation instead of saving past the warning.
 
 **Editing formulas in Excel before Data Dictionary upload.** Excel can corrupt special characters — including single and double quotes — when saving CSV files. A formula that looks correct in Excel may fail to parse when uploaded. After editing a formula in Excel, always open the saved CSV in a plain text editor to verify the formula is intact before uploading.
 

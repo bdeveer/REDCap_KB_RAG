@@ -224,7 +224,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 1 Access & exposure | 8 + 4 from the sweep | Done 2026-11-24 |
 | 2 Production & integrity | 14 + 2 from the sweep | Done 2026-11-24 |
 | 3 Compliance | 6 + 2 from the sweep | Done 2026-11-25 |
-| 4a Logic engine | 8 | — |
+| 4a Logic engine | 8 + 3 from the sweep | Done 2026-11-25 |
 | 4b Piping | 5 | — |
 | 4c Smart variables | 12 | — |
 | 4d Action tags | 11 | — |

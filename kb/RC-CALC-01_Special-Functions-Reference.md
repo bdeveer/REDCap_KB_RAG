@@ -7,9 +7,9 @@
 | **Domain** | Calculations & Special Functions |
 | **Applies To** | All REDCap project types; functions are available wherever REDCap logic or calculations are used |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions; data entry form and API import compared); blank handling in `sum()` and `+` also tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the v17.3.7 (LTS) changelog. §5.1 `datediff()` signature, sign and date handling checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§11 live-tested (64 expressions; data entry form and API import compared); blank handling in `sum()` and `+` also tested on v16.0.49 (LTS), 2026-09; LTS line otherwise last reviewed against the v17.3.7 (LTS) changelog. §5.1 `datediff()` signature, sign and date handling, and the function list, signatures and LTS 16 differences, checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md) |
@@ -19,7 +19,7 @@
 
 ## 1. Overview
 
-REDCap provides a library of built-in functions — called Special Functions — that can be used wherever logic or calculations are written in the platform. This includes branching logic, calculated fields, report filters, survey invitations, alerts, and the Data Quality module. Functions perform operations that go beyond simple comparisons: calculating the difference between two dates, extracting parts of a date, rounding numbers, manipulating text strings, and applying conditional logic. This article is a complete reference for all available Special Functions as of REDCap 16.1.3.
+REDCap provides a library of built-in functions — called Special Functions — that can be used wherever logic or calculations are written in the platform. This includes branching logic, calculated fields, report filters, survey invitations, alerts, and the Data Quality module. Functions perform operations that go beyond simple comparisons: calculating the difference between two dates, extracting parts of a date, rounding numbers, manipulating text strings, and applying conditional logic. This article is a complete reference for all available Special Functions as of REDCap 17.6 (Standard) and 17.3 (LTS). The 16.x LTS line has the same functions except `age_at_date()` and `random()`, which are 17.x only (see §5.2 and §6.2).
 
 ---
 
@@ -39,7 +39,7 @@ The value a function produces. Depending on the function, this may be a number, 
 
 **Boolean**
 
-A value that is either true (1) or false (0). Several functions — primarily text and missing data functions — return a boolean. In branching logic, a function returning true will satisfy the condition; returning false will not.
+A value that is either true (1) or false (0). Several functions — primarily text and missing data functions — return a boolean. In branching logic, a function returning true will satisfy the condition; returning false will not. The true/false text functions (`contains()`, `not_contain()`, `starts_with()`, `ends_with()`) don't work as the whole expression of a calculated field; inside a calculation, wrap them in `if()` — e.g. `if(contains([x], 'abc'), 1, 0)`. They work as-is in branching logic, `@IF`, `@CALCTEXT` and other logic.
 
 **Haystack / Needle**
 
@@ -58,7 +58,7 @@ Special Functions work in any location in REDCap where logic or calculations are
 | **Context** | **Typical Use** |
 |---|---|
 | Branching Logic | Use a function's return value as part of a show/hide condition |
-| Calculated Fields | Use a function as the entire calculation expression |
+| Calculated Fields | Use a function as the entire calculation expression (true/false text functions must be wrapped in `if()` — see §8.1) |
 | Report Filters | Filter records based on a function's result |
 | Survey Invitations | Control invitation timing or eligibility using date/logic functions |
 | Alerts & Notifications | Trigger or suppress alerts based on a function's result |
@@ -118,6 +118,10 @@ With units `'d'`, the result is rounded to whole days when both values are dates
 
 Calculates a person's age in years using their date of birth and another specified date. Returns an integer by default. To get a decimal value (e.g., 0.24 years for a newborn), add `true` as the third parameter. If datetime fields are provided, the time component is ignored — only the date portion is used.
 
+Unlike `datediff()`, `age_at_date()` does not accept `'today'` or `'now'`; the result is blank. If the second date is earlier than the date of birth, the result is negative (whole years) or blank (decimal).
+
+> **Version caveat (17.x only; not on 16.x LTS):** `age_at_date()` does not exist on the 16.x LTS line — an expression using it is rejected as a syntax error. On 16.x LTS, use `rounddown(datediff([date_of_birth], [other_date], 'y'), 0)` instead (a close approximation, since `datediff()` counts a year as 365.2425 days), or upgrade to a 17.x release.
+
 > **Critical — version caveat (17.0.6 to 17.2.0 Standard).** The date-related special functions were unreliable across five consecutive releases, and the failures were silent: the calculation produced nothing rather than an error.
 >
 > | Symptom | Fixed in |
@@ -176,10 +180,10 @@ Blank-comparison patterns are common in branching logic and calculated fields, s
 | **Function** | **Behavior** | **Example** |
 |---|---|---|
 | `round(number, decimals)` | Rounds to nearest | `round(14.384, 1)` → 14.4 |
-| `roundup(number, decimals)` | Always rounds up | `roundup(14.384, 1)` → 14.4 |
-| `rounddown(number, decimals)` | Always rounds down | `rounddown(14.384, 1)` → 14.3 |
+| `roundup(number, decimals)` | Always rounds up (toward the higher number) | `roundup(14.384, 1)` → 14.4; `roundup(-14.384, 1)` → -14.3 |
+| `rounddown(number, decimals)` | Always rounds down (toward the lower number) | `rounddown(14.384, 1)` → 14.3; `rounddown(-14.384, 1)` → -14.4 |
 
-If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole number).
+If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole number). When given, `decimals` must be a whole number.
 
 ### 6.2 Mathematical Operations
 
@@ -190,7 +194,7 @@ If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole nu
 | `abs(number)` | Absolute value | `abs(-7.1)` → 7.1 |
 | `exponential(number)` | e raised to the power of a number | `exponential(1)` → 2.718... |
 | `log(number, base)` | Logarithm | `log(100, 10)` → 2; omit base for natural log |
-| `mod(dividend, divisor)` | Remainder of integer division | `mod(10, 4)` → 2 |
+| `mod(dividend, divisor)` | Remainder of integer division. Both numbers must be whole numbers; a divisor of 0 gives blank; the result takes the sign of the dividend | `mod(10, 4)` → 2; `mod(-7, 3)` → -1 |
 | `random(min, max)` | Random integer between `min` and `max`, **inclusive of both**. Requires REDCap 17.0.3+ | `random(1, 6)` → an integer from 1 to 6 |
 
 > **Important — `random()` is not a randomization tool.** It returns a fresh value each time the calculation is evaluated, and calculated fields re-evaluate whenever their inputs change or the form is re-saved. It is unsuitable for treatment allocation or anything requiring a stable, auditable assignment — use the Randomization module for that, see [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md).
@@ -199,7 +203,7 @@ If the `decimals` parameter is omitted, it defaults to 0 (rounding to a whole nu
 
 ### 6.3 Aggregate Functions
 
-These functions operate on a set of two or more values. Blank values are always ignored and excluded from the calculation.
+These functions operate on a set of two or more values. Blank values are always ignored and excluded from the calculation, and so are non-numeric values such as text and Missing Data Codes.
 
 | **Function** | **Description** | **Example** |
 |---|---|---|
@@ -208,7 +212,7 @@ These functions operate on a set of two or more values. Blank values are always 
 | `mean(n1, n2, ...)` | Average of the set | `mean([score1], [score2], [score3])` |
 | `median(n1, n2, ...)` | Median of the set | `median([score1], [score2], [score3])` |
 | `sum(n1, n2, ...)` | Sum of the set | `sum([score1], [score2], [score3])` |
-| `stdev(n1, n2, ...)` | **Sample** standard deviation of the set (divides by n−1) | `stdev([score1], [score2], [score3])` |
+| `stdev(n1, n2, ...)` | **Sample** standard deviation of the set (divides by n−1); needs at least two values | `stdev([score1], [score2], [score3])` |
 
 There is no limit to the number of values that can be passed into these functions.
 
@@ -232,6 +236,8 @@ There is no limit to the number of values that can be passed into these function
 | `isnumber(value)` | The value is an integer or floating-point decimal |
 | `isinteger(value)` | The value is a whole number without decimals |
 
+Values with leading zeros (e.g. `007`) may not count as numbers or integers, and `isinteger('5.0')` is false.
+
 ---
 
 ## 7. Missing Data Code Functions
@@ -253,7 +259,7 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 ## 8. Text Functions
 
-> **Important constraint:** Text functions should not be used on date or datetime fields that use MDY or DMY date formatting. They work correctly on date fields using YMD formatting.
+> **Important constraint:** Text functions should not be used on date or datetime fields that use MDY or DMY date formatting in branching logic or calculations. They work correctly on date fields using YMD formatting. In Data Quality rules, report filters and Automated Survey Invitation logic, text functions on MDY/DMY date fields are fine.
 
 ### 8.1 Searching Within Text
 
@@ -263,7 +269,9 @@ These functions are only meaningful in projects where Missing Data Codes have be
 | `not_contain(haystack, needle)` | true if needle is NOT found in haystack (case-insensitive) | `not_contain([name], "smith")` |
 | `starts_with(haystack, needle)` | true if haystack begins with needle (case-insensitive) | `starts_with([name], "rob")` |
 | `ends_with(haystack, needle)` | true if haystack ends with needle (case-insensitive) | `ends_with([name], "taylor")` |
-| `find(needle, haystack)` | Position of needle in haystack (1-based); returns 0 if not found | `find('y', [last_name])` → 3 for "Taylor" |
+| `find(needle, haystack)` | Position of needle in haystack (1-based, case-insensitive); returns 0 if not found | `find('y', [last_name])` → 3 for "Taylor" |
+
+The first four functions return true or false. They work as-is in branching logic, `@IF`, `@CALCTEXT` and other logic, but not as the whole expression of a calculated field. In a calculated field, wrap them in `if()`: `if(contains([x], 'abc'), 1, 0)`.
 
 ### 8.2 Extracting and Manipulating Text
 
@@ -276,7 +284,9 @@ These functions are only meaningful in projects where Missing Data Codes have be
 | `trim(text)` | Removes leading and trailing spaces | `trim(' hello ')` → "hello" |
 | `upper(text)` | Converts to uppercase | `upper('John Doe')` → "JOHN DOE" |
 | `lower(text)` | Converts to lowercase | `lower('John Doe')` → "john doe" |
-| `replace_text(haystack, search, replace)` | Replaces all occurrences of search with replace | `replace_text([field1], "Taylor", "Harris")` |
+| `replace_text(haystack, search, replace)` | Replaces all occurrences of search with replace (case-sensitive) | `replace_text([field1], "Taylor", "Harris")` |
+
+For `left()`, `right()` and `mid()`, a length or start position that is not a whole number of 1 or more gives blank. `right(text, n)` with `n` longer than the text also gives blank.
 
 ### 8.3 Combining Text
 
@@ -297,7 +307,7 @@ These functions are only meaningful in projects where Missing Data Codes have be
 | BMI from English values (lb, in), 1 decimal | `round(([weight]/(([height])^(2))*703), 1)` |
 | Strip a prefix+dash from record name (e.g., '4890-2318' → '2318') | `mid([record-name], find('-', [record-name])+1, length([record-name])-find('-', [record-name])+1)` |
 | Convert first + last name to username format ('john_doe') | `lower(concat(trim([first_name]), '_', trim([last_name])))` |
-| Add leading zeros to an integer (e.g., '7' → '007') | `right(concat('00', [my_integer]), 3)` |
+| Add leading zeros to an integer of 1–3 digits (e.g., '7' → '007'); a longer integer is cut to its last 3 digits | `right(concat('00', [my_integer]), 3)` |
 
 ---
 
@@ -333,11 +343,11 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Q: Can I use 'today' or 'now' in date functions?**
 
-**A:** Yes. The literals `'today'` and `'now'` (in single quotes) can be used in `datediff()`, `dayoftheweek()`, `year()`, `month()`, and `day()` instead of a field variable. `'today'` resolves to the current date; `'now'` resolves to the current date and time.
+**A:** Yes. The literals `'today'` and `'now'` (in single quotes) can be used in `datediff()`, `dayoftheweek()`, `year()`, `month()`, and `day()` instead of a field variable. `'today'` resolves to the current date; `'now'` resolves to the current date and time. `age_at_date()` does not accept them (the result is blank).
 
 **Q: Do text functions work on date fields?**
 
-**A:** Only on date fields using YMD formatting. Text functions should not be used on date or datetime fields formatted as MDY or DMY — the results will be unreliable. If you need to extract parts of a date, use `year()`, `month()`, or `day()` instead.
+**A:** In branching logic and calculations, only on date fields using YMD formatting. Text functions should not be used there on date or datetime fields formatted as MDY or DMY — the results will be unreliable. In Data Quality rules, report filters and Automated Survey Invitation logic they work on MDY/DMY date fields too. If you need to extract parts of a date, use `year()`, `month()`, or `day()` instead.
 
 **Q: What is the difference between contains() and find()?**
 
@@ -357,7 +367,7 @@ These functions are only meaningful in projects where Missing Data Codes have be
 
 **Relying on how an older version handled blank values.** Logic built around a blank-handling result, such as code to tell an all-blank `sum()` (formerly 0) apart from a real 0, can silently change results after an upgrade. Test for blanks explicitly with `isblankormissingcode()` instead of relying on what a function returns for blank inputs.
 
-**Using text functions on MDY/DMY date fields.** Functions like `left()`, `right()`, `find()`, and `contains()` should not be used on date or datetime fields with MDY or DMY formatting. The string representation of the date differs from what the function expects. Use `year()`, `month()`, and `day()` for date component extraction.
+**Using text functions on MDY/DMY date fields.** Functions like `left()`, `right()`, `find()`, and `contains()` should not be used in branching logic or calculations on date or datetime fields with MDY or DMY formatting. The string representation of the date differs from what the function expects. Use `year()`, `month()`, and `day()` for date component extraction.
 
 **Expecting datediff() to return whole years accurately for age.** `datediff()` with units `'y'` uses 365.2425 days as one year, which is an approximation. For accurate age-in-years (i.e., whether a birthday has actually passed), use `age_at_date()` instead.
 

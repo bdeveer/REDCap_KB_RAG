@@ -7,10 +7,10 @@
 | **Domain** | Branching Logic |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. §7 case-sensitivity live-tested on v17.5.6 (Standard) |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — branching logic behaviour checked against source code; §7 case sensitivity live-tested on v17.5.6; pages not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.6 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.7 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-BL-03 — Branching Logic: Combining Statements](RC-BL-03_Branching-Logic-Combining-Statements.md); [RC-BL-04 — Branching Logic: Structured Fields & Checkboxes](RC-BL-04_Branching-Logic-Structured-Fields-and-Checkboxes.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) |
 | **Synonyms** | how do i show a field only when another answer is selected; conditional field visibility; what is branching logic in redcap; hide a question based on a previous answer; where do i set up branching logic; make fields appear conditionally; show hide fields on a form; intro to branching logic |
@@ -54,11 +54,20 @@ The branching logic feature has one job: show or hide a specific field based on 
 
 > **Important:** When branching logic is about to hide a field that holds a value, the behavior differs by context.
 >
-> - **Data entry forms:** REDCap prompts the user before erasing the value. If the user cancels, the field remains visible and keeps its data.
+> - **Data entry forms:** REDCap prompts the user before erasing the value. A single dialog lists every field about to be hidden, each with a checkbox. **Erase** clears the ticked fields and hides them; **Keep All** leaves every listed field visible with its data. If a field holds a Missing Data Code rather than a real value, it is erased without being listed. On a form the user can only view (read-only), there is no prompt and nothing is erased.
 > - **Survey pages:** there is no prompt. The field is hidden and its value erased automatically.
 > - **Project setting override:** when **Prevent branching logic from hiding fields that have values** is enabled under Project Setup → Additional Customizations, any field containing a value is exempt from branching logic entirely and stays visible on both forms and surveys. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
+> - **Randomization fields:** once a record has been randomized, the randomization field is never hidden by branching logic, whatever the logic says.
 >
 > Design logic on the assumption that survey data in hidden fields is lost, and that form data may or may not be, depending on what the user chose in the prompt.
+
+Branching logic only acts on forms and survey pages as they are filled in. Elsewhere:
+
+- **Data imports ignore branching logic.** Values imported through the Data Import Tool or the API are saved even where the logic for that field is false, and they are not erased afterwards. The same applies to calculations recalculated on the server.
+- **Record PDFs** leave out fields hidden by branching logic, unless the field holds data.
+- **Surveys skip empty pages.** On a multi-page survey, a page whose fields are all hidden is skipped automatically.
+- **Survey question numbering.** Adding branching logic to a field on a survey in Development mode switches that survey's automatic question numbering off. Check the survey's question numbering setting after adding logic.
+- **MyCap.** In the MyCap app, branching logic works only when the instrument uses the one-question-per-screen layout — see [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md).
 
 ---
 
@@ -75,7 +84,7 @@ The same logic syntax that powers branching logic is also used in several other 
 | Project Dashboards | Filter which records appear in a dashboard | True = include; False = exclude |
 | Alerts & Notifications | Determine whether to trigger an automated alert | True = send alert; False = suppress |
 | Calculated Fields | Perform arithmetic operations on field values | Numerical result (not true/false) |
-| Action Tags (selected) | Drive dynamic behavior such as default values or date comparisons | Varies by action tag |
+| Action Tags (selected) | `@IF` chooses which action tags apply; `@CALCTEXT` and `@CALCDATE` compute a text or date value. `@DEFAULT` does not take logic — it sets a fixed or piped value | Varies by action tag |
 
 > **Note:** Calculated fields and action tags use the same logic syntax but do not produce a true/false outcome. Calculated fields always return a number. Action tags use the syntax for a range of non-boolean purposes. Calculated fields are covered in [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md). Action tags that use logic syntax are covered in the RC-AT series — start with [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) — Action Tags Overview.
 
@@ -93,7 +102,7 @@ These defects are worth knowing because each produced a **wrong result rather th
 
 > **Version caveat (17.3.1–17.4.1 Standard / 17.3.5–17.3.7 LTS):** Logic containing more than roughly **200–300 `and`/`or` clauses** could fail to evaluate and **always return True** — so a field meant to be hidden was shown, or an alert or filter matched every record. Emerged in 17.3.1 Standard and was inherited by the 17.3.x LTS line; fixed in 17.4.2 Standard / 17.3.8 LTS, which handles far longer logic. Very long logic is usually generated (for example, a long list of eligible codes); on an affected version, split it or replace it with a lookup field.
 
-> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS):** Several client-side logic defects were fixed together. On forms and surveys: logic or calculations with **inline comments** could fail to evaluate in some situations; static text or label values containing an **apostrophe or quotation mark** could produce invalid JavaScript, so the logic silently did nothing; and on **repeating events**, integer and number fields could have **`0` treated as blank** (and blanks as non-blank). See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3, §3.6 and §6. Independent of version, comments are only accepted on a line of their own; a comment after logic on the same line is a syntax error ([RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.6).
+> **Version caveat (below 17.5.4 Standard / 17.3.18 LTS; not fixed in 16.x LTS):** Several client-side logic defects were fixed together, and the fixes are not in the 16.x LTS line (checked on 16.0.61). On forms and surveys: logic or calculations with **inline comments** could fail to evaluate in some situations; static text or label values containing an **apostrophe or quotation mark** could produce invalid JavaScript, so the logic silently did nothing; and on **repeating events**, integer and number fields could have **`0` treated as blank** (and blanks as non-blank). See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3, §3.6 and §6. Independent of version, comments are only accepted on a line of their own; a comment after logic on the same line is a syntax error ([RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.6).
 
 > **Version caveat (below 17.5.0 Standard / 17.3.13 LTS):** Logic or calculations referencing a **date or datetime field that has a Missing Data Code**, with an X-instance smart variable appended (such as `[visit_date][last-instance]`), could return an unexpected result on the form or survey. Server-side evaluation (Data Quality rule H, calculations during import) was not affected. See [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md) §5.3.
 
@@ -101,23 +110,25 @@ Comparisons against blank values have their own history of returning wrong resul
 
 > **Note — JavaScript is no longer permitted in logic.** From 17.0.2, administrators cannot inject JavaScript into branching logic or calc/CALCTEXT equations. This closed a Remote Code Execution vector that recurred across three releases. If an inherited project relies on it, the logic stops working on 17.0.2 — see [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md).
 
+> **Version caveat (16.x LTS):** Two safeguards in the 17.x lines are missing from 16.x LTS (checked on 16.0.61). Administrators can still save branching logic that contains a syntax error — the editor warns but does not block — and the 17.0.2 protection against JavaScript in logic is not present. On a 16.x instance, ask administrators to fix every syntax warning before saving rather than relying on the editor to refuse bad logic, and plan an upgrade to the 17.x LTS line.
+
 ---
 
 ## 5. Accessing the Branching Logic Editor
 
-Branching logic for a specific field is configured in the Online Designer. There are two paths:
+Branching logic is configured in the Online Designer (or the Data Dictionary — see §7). It is not part of the field's Edit Field dialog: that dialog has no branching logic section. There are two paths:
 
 ### 5.1 From the Instrument Field List
 
 - In the Online Designer, open the instrument that contains the field you want to add logic to.
 - Locate the field in the instrument's field list.
-- Select the branching logic icon (a fork/branch symbol) next to the field. This opens the branching logic editor for that field.
+- Select the branching logic icon (a fork/branch symbol, tooltip **Edit Branching Logic**) next to the field. This opens the branching logic editor for that field.
 
-### 5.2 From the Field Edit Dialog
+### 5.2 For Several Fields at Once (Quick-modify)
 
-- In the Online Designer, open the field edit dialog for any field (select the pencil/edit icon).
-- Scroll to the Branching Logic section within the dialog.
-- Select **Open Branching Logic Editor** to open the dedicated editor, or type logic directly into the text field.
+- In the Online Designer, select several fields on the instrument with **Quick-modify field(s)**.
+- Choose the option to edit branching logic. See [RC-FD-11 — Online Designer – Advanced Options](RC-FD-11_Advanced-Online-Designer-Options.md).
+- In the **Edit Branching Logic?** dialog, pick one option and select **Apply**: **Clear** Branching Logic from all fields; **Copy** the Branching Logic of the current field to the other fields; or **Add** new Branching Logic to all selected fields (type it in the box provided).
 
 > **Tip:** The branching logic editor provides a drag-and-drop interface for building basic statements without typing syntax. For more complex or compound logic, typing directly into the syntax field is faster. Both methods produce identical results.
 
@@ -151,7 +162,7 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 **Q: Can I use branching logic to show or hide an entire instrument (not just a field)?**
 
-**A:** Not directly through branching logic. Branching logic operates at the field level. Showing or hiding an entire instrument based on conditions is handled through other features — for example, the Survey Queue (for surveys) or instrument-level access rights. See those dedicated articles.
+**A:** Not through branching logic, which operates at the field level. To show or hide a whole instrument on the data entry pages based on a condition, use **Form Display Logic**, set up in the Online Designer — see [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md). For surveys, the Survey Queue and survey invitation logic control which surveys a participant is offered, and instrument-level user rights control which instruments each user can see.
 
 **Q: What happens to data in a field when branching logic hides it?**
 
@@ -165,20 +176,20 @@ The following topics are outside the scope of this series. Each has its own dedi
 
 **A:** Yes, in both halves of a comparison.
 
-- **Variable names are case-sensitive.** REDCap stores every variable name in lowercase, so a capitalized reference matches nothing. Both the Online Designer's logic editor and a Data Dictionary upload reject `[Age]` as a syntax error, so it cannot be saved as branching logic. Used as a report filter or API `filterLogic`, it fails silently and matches every record.
+- **Variable names are case-sensitive.** REDCap stores every variable name in lowercase, so a capitalized reference matches nothing. Both the Online Designer's logic editor and a Data Dictionary upload reject `[Age]` as a syntax error, so it cannot be saved as branching logic (on 16.x LTS an administrator can still save it — see §4a). In a report, an invalid filter like this shows an error on the report page. As API `filterLogic`, invalid logic fails silently and matches every record.
 - **Hard-coded text values are case-sensitive.** `[fav_color]="green"` will not match a stored value of "Green".
 
-Boolean operators are the exception: `and` and `AND`, `or` and `OR` are interchangeable.
+Boolean operators are the exception, within limits: `and` and `AND`, `or` and `OR` are interchangeable, but each must be written all lowercase or all uppercase, with a space (or line break) on each side. Mixed case such as `And`, or no spaces as in `)and(`, is a syntax error.
 
 ---
 
 ## 8. Common Mistakes & Gotchas
 
-**Assuming hidden fields always retain their data — or never do.** Both assumptions cause trouble. On surveys, a field hidden by branching logic loses its value silently, so a respondent who backtracks loses downstream answers. On data entry forms the user is prompted and may cancel, which means a hidden field *can* still hold a value. That second case is why Data Quality rule F (hidden fields containing values) exists and routinely finds records. Note that fields hidden by the `@HIDDEN` action tag family are a separate mechanism: those keep their values and continue to calculate. Test all logic thoroughly in Development mode before collecting real data.
+**Assuming hidden fields always retain their data — or never do.** Both assumptions cause trouble. On surveys, a field hidden by branching logic loses its value silently, so a respondent who backtracks loses downstream answers. On data entry forms the user is prompted and may cancel, which means a hidden field *can* still hold a value. That second case is why Data Quality rule F (**Hidden fields that contain values**) exists and routinely finds records. When **Prevent branching logic from hiding fields that have values** is enabled, the rule is renamed **Fields that contain values that should be hidden**, since such fields stay visible — see [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md). Note that fields hidden by the `@HIDDEN` action tag family are a separate mechanism: those keep their values and continue to calculate. A field that has `@HIDDEN` *and* branching logic that turns false is still treated as hidden by branching logic, so its value is erased on surveys and goes through the prompt on forms. Test all logic thoroughly in Development mode before collecting real data.
 
 **Applying branching logic in Production without testing.** The Online Designer's syntax checker validates that logic is syntactically correct, but it does not verify that it behaves as intended. Always test in a Development project or with test records before deploying.
 
-**Confusing branching logic scope with instrument scope.** Branching logic only shows or hides individual fields. It cannot be used to show or hide an entire instrument.
+**Confusing branching logic scope with instrument scope.** Branching logic only shows or hides individual fields. To show or hide an entire instrument, use Form Display Logic — see [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md).
 
 **Expecting logic behavior to be the same in calculated fields.** Calculated fields use the same syntax but do not evaluate to true or false — they always return a number. The semantics are different even though the syntax looks similar.
 

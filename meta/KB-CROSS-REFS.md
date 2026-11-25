@@ -1005,6 +1005,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-34 — Export Project Info API
 - RC-API-35 — Import Project Info API
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-LOG-01 — Logging — Project Audit Trail
 - RC-LONG-03 — Longitudinal Clinical Research Design Patterns
 - RC-NAV-UI-03 — Project Bookmarks
@@ -2856,13 +2857,16 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-03 — Branching Logic: Combining Statements
 - RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-CALC-02 — Calculated Fields
 - RC-AT-01 — Action Tags: Overview
 - RC-FDL-01 — Form Display Logic
 - RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-CALC-01 — Special Functions Reference
+- RC-FD-11 — Online Designer – Advanced Options: Quick-Modify, Field Navigator, and Custom CSS
 - RC-PIPE-03 — Smart Variables Overview
 - RC-FD-07 — Field Embedding
+- RC-DQ-01 — Data Quality Module
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-FD-03 — Data Dictionary
 - RC-DE-02 — Basic Data Entry
@@ -2962,6 +2966,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-03 — Branching Logic: Combining Statements
 - RC-FD-05 — Codebook
 - RC-DE-02 — Basic Data Entry
+- RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-CALC-01 — Special Functions Reference
 - RC-BL-01 — Branching Logic: Overview & Scope
 
 **Inbound links (referenced by):**
@@ -3038,6 +3044,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-CALC-02 — Calculated Fields
 - RC-DQ-01 — Data Quality Module
 - RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing
@@ -3492,6 +3499,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
 - RC-PROJ-04 — Project Setup: Additional Customizations
+- RC-BL-01 — Branching Logic: Overview & Scope
 - RC-CALC-02 — Calculated Fields
 - RC-DE-12 — Data Resolution Workflow
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
@@ -4168,6 +4176,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-02 — Survey Settings: Basic Options & Design
 
 **Inbound links (referenced by):**
+- RC-BL-01 — Branching Logic: Overview & Scope
 - RC-DE-02 — Basic Data Entry
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management (alignment codes cross-reference)
@@ -4878,6 +4887,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-03 — Data Dictionary
 
 **Inbound links (referenced by):**
+- RC-BL-01 — Branching Logic: Overview & Scope
 - RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-MYCAP-03 — MyCap: Task Scheduling

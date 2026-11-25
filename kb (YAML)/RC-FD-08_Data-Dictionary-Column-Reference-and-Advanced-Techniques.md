@@ -11,7 +11,7 @@ verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog revie
   of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-FD-03 — Data Dictionary
-version: '1.8'
+version: '1.9'
 last_updated: 2026-11
 related:
 - id: RC-FD-01
@@ -401,7 +401,7 @@ Marking a variable as required makes REDCap check that the variable has a value 
 - **Data entry forms:** a missing required value does **not** stop the save. The record is saved, and REDCap then tells the user which required fields are empty.
 - **Surveys:** the participant cannot move on or submit the page until the required fields are answered.
 
-For a `checkbox` field, "has a value" means at least one box is checked. This is enforced on both forms and surveys.
+For a `checkbox` field, don't rely on **Required** to force a selection: in practice it does not reliably make the user tick at least one option. If at least one option must be chosen, test the behaviour on your own server, or add a separate check (for example a data quality rule or a warning field shown by branching logic when no option is ticked).
 
 **Allowed values:**
 - `y` or `Y` — required

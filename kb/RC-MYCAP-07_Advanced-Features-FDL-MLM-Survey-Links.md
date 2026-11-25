@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md); [RC-MLM-01 — Multi-Language Management](RC-MLM-01_Multi-Language-Management.md); [RC-MYCAP-03 — MyCap: Task Scheduling](RC-MYCAP-03_Task-Scheduling.md)|
 | **Synonyms** | use form display logic in mycap; show or hide mycap tasks conditionally; translate the mycap app with multi-language management; embed a redcap survey link inside a mycap task; mycap advanced features fdl mlm survey links; conditional task display in the mycap app; combine translations and survey links in mycap; enable fdl support for the mycap app |
@@ -68,9 +68,9 @@ FDL behavior in MyCap differs from standard REDCap FDL in the following ways:
 
 #### 2.5 Configuring FDL for MyCap
 
-1. Ensure FDL is enabled for the project: **Project Setup > Enable optional modules > Form Display Logic**.
-2. Enable FDL specifically for MyCap: **MyCap > Additional Settings > Enable support for MyCap App**.
-3. Go to **Project Setup > Form Display Logic** and configure the display conditions for each instrument.
+1. Open the **Online Designer** and click **Form Display Logic** (choose **Edit Form Display Logic**).
+2. For each condition, tick **MyCap Tasks** under "Apply to". The option appears only when MyCap is enabled for the project. Once any condition applies to MyCap, MyCap uses only the conditions with MyCap ticked.
+3. Configure the display conditions for each instrument. MyCap evaluates conditions at the first instance, so use `[last-instance]` when you need the latest repeating value. See [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md).
 4. For MyCap-specific instruments, test using a test participant record (see [RC-MYCAP-08 — MyCap: Testing](RC-MYCAP-08_Testing-MyCap.md)
 
 ---
