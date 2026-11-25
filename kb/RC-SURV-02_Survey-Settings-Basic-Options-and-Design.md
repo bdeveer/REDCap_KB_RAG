@@ -7,10 +7,10 @@
 | **Domain** | Surveys |
 | **Applies To** | All REDCap projects with surveys enabled; assumes surveys have been enabled on at least one instrument |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — survey behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) |
 | **Synonyms** | how do i change the look of my survey; add a logo and colors to a survey; edit survey title and instructions; customize survey layout and fonts; survey design and theme options; basic survey settings page; change survey appearance; where do i set the survey status |
@@ -37,7 +37,7 @@ A dropdown that activates or deactivates a survey without deleting any settings.
 
 ### Survey Title
 
-The label displayed at the top of the survey page and in the participant's browser tab. Defaults to the instrument name but can be set to any value. Supports a limited set of HTML formatting tags.
+The label displayed at the top of the survey page and in the participant's browser tab. Defaults to the instrument name but can be set to any value. Accepts the same HTML formatting as field labels; the browser tab shows the title as plain text.
 
 ### Survey Instructions
 
@@ -45,11 +45,11 @@ An optional block of introductory text displayed between the survey title and th
 
 ### Survey Design Options
 
-The set of settings that control the visual appearance of a survey: layout width, logo, button style, text size, font, and color theme.
+The set of settings that control the visual appearance of a survey: layout width, logo (with an option to hide the title), enhanced radio buttons and checkboxes, text size, font, color theme, and custom CSS.
 
 ### Survey Theme
 
-A saved collection of eight color settings that define the background and text colors for various regions of the survey interface. REDCap ships with built-in themes; institutions may add custom themes aligned to their branding guidelines. Themes can also be created and saved by individual users.
+A saved collection of eight color settings that define the background and text colors for various regions of the survey interface. REDCap ships with built-in themes, and your REDCap administrator may have added themes for local branding. Themes can also be created and saved by individual users.
 
 ### Enhanced Radio Buttons and Checkboxes
 
@@ -82,14 +82,14 @@ Use a participant-friendly title when the instrument name is technical or intern
 - Instrument name: `PHQ-9`
 - Survey title: `Patient Health Questionnaire`
 
-> **Note:** The survey title supports a limited set of HTML tags, including `<u>` (underline) and `<i>` (italic). Full HTML or script tags are not permitted.
+> **Note:** The survey title accepts the same HTML formatting as field labels (scripts are removed). The browser tab shows the title as plain text, without the formatting. **Best practice:** keep the title short and plain, with at most simple formatting such as `<b>` or `<i>`, and put images, links and other rich content in the **Survey Instructions** instead.
 
 **Piping into the title** *(17.5.3+)* — the survey title can contain piped values, e.g. `Follow-up survey for [first_name]`. Two limits apply:
 
-- It works only for **existing records**. The public survey link has no record when it opens, so piping is not applied there.
+- It works only for **existing records**. The public survey link has no record when it opens, so the piped values show as blank there.
 - The title is evaluated **once, on page load**. It does not update live as the respondent answers questions on the page.
 
-> **Version caveat (below 17.5.3 Standard, and the 17.3.x LTS line):** Piping in the survey title is not supported. Pipe into the survey instructions instead, which has always worked.
+> **Version caveat (below 17.5.3 Standard, and the 17.3.x and 16.0.x LTS lines):** Piping in the survey title is not supported. Pipe into the survey instructions instead, which has always worked.
 
 ### 3.3 Survey Instructions
 
@@ -106,7 +106,7 @@ This field supports full rich text editing — bold, italic, underline, bullet l
 The **Width of Survey** setting controls the horizontal extent of the survey on the participant's screen. Options include:
 
 - **Fixed width** (default) — the survey displays at a consistent width regardless of screen size. This is the best option for most surveys.
-- **Percentage-based widths** — stretches or compresses the survey to fill a set proportion of the screen (e.g., 75%, 90%, 100%).
+- **Percentage-based widths** — stretches or compresses the survey to fill a set proportion of the screen (50% to 100%, in 10% steps).
 
 > **Note:** REDCap overrides the width setting on mobile devices and scales the survey to fit the screen automatically. The width setting only has a visible effect on desktop and tablet browsers.
 
@@ -124,7 +124,7 @@ Standard radio button and checkbox controls are small and designed for precise m
 
 Enabling **Enhanced Radios and Checkboxes** replaces the standard controls with large, block-style buttons — much easier to tap with a finger.
 
-> **Note:** This setting applies to the entire survey. You cannot enable enhanced buttons for individual questions only.
+> **Note:** This setting applies to the entire survey. You cannot enable enhanced buttons for individual questions only. It affects only the survey pages: staff entering data on the same instrument as a data entry form still see standard controls.
 
 > **Alignment interaction:** Enhanced buttons still respect the **Custom Alignment** code set on each field (Column N in the Data Dictionary). Fields with a V code (RV, LV) render one button per row (full container width). Fields with an H code (LH, RH) render buttons in a two-column side-by-side grid. The L/R width designation (full-width vs. half-width) is also preserved. See [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) for alignment code details.
 
@@ -142,13 +142,13 @@ Tailor the default size to your audience. Surveys targeting older participants o
 
 The **Survey Text Font** setting applies a single typeface to all survey text. The default font, **Open Sans**, is a clean, neutral choice appropriate for most surveys.
 
-All available fonts are web-safe or embedded — participants do not need any fonts installed on their device. Choose a font that aligns with your study's branding or the expectations of your participant population.
+Open Sans is built into REDCap, so it looks the same everywhere. The other fonts in the list are common system fonts: if a participant's device does not have the chosen font, the browser substitutes a similar one. Check the survey on the devices your participants will use. Choose a font that aligns with your study's branding or the expectations of your participant population.
 
 ### 4.6 Survey Themes
 
 A **Survey Theme** is a set of eight color values that define the colors of the survey's header, body background, text, buttons, and borders. Selecting a theme applies all eight values at once.
 
-REDCap includes a set of built-in themes. Your institution may also have loaded themes aligned to local branding guidelines.
+REDCap includes a set of built-in themes. Your REDCap administrator may have added themes aligned to local branding guidelines.
 
 A **Survey Design Preview** section appears at the bottom of the Survey Design Options section and updates in real time as you make changes. Click **Expand** in the top-right corner of the preview to see a larger version.
 
@@ -165,17 +165,27 @@ The editor exposes all eight color settings as individual dropdowns. Clicking an
 
 You can also type or paste a **six-digit hexadecimal color code** directly into the code field at the bottom of the picker. This is the most reliable way to match a specific brand color. Most institutional branding guidelines publish hex codes for this purpose.
 
-Click **Choose** (or click outside the picker) to confirm a color. When all eight colors are set, click **Save Custom Theme** and enter a name for the theme. REDCap links saved custom themes to your user account — they are available across all your projects without needing to be recreated.
+Click **Choose** (or click outside the picker) to confirm a color. Your custom colors are saved with the survey when you save Survey Settings, even if you never save them as a named theme. To reuse them, click **Save Custom Theme** and enter a name for the theme. REDCap links saved custom themes to your user account — they are available across all your projects without needing to be recreated.
 
-Use **Manage Saved Themes** to edit or delete your custom themes at any time.
+Use **Manage Saved Themes** to edit or delete your custom themes at any time. Deleting a saved theme switches any survey that uses it back to the **Default** theme, so check those surveys afterwards.
+
+#### Custom CSS
+
+The **Custom CSS** field accepts your own CSS styling rules for this survey, for adjustments the design options above do not cover. Keep custom CSS small and test it on every device type, since a stray rule can break the survey layout.
 
 #### Copying Design Settings to Other Surveys
 
-The **Copy Design to Other Surveys** button (top-right of the Survey Design Options section) lets you apply your design settings to other surveys in the same project. After clicking the button, a popup lets you select which settings to copy and which surveys to copy them to. Use this to keep a consistent look across a project with multiple surveys.
+The **Copy Design to Other Surveys** button (top-right of the Survey Design Options section) lets you apply your design settings to other surveys in the same project. After clicking the button, a popup lets you select which settings to copy and which surveys to copy them to. Use this to keep a consistent look across a project with multiple surveys. The button is available only when the project has at least two surveys.
+
+#### Default Settings and Copying Settings Between Projects
+
+A newly enabled survey starts with the survey **active**, all questions on **one page**, **Large** text size, the **Open Sans** font, the **Default** theme, pre-filled instructions text and custom question numbering. Review these before going live.
+
+To reuse settings across many surveys or projects, the Online Designer offers **Download Survey Settings (CSV)** and **Upload Survey Settings (CSV)**. A simple way to build an upload file is to download the settings from a survey that is already set up and edit the copy in a spreadsheet.
 
 ---
 
-> **Descriptive Popups (17.4.0+).** The inline text limit for a Descriptive Popup was raised to **255 characters**, with a maxlength safeguard so text can no longer be entered that would be silently truncated on save. On earlier versions, over-long popup text was accepted and then cut.
+> **Version caveat (Descriptive Popups, 17.4.0+ Standard; not in LTS 17.3 or 16.0):** The inline text limit for a Descriptive Popup was raised to **255 characters**, with a maxlength safeguard so text can no longer be entered that would be silently truncated on save. On the 17.3 and 16.0 LTS lines the limit is **100 characters**. If your instance is on an LTS line, or you share project designs with one, keep popup text to 100 characters or fewer.
 
 > **Note (15.6.0):** Where an image is attached to a Descriptive field and shown inline, and the field label is otherwise empty, REDCap no longer inserts extra blank space before the image.
 
@@ -185,19 +195,18 @@ The **Copy Design to Other Surveys** button (top-right of the Survey Design Opti
 
 ## 5. Survey Notifications
 
-Survey Notifications is a per-survey feature that sends a brief system-generated email to a project user each time a participant completes a survey. It is configured separately from the Survey Settings page and does not appear inside the Survey Settings dialog.
+Survey Notifications is a per-survey feature that sends a brief system-generated email to selected project users each time a participant completes a survey. It is configured separately from the Survey Settings page and does not appear inside the Survey Settings dialog.
 
-**Where to find it:** In the **Online Designer**, scroll to the **Survey options** section at the top of the instrument list. Click the **Survey Notifications** button to open the notification setup dialog. A list of all surveys in the project is displayed — use the dropdown next to each survey to select which project user should receive the notification. The dropdown lists each user's primary, secondary, and tertiary email addresses as configured in their REDCap profile. To disable notifications for a survey, set the dropdown back to **Not selected**.
+**Where to find it:** In the **Online Designer**, scroll to the **Survey options** section at the top of the instrument list. Click the **Survey Notifications** button to open the notification setup dialog. Each survey in the project is listed with a row for every project user. Use the dropdown in a user's row to turn the notification on for that user and choose which of their email addresses (primary, secondary or tertiary, as set in their REDCap profile) it goes to. You can turn it on for any number of users per survey. To stop notifications for a user, set their dropdown back to **Not selected**.
 
-**What the notification contains:** REDCap sends a standard system email. The message is not customizable — it does not include project field values, a custom subject, or any conditional logic. One recipient can be selected per survey.
+**What the notification contains:** REDCap sends a standard system email with fixed text: the survey title, the time the response was completed, and a link to view the response in REDCap (the recipient must log in to see it). The message is not customizable — it does not include project field values, a custom subject, or any conditional logic.
 
 **When to use something else:** If you need any of the following, use **Alerts & Notifications** ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)) instead:
-- Notifying more than one person per survey completion
 - Including participant data or smart variables in the notification message
 - Triggering a notification only when certain conditions are met
 - Customizing the subject or message body
 
-Survey Notifications is best suited for simple, low-volume projects where a single staff member needs a heads-up each time a response comes in, and no customization is required.
+Survey Notifications is best suited for simple, low-volume projects where one or a few staff members need a heads-up each time a response comes in, and no customization is required.
 
 ---
 
@@ -205,7 +214,7 @@ Survey Notifications is best suited for simple, low-volume projects where a sing
 
 
 **Q: Can I notify multiple users when a survey is completed?**
-Survey Notifications supports one recipient per survey. To notify multiple users simultaneously, use Alerts & Notifications ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)), which supports multiple recipients and allows you to include participant data in the message.
+Yes. In the Survey Notifications dialog, turn the notification on for each project user who should receive it — there is no limit per survey. Recipients must be project users. To notify people who are not project users, or to include participant data in the message, use Alerts & Notifications ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)).
 
 **Q: Can I turn a survey off temporarily without losing my settings?**
 Set **Survey Status** to **Survey Offline**. All settings and data are preserved. The survey can be re-activated at any time by switching the status back to **Survey Active**.
@@ -217,7 +226,7 @@ Yes. REDCap users with data entry rights can fill out an offline survey as a reg
 Edit the **Survey Title** field in Survey Settings. This changes what participants see without renaming the instrument itself.
 
 **Q: Can I use images or HTML in the survey title?**
-Basic HTML tags (e.g., `<u>`, `<i>`) are supported. Full HTML, images embedded via `<img>`, and script tags are not. For rich formatting above the questions, use the **Survey Instructions** field instead, which supports the full rich text editor.
+The title accepts the same HTML formatting as field labels (scripts are removed), and the browser tab shows it as plain text. Best practice is to keep the title short and plain, with at most simple formatting such as `<b>` or `<i>`. For images, links and other rich content above the questions, use the **Survey Instructions** field instead, which supports the full rich text editor. To show an image above the title, use the **Logo** setting.
 
 **Q: Does the enhanced radio buttons setting only affect mobile users?**
 The setting changes the display for all participants, not just mobile users. Desktop users will also see the large block-style buttons. The setting is most beneficial for mobile users but is not hidden from others.
@@ -235,7 +244,7 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 ## 7. Common Mistakes & Gotchas
 
-**Expecting Survey Notifications to send a customized message.** The notification email is system-generated and contains no project data, custom subject, or body text. If you need a tailored message with participant details — such as a record ID, name, or response summary — use Alerts & Notifications instead.
+**Expecting Survey Notifications to send a customized message.** The notification email is system-generated fixed text (survey title, completion time and a link to the response) and contains no project data, custom subject, or body text. If you need a tailored message with participant details — such as a record ID, name, or response summary — use Alerts & Notifications instead.
 
 **Forgetting to re-activate a survey after edits.** Setting a survey offline for edits is good practice, but it is easy to forget to set it back to active afterward. Participants who attempt to access the survey during that window will see the offline message (or a default offline screen if no message is set). Build re-activation into your editing checklist.
 
@@ -243,7 +252,7 @@ No. Custom themes are linked to the user account that created them. Other projec
 
 **Using a high-percentage survey width without testing on large monitors.** A 100% width survey on a wide monitor can feel uncomfortably stretched. Conversely, a 50% width on a small laptop can be cramped. If you deviate from fixed width, test on multiple screen sizes.
 
-**Entering a display label rather than a hex code in the color picker.** The color code field expects a six-digit hexadecimal value (e.g., `#2A5DAB`). Entering a CSS color name or a label like "Institution Blue" will not work. Use the hex code from your branding guidelines.
+**Entering a display label rather than a hex code in the color picker.** The color code field expects a six-digit hexadecimal value (e.g., `#2A5DAB`). A label like "Institution Blue" will not work, and CSS color names are not a reliable substitute. Use the hex code from your branding guidelines.
 
 **Assuming custom themes are project-wide or user-independent.** Custom themes belong to the user who creates them. If you leave a project or a colleague tries to recreate your theme in a different account, they will need the eight hex codes to reproduce it.
 
@@ -256,5 +265,5 @@ No. Custom themes are linked to the user account that created them. Other projec
 - [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)
 - [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md)
 - [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md) (Column N alignment codes and how they interact with enhanced buttons)
-- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (for customizable or multi-recipient survey completion notifications)
+- [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (for customizable or conditional survey completion notifications)
 - [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)

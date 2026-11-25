@@ -5,11 +5,11 @@ domain: Surveys
 applies_to:
 - All projects with surveys enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — survey
+  behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-SURV-04 — Survey Link Types & Access Methods
-version: '1.1'
+version: '1.2'
 last_updated: 2026-11
 related:
 - id: RC-SURV-04
@@ -55,7 +55,7 @@ The default state of the participant list. REDCap knows which response belongs t
 
 **Identified Mode**
 
-An enhanced state of the participant list where record IDs are visible and clickable, linking directly to the corresponding record. Identified mode is enabled by adding a participant identifier alongside an email address, or by designating an email field at the project level.
+An enhanced state of the participant list where record IDs are visible and clickable, linking directly to the corresponding record. Identified mode is enabled by adding a participant identifier alongside an email address, or by designating an email field at the project level. Even in identified mode, the Record column shows a record ID only once the participant has started or finished the survey, because the record does not exist before then.
 
 **Participant Identifier**
 
@@ -63,7 +63,7 @@ An optional name or label added alongside an email address when uploading partic
 
 **Designated Email Field**
 
-A project-level setting (configured in Project Setup → Enable Optional Modules and Customizations) that tells REDCap which variable in the project should be used as the communication email for all records. The variable must have email validation. Once set, REDCap uses the value in that field as the participant's email address for invitation purposes.
+A project-level setting (configured in Project Setup → Enable Optional Modules and Customizations) that tells REDCap which variable in the project should be used as the communication email for all records. The variable must have email validation. Once set, REDCap uses the value in that field as the participant's email address for invitation purposes. In production, only a REDCap administrator can change this setting. A survey can also have its own survey-level email field (set in Survey Settings), which works the same way for that survey.
 
 **Compose Survey Invitations**
 
@@ -77,6 +77,8 @@ A project-wide log of all past and future survey invitations. It covers both man
 
 > **Note (15.0.0) — performance.** Rapid Retrieval caching was applied to the Participant List page, its CSV export, and the API Export Participant List method. On large participant lists this is the difference between a usable page and a slow one.
 
+> **Version caveat (16.0.x LTS):** Because of this caching, the participant list and its export can briefly show an out-of-date sent/scheduled invitation status. 17.x reads invitation status live. On 16.0.x, refresh the page or check the Survey Invitation Log before acting on an invitation's status.
+
 > **Version caveat (below 15.2.5 Standard):** In the **Compose Survey Invitations** dialog, selecting a previously sent email left **hardcoded links from the original message** in the template rather than regenerating them. Sending that template to a different participant could therefore include a link belonging to someone else. Fixed in 15.2.5.
 
 ---
@@ -85,6 +87,8 @@ A project-wide log of all past and future survey invitations. It covers both man
 
 The participant list is accessed through Survey Distribution Tools in the project menu. It is instrument-specific: a dropdown in the top-left of the participant list selects which survey (and, in longitudinal projects, which event) the list applies to.
 
+In projects with Data Access Groups, records in other DAGs are hidden from DAG-restricted users.
+
 ## 3.1 Anonymous vs. Identified Mode
 
 Every project starts in anonymous mode. In anonymous mode, record IDs in the participant list are replaced with a "hidden" symbol, meaning staff cannot directly click through to a record from the list. REDCap still tracks which response belongs to which record internally — the restriction is only on direct navigation.
@@ -92,22 +96,24 @@ Every project starts in anonymous mode. In anonymous mode, record IDs in the par
 Identified mode makes the Record ID column clickable and links it to the corresponding record. There are two ways to enable it:
 
 - **Add a participant identifier** when uploading participants (see Section 3.3).
-- **Designate an email field** in Project Setup → Enable Optional Modules and Customizations. Once a valid email is entered in that field for a given record, that record becomes identified in the participant list.
+- **Designate an email field** in Project Setup → Enable Optional Modules and Customizations (or a survey-level email field in Survey Settings). Once a valid email is entered in that field for a given record, that record becomes identified in the participant list.
+
+A banner above the participant list states whether responses on that list are considered anonymous, based on the current settings. In identified mode, the record ID appears only after the participant has started or finished the survey; until then there is no record to link to.
 
 > **Note:** Identified mode is per-record, not per-project. A record is identified only if it has an email or participant identifier associated with it. Records without either remain anonymous.
 
-> **Before adding participant identifiers:** activate the feature by clicking the **Enable** button in the Participant Identifier column header of the participant list table (see Section 3.3). This makes the column active and adds instructional help text to the Add Participants dialog. Be aware that clicking **Disable** later will wipe all stored identifiers, except those belonging to records with a completed survey response.
+> **Before adding participant identifiers:** activate the feature by clicking the **Enable** button in the Participant Identifier column header of the participant list table (see Section 3.3). This makes the column active and adds instructional help text to the Add Participants dialog. Be aware that clicking **Disable** later will wipe all stored identifiers, except those belonging to participants who have already started (partial) or completed a response. The setting applies to the whole project, not just one survey, and in production only a REDCap administrator can change it.
 
 ## 3.2 Feature Buttons
 
 | Button | Function |
 |---|---|
 | Survey selector (top-left dropdown) | Selects which survey and event the participant list displays. |
-| Displaying selector | Paginates the list in groups of 100. |
-| Add Participants | Opens a text box for entering email addresses, one per line. Optionally, append a participant identifier: `email@example.com, Jane Doe`. Adding a participant does not create a record — the record is only created when the participant completes their first survey. |
+| Displaying selector | Paginates the list in groups of 50. |
+| Add Participants | Opens a text box for entering email addresses, one per line. Optionally, append a participant identifier: `email@example.com, Jane Doe`. If participant identifiers have not been enabled, a batch that includes identifiers is rejected. The same email can be added more than once; duplicates are numbered so each gets its own link. Adding a participant does not create a record — the record is only created when the participant submits the first page of the survey. Available only on the first instrument (see Section 3.4). |
 | Compose Survey Invitations | Opens the invitation composer (see Section 4). |
-| Remove All Participants | Removes all participants who have not yet submitted any data. Does not affect participants who have responded. |
-| Export List | Downloads an Excel file containing all participants, their response status, invitation status, and survey links/codes. Useful for importing into external mailing systems (e.g., Epic MyChart, mail merge tools). |
+| Remove All Participants | Removes all participants who have not yet submitted any data. Does not affect participants who have responded. Available only on the participant list of the first survey (in the first event, for longitudinal projects). |
+| Export List | Downloads a CSV file containing all participants, their response status, invitation status, and survey links/codes. Useful for importing into external mailing systems (e.g., Epic MyChart, mail merge tools). |
 
 ## 3.3 Participant List Table Columns
 
@@ -115,16 +121,27 @@ Identified mode makes the Record ID column clickable and links it to the corresp
 |---|---|
 | Email | The uploaded email address. Displays `[no email listed]` for records entered via the public survey link without an associated email. |
 | Phone | Displayed only when the texting feature is enabled for the project. |
-| Record | Visible in identified mode. Shows a clickable Record ID that links directly to the record. Displays a "hidden eye" icon for anonymous participants. |
-| Participant Identifier | Shows any identifier added at upload. The **Enable** button in this column header activates the participant identifier feature, which adds instructional help text to the Add Participants dialog. Once enabled, the button changes to **Disable**. Disabling wipes all identifiers except those belonging to records with a completed survey. |
+| Record | Visible in identified mode. Shows a clickable Record ID that links directly to the record, once the participant has started or finished the survey. Displays a "hidden eye" icon for anonymous participants. |
+| Participant Identifier | Shows any identifier added at upload. The **Enable** button in this column header activates the participant identifier feature, which adds instructional help text to the Add Participants dialog. Once enabled, the button changes to **Disable**. Disabling wipes all identifiers except those belonging to participants with a partial or completed response. |
 | Invitation Preference | Displayed only when texting is enabled. Shows the participant's preferred contact method (email, phone, or both). |
 | Responded? | A colored dot indicating survey completion status: grey = not started; orange checkmark = partially completed; green checkmark = completed. |
 | Invitation Scheduled? | A clock icon appears if a future invitation is queued for this participant. |
 | Invitation Sent? | Blank envelope = not sent; envelope with green checkmark = sent successfully; envelope with green arrow = currently sending (large batch in progress). |
-| Link | A link icon opens the individual survey for that participant in a new tab. Displays a dash if the survey is already completed. |
-| Survey Access Code & QR Code | A QR icon opens the access code and QR code for that participant's specific survey link. Displays a dash if the survey is completed. |
-| Survey Queue | A survey queue icon (visible in identified mode only) opens the survey queue for that record. Only appears when data exists in the record. |
+| Link | A link icon opens the individual survey for that participant in a new tab. Displays a dash if the survey is already completed or its time limit has expired. |
+| Survey Access Code & QR Code | A QR icon opens the access code and QR code for that participant's specific survey link. Displays a dash if the survey is completed or its time limit has expired. |
+| Link Expiration | Shows when the participant's link stops working, if a time limit applies. |
+| Survey Queue | A survey queue icon opens the survey queue for that record. Appears for any participant who has a record (data exists), whether or not the list is identified. |
 | Remove | Appears for participants who have not yet submitted data. Clicking it removes that individual participant from the list. |
+
+## 3.4 Follow-Up Surveys and Projects Whose First Instrument Is Not a Survey
+
+**Add Participants** is available only on the participant list of the project's first instrument (in the first event, for longitudinal projects), and only when that instrument is a survey. For every other survey — a follow-up survey, or any survey in a project whose first instrument is a data entry form — the participant list cannot be added to directly. Instead:
+
+- The list is filled from existing records. A record appears once it has been created, by staff data entry, import or an earlier survey.
+- The email address comes from the first survey's participant list (when the first instrument is a survey), or from the designated email field or the survey-level email field.
+- Records with no email from any of these sources show `[no email listed]` and cannot be sent an email invitation until one is entered.
+
+When the first instrument is not a survey, set up a designated email field (or a survey-level email field) so invitations have an address to go to. When a participant opens a survey from a participant-list invitation, the designated email field on that survey is pre-filled with their email and locked.
 
 ---
 
@@ -138,19 +155,23 @@ A yellow info box at the top of the dialog confirms which survey (and event, for
 
 ## 4.2 Timing Options
 
-**Immediately** — REDCap sends invitations the moment you click **Send Invitations**.
+**Immediately** — REDCap queues the invitations when you click **Send Invitations**, and the scheduler sends them, usually within about a minute.
 
 **At a specified time** — Enter a future date and time. REDCap uses the server's internal clock and time zone, which may differ from your local time zone. The help text in the dialog shows the current server time — use it to calculate the correct local-to-server time offset.
 
 ## 4.3 Reminders
 
-Check the **Enable Reminder** box to configure automated follow-ups. REDCap supports up to five reminders per invitation. Reminders continue sending at the defined intervals until either all reminders are exhausted or the participant completes the survey — whichever comes first. REDCap automatically cancels any unsent reminders once a response is recorded.
+Check the **Enable Reminder** box to configure automated follow-ups. REDCap supports up to five reminders per invitation. Reminders continue sending at the defined intervals until either all reminders are exhausted or the participant completes the survey — whichever comes first. REDCap automatically cancels any unsent reminders once the response is completed; a partial response does not stop them.
+
+Composing a new invitation for a participant who already has a queued invitation for the same survey replaces that queued invitation and its reminders.
 
 ## 4.4 Composing the Message
 
 **From Email** — Select a "from" address from the dropdown, which is populated by the email addresses associated with all users in the project (up to three per user, configurable in My Profile). Best practice: use a study-specific or shared team email rather than a personal account.
 
-**Display Name** — An optional label that recipients see as the sender name in their email client (e.g., "Heart Congestion Study 2024"). Test any display name with a test participant before broad distribution — some spam filters flag display names that differ from the sending domain.
+**Delivery method** — If texting (Twilio or Mosio) is enabled for the project, a selector lets you choose how the invitation is delivered (email, SMS or voice, depending on the setup).
+
+**Display Name** — Appears only if your REDCap administrator has enabled it. An optional label that recipients see as the sender name in their email client (e.g., "Heart Congestion Study 2024"). Test any display name with a test participant before broad distribution — some spam filters flag display names that differ from the sending domain.
 
 **Subject Line** — Free text. Piping variables is supported.
 
@@ -158,13 +179,13 @@ Check the **Enable Reminder** box to configure automated follow-ups. REDCap supp
 
 > **Note on piping in initial invitations:** If a participant is being invited before their record contains any data (i.e., they have not yet filled out any survey), avoid piping field values from the project — there is nothing to pull yet. For follow-up invitations where a record exists, piping field values works normally.
 
-> **Tip — Test Emails:** A small **send test email** link appears between the subject and message body fields. Clicking it immediately sends the current message draft to the primary email of your REDCap account. Use this to verify formatting, piping, and smart variables before sending to participants.
+> **Tip — Test Emails:** A small **send test email** link appears between the subject and message body fields. Clicking it immediately sends the current message draft to the primary email of your REDCap account. The test fails if the selected From address is not one of your own account's addresses. Use this to verify formatting, piping, and smart variables before sending to participants.
 
-**Load a Previously Sent Email** — A dropdown at the bottom of the compose section lets you load a previously used invitation message. Useful when sending to multiple cohorts with the same or similar content.
+**Load a Previously Sent Email** — A dropdown at the bottom of the compose section lets you load an invitation message sent in the last 12 months (DAG-restricted users see only messages from their own DAG). Useful when sending to multiple cohorts with the same or similar content.
 
 ## 4.5 Selecting Participants
 
-The participant selection table at the bottom of the dialog defaults to all participants who have not yet received a sent or scheduled invitation. Manually check or uncheck individual participants to include or exclude them.
+The participant selection table at the bottom of the dialog pre-checks all participants who have not yet been sent an invitation, do not have one scheduled, and have not started the survey. Manually check or uncheck individual participants to include or exclude them.
 
 For larger participant lists, use the **Actions** dropdown in the top-right corner of the selection table to bulk-select participants based on criteria such as response status or invitation status.
 
@@ -192,17 +213,17 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 | Display Response Status | Filter by survey completion status (e.g., unresponded, partially completed). Single selection only. |
 | Display Surveys | Filter by a specific survey or survey-event combination. Single selection only. |
 | Display Records | Filter by Record ID. For large projects, type a Record ID to jump to it instead of scrolling. Single selection only. |
-| Display Invitation Reminders | Checkbox (unchecked by default). When checked, individual reminders appear as separate rows. Enabling this in a project with many reminders can substantially expand the list. |
+| Display Invitation Reminders | Checkbox (checked by default). When checked, individual reminders appear as separate rows. Enabling this in a project with many reminders can substantially expand the list. |
 | Apply Filters | Applies all current filter settings to the displayed list. |
 | Reset | Returns all filters to their defaults. |
-| Download Log | Generates an Excel file of the invitations currently displayed on screen. Can be run multiple times. |
-| Delete All Selected | Permanently deletes all checked future invitations. A confirmation popup appears before deletion. Deleted future invitations cannot be re-generated by ASIs — use this intentionally (e.g., withdrawing a participant from a study). |
+| Download Log | Downloads a CSV file of all invitations that match the current filters, across all pages (not just the page on screen). Can be run multiple times. |
+| Delete All Selected | Permanently deletes all checked future invitations. A confirmation popup appears before deletion. A deleted ASI invitation can be scheduled again if the record meets the ASI conditions again, unless you tick the option to permanently cancel it in the confirmation popup — tick it when you mean to stop that ASI for good (e.g., withdrawing a participant from a study). |
 
 ## 5.2 Log Table Columns
 
 | Column | Description |
 |---|---|
-| Invitation Send Time | The exact timestamp when the invitation was sent (past) or is scheduled to send (future), based on the server's time zone. Green = sent successfully; red = send failed; grey = scheduled. Future invitations show a pencil icon (edit the scheduled time) and a red X (delete the invitation). Reminders display a bell icon with a number in parentheses indicating which reminder in the sequence it is. |
+| Invitation Send Time | The exact timestamp when the invitation was sent (past) or is scheduled to send (future), based on the server's time zone. Green = sent successfully; red = send failed; grey = scheduled. Future invitations show a pencil icon (reschedule that one invitation) and a red X (delete the invitation). Reminders display a bell icon with a number in parentheses indicating which reminder in the sequence it is. |
 | View Invite | An envelope icon. Click to review the message content for that invitation, including any piped-in values. Piping is filled in when the invitation is composed (or scheduled), not when it goes out, so data entered after that does not appear. |
 | Participant Email | The email address the invitation is or was sent to. |
 | Participant Phone | Displayed only when texting is enabled for the project. |
@@ -228,19 +249,19 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 
 **Q: How many reminders can I set up for a manual survey invitation?**
 
-**A:** Up to five reminders per invitation. REDCap automatically cancels any remaining reminders once the participant completes the survey.
+**A:** Up to five reminders per invitation. REDCap automatically cancels any remaining reminders once the participant completes the survey. A partial response does not stop them.
 
 **Q: I added participant emails to the participant list, but their records are not showing up in REDCap. Is that normal?**
 
-**A:** Yes. Adding a participant to the list does not create a record. A record is only created when the participant submits their first survey response.
+**A:** Yes. Adding a participant to the list does not create a record. A record is only created when the participant submits the first page of the survey.
 
 **Q: A participant says they never received the invitation. How do I check if it was sent?**
 
-**A:** Check the Survey Invitation Log. Find the participant's email and verify the **Invitation Sent?** column. A green checkmark confirms REDCap sent it from the server side. If the invitation shows as sent but the participant didn't receive it, the most likely cause is a spam filter — REDCap cannot detect delivery failures on the recipient's end.
+**A:** Check the Survey Invitation Log. Find the participant's email and look at the icon in the **Invitation Send Time** column: a green checkmark means REDCap sent it from the server side, a grey clock means it is still scheduled, and red means sending failed. The **Invitation Sent?** column in the Participant List shows the same for that survey. If the invitation shows as sent but the participant didn't receive it, the most likely cause is a spam filter — REDCap cannot detect delivery failures on the recipient's end.
 
 **Q: Can I use the Survey Invitation Log to cancel a scheduled invitation?**
 
-**A:** Yes. In the log, find the future invitation, check its checkbox, and use **Delete All Selected**. You can also delete a single future invitation using the red X icon next to its timestamp. Deleted invitations cannot be regenerated by ASIs.
+**A:** Yes. In the log, find the future invitation, check its checkbox, and use **Delete All Selected**. You can also delete a single future invitation using the red X icon next to its timestamp. A deleted ASI invitation can be scheduled again if the record meets the ASI conditions again; tick the permanently cancel option in the confirmation popup to prevent that.
 
 **Q: What is the difference between the participant list and the Survey Invitation Log?**
 
@@ -258,7 +279,7 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 
 **Using a personal email as the From address.** Personal email addresses are tied to individuals who may leave the project. Use a study-specific or shared account. A personal-domain From address can also trigger spam filters in some institutional environments.
 
-**Deleting all future invitations without realizing ASI-generated invitations are included.** The Survey Invitation Log shows both manually composed invitations and ASI-generated ones together. **Delete All Selected** permanently removes all checked entries, including those scheduled by ASIs. Deleted ASI invitations cannot be regenerated.
+**Deleting all future invitations without realizing ASI-generated invitations are included.** The Survey Invitation Log shows both manually composed invitations and ASI-generated ones together. **Delete All Selected** removes all checked entries, including those scheduled by ASIs. A deleted ASI invitation can be scheduled again if the record meets the ASI conditions again, so tick the permanently cancel option when you mean to stop it for good, and leave it unticked if the ASI should be able to fire again.
 
 ---
 

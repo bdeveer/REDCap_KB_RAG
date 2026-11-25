@@ -6,13 +6,13 @@ applies_to:
 - All REDCap projects with surveys enabled
 - single-instrument projects assumed for this guide
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — survey
+  behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-02 — Online Designer
-version: '1.0'
-last_updated: '2026-04-02'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-FD-02
   title: Online Designer
@@ -91,9 +91,11 @@ Before any instrument can be used as a survey, surveys must be turned on for the
 | 1 | Navigate to the **Project Setup** page from the left-hand menu. |
 | --- | --- |
 | 2 | Under **Main Project Settings**, locate the **Use Surveys in this project** option. |
-| 3 | If the button is red, surveys are disabled. Select **Enable** to turn surveys on. If the button is green, surveys are already enabled. |
+| 3 | If the option's label is red, surveys are disabled. Select **Enable** to turn surveys on. If the label is green, surveys are already enabled. |
 
-The **Enable/Disable** button toggles between the enabled (green) and disabled (red) state. When surveys are disabled, all survey-related functionality — including survey settings, distribution tools, and survey status icons — is hidden throughout the project.
+The **Enable/Disable** button itself is grey; it is the option's label that turns green (enabled) or red (disabled). When surveys are disabled, all survey-related functionality — including survey settings, distribution tools, and survey status icons — is hidden throughout the project.
+
+> **Note:** Once a project is in Production, only a REDCap administrator can turn **Use Surveys in this project** on or off. Enable surveys while the project is still in Development.
 
 ## 4.2 Enabling an Instrument as a Survey
 
@@ -106,7 +108,7 @@ The Online Designer now shows additional survey-related columns and buttons:
 | **Survey Options** header | Contains advanced survey features. Covered in [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md). |
 | **Enabled as Survey** column | The primary column for enabling instruments as surveys. |
 | **Enable** button | Appears behind each instrument that is not yet a survey. Selecting it takes you directly to that instrument's Survey Settings. |
-| **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Selecting it does nothing — it is informational only. |
+| **Green checkmark shield** | Replaces the Enable button once an instrument has been enabled as a survey. Selecting it opens that instrument's Survey Settings. |
 | **Survey Related Options** column | Appears for instruments that are already enabled as surveys and contains additional controls. |
 | **Survey Settings** button | Returns you to the Survey Settings page for that instrument to adjust settings after initial setup. |
 | **Automated Invitations** button | An advanced feature for scheduling email invitations. Covered in a separate course. |
@@ -115,11 +117,13 @@ The Online Designer now shows additional survey-related columns and buttons:
 | --- | --- |
 | 2 | You are taken directly to the Survey Settings page for that instrument. |
 
+> **Production projects:** Enable instruments as surveys while the project is not in Draft Mode — REDCap won't let you enable a survey during Draft Mode. Survey settings can be changed in Production without Draft Mode.
+
 ## 4.3 Choosing and Saving Survey Settings
 
 The Survey Settings page contains a long list of options that control the appearance and behavior of your survey. For a first-time setup, you do not need to change any settings — the defaults are appropriate for most surveys.
 
-> **Critical:** Your instrument is not enabled as a survey until you scroll to the bottom of the Survey Settings page and select **Save Changes**. Do not navigate away without saving.
+> **Critical:** Your instrument is not enabled as a survey until you select **Save Changes** (the button appears at both the top and the bottom of the Survey Settings page). Do not navigate away without saving.
 
 See Section 5 for a reference guide to all available settings.
 
@@ -143,6 +147,8 @@ Allows you to turn the survey on or off without removing any of the configured s
 | --- | --- |
 | **Online and active** | Participants can access and fill out the survey. |
 | **Offline** | The survey link returns an "offline" message to participants. Survey settings and collected data are preserved. |
+
+> **Important:** Taking a survey offline does **not** pause or cancel scheduled invitations and reminders. They are still sent on schedule, and participants who select the link see the offline message. To stop them, delete them in the **Survey Invitation Log** (Section 6.3).
 
 ## 5.2 Basic Survey Options
 
@@ -173,7 +179,7 @@ Governs what participants see and what happens after they submit a completed sur
 
 This button appears at the very bottom of the Survey Settings page, but **only** when you return to the page after a survey has already been enabled (it is not visible during initial setup). Selecting it removes all survey configuration and reverts the instrument back to a standard instrument.
 
-> **Important:** Deleting survey settings does **not** delete the instrument or any data collected through the survey. Only the survey-specific configuration is removed.
+> **Important:** Deleting survey settings does **not** delete the instrument or the field data collected through the survey. It does remove everything survey-specific: the survey configuration, the participant list, survey links and return codes, scheduled invitations, and the survey completion timestamps. Export anything you need first.
 
 ## 5.8 Save Changes / Cancel
 
@@ -219,6 +225,8 @@ A checkbox option that adds a Google reCAPTCHA (v2) screen before the survey loa
 
 The Participant List allows you to send each participant an individualized survey link via email. Unlike the Public Survey Link, individualized links enable REDCap to track which specific participant has (or has not) completed the survey, and to send targeted follow-up reminders.
 
+Participants can only be added for the **first instrument** in the project; later surveys use the records that already exist. See [RC-SURV-05 — Participant List & Manual Survey Invitations](RC-SURV-05_Participant-List-and-Manual-Survey-Invitations.md) for details.
+
 Using the Participant List is a two-step process:
 
 **Step 1 — Add Participants:**
@@ -226,7 +234,7 @@ Using the Participant List is a two-step process:
 | 1 | Select the **Add Participants** button. |
 | --- | --- |
 | 2 | Paste participant email addresses into the input box, one email address per line. |
-| 3 | Optionally add an identifier alongside each email (useful for matching responses to your own records). |
+| 3 | Optionally add an identifier alongside each email (useful for matching responses to your own records). Participant identifiers are off by default and must be enabled first; in Production only a REDCap administrator can enable them. |
 | 4 | Save the participant list. |
 
 **Step 2 — Compose and Send Survey Invitations:**
@@ -246,9 +254,11 @@ Using the Participant List is a two-step process:
 The Survey Invitation Log provides a complete record of all invitations and reminders associated with the project. On this page you can:
 
 - View all invitations and reminders that have already been sent.
-- View all scheduled future invitations and reminders.
-- Edit the content or timing of scheduled (not yet sent) invitations.
-- Cancel scheduled invitations or reminders before they are sent.
+- View all scheduled future invitations and reminders, including the email each one will send.
+- Change the send time of scheduled (not yet sent) invitations.
+- Delete scheduled invitations or reminders before they are sent.
+
+The content of a scheduled invitation cannot be edited. To change the wording, delete the scheduled invitation and compose a new one.
 
 ---
 
@@ -258,9 +268,9 @@ Only a few user rights in REDCap affect survey functionality.
 
 | Right | Effect |
 | --- | --- |
-| **Project Design and Setup** | Required to enable surveys for the project, enable individual instruments as surveys, and modify survey settings. Without this right, a user cannot access the Survey Settings page or the survey-related columns in the Online Designer. |
-| **Survey Distribution Tools** | Required to access the Survey Distribution Tools page (Public Survey Link, Participant List, Survey Invitation Log). Without this right, the page does not appear in the left-hand menu. |
-| **Edit Survey Responses** | Controls whether a user can modify survey responses after they have been submitted. By default, submitted survey responses are locked — users can view them but not edit them. Granting this right unlocks the Edit Response button for that user. This right must be granted **per instrument** (not project-wide) and only appears for instruments that are enabled as surveys. It is turned off by default. |
+| **Project Design and Setup** | Required to enable surveys for the project (in Production, only an administrator can change the project-level setting), enable individual instruments as surveys, and modify survey settings. Without this right, a user cannot access the Survey Settings page or the survey-related columns in the Online Designer. |
+| **Survey Distribution Tools** | Required to access the Survey Distribution Tools page (Public Survey Link, Participant List, Survey Invitation Log). Without this right, the page does not appear in the left-hand menu. It also controls the **Survey options** menu on the data entry form. |
+| **Edit Survey Responses** | Controls whether a user can modify survey responses after they have been submitted. By default, survey responses — partial and completed — are locked: users can view them but not edit them. Granting this right unlocks the Edit Response button for that user. This right must be granted **per instrument** (not project-wide) and only appears for instruments that are enabled as surveys, and only if your REDCap administrator allows editing of survey responses on the instance. It is turned off by default. |
 
 ---
 
@@ -274,9 +284,9 @@ Surveys use dedicated status icons that differ from those used for standard inst
 
 | Icon | Meaning |
 | --- | --- |
-| **Grey dot** | The survey has not been opened or touched by any participant. Shared with regular (non-survey) instruments. |
+| **Grey dot** | No data has been saved for the survey yet. A participant who opens the survey but leaves before submitting the first page still shows grey. Shared with regular (non-survey) instruments. |
 | **Orange dot with white checkmark** | The survey was partially completed. This typically occurs in multi-page surveys where the participant closed the browser or navigated away before reaching the last page. |
-| **Green dot with white checkmark** | The survey was fully completed by a participant. |
+| **Green dot with white checkmark** | The survey was fully completed by a participant. Completing a survey also sets the instrument's form status to **Complete**. |
 
 > **Note on partial completions:** Partial completions most commonly occur in surveys that use the "one section per page" setting. If a participant closes the browser after filling out page one but before reaching page two, an orange checkmark is recorded.
 
@@ -286,13 +296,20 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 | 1 | Navigate to the survey response in question using the Record Home Page or the record navigation tools. |
 | --- | --- |
-| 2 | Select the **Edit Response** button, found in the highlighted green information box at the top of the survey view. |
+| 2 | Select the **Edit Response** button, found in the information box at the top of the form (green for a completed response, orange for a partial one). |
 | 3 | Modify the data as needed. |
 | 4 | Save your changes. |
 
 > **Note:** You must select **Edit Response** each time you want to modify a given survey response. The form does not remain in edit mode between sessions.
 
 > **Permission required:** The user must have the **Edit Survey Responses** right for the specific instrument in order for the Edit Response button to appear. See Section 7.
+
+## 8.3 Other Survey Behaviour Worth Knowing
+
+- **Timestamps:** REDCap records when each survey was started and completed, and how long it took. The completion time can be exported as the `[instrument]_timestamp` column in data exports.
+- **Survey options menu:** On the data entry form, the **Survey options** menu needs the **Survey Distribution Tools** right. Its survey options are greyed out when the survey is offline or the response is already complete. See [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md).
+- **Project status:** When a project moves to **Analysis/Cleanup** or **Completed**, its surveys stop accepting responses and invitations are no longer sent.
+- **Survey settings in depth:** Response limits, close dates, save and return, and termination options are covered in [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
 
 ---
 
@@ -301,10 +318,10 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 | Does enabling surveys prevent users from entering data directly into the instrument? | No. Enabling an instrument as a survey does not remove the ability to enter data as a logged-in user. Both data entry modes (user-entered and survey participant) remain available simultaneously. |
 | --- | --- |
 | What is the difference between the Public Survey Link and the Participant List? | The Public Survey Link is a single URL anyone can use — no tracking of individual participants. The Participant List sends each participant a unique link, enabling response tracking and automated reminders. |
-| What happens to survey settings and data if I select "Delete Survey Settings"? | Only the survey configuration is deleted. The instrument definition and all collected data are preserved. The instrument reverts to a standard, non-survey instrument. |
-| Why does the "Edit Survey Responses" checkbox not appear in the user rights page? | The checkbox only appears after an instrument has been enabled as a survey. If you don't see it, verify that the instrument is enabled as a survey first. |
-| Can I temporarily disable a survey without losing its settings? | Yes. Use the **Survey Status** toggle in the Survey Settings page to switch the survey to Offline. The settings and data are preserved; participants who visit the link will see an offline message. |
-| What is the Survey Access Code used for? | It is a shorter alternative to the full Public Survey URL. Participants can enter this code in the REDCap general survey portal (if your institution has one configured) instead of using the full URL. |
+| What happens to survey settings and data if I select "Delete Survey Settings"? | The instrument definition and the collected field data are preserved, and the instrument reverts to a standard, non-survey instrument. Everything survey-specific is removed: the participant list, survey links and return codes, scheduled invitations, and survey completion timestamps. |
+| Why does the "Edit Survey Responses" checkbox not appear in the user rights page? | The checkbox only appears after an instrument has been enabled as a survey, and only if your REDCap administrator allows editing of survey responses on the instance. Verify that the instrument is enabled as a survey first; if it is, ask your administrator. |
+| Can I temporarily disable a survey without losing its settings? | Yes. Use the **Survey Status** toggle in the Survey Settings page to switch the survey to Offline. The settings and data are preserved; participants who visit the link will see an offline message. Scheduled invitations and reminders are still sent while the survey is offline — delete them in the Survey Invitation Log if you don't want them to go out. |
+| What is the Survey Access Code used for? | It is a shorter alternative to the full Public Survey URL. Participants can enter this code on REDCap's built-in survey access code page instead of using the full URL; no extra setup is needed. See [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md). |
 | How many reminders can I set up in the Participant List? | Up to 5 reminder emails per invitation. REDCap automatically cancels pending reminders for any participant who completes the survey. |
 | Can I use both the Public Survey Link and the Participant List at the same time? | Yes. They are independent distribution methods and can be used concurrently. |
 
@@ -314,9 +331,9 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 
 ## Forgetting to select Save Changes after enabling a survey
 
-- The user selects Enable behind an instrument, reviews the Survey Settings, but navigates away without scrolling to the bottom and selecting Save Changes.
+- The user selects Enable behind an instrument, reviews the Survey Settings, but navigates away without selecting Save Changes.
 - The instrument is not enabled as a survey. The green checkmark shield does not appear.
-- **Prevention:** Always scroll to the bottom of the Survey Settings page and confirm you have selected Save Changes before navigating away.
+- **Prevention:** Always select Save Changes (at the top or bottom of the Survey Settings page) before navigating away.
 - **Recovery:** Return to the Online Designer, select Enable behind the instrument again, and save.
 
 ## Distributing the survey before saving settings
@@ -343,10 +360,11 @@ Submitted survey responses open in **view-only mode** by default. To modify a re
 - The Public Survey Link does not track individual respondents — all submissions appear as anonymous.
 - **Prevention:** If tracking completion by individual participant is a requirement, use the Participant List instead of (or in addition to) the Public Survey Link.
 
-## Missing scheduled reminders because the survey was re-enabled
+## Expecting an offline survey to stop invitations and reminders
 
-- The user disables and re-enables the survey during the data collection period, which can affect scheduled reminders.
-- **Prevention:** Avoid toggling the Survey Status on and off during active data collection. If you must take the survey offline briefly, verify the Invitation Log afterward to confirm scheduled reminders are still intact.
+- The user sets the survey to Offline, assuming this pauses scheduled invitations and reminders.
+- Scheduled invitations and reminders are still sent on schedule. Participants receive the email, select the link, and see the offline message.
+- **Prevention:** Before taking a survey offline, open the **Survey Invitation Log** and delete any scheduled invitations and reminders you don't want sent. Compose new ones when the survey is back online.
 
 ---
 
@@ -357,7 +375,6 @@ Survey functionality must be enabled at the system level before any project can 
 Additional survey-related settings that administrators control in the Control Center:
 
 - **Google reCAPTCHA** — Optional bot protection for public surveys; must be configured in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) before the per-project reCAPTCHA option becomes available.
-- **Alerts & Notifications email recipient settings** — Controls whether project users can include project variables or freeform email addresses in survey invitation fields ([RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)).
 - **e-Consent Framework** — Must be enabled in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) before the e-Consent option appears in survey settings (see [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md)).
 - **URL Shortening Service** — Must be enabled in [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md) for the "Get Short Survey Link" option to work in Survey Distribution Tools.
 
