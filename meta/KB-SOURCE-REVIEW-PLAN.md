@@ -202,6 +202,24 @@ RC-TXT-01, RC-MSG-01, RC-SENDIT-01, RC-INTG-01, RC-DDP-01, RC-DE-06/07/08.
 - **Commit once per wave** (or once per sub-cluster in large waves), with messages
   like `<IDs>: <topic> review against source`.
 
+### Chunk size (set 2026-11-25)
+
+Wave 3 and Wave 4a each used about 40% of one session allowance (Wave 3: 6
+changelog-only articles, about 2,100 lines; Wave 4a: 8 articles, about 3,600
+lines, five of them partly live-tested). No chunk may use more than 40%, so each
+chunk in the table above targets about 25–30%:
+
+- **At most about 6 fact-check agents and 1,400 lines** of changelog-only articles,
+  or about 2,300 lines when most articles were live-tested (those agents check
+  only LTS differences and untested claims).
+- **Batch small related articles**, 2–5 per agent (smart variables, action tags,
+  upload formats, API methods, live-tested Control Center pages). One agent
+  reading the shared source once is cheaper than several agents reading it.
+- **Keep reports short:** ask agents for about 1,200 words, no CONFIRMED list
+  beyond one line per claim, and skip facts already in earlier wave notes.
+- **One report, go-ahead and commit per chunk.** Two chunks can share a session
+  only if the first finished well under 40%.
+
 ## 6. Keeping it current afterwards
 
 When a new version is added with `add-version.ps1`, hash-compare each module in the
@@ -225,11 +243,33 @@ version on every article, because each source-reviewed article gets a pinned
 | 2 Production & integrity | 14 + 2 from the sweep | Done 2026-11-24 |
 | 3 Compliance | 6 + 2 from the sweep | Done 2026-11-25 |
 | 4a Logic engine | 8 + 3 from the sweep | Done 2026-11-25 |
-| 4b Piping | 5 | — |
-| 4c Smart variables | 12 | — |
-| 4d Action tags | 11 | — |
-| 5 Longitudinal & surveys | ~25 | — |
-| 6 Exports & data entry | ~30 | — |
-| 7 API methods | ~40 remaining | — |
-| 8 Control Center & admin | ~40 | — |
-| 9 Specialty | ~16 | — |
+| 4b Piping | PIPE-01–04, DE-05 (5) | — |
+| 4c-1 Smart variables | PIPE-05–10 (6; 3 per agent) | — |
+| 4c-2 Smart variables | PIPE-11, 12, 14–17 (6; 3 per agent) | — |
+| 4d-1 Action tags | AT-01–06 (6; 2–3 per agent) | — |
+| 4d-2 Action tags | AT-07–11 (5; 2–3 per agent; also fix AT-09 rule H wording) | — |
+| 5a Longitudinal | LONG-01/02, DE-10, NAV-REC-02/03 (5) | — |
+| 5b Surveys core | SURV-01/02/04/05 (4) | — |
+| 5c Automation | SURV-06/07, ALERT-01/02 (4) | — |
+| 5d MLM and upload formats | MLM-01, IMP-05–10 (7; IMP 3 per agent) | — |
+| 6a Exports | EXPRT-01/02/05/06/07/08 (6) | — |
+| 6b Data entry | DE-01/02/11/12, DDE-01 (5) | — |
+| 6c Data quality and navigation | DQ-01, NAV-REC-01/04, NAV-UI-01/02 (5) | — |
+| 6d Designer I | FD-01/04/05 (3) | — |
+| 6e Designer II | FD-07/11/12, NAV-UI-03/04 (5) | — |
+| 6f Project and misc | PROJ-02/03/04, FILE-01, CAL-01, PROF-01 (6) | — |
+| 7a API | API-02–13 except 03, 08 (10; 5 per agent) | — |
+| 7b API | API-14–24 except 18 (10; 5 per agent) | — |
+| 7c API | API-25–36 except 31, 32 (10; 5 per agent) | — |
+| 7d API | API-37–46 (10; 5 per agent) | — |
+| 7e API | API-47–56 (10; 5 per agent) | — |
+| 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | — |
+| 8b Control Center II | CC-10–18 (9; LTS differences, 2–3 per agent) | — |
+| 8c Control Center III | CC-19–26 (8; LTS differences, 2 per agent) | — |
+| 8d REDCap+ and modules | PLUS-01–05, EM-01, TXT-02 (7) | — |
+| 8e AI and DDP | AI-01–04, DDP-02 (5) | — |
+| 8f CDIS | CDIS-01–05 (5) | — |
+| 9a MyCap I | MYCAP-01–04 (4) | — |
+| 9b MyCap II | MYCAP-05–08 (4) | — |
+| 9c Mobile, texting, messenger | MOB-01, TXT-01, MSG-01 (3) | — |
+| 9d Specialty | SENDIT-01, INTG-01, DDP-01, DE-06/07/08 (6; 2 per agent) | — |
