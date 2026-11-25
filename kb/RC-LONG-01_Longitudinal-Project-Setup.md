@@ -7,10 +7,10 @@
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Export Events offset values live-tested on v17.5.6 (Standard), 2026-10 |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — longitudinal setup behaviour checked against source code; Export Events offset values live-tested on 17.5.6 (Standard), 2026-10; pages not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.6 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.7 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how do i set up a longitudinal project; collect data across multiple time points and events; enable longitudinal mode in redcap; define arms and events; assign instruments to events; multiple visits or timepoints per participant; set up study arms for control and intervention groups; designate which forms are collected at which event |
@@ -29,7 +29,7 @@ Repeated instruments and repeated events are a separate feature that can be laye
 
 **Longitudinal Mode**
 
-A project setting that enables time-point-based data collection. When active, REDCap organizes data by record, arm, and event rather than simply by record and instrument. All longitudinal features are hidden until this mode is enabled.
+A project setting that enables time-point-based data collection. When active, REDCap organizes data by record, arm, and event rather than simply by record and instrument. All longitudinal features are hidden until this mode is enabled. REDCap only treats the project as longitudinal once it has more than one event; with a single event it behaves like a classic project.
 
 **Arm**
 
@@ -45,9 +45,9 @@ The human-readable name you assign to an event (e.g., "Baseline," "3 Month Follo
 
 **Unique Event Name**
 
-A system-generated identifier for each event, derived from the event label and arm number (e.g., `baseline_arm_1`). It is used to reference events in branching logic, piping, and calculated fields. Cannot be manually overridden through the UI; may be specified in a CSV upload, but leaving it blank and letting REDCap generate it is strongly preferred.
+A system-generated identifier for each event, derived from the event label and arm number (e.g., `baseline_arm_1`). It is used to reference events in branching logic, piping, and calculated fields. It cannot be set by hand — not in the UI and not in a CSV upload (for a new event, a value supplied in the upload is ignored and REDCap generates the name itself).
 
-REDCap generates the unique event name using this algorithm: lowercase the event label, remove hyphens entirely (they do not become underscores), replace all remaining non-alphanumeric characters with underscores, collapse consecutive underscores, and append `_arm_N`. Examples: `"Baseline"` → `baseline_arm_1`; `"Follow-up 30 min"` → `followup_30_min_arm_1` (not `follow_up_30_min_arm_1`); `"Ad Hoc Follow-up"` → `ad_hoc_followup_arm_1`. When building instrument-event mapping CSVs externally, derive unique event names using this exact algorithm — hand-typed approximations frequently diverge from what REDCap generates and will cause mapping imports to fail.
+REDCap generates the unique event name from the event label using this algorithm: remove punctuation and all other special characters (hyphens, parentheses, slashes and so on are deleted, not turned into underscores), replace each space with an underscore, lowercase the result, cut it to 18 characters, trim any leading or trailing underscores, and append `_arm_N`. Consecutive underscores are not collapsed. If two events in the project end up with the same name, the second gets a `b` appended, the third a `c`, and so on (e.g. `visit_arm_1`, `visit_arm_1b`). Examples: `"Baseline"` → `baseline_arm_1`; `"Follow-up 30 min"` → `followup_30_min_arm_1` (not `follow_up_30_min_arm_1`); `"Visit - Week 2"` → `visit__week_2_arm_1` (double underscore, because the hyphen is removed and both spaces remain); `"Month 12 Follow-up Visit"` → `month_12_followup_arm_1` (cut to 18 characters, trailing underscore trimmed). If nothing is left after removing characters (for example, a label written entirely in a non-Latin script), REDCap substitutes a 10-character code derived from the label. When building instrument-event mapping CSVs externally, derive unique event names using this exact algorithm — or better, copy them from a downloaded events CSV — because hand-typed approximations frequently diverge from what REDCap generates and the mapping import will be rejected.
 
 **Custom Event Label**
 
@@ -73,15 +73,15 @@ Before any longitudinal features are accessible, you must enable longitudinal mo
 
 Once enabled, the longitudinal configuration tools — Define My Events and Designate Instruments for My Events — become visible in Project Setup.
 
-> **Critical:** Disabling longitudinal mode after data collection has begun will delete all data that was not collected in the very first event of the project. Do not disable longitudinal mode unless you are certain no data outside the first event needs to be retained.
+> **Critical:** Disabling longitudinal mode after data collection has begun makes all data outside the very first event (of Arm 1) inaccessible — REDCap asks for confirmation, then hides the other arms and events and only the first event's data remains available. Strictly, that data is hidden rather than erased, and re-enabling longitudinal mode with the exact same setup may bring it back, but restoring can have side effects. Treat it as lost: do not disable longitudinal mode unless you are certain no data outside the first event needs to be retained, and export the full dataset first.
 
-> **Institution-specific:** In Production mode, disabling longitudinal mode or un-designating events may require administrator approval. Many installations enable this safeguard by default. Move your project to Production before collecting real data to benefit from this protection.
+> **Institution-specific:** In Production status, only REDCap administrators can enable or disable longitudinal mode, and normal users cannot remove instrument designations; how such requests are submitted and approved varies by institution. Move your project to Production before collecting real data to benefit from this protection.
 
 ---
 
 ## 4. Defining Arms & Events
 
-After enabling longitudinal mode, click the **Define My Events** button in Project Setup to reach the arm and event configuration page. By default, REDCap creates one arm ("Arm 1") with one event pre-populated.
+After enabling longitudinal mode, click the **Define My Events** button in Project Setup to reach the arm and event configuration page. Every project already has one arm ("Arm 1") with one event, so these are pre-populated.
 
 ### 4.1 Managing Arms
 
@@ -91,9 +91,9 @@ Arms appear as tabs across the top of the Define My Events page.
 
 **Adding a new arm:** Click the **+Add New Arm** tab, enter a name, and confirm. New arms are created without any events — you must add events to them manually.
 
-**Deleting an arm:** The delete option appears next to the rename link when more than one arm exists.
+**Deleting an arm:** The delete option appears next to the rename link when more than one arm exists. In Production it is shown only to REDCap administrators.
 
-> **Critical:** Deleting an arm permanently deletes all records and data associated with that arm. This action cannot be undone.
+> **Critical:** Deleting an arm makes all records and data associated with that arm inaccessible. The data is hidden rather than erased and may reappear if the exact same arm and events are recreated, but restoring can have side effects — treat the deletion as irreversible and export the arm's data first.
 
 ### 4.2 Event Table Columns
 
@@ -101,10 +101,11 @@ Within each arm, events are displayed in a table with the following columns:
 
 | **Column** | **Description** |
 |---|---|
-| Move | Drag handle to reorder events. Hover over the column to reveal the up/down arrow icon. |
+| Move | Drag handle to reorder events. Hover over the column to reveal the up/down arrow icon. Without the Scheduling module or MyCap, this drag order is the display order. |
 | Edit / Delete | Pencil icon edits the event label or custom event label. Red X deletes the event. |
 | Event # | System-assigned display order number for the event. |
-| Event Label | The human-readable name of the event. Must be unique within the arm. |
+| Day offset and offset range | Shown only when the Scheduling module or MyCap is enabled. Events are then ordered by day offset rather than by drag order. |
+| Event Label | The human-readable name of the event, up to 30 characters. Keep it unique within the arm — REDCap checks this when you add an event on this page, but not on CSV upload. |
 | Custom Event Label | Optional piping field. Enter a variable name in brackets (e.g., `[visit_date]`) to display that value in the event label during data entry. |
 | Unique Event Name | Auto-generated from the arm number and event label. Used in logic references. Read-only; changes when the event label is renamed. |
 | Event ID | Permanent numeric identifier. Does not change when the event label is renamed. |
@@ -115,13 +116,15 @@ Within each arm, events are displayed in a table with the following columns:
 
 **Adding an event:** Enter an event name in the **Event label** text box at the bottom of the arm's table, optionally fill in a custom event label, and click **Add new event**.
 
-**Deleting an event:** Click the red X icon next to the event. Deleting an event permanently deletes any data recorded in that event for all records in the project.
+**Deleting an event:** Click the red X icon next to the event. The last remaining event cannot be deleted. Deleting an event makes any data recorded in that event inaccessible for all records in the project. The data is hidden rather than erased and may reappear if the exact same event is restored, but restoring can have side effects — treat the deletion as irreversible and export the event's data first.
 
 ---
 
-> **Navigation notes.** A direct link to **Define My Events** appears in the "Project Home and Design" section of the left-hand menu from **15.3.3** (repositioned slightly in 15.4.0 for consistency with earlier layouts). From **17.4.1**, **Designate Instruments for My Events** is likewise reachable directly from the left-hand menu and gained a **Print Page** button. From **15.4.5**, icons distinguish repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer.
+> **Navigation notes.** A direct link to **Define My Events** appears in the "Project Home and Design" section of the left-hand menu from **15.3.3** (repositioned slightly in 15.4.0 for consistency with earlier layouts). From **15.4.5**, icons distinguish repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer.
 
-> **Critical — accented characters in event and DAG names (17.3.0+).** In **newly created** projects, accented characters in Data Access Group or longitudinal event names are transliterated to their unaccented equivalents when REDCap generates the **unique** name. Since unique event names are what branching logic, piping and API calls reference, a project created before 17.3.0 may hold unique names containing accents while a project created after does not — so logic copied between the two can silently fail to match. Check the unique names, not the display labels, when moving expressions between projects.
+> **Version caveat (17.6 Standard; not in LTS 17.3 or 16):** The direct left-hand-menu link to **Designate Instruments for My Events** and the **Print Page** button on that page are Standard-release features (from 17.4.1 per the changelog). On LTS 17.3 or 16, open the page from Project Setup or the Define My Events page instead.
+
+> **Version caveat (accented characters in event and DAG names, 17.3.0+):** In projects **created** on 17.3.0 or later, accented letters in Data Access Group or event labels are flattened to their unaccented equivalents when REDCap generates the **unique** name (`"Visité"` → `visite_arm_1`). Projects created earlier keep the old behaviour even after an upgrade: accented letters are simply dropped (`"Visité"` → `visit_arm_1`). A project created from an XML file carries the behaviour of the project it was exported from. Because branching logic, piping and API calls reference unique names, logic copied between an older and a newer project can silently fail to match — check the unique names, not the display labels, when moving expressions between projects.
 
 ---
 
@@ -137,7 +140,7 @@ This page displays a matrix with instruments as rows and events as columns. A se
 2. Check the box for each instrument-event combination you want to enable. Use **Select All** or **Deselect All** at the top of the table to apply changes in bulk.
 3. Click **Save** to confirm your selections.
 
-> **Critical:** Unchecking an instrument-event combination that already contains saved data will make that data inaccessible — it will no longer appear in the UI. The data is not deleted from the database and can be recovered by re-checking the combination, but treat this as a high-risk action: always verify the combination is empty, or export the data first, before removing a designation. If new data is collected in the same instrument-event combination after it was unchecked and then re-checked, there may be record-level collisions that require backend database intervention to resolve. If you are unsure, contact your local REDCap administrator before proceeding.
+> **Critical:** Unchecking an instrument-event combination that already contains saved data will make that data inaccessible — it will no longer appear in the UI. The data is not deleted from the database and can be recovered by re-checking the combination, but treat this as a high-risk action: always verify the combination is empty, or export the data first, before removing a designation. If new data is collected in the same instrument-event combination after it was unchecked and then re-checked, there may be record-level collisions that require backend database intervention to resolve. Removing a designation also sets any active Automated Survey Invitation for that instrument and event to inactive, so review your ASIs if you later re-check the combination. If you are unsure, contact your local REDCap administrator before proceeding.
 
 > **Important:** Always designate the first instrument in your project (the one containing the record ID field) to the very first event in each arm. REDCap stores the record ID in this instrument-event combination. Omitting it leads to problems that vary by project setup rather than to one predictable failure — reported symptoms include orphaned records and branching logic or calculations not firing as expected. Because the symptom is unpredictable and usually surfaces long after data collection starts, treat this as a setup step to verify rather than a risk to weigh.
 
@@ -153,16 +156,18 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 
 > **Upload order:** When setting up a project via CSV, always upload in this sequence: **arms → events → instrument mappings**. Events reference arm numbers, so the arm must exist before events are uploaded. Instrument mappings reference unique event names, so events must exist before mappings are uploaded. Uploading out of order will cause references to fail.
 
-> **Single-arm projects:** If your project has only one arm, you do not need to upload the arms CSV. REDCap creates "Arm 1" automatically when longitudinal mode is enabled. Start with the events upload, then upload instrument mappings.
+> **Single-arm projects:** If your project has only one arm, you do not need to upload the arms CSV. Every project already has "Arm 1". Start with the events upload, then upload instrument mappings.
 
 | **Option** | **Behavior** |
 |---|---|
-| Upload arms (CSV) | **Additive.** Adds new arms. Existing arms not in the file are unaffected. |
-| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. Below 17.4.3 Standard / 17.3.9 LTS it only worked once at least two events were defined. |
-| Upload events (CSV) | **Additive.** Adds new events. Existing events not in the file are unaffected. |
+| Upload arms (CSV) | **Additive.** A row whose `arm_num` matches an existing arm updates that arm's name; any other row creates a new arm. Existing arms not in the file are unaffected. |
+| Download arms (CSV) | Exports current arm configuration. Useful for backup or bulk editing. |
+| Upload events (CSV) | **Additive.** A row whose `unique_event_name` matches an existing event updates that event; any other row creates a new event. Existing events not in the file are unaffected. REDCap shows a preview of the changes before you commit them. |
 | Download events (CSV) | Exports current event configuration. |
 
-> **Note:** Arms and event uploads are additive — you can safely upload a file containing only new rows without affecting existing configuration. This is the opposite of instrument-event mapping uploads, which replace the entire mapping (see §6.2). Keep this distinction in mind when planning bulk updates.
+> **Version caveat (LTS 16; 17.x below 17.4.3 Standard / 17.3.9 LTS):** **Download arms** only works once the project has at least two events. On these versions, add a second event first, or use the Export Arms API.
+
+> **Note:** Arms and event uploads are additive — you can safely upload a file containing only new rows without affecting existing configuration. This is the opposite of instrument-event mapping uploads, which replace the entire mapping (see §6.2). Keep this distinction in mind when planning bulk updates. If any row references an arm that does not exist (or, for mappings, an event that does not exist), REDCap reports an error and saves nothing from the file.
 
 #### Arms CSV format
 
@@ -170,8 +175,8 @@ Access bulk options from the **Upload or download arms/events** dropdown.
 
 | **Column** | **Type** | **Notes** |
 |---|---|---|
-| `arm_num` | Positive integer | Sequential, starting at 1. No leading zeros. |
-| `name` | Free text | Descriptive label shown in the UI (e.g., "Control", "Intervention"). |
+| `arm_num` | Integer 1–99 | No leading zeros. Numbers need not be consecutive, but numbering 1, 2, 3… keeps unique event names (`_arm_N`) easy to read. |
+| `name` | Free text, up to 50 characters | Descriptive label shown in the UI (e.g., "Control", "Intervention"). If left blank, REDCap names the arm "Arm N". |
 
 Example:
 
@@ -185,24 +190,24 @@ arm_num,name
 
 **Core columns (always present):** `event_name`, `arm_num`, `unique_event_name`, `custom_event_label`
 
-**Additional columns when the Scheduling module is active:** `day_offset`, `offset_min`, `offset_max` appear between `arm_num` and `unique_event_name`.
+**Additional columns when the Scheduling module (or MyCap) is active:** `day_offset`, `offset_min`, `offset_max` appear between `arm_num` and `unique_event_name`.
 
 Full column order (scheduling active): `event_name`, `arm_num`, `day_offset`, `offset_min`, `offset_max`, `unique_event_name`, `custom_event_label`
 
 | **Column** | **Type** | **Notes** |
 |---|---|---|
-| `event_name` | Free text | Display label for the event. **Values containing spaces or special characters are wrapped in double quotes** in the CSV (e.g., `"3 Month"`, `"End of Study"`). |
+| `event_name` | Free text, up to 30 characters | Display label for the event. **Values containing spaces or special characters are wrapped in double quotes** in the CSV (e.g., `"3 Month"`, `"End of Study"`). |
 | `arm_num` | Positive integer | Must match an existing arm. In multi-arm projects, every event must appear as a separate row for each arm — there is no single row that spans multiple arms. A 2-arm, 6-event project produces 12 rows in the events CSV. |
-| `day_offset` | Integer ≥ 0 | Days from the reference date (e.g., enrollment). REDCap sorts events by `day_offset` ascending. |
+| `day_offset` | Integer, −9999 to 9999 | Days from the reference date (e.g., enrollment); negative values are allowed for events before it. With Scheduling or MyCap active, REDCap sorts events by `day_offset` ascending. If the column is absent, each event's row number in the file is used instead, so row order sets the display order. |
 | `offset_min` | Integer ≥ 0 | Early scheduling window (days before the target date). Expressed as a positive number in the CSV — e.g., `3` means the window opens 3 days before the target date. The API Export Events endpoint returns it the same way (positive), and only when the Scheduling module is enabled. |
 | `offset_max` | Integer ≥ 0 | Late scheduling window (days after the target date). Expressed as a positive number. Symmetric windows (e.g., ±14 days) appear as the same value in both columns. |
-| `unique_event_name` | Snake_case string | May be left blank on upload — REDCap auto-generates from the event name and arm number. **Recommended: leave blank and let REDCap generate.** See derivation rule below. |
+| `unique_event_name` | Snake_case string | Leave blank for new events — REDCap always generates the name from the event name and arm number and ignores any value you supply. Fill it in only to update an existing event: a value matching an existing unique event name updates that event instead of creating a new one. See derivation rule below. |
 | `custom_event_label` | Free text or blank | Piped event label. Leave blank if not used. The column is always present in exports — even when all values are empty. |
 
-**`unique_event_name` derivation rule:** REDCap lowercases the event name, removes hyphens entirely (they do not become underscores), replaces all remaining non-alphanumeric characters with underscores, collapses consecutive underscores into one, and appends `_arm_{N}`. Examples: "Screening" → `screening_arm_1`; "3 Month" → `3_month_arm_1`; "End of Study" → `end_of_study_arm_1`; "Follow-up" → `followup_arm_1` (hyphen removed, not converted); "Ad Hoc (Visit)" → `ad_hoc_visit_arm_1` (parentheses become underscores, consecutive underscores collapsed). Hand-typing unique event names that don't match this rule exactly will cause the mapping upload to silently fail.
+**`unique_event_name` derivation rule:** REDCap removes punctuation and all other special characters from the event name (they are deleted, not turned into underscores), replaces each space with an underscore, lowercases the result, cuts it to 18 characters, trims leading and trailing underscores, and appends `_arm_{N}`. Consecutive underscores are not collapsed. A second event with the same result gets `b` appended, a third `c`, and so on. Examples: "Screening" → `screening_arm_1`; "3 Month" → `3_month_arm_1`; "End of Study" → `end_of_study_arm_1`; "Follow-up" → `followup_arm_1` (hyphen removed, not converted); "Ad Hoc (Visit)" → `ad_hoc_visit_arm_1` (parentheses removed); "Visit - Week 2" → `visit__week_2_arm_1` (double underscore kept); "Month 12 Follow-up Visit" → `month_12_followup_arm_1` (cut to 18 characters). A mapping upload that references a unique event name not in the project is rejected with an error and nothing in the file is saved.
 
-- `day_offset`, `offset_min`, and `offset_max` appear in the downloaded events CSV only when the scheduling module is active for the project. Include them in an upload only when scheduling is in use.
-- When multiple events share the same `day_offset`, REDCap breaks the display-order tie by sorting alphabetically by unique event name — which is rarely the intended clinical order. To enforce a specific display order among same-day events, assign sequential `day_offset` values (e.g., 0, 1, 2, 3…) even if the events all occur on the same calendar day.
+- `day_offset`, `offset_min`, and `offset_max` appear in the downloaded events CSV only when the Scheduling module or MyCap is active for the project. Include them in an upload only when scheduling is in use.
+- With Scheduling or MyCap active, events are ordered by `day_offset`, and events sharing the same `day_offset` are sorted alphabetically by event label — which is rarely the intended clinical order. To enforce a specific display order among same-day events, assign sequential `day_offset` values (e.g., 0, 1, 2, 3…) even if the events all occur on the same calendar day. Without Scheduling or MyCap, the order is simply the drag order on the Define My Events page.
 
 Example (scheduling module active, 2-arm project — rows for both arms shown):
 
@@ -228,7 +233,7 @@ Access bulk options from the **Upload or download instrument mappings** dropdown
 
 | **Option** | **Behavior** |
 |---|---|
-| Upload instrument-event mappings (CSV) | Replaces the full mapping configuration. Any instrument-event combination omitted from the file will be unchecked. |
+| Upload instrument-event mappings (CSV) | Replaces the full mapping configuration. Any instrument-event combination omitted from the file will be unchecked. The upload is refused if it would remove events that MyCap task schedules depend on. |
 | Download instrument-event mappings (CSV) | Exports current mappings. Useful for backup or bulk editing. |
 
 #### Instrument-Event Mappings CSV format
@@ -243,7 +248,7 @@ Access bulk options from the **Upload or download instrument mappings** dropdown
 
 Each row represents one instrument designated to one event. An event with five instruments assigned to it produces five rows in this file. In multi-arm projects the entire mapping is replicated per arm — arm 1 rows first, then arm 2, etc. File size scales as total (events × instruments per event) across all arms.
 
-> **Important:** Unlike arm and event uploads, the instrument-event mapping upload is not additive — it replaces the complete mapping configuration. Omitting a mapping will uncheck it, potentially deleting data if the combination contained records. Always start from a downloaded export and edit it rather than building from scratch.
+> **Important:** Unlike arm and event uploads, the instrument-event mapping upload is not additive — it replaces the complete mapping configuration. Omitting a mapping will uncheck it, making any data in that combination inaccessible until the combination is re-checked (see §5). Always start from a downloaded export and edit it rather than building from scratch.
 
 Example (2-arm project, abbreviated):
 
@@ -276,13 +281,13 @@ For the full column-by-column reference, upload order rules, and common mistakes
 Changing arms, events, or instrument designations in a project that has already collected data carries significant risk. The following actions can cause data loss or break project logic:
 
 - Renaming event labels (changes unique event names, breaks logic references)
-- Deleting events or arms (permanently deletes associated data)
-- Removing instrument-event designations (deletes data in that combination)
-- Reordering events (may affect downstream workflow features)
+- Deleting events or arms (the associated data becomes inaccessible — hidden rather than erased, but treat it as lost; restoring the exact setup may bring it back with side effects)
+- Removing instrument-event designations (data in that combination is hidden until the combination is re-checked; active ASIs for it are deactivated)
+- Reordering events (may affect downstream workflow features; if a different event becomes the first event, REDCap warns you because the public survey is tied to the first event)
 
-**Best practice:** Before making any changes to an active project, clone the entire project and test the modifications in the copy first. If you are unsure about the impact of a change, consult your local REDCap administrator before proceeding.
+**Best practice:** Before making any changes to an active project, export the full dataset, then clone the entire project and test the modifications in the copy first. If you are unsure about the impact of a change, consult your local REDCap administrator before proceeding.
 
-> **Institution-specific:** Production-mode changes to the longitudinal setup may require administrator approval. Contact your REDCap support team before modifying the setup of an active production project.
+> **Institution-specific:** Production-mode changes to the longitudinal setup may require administrator approval (see §11 for what normal users can do themselves). Contact your REDCap support team before modifying the setup of an active production project. Administrators editing events in Production see a red warning on the page as a reminder.
 
 ---
 
@@ -348,25 +353,25 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **Q: How does REDCap determine the display order of events?**
 
-**A:** REDCap displays events in ascending `day_offset` order. When two or more events share the same `day_offset`, REDCap sorts them alphabetically by unique event name — not by the order they were created or entered. This catches many users off guard when all events are at Day 0 (common in projects where events represent sequential steps rather than time-separated visits). To enforce a specific display order, assign sequential `day_offset` values (0, 1, 2, 3…) to events that would otherwise share the same offset. The difference between Day 0 and Day 1 has no practical scheduling impact but guarantees the correct display sequence.
+**A:** It depends on whether the Scheduling module or MyCap is enabled. Without either, events appear in the order you arrange them by dragging on the Define My Events page (and, for an events CSV upload, new events follow their row order in the file). With Scheduling or MyCap, events are displayed in ascending `day_offset` order, and you can only reorder them by changing offsets. When two or more events then share the same `day_offset`, REDCap sorts them alphabetically by event label — not by the order they were created or entered. This catches many users off guard when all events are at Day 0 (common in projects where events represent sequential steps rather than time-separated visits). To enforce a specific display order, assign sequential `day_offset` values (0, 1, 2, 3…) to events that would otherwise share the same offset. The difference between Day 0 and Day 1 has no practical scheduling impact but guarantees the correct display sequence.
 
 **Q: If I upload an events CSV with only new events in it, will my existing events be deleted?**
 
-**A:** No. The events upload is additive — REDCap adds any events in the file that do not already exist and leaves existing events untouched. This is different from the instrument-event mapping upload, which replaces the full mapping configuration. You can safely upload a partial events file without affecting events that are already configured.
+**A:** No. The events upload is additive — REDCap adds any events in the file that do not already exist, updates any whose unique event name matches a row, and leaves events not in the file untouched. This is different from the instrument-event mapping upload, which replaces the full mapping configuration. You can safely upload a partial events file without affecting events that are already configured.
 
 **Q: Do I need to upload an arms CSV for a single-arm project?**
 
-**A:** No. When longitudinal mode is enabled, REDCap automatically creates one arm ("Arm 1"). For single-arm projects, skip the arms upload entirely and begin with the events CSV upload, followed by the instrument-event mappings upload.
+**A:** No. Every project already has one arm ("Arm 1"). For single-arm projects, skip the arms upload entirely and begin with the events CSV upload, followed by the instrument-event mappings upload.
 
 **Q: What columns does the events CSV need, and what is optional?**
 
-**A:** The minimum required columns are `event_name`, `arm_num`, `unique_event_name`, and `custom_event_label`. The `unique_event_name` column can be left blank — REDCap will auto-generate it. The `custom_event_label` column can also be blank. If the scheduling module is active, the CSV will also contain `day_offset`, `offset_min`, and `offset_max` columns; include those only when scheduling is in use. Download the existing events CSV from REDCap and use it as a template to ensure the column order and names are correct.
+**A:** The minimum required columns are `event_name`, `arm_num`, `unique_event_name`, and `custom_event_label`. Leave the `unique_event_name` column blank for new events — REDCap always generates it. The `custom_event_label` column can also be blank. If the Scheduling module or MyCap is active, the CSV will also contain `day_offset`, `offset_min`, and `offset_max` columns; include those only when scheduling is in use. Download the existing events CSV from REDCap and use it as a template to ensure the column order and names are correct.
 
 ---
 
 ## 10. Common Mistakes & Gotchas
 
-**Disabling longitudinal mode with existing data.** Turning off longitudinal mode deletes all data outside the first event, without a confirmation prompt specific to each record. There is no undo. Never disable longitudinal mode in a project with collected data unless you have verified that all data resides in the first event.
+**Disabling longitudinal mode with existing data.** Turning off longitudinal mode makes all data outside the first event inaccessible after a single confirmation prompt — nothing warns you record by record. The data is hidden rather than erased and re-enabling longitudinal mode with the exact same setup may bring it back, but restoring can have side effects, so treat it as having no undo. Never disable longitudinal mode in a project with collected data unless you have verified that all data resides in the first event, and export everything first.
 
 **Renaming events without auditing logic.** Every reference to a renamed event's unique event name in branching logic, piping, or calculated fields will silently stop working. REDCap will not flag broken logic at the time of renaming. Always run a full logic audit after any event rename.
 
@@ -374,13 +379,13 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 **Uploading instrument-event mappings expecting additive behavior.** The instrument-event mapping CSV upload replaces the entire mapping, not just the rows in the file. Uploading a partial mapping will uncheck all omitted combinations. Always download and edit the existing mapping rather than creating a file from scratch.
 
-**Uploading events before arms in a multi-arm project.** Events reference arm numbers in the CSV. If you upload an events CSV before the corresponding arms exist, REDCap cannot assign events correctly. For multi-arm projects, always upload in order: arms first, then events, then instrument-event mappings. Single-arm projects can skip the arms upload since Arm 1 is created automatically.
+**Uploading events before arms in a multi-arm project.** Events reference arm numbers in the CSV. If you upload an events CSV before the corresponding arms exist, REDCap rejects the upload with an error and saves none of the events. For multi-arm projects, always upload in order: arms first, then events, then instrument-event mappings. Single-arm projects can skip the arms upload since Arm 1 is created automatically.
 
 **Assuming exports will be one row per record.** Longitudinal exports produce one row per event per record. Many users attempt to read a longitudinal export expecting a flat structure and are surprised by the volume of rows and empty cells. Plan your analysis workflow before collecting data.
 
-**Expecting same-day events to appear in entry order.** When multiple events share the same `day_offset`, REDCap sorts them alphabetically by unique event name rather than by the order they were entered. For example, events named Screening, Consent, Baseline, and Randomization all at `day_offset=0` will display as Baseline → Consent → Randomization → Screening. To control display order, assign sequential `day_offset` values (0, 1, 2, 3…) to same-day events.
+**Expecting same-day events to appear in entry order.** With the Scheduling module or MyCap active, events that share the same `day_offset` are sorted alphabetically by event label rather than by the order they were entered. For example, events named Screening, Consent, Baseline, and Randomization all at `day_offset=0` will display as Baseline → Consent → Randomization → Screening. To control display order, assign sequential `day_offset` values (0, 1, 2, 3…) to same-day events.
 
-**Manually typing unique event names in CSV mapping files.** The unique event name REDCap generates does not always match a naive word-for-word conversion. Specifically, REDCap removes hyphens rather than replacing them with underscores: `"Follow-up"` becomes `followup`, not `follow_up`. Hand-typed unique event names in instrument-event mapping CSVs frequently diverge from what REDCap actually generated, causing mapping imports to silently fail (the referenced event simply doesn't exist under that name). Always derive unique event names using REDCap's exact algorithm, or download the events CSV from REDCap and copy the names from there.
+**Manually typing unique event names in CSV mapping files.** The unique event name REDCap generates does not always match a naive word-for-word conversion. Specifically, REDCap removes hyphens and other punctuation rather than replacing them with underscores (`"Follow-up"` becomes `followup`, not `follow_up`), keeps double underscores where a removed character sat between two spaces, cuts the name to 18 characters before adding `_arm_N`, and adds `b`, `c`… to duplicates. Hand-typed unique event names in instrument-event mapping CSVs frequently diverge from what REDCap actually generated, and the mapping upload is then rejected with an error (the referenced event doesn't exist under that name) and nothing in the file is saved. Always derive unique event names using REDCap's exact algorithm, or download the events CSV from REDCap and copy the names from there.
 
 ---
 
@@ -404,11 +409,11 @@ Automated Survey Invitations, the Survey Queue, the scheduling module, and Form 
 
 Whether project-level users can add or modify events and arms on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Normal Users to Add or Modify Events and Arms in Production").
 
-When this setting is disabled — which is the default in most instances — only REDCap administrators can add or modify events and arms on a project in Production status. Users who need this change must submit a request to the REDCap support team.
+The setting is enabled on a new REDCap installation, but many institutions turn it off — ask your REDCap administrators which applies to you. When it is disabled, only REDCap administrators can add or modify events and arms on a project in Production status. Users who need this change must submit a request to the REDCap support team.
 
-When the setting is enabled, project-level users with Project Design and Setup rights can add events and modify certain event properties directly on a Production project. Even then, only administrators can delete events in production. Users can designate instruments to events that have not yet been designated, but cannot un-designate instruments that are already designated.
+When the setting is enabled, project-level users with Project Design and Setup rights can, on a Production project, add new events and arms, reorder events (only when neither the Scheduling module nor MyCap is enabled, since otherwise order follows the day offsets), and designate instruments to events that have not yet been designated. They cannot edit existing events on the Define My Events page, and an events or arms CSV upload that changes an existing event's label, offsets or custom event label, or an existing arm's name, is rejected. Only administrators can delete events or arms, enable or disable longitudinal mode, or un-designate instruments that are already designated in production.
 
-> **Note:** This setting applies to the REDCap UI only. The Import Arms and Import Events API endpoints remain restricted to Development status even when this setting is enabled. To modify arms or events via the API on a Production project, the project must first be returned to Development status.
+> **Note:** Over the API, Import Arms and Import Events follow the same rule on a Production project: they are allowed when this setting is enabled, and blocked otherwise. Delete Arms, Delete Events and Import Instrument-Event Mappings are blocked for Production projects regardless of the setting; for those changes, ask an administrator or make them in the UI where permitted.
 
 > **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)
 

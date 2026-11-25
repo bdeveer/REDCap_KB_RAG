@@ -5,12 +5,12 @@ domain: Record Navigation
 applies_to:
 - Longitudinal projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — longitudinal
+  and repeating data entry behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview, RC-NAV-REC-03 — Repeated Instruments & Repeated
@@ -58,9 +58,17 @@ record, each event appears as a separate column on the Record Home Page.
 
 A named collection of events within a longitudinal project. A project
 can have multiple arms, each with a different set of events and
-instrument assignments. A given record belongs to exactly one arm at a
-time. Arms are typically used to separate participant cohorts (e.g.,
+instrument assignments. Each record ID should exist in only one arm.
+Arms are typically used to separate participant cohorts (e.g.,
 intervention group vs. placebo group).
+
+> **Note:** REDCap does not strictly stop the same record ID from having
+> data in more than one arm — it can happen through a data import, or by
+> typing an existing record ID while another arm is selected. This leads
+> to confusing behaviour: the Record Home Page notes that the record
+> "also exists on another arm", and **Rename Record** and **Delete
+> Record** act only on the arm you are viewing. Keep each record in one
+> arm.
 
 ---
 
@@ -75,6 +83,10 @@ intervention group vs. placebo group).
 
 - Click any dot to open that instrument for that event.
 
+- Only the events of the record's arm are shown, and instruments that
+    are not designated to any event in that arm are left out of the
+    grid.
+
 ## 3.2 Record Status Dashboard in a Longitudinal Project
 
 - The dashboard displays the same grid layout — rows are records,
@@ -85,14 +97,31 @@ intervention group vs. placebo group).
 
 - Click a tab to view records belonging to that arm.
 
+- A custom dashboard that is set to show a single arm does not show the
+    arm tabs.
+
 ## 3.3 Add/Edit Records in a Project with Arms
 
 - An additional dropdown appears at the top of the Add/Edit Records
-    page asking you to select an arm.
+    page asking you to select an arm. An arm is always preselected, so
+    check it before you look up or add a record.
 
-- You must choose an arm before looking up or adding a record.
+- The record drop-down and the record ID autocomplete list only the
+    records in the selected arm.
 
-- Records can only be found within the arm they belong to.
+- The field search on the same page (searching for a value within a
+    chosen field) covers all arms and opens the matching record in its
+    own arm.
+
+- With auto-numbering on, the next record ID is the highest ID across
+    all arms plus 1, so auto-numbering never reuses an ID that already
+    exists in another arm.
+
+> **Version caveat (LTS 16):** the Add/Edit Records page always
+> preselects Arm 1. From 17.x (LTS 17.3 and later, and Standard) it
+> remembers the arm you last used, and offers an option to keep the arm
+> selection in step with the Record Status Dashboard. On LTS 16, select
+> the arm every time before adding a record.
 
 ---
 
@@ -115,8 +144,9 @@ intervention group vs. placebo group).
 - The Record Home Page header or the arm tab on the Record Status
     Dashboard indicates the active arm.
 
-- A record can only appear under one arm. If you cannot find a record
-    in one arm, check another arm.
+- Each record should exist in only one arm. If you cannot find a record
+    in one arm, check another arm, or use the field search on Add/Edit
+    Records, which searches all arms.
 
 ---
 
@@ -131,9 +161,18 @@ different groups of participants.
 
 **Q: Can a record move from one arm to another?**
 
-**A:** Not typically during normal data entry. Arm assignment is usually set
-when a record is created. Moving records between arms requires
-administrative intervention.
+**A:** There is no move feature, for administrators either. To move a
+record, export its data first, then:
+
+1. Enter the record's data in the new arm — either by a data import
+    into that arm's events, or (when auto-numbering is off) by entering
+    the same record ID on Add/Edit Records with the new arm selected.
+2. Check that the data in the new arm is complete and correct.
+3. Open the record in the old arm and use **Delete Record**, which
+    deletes only that arm's data.
+
+This needs the **Create Records** or **Data Import Tool** right, plus the
+**Delete Records** right.
 
 **Q: Do all instruments appear in every event?**
 
@@ -144,15 +183,21 @@ for.
 **Q: I cannot find a record in Add/Edit Records. What should I check?**
 
 **A:** First confirm you have selected the correct arm from the dropdown.
-Records only appear in the arm they belong to.
+The record list only shows records in the selected arm. If you are not
+sure of the arm, use the field search on the same page, which searches
+all arms.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-- Looking for a record in the wrong arm: records are arm-specific. If
-    the arm dropdown is set incorrectly, the record will not appear in
-    the search results.
+- Looking for a record in the wrong arm: the record drop-down is
+    arm-specific. If the arm dropdown is set incorrectly, the record
+    will not appear in it (the field search still finds it).
+
+- Creating the same record ID in a second arm: this is not blocked
+    when auto-numbering is off or during data import, but it causes
+    confusing behaviour (see Section 2). Keep each record in one arm.
 
 - Expecting all instruments in every event: instruments are assigned
     to events individually. An instrument that is not assigned to a

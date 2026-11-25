@@ -4702,6 +4702,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-NAV-REC-03 — Repeated Instruments & Repeated Events
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-05 — Branching Logic — Longitudinal Projects
+- RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
 - RC-API-01 — REDCap API
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-11 — Import Instrument-Event Mappings API
@@ -5485,6 +5486,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PIPE-09 — Smart Variables: Event & Arm
 - RC-PIPE-10 — Smart Variables: Repeating Instruments and Events
 - RC-PIPE-16 — Smart Variables: MyCap
+- RC-SURV-04 — Survey Link Types & Access Methods
 
 ---
 
@@ -5519,6 +5521,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
+- RC-LONG-02 — Repeated Instruments & Events Setup
 - RC-LONG-03 — Longitudinal Clinical Research Design Patterns
 - RC-PIPE-08 — Smart Variables: Survey
 - RC-PIPE-09 — Smart Variables: Event & Arm
@@ -5726,10 +5729,12 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-SURV-05 — Participant List & Manual Survey Invitations
+- RC-SURV-04 — Survey Link Types & Access Methods
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-FD-01 — Form Design Overview
 - RC-SURV-06 — Automated Survey Invitations (ASI)
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-07 — Survey Queue
 
 **Inbound links (referenced by):**
@@ -5841,16 +5846,18 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PIPE-03 — Smart Variables Overview
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-FD-05 — Codebook
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
+- RC-PIPE-08 — Smart Variables: Survey
 - RC-API-01 — REDCap API
 - RC-API-40 — Export Survey Link API
 - RC-SURV-02 — Survey Settings: Basic Options & Design
-- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 
 **Inbound links (referenced by):**
 - RC-OPS-01 — Using REDCap as an Operational Request Management System
 - RC-API-40 — Export Survey Link API
 - RC-IMP-05 — Alerts & Notifications CSV — Column Reference and Format Guide
 - RC-LONG-03 — Longitudinal Clinical Research Design Patterns
+- RC-SURV-01 — Surveys – Basics
 - RC-SURV-05 — Participant List & Manual Survey Invitations
 - RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-10 — Survey Login
@@ -5881,6 +5888,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-43 — Export Survey Participants API
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-SURV-01 — Surveys – Basics
 - RC-SURV-04 — Survey Link Types & Access Methods
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-07 — Survey Queue

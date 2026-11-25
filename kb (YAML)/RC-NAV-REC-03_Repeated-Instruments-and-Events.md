@@ -5,12 +5,12 @@ domain: Record Navigation
 applies_to:
 - Projects with repeated instruments or events
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — repeating
+  instruments and events behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-NAV-REC-01
   title: Record Navigation Overview, RC-NAV-REC-02 — Longitudinal Mode & Arms, RC-NAV-REC-04
@@ -68,8 +68,8 @@ Clicking it adds a new repeated entry.
 **Double Back Arrow**
 
 Appears when a repeated event has been repeated three or more times.
-Clicking it collapses the repeated-event columns to save horizontal
-space.
+Clicking it collapses the middle repeated-event columns to save
+horizontal space; the first and last instances stay visible.
 
 ---
 
@@ -81,8 +81,8 @@ space.
 | --- | --- |
 | Plus symbol (+) | Repeated instrument with at least one entry. Click to add a new entry. |
 | Stacked dot | Repeated instrument with more than one entry. Click to see all entries. |
-| Double back arrow | Repeated event with 3+ repetitions. Click to collapse the columns. |
-| Down arrow (on table) | Collapse the repeated instrument table on the Record Home Page. |
+| Double back arrow | Repeated event with 3+ repetitions. Click to collapse the middle columns (first and last stay visible). |
+| Chevron (on table header) | Chevron up collapses the repeated instrument table on the Record Home Page; chevron down expands it again. |
 
 ## 3.2 Stacked Dot Color Codes
 
@@ -97,7 +97,9 @@ that repeated instrument:
 | Blue stacked dot | There is a mix of statuses across the entries (e.g., some complete, some incomplete). |
 
 
-> **Note:** A completed survey entry counts as Complete when determining stacked dot color.
+> **Note:** A completed survey entry counts as Complete when determining stacked dot color. A partially completed survey counts as Incomplete.
+
+> **Version caveat (17.6 Standard):** A purple stacked icon marks incomplete MyCap responses. This icon is not in LTS 17.3 or 16; on those versions, open the instance list to check each MyCap response's status.
 
 
 ---
@@ -114,6 +116,8 @@ The tables and popups listing repeating instances — at the bottom of the Recor
 | **Sort order** of rows persists per user, per project | 15.7.2 |
 | **Previous / Next links** at the top of a repeating *event* instrument, for moving between instances without returning to the record home page | 17.0.7 |
 | Icons distinguishing repeating instruments from repeating events on Define My Events, Designate Forms and the Online Designer | 15.4.5 |
+
+> **Version caveat (17.3 LTS and later; not LTS 16):** The **Previous / Next** instance links are present in 17.3 LTS and 17.6 Standard but not in LTS 16. On LTS 16, return to the Record Home Page to move between repeating event instances. Where they exist, the links skip over gaps left by deleted instances.
 
 > **Note (15.4.1):** The redesign initially rendered the **custom label as a link**, which was reverted because it interfered with selecting and copying parts of the label. If you remember labels being clickable, that behaviour was deliberate and then withdrawn.
 
@@ -141,9 +145,28 @@ The tables and popups listing repeating instances — at the bottom of the Recor
 
 - On the Record Home Page, find the repeated instrument.
 
-- Click the plus symbol (+) next to it to create a new entry.
+- Click the plus symbol (+) next to it to create a new entry. If the
+    plus is greyed out, Form Display Logic is currently hiding that
+    instrument for this record.
 
 - Fill in the instrument and save.
+
+- The new entry gets the highest existing instance number + 1. Instance
+    numbers are never renumbered, so deleting an entry in the middle
+    leaves a gap. API and data imports can also request a new instance,
+    which is numbered the same way.
+
+## 4.2a Deleting a Repeated Entry
+
+- Deleting a single instance of a repeating instrument requires either
+    the **Delete Records** right or the instrument-level delete
+    permission (**Form-Level Delete Rights**, set per instrument under
+    Data Viewing Rights).
+
+- Deleting an instance of a repeating event requires **Delete
+    Records**.
+
+- Remaining instances keep their numbers.
 
 ## 4.3 Using the Repeated Instrument Table
 
@@ -151,9 +174,14 @@ The tables and popups listing repeating instances — at the bottom of the Recor
     entry also display as a table below the main instrument grid.
 
 - The table lists all entries and provides direct links to each one.
+    The table header shows the number of instances in parentheses,
+    e.g. "(12)". Tables appear in event order, then instrument order.
 
-- Tables can be collapsed using the down arrow to reduce visual
-    clutter when there are many entries.
+- Tables can be collapsed using the chevron (up) in the table header
+    to reduce visual clutter when there are many entries; the instance
+    count stays visible in the collapsed header. Click the chevron
+    (down) to expand a table again, or use the **(Uncollapse all
+    tables)** link to expand all of them at once.
 
 ## 4.4 Navigating Repeated Events
 
@@ -161,7 +189,8 @@ The tables and popups listing repeating instances — at the bottom of the Recor
     the event appears as an additional column on the Record Home Page.
 
 - When there are three or more repetitions, a double back arrow
-    appears. Click it to collapse those columns.
+    appears. Click it to collapse the middle columns; the first and
+    last instances stay visible.
 
 - Click any dot within a repeated event column to open that instrument
     instance.
@@ -191,8 +220,11 @@ ways:
 **Q: How do I know how many entries a repeated instrument has without
 clicking the stacked dot?**
 
-**A:** The stacked dot itself indicates there are multiple entries, but the
-exact count is only visible after clicking it to open the popup list.
+**A:** The stacked dot itself only indicates there are multiple entries.
+For the exact count, look at the repeating instrument table below the
+main grid on the Record Home Page: its header shows the number of
+instances in parentheses, e.g. "(12)", even when the table is
+collapsed. Clicking the stacked dot also lists every entry.
 
 **Q: What does a blue stacked dot mean?**
 
@@ -229,7 +261,9 @@ Dashboard that filters or groups the view.
 
 - Missing entries because the repeated instrument table is collapsed:
     if someone previously collapsed the table, entries are still there
-    but hidden. Click the down arrow (now pointing right) to expand it.
+    but hidden. The instance count in the collapsed header still shows
+    how many there are. Click the chevron (down) to expand it, or use
+    **(Uncollapse all tables)**.
 
 - Expecting repeated instruments inside a repeated event: this
     configuration is not supported. If you see a stacked dot, the event

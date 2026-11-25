@@ -248,7 +248,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 4c-2 Smart variables | 6 + 3 from the sweep | Done 2026-11-25 |
 | 4d-1 Action tags | AT-01–06 (6; 2–3 per agent) | Done 2026-11-25 (6 + 1 from the sweep) |
 | 4d-2 Action tags | AT-07–11 (5; 2–3 per agent; also fix AT-09 rule H wording) | Done 2026-11-25 (5 + 2 from the sweep) |
-| 5a Longitudinal | LONG-01/02, DE-10, NAV-REC-02/03 (5) | — |
+| 5a Longitudinal | LONG-01/02, DE-10, NAV-REC-02/03 (5) | Done 2026-11-25 (5 + 3 from the sweep) |
 | 5b Surveys core | SURV-01/02/04/05 (4) | Done 2026-11-25 (4; sweep found nothing) |
 | 5c Automation | SURV-06/07, ALERT-01/02 (4) | — |
 | 5d MLM and upload formats | MLM-01, IMP-05–10 (7; IMP 3 per agent) | — |

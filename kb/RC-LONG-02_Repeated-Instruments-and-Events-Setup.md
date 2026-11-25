@@ -7,10 +7,10 @@
 | **Domain** | Longitudinal & Repeated Setup |
 | **Applies To** | All REDCap project types (repeated instruments); longitudinal projects only (repeated events) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — repeating instruments and events behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (for longitudinal projects only) |
-| **Version** | 1.5 |
-| **Last Updated** | 2026-04-29 |
+| **Version** | 1.6 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | how do i set up a repeating instrument; enable repeatable forms or events; fill out the same form multiple times per record; one-to-many data collection in redcap; repeat an entire event as a group; numbered instances of an instrument; set up a medication log that repeats; difference between repeated instruments and repeated events |
@@ -31,7 +31,7 @@ This article covers setup only. For how repeated instruments and events appear d
 
 **One-to-Many Data Collection**
 
-The pattern in which a single record can have multiple independent instances of an instrument or event. Unlike traditional longitudinal mode (where all events must be defined in advance), repeating instruments and events allow unlimited instances per record without pre-specifying a maximum. Each record can have a different number of instances — one record might have five medication entries while another has none.
+The pattern in which a single record can have multiple independent instances of an instrument or event. Unlike traditional longitudinal mode (where all events must be defined in advance), repeating instruments and events allow a practically unlimited number of instances per record (up to 32,767) without pre-specifying a maximum. Each record can have a different number of instances — one record might have five medication entries while another has none.
 
 **Repeated Instrument**
 
@@ -43,11 +43,11 @@ An event (with all its designated instruments) configured to be collected multip
 
 **Instance**
 
-A single numbered occurrence of a repeated instrument or repeated event. Instance 1 is the first submission, instance 2 is the second, and so on. Instance numbers are assigned sequentially. For repeated instruments, numbering is independent per instrument per event — each event's instance counter starts at 1.
+A single numbered occurrence of a repeated instrument or repeated event. Instance 1 is the first submission, instance 2 is the second, and so on. Instance numbers are assigned sequentially: a new instance gets the highest existing number + 1. Gaps left by deleted instances in the middle are never reused or renumbered; deleting the highest instance frees its number for the next new instance. For repeated instruments, numbering is independent per instrument per event — each event's instance counter starts at 1.
 
 **Custom Label (Repeated)**
 
-An optional text field that allows you to attach a descriptive label to each instance. Uses REDCap piping syntax to pull values from variables within the same instrument or event. Multiple variables can be combined with free text (e.g., `[version] - [change_type] - RC[redcap_version]` or `[visit_date], [weight] kg`). The label is populated dynamically from the instance's own data.
+An optional text field that allows you to attach a descriptive label to each instance. Uses REDCap piping syntax to pull values from variables in the same event (the repeating instrument itself or another instrument in that event). Multiple variables can be combined with free text (e.g., `[version] - [change_type] - RC[redcap_version]` or `[visit_date], [weight] kg`). The label is populated dynamically from the instance's own data.
 
 ---
 
@@ -83,6 +83,8 @@ Non-longitudinal projects support repeated instruments only (not repeated events
 5. Optionally, enter a **custom label** using piping syntax (e.g., `[medication_name]`) in the field next to the instrument name.
 6. Click **Save**.
 
+> **Note:** REDCap will not save the popup with no instruments ticked. Instruments used as MyCap tasks appear locked in the popup; their repeat setting is managed by MyCap.
+
 > **Tip:** Your instruments do not need to be fully built out before enabling them as repeatable. A placeholder instrument with a single variable is sufficient to proceed with this setup. You can add more variables later.
 
 ---
@@ -91,27 +93,27 @@ Non-longitudinal projects support repeated instruments only (not repeated events
 
 Longitudinal projects support both repeated instruments and repeated events. The configuration is more granular: you designate a repeat mode per event, not per project.
 
-**Prerequisites:** Instruments must exist and your longitudinal setup (arms, events, instrument designations) must be complete before configuring repeating instruments or events. REDCap cannot populate the repeating instrument/event menu correctly without a completed event structure.
+**Prerequisites:** Instruments must exist, and your longitudinal setup (arms, events, instrument designations) should be in place before configuring repeating instruments or events. The popup lists every event, but under each event it offers only the instruments designated to that event — an instrument you have not yet designated cannot be made repeatable there.
 
 **Steps:**
 
 1. Navigate to **Project Setup**.
 2. In the **Enable optional modules and customizations** section, locate the **Repeating instruments and events** option. Click **Enable** (or **Modify** if a configuration already exists).
-3. A popup appears listing all defined events. For each event, choose one of three options (shown as radio buttons in the UI, in this order):
+3. A popup appears listing all defined events. For each event, choose one of three options from the drop-down next to the event name (in this order):
 
 | **UI Label** | **Effect** |
 |---|---|
 | `-- not repeating --` | Default. Neither the event nor its instruments are repeatable. |
 | `Repeat Entire Event (repeat all instruments together)` | The entire event repeats as a unit. All designated instruments repeat together and stay connected. Instruments cannot be repeated independently within a repeated event. |
-| `Repeat Instruments (repeat independently)` | Selected instruments within this event repeat independently of each other. You must check which instruments in the event are repeatable. |
+| `Repeat Instruments (repeat independently of each other)` | Selected instruments within this event repeat independently of each other. You must check which instruments in the event are repeatable. |
 
 4. If you selected **Repeat Instruments** for an event, check the boxes for the specific instruments within that event that should be repeatable.
 5. Optionally, enter a **custom label** for repeatable instruments in the text field next to the instrument name.
 6. Click **Save**.
 
-> **Tip:** Your longitudinal setup (arms, events, instrument designations) must be complete before configuring repeating instruments or events. If the event structure is incomplete, the popup will not display correctly.
+> **Tip:** Finish your instrument designations before configuring repeating instruments. If you designate more instruments to an event later, reopen the popup (**Modify**) to make them repeatable there.
 
-> **No UI bulk import/export:** Unlike arms, events, and instrument-event designations — which support CSV upload and download from the Define My Events and Designate Instruments pages — the repeatable instrument and event configuration has no UI-based import or export option. To manage repeatable mappings programmatically (e.g., when setting up multiple projects with the same repeated structure), use the REDCap API. The API supports both exporting and importing the repeatable instruments and events configuration.
+> **No UI bulk import/export:** Unlike arms, events, and instrument-event designations — which support CSV upload and download from the Define My Events and Designate Instruments pages — the repeatable instrument and event configuration has no UI-based import or export option. To manage repeatable mappings programmatically (e.g., when setting up multiple projects with the same repeated structure), use the REDCap API. The API supports both exporting and importing the repeatable instruments and events configuration. Copying a project, or creating one from a project XML file, also carries the repeating setup over.
 
 ---
 
@@ -125,9 +127,11 @@ Custom labels attach a descriptive tag to each instance, making it easier to ide
 
 Both locations use the same piping syntax. Custom labels support combining multiple piped variables with free text between them — for example, `[visit_date], [weight] kg` produces a label like "2026-03-15, 72 kg", and `[version] - [change_type] - RC[redcap_version]` produces a label like "2.1.0 - Bug fix - RC16.1". There is no limit on the number of variables or the amount of free text in the label.
 
-One key constraint applies to both: the variables you pipe in must exist within the repeated instrument or repeated event itself. You cannot pipe a variable from a different instrument or event into a custom label.
+One key constraint applies to both: the variables you pipe in must be in the **same event**. Variables from the repeating instrument itself work, and so do variables from other instruments designated to that event, including non-repeating ones. Variables from a different event show as blank in the label.
 
-> **Example:** If you want to display the visit date in a repeated event's label, the variable `[visit_date]` must be in an instrument designated to that same event. Piping in a date of birth from a baseline event into a follow-up event's custom label is not supported.
+> **Example:** If you want to display the visit date in a repeated event's label, the variable `[visit_date]` must be in an instrument designated to that same event. Piping in a date of birth from a baseline event into a follow-up event's custom label shows a blank.
+
+> **Tip:** After saving a custom label, open a record with a few instances and check that the label shows what you expect.
 
 ---
 
@@ -140,9 +144,13 @@ Changing repeating instrument or event configuration in a project that has alrea
 - Removing an instrument from the repeatable list when instances of that instrument exist
 - Renaming an instrument that is referenced in logic within a repeated context
 
+For most users this is effectively data loss. Strictly, REDCap hides the extra instances rather than erasing them: they no longer appear on forms, in reports or in exports, and they may reappear if the exact same repeating setting is restored later. Restoring the setting can have side effects of its own, though, so do not rely on it — treat the change as irreversible and export your data first. REDCap shows a warning about this only when the project is in Production; in Development it saves the change without warning.
+
 **Best practice:** Before making any changes to the repeated setup of an active project, clone the entire project and test the modification in the copy first. If you are unsure about the potential impact, consult your local REDCap administrator before making changes in Production.
 
-> **Institution-specific:** Changes to repeating instrument or event configuration in a Production project may require administrator review. Contact your REDCap support team before modifying the setup of an active production project.
+> **Institution-specific:** Whether you can change the repeating setup of a Production project yourself depends on an administrator setting (see Section 11). Check with your REDCap support team before modifying the setup of an active production project.
+
+**Deleting an instrument** also removes it from the repeating setup.
 
 ---
 
@@ -152,15 +160,15 @@ Configuring repeated instruments or events changes behavior in several other are
 
 ### 8.1 Branching Logic
 
-In standard projects, variables in repeated instruments can generally be referenced within the same instrument using local branching logic (no event prefix needed). However, you cannot reliably reference a variable from a repeated instrument or repeated event in logic that runs outside that repeated context.
+In standard projects, variables in repeated instruments can generally be referenced within the same instrument using local branching logic (no event prefix needed). A plain reference to a repeating variable from outside its repeated context, without saying which instance, is ambiguous — so always name the instance.
 
-REDCap supports cross-instance references in branching logic using two methods: a direct instance number (e.g., `[variable_name][1]`, or `[event_name][variable_name][1]` in longitudinal projects) or smart variables such as `[previous-instance]`, `[next-instance]`, `[first-instance]`, and `[last-instance]`. Smart variables are the preferred approach inside a repeated instrument when the target instance is relative to the current one. For the full syntax and examples, see [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md), Section 5.3.
+REDCap supports cross-instance references in branching logic using two methods: a direct instance number (e.g., `[variable_name][1]`, or `[event_name][variable_name][1]` in longitudinal projects) or smart variables such as `[previous-instance]`, `[next-instance]`, `[first-instance]`, and `[last-instance]`. Smart variables are the preferred approach inside a repeated instrument when the target instance is relative to the current one. For the full syntax and examples, see [RC-BL-05 — Branching Logic in Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md), Section 5.3, and [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md).
 
 See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) for general branching logic guidance.
 
 ### 8.2 Piping
 
-Piping follows the same rules as branching logic. Piping a value from within the same repeated instrument or event instance works reliably. Piping values from outside the repeated context (e.g., piping a baseline variable into a repeated event's label) is supported only for the custom label field and requires the variable to exist within the repeated instrument or event itself.
+Piping follows the same rules as branching logic. Piping a value from within the same repeated instrument or event instance works reliably, and values from other instances can be piped with an instance number or the instance smart variables (see [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md)). Custom labels are narrower: they can only use variables from the same event (see Section 6), so a baseline variable piped into a follow-up event's label shows blank.
 
 ### 8.3 Reports & Data Exports
 
@@ -219,15 +227,15 @@ This is useful in intervention/control designs: the intervention arm may need vi
 
 **Q: How do I reference a value from a specific instance of a repeated instrument?**
 
-**A:** Reliably referencing values across instances from outside a repeated instrument or event is not straightforward in REDCap. Smart variables allow some within-instance references. For cross-instance comparisons, consider restructuring your data model to avoid this requirement. Consult your REDCap administrator if this is a design requirement for your project.
+**A:** Add an instance qualifier to the variable — a number such as `[medication_name][2]` — or use an instance smart variable such as `[first-instance]`, `[last-instance]` or `[previous-instance]`. This works in branching logic, calculations and piping, both inside and outside the repeated instrument. See Section 8.1 and [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md).
 
 **Q: Can I switch a project from repeated instruments to repeated events after data collection has started?**
 
-**A:** Technically the configuration can be changed, but doing so when instances already exist is strongly discouraged and can cause data loss. Test any such change in a cloned project first and consult your REDCap administrator before proceeding.
+**A:** Technically the configuration can be changed, but doing so when instances already exist is strongly discouraged and is effectively data loss: the extra instances are hidden from forms, reports and exports. Treat it as irreversible, export your data first (Section 7), and test any such change in a cloned project first and consult your REDCap administrator before proceeding.
 
 **Q: Does the instance counter reset between events?**
 
-**A:** Instance numbering for repeated instruments is independent per instrument per event. Each event's repeated instrument starts fresh at instance 1. For repeated events, each repetition of the event is a new instance of that event, starting from 1.
+**A:** Instance numbering for repeated instruments is independent per instrument per event. Each event's repeated instrument starts fresh at instance 1. For repeated events, each repetition of the event is a new instance of that event, starting from 1. In both cases a new instance gets the highest existing number + 1, and numbers are never renumbered after a deletion.
 
 **Q: Can I bulk upload or export the repeatable instrument/event configuration?**
 
@@ -245,15 +253,15 @@ This is useful in intervention/control designs: the intervention arm may need vi
 
 ## 10. Common Mistakes & Gotchas
 
-**Trying to set up repeated events before completing the longitudinal configuration.** The repeating instruments and events popup will not display events correctly if arms, events, or instrument designations are incomplete. Always finish the full longitudinal setup before configuring repeated instruments or events in a longitudinal project.
+**Trying to set up repeated events before completing the longitudinal configuration.** The repeating instruments and events popup lists every event, but only the instruments already designated to each event. Instruments you designate later will not be repeatable until you reopen the popup and tick them. Finish the longitudinal setup first, or remember to revisit the popup after adding designations.
 
-**Designing branching logic that references across repeated instances.** Logic that attempts to check values in instance 1 from within instance 3 of the same instrument, or from outside the repeated context entirely, will not behave reliably. Design instruments so that logic only references variables within the same instance.
+**Referencing across repeated instances without an instance qualifier.** Logic that checks values in instance 1 from within instance 3, or from outside the repeated context, works only if you say which instance you mean — with a number (`[variable][1]`) or a smart variable such as `[previous-instance]` or `[last-instance]`. A bare reference leaves REDCap to guess. See Section 8.1.
 
 **Using repeated events when independent instrument repetition is needed.** When an event is configured as "Repeat entire event," all instruments in that event must be repeated together. If different instruments need to be repeated at different rates, use the "Repeat instruments" option instead and designate each instrument's repeatability separately.
 
 **Forgetting that the mapping upload is non-additive.** If you use the CSV upload for instrument-event mappings after configuring repeated instruments, be aware that the upload replaces all mappings. Instruments previously set as repeatable via the popup are a separate configuration — the mapping upload does not affect the repeatability setting, but it can remove instrument-event designations.
 
-**Expecting custom labels to work with external variables.** The piped variable in a custom label must exist within the same repeated instrument or event. Attempting to pipe in a variable from a different instrument (e.g., from the baseline event) will display a blank label rather than an error.
+**Expecting custom labels to work with variables from other events.** The piped variable in a custom label must be in the same event — the repeating instrument itself or another instrument in that event. Attempting to pipe in a variable from a different event (e.g., from the baseline event) will display a blank label rather than an error.
 
 **Assuming CSV bulk upload covers the repeatable configuration.** The CSV upload options for arms, events, and instrument-event designations do not include the repeatable instrument and event setup. Setting up your entire longitudinal structure via CSV and expecting the repeatable mapping to carry over will leave that configuration blank — you must either set it manually through the UI popup or use the REDCap API.
 
@@ -261,7 +269,7 @@ This is useful in intervention/control designs: the intervention arm may need vi
 
 **Using numbered duplicate events instead of a repeating event.** A common pattern in projects built before REDCap 7.0 is a sequence of identically structured events — for example, "Daily Hospital 1", "Daily Hospital 2", ... "Daily Hospital 19" — where each event carries the same instruments and fields. This inflates the event list, makes the record home page unwieldy, and produces a wide, sparse export where most event columns are empty for any given record. The correct modern approach is to define a single event and configure it as a repeating event. Each occurrence (hospital day, treatment cycle, visit) becomes an instance rather than a separate event. If you encounter this pattern in an existing project that has already collected data, converting to a repeating event requires API-based data migration — do not convert in place without a full backup and administrator support.
 
-**Using manual array fields instead of a repeating instrument.** A related pattern occurs at the field level: collecting a variable number of similar entries by pre-defining a fixed array of numbered fields (e.g., `npo_date_1`, `npo_date_2`, ... `npo_date_6` for NPO episodes; `medication_name_1` through `medication_name_10` for a medication list). This creates empty fields for most records, caps the number of entries at the array size, and makes field-level branching logic verbose. The better approach is to create a dedicated instrument for a single entry (one NPO episode, one medication) and configure it as a repeating instrument. The number of instances can then vary freely per record without pre-specifying a maximum.
+**Using manual array fields instead of a repeating instrument.** A related pattern occurs at the field level: collecting a variable number of similar entries by pre-defining a fixed array of numbered fields (e.g., `npo_date_1`, `npo_date_2`, ... `npo_date_6` for NPO episodes; `medication_name_1` through `medication_name_10` for a medication list). This creates empty fields for most records, caps the number of entries at the array size, and makes field-level branching logic verbose. The better approach is to create a dedicated instrument for a single entry (one NPO episode, one medication) and configure it as a repeating instrument. The number of instances can then vary freely per record without pre-specifying a maximum (the practical ceiling is 32,767 instances).
 
 **Expecting the "Repeat the survey" button to work with repeating events.** The "Repeat the survey" button is available for repeating instruments only. If your survey instrument lives on a repeating event rather than being designated as a repeating instrument, this option is not available. Use ASIs or Alerts & Notifications to send recurring survey links in that scenario.
 
@@ -285,9 +293,9 @@ This is useful in intervention/control designs: the intervention arm may need vi
 
 Whether project-level users can modify the repeating instruments and events configuration on a Production project is controlled by an administrator setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Normal Users to Modify Repeating Instruments & Events in Production").
 
-When this setting is disabled — which is the default in most instances — only REDCap administrators can change a project's repeating configuration while it is in Production status. Users who need this change must contact the REDCap support team.
+This setting is **enabled by default**. Unless your administrator has turned it off, users with Project Design and Setup rights can change the repeating configuration of a Production project themselves, without administrator involvement — which is why the warnings in Section 7 matter.
 
-When the setting is enabled, users with Project Design and Setup rights can make repeating configuration changes in Production without administrator involvement.
+When an administrator has disabled the setting, only REDCap administrators can change a project's repeating configuration while it is in Production status. Users who need this change must contact the REDCap support team.
 
 > **See also:** [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)
 

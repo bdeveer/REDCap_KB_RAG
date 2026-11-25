@@ -147,16 +147,16 @@ An optional additional condition can restrict auto-approval if any new fields ha
 > Note: Even with auto-approval enabled, an administrator is still required to review changes if critical issues exist AND the project contains one or more records.
 
 **Allow Normal Users to Modify Repeating Instruments & Events in Production**
-Controls whether project-level administrators can change repeating instrument/event configurations on a production project without super-user involvement. Options:
+Controls whether normal users with Project Design rights can change repeating instrument/event configurations on a production project without administrator involvement. The default on a new installation is *Yes*. Options:
 - *No, only Administrators can modify the repeating instance setup in production*
 - *Yes, normal users can modify the repeating instance setup in production*
 
 **Allow Normal Users to Add or Modify Events and Arms in Production**
-Controls whether project-level administrators can add or modify events and arms on a longitudinal project's Define My Events page while the project is in Production status. Options:
+Controls whether normal users with Project Design rights can add events and arms on a longitudinal project's Define My Events page while the project is in Production status. The default on a new installation is *Yes*. Options:
 - *No, only Administrators can add/modify events in production*
 - *Yes, normal users can add/modify events in production*
 
-> Note: Even when set to Yes, only administrators can *delete* events in production. Normal users can designate instruments to events that have not yet been designated, but cannot un-designate instruments that are already designated.
+> Note: Even when set to Yes, only administrators can *delete* events in production, and normal users cannot edit existing events (name, offsets, custom label). They can add new events and arms. Normal users can designate instruments to events that have not yet been designated, but cannot un-designate instruments that are already designated.
 
 **Domain Allowlist for User Email Addresses**
 Restricts the email domains that can be used for REDCap accounts. Enter one domain per line (e.g., `university.edu`). When set, only email addresses from listed domains can be associated with a REDCap account. Useful for limiting access to institutional users.

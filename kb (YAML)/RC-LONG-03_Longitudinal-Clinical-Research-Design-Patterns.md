@@ -704,7 +704,7 @@ This approach works well when:
 - Each phase follows the same event structure
 - Reporting needs to be segmented cleanly by phase
 
-The key constraint is that records can only be in one arm at a time, and arm reassignment is manual. If the number of phases is variable or unknown at build time, repeating events may be more flexible.
+The key constraint is that each record should be in only one arm, and there is no feature to move a record between arms: you re-enter its data in the new arm and delete it from the old one. If the number of phases is variable or unknown at build time, repeating events may be more flexible.
 
 When using arms this way, ensure the repeating instrument configuration is identical across all arms that share the same event structure. A common oversight is configuring a form as repeating in Arms 2–4 but leaving it non-repeating in Arm 1 (which was built first) — this creates inconsistent data collection capacity across phases. See the STYLE-GUIDE §7.2 for the audit procedure.
 

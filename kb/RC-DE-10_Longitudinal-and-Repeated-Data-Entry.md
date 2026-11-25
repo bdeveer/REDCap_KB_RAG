@@ -7,10 +7,10 @@
 | **Domain** | Data Entry |
 | **Applies To** | REDCap projects with Longitudinal mode enabled; projects with repeated instruments or repeated events |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — longitudinal and repeating data entry behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-DE-01 — Record Creation & the Record Home Page](RC-DE-01_Record-Creation-and-Record-Home-Page.md); [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)|
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-DE-03 — Longitudinal Projects & DAGs](RC-DE-03_Longitudinal-Projects-and-DAGs.md); [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-NAV-REC-02 — Longitudinal Mode & Arms](RC-NAV-REC-02_Longitudinal-Mode-and-Arms.md); [RC-NAV-REC-03 — Repeated Instruments & Repeated Events](RC-NAV-REC-03_Repeated-Instruments-and-Events.md)|
 | **Synonyms** | how do i enter data for multiple events; add another instance of a repeating instrument; enter data across longitudinal events; repeat an instrument or event during data entry; fill out the same form multiple times; data entry for repeated instruments and events; add a new visit or timepoint of data; longitudinal repeated measures data entry |
@@ -27,7 +27,7 @@ This article covers the data entry workflows that are specific to longitudinal R
 
 **Arm**
 
-A top-level grouping in a longitudinal project. Arms define which events a record participates in. A record belongs to exactly one arm at a time — it cannot be assigned to multiple arms simultaneously. Arms are typically used to separate distinct study populations or intervention paths (e.g., an intervention arm and a control arm).
+A top-level grouping in a longitudinal project. Arms define which events a record participates in. Each record ID should exist in only one arm (see Section 3.2 for why). Arms are typically used to separate distinct study populations or intervention paths (e.g., an intervention arm and a control arm).
 
 **Event**
 
@@ -49,25 +49,37 @@ A required field at the bottom of every REDCap instrument that indicates the com
 
 ## 3. Record Creation in Longitudinal Projects
 
-In non-longitudinal projects, creating a new record takes you directly into the first instrument. In longitudinal projects, record creation works differently depending on whether the project has one arm or multiple arms.
+Creating a new record takes you directly into an instrument only when there is just one place to go: a non-longitudinal project with a single instrument, or a longitudinal arm with one event and one instrument. In every other case — including non-longitudinal projects with several instruments — REDCap opens the **Record Home Page** for the new record. In longitudinal projects, record creation also depends on whether the project has one arm or multiple arms.
 
 ### 3.1 Single-Arm Projects
 
-Creating a record in a single-arm longitudinal project uses the same Add/Edit Records page as a non-longitudinal project — click **Add New Record**. The key difference is what happens next: instead of opening the first instrument directly, REDCap takes you to the **Record Home Page** for that record.
+Creating a record in a single-arm longitudinal project uses the same Add/Edit Records page as a non-longitudinal project — click **Add New Record**. REDCap takes you to the **Record Home Page** for that record, where you pick the event and instrument.
 
 > **Important:** A newly created record is not permanently saved until at least one instrument has been saved with data. If you navigate away from the Record Home Page without saving any instrument, REDCap discards the record.
 
 ### 3.2 Multi-Arm Projects
 
-When a project has more than one arm, you must specify which arm the record belongs to before creating it. REDCap cannot assign a record to an arm automatically because a record can only exist in one arm at a time.
+When a project has more than one arm, a record's arm is decided by where it is created: the arm selected on Add/Edit Records, the arm whose public survey link the participant used, or the arm whose events the data was imported into. REDCap has no other way to know which cohort a participant belongs to, so check the arm before creating the record.
 
 1. Go to the **Add/Edit Records** page.
-2. Use the arm dropdown to select the arm in which you want to create the record.
+2. Check the arm dropdown and select the arm in which you want to create the record. An arm is always preselected, so do not assume the default is right.
 3. Click **Add New Record for the Arm Selected Above**.
 
 REDCap creates the record and takes you to the Record Home Page, scoped to the selected arm. As with single-arm projects, the record is not permanent until at least one instrument is saved.
 
-> **Note:** If you need to move a record to a different arm after it has been created, that requires a REDCap administrator. Data entry users cannot reassign records between arms.
+> **Version caveat (LTS 16):** Add/Edit Records always preselects Arm 1. From 17.x (LTS 17.3 and later, and Standard) it remembers the arm you last used. On LTS 16, select the arm every time before clicking **Add New Record**.
+
+With auto-numbering on, the next record ID is the highest ID across all arms plus 1, so auto-numbering never reuses an ID that already exists in another arm.
+
+> **Important:** Each record ID should exist in only one arm. REDCap does not strictly stop the same record ID from having data in more than one arm — it can happen through a data import, or by typing an existing record ID while another arm is selected — but this leads to confusing behaviour: the Record Home Page notes that the record "also exists on another arm", and **Rename Record** and **Delete Record** act only on the arm you are viewing. Keep each record in one arm.
+
+**Moving a record to a different arm.** There is no move feature, for administrators either. Export the record's data first, then:
+
+1. Enter the record's data in the new arm — either by a data import into that arm's events, or (when auto-numbering is off) by entering the same record ID on Add/Edit Records with the new arm selected.
+2. Check that the data in the new arm is complete and correct.
+3. Open the record in the old arm and use **Delete Record**, which deletes only that arm's data.
+
+This needs the **Create Records** or **Data Import Tool** right, plus the **Delete Records** right. If you do not have these rights, ask a project member who does.
 
 ### 3.3 Creating Records via Public Survey Links
 
@@ -84,6 +96,8 @@ Distributing the wrong public survey link will route a participant's response in
 The Record Home Page displays a grid when longitudinal mode is active. Each column is an event; each row is an instrument. Click any cell in the grid (represented as a colored dot) to open that specific instrument at that specific event.
 
 The instrument opens in the context of the selected event. To enter data for the same instrument at a different event, return to the Record Home Page and click the dot in the desired event's column. Data entered in one event does not affect the same instrument in another event.
+
+The save options at the bottom of the instrument vary: **Save & Go To Next Form** is not shown on the last instrument of an event, and **Save & Mark Survey as Complete** appears only for users with the right to edit survey responses. See [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md).
 
 ### 4.2 Prefilled Fields
 
@@ -102,6 +116,13 @@ Setting form status accurately at each event allows project staff to use the Rec
 
 Best practice: set form status before saving every instrument. Use **Complete** only when all required data has been entered and verified; use **Unverified** for data that has been entered but not yet reviewed.
 
+### 4.4 Deleting Event Data or a Record
+
+- **One event (or one instance of a repeating event):** on the Record Home Page, an event column that has data offers a delete option for that event's data. It is available only to users with the **Delete Records** right, and not when the record is locked.
+- **The whole record:** **Delete Record** on the Record Home Page deletes the record's data in the current arm only.
+
+Deleted data cannot be recovered from the interface — export it first if you may need it.
+
 ---
 
 ## 5. Working with Repeated Instruments
@@ -114,13 +135,16 @@ After an instrument's first instance has been saved, REDCap provides several way
 
 | **UI Location** | **Control** | **When It Appears** |
 |---|---|---|
-| Record Home Page | **+** icon in the instrument's cell | Always visible for repeated instruments |
-| Record Status Dashboard | **+** icon in the instrument's cell | Always visible for repeated instruments |
-| Data Collection menu | **+** icon next to the instrument name | Always visible for repeated instruments |
-| Within the instrument | **+ Add New** button | In the instance selector dropdown and near the instrument header |
-| Within the instrument | **Save & Add New Instance** button | At the bottom of the instrument; see [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) for all save options |
+| Record Home Page | **+** icon in the instrument's cell, and **+ Add new** in the instrument's table of instances | For repeated instruments, unless Form Display Logic hides the instrument |
+| Record Status Dashboard | **+** icon in the instrument's cell | For repeated instruments; disabled when Form Display Logic hides the instrument (see caveat below) |
+| Data Collection menu (left menu, while in a record) | **+** icon next to the instrument name | For repeated instruments, unless Form Display Logic hides the instrument |
+| Within the instrument | **Save & Add New Instance** button | At the bottom of a repeating instrument, when you are on the latest or a new instance; on an earlier instance the button is **Save & Go To Next Instance** instead. See [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) |
 
-> **Note:** The **+** icon and the **+ Add New** button are functionally identical — they differ only by the amount of screen space available in that location.
+> **Note:** The **+** icon and the **+ Add new** link do the same thing. The instance selector inside the instrument is for moving between existing instances; it has no add button.
+
+> **Version caveat (LTS 16):** on LTS 16 the Record Status Dashboard **+** ignores Form Display Logic, so it can add an instance the Record Home Page would not offer. From 17.x (LTS 17.3 and later, and Standard) it respects Form Display Logic. On LTS 16, add instances from the Record Home Page if your project uses Form Display Logic.
+
+> **Version caveat (17.6 Standard):** Instance Embedding lets a designer embed a repeating instrument's table of instances in another instrument, with its own **Add new** button. It is not in LTS 17.3 or 16; on those versions use the controls in the table above.
 
 ### 5.2 Prefilled Fields in Repeated Instruments
 
@@ -139,9 +163,9 @@ When an event is configured to repeat, the entire event — including all instru
 There is only one location in REDCap where you can add a new instance of a repeated event: the **Record Home Page**.
 
 1. On the Record Home Page, locate the column for the repeating event.
-2. Click the **+ Add New** button in that event's column header.
+2. Click the **+ Add New** button in the column header of the event's latest instance. The button appears only on the latest instance and is disabled until the event has some saved data.
 
-REDCap creates a new instance of the event, which includes a new instance of every instrument assigned to that event. As with record creation, the new event instance is not permanently saved until at least one instrument within it has been saved.
+REDCap opens a new instance of the event, which includes a new instance of every instrument assigned to that event. Nothing is saved until you save an instrument within it.
 
 > **Note:** You cannot add a new repeated event instance from within an instrument. Save your current work and return to the Record Home Page to add the new instance.
 
@@ -159,7 +183,7 @@ Repeated events support the same prefill behavior as regular events: fields can 
 
 **Q: I need to enter data for a participant who belongs in a different arm than the one I selected. Can I switch the arm?**
 
-**A:** No — data entry users cannot reassign a record to a different arm. A record can only exist in one arm at a time, and changing arm assignment requires a REDCap administrator. Contact your project administrator to have the arm corrected.
+**A:** There is no switch or move feature, for administrators either. Move the record instead: export its data, enter the data in the correct arm (by data import into that arm's events, or by entering the same record ID with that arm selected when auto-numbering is off), check it, then use **Delete Record** in the wrong arm, which deletes only that arm's data. This needs the **Create Records** or **Data Import Tool** right and the **Delete Records** right. See Section 3.2.
 
 **Q: I opened an instrument and saw prefilled values, but I didn't save it. Were those values recorded?**
 
@@ -175,7 +199,7 @@ Repeated events support the same prefill behavior as regular events: fields can 
 
 **Q: Can the same record appear in multiple arms?**
 
-**A:** No. REDCap stores data in a way that prevents a record from existing in more than one arm simultaneously. Arm assignment is a fundamental attribute of the record, not of individual events.
+**A:** It should not. REDCap does not strictly prevent the same record ID from having data in more than one arm (for example through a data import, or by typing an existing ID with another arm selected), but the result is confusing: the Record Home Page notes the record "also exists on another arm", and **Rename Record** and **Delete Record** act only on the current arm. Keep each record in one arm. Auto-numbering never creates the same ID in a second arm.
 
 **Q: Can I add a new repeated event instance from inside an instrument?**
 
