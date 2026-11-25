@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — piping
+  behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-FD-02 — Online Designer
 version: '1.2'
-last_updated: 2026-10
+last_updated: 2026-11
 related:
 - id: RC-PIPE-02
   title: 'Piping: Longitudinal, Repeated Instruments & Modifiers'
@@ -99,7 +99,7 @@ Consistent, readable variable names make piping references easier to write, revi
 
 # 4. Where Piping Can Be Used
 
-Piping works anywhere REDCap displays text. The complete list of supported locations is:
+Piping works in most places REDCap displays text. The main supported locations are:
 
 **Field labels.** The question text shown to data entry users or survey respondents. This is the most common piping location.
 
@@ -133,6 +133,8 @@ Piping works anywhere REDCap displays text. The complete list of supported locat
 
 **Emails and notifications.** Alert & Notification messages can contain piped values. See [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md)
 
+**Other locations.** Piping also works in @PLACEHOLDER text, video URLs on descriptive fields, custom event labels (longitudinal projects), custom labels for repeating instances, and the Record Status Dashboard custom record description.
+
 > **Security note:** User data viewing privileges are **not** enforced during piping. If a field on instrument A is piped into a label on instrument B, any user who can view instrument B will see that piped value — even if they have "No Access" rights to instrument A. Keep this in mind when designing projects that use piping across instruments with different access controls.
 
 ---
@@ -153,6 +155,7 @@ Different field types produce different output when piped. The table below shows
 | True – False | Label of the selected option | True |
 | Signature | Internal reference value (not the image itself) | 430002 |
 | File upload | Internal reference value (not the filename) | 24578 |
+| Date / datetime (validated text) | Entered date in the source field's own display format (M-D-Y, D-M-Y or Y-M-D) | 03-15-2026 |
 | Slider | Numerical value at the slider position | 66 |
 | Descriptive text | Nothing — no value is captured in this field type | n/a |
 | Section header | Nothing — no value is captured in this field type | n/a |
@@ -161,6 +164,10 @@ Different field types produce different output when piped. The table below shows
 | Matrix — checkboxes | Label(s) of checked options (per row) | Vanilla, Chocolate |
 
 > **Note:** Matrix fields can only be piped by row. To display values from an entire matrix, pipe each row individually — there is no single bracket expression that captures a whole matrix at once.
+
+> **Note:** Text and notes fields pipe as plain text. HTML or rich formatting typed into the source field does not render when piped (line breaks are kept), and formatting entered through @RICHTEXT is likely to be lost.
+
+> **Note:** If a field holds a missing data code, the code's label is piped; use `:value` to pipe the raw code. If a stored code no longer exists in the field's choice list (for example, the option was deleted), it pipes as the blank placeholder `______`.
 
 > **Note:** To pipe the raw coded value instead of the display label (for dropdowns, radio buttons, checkboxes, yes/no, true/false, and SQL fields), use the `:value` modifier. Modifiers are covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md).
 
@@ -174,13 +181,15 @@ When REDCap evaluates a pipe reference and the referenced variable has no stored
 
 This is not an error. It is expected behavior whenever the source variable is empty. If you do not want the underscore placeholder to appear, use the `:hideunderscore` modifier — covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) — which causes the blank value to be piped as truly empty/invisible instead.
 
+Where the placeholder appears depends on context. In field labels, field notes and survey invitations, a blank piped value shows as `______`. In Alerts & Notifications, the @DEFAULT action tag and the survey redirect URL, a blank value is piped as truly empty — no underscores — so a missing value can silently produce an empty default or a broken URL parameter.
+
 ## 6.2 Same-Instrument Timing
 
-If the source variable and the piping reference live on the same instrument, the displayed value updates in real time as the participant types. There is no need to save and reload.
+If the source variable and the piping reference live on the same instrument (and the same survey page), the displayed value updates in real time as the participant types. There is no need to save and reload.
 
 ## 6.3 Cross-Instrument Timing
 
-If the source variable lives on a different instrument from the field that references it, the piped value only refreshes after: (1) data has been entered in the source instrument, (2) the record has been saved, and (3) the destination instrument has been reloaded or opened fresh.
+If the source variable lives on a different instrument from the field that references it, the piped value only refreshes after: (1) data has been entered in the source instrument, (2) the record has been saved, and (3) the destination instrument has been reloaded or opened fresh. Values from another instrument show what was saved at the moment the page loaded; they do not change while the page is open, even if the source instrument is edited in another tab.
 
 ## 6.4 Avoiding Blank Displays
 
@@ -225,7 +234,7 @@ Combining correct ordering with branching logic produces instruments that flow c
 
 **Q: What does REDCap display when I pipe a checkbox field?**
 
-**A:** By default, REDCap displays a comma-separated list of all checked option labels — for example, "Vanilla, Chocolate". If no options are checked, the display is blank. To display unchecked options or specific choices, use checkbox modifiers covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md).
+**A:** By default, REDCap displays a comma-separated list of all checked option labels — for example, "Vanilla, Chocolate". If no options are checked, REDCap pipes the blank placeholder `______` (six underscores), just like any other empty field; add `:hideunderscore` to show nothing instead. To display unchecked options or specific choices, use checkbox modifiers covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md).
 
 ---
 
@@ -237,7 +246,9 @@ Combining correct ordering with branching logic produces instruments that flow c
 
 **Piping into a field that uses coded values when you need the label.** The default piped value for dropdowns, radio buttons, and similar fields is the display label, not the raw code. If your downstream logic or display needs the raw code, use the `:value` modifier (see [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md)). Mixing up labels and codes produces confusing output.
 
-**Using piping references in field types that do not display text.** Piping syntax placed inside validation settings, field widths, or other non-text configuration fields has no effect and is ignored by REDCap.
+**Expecting piping in field settings that are not displayed text.** Piping does not apply to configuration settings such as field width. The exception is validation: the minimum and maximum of a validated text field can be a piped field such as `[enroll_date]` — this is dynamic min/max, where the limit is read live from the page or from the saved value. See [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md).
+
+**Trying to pipe a descriptive field.** Descriptive fields (and section headers) capture no data, so there is no value to pipe. Pipe the underlying data fields instead.
 
 **Assuming blank means broken.** A blank in a piped label is almost always a timing or ordering issue, not a configuration error. Check that the source variable is filled in and that the instrument has been reloaded after saving.
 

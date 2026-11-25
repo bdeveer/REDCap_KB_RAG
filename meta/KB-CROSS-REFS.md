@@ -3285,6 +3285,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DE-08 — Field Comment Log
 - RC-DE-12 — Data Resolution Workflow
 - RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 
 ---
 
@@ -5286,6 +5287,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-FD-05 — Codebook
 - RC-SURV-02 — Survey Settings: Basic Options & Design
+- RC-DE-05 — Field Validations
 
 **Inbound links (referenced by):**
 - RC-ALERT-01 — Alerts & Notifications: Setup

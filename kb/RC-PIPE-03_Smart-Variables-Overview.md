@@ -7,7 +7,7 @@
 | **Domain** | Piping |
 | **Applies To** | All REDCap project types |
 | **Requires** | Any supported version. Individual Smart Variables have their own version floors — see §3 |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — smart variable list and contexts checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md)|
 | **Version** | 1.2 |
 | **Last Updated** | 2026-11 |
@@ -22,6 +22,8 @@
 Smart variables are bracket expressions that reference system-level information in REDCap rather than participant-entered field values. They use the same `[bracket]` syntax as regular piping but resolve to context-dependent data — the current user's name, the current event, a survey link, a record's data access group, and more. This article provides a category-level overview of all smart variable groups available in REDCap.
 
 New smart variables are added with each REDCap release. For a complete, version-specific listing, use the embedded help text accessible from any green "Smart Variables" button found in the Online Designer, survey settings, and alert configuration screens.
+
+The Smart Variables list in your project hides variables for features that are not enabled — for example the calendar feed, public Project Dashboards, Access Control Groups, Rewards and REDCap+ features. Your list may therefore be shorter than the full documentation or this article.
 
 ---
 
@@ -51,41 +53,41 @@ By default, if a piped value is blank or null, REDCap displays six underscore ch
 
 Smart variables in this category return information about the REDCap user currently interacting with the system. Useful for personalizing data entry forms or emails based on who is logged in.
 
-Examples of what these variables can return: the user's REDCap username, their first or last name, their email address, and which Data Access Group (DAG) the current user belongs to.
+Examples of what these variables can return: the user's REDCap username, their first or last name, their email address, and which Data Access Group (DAG) the current user belongs to. Also included: `[user-fullname]`, and the user's role via `[user-role-id]`, `[user-role-name]` and `[user-role-label]`.
 
 ### 3.2 Record
 
 These smart variables reference metadata about the record currently being viewed or edited — not the participant-entered data fields, but record-level properties managed by REDCap.
 
-Examples: the record's unique identifier, the record's assigned Data Access Group, and a URL to the record's calendar page (if applicable).
+Examples: the record's unique identifier, the record's assigned Data Access Group, and the record's calendar feed URL — a subscribe (ICS) link for calendar apps, available only if the calendar feed is enabled on your server.
 
 ### 3.3 Form
 
 Form smart variables reference properties of the instrument (form) that is currently open. They do not return participant data — they return information about the instrument itself.
 
-Examples: the instrument's name, a direct link to the current form for the current record, and the form's completion status.
+Examples: `[is-form]`, `[form-url]`, `[form-link]`, `[instrument-name]` and `[instrument-label]`. The form's completion status is not a smart variable — it is the ordinary `[instrument_name_complete]` field.
 
 ### 3.4 Survey
 
 Survey smart variables are similar to form smart variables but focus specifically on the survey aspect of an instrument. They are most useful in confirmation emails and automated survey invitations.
 
-Examples: a direct link to the survey itself, the corresponding survey queue link for the current record, the survey's start timestamp, stop timestamp, and total completion duration.
+Examples: a direct link to the survey itself, the corresponding survey queue link for the current record, the survey's start timestamp, stop timestamp, and total completion duration. Also included: `[survey-title]`, `[survey-access-code]`, `[survey-return-code]`, and `[survey-date-started]` / `[survey-date-completed]`.
 
 ### 3.5 Event & Arm
 
 These smart variables enable dynamic event and arm references. While it is possible to hard-code a specific event name in a pipe reference (e.g., `[event_1_arm_1][variable_name]`), event smart variables allow you to reference events relative to the current context — for example, the previous event.
 
-Examples: the name of the current event, the current arm number, the arm label, and relative event references such as the previous event or next event.
+Examples: the name of the current event, the current arm number, the arm label, and relative event references such as the previous event or next event. Also included: `[event-id]` and `[event-number]`.
 
 > **Note:** Hard-coded event references (e.g., `[event_1_arm_1][variable_name]`) are covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md). Event smart variables extend that capability by allowing references that do not require knowing the specific event name in advance.
 
 ### 3.6 Repeating Instruments and Events
 
-These smart variables serve two functions: (1) the instance qualifier smart variables covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (`[first-instance]`, `[last-instance]`, `[previous-instance]`, `[next-instance]`), and (2) an additional smart variable that references a new, not-yet-created instance. The latter is useful for generating links or pre-populating default values that will apply to a new instance when it is created.
+These smart variables serve two functions: (1) the instance qualifier smart variables covered in [RC-PIPE-02 — Piping: Longitudinal, Repeated Instruments & Modifiers](RC-PIPE-02_Piping-Longitudinal-Repeated-Instruments-and-Modifiers.md) (`[first-instance]`, `[last-instance]`, `[previous-instance]`, `[next-instance]`), and (2) an additional smart variable that references a new, not-yet-created instance. The latter is useful for generating links or pre-populating default values that will apply to a new instance when it is created. `[current-instance]` returns the instance number currently being viewed.
 
 ### 3.7 Aggregate Functions, Charts, and Tables
 
-These smart variables are associated with REDCap's Project Dashboard feature (REDCap's own UI refers to them as "Smart Functions" and "Smart Charts"). They allow project designers to build custom charts and summary tables on the dashboard using aggregated data from the project.
+These smart variables are most often used in Project Dashboards, but are also usable in piped text such as field labels and descriptive text (REDCap's own UI refers to them as "Smart Functions" and "Smart Charts"). They allow project designers to build custom charts and summary tables using aggregated data from the project. The chart and table variables are `[pie-chart]`, `[donut-chart]`, `[bar-chart]`, `[scatter-plot]`, `[line-chart]` and `[stats-table]`.
 
 This category is more advanced and is primarily used by administrators and power users building project-level dashboards. Full documentation is available in REDCap's embedded help text.
 
@@ -97,7 +99,7 @@ These smart variables act as modifiers or extensions to the aggregate function c
 
 These smart variables expose information about a record's randomization assignment. They are only relevant to projects with REDCap's Randomization module enabled.
 
-Examples: the randomization number assigned to the record (`[rand-number]`), the server date/time at which the record was randomized (`[rand-time]`), and the equivalent UTC timestamp (`[rand-utc-time]`). Each variable also supports a `:value` suffix to return a raw `YYYY-MM-DD HH:MM:SS` formatted value suitable for use in logic or calculated fields rather than display contexts. Projects with more than one randomization can use `:n` (e.g., `[rand-number:2]`) to reference a specific one.
+Examples: the randomization number assigned to the record (`[rand-number]`), the server date/time at which the record was randomized (`[rand-time]`), and the equivalent UTC timestamp (`[rand-utc-time]`). The time variables also support a `:value` suffix to return a raw `YYYY-MM-DD HH:MM:SS` formatted value suitable for use in logic or calculated fields rather than display contexts; `[rand-number]` returns the same value with or without it. Projects with more than one randomization can use `:n` (e.g., `[rand-number:2]`) to reference a specific one.
 
 ### 3.10 Project Dashboards
 
@@ -117,13 +119,17 @@ If a project uses REDCap's MyCap mobile application for participant data collect
 
 Six Smart Variables supporting participant email verification and opt-out: `[email-verify-url]`, `[email-verify-link]` and `[email-verified]`; `[email-unsubscribe-url]`, `[email-unsubscribe-link]` and `[email-unsubscribed]`. Each set is a URL and a link to place in an email, plus a flag to use in alert or ASI trigger logic.
 
-> **Note:** These need 17.3.0+ and an active REDCap+ subscription to work, and the feature must be enabled in the Control Center. On a 17.5.6 instance without a subscription they are still listed in the Smart Variable documentation. If the feature is disabled in the Control Center, REDCap hides them from the documentation as well as from use. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md).
+> **Version caveat (v17.3+; not in LTS 16):** The Email Verification & Unsubscribe and REDCap SHARE categories, and the Rewards redemption variables, exist from v17.3 onward and are not available in LTS 16. Email Verification & Unsubscribe and REDCap SHARE need an active REDCap+ subscription to return values, and the feature must be enabled in the Control Center. On a 17.5.6 instance without a subscription the Email Verification variables were still listed in the Smart Variable documentation; if the feature is disabled in the Control Center, REDCap hides them from the documentation as well as from use. See [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md). Check with your REDCap administrator whether your server has these features before relying on them.
 
 ### 3.14 Miscellaneous
 
 The Miscellaneous category is primarily relevant for REDCap administrators rather than project designers. These smart variables expose information about the REDCap installation and the project itself.
 
-Examples: the current REDCap version number, the project's unique Project ID, the base URL of the REDCap installation, and similar system-level metadata.
+Examples: the current REDCap version number, the project's unique Project ID, the base URL of the REDCap installation (and `[survey-base-url]` for surveys), `[project-title]`, `[project-status]`, `[project-purpose]`, `[project-irb-number]`, and similar system-level metadata.
+
+### 3.15 Feature-Dependent Categories
+
+The Access Control Groups and Rewards categories also exist, but appear in the Smart Variables list only when those features are enabled for the project.
 
 ---
 
@@ -136,8 +142,11 @@ Smart variables are recognized in the same locations as regular piping:
 - Email bodies in confirmation emails, survey invitations, and Alerts & Notifications
 - Branching logic conditions (certain smart variables, such as `[is-survey]`, are specifically designed for logic contexts)
 - Action tag values (e.g., `@DEFAULT` and `@CALCTEXT`)
+- Calculated fields
+- Report filters
+- Data Quality rules
 
-Not all smart variables are meaningful in all contexts. For example, survey-specific smart variables (survey start time, survey queue link) are only useful in survey-related email fields, not in branching logic.
+Not all smart variables are meaningful in all contexts. Survey timestamp and duration variables (e.g., `[survey-date-completed:instrument]`, `[survey-duration:instrument]`) work in logic and calculations, but link/URL-type variables (e.g., `[survey-link]`, `[survey-queue-link]`) are only meaningful in text and emails, not in branching logic.
 
 ---
 
@@ -173,7 +182,7 @@ The embedded help text lists every available smart variable, its syntax, its cat
 
 **Q: Can smart variables be used in the same expression as a regular variable pipe reference?**
 
-**A:** Yes. Smart variables and regular variable references can coexist in the same text. For example, a field label might read: "Dear `[participant-name]`, you are enrolled in `[event-label]`." The two types of references are independent and each resolves on its own.
+**A:** Yes. Smart variables and regular variable references can coexist in the same text. For example, a field label might read: "Dear `[first_name]`, you are enrolled in `[event-label]`." The two types of references are independent and each resolves on its own.
 
 **Q: Are smart variables the same as piping modifiers?**
 
@@ -183,7 +192,7 @@ The embedded help text lists every available smart variable, its syntax, its cat
 
 ## 7. Common Mistakes & Gotchas
 
-**Using smart variables outside of supported locations.** Not every smart variable works in every context. Survey-specific smart variables placed in branching logic do not resolve correctly. Test smart variable placement in a development project before using it in production.
+**Using smart variables outside of supported locations.** Not every smart variable works in every context. Survey link/URL variables such as `[survey-link]` or `[survey-queue-link]` are not meaningful in branching logic, although survey timestamp and duration variables do work in logic and calculations. Test smart variable placement in a development project before using it in production.
 
 **Relying on smart variables in a version-specific way without checking the embedded help.** REDCap adds new smart variables frequently. Documentation from external sources (including this KB) may lag behind the actual REDCap version in use at your institution. Always verify against the built-in help text.
 
@@ -191,7 +200,7 @@ The embedded help text lists every available smart variable, its syntax, its cat
 
 **Using smart variables in Data Quality rules.** Smart variables are supported in DQ rule logic, but they significantly increase the time required for rules to complete. Avoid using them in DQ rules unless necessary, and be prepared for longer run times when they are present.
 
-**Using MyCap smart variables in non-MyCap projects.** MyCap smart variables only resolve correctly if the project has MyCap enabled and the participant is accessing data through the MyCap app. Using them in a standard web survey produces blank or unexpected output.
+**Using MyCap smart variables in non-MyCap projects.** MyCap smart variables require MyCap to be enabled and set up in the project. Within such a project, the MyCap participant link/URL variables are intended for emails and web pages that invite participants to join MyCap — they do not require the participant to already be in the app.
 
 ---
 

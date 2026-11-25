@@ -6,12 +6,13 @@ applies_to:
 - All REDCap project types with survey or notification features
 - Project Design and Setup rights required
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — piping
+  timing, identifier handling and recipients checked against source code; pages not
+  re-captured
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
 version: '1.0'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-PIPE-01
   title: 'Piping: Basics, Syntax & Field Types'
@@ -64,9 +65,11 @@ A special instruction added to a field's Action Tags field in the Online Designe
 
 # 3. Piping in Confirmation Emails
 
-Confirmation emails are configured within the survey settings for each instrument. When a participant submits the survey, REDCap sends the confirmation email to an address you specify — typically piped in from a field capturing the participant's email.
+Confirmation emails are configured within the survey settings for each instrument. When a participant submits the survey, REDCap sends the confirmation email to the respondent's email address that REDCap already knows — the address in the Participant List, or the value of the project's designated email field. There is no separate "To" field to pipe into. On a public survey where REDCap has no email address for the respondent, the respondent can type an address on the survey completion page to receive the confirmation.
 
-**What can be piped:** Any field value from the survey just completed, as well as any other field value in the record and any applicable smart variable.
+**What can be piped:** In the subject and body — any field value from the survey just completed, as well as any other field value in the record and any applicable smart variable. Values are filled in when the email is sent (on submission), so they reflect the data saved at that moment.
+
+**Attachments:** The confirmation email can attach a PDF of the completed response and one static file that you upload.
 
 **Common uses:** Personalizing the greeting with the participant's name, confirming the data they submitted, providing a direct survey queue link for next steps, or including a summary of entered values.
 
@@ -96,13 +99,34 @@ ASIs are linked to a specific instrument and trigger automatically based on cond
 
 **Default ASI content:** By default, REDCap pre-populates new ASIs with smart variables that link directly to the relevant survey. These smart variable links are functional and important — modify them carefully. Removing the survey link from an invitation defeats its purpose.
 
+**Attachments:** ASIs cannot include file attachments. If a message needs an attachment, use an alert instead (see Section 5).
+
 **Common uses:** Personalizing invitations with participant names, including direct survey links, specifying the survey queue link for participants enrolled in a multi-survey sequence.
 
 > **Institution-specific:** Local policies around automated survey invitations and email-sending from REDCap vary by installation. Contact your REDCap administrator to confirm any approval steps or institutional requirements before setting up automated communications.
 
-## 4.3 Piping Identifiable Information in Invitations
+## 4.3 When Piped Values Are Filled In
 
-Standard piping of identifiable information (such as participant names) works in survey invitations by default, provided that the relevant field values are available in the record at the time the invitation is sent.
+Timing differs between email types, and it matters whenever the data you pipe might be entered or changed after the trigger.
+
+- **Survey invitations (ASIs and the Participant List):** Piped values are filled in at the moment the invitation is **scheduled** or composed — not when it goes out. The finished text is stored and sent later as is. This includes ASIs with a delay and manual invitations scheduled for a later date. Reminders reuse the same stored text, with "[Reminder]" added to the subject. Data entered or changed after scheduling does not appear.
+- **Alerts & Notifications and confirmation emails:** Piped values are filled in at **send** time, so they use the record's current data.
+
+| Email type | Piped values filled in | Picks up data entered after the trigger? |
+|---|---|---|
+| Automated Survey Invitation (immediate or delayed) | When the invitation is scheduled | No |
+| Manual invitation from the Participant List (now or scheduled) | When the invitation is composed | No |
+| Invitation reminders | Reuse the original invitation text | No |
+| Alerts & Notifications (immediate or delayed) | When the alert is sent | Yes |
+| Survey confirmation email | When sent, on survey submission | Data saved up to submission |
+
+> **Tip:** If an invitation must show data that's entered later — for example, an appointment date added a few days after enrollment — use an alert with a survey link smart variable (such as `[survey-link:instrument_name]`) instead of a delayed ASI, or make sure the data exists before the ASI condition becomes true.
+
+## 4.4 Identifiable Information and Blank Values in Invitations
+
+Survey invitations and confirmation emails have no option to block identifier piping: fields marked as **Identifier** (such as participant names) pipe normally, provided the value is in the record when the invitation is scheduled (see 4.3).
+
+If a piped field is blank, invitations, ASIs and confirmation emails show a line of underscores (`______`) in its place. Add `:hideunderscore` to show nothing instead — for example, `Dear [first_name:hideunderscore],`.
 
 ---
 
@@ -110,17 +134,23 @@ Standard piping of identifiable information (such as participant names) works in
 
 The Alerts & Notifications module provides more flexibility than confirmation emails and ASIs. Alerts are not bound to a specific instrument or event — they can be triggered by any data change or logic condition across the project.
 
-**What can be piped:** Any field value in the entire project record, plus a broad range of smart variables.
+**What can be piped:** Any field value in the entire project record, plus a broad range of smart variables, in the subject and body. Values are filled in when the alert is sent, so a delayed alert uses the record's current data. A blank piped field shows as nothing (no underscores). The From address and display name cannot be piped.
 
-**Recipients:** Alerts can be sent to specified email addresses, piped email addresses (e.g., `[participant_email]`), or specific user roles and data access groups.
+**Recipients:** Alerts can be sent to specified email addresses, piped email fields (e.g., `[participant_email]`), project users, or specific user roles (optionally only users in the record's data access group). Email fields marked as Identifier still work as alert recipients.
+
+> **Version caveat (recipients by user role):** Choosing recipients by user role, optionally limited to users in the record's data access group, is a recent Standard-release feature (present in v17.6; the exact release it arrived in was not checked). It is not in LTS 17.3 or 16, where recipients are explicit addresses, piped email fields and project users. On LTS, pipe an email field or list the addresses directly.
+
+**Attachments:** Alerts can attach files from File Upload fields in the record plus up to 5 static files that you upload.
 
 **Trigger logic:** The condition that fires an alert uses the same logic syntax as branching logic and can incorporate piped values and smart variables.
 
-**Piping identifiable information:** As a privacy safeguard, the ability to pipe identifiable information (such as a participant's name) is **disabled by default** in Alerts & Notifications. This setting must be enabled individually for each alert in its configuration menu. There is no global toggle to enable it for all alerts at once.
+**Piping identifiable information:** As a privacy safeguard, each alert has an option **Prevent piping of data for Identifier fields**, which is **checked by default** for every alert. There is no project-wide toggle — it is set per alert. It affects only fields marked as **Identifier** in the Online Designer: in the message, those show `[*DATA REMOVED*]` instead of their value. Fields not marked as Identifier — including a name field that hasn't been flagged — pipe normally. To pipe Identifier fields, uncheck the option in that alert and confirm the warning.
 
-> **Important:** Always review whether an alert should include identifiable information before enabling that setting. Once enabled per alert, piping will include whatever identifiable fields are referenced in the message body.
+> **Important:** Always review whether an alert should include identifiable information before unchecking that option. Once unchecked, the alert includes whatever Identifier fields are referenced in the message.
 
-**Alerts vs. ASIs:** Use an ASI when the communication is directly tied to completing a specific survey. Use an Alert when the trigger is a data event (e.g., a value crossing a threshold, a checkbox being checked, a date being reached) or when recipients or conditions are more complex than a single instrument's completion.
+> **Protected Email Mode:** If your project uses Protected Email Mode set to trigger when identifier fields are piped, piping an Identifier field into an alert, ASI or confirmation email sends that message as a protected email (the recipient gets a link to read it securely in REDCap) instead of a regular email.
+
+**Alerts vs. ASIs:** Use an ASI when the communication is directly tied to completing a specific survey. Use an Alert when the trigger is a data event (e.g., a value crossing a threshold, a checkbox being checked, a date being reached) or when recipients or conditions are more complex than a single instrument's completion. For "a date being reached": alerts whose logic uses `datediff` with `"today"` or `"now"` are re-checked automatically on a schedule, so they can fire without anyone saving data.
 
 > Alerts & Notifications is a large topic covered in its own dedicated training course. This section covers only the piping-specific aspects. See [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) for full coverage.
 
@@ -154,7 +184,7 @@ Action tags modify or extend field behavior. Several accept piped values or smar
 
 **`@DEFAULT`**
 
-Pre-fills a field with a specified value when the record is first loaded. Accepts a hard-coded value, a piped variable reference, or a smart variable.
+Pre-fills an empty field with a specified value when the form is first opened (before it has been saved). Accepts a hard-coded value, a piped variable reference, or a smart variable.
 
 Use case: carry a value forward from a previous event or instance.
 
@@ -184,19 +214,19 @@ If `pref` equals 1, the field is pre-filled with the value of `nick_name`; other
 
 **Q: Can I include a participant's name in a survey invitation email?**
 
-**A:** Yes — place `[first_name]` (or whatever variable holds the name) in the invitation body. The value available at send time is pulled from the record. Ensure the name field is filled in before the invitation is triggered.
+**A:** Yes — place `[first_name]` (or whatever variable holds the name) in the invitation body. The value is filled in when the invitation is scheduled, not when it is sent — so make sure the name field is saved before the ASI condition becomes true (or before you compose the invitation from the Participant List). A name added afterward will not appear, not even in reminders.
 
 **Q: Why is my participant's name showing as blank in the confirmation email?**
 
-**A:** The most common cause is that the name field was not completed or saved before the confirmation email was triggered. Confirmation emails fire immediately on survey submission — if the name came from a prior instrument, it must have been saved before the survey was completed.
+**A:** The most common cause is that the name field was not completed or saved before the confirmation email was triggered. Confirmation emails fire immediately on survey submission — if the name came from a prior instrument, it must have been saved before the survey was completed. When a piped field is empty, confirmation emails and invitations show a line of underscores (`______`); use `[first_name:hideunderscore]` to show nothing instead. (In alerts, an empty field simply shows as nothing.)
 
 **Q: Why isn't my piped identifiable information appearing in an Alert?**
 
-**A:** Piping identifiable information in Alerts & Notifications is disabled by default. Open the alert's configuration and enable the "Allow piping of identifiable fields" option (exact label may vary by REDCap version) for that specific alert.
+**A:** If the alert shows `[*DATA REMOVED*]` where the value should be, the field is marked as **Identifier** and the alert's **Prevent piping of data for Identifier fields** option is checked (the default for every alert). Open that alert, uncheck the option and confirm the warning. If nothing at all appears, the field isn't being blocked — it was most likely empty when the alert was sent.
 
 **Q: What is the difference between an Automated Survey Invitation and an Alert?**
 
-**A:** An ASI is tied to a specific instrument and fires when conditions related to that instrument are met (typically, when it is completed). An Alert is not tied to any instrument — it fires based on any configurable trigger condition in the project. Alerts also offer more flexibility in recipients and trigger logic.
+**A:** An ASI is tied to a specific instrument and fires when conditions related to that instrument are met (typically, when it is completed). An Alert is not tied to any instrument — it fires based on any configurable trigger condition in the project. Alerts also offer more flexibility in recipients and trigger logic, and they fill in piped values when sent rather than when scheduled.
 
 **Q: Can I use smart variables in branching logic?**
 
@@ -210,15 +240,17 @@ If `pref` equals 1, the field is pre-filled with the value of `nick_name`; other
 
 # 9. Common Mistakes & Gotchas
 
-**Not enabling identifiable piping in Alerts.** The most common reason piped names and contact information are blank in alerts is that the per-alert setting to allow identifiable piping has not been enabled. Check each alert's configuration individually — there is no global enable.
+**Not unchecking identifier blocking in Alerts.** If an alert shows `[*DATA REMOVED*]` instead of a name or contact detail, that field is marked as Identifier and the alert's **Prevent piping of data for Identifier fields** option is still checked (the default). Uncheck it in each alert that needs it — there is no project-wide setting. Fields not marked as Identifier pipe normally.
+
+**Expecting a delayed ASI to pick up data entered after it was scheduled.** ASI and Participant List invitations are filled in when scheduled, and reminders reuse that text. If the invitation must include data entered later, use an alert with a survey link smart variable instead, or make sure the data exists before the ASI condition becomes true.
 
 **Removing the default survey link from an ASI template.** REDCap pre-populates new ASIs with smart variable survey links. Deleting those links means participants receive an invitation with no way to access the survey. Modify the surrounding text, but preserve the link smart variables.
 
 **Assuming branching logic uses display labels.** When writing logic conditions, always use the raw coded value (e.g., `[dropdown]="1"`) not the label (e.g., `[dropdown]="Vanilla"`). The piping behavior (which returns labels by default) does not carry over to logic evaluation.
 
-**Piping a value into @DEFAULT without accounting for blank source variables.** If the source variable is empty when the record loads, @DEFAULT pre-fills the field with a blank — overwriting any value the user might have typed if they reload. Use branching logic or conditional @DEFAULT syntax to guard against pre-filling from an empty source.
+**Expecting @DEFAULT to fill in later from a source that was empty.** @DEFAULT fills the field only when the field is empty, the piped default isn't empty, and the form hasn't been saved before — it never overwrites a typed or saved value. If the source variable is empty when the form is first opened, there is simply no default, and it won't fill in later once the form has been saved. Make sure the source data is entered before the form is first opened and saved.
 
-**Triggering an Alert before the relevant data is saved.** Alerts fire based on a data-save event. If an alert references a field whose value is saved in a later step than the trigger, the value will be blank in the outgoing message. Align trigger conditions with the save event that captures the relevant data.
+**Triggering an Alert before the relevant data is saved.** Most alerts fire based on a data-save event. If an alert references a field whose value is saved in a later step than the trigger, the value will be blank in the outgoing message. Align trigger conditions with the save event that captures the relevant data. (Alerts whose logic uses `datediff` with `"today"` or `"now"` are also re-checked on a schedule, so they can fire without a save — but they still pipe only the data that exists when they are sent.)
 
 ---
 

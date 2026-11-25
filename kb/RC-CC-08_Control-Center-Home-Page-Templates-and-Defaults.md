@@ -183,7 +183,7 @@ Each row has a **Publish** or **Disable** action. Once published, a type appears
 > **Version caveat:** Earlier versions of this article also listed **MRN (7 digits)** (`mrn_7d`). It is not in the 17.5.6 install scripts or on a 17.5.6 test instance.
 
 **Custom Validation Types**
-REDCap administrators can develop and register custom validation types for institution-specific needs. The **Add Custom Validation Type** form on 17.5.6 asks for a **Data type**, **Display name**, **Internal name**, a server-side (PHP) regex pattern and a **JavaScript regex pattern**, plus **Case sensitive** and **Unicode** checkboxes. Once registered here, a type becomes available in the validation type dropdown alongside standard types.
+REDCap administrators can develop and register custom validation types for institution-specific needs. The **Add Custom Validation Type** form on 17.5.6 asks for a **Data type**, **Display name**, **Internal name**, a server-side (PHP) regex pattern and a **JavaScript regex pattern**, plus **Case sensitive** and **Unicode** checkboxes. A new custom type starts **disabled**: publish it on this page before project designers can choose it in the validation type dropdown alongside standard types.
 
 ---
 

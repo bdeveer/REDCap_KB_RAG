@@ -10,7 +10,7 @@
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md) |
 | **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-SURV-04 — Survey Link Types & Access Methods](RC-SURV-04_Survey-Link-Types-and-Access-Methods.md); [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md); [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md); [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
 | **Synonyms** | how do i email survey invitations to participants; upload participant email addresses; send individual survey links manually; track who has responded to a survey; participant list setup; survey invitation log; send a survey invite to one person; review sent and scheduled survey invitations |
@@ -183,7 +183,7 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 | Column | Description |
 |---|---|
 | Invitation Send Time | The exact timestamp when the invitation was sent (past) or is scheduled to send (future), based on the server's time zone. Green = sent successfully; red = send failed; grey = scheduled. Future invitations show a pencil icon (edit the scheduled time) and a red X (delete the invitation). Reminders display a bell icon with a number in parentheses indicating which reminder in the sequence it is. |
-| View Invite | An envelope icon. Click to review the message content for that invitation, including any piped-in values at the time of sending. |
+| View Invite | An envelope icon. Click to review the message content for that invitation, including any piped-in values. Piping is filled in when the invitation is composed (or scheduled), not when it goes out, so data entered after that does not appear. |
 | Participant Email | The email address the invitation is or was sent to. |
 | Participant Phone | Displayed only when texting is enabled for the project. |
 | Record | In identified mode, shows a clickable Record ID linking to the record. |

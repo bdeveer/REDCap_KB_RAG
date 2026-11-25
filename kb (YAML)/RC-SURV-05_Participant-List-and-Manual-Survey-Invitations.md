@@ -10,7 +10,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
 prerequisites:
 - RC-SURV-04 — Survey Link Types & Access Methods
 version: '1.1'
-last_updated: 2026-08
+last_updated: 2026-11
 related:
 - id: RC-SURV-04
   title: Survey Link Types & Access Methods
@@ -203,7 +203,7 @@ The Survey Invitation Log is accessible from the Survey Distribution Tools menu.
 | Column | Description |
 |---|---|
 | Invitation Send Time | The exact timestamp when the invitation was sent (past) or is scheduled to send (future), based on the server's time zone. Green = sent successfully; red = send failed; grey = scheduled. Future invitations show a pencil icon (edit the scheduled time) and a red X (delete the invitation). Reminders display a bell icon with a number in parentheses indicating which reminder in the sequence it is. |
-| View Invite | An envelope icon. Click to review the message content for that invitation, including any piped-in values at the time of sending. |
+| View Invite | An envelope icon. Click to review the message content for that invitation, including any piped-in values. Piping is filled in when the invitation is composed (or scheduled), not when it goes out, so data entered after that does not appear. |
 | Participant Email | The email address the invitation is or was sent to. |
 | Participant Phone | Displayed only when texting is enabled for the project. |
 | Record | In identified mode, shows a clickable Record ID linking to the record. |

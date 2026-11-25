@@ -6,15 +6,15 @@ applies_to:
 - All REDCap project types
 - data entry users
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — validation
+  types, enforcement and admin page checked against source code; pages not re-captured
 prerequisites:
 - RC-DE-02 — Basic Data Entry
 version: '1.1'
-last_updated: '2026'
+last_updated: 2026-11
 related:
 - id: RC-CC-08
-  title: 'Control Center: Home Page, Templates & Project Defaults'
+  title: 'Control Center: Home Page, Templates, Project Defaults & Field Validations'
 - id: RC-DE-06
   title: Bio-Medical Ontologies
 - id: RC-DE-02
@@ -48,7 +48,7 @@ A predefined rule attached to a text box variable by the instrument designer tha
 
 **Validation Error Popup**
 
-A dialog box that appears when you attempt to save or move past a field containing a value that does not pass the attached validation. The popup names the validation type and typically describes the expected format.
+A dialog box that appears when you attempt to save or move past a field containing a value that does not pass the attached validation. The popup usually names the required format (e.g., "Date (M-D-Y)"); a few older validation types use their own wording instead.
 
 **Field Note**
 
@@ -60,7 +60,7 @@ Text displayed inside a text box before any value has been entered. Placeholders
 
 **Minimum / Maximum**
 
-An optional constraint that can be added to date/time and number validations. By default, min/max constraints are **soft**: REDCap displays a warning popup if the entered value falls outside the defined range, but the user can acknowledge it and save the value anyway (to allow for legitimate outliers). The instrument designer can override this by adding the action tag **@FORCE-MINMAX** to the field, which makes the constraint **hard** — REDCap will not accept any value outside the defined range. Minimums and maximums can be set as hard values (fixed numbers or dates) or dynamic values (derived from another field's answer).
+An optional constraint that can be added to date/time and number validations. By default, min/max constraints are **soft**: REDCap displays a warning popup if the entered value falls outside the defined range, but the user can acknowledge it and save the value anyway (to allow for legitimate outliers). The popup says the value is outside the suggested range but is still admissible. The instrument designer can override this by adding the action tag **@FORCE-MINMAX** to the field, which makes the constraint **hard** — REDCap will not accept any value outside the defined range, and the popup says the value must be within the range. Minimums and maximums can be set as hard values (fixed numbers or dates) or dynamic values (derived from another field's answer).
 
 **Prefilled Value**
 
@@ -74,28 +74,32 @@ A value that REDCap (or an advanced feature such as action tags or piping) autom
 
 REDCap provides a large number of date, time, and date-time validation variants. The specific format in use for any given field is determined by the instrument designer; as a data entry user, you do not choose the format. There are four ways to enter a value into a date or time field:
 
-**Manual entry.** Type the date or time directly using your keyboard. Use exactly the format shown next to or below the field — REDCap will reject entries in the wrong format.
+**Manual entry.** Type the date or time directly using your keyboard, using the format shown next to or below the field. REDCap tidies punctuation for you — slashes or periods become dashes, missing leading zeros are added, and an 8-digit string such as 03152025 gets its dashes — so what matters most is that the day, month and year are in the order the field expects (e.g., M-D-Y, D-M-Y or Y-M-D). A date in the wrong order, or one that is not a real date, is rejected. Two-digit years are expanded automatically (to 20xx if that is no more than ten years ahead of the current year, otherwise to 19xx), so enter four-digit years to avoid surprises.
 
 **Date picker.** Click the calendar icon next to the field to open a calendar popup. For validations that include a time component, the popup also includes a time selector. Using the date picker guarantees the correct format because REDCap formats the value for you automatically.
 
-**Today / Now button.** A button labeled "Today" (or "Now" for date-time validations) appears next to the date picker. Clicking it fills the field with the current date and time in your local timezone. This is the fastest way to record the current moment.
+**Today / Now button.** A button labeled "Today" (or "Now" for date-time validations) appears next to the date picker. Clicking it fills the field with the current date and time according to your device's clock. This is the fastest way to record the current moment. The button may be hidden on some fields (by the @HIDEBUTTON action tag or by a project or system setting), and Time (MM:SS) fields have no Now button.
 
 **Prefilled value.** Certain advanced project features (e.g., action tags, calculated fields, or piping) can automatically populate a date or time field when you open the instrument. Whether you can modify a prefilled value depends on how the instrument is configured.
 
-> **Note:** Date and time validations can also include a minimum, a maximum, or both. These constraints can be hard dates (e.g., no date before January 1, 2000) or dynamic dates derived from another field's value (e.g., a visit date cannot be before the participant's date of birth). If you enter a value outside these bounds, a popup error will appear.
+> **Note:** Date and time validations can also include a minimum, a maximum, or both. These constraints can be hard dates (e.g., no date before January 1, 2000) or dynamic dates derived from another field's value (e.g., a visit date cannot be before the participant's date of birth). A minimum or maximum can also be "today" or "now" — on a form this is checked against your device's clock, but during a data import it is checked against the server's clock. If you enter a value outside these bounds, a popup warning will appear (see **Minimum / Maximum** above).
+
+Besides date and date-time types, REDCap also has time-only validations: **Time (HH:MM)**, **Time (HH:MM:SS)** and **Time (MM:SS)**.
 
 ### 3.2 Number Validations
 
-Number validations check that the entered value is numeric. The two most common variants are:
+Number validations check that the entered value is numeric. The most common variants are:
 
 | **Validation** | **What It Checks** |
 |---|---|
-| Number | The entry is in a numeric format (integers and decimals are both accepted) |
-| Integer | The entry is a whole number — no decimal places allowed |
+| Number | The entry is in a numeric format (integers and decimals are both accepted, as is scientific notation such as 1e5) |
+| Integer | The entry is a whole number, with an optional + or − sign — no decimal places allowed |
+| Number (1–4 decimal places) | The entry has the specified number of decimal places (separate types for 1, 2, 3 and 4) |
+| Number (comma as decimal) | The entry is a number that uses a comma instead of a period as the decimal separator |
 
 Use the integer validation context as a signal from the instrument designer that fractional values are not meaningful for that variable (e.g., number of pregnancies, number of visits).
 
-Number validations can also include a minimum, maximum, or both. As with date validations, these can be hard values or dynamic values derived from another field. If your entry falls outside the allowed range, a popup error will appear.
+Number validations can also include a minimum, maximum, or both. As with date validations, these can be hard values or dynamic values derived from another field. If your entry falls outside the allowed range, a popup warning will appear.
 
 ### 3.3 Contact Information Validations
 
@@ -107,14 +111,14 @@ REDCap provides validations for common contact information formats:
 
 > **Important:** Contact information validations check format only — they do not verify that the email address, phone number, or zip code actually exists or belongs to the participant. An entry like `fake@example.com` will pass email validation.
 
-If you trigger a contact validation error, the popup will name the specific validation in use, which is usually a reliable hint about the expected format (e.g., "Phone (North America)").
+If you trigger a contact validation error, the popup tells you the expected format — for example, the North American phone validation says the value must be a 10-digit North American phone number.
 
 ### 3.4 Specialty Validations
 
 Specialty validations cover formats that do not fit the categories above. Examples include:
 
 - US Social Security Number
-- Letters only (no digits or special characters)
+- Letters only (A–Z only — no digits, spaces, special characters or accented letters)
 - Medical Record Number (MRN) — multiple format variants exist
 
 If you trigger a specialty validation error, the popup names the validation. The name is usually descriptive enough to infer the expected format. If the instrument designer has added a field note or placeholder, check those first for guidance.
@@ -124,6 +128,14 @@ If you trigger a specialty validation error, the popup names the validation. The
 In some REDCap installations, the system administrator has added validations specific to that institution. These custom validations behave the same as specialty validations — they display the validation name in the error popup — but they are not part of the standard REDCap distribution. Examples include institution-specific MRN formats, country-specific ID number formats, or locally defined code formats.
 
 > **Institution-specific:** Some REDCap installations include custom validation types beyond the standard set. Contact your REDCap administrator to learn whether custom validations are available at your institution and what formats they expect.
+
+### 3.6 Missing Data Codes
+
+If the project defines Missing Data Codes (e.g., UNK for unknown), a validated field accepts one of those codes even though it does not match the validation — unless the field has the @NOMISSING action tag.
+
+### 3.7 Data Imports and the API
+
+Validations also apply when data is imported with the Data Import Tool or the API, and format is checked strictly: a value in the wrong format is an error and that row is not imported. Out-of-range values are reported as warnings only and are still imported — unless the field has @FORCE-MINMAX, in which case they are errors.
 
 ---
 
@@ -151,19 +163,19 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **Q: I entered a valid-looking date but REDCap rejected it — why?**
 
-**A:** The most common cause is entering the date in the wrong format. REDCap supports multiple date formats (e.g., MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD), and the required format is set by the instrument designer. Check the field note next to the input for the expected format, or use the date picker to avoid format errors entirely.
+**A:** The most common cause is entering the day, month and year in the wrong order. REDCap tidies separators and leading zeros for you, but it reads the date in the field's format (e.g., M-D-Y, D-M-Y or Y-M-D), which is set by the instrument designer — so 13-04-2025 is rejected in an M-D-Y field. Check the field note next to the input for the expected format, or use the date picker to avoid format errors entirely.
 
 **Q: Can a minimum or maximum on a date field reference another field's value?**
 
-**A:** Yes. Dynamic minimums and maximums derive their bound from the value stored in another field. For example, a visit date field might have a dynamic minimum set to the participant's date of birth — meaning no visit date before the date of birth will be accepted. If a dynamic bound is in use and the referenced field is blank, REDCap's behavior depends on how the instrument was designed.
+**A:** Yes. Dynamic minimums and maximums derive their bound from the value stored in another field. For example, a visit date field might have a dynamic minimum set to the participant's date of birth — meaning no visit date before the date of birth will be accepted. If a dynamic bound is in use and the referenced field is blank, that limit is simply ignored — no minimum or maximum check happens until the referenced field has a value.
 
 **Q: The field I need to fill in has a number validation but I need to enter text explaining an unusual value. What should I do?**
 
-**A:** You cannot override a validation by entering text into a validated text box — REDCap will reject the entry. Instead, leave the field blank (or enter the closest valid numeric value) and use the field comment log to document your explanation. See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
+**A:** You cannot override a validation by entering free text into a validated text box — REDCap will reject the entry. (The one exception is a Missing Data Code such as UNK, if the project defines them and the field does not have @NOMISSING.) Instead, leave the field blank (or enter the closest valid numeric value) and use the field comment log to document your explanation. See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 **Q: Why does the phone number validation reject a number that looks correct to me?**
 
-**A:** REDCap has multiple phone number validation variants tailored to different countries or formats. A number that is valid for one variant (e.g., a US format) may be invalid under a different variant (e.g., a European format). The validation name shown in the error popup — such as "Phone (North America)" — tells you which format is expected.
+**A:** REDCap has multiple phone number validation variants tailored to different countries or formats. A number that is valid for one variant (e.g., a US format) may be invalid under a different variant (e.g., a European format). The error popup tells you which format is expected — for example, the North American phone validation says the value must be a 10-digit North American phone number.
 
 **Q: What is the difference between a placeholder and a prefilled value?**
 
@@ -171,19 +183,19 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 **Q: I entered a value outside the min/max range and REDCap still let me save it. Is that a bug?**
 
-**A:** No — this is the default, intended behavior. Min/max range constraints are soft validations. REDCap shows a warning popup to prompt you to double-check the value, but it allows you to proceed if you confirm the value is correct. This is by design, to accommodate legitimate outliers. If the instrument was configured with @FORCE-MINMAX, REDCap will instead hard-reject any value outside the range. If you're unsure whether a borderline value is acceptable, contact the instrument designer or study coordinator.
+**A:** No — this is the default, intended behavior. Min/max range constraints are soft validations. REDCap shows a warning popup saying the value is outside the suggested range but admissible, to prompt you to double-check it, and it allows you to proceed if you confirm the value is correct. This is by design, to accommodate legitimate outliers. If the instrument was configured with @FORCE-MINMAX, REDCap will instead hard-reject any value outside the range. If you're unsure whether a borderline value is acceptable, contact the instrument designer or study coordinator.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Entering the date in the wrong format.** REDCap supports many date formats, and each field uses exactly one. If you type a date without checking the expected format first, you will trigger a validation error even if the date itself is correct. Use the date picker when in doubt — it formats the value for you automatically.
+**Entering the date in the wrong order.** REDCap supports several date formats, and each field uses exactly one. REDCap fixes separators and leading zeros for you, but if you type the day, month and year in a different order than the field expects, you will trigger a validation error (or, worse, save a different date). Type four-digit years. Use the date picker when in doubt — it formats the value for you automatically.
 
 **Assuming contact information validations verify real-world validity.** Email, phone, and zip code validations check format only. A syntactically correct but fictional or wrong contact address will pass without error. Data quality review is a separate process.
 
-**Trying to type text into a number or date field to explain an unusual value.** Validations cannot be bypassed by entering free text. If you need to explain or flag an unusual data point, leave the validated field with a valid value (or blank) and use the field comment log ([RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
+**Trying to type text into a number or date field to explain an unusual value.** Validations cannot be bypassed by entering free text (apart from the project's Missing Data Codes, if it uses them). If you need to explain or flag an unusual data point, leave the validated field with a valid value (or blank) and use the field comment log ([RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
 
-**Missing a dynamic minimum or maximum because the referenced field is blank.** If a validation's minimum or maximum is derived from another field and that field has not yet been filled in, the constraint may not apply — which means an otherwise invalid value could be accepted temporarily. Always fill prerequisite fields before dependent fields.
+**Missing a dynamic minimum or maximum because the referenced field is blank.** If a validation's minimum or maximum is derived from another field and that field has not yet been filled in, the constraint does not apply — which means an otherwise invalid value could be accepted temporarily. Always fill prerequisite fields before dependent fields.
 
 **Assuming a value outside the min/max range was accepted in error.** Min/max constraints are soft by default — REDCap warns you but allows the value if you confirm it. If a field has been configured with @FORCE-MINMAX, the behavior changes: REDCap will not accept values outside the range at all. If you are unsure whether an out-of-range value you entered was appropriate, add a field comment explaining the data point (see [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md)).
 
@@ -191,19 +203,23 @@ When a field note or placeholder is present, read it before entering data. It wi
 
 # 7. Administrator Configuration
 
-The set of validation types available in the Online Designer is controlled by a REDCap administrator in the Control Center under System Configuration → Home Page, Templates & Project Defaults (see **[RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)**, "Field Validation Types" section). Administrators can enable or disable any built-in validation type and can register custom institution-specific validation types using JavaScript-based pattern matching or range checking.
+The set of validation types available in the Online Designer is controlled by a REDCap administrator on its own Control Center page: **Control Center → Field Validation Types** (in the System Configuration section). The page is documented in **[RC-CC-08 — Control Center: Home Page, Templates, Project Defaults & Field Validations](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)**, §6 "Field Validation Types". Administrators can enable or disable any built-in validation type.
+
+Many validation types are switched off on a new installation — for example Letters only, Social Security Number, the MRN types, number with fixed decimal places, comma-decimal number, non-US phone and postal codes, and Time (MM:SS). If you need one of these, ask your REDCap administrator to enable it.
+
+> **Version caveat (custom validation types, v17.4+ Standard):** From v17.4 (Standard; not in LTS 17.3 or 16), administrators can add, edit and remove custom validation types on the Field Validation Types page. A custom type is defined by a pattern (regular expression) and a data type; there is no range-checking option — ranges still come from each field's own minimum and maximum. New custom types start disabled and must be enabled before project designers can choose them. On LTS, administrators can only enable or disable the built-in types. If you need a custom validation type, ask your REDCap administrator; see [RC-CC-08 — Control Center: Home Page, Templates, Project Defaults & Field Validations](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) §6 for the admin details.
 
 A disabled validation type does not appear in the **Validation** dropdown in the Online Designer or the Add/Edit Field dialog. However, existing fields that already use a disabled type continue to function normally — the disable only prevents new fields from selecting that type via the UI. Disabled types can still be applied by entering them directly in a Data Dictionary CSV upload.
 
 If a validation type you expect to see is missing from the Validation dropdown, contact your REDCap administrator to check whether it has been disabled, or whether a custom validation has been created to replace it.
 
-> **See also:** [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)
+> **See also:** [RC-CC-08 — Control Center: Home Page, Templates, Project Defaults & Field Validations](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md)
 
 ---
 
 # 8. Related Articles
 
-- [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) (system-level management of available validation types)
+- [RC-CC-08 — Control Center: Home Page, Templates, Project Defaults & Field Validations](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md) (§6 covers the Field Validation Types page: enabling, disabling and custom validation types)
 - [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) (foundational data entry skills)
 - [RC-DE-06 — Bio-Medical Ontologies](RC-DE-06_Bio-Medical-Ontologies.md) (a distinct lookup-based field type often paired with validated fields)
 - [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md) (how to flag problematic validated fields without altering the dataset)

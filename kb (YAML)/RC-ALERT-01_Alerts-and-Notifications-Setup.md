@@ -312,7 +312,7 @@ The message body supports:
 - **Piped variables** — any project variable can be inserted using standard piping syntax. See [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) and [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) for full reference.
 - **Smart variables** — REDCap-specific tokens that resolve to dynamic links and values at send time. Access them via the green **Smart Variables** button below the message body.
 
-> **Important:** If you pipe a field designated as an Identifier in the project, you must **uncheck** the "Prevent piping of data for Identifier fields" checkbox that appears in the alert setup. If this box remains checked, REDCap will send the alert but will strip the identifier value from the message, resulting in blank placeholders.
+> **Important:** If you pipe a field designated as an Identifier in the project, you must **uncheck** the "Prevent piping of data for Identifier fields" checkbox that appears in the alert setup. If this box remains checked, REDCap will send the alert but will replace each Identifier field's value with the text **[\*DATA REMOVED\*]**. Fields not marked as Identifier pipe normally either way.
 
 Unlike Automated Survey Invitations (which pre-fill the message body with stock text and survey link tokens), alert message bodies start blank. REDCap does not know what kind of message you intend to send.
 
