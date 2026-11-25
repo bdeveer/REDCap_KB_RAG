@@ -47,6 +47,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-CC-06 — Control Center: Modules & Services Configuration
@@ -76,9 +77,12 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-04 — User Rights: User Management
-- RC-PROF-01 — My Profile: User Profile Settings
 - RC-CC-04 — Control Center: User Settings & Defaults
+- RC-CC-02 — Control Center: General System Configuration
 - RC-CC-07 — Control Center: Users & Access Management
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
+- RC-API-01 — REDCap API
+- RC-PROF-01 — My Profile: User Profile Settings
 
 **Inbound links (referenced by):**
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
@@ -256,6 +260,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-CC-21 — Control Center: Overview & Navigation
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-DE-05 — Field Validations
@@ -1523,6 +1528,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Inbound links (referenced by):**
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-18 — Control Center: Custom Application Links
@@ -4574,6 +4580,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-DE-13 — Record Administration: Choose Action for Record
 - RC-LOG-01 — Logging — Project Audit Trail
+- RC-USER-03 — User Rights: Configuring User Privileges
 
 ---
 
@@ -5780,14 +5787,15 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-PIPE-01 — Piping: Basics, Syntax & Field Types
 - RC-LONG-01 — Longitudinal Project Setup
+- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-SURV-09 — PDF Snapshots of Records
 - RC-SURV-11 — Accessibility in REDCap Surveys & Forms
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
-- RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-SURV-10 — Survey Login
 - RC-API-01 — REDCap API
 - RC-API-42 — Export Survey Return Code API
 - RC-PIPE-03 — Smart Variables Overview
 - RC-FD-02 — Online Designer
-- RC-SURV-10 — Survey Login
 
 **Inbound links (referenced by):**
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
@@ -5981,7 +5989,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-API-15 — Export Instruments PDF API
+- RC-SURV-03 — Survey Settings: Behavior, Access & Termination
 - RC-SURV-08 — e-Consent Framework: Setup & Management
+- RC-FILE-01 — File Repository
 
 ---
 
@@ -6180,6 +6190,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-CC-25 — Control Center: Access Control Groups
 - RC-RAND-01 — Randomization Concepts & Terminology
+- RC-LOCK-01 — Record Locking & E-Signatures
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-API-01 — REDCap API
 - RC-API-22 — Export Users API
@@ -6287,6 +6298,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-API-45 — Create Folder (File Repository) API
 - RC-API-49 — Delete a File (File Repository) API
+- RC-SURV-09 — PDF Snapshots of Records
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-API-46 — List Files and Folders (File Repository) API
 - RC-CC-24 — Control Center: Edit Project Settings

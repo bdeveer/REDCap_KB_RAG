@@ -12,7 +12,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-01 — User Rights: Overview & Three-Tier Access'
-version: '1.5'
+version: '1.6'
 last_updated: 2026-11
 related:
 - id: RC-USER-02
@@ -177,9 +177,9 @@ Record locking is useful for larger projects where completed instruments should 
 
 - **Record locking customization** — grants access to the locking configuration page where the project's overall record locking behavior is defined.
 - **Lock/unlock records (instrument level)** — three options: **No Access**; **Locking / Unlocking**, which allows locking and unlocking individual instruments in a record; and **Locking / Unlocking with E-signature authority**, which adds the ability to e-sign, confirmed by re-entering credentials. Granting e-signature authority does not switch the e-signature on: it must also be enabled per instrument (**Display E-signature Option**) on the Record Locking Customization page.
-- **Lock/Unlock entire records** — grants the ability to lock or unlock a complete record (all instruments at once).
+- **Lock/Unlock entire records** — grants the ability to lock or unlock a complete record (all instruments at once). This right is independent of the instrument-level right, not a higher tier.
 
-> **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. Plan your locking roles carefully.
+> **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. E-signing an instrument also locks it, and unlocking an e-signed instrument removes the e-signature, so anyone with Lock/Unlock rights can withdraw a signature. Plan your locking roles carefully. See [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md).
 >
 > **Important:** E-signing requires REDCap to re-check the user's identity, so it is only available when the administrator has enabled e-signatures for the installation and one of these applies:
 > - REDCap uses table-based, LDAP or LDAP/table-based authentication (or no authentication), or the user has a table-based account;

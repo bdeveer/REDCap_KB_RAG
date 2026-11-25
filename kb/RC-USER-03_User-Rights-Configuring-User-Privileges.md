@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Randomization rights and all other user privileges checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS). API import rights checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-04 — User Rights: User Management](RC-USER-04_User-Rights-User-Management.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md); [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) |
@@ -149,9 +149,9 @@ Record locking is useful for larger projects where completed instruments should 
 
 - **Record locking customization** — grants access to the locking configuration page where the project's overall record locking behavior is defined.
 - **Lock/unlock records (instrument level)** — three options: **No Access**; **Locking / Unlocking**, which allows locking and unlocking individual instruments in a record; and **Locking / Unlocking with E-signature authority**, which adds the ability to e-sign, confirmed by re-entering credentials. Granting e-signature authority does not switch the e-signature on: it must also be enabled per instrument (**Display E-signature Option**) on the Record Locking Customization page.
-- **Lock/Unlock entire records** — grants the ability to lock or unlock a complete record (all instruments at once).
+- **Lock/Unlock entire records** — grants the ability to lock or unlock a complete record (all instruments at once). This right is independent of the instrument-level right, not a higher tier.
 
-> **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. Plan your locking roles carefully.
+> **Note:** A user with locking rights can lock and unlock anything in the project — including instruments locked by other users. E-signing an instrument also locks it, and unlocking an e-signed instrument removes the e-signature, so anyone with Lock/Unlock rights can withdraw a signature. Plan your locking roles carefully. See [RC-LOCK-01 — Record Locking & E-Signatures](RC-LOCK-01_Record-Locking-and-E-Signatures.md).
 >
 > **Important:** E-signing requires REDCap to re-check the user's identity, so it is only available when the administrator has enabled e-signatures for the installation and one of these applies:
 > - REDCap uses table-based, LDAP or LDAP/table-based authentication (or no authentication), or the user has a table-based account;

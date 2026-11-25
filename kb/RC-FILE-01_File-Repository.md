@@ -9,8 +9,8 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md); [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) through [RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md)|
 | **Synonyms** | where do i store project files in redcap; upload and share files with my team; create folders in the file repository; restrict file access by dag or role; recover a deleted file from the recycle bin; file repository vs file upload field; find exported data files and econsent pdfs; how to use the file repository |
@@ -38,7 +38,7 @@ Folders and subfolders created manually by project users or administrators to or
 A set of automatically managed folders that REDCap maintains for its own purposes. Files in these folders do not count against the project's storage quota:
 
 - **Data Export Files** — Every data export run from the project is saved here automatically. Users can re-download any previous export without re-running it. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
-- **e-Consent PDFs** — Signed consent documents are stored here automatically when the e-Consent Framework is in use. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
+- **PDF Snapshot Archive** — Signed e-Consent PDFs, and any PDF Snapshot set to save to the File Repository, are stored here automatically. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) and [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 - **Miscellaneous File Attachments** — Files uploaded via the rich text editor anywhere in the project (field labels, survey invitations, project dashboards, etc.) are auto-stored here with publicly accessible download links. Anyone with the link can download these files without logging in to REDCap — PHI or other sensitive content should never be uploaded through the rich text editor.
 - **Recycle Bin** — Deleted files are held here for up to 30 days, after which they are permanently deleted. Files can be restored during this window.
 
@@ -48,7 +48,7 @@ When file versioning is enabled at the system level, uploading a file with the s
 
 **Storage Quota**
 
-Projects may have a maximum storage limit set by administrators. The storage meter reflects only user-uploaded files; system folder contents (exports, e-consent PDFs, miscellaneous attachments) do not count toward the quota.
+Projects may have a maximum storage limit set by administrators. The storage meter reflects only user-uploaded files; system folder contents (exports, PDF Snapshot Archive files, miscellaneous attachments) do not count toward the quota.
 
 ---
 
@@ -118,15 +118,17 @@ Two consequences worth knowing:
 
 ---
 
-## 5. Recycle Bin and e-Consent PDFs Folder
+## 5. Recycle Bin and PDF Snapshot Archive
 
 ### 5.1 Recycle Bin
 
 Deleted files land in the Recycle Bin and remain recoverable for up to 30 days. The listing shows the original folder location, deletion time, and the deadline for permanent deletion. Click **Restore** to recover a file; if its original folder was also deleted, restoring the file automatically recreates the folder and any required parent folders. Administrators can permanently delete Recycle Bin files immediately — this is irreversible.
 
-### 5.2 e-Consent PDFs Folder
+### 5.2 PDF Snapshot Archive
 
-When the e-Consent Framework is enabled on a survey instrument, REDCap automatically stores a signed PDF of each completed consent here. The listing shows respondent identifier (name/DOB), IP address, survey completion time, file storage time, version, and consent type. This folder is read-only for project users.
+When the e-Consent Framework is enabled on a survey instrument, REDCap automatically stores a signed PDF of each completed consent here. PDF Snapshots whose trigger has "Save to File Repository" ticked are stored here too. For e-Consent PDFs the listing shows the respondent identifier (name/DOB), IP address (if the administrator has IP capture on), version and type, along with survey completion and file storage times.
+
+Project users cannot edit or delete files in this folder. Downloading a file needs data export rights; for PDFs created by a survey, full export rights on that instrument. Users in a Data Access Group see only their group's records. Deleting a record removes its PDFs from the archive, and Erase all data deletes them, so the archive is not a permanent record on its own.
 
 > **See also:** [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 
@@ -137,7 +139,7 @@ When the e-Consent Framework is enabled on a survey instrument, REDCap automatic
 | Question | Answer |
 |---|---|
 | *Who can access the File Repository?* | Any project user with the File Repository user right. Users without this right see no menu item and cannot access the module. Folder-level restrictions (DAG, role, admin-only) further limit which folders a user can see within it. |
-| *Do files in the system folders count toward the project storage limit?* | No. Data Export Files, e-Consent PDFs, Miscellaneous File Attachments, and the Recycle Bin are excluded from the storage quota. Only user-uploaded files in user-created folders count. |
+| *Do files in the system folders count toward the project storage limit?* | No. Data Export Files, the PDF Snapshot Archive, Miscellaneous File Attachments, and the Recycle Bin are excluded from the storage quota. Only user-uploaded files in user-created folders count. |
 | *Can I recover a file I accidentally deleted?* | Yes, if within 30 days. Open the Recycle Bin, find the file, and click Restore. After 30 days the file is permanently deleted and cannot be recovered. |
 | *I deleted a file that was linked in a field label — is the link broken?* | Yes. Deleting a file that is embedded elsewhere makes its download link a dead link. REDCap warns before deletion. If this has already happened, re-upload the file and update any links that referenced it. |
 | *Can I restrict a folder so only one DAG can see it?* | Yes. When creating or editing a folder, use the DAG restriction option to limit visibility to users in a specific DAG. See [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md). |
@@ -175,7 +177,7 @@ When the e-Consent Framework is enabled on a survey instrument, REDCap automatic
 - [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) (the right required to access the File Repository)
 - [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (how to grant File Repository access)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (DAG-restricted folder setup)
-- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) (the e-Consent PDFs system folder)
+- [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) (the PDF Snapshot Archive system folder)
 - [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md) (sharing files via secure link from the File Repository)
 - [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md) (Data Export Files system folder; how exports are stored)
 - [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) (prerequisite — left-hand menu and application access)

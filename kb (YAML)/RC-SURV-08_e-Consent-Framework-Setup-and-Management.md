@@ -4,15 +4,15 @@ title: 'e-Consent Framework: Setup & Management'
 domain: Surveys
 applies_to:
 - Projects with surveys enabled
-- requires Project Design and Setup, User Rights, and Data Access Groups rights
+- setting up e-Consent requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — e-Consent
+  behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-SURV-01 — Surveys – Basics
 - 'RC-SURV-02 — Survey Settings: Basic Options & Design'
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-SURV-09
   title: PDF Snapshots of Records
@@ -41,7 +41,7 @@ synonyms:
 
 # 1. Overview
 
-This article covers REDCap's e-Consent Framework — a feature that enables electronic consent collection by allowing a participant to review a document, sign it, and generate a permanent, immutable PDF record of that consent. It covers the conceptual model behind e-Consent, everything that must be prepared before configuration, step-by-step setup of the e-Consent Framework, and how to manage consent versions over time. PDF Snapshots, which are related but independently usable, are covered in [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
+This article covers REDCap's e-Consent Framework — a feature that enables electronic consent collection by allowing a participant to review a document, sign it, and generate a PDF record of that consent that project users cannot edit or delete (see Section 7.3 for when archived PDFs are removed). It covers the conceptual model behind e-Consent, everything that must be prepared before configuration, step-by-step setup of the e-Consent Framework, and how to manage consent versions over time. PDF Snapshots, which are related but independently usable, are covered in [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
 > **Note:** This article covers how to use the e-Consent feature in REDCap. It does not constitute legal guidance on compliant e-consent practice. Requirements vary widely by jurisdiction and institution. Always consult your local compliance office or Institutional Review Board (IRB) to confirm what is required.
 
@@ -51,7 +51,7 @@ This article covers REDCap's e-Consent Framework — a feature that enables elec
 
 **e-Consent**
 
-REDCap's built-in feature for collecting electronic consent. A participant reviews a consent document, enters their name (and optionally a signature and date of birth), and confirms their consent. REDCap then generates an immutable PDF capturing that event.
+REDCap's built-in feature for collecting electronic consent. A participant reviews a consent document, enters their name (and optionally a signature and date of birth), and confirms their consent. REDCap then generates a PDF capturing that event, which users cannot edit or delete in the File Repository.
 
 **e-Consent Framework**
 
@@ -67,7 +67,7 @@ A REDCap-generated PDF of instrument data at a specific point in time. e-Consent
 
 **Verification / Attestation**
 
-The process by which a study team member confirms the identity of the person providing consent. REDCap supports pre-validation (before signing), post-validation (after signing), and no validation. Attestations by staff are captured separately via a PDF Snapshot of a verification instrument.
+The process by which a study team member confirms the identity of the person providing consent. Common procedural patterns are pre-validation (before signing), post-validation (after signing), and no validation. These are workflow choices, not REDCap settings. Attestations by staff are captured separately via a PDF Snapshot of a verification instrument.
 
 **Versioning**
 
@@ -97,9 +97,32 @@ When a participant completes an e-Consent survey, REDCap executes the following 
 
 1. The participant reviews the consent content (text or inline PDF) injected into the descriptive field placeholder.
 2. The participant fills in required fields (name, and optionally date of birth and signature).
-3. REDCap presents a confirmation screen where the participant explicitly agrees to the consent.
-4. If the participant clicks "Previous" before confirming, any defined signature fields are automatically cleared.
-5. Upon confirmation, REDCap generates an immutable PDF and stores it in the File Repository and/or a specified file upload field.
+3. REDCap automatically adds a certification page as the last page of the survey, where the participant reviews a PDF of their responses and explicitly agrees to the consent. You do not build this page.
+4. If the participant clicks "Previous" on the certification page, REDCap warns them and then clears any defined signature fields. If the survey hides the Previous button, there is no way back and nothing is cleared.
+5. Upon confirmation, REDCap generates the consent PDF and always stores it in the File Repository, plus in a specified file upload field if one is configured. The consent version recorded is the one active at the moment the participant completes the survey.
+
+Fields tagged `@HIDDEN` or `@HIDDEN-SURVEY` are left out of the e-Consent PDF.
+
+**What REDCap records for each consent**
+
+| Where | What is recorded |
+|---|---|
+| PDF footer (every page) | The participant's name and date of birth (if those fields are set), "Version: x" with the consent version, and the custom tag, if set |
+| PDF header | The custom label, if set |
+| File Repository archive entry | Identifier (name and date of birth), consent version, type (e-Consent), and the participant's IP address if your administrator has IP capture on |
+| Logging | An "e-Consent Certification" entry listing the participant's email or phone (if known), language, DAG, consent version, file name and the certification statement |
+
+**What the e-Consent protection covers**
+
+Once a participant completes an e-Consent survey, REDCap protects the response:
+
+- The completed response is read-only on the data entry form (unless editing is allowed — see Section 5.2).
+- Data Import Tool and API imports cannot change it.
+- Bulk deletion of instrument data skips it.
+- Staff cannot use "mark survey as complete" on an e-Consent survey.
+- The participant can never return to modify a completed e-Consent response. REDCap forces the survey's "return and modify" option off.
+
+These protections apply only while e-Consent is active for the survey (see the warning in Section 6.3).
 
 **Signing options**
 
@@ -127,15 +150,17 @@ e-Consent pulls configuration from several other areas of REDCap. Setting these 
 
 ## 4.1 e-Consent Instrument
 
-Create a dedicated instrument in the Online Designer to serve as the e-Consent survey. Include the following fields:
+Create a dedicated instrument in the Online Designer to serve as the e-Consent survey. A typical design includes the following fields:
 
 | Field | Field Type | Notes |
 |---|---|---|
-| First name | Text (no validation) | Required. Best practice: use separate first and last name fields. |
-| Last name | Text (no validation) | Required if using two-field name approach. |
-| Date of birth | Text (date validation) | Optional. Required only if your consent process needs it. |
-| Signature | Signature field type | Optional but strongly recommended. Enables automatic clearing on back-navigation. |
+| First name | Text (no validation) | Recommended. Best practice: use separate first and last name fields. |
+| Last name | Text (no validation) | Recommended if using the two-field name approach. |
+| Date of birth | Text (date validation) | Optional. Use only if your consent process needs it. |
+| Signature | Signature field type | Optional but strongly recommended. To be cleared on back-navigation it must be marked **Required** (see Section 5.2). |
 | Descriptive placeholder | Descriptive | Required for versioning. This field receives the injected consent content at runtime. |
+
+The name and date of birth fields do not have to be on the e-Consent instrument. The e-Consent settings can use fields from any instrument (and, in longitudinal projects, any event), for example names already collected on an earlier screening form. Signature fields, by contrast, must be on the e-Consent instrument itself.
 
 > **Important:** The descriptive field placeholder does not need any content entered in the Online Designer — it serves purely as a target for the e-Consent Framework's content injection. Without it, you cannot use versioning, DAG-specific content, or language-specific content.
 
@@ -149,7 +174,7 @@ Once the instrument is created, enable it as a survey. Adjust the **Survey Instr
 
 ## 4.2 Languages (if applicable)
 
-If the consent will be offered in multiple languages, define at least two languages in the **Multi-Language Management (MLM)** module before configuring e-Consent. Once two or more languages are defined, the e-Consent Framework will display a language assignment option when adding consent versions.
+If the consent will be offered in multiple languages, define at least two languages in the **Multi-Language Management (MLM)** module before configuring e-Consent. Once two or more languages are defined, the e-Consent Framework will display a language assignment option when adding consent versions. Any active MLM language appears in that option; languages that are not active are not offered.
 
 ## 4.3 Data Access Groups (if applicable)
 
@@ -182,7 +207,7 @@ File upload fields also enable attaching PDFs to Alerts (e.g., a confirmation em
 
 Navigate to **Project Setup → Online Designer**, then click the **"e-Consent"** button. This opens the e-Consent Framework page.
 
-> **Indicator:** Once at least one e-Consent is active, the "e-Consent" button in the Online Designer gains a green checkmark, and the corresponding survey row gains a blue person-with-checkmark icon in the "Enable as Survey" column.
+> **Indicator:** Once at least one e-Consent is active, the "e-Consent" button in the Online Designer gains a green checkmark, and the corresponding survey row gains a person-with-pen icon in the "Enable as Survey" column. Hovering over it shows "This survey has the e-Consent Framework enabled."
 
 The main page has two tabs:
 - **e-Consent Framework** — where e-Consents are configured and versions managed
@@ -196,25 +221,32 @@ This opens the e-Consent settings popup, organized into four sections:
 
 **Primary Settings**
 
-- **First/last name fields** — Map to the name variable(s) in the instrument. At least one must be selected. Best practice is to use separate first and last name fields for easier piping elsewhere in REDCap.
-- **Allow editing after submission** — Unchecked by default. Leave unchecked unless there is a specific protocol reason to allow post-submission edits. Enabling this does not alter the PDF generated at the time of consent.
+- **First/last name fields** — Map to the name variable(s). The fields can be on any instrument (and any event in longitudinal projects). REDCap does not force you to choose one, but select at least one, or the PDF footer and the File Repository archive carry no name. Best practice is to use separate first and last name fields for easier piping elsewhere in REDCap.
+- **Allow e-Consent responses to be edited by users?** — Off by default. Leave it off unless there is a specific protocol reason to allow post-submission edits by staff. Turning it on does not regenerate or alter the PDF generated at the time of consent. Even when it is on, a user can edit a completed e-Consent response only if all of the following also hold:
+  - A REDCap administrator has not turned off e-Consent editing for the project. This project-level administrator setting is on by default; if it is off, the option appears disabled in the popup.
+  - The user has the **Edit survey responses** right for that instrument.
+  - The system allows survey responses to be edited.
+
+  Participants can never modify a completed e-Consent response, whatever this setting says.
 
 **Additional Settings**
 
 - **Date of birth** — Optional. Select a date variable if your consent process requires it. Note: REDCap does not validate that the selected variable has date formatting — verify this yourself.
 - **Custom tag/category for PDF footer** — Optional static text appended to the PDF footer (e.g., "Pediatric," "LAR," "Standard").
 - **Custom label for PDF header** — Optional. Supports piped values (e.g., `[record_id] -- [last_name]`). Use the "Codebook" and "Smart Variables" buttons in the popup for reference.
-- **Signature fields** — Define up to five fields that will be automatically cleared if the participant clicks "Previous" during the consent flow. Click "Select another signature field" to add more (up to five total).
+- **Signature fields** — Define up to five fields that will be cleared if the participant clicks "Previous" on the certification page (after a warning). Click "Select another signature field" to add more (up to five total). Only fields that are on the e-Consent instrument, marked **Required**, and of type Notes, Text (no validation, or integer/number validation) or Signature can be chosen. If the survey hides the Previous button, the participant cannot go back, so nothing is cleared.
+
+> **Version caveat (16.0.x LTS):** Enhanced signature fields exist on 17.x only. On 16.0 LTS, build signature fields with the standard Signature field type; if a protocol or template assumes enhanced signatures, confirm your instance is on 17.x before relying on it.
 
 **Location(s) to Save the Signed Consent Snapshot**
 
-- **File Repository** — Always active; all e-Consent PDFs are saved here automatically.
-- **Specified field** — Optional. Select a file upload field to also save a copy directly in the record. In longitudinal projects, you must also specify the event.
-- **Translated version** — Checked by default when MLM languages are defined. When active, the PDF is generated in the language the participant selected (e.g., a Spanish consent produces a Spanish PDF).
+- **File Repository** — Always active; all e-Consent PDFs are saved here automatically. Users cannot edit or delete them there (see Section 7.3 for when they are removed).
+- **Specified field** — Optional. Select a file upload field to also save a copy directly in the record. In longitudinal projects, an event dropdown appears; it defaults to "Current event" (the event in which the survey is completed), so choosing a specific event is optional. The copy in the file upload field is ordinary field data — it is not protected like the File Repository copy.
+- **Store the translated version of the PDF** — Always on for e-Consent; this is not a checkbox you can change. When MLM is in use, the PDF is generated in the language the participant selected (e.g., a Spanish consent produces a Spanish PDF).
 
 **Snapshot File Name**
 
-Customize the PDF filename using static text and piped values. REDCap always appends a timestamp to prevent duplicates. Examples:
+Customize the PDF filename using static text and piped values. In the piped prefix, spaces and any characters other than letters, digits, hyphens and underscores are removed. REDCap always appends a timestamp to prevent duplicates. Examples:
 
 ```
 pid[project-id]_form[instrument-label]_id[record-name]
@@ -223,6 +255,8 @@ pid[project-id]_form[instrument-label]_id[record-name]
 [last_name]-[first_name]-record_[record_id]
 → Doe-John-record_56789_2025-12-12_121534.pdf
 ```
+
+> **Version caveat (16.0.x LTS):** On 16.0 LTS, the File Repository copy's file name gets an extra random suffix after the timestamp; the copy saved to a file upload field does not. If you match archived PDFs to records by file name (for example in an audit script), allow for the suffix, or match on the archive's Record column instead.
 
 An optional **Notes** field is available for internal documentation. It is not used anywhere in the consent workflow.
 
@@ -252,13 +286,16 @@ If consents were captured on any of these versions, the archived PDFs and the si
 
 After saving the e-Consent entry, click **"Add consent form"** in the Survey column of the e-Consent table. The popup contains:
 
-- **Consent form version** — A required identifier for this version. Use a consistent scheme (e.g., incrementing integers: 1, 2, 3; or dates: 2025-01-15). The scheme is yours to define — pick one and stick to it.
-- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown. The descriptive field **must not be the only field on the instrument** — if it is, the PDF on the survey certification page does not generate correctly. Put at least the signature or name fields on the same instrument. The dialog states this from 17.4.3.
-- **Display for specific DAG** — If DAGs are defined, assign this version to a specific DAG or to the default ("When record is not assigned to a DAG"). Always create a default version — records without a DAG assignment will show a blank consent if no default exists.
-- **Display for specific Language** — If MLM languages are defined, assign this version to a specific language or to the default ("When participant has no language selected"). Always create a default version for the same reason.
+- **Consent form version** — A required identifier for this version. Use a consistent scheme (e.g., incrementing integers: 1, 2, 3; or dates: 2025-01-15). The scheme is yours to define — pick one and stick to it. The label must be unique for the same consent, DAG and language, and that includes inactive versions — so bringing back an older text needs a new label.
+- **Placement of consent form** — Select the descriptive field placeholder in the e-Consent instrument. Only valid descriptive fields are shown. The descriptive field **must not be the only field on the instrument** — if it is, the PDF on the survey certification page does not generate correctly. Put at least the signature or name fields on the same instrument.
+
+> **Version caveat (17.3 LTS and 16.0 LTS):** The dialog note warning that the descriptive field must not be the only field on the instrument appears on recent Standard releases (from 17.4.3) but not on 17.3 LTS or 16.0 LTS. The advice still applies there: always put the name or signature fields on the same instrument as the descriptive field.
+
+- **Display for specific DAG** — If DAGs are defined, assign this version to a specific DAG or to the default ("When record is not assigned to a DAG"). Always create a default version. Without one, a record that is not in a DAG (including new records created through a public survey link) may be shown — and certified against — another DAG's active version rather than a blank consent, so the wrong site's consent can end up in the archived PDF. A record that is in a DAG with no version of its own gets no consent content at all if there is no default.
+- **Display for specific Language** — If MLM languages are defined, assign this version to a specific language or to the default ("When participant has no language selected"). Only active MLM languages are offered. Always create a default version so every participant has consent content in a known language.
 - **Consent form content** — Two options:
-  - *Rich Text* — Enter or paste consent text directly. Supports rich formatting, HTML import, and (if enabled) AI-generated draft text.
-  - *Inline PDF* — Upload a pre-prepared consent PDF. It will be displayed inline within the survey.
+  - *Rich Text* — Enter or paste consent text directly. Supports rich formatting, HTML import, and (if enabled) AI-generated draft text. Piping and field embedding do not work in rich-text consent content, and images in it do not appear in exported or snapshot PDFs — if the consent needs logos or diagrams in the archived PDF, use Inline PDF.
+  - *Inline PDF* — Upload a pre-prepared consent PDF. It will be displayed inline within the survey. In the stored e-Consent PDF, the inline PDF is rendered as page images; if the server cannot render it, an attachment placeholder appears in its place. This option needs the **Imagick PHP extension** on the REDCap web server. If Imagick is not installed, the Inline PDF tab is hidden and only Rich Text is offered. Ask your REDCap administrator; the Control Center Configuration Check page shows whether Imagick is installed and able to render PDFs (it also needs Ghostscript and a security policy that allows reading PDFs).
 
 > **Important:** When you click "Add new consent form," the new version goes live **immediately** — even in Production mode. It replaces any prior version for the same DAG/language combination. Verify your content carefully before submitting.
 
@@ -274,12 +311,12 @@ Click **"View all versions"** in the e-Consent table to see a full history of al
 | Version | The version identifier you assigned |
 | Time Added | Timestamp of when the version was added |
 | Uploaded By | The REDCap user who added the version |
-| Number of Records Consented | Count of records consented on this version |
+| Number of Records Consented | Count of archived e-Consent PDFs on this version |
 | Data Access Group | DAG assignment (blank if default or no DAGs) |
 | MLM Language | Language assignment (blank if default or no languages) |
 | Consent Form Text or File | Preview of text or link to the PDF |
 
-To deactivate a version without replacing it, click **"Set as inactive."** REDCap will ask for confirmation. To reactivate a deactivated version, you must add it as a new version — there is no direct reactivation.
+To deactivate a version without replacing it, click **"Set as inactive."** REDCap will ask for confirmation. To reactivate a deactivated version, you must add it as a new version with a new version label — there is no direct reactivation, and the old label cannot be reused.
 
 ## 6.3 Managing the e-Consent Table
 
@@ -288,6 +325,8 @@ The main e-Consent Framework table provides the following controls per row:
 - **Active?** toggle — Enable or disable the entire e-Consent entry
 - **Pencil icon** — Edit the e-Consent settings
 - **Survey column** — Manage consent versions for that entry
+
+> **Important:** Turning **Active?** off for a survey removes the e-Consent protections (Section 3) from responses already completed, not just from future ones — those responses become editable and importable like any other survey data (PDFs already archived stay in the File Repository). Any user with Project Design and Setup rights can do this, including in Production. The change is logged. Control who may switch e-Consent off through your SOPs, and review Logging for these changes during audits.
 
 Above the table:
 - Add another consent entry (green button)
@@ -300,28 +339,44 @@ Above the table:
 
 ## 7.1 File Repository
 
-All e-Consent PDFs are stored in the **File Repository** under a folder named **"PDF Snapshot Archive."** Access the File Repository from the left-hand Applications menu (requires appropriate user rights).
+All e-Consent PDFs are stored in the **File Repository** under a folder named **"PDF Snapshot Archive."** Access the File Repository from the left-hand Applications menu. Access depends on user rights:
+
+- Seeing the archive requires the **File Repository** right.
+- A download link for a PDF, and its inclusion in the ZIP download, require full data export rights on the instrument concerned.
+- Users in a DAG see only their own DAG's records.
 
 The archive table includes the following columns:
 
 | Column | Description |
 |---|---|
 | Name | PDF filename — a well-chosen filename during setup pays off here |
-| PDF utilized e-Consent Framework | Flags whether the PDF was generated by an e-Consent |
+| PDF utilized e-Consent Framework | Flags any PDF that contains a completed e-Consent response |
 | Record | Direct link to the record and instrument that generated the PDF |
 | Survey Completed | Which survey was completed to generate the PDF |
 | File Storage Time | Timestamp of PDF generation |
 | Identifier | Name and date of birth from the e-Consent settings |
-| IP Address | IP of the consenting party, if your administrator has enabled capture |
+| IP Address | IP of the consenting party, if IP capture is on (it is on by default). The IP address is kept in this archive entry; it is not printed on the PDF or saved in the record's data |
 | Version | The consent version used |
 | Type | Whether this was an e-Consent or standard snapshot |
 | Size | File size |
 
-The page also supports bulk download of all files as a ZIP archive. Note that large projects can produce very large ZIP files.
+The page also supports bulk download of all files as a ZIP archive (only files you have rights to download are included). Note that large projects can produce very large ZIP files.
 
 ## 7.2 File Upload Fields
 
-If you configured per-record file upload fields (Section 4.5), each record's PDF is accessible directly from within the record. These files can be piped, displayed inline, or downloaded in bulk via reports.
+If you configured per-record file upload fields (Section 4.5), each record's PDF is accessible directly from within the record. These files can be piped, displayed inline, or downloaded in bulk via reports. The copy in a file upload field is ordinary field data: it follows that field's normal rights and can be replaced or deleted like any other uploaded file. Treat the File Repository archive as the reference copy.
+
+## 7.3 When Archived PDFs Are Removed
+
+Users cannot edit or delete individual PDFs in the PDF Snapshot Archive, but the archive is not permanent in every case:
+
+- **Deleting a record** removes that record's PDFs from the archive.
+- **Erase all data** and **moving to Production with the option to delete all data** delete the archived PDFs as well.
+- If your administrator has configured an **external storage server** for e-Consent, every e-Consent PDF is also copied there. That external copy survives record deletion.
+
+Before deleting records or erasing data in a project that holds signed consents, export the PDFs you must retain, and check with your administrator whether an external copy exists.
+
+> **Institution-specific:** Whether an external storage copy of e-Consent PDFs is configured, and your retention requirements for signed consents, vary by institution. Check with your REDCap administrators and IRB office.
 
 ---
 
@@ -334,10 +389,10 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 **A:** Yes. If you do not add a descriptive field placeholder, you can still configure an e-Consent — but consent content must be managed directly in the Online Designer, REDCap will not track versions automatically, and you cannot assign different content by DAG or language.
 
 **Q: What happens if a record is not assigned to a DAG and I have no default consent version?**
-**A:** The participant will see a blank consent form — no content will be displayed. Always create a version assigned to the default DAG option ("When record is not assigned to a DAG") to prevent this.
+**A:** Always create a version assigned to the default DAG option ("When record is not assigned to a DAG"). Without one, a record that is not in a DAG — including a new record created through a public survey link — may be shown, and certified against, another DAG's active version rather than a blank consent. A record that is in a DAG with no version of its own gets no consent content if there is no default.
 
 **Q: Can I edit a submitted consent response?**
-**A:** By default, no. The "Allow editing after submission" option in Primary Settings must be explicitly enabled. Note that enabling this does not alter the PDF already generated at the time of original consent.
+**A:** By default, no. Staff can edit a completed e-Consent response only if **"Allow e-Consent responses to be edited by users?"** is turned on in Primary Settings, the administrator's project-level setting allows it (on by default), the user has the Edit survey responses right, and the system allows survey responses to be edited. Participants can never modify a completed e-Consent response. Editing does not regenerate or alter the PDF already generated at the time of original consent.
 
 **Q: How many concurrent consent versions can I have?**
 **A:** The maximum is (number of DAGs + 1) × (number of languages + 1). The +1 accounts for the default slot in each dimension. Example: 4 DAGs and 3 languages = 5 × 4 = 20 concurrent versions.
@@ -346,13 +401,13 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 **A:** Immediately upon clicking "Add new consent form" — including in Production mode. There is no staging or preview step. Review content carefully before submitting.
 
 **Q: Where is the consent PDF stored?**
-**A:** Always in the File Repository under "PDF Snapshot Archive." Optionally also in a per-record file upload field if configured.
+**A:** Always in the File Repository under "PDF Snapshot Archive," where users cannot edit or delete it. Optionally also in a per-record file upload field if configured (that copy is ordinary field data). Deleting the record, Erase all data, or moving to Production with data deletion removes the archived PDFs; only an external storage copy, if your administrator configured one, survives record deletion. See Section 7.3.
 
 **Q: Can I use the same e-Consent instrument for multiple e-Consent entries?**
 **A:** No. Each e-Consent entry is linked to exactly one survey instrument. To run multiple distinct consent processes, create separate instruments and configure each as its own e-Consent entry.
 
 **Q: What happens when a participant clicks "Previous" during the consent flow?**
-**A:** Any fields defined as signature fields in the e-Consent settings are automatically cleared. The participant must re-enter them before proceeding.
+**A:** If the participant clicks "Previous" on the certification page, REDCap warns them, then clears any fields defined as signature fields in the e-Consent settings. The participant must re-enter them before proceeding. If the survey hides the Previous button, the participant cannot go back and nothing is cleared.
 
 **Q: Can I use the AI writing tool to draft consent content?**
 **A:** Yes, if AI tools are enabled on your REDCap instance. The rich text editor in the "Add consent form" popup includes an AI draft option. Always have any AI-generated text reviewed by the relevant compliance office or IRB before going live.
@@ -363,13 +418,13 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 
 **Missing descriptive field placeholder — blank consent content at runtime.** If the e-Consent instrument does not have a descriptive field, the e-Consent Framework cannot inject content into the survey. Participants see a form with name and signature fields but no consent text. Add a descriptive field to the instrument before setting up the e-Consent Framework.
 
-**No default DAG or language version — blank consent for unassigned records.** If you create versions only for specific DAGs or languages but not for the default option, any record that falls outside those assignments will receive a blank consent form. Always configure a default version as a fallback.
+**No default DAG or language version — wrong or missing consent.** Always configure a default version as a fallback. If you create versions only for specific DAGs but not for the default option, a record that is not in a DAG (including new public-survey records) may be shown — and certified against — another DAG's active version, so the archived PDF may carry the wrong site's consent. A record in a DAG that has no version of its own gets no consent content.
 
 **New consent version goes live immediately in Production.** There is no staging environment for consent versions. The moment you click "Add new consent form," the new content is active for all new consents. Prepare and review content before opening the popup, not during.
 
 **Date of birth field not validated.** The e-Consent Framework's DOB dropdown does not filter for fields with date validation — it shows all eligible fields. Selecting a non-date field will cause unexpected behavior. Verify that the selected DOB variable has proper date formatting.
 
-**Reactivating a deactivated version requires re-adding it.** There is no "reactivate" button. If you deactivate a consent version and later need it again, you must re-enter it as a new version. Keep a copy of the consent text in an external document if there is any chance you will need it again.
+**Reactivating a deactivated version requires re-adding it.** There is no "reactivate" button. If you deactivate a consent version and later need it again, you must re-enter it as a new version with a new version label — labels must be unique per consent, DAG and language, including inactive versions. Keep a copy of the consent text in an external document if there is any chance you will need it again.
 
 **Attestation PDFs are not generated by the e-Consent Framework.** Staff verification attestations are captured via PDF Snapshots, not through e-Consent settings. If your protocol requires an attestation PDF, configure a separate PDF Snapshot trigger on the verification instrument. See [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 
@@ -377,10 +432,10 @@ If you configured per-record file upload fields (Section 4.5), each record's PDF
 
 # Administrator Configuration
 
-The e-Consent Framework requires system-level enablement by a REDCap administrator before it is visible in any project's survey settings. Administrators configure this in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**):
+The e-Consent Framework is controlled at system level by a REDCap administrator. Administrators configure this in the Control Center under System Configuration → Modules/Services Configuration (see **[RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)**):
 
-- **Display 'e-Consent Framework' Option for All Surveys** — Must be enabled for the e-Consent configuration button to appear in the Online Designer and survey settings.
-- **Capture IP Address of Participants** — Optional setting to store the participant's IP address as part of each e-Consent record.
+- **Display 'e-Consent Framework' Option for All Surveys** — Must be enabled for the e-Consent configuration button to appear in the Online Designer and survey settings. It is on by default.
+- **Capture IP Address of Participants** — Stores the participant's IP address in the File Repository archive entry for each e-Consent PDF (not on the PDF or in the record's data). It is on by default.
 - **Custom Message for e-Consent Framework Settings** — Administrators can add institution-specific guidance (e.g., links to IRB requirements or compliance checklists) that appears to project administrators when configuring e-Consent.
 
 If the e-Consent option is not visible in your project's Online Designer, contact your REDCap administrator.

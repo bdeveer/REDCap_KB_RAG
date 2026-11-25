@@ -214,7 +214,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 0 Set-up and TODOs | 5 open TODOs → 13 articles edited | Done 2026-11-24 |
 | 1 Access & exposure | 8 + 4 from the sweep | Done 2026-11-24 |
 | 2 Production & integrity | 14 + 2 from the sweep | Done 2026-11-24 |
-| 3 Compliance | 6 | — |
+| 3 Compliance | 6 + 2 from the sweep | Done 2026-11-25 |
 | 4 Logic engine | ~38 | — |
 | 5 Longitudinal & surveys | ~25 | — |
 | 6 Exports & data entry | ~30 | — |
