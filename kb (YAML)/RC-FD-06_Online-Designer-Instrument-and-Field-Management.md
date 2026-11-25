@@ -13,7 +13,7 @@ prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
-version: '1.6'
+version: '1.7'
 last_updated: 2026-11
 related:
 - id: RC-FD-02
@@ -416,8 +416,8 @@ Displays all choices directly on screen. The data entry person may select **mult
 Choices are defined in the `raw_value, Label` format, one per line.
 
 Two action tags are commonly used with checkbox fields:
-- **@NONEOFTHEABOVE** — when applied to a specific answer choice, selecting that choice automatically unchecks all other selections. Use this for "None of the above" or "Not applicable" options.
-- **@MAXCHECKED** — limits the number of choices a respondent can select. For example, `@MAXCHECKED='3'` prevents more than three boxes from being checked at once.
+- **@NONEOFTHEABOVE** — names one or more answer codes (for example `@NONEOFTHEABOVE='99'`) that cannot be combined with other choices. If other boxes are already checked when that choice is selected, REDCap asks whether to clear them; checking another box after it unchecks the "none" choice. Use this for "None of the above" or "Not applicable" options.
+- **@MAXCHECKED** — limits the number of choices a respondent can select. For example, with `@MAXCHECKED='3'` a fourth box is unchecked straight away and a short message appears.
 
 ## 8.6 Yes – No
 

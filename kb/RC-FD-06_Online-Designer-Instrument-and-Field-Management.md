@@ -9,7 +9,7 @@
 | **Requires** | Any supported version |
 | **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured. Instrument and field management behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md); [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
-| **Version** | 1.6 |
+| **Version** | 1.7 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
@@ -396,8 +396,8 @@ Displays all choices directly on screen. The data entry person may select **mult
 Choices are defined in the `raw_value, Label` format, one per line.
 
 Two action tags are commonly used with checkbox fields:
-- **@NONEOFTHEABOVE** — when applied to a specific answer choice, selecting that choice automatically unchecks all other selections. Use this for "None of the above" or "Not applicable" options.
-- **@MAXCHECKED** — limits the number of choices a respondent can select. For example, `@MAXCHECKED='3'` prevents more than three boxes from being checked at once.
+- **@NONEOFTHEABOVE** — names one or more answer codes (for example `@NONEOFTHEABOVE='99'`) that cannot be combined with other choices. If other boxes are already checked when that choice is selected, REDCap asks whether to clear them; checking another box after it unchecks the "none" choice. Use this for "None of the above" or "Not applicable" options.
+- **@MAXCHECKED** — limits the number of choices a respondent can select. For example, with `@MAXCHECKED='3'` a fourth box is unchecked straight away and a short message appears.
 
 ### 8.6 Yes – No
 

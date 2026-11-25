@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action tag behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); foundational Project Build & Management knowledge |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) through [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) (category articles); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
 | **Synonyms** | what are action tags in redcap; how do i add an action tag to a field; list of available action tags; where do i put action tags in the online designer; action tags field annotation box; intro to redcap action tags; how do action tags work; @ tag to change field behavior |
@@ -27,7 +27,7 @@ This article introduces REDCap's action tags feature — what action tags are, w
 
 **Action Tag**
 
-A short keyword starting with `@` that is placed in the *Action Tags / Field Annotation* box of a REDCap field. Action tags modify the standard behavior of that field. For example, `@HIDDEN` hides the field from view; `@WORDLIMIT=10` caps input at ten words.
+A short keyword starting with `@` that is placed in the *Action Tags / Field Annotation* box of a REDCap field. Action tags modify the standard behavior of that field. Tag names must be written in UPPERCASE — `@hidden` in lowercase is not recognized and is silently ignored. For example, `@HIDDEN` hides the field from view; `@WORDLIMIT=10` caps input at ten words.
 
 **Parameter**
 
@@ -39,7 +39,7 @@ The internal code assigned to each option in a radio button, dropdown, or checkb
 
 **Field Annotation**
 
-Free-form notes that can be placed in the same *Action Tags / Field Annotation* box alongside any action tag. Annotations are only visible in the Online Designer and the Data Dictionary — they are never shown to data entry users or survey participants, and they have no effect on field behavior. Use annotations for designer-facing notes: design rationale, outstanding questions, variable mapping notes, or reminders about protocol decisions.
+Free-form notes that can be placed in the same *Action Tags / Field Annotation* box alongside any action tag. Annotations are visible wherever the project's design is shown — the Online Designer, the Data Dictionary, the Codebook and the API metadata export — but they are never shown on data entry forms or survey pages, and they have no effect on field behavior. Use annotations for designer-facing notes: design rationale, outstanding questions, variable mapping notes, or reminders about protocol decisions.
 
 > **Do not confuse with the Field Note.** The Field Note (a separate field attribute) is visible to everyone completing the instrument. The Field Annotation is visible to designers only. If you need to communicate something to the person filling in the form — such as units of measure or format instructions — use the Field Note, not the Field Annotation. See [RC-FD-06 — Online Designer – Instrument and Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) Section 7.8–7.9 and the project STYLE-GUIDE.md for guidance on which to use when.
 
@@ -57,7 +57,9 @@ Every action tag shares three characteristics:
 
 - **They change field behavior.** Each tag modifies something specific — hiding a field, capping word count, pre-filling a value, and so on.
 - **They are situational.** Most tags only work for specific field types or in specific contexts (e.g., survey mode only). Adding a tag to an incompatible field type typically has no effect; no error is generated.
-- **Their effects can be combined.** Multiple action tags can be placed in the same annotation box, separated by spaces. Their effects stack.
+- **Their effects can be combined.** Multiple action tags can be placed in the same annotation box, separated by spaces or line breaks. Their effects stack, and `@IF` can switch tags on or off based on logic (see [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md)).
+
+**Where action tags take effect.** Action tags act when a record is viewed or saved on a data entry form or survey page (and, for the `-APP` tags, in the REDCap Mobile App). They do not apply to data imported through the Data Import Tool or the API, or to surveys taken by SMS or voice call (Twilio). The one exception is `@FORCE-MINMAX`, which is also enforced on import. Only some tags change PDFs — for example `@HIDDEN-PDF` (see [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md)).
 
 ---
 
@@ -71,7 +73,7 @@ Red **@ Action Tags** buttons appear in several places throughout REDCap:
 - The Online Designer (top-right corner of the instrument field list)
 - The *Edit Field* popup for any individual field
 
-All of these buttons open the same popup, which lists every currently available action tag along with a description of its purpose and usage. When opened from the *Edit Field* popup, the list also shows an **Add** button that inserts the selected tag directly into the annotation box.
+All of these buttons open the same popup, which lists every currently available action tag along with a description of its purpose and usage. Some tags appear in the list only when the related feature is on: the `-APP` tags (such as `@HIDDEN-APP` and `@SYNC-APP`) only when the REDCap Mobile App is enabled for the project, and the MyCap `@MC-*` tags only when MyCap is enabled. When opened from the *Edit Field* popup, the list also shows an **Add** button that inserts the selected tag directly into the annotation box.
 
 > **Pro tip:** Select *View text on separate page* (top-right of the popup) to open the reference in a new browser tab so you can keep it open while configuring fields.
 
@@ -93,11 +95,11 @@ Most fields in the Online Designer have a checkbox in their top-right corner. Se
 
 | Option | Effect |
 |---|---|
-| **Clear** | Removes all action tags from the selected fields |
+| **Clear** | Empties the entire *Action Tags / Field Annotation* box of the selected fields — action tags and any annotation notes alike |
 | **Add** | Adds the entered action tags to all selected fields |
-| **Deactivate** | Temporarily disables action tags (useful during testing) |
-| **Reactivate** | Re-enables any deactivated action tags |
-| **Copy** | Copies the action tags from the last-checked field to all other selected fields |
+| **Deactivate** | Temporarily disables action tags without deleting them (useful during testing). List specific tags to deactivate only those; leave the list empty to deactivate all of them |
+| **Reactivate** | Re-enables deactivated action tags — the ones you list, or all of them if the list is empty |
+| **Copy** | Copies the *Action Tags / Field Annotation* content of the last-checked field to all other selected fields, replacing (not merging with) what they had |
 | **Edit** | Opens the standard edit dialog for the last-checked field only |
 
 Click **Apply** to confirm any changes.
@@ -129,6 +131,7 @@ Use this table to quickly find which article covers a specific action tag.
 | `@HIDECHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Hide specific options |
 | `@SHOWCHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Show only specific options |
 | `@MAXCHOICE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Limit selections per option |
+| `@MAXCHOICE-SURVEY-COMPLETE` | Radio/Dropdown | [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | As `@MAXCHOICE`, but counting only completed survey responses |
 | `@NONEOFTHEABOVE` | Checkbox | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Enforce mutually exclusive options |
 | `@MAXCHECKED` | Checkbox | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Limit maximum checked boxes |
 | `@PASSWORDMASK` | Free Text | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Obscure text entry display |
@@ -150,8 +153,10 @@ Use this table to quickly find which article covers a specific action tag.
 | `@DEFAULT` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on first load |
 | `@SETVALUE` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Pre-fill on every load |
 | `@PREFILL` | Autofill | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Deprecated alias for @SETVALUE — use @SETVALUE instead |
+| `@DOWNLOAD-COUNT` | Autofill | No dedicated article yet | Count downloads of a File Upload field or descriptive field attachment in a Text or Notes field |
+| `@NOMISSING` | Data Entry | [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md) (Section 7) | Turn off missing data codes (the **M** icon) for this field |
 | `@HIDEBUTTON` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide Today/Now button |
-| `@HIDEDATEPICKER` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide date/time picker icon (17.5.0+) |
+| `@HIDEDATEPICKER` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Hide date/time picker icon (17.5.0+ Standard; not in LTS 17.3 or 16) |
 | `@INLINE` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display uploaded file inline |
 | `@INLINE-PREVIEW` | Cosmetic | [RC-AT-07 — Cosmetic Action Tags](RC-AT-07_Action-Tags-Cosmetic.md) | Display with toggle button |
 | `@IF` | Conditional | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Apply action tags conditionally based on logic |
@@ -168,6 +173,8 @@ Use this table to quickly find which article covers a specific action tag.
 | `@LANGUAGE-MENU-STATIC` | Language | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Keep language menu always visible in survey |
 | `@APPUSERNAME-APP` | Mobile App | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Fill with mobile app username |
 | `@BARCODE-APP` | Mobile App | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Enable barcode/QR code scanning |
+| `@SYNC-APP` | Mobile App | [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Send uploaded images and signatures to the Mobile App so they can be viewed there |
+| `@MC-*` (e.g. `@MC-TASK-STARTDATE`, `@MC-FIELD-HIDDEN`) | MyCap | [RC-MYCAP-02 — MyCap: Designing Instruments for MyCap](RC-MYCAP-02_Designing-Instruments-for-MyCap.md) | MyCap field and task annotations (listed only when MyCap is enabled) |
 | `@HIDESUBMIT` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide all save/submit buttons (HIDESUBMIT module) |
 | `@HIDESUBMIT-FORM` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide buttons on data entry forms (HIDESUBMIT module) |
 | `@HIDESUBMIT-SURVEY` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide buttons on surveys (HIDESUBMIT module) |
@@ -175,6 +182,8 @@ Use this table to quickly find which article covers a specific action tag.
 | `@HIDESAVE` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save button only (HIDESUBMIT module) |
 | `@HIDESAVE-FORM` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save on forms only (HIDESUBMIT module) |
 | `@HIDESAVE-SURVEY` | External Module | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | Hide save on surveys only (HIDESUBMIT module) |
+
+> **Version caveat (@HIDEDATEPICKER):** `@HIDEDATEPICKER` is present in 17.5+ Standard releases but not in LTS 17.3 or LTS 16. On an LTS instance the tag is not recognized and the date picker icon still shows; check the **@ Action Tags** list on your instance before relying on it.
 
 ---
 
@@ -185,7 +194,7 @@ The Action Tags knowledge base series is organized by tag category:
 | Article | Category | Tags Covered |
 |---|---|---|
 | [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md) | Visibility | `@HIDDEN`, `@READONLY` and all situational variants |
-| [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE` |
+| [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md) | Radio/Dropdown | `@RANDOMORDER`, `@HIDECHOICE`, `@SHOWCHOICE`, `@MAXCHOICE`, `@MAXCHOICE-SURVEY-COMPLETE` |
 | [RC-AT-04 — Checkbox Action Tags](RC-AT-04_Action-Tags-Checkbox.md) | Checkbox | `@NONEOFTHEABOVE`, `@MAXCHECKED` |
 | [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md) | Free Text | `@PASSWORDMASK`, `@FORCE-MINMAX`, `@WORDLIMIT`, `@CHARLIMIT`, `@RICHTEXT`, `@PLACEHOLDER` |
 | [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md) | Autofill | `@NOW`, `@TODAY`, `@LONGITUDE`, `@LATITUDE`, `@USERNAME`, `@CONSENT-VERSION`, `@DEFAULT`, `@SETVALUE` |
@@ -193,7 +202,7 @@ The Action Tags knowledge base series is organized by tag category:
 | [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) | Conditional | `@IF` |
 | [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) | Calculation | `@CALCTEXT`, `@CALCDATE` |
 | [RC-AT-10 — Action Tags: Language Action Tags](RC-AT-10_Action-Tags-Language.md) | Language | `@LANGUAGE-*` family (9 tags for multi-language projects) |
-| [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP` |
+| [RC-AT-11 — Action Tags: Mobile App Action Tags](RC-AT-11_Action-Tags-Mobile-App.md) | Mobile App | `@APPUSERNAME-APP`, `@BARCODE-APP`, `@SYNC-APP` |
 | [RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT](RC-AT-EM-01_Action-Tags-HIDESUBMIT-External-Module.md) | External Module | `@HIDESUBMIT`, `@HIDESAVE` and related variants (HIDESUBMIT module) |
 
 ---
@@ -210,7 +219,7 @@ The Action Tags knowledge base series is organized by tag category:
 
 **Q: Will adding an unsupported action tag to a field cause an error?**
 
-**A:** Typically no. REDCap silently ignores action tags applied to incompatible field types.
+**A:** Typically no. REDCap silently ignores action tags applied to incompatible field types. The same goes for tags typed in lowercase or misspelled — they are simply not recognized, so check the spelling and case if a tag seems to do nothing.
 
 ---
 

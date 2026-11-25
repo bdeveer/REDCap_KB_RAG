@@ -1002,6 +1002,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-OPS-01 — Using REDCap as an Operational Request Management System
+- RC-AT-01 — Action Tags: Overview
 - RC-API-34 — Export Project Info API
 - RC-API-35 — Import Project Info API
 - RC-BL-01 — Branching Logic: Overview & Scope
@@ -1101,14 +1102,16 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-AT-07 — Cosmetic Action Tags
 - RC-FD-03 — Data Dictionary
 - RC-FD-06 — Online Designer – Instrument and Field Management
+- RC-AT-08 — Action Tags: @IF — Conditional Logic
 - RC-AT-06 — Autofill Action Tags
 - RC-AT-03 — Radio & Dropdown Action Tags
 - RC-AT-04 — Checkbox Action Tags
 - RC-AT-05 — Free Text Action Tags
-- RC-AT-08 — Action Tags: @IF — Conditional Logic
+- RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations
 - RC-AT-10 — Action Tags: Language Action Tags
 - RC-AT-11 — Action Tags: Mobile App Action Tags
+- RC-MYCAP-02 — MyCap: Designing Instruments for MyCap
 - RC-AT-EM-01 — External Module Action Tags: HIDESUBMIT
 
 **Inbound links (referenced by):**
@@ -4889,6 +4892,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-03 — Data Dictionary
 
 **Inbound links (referenced by):**
+- RC-AT-01 — Action Tags: Overview
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-IMP-08 — Form Display Logic CSV — Column Reference and Format Guide
 - RC-MYCAP-01 — MyCap: Overview & Enabling

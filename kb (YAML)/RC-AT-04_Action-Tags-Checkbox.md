@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action
+  tag behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -39,9 +39,12 @@ This article covers action tags designed specifically for checkbox fields: `@NON
 
 # 2. @NONEOFTHEABOVE
 
-Designates one or more options as mutually exclusive "none of the above" choices. If a respondent tries to select a designated option alongside other options, REDCap displays a prompt asking them to either clear the other selections or cancel.
+Designates one or more options as mutually exclusive "none of the above" choices. It works the same way on data entry forms and surveys:
 
-This prevents ambiguous data where a "none of the above" response is combined with substantive answers.
+- **Checking the "none" option while other options are checked:** REDCap immediately shows a prompt. **Yes, clear other selections** unchecks the other options; cancelling unchecks the "none" option instead.
+- **Checking another option while "none" is checked:** REDCap unchecks the "none" option automatically, without a prompt.
+
+This prevents ambiguous data where a "none of the above" response is combined with substantive answers. The prompt text can be translated with Multi-Language Management.
 
 > **Important:** This tag only works on **checkbox** fields, not radio buttons or dropdowns.
 
@@ -57,7 +60,9 @@ Both quoted and unquoted raw values are accepted (`@NONEOFTHEABOVE=99` is equiva
 @NONEOFTHEABOVE='99, 98'
 ```
 
-Use the raw value of the option(s). Multiple designated options are mutually exclusive with each other as well.
+Use the raw value of the option(s). Multiple designated options are mutually exclusive with each other as well. Put a list of values inside quotes; if you leave the quotes off, the list must have no spaces (`@NONEOFTHEABOVE=99,98`).
+
+> **Note:** A missing data code cannot serve as the "none" option; designate a regular choice instead. Missing data codes have their own behaviour: on a data entry form, marking a checkbox field with a missing data code clears its checked values and disables the checkboxes.
 
 **Negative integers as raw values:**
 
@@ -77,7 +82,7 @@ Using a consistent negative coding scheme across a project makes it easy to iden
 
 # 3. @MAXCHECKED
 
-Limits the maximum number of checkboxes that can be simultaneously selected. Once the limit is reached, remaining unchecked options are disabled until the respondent unchecks one of the selected options.
+Limits the maximum number of checkboxes that can be simultaneously selected. Once the limit is reached, the other options still look available, but if the respondent checks one, REDCap unchecks it straight away and shows the message "Cannot select choice! The maximum number of choices has been selected." for a few seconds. To pick a different option, the respondent must first uncheck one of the selected options.
 
 > **Note:** This enforces a ceiling only. It does not require a minimum number of selections. There is currently no action tag to enforce a minimum.
 
@@ -116,7 +121,7 @@ Both operate independently and do not interfere with each other.
 
 **Q: What happens if a respondent selects a "none of the above" option along with other options?**
 
-**A:** REDCap displays a prompt asking the respondent to either clear the other selections or cancel their action. The form does not save until they resolve the conflict. This ensures data integrity — the record cannot have both "none of the above" and substantive answers simultaneously.
+**A:** As soon as they check the "none" option, REDCap displays a prompt. **Yes, clear other selections** unchecks the other options; cancelling unchecks the "none" option. The conflict is resolved on the page, before saving, so data entered on forms and surveys cannot have both. Data imports and the API are not checked, so imported data can contain both "none of the above" and substantive answers.
 
 **Q: Can I have multiple "none of the above" options on the same checkbox field?**
 
@@ -124,7 +129,7 @@ Both operate independently and do not interfere with each other.
 
 **Q: If I add @MAXCHECKED after respondents have already selected more than the limit, what happens?**
 
-**A:** When those respondents return to the form, any excess selections remain checked and visible (the tag does not retroactively remove selections). However, they will not be able to select additional unchecked options until they uncheck enough to fall below the limit.
+**A:** When those respondents return to the form, any excess selections remain checked and visible (the tag does not retroactively remove selections). However, any additional option they check is unchecked straight away until they uncheck enough to fall below the limit.
 
 ---
 
@@ -134,7 +139,7 @@ Both operate independently and do not interfere with each other.
 
 **Designating the wrong raw value as "none of the above."** If the raw value in `@NONEOFTHEABOVE` does not match an actual option's raw value, the tag will silently fail. Double-check the coded value in the field's choices list.
 
-**Assuming @MAXCHECKED prevents saving when over the limit.** The limit is enforced by disabling unchecked options, not by preventing form submission. A respondent cannot check additional options, but if they somehow exceed the limit (e.g., via data import or editing via the API), the saved data will reflect the excess.
+**Assuming @MAXCHECKED prevents saving when over the limit.** The limit is enforced on the page, by unchecking any extra option as soon as it is checked, not by preventing form submission. Data imports and the API are not checked against `@MAXCHECKED` (or `@NONEOFTHEABOVE`), so imported data can exceed the limit and the saved data will reflect the excess.
 
 ---
 

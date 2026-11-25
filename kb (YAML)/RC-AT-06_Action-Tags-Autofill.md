@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action
+  tag behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -41,7 +41,9 @@ synonyms:
 
 This article covers action tags that automatically populate field values when a form or survey is first loaded: the `@NOW` and `@TODAY` families, device-based tags, user-based tags, and the flexible `@DEFAULT` and `@SETVALUE` tags.
 
-Autofill tags only populate values on page load if the field is currently empty. Existing values are never overwritten (except by `@SETVALUE`, which always overwrites).
+Autofill tags only populate values on page load if the field is currently empty. Existing values are never overwritten (except by `@SETVALUE`, which always overwrites). `@DEFAULT` is narrower still: it applies only to an instrument that has no saved data yet (see Section 4).
+
+An autofilled value is only a value in the browser until the page is saved. If the user leaves without saving, nothing is stored.
 
 ---
 
@@ -53,12 +55,16 @@ These tags fill text boxes with date and/or time values. All have no parameters.
 |---|---|---|
 | `@NOW` | Current date/time from user's device | Use for date-time fields |
 | `@NOW-SERVER` | Current date/time from REDCap server | Better for multi-timezone scenarios |
-| `@NOW-UTC` | Current date/time in UTC | Consistent reference |
+| `@NOW-UTC` | Current date/time in UTC, calculated from the user's device clock | Consistent reference; only as accurate as the device clock |
 | `@TODAY` | Current date from user's device | Use for date-only fields |
 | `@TODAY-SERVER` | Current date from REDCap server | For multi-timezone scenarios |
-| `@TODAY-UTC` | Current date in UTC | Consistent reference |
+| `@TODAY-UTC` | Current date in UTC, calculated from the user's device clock | Consistent reference; only as accurate as the device clock |
 
-**Applies to:** Text box and notes box with corresponding date/time validation.
+**Applies to:** Text box only (not notes box). Date or datetime validation is not required, but is strongly recommended (see Section 8).
+
+The value is the time the page was **loaded**, not the time it was saved. A form left open for an hour before saving records the opening time.
+
+The tags do not fill the field when the user cannot save the instrument (read-only instrument rights) or when viewing an already completed survey response.
 
 **Use case:** Timestamp fields, survey completion dates, or any field where the current date/time is the expected value.
 
@@ -70,12 +76,12 @@ These tags fill text boxes with date and/or time values. All have no parameters.
 |---|---|---|
 | `@LONGITUDE` | Device longitude | Subject to privacy settings; may be blank or inaccurate |
 | `@LATITUDE` | Device latitude | Subject to privacy settings; may be blank or inaccurate |
-| `@USERNAME` | Current REDCap username | Fills with "survey-participant" when accessed via survey |
-| `@CONSENT-VERSION` | E-consent version number | Only applies to surveys with e-consent framework enabled |
+| `@USERNAME` | Current REDCap username | Fills with "[survey respondent]" when accessed via survey. When an administrator is impersonating a user, fills with the impersonated user's username |
+| `@CONSENT-VERSION` | E-consent version number | Only on survey pages of surveys with the e-Consent Framework enabled; does nothing on data entry forms |
 
-**Applies to:** Text box (varies by tag).
+**Applies to:** Text box (varies by tag). `@LATITUDE`, `@LONGITUDE`, `@CONSENT-VERSION` and `@PASSWORDMASK` cannot be combined on the same field.
 
-> **Note on location accuracy:** Device location depends on privacy settings. Many devices allow users to disable location services or reduce accuracy. VPNs can also return incorrect values. Treat location data as approximate.
+> **Note on location accuracy:** Device location depends on privacy settings. The browser asks the user for permission to share location; if the user declines, the field stays blank. The field is read-only and shows a button to capture the location. Many devices allow users to disable location services or reduce accuracy. VPNs can also return incorrect values. Treat location data as approximate.
 
 ---
 
@@ -83,7 +89,11 @@ These tags fill text boxes with date and/or time values. All have no parameters.
 
 Pre-fills a field only when the form has never had data entered (status is "grey/incomplete"). Once the respondent saves data, `@DEFAULT` no longer applies.
 
-**Applies to:** Text box, notes box, radio button, dropdown, checkbox, slider fields.
+More precisely, both conditions must hold: the field is blank, **and** the record is new or the instrument has no saved data yet. A new instance of a repeating instrument or event counts as having no data, so `@DEFAULT` applies again there. On a multi-page survey, the check is made per page.
+
+**Applies to:** All field types except File Upload and Signature — including text box, notes box, radio button, dropdown, checkbox, yes/no, true/false and slider fields.
+
+**Date values:** Write dates in `@DEFAULT` and `@SETVALUE` in Y-M-D format (for example `@DEFAULT='2026-01-31'`), whatever the field's display format.
 
 **Use case:** Setting expected default values that respondents may override.
 
@@ -149,7 +159,9 @@ Like `@DEFAULT`, but fills the field every time the form is loaded, overwriting 
 
 **Use case:** Tracking the last user to touch a form, or always pulling the most recent data from another field.
 
-**Backward compatibility note:** Older REDCap versions used `@PREFILL` (which still works but is deprecated).
+**Backward compatibility note:** `@PREFILL` is the old name for `@SETVALUE`. It still works and behaves identically, but use `@SETVALUE` in new projects.
+
+> **Warning — a blank piped value wipes the field.** When `@SETVALUE` pipes from another field (for example `@SETVALUE='[email]'`) and that source field is empty when the page loads, `@SETVALUE` sets this field to blank. On save, the blank overwrites whatever was stored before. Best practice: make sure the piped source always has a value before this instrument is opened, or wrap the tag in `@IF` so it only runs when the source has a value, for example `@IF([email] <> '', @SETVALUE='[email]', '')`.
 
 ---
 
@@ -216,9 +228,15 @@ Pre-populates with the current user's username and locks it to prevent manual ed
 
 **Using `@NOW` on a date-only field.** If the field has a date-only validation, use `@TODAY` instead. `@NOW` on a date-only field will still populate the date, but the time component is discarded.
 
-**Applying `@TODAY` or `@NOW` to a field with no date validation.** Both tags will autofill any text field regardless of whether date or datetime validation is set. If the field has no validation, REDCap fills it with a date or datetime string on first load — but does not enforce the format on save. Users can overwrite the autofilled value with free text, and REDCap will accept it. Over time this produces inconsistently formatted data in what was intended to be a timestamp field. For reliable timestamp capture, always set the matching validation type: `date_mdy` (or `date_ymd`, `date_dmy`) for `@TODAY` fields, and `datetime_ymd` (or another datetime variant) for `@NOW` fields. The validation enforces format consistency on every entry, not only the autofilled ones. If you need a reliable date anchor for calculations but want to keep a visible field without format restrictions, see the hidden anchor field pattern in [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md).
+**Applying `@TODAY` or `@NOW` to a field with no date validation.** Both tags will autofill any text box (not notes boxes) regardless of whether date or datetime validation is set. If the field has no validation, REDCap fills it with a date or datetime string on first load — but does not enforce the format on save. Users can overwrite the autofilled value with free text, and REDCap will accept it. Over time this produces inconsistently formatted data in what was intended to be a timestamp field. For reliable timestamp capture, always set the matching validation type: `date_mdy` (or `date_ymd`, `date_dmy`) for `@TODAY` fields, and `datetime_ymd` (or another datetime variant) for `@NOW` fields. The validation enforces format consistency on every entry, not only the autofilled ones. If you need a reliable date anchor for calculations but want to keep a visible field without format restrictions, see the hidden anchor field pattern in [RC-FD-10 — Advanced Workflow Patterns: Multi-Stage Review and Operational Processing](RC-FD-10_Advanced-Workflow-Patterns-Multi-Stage-Review-and-Operational-Processing.md).
 
 **Expecting autofill tags to populate during data import.** These tags run only when a form is loaded in the browser.
+
+**Piping an empty field into `@SETVALUE`.** If the source field is blank when the page loads, `@SETVALUE` blanks this field and the save overwrites the stored value. Make sure the source has a value, or wrap the tag in `@IF` (see Section 5).
+
+**Reading `@NOW` as the save time.** `@NOW` and `@TODAY` record when the page was loaded, not when it was saved.
+
+**Putting `@NOW` or `@TODAY` on a field with branching logic.** The autofill and the branching can work against each other, leaving an unexpected timestamp or none. Put the timestamp on a field without branching logic, and use `@HIDDEN` if it should not be seen.
 
 **Carrying forward values that are supposed to change.** `@DEFAULT='[previous-event-name][field]'` on a count or measurement makes it easy to submit last event's number unchanged, and nothing in the data shows that it wasn't re-entered. Carry forward only stable answers. For changing values, show the previous value in the field note with piping and leave the field blank (see Section 4.5).
 

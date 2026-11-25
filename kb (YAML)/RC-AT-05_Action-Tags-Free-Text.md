@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action
+  tag behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -42,9 +42,9 @@ This article covers action tags that constrain, enhance, or modify the behavior 
 
 # 2. @PASSWORDMASK
 
-Obscures text entry by replacing displayed characters with dots, similar to a password field. The underlying data is stored normally and is fully visible in reports, exports, and the Codebook — only the on-screen display is masked.
+Obscures text entry by replacing displayed characters with dots, similar to a password field. The underlying data is stored normally and shows unmasked everywhere outside the entry field itself — in PDFs, reports, exports and anywhere the value is piped. Only the on-screen display in the text box is masked.
 
-**Applies to:** Text box only.
+**Applies to:** Text box only. `@PASSWORDMASK` cannot be combined on the same field with `@LATITUDE`, `@LONGITUDE` or `@CONSENT-VERSION`; use only one of these tags per field.
 
 **Syntax:**
 ```
@@ -58,6 +58,8 @@ Obscures text entry by replacing displayed characters with dots, similar to a pa
 # 3. @FORCE-MINMAX
 
 Text boxes with numeric or date validation can define minimum and/or maximum bounds. By default, REDCap warns users about out-of-range values but allows them to proceed. `@FORCE-MINMAX` makes that warning a hard block — users cannot save or advance until an in-range value is entered.
+
+Unlike the other tags in this article, `@FORCE-MINMAX` is also enforced on API and Data Import Tool uploads: out-of-range values are rejected. Missing data codes are still accepted.
 
 **Applies to:** Text box with a validation that defines a minimum, maximum, or both.
 
@@ -74,9 +76,9 @@ Text boxes with numeric or date validation can define minimum and/or maximum bou
 
 Limits the maximum number of words in a text or notes box. REDCap counts words by spaces between them ("garage door" = 2 words; "garage-door" = 1 word). The remaining word count is displayed below the field.
 
-> **Note:** `@WORDLIMIT` and `@CHARLIMIT` are mutually exclusive. Use one or the other.
+> **Note:** Use `@WORDLIMIT` or `@CHARLIMIT`, not both. If a field has both, `@CHARLIMIT` wins and `@WORDLIMIT` is ignored.
 
-> **Note:** Enforced only during data entry and surveys, not during API or Data Import Tool uploads.
+> **Note:** Enforced only during data entry and surveys, not during API or Data Import Tool uploads. Text pasted into the field that goes over the limit is cut to the limit.
 
 **Applies to:** Text box and notes box.
 
@@ -91,9 +93,9 @@ Limits the maximum number of words in a text or notes box. REDCap counts words b
 
 Limits the maximum number of characters in a text or notes box. All characters count (letters, spaces, punctuation). The remaining character count is displayed below the field.
 
-> **Note:** Mutually exclusive with `@WORDLIMIT`.
+> **Note:** Use instead of `@WORDLIMIT`, not alongside it. If a field has both, `@CHARLIMIT` wins.
 
-> **Note:** Not enforced during data import.
+> **Note:** Not enforced during API or Data Import Tool uploads. Text pasted into the field that goes over the limit is cut to the limit.
 
 **Applies to:** Text box and notes box.
 
@@ -107,6 +109,8 @@ Limits the maximum number of characters in a text or notes box. All characters c
 # 6. @RICHTEXT
 
 Adds a rich text toolbar to a notes box, enabling bold, italic, bullets, and other formatting options. Without this tag, notes boxes accept only plain text.
+
+The formatted text is stored as HTML. Data exports therefore contain the HTML tags (for example `<p>` and `<strong>`), while PDFs of the instrument show the text without the tags. Plan for this if the data will be analysed outside REDCap. Image upload in the editor is not available on public surveys.
 
 **Applies to:** Notes box only.
 
@@ -123,14 +127,16 @@ Adds a rich text toolbar to a notes box, enabling bold, italic, bullets, and oth
 
 Displays hint text inside an empty field. The hint appears in grey and disappears when the user starts typing. The placeholder text is never saved — it is purely a UI hint.
 
-**Applies to:** Text box and notes box.
+**Applies to:** Text box, notes box, and drop-down fields set to auto-complete.
 
 **Syntax:**
 ```
 @PLACEHOLDER='Please be brief'
 ```
 
-> **Note:** Single and double quotes cannot be used within the placeholder text.
+> **Note:** The placeholder text cannot contain the same quote character that wraps it, but it can contain the other one. To use an apostrophe, wrap the text in double quotes: `@PLACEHOLDER="Patient's initials"`.
+
+> **Note:** The placeholder text supports piping, so it can show a value from another field.
 
 > **Note:** To pre-fill a value that is saved when the field is submitted, use `@DEFAULT` or `@SETVALUE` instead (see [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md)).
 
@@ -140,13 +146,15 @@ Displays hint text inside an empty field. The hint appears in grey and disappear
 
 # 8. Common Mistakes
 
-**Using `@WORDLIMIT` and `@CHARLIMIT` on the same field.** These are mutually exclusive; only one can be active.
+**Using `@WORDLIMIT` and `@CHARLIMIT` on the same field.** Only one can be active: `@CHARLIMIT` wins and `@WORDLIMIT` is ignored.
 
-**Expecting `@PASSWORDMASK` to encrypt data.** It only masks the display — data is stored and exported in plain text.
+**Expecting `@PASSWORDMASK` to encrypt data.** It only masks the display in the entry field — data is stored in plain text and shows unmasked in PDFs, reports, exports and piping.
 
 **Confusing `@PLACEHOLDER` with `@DEFAULT`.** `@PLACEHOLDER` is a hint that is never saved; `@DEFAULT` pre-fills with a value that will be saved.
 
-**Expecting limits to apply to imported data.** `@WORDLIMIT` and `@CHARLIMIT` are enforced only during browser-based data entry and surveys, not during API or import uploads.
+**Expecting limits to apply to imported data.** `@WORDLIMIT` and `@CHARLIMIT` are enforced only during browser-based data entry and surveys, not during API or import uploads. `@FORCE-MINMAX` is the exception: it is enforced on imports too.
+
+**Expecting clean text from `@RICHTEXT` in exports.** The value is stored as HTML, so exported data includes the HTML tags.
 
 ---
 
