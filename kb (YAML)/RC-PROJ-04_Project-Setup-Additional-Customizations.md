@@ -129,7 +129,7 @@ REDCap provides two mutually exclusive annotation modes for tracking data questi
 
 **Additional options for Data Resolution Workflow:**
 - **Hide closed/verified data queries from Data Quality results** — When enabled, queries that have been closed or verified no longer appear in the Data Quality module results. This reduces visual noise for teams that have already resolved flagged issues.
-- **Prevent calc/CALCTEXT fields with closed/verified queries from being fixed by DQ rule H** — Data Quality rule H automatically fixes calculated and @CALCTEXT fields with outdated values. When this option is enabled, fields that have a closed or verified query will be exempt from rule H auto-fixes, preserving the existing value even if REDCap would otherwise correct it.
+- **Prevent calc/CALCTEXT fields with closed/verified queries from being fixed by DQ rule H** — Data Quality rule H finds calculated and @CALCTEXT fields with outdated values and updates them when you click **Fix calcs now**. When this option is enabled, fields that have a closed or verified query are exempt from these rule H fixes, preserving the existing value even if REDCap would otherwise correct it.
 
 > **Switching modes:** Switching between Field Comment Log and Data Resolution Workflow is possible at any point. However, existing comments or queries created under the previous mode remain in the system and may not be fully visible under the new mode. Consult your local support team before switching modes on a project that already has annotation data.
 

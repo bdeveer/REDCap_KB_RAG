@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | REDCap Mobile App only; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action tag behaviour checked against source code; app-side behaviour not checked; pages not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); REDCap Mobile App must be installed and project initialized |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md)|
 | **Synonyms** | @APPUSERNAME-APP action tag; @BARCODE-APP action tag; redcap mobile app action tags; how do i scan a barcode or qr code in the mobile app; capture the mobile app username into a field; action tags that only work in the mobile app; sync uploaded images to the mobile app |
@@ -21,7 +21,9 @@
 
 REDCap provides five action tags designed exclusively for use in the **REDCap Mobile App**. This article covers three of them (`@BARCODE-APP`, `@APPUSERNAME-APP`, `@SYNC-APP`), which extend mobile data collection with barcode/QR scanning, automatic capture of the mobile user's identity, and syncing of uploaded images from the server to the app. The remaining two (`@HIDDEN-APP` and `@READONLY-APP`) are documented in [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md).
 
-> **Mobile App only.** All three tags in this article function only within the REDCap Mobile App. They have no effect on browser-based data entry forms or survey pages.
+> **Mobile App only.** All three tags in this article function only within the REDCap Mobile App. They have no effect on browser-based data entry forms or survey pages: the REDCap web server ignores all five `-APP` tags.
+>
+> The `-APP` tags appear in REDCap's list of action tags only when the REDCap administrator has enabled the Mobile App. If it is not enabled, the tags are simply missing from the list; any already typed into a Field Annotation stay as harmless text.
 
 ---
 

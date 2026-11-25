@@ -61,7 +61,7 @@ REDCap provides a large number of date, time, and date-time validation variants.
 
 **Date picker.** Click the calendar icon next to the field to open a calendar popup. For validations that include a time component, the popup also includes a time selector. Using the date picker guarantees the correct format because REDCap formats the value for you automatically.
 
-**Today / Now button.** A button labeled "Today" (or "Now" for date-time validations) appears next to the date picker. Clicking it fills the field with the current date and time according to your device's clock. This is the fastest way to record the current moment. The button may be hidden on some fields (by the @HIDEBUTTON action tag or by a project or system setting), and Time (MM:SS) fields have no Now button.
+**Today / Now button.** A button labeled "Today" (or "Now" for date-time and HH:MM / HH:MM:SS time validations) appears next to the date picker. Clicking it fills the field with the current date and time according to your device's clock. This is the fastest way to record the current moment. The button may be hidden on some fields (by the @HIDEBUTTON action tag or by a project or system setting), and Time (MM:SS) fields have no Now button.
 
 **Prefilled value.** Certain advanced project features (e.g., action tags, calculated fields, or piping) can automatically populate a date or time field when you open the instrument. Whether you can modify a prefilled value depends on how the instrument is configured.
 

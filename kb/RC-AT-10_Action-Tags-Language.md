@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | REDCap projects with Multi-Language Management (MLM) enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action tag behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); Multi-Language Management must be configured in the project |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md)|
 | **Synonyms** | @LANGUAGE-SET action tag; @LANGUAGE-FORCE action tag; @LANGUAGE-CURRENT-FORM and @LANGUAGE-CURRENT-SURVEY tags; how do i force a survey into a specific language; multi-language management action tags; capture the current language into a field; switch language based on a field value; mlm language action tags |
@@ -21,7 +21,21 @@
 
 REDCap's **Multi-Language Management (MLM)** feature allows a project to be presented in multiple languages. Users and survey respondents can switch between languages using buttons at the top of the page. The language action tags extend this system by allowing language detection, selection, and forcing to be driven by field values and logic rather than only by manual button clicks.
 
-> **Prerequisite:** All language action tags require Multi-Language Management to be enabled and at least one additional language to be configured in the project. These tags have no effect in projects without MLM enabled.
+> **Prerequisite:** All language action tags require Multi-Language Management to be enabled and at least one additional language to be configured in the project. These tags have no effect in projects without MLM enabled. (Strictly, the tags load as soon as one language is active, but they only do something useful once there are two or more.)
+
+#### Which language a page opens in
+
+When a form or survey page loads, REDCap picks the language in this order:
+
+1. A valid, active language from `@LANGUAGE-FORCE` (or its `-FORM`/`-SURVEY` variant).
+2. A value already saved in a `@LANGUAGE-SET` field.
+3. On data entry forms, the user's own language preference; on surveys, the language the respondent chose on a previous visit, then the browser's language.
+4. The project's initial (default) language.
+5. The fallback language.
+
+#### @IF and the language tags
+
+`@LANGUAGE-SET`, `@LANGUAGE-CURRENT-*` and `@LANGUAGE-MENU-STATIC` honour `@IF`. `@IF` does not work with `@LANGUAGE-FORCE` (or its `-FORM`/`-SURVEY` variants): REDCap reads every `@LANGUAGE-FORCE` in the annotation, and the last one wins. To force a language conditionally, pipe a field into the tag instead — see Section 5.
 
 ---
 
@@ -47,7 +61,9 @@ REDCap's **Multi-Language Management (MLM)** feature allows a project to be pres
 
 Captures the currently active language on a **data entry form** and stores it in the tagged field. The field value is always updated to reflect the current language, making it possible to branch on language or carry it forward to other forms.
 
-**Applies to:** Text Box fields (no validation), or Drop-down / Radio Button fields whose coded values match the language IDs defined in MLM (e.g., `en`, `fr`, `de`).
+> **Important:** The stored value is overwritten whenever the form is opened in another language. Don't rely on a `@LANGUAGE-CURRENT-*` field as a permanent record of the language the data was first entered in unless that is what you want.
+
+**Applies to:** Text Box fields (no validation), or Drop-down / Radio Button fields whose coded values match the language IDs defined in MLM (e.g., `en`, `fr`, `de`). Not Notes Box fields.
 
 **Syntax** (no parameters):
 ```
@@ -102,7 +118,7 @@ Same as `@LANGUAGE-SET`, but the language switching effect is limited to **surve
 
 Forces the data entry form or survey page to render in a specified language when the field is present on the instrument. The language must be active and configured in MLM. When the forced language loads successfully, the language selector at the top of the page is hidden.
 
-The tag is evaluated when the form or survey loads.
+The tag is evaluated when the form or survey loads. On a multi-page survey it only takes effect on pages that contain the tagged field. If a field carries several `@LANGUAGE-FORCE` tags, the last one that applies to the current context (form or survey) wins.
 
 **Applies to:** Any field type.
 
@@ -116,6 +132,8 @@ The language ID must be placed inside single or double quotes. Piping is support
 ```
 @LANGUAGE-FORCE="[preferred_language]"
 ```
+
+Piping uses the value already saved in the record, not one entered on the same page but not yet saved. If the source field is a Radio Button or Drop-down, add the `:value` qualifier (`[preferred_language:value]`) so the coded language ID is piped rather than the choice label.
 
 > **Tip for "locking in" a language:** Combining `@LANGUAGE-CURRENT-FORM/SURVEY` on a source field with `@LANGUAGE-FORCE` that reads from that source field creates a pattern where the language selected by the participant persists across subsequent pages.
 
@@ -131,7 +149,7 @@ Same as `@LANGUAGE-FORCE` but applies only to **survey pages**, not data entry f
 
 ## 6. @LANGUAGE-MENU-STATIC
 
-When present on any field of a survey page in a project with MLM active (with at least two active languages), the language selection menu remains visible at all times on that page — it does not collapse after a language button has been clicked.
+When present on any field of a survey page in a project with MLM active (with at least two active languages), the language selection menu remains visible at all times on that page — it does not collapse after a language button has been clicked. The menu also stays visible when a `@LANGUAGE-SET` field has already pre-selected the language.
 
 **Applies to:** Any field type, survey pages only.
 
@@ -154,11 +172,11 @@ When present on any field of a survey page in a project with MLM active (with at
 
 **Q: Can @LANGUAGE-FORCE be conditional?**
 
-**A:** Yes. Use it inside an `@IF` tag to force different languages based on a condition: `@IF([lang]='fr', @LANGUAGE-FORCE-SURVEY="fr", @LANGUAGE-FORCE-SURVEY="en")`.
+**A:** Yes, but not with `@IF`. `@IF` does not work with `@LANGUAGE-FORCE`, `@LANGUAGE-FORCE-FORM` or `@LANGUAGE-FORCE-SURVEY`: REDCap reads every `@LANGUAGE-FORCE` in the annotation, and the last one wins, so `@IF([lang]='fr', @LANGUAGE-FORCE-SURVEY="fr", @LANGUAGE-FORCE-SURVEY="en")` always forces `en`. Instead, pipe a saved field that holds the language ID into the tag: `@LANGUAGE-FORCE-SURVEY="[lang_field]"` (use `[lang_field:value]` if the source is a Radio Button or Drop-down). If the piped value is empty or not an active language, the page simply uses the normal language choice. The other language tags (`@LANGUAGE-SET`, `@LANGUAGE-CURRENT-*`, `@LANGUAGE-MENU-STATIC`) do honour `@IF`.
 
 **Q: What happens if the language ID specified in @LANGUAGE-FORCE does not exist in the project?**
 
-**A:** The tag has no effect — the page renders in the default language, and the language selector remains visible.
+**A:** The tag has no effect — the same applies if the language exists but is not active. The page opens in whatever language it would have used without the tag (see "Which language a page opens in" in Section 1), which is often but not always the default language, and the language selector remains visible.
 
 **Q: Can I use @LANGUAGE-SET to allow users to select their language and have it persist across forms in a longitudinal project?**
 
@@ -172,13 +190,15 @@ When present on any field of a survey page in a project with MLM active (with at
 
 **Using @LANGUAGE-SET on a Text Box field.** `@LANGUAGE-SET` and its variants work only on Drop-down and Radio Button fields whose coded values match language IDs.
 
-**Forgetting to configure language IDs in MLM first.** All these tags depend on language IDs (e.g., `en`, `fr`) that must be defined in Multi-Language Management before the tags can function. A mismatch between the tag parameter and the configured ID will cause the tag to silently fail.
+**Forgetting to configure language IDs in MLM first.** All these tags depend on language IDs (e.g., `en`, `fr`) that must be defined in Multi-Language Management before the tags can function. A mismatch between the tag parameter and the configured ID will cause `@LANGUAGE-FORCE` or `@LANGUAGE-SET` to silently do nothing. `@LANGUAGE-CURRENT-*` is different: on a Radio Button or Drop-down field with no choice code matching the current language, it clears the field's value.
 
 **Omitting @LANGUAGE-CURRENT-SURVEY on multi-page surveys.** The tag captures the language only on the page where it is placed. For multi-page surveys, add it to each page where the language value is needed for branching or downstream use.
+
+**Wrapping @LANGUAGE-FORCE in @IF.** It does not work — the last `@LANGUAGE-FORCE` in the annotation always wins. Pipe a field into the tag instead (see Section 5).
 
 ---
 
 ## 9. Related Articles
 
 - [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
-- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: using @LANGUAGE-FORCE conditionally based on other field values
+- [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) — @IF: conditional @LANGUAGE-SET, @LANGUAGE-CURRENT-* and @LANGUAGE-MENU-STATIC (not @LANGUAGE-FORCE)

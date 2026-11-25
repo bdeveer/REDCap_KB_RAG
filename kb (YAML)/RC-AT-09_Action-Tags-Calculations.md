@@ -6,13 +6,13 @@ applies_to:
 - All REDCap project types
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action
+  tag behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-AT-01 — Action Tags: Overview'
 - familiarity with REDCap calculated fields
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 related:
 - id: RC-AT-01
   title: 'Action Tags: Overview'
@@ -39,7 +39,9 @@ synonyms:
 
 `@CALCTEXT` and `@CALCDATE` are action tags that turn a standard Text Box field into a calculated field — one whose value is computed automatically from other field values rather than entered manually. Unlike the built-in **Calculated Field** type, these tags work inside ordinary Text Boxes and offer expanded output options (text strings, conditional text, and date arithmetic).
 
-Both tags behave like calculated fields in key ways: the field is not editable by users, the value updates in real time during data entry, and the value can be updated via data import or when Data Quality rule H is run.
+Both tags behave like calculated fields in key ways: the field is not editable by users, the value updates in real time during data entry, and the value is recalculated when the record is saved or its input fields are imported. Data Quality rule H lists out-of-date values and updates them when you click **Fix calcs now**.
+
+The field is read-only only while the calculation is active. A tag that cannot run — for example `@CALCDATE` on a Text Box without date validation — does nothing, and the field stays editable.
 
 > **Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation tags operate in more contexts than `@IF` does (real-time recalculation, imports, Data Quality rules). Nesting them inside `@IF` produces unpredictable results. See [RC-AT-08 — Action Tags: @IF — Conditional Logic](RC-AT-08_Action-Tags-Conditional-IF.md) for guidance on `@IF`.
 
@@ -57,7 +59,7 @@ A logical function used inside `@CALCTEXT` and `@CALCDATE` expressions. Syntax: 
 
 **Escaping**
 
-When text inside `@CALCTEXT` contains a quote character that matches the surrounding delimiter, a backslash must precede it to prevent a parsing error — e.g., `'The user's guide'`.
+When text inside `@CALCTEXT` contains a quote character that matches the surrounding delimiter, a backslash must precede it to prevent a parsing error — e.g., `'The user\'s guide'`.
 
 ---
 
@@ -124,7 +126,7 @@ Alternatively, use double quotes as the outer delimiter when the text contains a
 
 `@CALCDATE` calculates a new date or datetime value by adding or subtracting a specified amount of time from a source date field. It is used for computing follow-up dates, deadlines, or scheduled time points relative to a baseline date.
 
-**Applies to:** Text Box fields with date, datetime, or datetime_seconds validation. Both the source field and the result field must have date or datetime validation.
+**Applies to:** Text Box fields with date, datetime, or datetime_seconds validation. The result field must have one of these validations (any format — YMD, MDY or DMY); without it, nothing is calculated. The source should also be a date or datetime field: REDCap reads the source date's format from the first date-validated field in the first parameter, and assumes YMD if there is none.
 
 **Syntax:**
 ```
@@ -135,9 +137,11 @@ Alternatively, use double quotes as the outer delimiter when the text contains a
 |---|---|
 | `source` | A date/datetime field variable, or an `if()` expression that returns a date/datetime value. In longitudinal projects, include the event: `[baseline_event][visit_date]`. |
 | `offset` | A number (integer or decimal) to add. Use a negative number to subtract (go back in time). |
-| `unit` | A quoted string specifying the unit: `'y'` (years), `'M'` (months), `'d'` (days), `'h'` (hours), `'m'` (minutes), `'s'` (seconds). |
+| `unit` | A quoted string specifying the unit: `'y'` (years), `'M'` (months), `'d'` (days), `'h'` (hours), `'m'` (minutes), `'s'` (seconds). Units are case-sensitive (`'M'` is months, `'m'` is minutes); any other value gives a blank result. |
 
 > **Year and month lengths:** `'y'` uses 365.2425 days per year. `'M'` uses 30.44 days per month. For precise day-count calculations, use `'d'` instead.
+
+If the source field holds a missing data code instead of a date, the result is blank.
 
 ## 4.1 Basic Example — Add Days
 
@@ -192,10 +196,10 @@ The source can be a logical expression that resolves to a date value:
 | Feature | Built-in Calculated Field | @CALCTEXT / @CALCDATE |
 |---|---|---|
 | Output type | Numeric only | Text or date/datetime |
-| Conditional logic | Not supported | Supported via `if()` |
+| Conditional logic | Supported via `if()` (numeric results only) | Supported via `if()` |
 | Real-time update | Yes | Yes |
-| Updates via data import | Yes | Yes |
-| Updates via Data Quality rule H | Yes | Yes |
+| Recalculated when input fields are imported | Yes | Yes |
+| Data Quality rule H finds stale values and fixes them on **Fix calcs now** | Yes | Yes |
 | Field type required | Calculated Field | Text Box |
 | Editable by users | No | No |
 
@@ -211,11 +215,16 @@ Use the built-in Calculated Field when you need a numeric result. Use `@CALCTEXT
 
 **Q: When does @CALCDATE update its value?**
 
-**A:** The same contexts as a built-in calculated field: in real time during data entry on the form, during a data import, and when Data Quality rule H is run. The value is not updated by API writes directly to the field itself.
+**A:** The same contexts as a built-in calculated field (this applies equally to `@CALCTEXT`):
+
+- **During data entry** — in real time on the form or survey.
+- **On save** — REDCap recalculates these fields on the server, including dependent `@CALCTEXT`/`@CALCDATE` fields on other instruments and events of the record.
+- **On import** (Data Import Tool or API) — when an input field is imported, the calculated field is recalculated, unless the project's option to turn off auto-calculations is enabled. Values imported directly into the calculated field itself are ignored, with a warning.
+- **Data Quality rule H** — lists out-of-date calculated values and updates them when you click **Fix calcs now**.
 
 **Q: Can I use @CALCTEXT on a field with validation (e.g., integer validation)?**
 
-**A:** The tag works on Text Box fields regardless of validation, but the output must match the validation format. If the computed text does not match the validation rule, the value will be rejected. Use text-only fields (no validation) unless you are certain the output will always conform.
+**A:** The tag works on Text Box fields regardless of validation, but REDCap does not enforce the field's validation on `@CALCTEXT` output — a value that doesn't fit the validation is still saved. Leave validation off unless you are certain the output will always conform. On a date or datetime-validated field, the output is cut to the length of the date format, so return a properly formatted date or use `@CALCDATE` instead.
 
 **Q: How do I display the best available value when data may come from multiple sources?**
 
@@ -239,15 +248,15 @@ This pattern is useful in operational or administrative projects where a value m
 
 **Using @CALCTEXT or @CALCDATE inside @IF.** This combination is explicitly unsupported and produces unpredictable behavior. Apply calculation tags directly to the field without wrapping them in `@IF`.
 
-**Source or result field missing date validation for @CALCDATE.** Both fields must have date, datetime, or datetime_seconds validation. Without this, `@CALCDATE` will not function correctly.
+**Source or result field missing date validation for @CALCDATE.** Both fields should have date, datetime, or datetime_seconds validation. Without it on the result field, nothing is calculated and the field stays editable; without it on the source, REDCap assumes the source is in YMD format.
 
 **Forgetting that `'now'` and `'today'` use server time.** If your REDCap server is in a different timezone from your users, `@CALCDATE('today', ...)` may produce a date that is one day off. Use `'d'` offsets cautiously when timezone alignment matters.
 
-**Not escaping apostrophes in text output.** If `@CALCTEXT` output contains an apostrophe and you used apostrophes as delimiters, escape it: `'it's'` or switch to double quotes: `"it's"`.
+**Not escaping apostrophes in text output.** If `@CALCTEXT` output contains an apostrophe and you used apostrophes as delimiters, escape it: `'it\'s'` or switch to double quotes: `"it's"`.
 
 **Cross-event source fields in @CALCDATE breaking silently after schema changes.** When `@CALCDATE` references a field from a different event using the `[event_name][field_name]` syntax — for example, `@CALCDATE([baseline_arm_1][enrol_date], 45, 'd')` — the expression depends on two identifiers that are easy to change accidentally: the event's unique name and the field's variable name. If the baseline event is renamed (which regenerates its unique event name) or the source field is renamed, every `@CALCDATE` field referencing it returns blank with no error or warning. This failure mode is especially consequential when multiple downstream fields all chain from the same source (e.g., a randomisation date used to calculate several visit windows). Before moving a project to production, document all cross-event field references in `@CALCDATE` and `@CALCTEXT` expressions. Treat the referenced event names and field names as frozen — equivalent to a primary key — and apply a branching logic audit whenever either is changed.
 
-**`[previous-instance]` chains may go stale without a recalculate module.** When `@CALCTEXT` fields in a repeating instrument use `[previous-instance]` to build accumulated values (see [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) §7), REDCap does not automatically recalculate earlier instances when a later one changes, or vice versa. If a user edits instance 2 after instances 3–5 already exist, the accumulated values in those later instances will not update. The `recalculate` external module (if installed on your instance) can force a full recalculation across all instances. When designing accumulator-chain patterns, confirm that `recalculate` is available or plan for the possibility of stale values.
+**`[previous-instance]` accumulator chains are easy to get wrong.** When `@CALCTEXT` fields in a repeating instrument use `[previous-instance]` to build accumulated values (see [RC-PIPE-10 — Smart Variables: Repeating Instruments and Events](RC-PIPE-10_Smart-Variables-Repeating-Instruments-and-Events.md) §7), each instance depends on the one before it. REDCap recalculates dependent fields when a source field is saved, but chains across instances are fragile: after a user edits instance 2 when instances 3–5 already exist, check that the later instances show the expected values. Data Quality rule H can find stale values and fix them with **Fix calcs now**; if your instance has a recalculation external module installed, that is another option.
 
 ---
 

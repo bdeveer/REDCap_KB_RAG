@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action tag behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); familiarity with branching logic syntax |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-02 — @HIDDEN & @READONLY — Visibility Control](RC-AT-02_Action-Tags-Hidden-and-Readonly.md); [RC-AT-03 — Radio & Dropdown Action Tags](RC-AT-03_Action-Tags-Radio-Dropdown.md); [RC-AT-06 — Autofill Action Tags](RC-AT-06_Action-Tags-Autofill.md); [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)|
 | **Synonyms** | @IF action tag; how do i apply an action tag conditionally; conditional action tag based on logic; use @IF to hide a field for some records but not others; apply different action tags by event or user; @IF condition evaluated on page load; make a field behave differently with @IF |
@@ -63,10 +63,10 @@ The action tag(s) to apply when the condition evaluates to false. Use an empty p
 Hide a field for records in one data access group; leave it visible for all others:
 
 ```
-@IF([dag-name] = 'site_a', @HIDDEN, '')
+@IF([record-dag-name] = 'site_a', @HIDDEN, '')
 ```
 
-When the condition is true (the current record is in DAG "site_a"), the field is hidden. For all other records, no action tag is applied and the field displays normally.
+When the condition is true (the current record is in the DAG whose unique group name is "site_a"), the field is hidden. Use `[record-dag-name]` for the record's DAG or `[user-dag-name]` for the current user's DAG — there is no `[dag-name]` smart variable. For all other records, no action tag is applied and the field displays normally.
 
 ### 4.2 Multiple Action Tags in One Branch
 
@@ -110,7 +110,7 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 ## 5. PDF Behavior
 
-`@IF` is also evaluated when generating a PDF of an instrument or survey. This means PDF-specific action tags (such as `@HIDDEN-PDF`) can be placed inside `@IF` branches and will be applied correctly in the generated PDF.
+`@IF` is also evaluated when generating a PDF of an instrument or survey, so hiding tags placed inside `@IF` branches are applied correctly in the generated PDF: `@HIDDEN-PDF` in any PDF, and `@HIDDEN` or `@HIDDEN-SURVEY` in the PDF a survey respondent downloads. These hiding tags are the only action tags that affect a PDF; other tags in an `@IF` branch make no difference there.
 
 > **Version caveat (below 17.4.4 Standard / 17.3.10 LTS):** In some situations, `@IF` and similar action tags made REDCap-generated PDFs take **much longer** to produce than expected. This affects PDF exports, e-Consent, PDF Snapshots and PDF attachments. If PDF generation is slow on an older instance with heavy `@IF` use, that is the likely cause.
 
@@ -120,7 +120,11 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 **Not evaluated in real time.** The condition is checked once when the page loads. If a user changes a field value that the condition depends on, `@IF` will not re-evaluate until the page is reloaded.
 
-**Do not use @CALCTEXT or @CALCDATE inside @IF.** The calculation action tags operate in contexts (real-time recalculation, data import, Data Quality rules) that `@IF` does not. Placing them inside an `@IF` branch produces unexpected results. See [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) for guidance on calculation tags.
+**Do not use @CALCTEXT or @CALCDATE inside @IF.** Data entry forms and surveys honour the `@IF`, but calculations also run outside the form: data imports, the API, Data Quality and server-side recalculation treat the field as always calculated, ignoring the `@IF`. The stored value can therefore differ from what the form would have produced. See [RC-AT-09 — Action Tags: @CALCTEXT & @CALCDATE — Calculations](RC-AT-09_Action-Tags-Calculations.md) for guidance on calculation tags.
+
+**Not supported in the REDCap Mobile App.** The Mobile App does not evaluate `@IF`; plan offline data collection without relying on it.
+
+**Not evaluated on the record ID field.** Do not place `@IF` on the project's first (record identifier) field.
 
 **Avoid complex nesting.** Deeply nested `@IF` statements are difficult to read and maintain. If logic becomes complex, consider restructuring the project design or using branching logic to control field visibility separately.
 
@@ -140,6 +144,14 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 **A:** Using `''` in both branches (`@IF([field]='1', '', '')`) has no practical effect — no action tags are applied in either case. This is valid but unnecessary.
 
+**Q: Does @IF affect the required-field check when the form is saved?**
+
+**A:** Yes. When the form is saved, REDCap re-evaluates `@IF` against the data just saved before checking required fields, so the check follows the saved values rather than the values at page load.
+
+**Q: Does @IF affect file uploads?**
+
+**A:** On 17.6.x Standard, yes: if `@IF` makes a file upload field hidden or read-only, REDCap refuses an upload to that field.
+
 **Q: Can @IF be combined with other action tags placed directly on the field (outside @IF)?**
 
 **A:** Yes. A field can have both standalone action tags and `@IF` tags. The standalone tags always apply; the `@IF` tags add or layer additional behavior conditionally.
@@ -152,7 +164,9 @@ Multiple independent `@IF` tags can be placed on the same field, separated by sp
 
 **Expecting real-time re-evaluation.** `@IF` evaluates at page load only. A field that is hidden by `@IF` based on another field's value will not become visible if the user changes that other field during the same session — the page must reload.
 
-**Nesting @CALCTEXT or @CALCDATE inside @IF.** This combination is explicitly not supported. Use calculation action tags directly on the field without wrapping them in `@IF`.
+**Nesting @CALCTEXT or @CALCDATE inside @IF.** Avoid it. The form and survey honour the `@IF`, but data imports, the API, Data Quality and server-side recalculation treat the field as always calculated. Use calculation action tags directly on the field without wrapping them in `@IF`.
+
+**Using `[dag-name]` in the condition.** No such smart variable exists. Use `[record-dag-name]` (the record's DAG) or `[user-dag-name]` (the current user's DAG).
 
 **Forgetting the `''` placeholder.** If one branch should apply no action tags, use `''` as an explicit placeholder. An empty branch (missing parameter) causes a syntax error and the tag will not function.
 

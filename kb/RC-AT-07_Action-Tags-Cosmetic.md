@@ -7,10 +7,10 @@
 | **Domain** | Action Tags |
 | **Applies To** | All REDCap project types; requires Project Design and Setup rights |
 | **Requires** | Any supported version (`@HIDEDATEPICKER` requires 17.5.0+) |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — action tag behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)|
-| **Version** | 1.1 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md); [RC-AT-05 — Free Text Action Tags](RC-AT-05_Action-Tags-Free-Text.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md) |
 | **Synonyms** | @HIDEBUTTON action tag; @HIDEDATEPICKER action tag; how do i hide the calendar icon on a date field; remove the date picker from a date or time field; @INLINE action tag; @INLINE-PREVIEW action tag; how do i remove the today now button from a date field; how do i show an uploaded file inline on the form; display image or pdf inline instead of a download link; cosmetic action tags for field display |
@@ -25,9 +25,9 @@ This article covers action tags that adjust the visual display of certain field 
 
 ## 2. @HIDEBUTTON
 
-Text boxes with a date or date-time validation automatically display a **Today** or **Now** button that fills the current date/time with a single click. `@HIDEBUTTON` removes that button.
+Text boxes with date, date-time or time validation automatically display a **Today** or **Now** button that fills the current date/time with a single click. `@HIDEBUTTON` removes that button. The date format hint beside the field (e.g. Y-M-D) still shows.
 
-**Applies to:** Text box with date or date-time validation only.
+**Applies to:** Text boxes with date, date-time or time validation. It also hides any other button REDCap adds beside a text box for that field — for example the get-location button added by `@LATITUDE`/`@LONGITUDE`.
 
 **Syntax:**
 ```
@@ -35,6 +35,8 @@ Text boxes with a date or date-time validation automatically display a **Today**
 ```
 
 **Use case:** Date of birth fields, historical dates, or any date field where "today" is unlikely to be the correct answer and the button would be misleading.
+
+> **Note:** A REDCap administrator can also turn off the **Today**/**Now** buttons for a whole project, in which case `@HIDEBUTTON` is not needed on individual fields.
 
 ---
 
@@ -65,15 +67,17 @@ Text boxes with date, time or date-time validation display a calendar/clock pick
 
 Renders an uploaded file directly within the form, inline with other fields, instead of just showing the file name.
 
-**Supported formats:** PDF, JPG, JPEG, GIF, PNG, TIF, BMP. DICOM and other specialized formats are not supported.
+**Supported formats:** PDF, JPG/JPEG/JPE, GIF, PNG, TIF/TIFF, BMP, WEBP and SVG. Whether a TIFF displays depends on the browser. DICOM and other specialized formats are not supported; for those, REDCap shows a crossed-out eye icon in place of the file.
 
-**Applies to:** File upload fields only.
+**Applies to:** File upload fields only, including file upload fields embedded in another field's text.
 
-`@INLINE` supports three forms:
+`@INLINE` changes only the data entry form and survey page. It has no effect on PDF exports of the instrument.
+
+`@INLINE` supports three forms. The size settings in 4.2 and 4.3 apply to **images only**: an inline PDF always fills the width of the field's area at a fixed height (about 500 pixels), whatever size you specify.
 
 ### 4.1 @INLINE without parameters
 
-Displays the file at 100% width of the containing area:
+Displays an image at its natural size, scaled down if needed so it never exceeds the width of the field's area (a small image is not stretched). A PDF fills the width of the field's area at a fixed height:
 
 ```
 @INLINE
@@ -81,13 +85,13 @@ Displays the file at 100% width of the containing area:
 
 ### 4.2 @INLINE with one parameter
 
-Sets the display width; height scales proportionally:
+Sets the image's display width; height scales proportionally:
 
 ```
 @INLINE(50)
 ```
 
-Use a whole number for pixels or append `%` for a percentage of screen width:
+Use a whole number for pixels or append `%` for a percentage of the width of the field's area (the cell the field sits in), not of the screen:
 
 ```
 @INLINE(50%)
@@ -95,12 +99,14 @@ Use a whole number for pixels or append `%` for a percentage of screen width:
 
 ### 4.3 @INLINE with two parameters
 
-Sets both width and height independently (may distort aspect ratio):
+Sets both width and height of the image independently (may distort aspect ratio):
 
 ```
 @INLINE(50,100)
 @INLINE(50%,100%)
 ```
+
+Each value must be greater than zero, and a percentage cannot exceed 100%. If either value is invalid, REDCap ignores both and displays the image at the default size.
 
 > **Recommendation:** Test `@INLINE` thoroughly before deploying. Results vary based on file type, file dimensions, and the viewing device.
 
@@ -110,12 +116,16 @@ Sets both width and height independently (may distort aspect ratio):
 
 A compromise between default (filename only) and `@INLINE` (always displayed). Adds a toggle button to the file upload field: a magnifier icon shows the file; an × icon hides it.
 
-**Applies to:** File upload fields and descriptive fields.
+**Applies to:** File upload fields and descriptive fields. The preview is not offered on signature fields.
+
+**Preview formats:** PDF, JPG/JPEG/JPE, GIF, PNG, TIF/TIFF, BMP, WEBP and SVG.
 
 **Syntax:**
 ```
 @INLINE-PREVIEW
 ```
+
+If a field has both `@INLINE` and `@INLINE-PREVIEW`, `@INLINE` wins: the file is always displayed and no toggle is shown.
 
 **Use case:** Sensitive images or large PDFs that should be viewable on demand but not always visible.
 
@@ -133,17 +143,19 @@ A file upload field's inline display can also be referenced elsewhere in a form 
 
 This displays the file inline as if `@INLINE` (without parameters) were applied, without requiring the tag on the upload field itself.
 
+In emails and alerts, `[field:inline]` shows an image inline, but a PDF appears only as its file name.
+
 ---
 
 ## 7. Common Questions
 
 **Q: Can I use @INLINE with a video or audio file?**
 
-**A:** No. `@INLINE` supports only static image and PDF formats (JPG, PNG, GIF, TIF, BMP, PDF). Video and audio files cannot be displayed inline; only the filename will show.
+**A:** No. `@INLINE` supports only static image and PDF formats (JPG/JPEG/JPE, PNG, GIF, TIF/TIFF, BMP, WEBP, SVG, PDF). Video and audio files cannot be displayed inline; only the filename will show.
 
 **Q: What is the difference between @INLINE and @INLINE-PREVIEW?**
 
-**A:** `@INLINE` displays the file immediately and always (at 100% width by default or a specified size). `@INLINE-PREVIEW` adds a toggle button so the file is hidden by default and displayed on demand. Use `@INLINE-PREVIEW` for sensitive images or large files you want respondents to view only if needed.
+**A:** `@INLINE` displays the file immediately and always (images at natural size up to the width of the field's area by default, or at a specified size; PDFs at full width). `@INLINE-PREVIEW` adds a toggle button so the file is hidden by default and displayed on demand. Use `@INLINE-PREVIEW` for sensitive images or large files you want respondents to view only if needed.
 
 **Q: If I use @HIDEBUTTON on a date field, can respondents still manually enter a date?**
 
@@ -159,7 +171,7 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 **Q: Does @INLINE work on mobile devices or in the REDCap Mobile App?**
 
-**A:** `@INLINE` works on mobile browsers, but rendering and sizing may vary significantly depending on the device screen size and the file format. Test on representative devices. The tag has no effect in the REDCap Mobile App unless the Mobile App displays files in a context that supports inline rendering (functionality varies by app version).
+**A:** `@INLINE` works on mobile browsers, but rendering and sizing may vary significantly depending on the device screen size and the file format. On iPhone, iPad and Android devices, inline PDFs always open in REDCap's built-in PDF viewer rather than the browser's own. Test on representative devices. The tag has no effect in the REDCap Mobile App unless the Mobile App displays files in a context that supports inline rendering (functionality varies by app version).
 
 ---
 
@@ -167,7 +179,9 @@ This displays the file inline as if `@INLINE` (without parameters) were applied,
 
 **Not testing `@INLINE` across devices.** Pixel-based sizing looks very different on high-density smartphone screens versus standard monitors. Always test on representative devices.
 
-**Using `@INLINE` with unsupported file formats.** DICOM and other specialized formats are not supported. The file can still be uploaded and downloaded — it simply cannot be rendered inline.
+**Using `@INLINE` with unsupported file formats.** DICOM and other specialized formats are not supported. The file can still be uploaded and downloaded — it simply cannot be rendered inline; the page shows a crossed-out eye icon instead.
+
+**Expecting `@INLINE` size settings to resize a PDF.** Width and height settings apply to images only. An inline PDF always fills the width of the field's area at a fixed height.
 
 **Expecting `@HIDEDATEPICKER` to remove the Today/Now button.** It hides only the picker icon. Add `@HIDEBUTTON` as well if the button should go too.
 
