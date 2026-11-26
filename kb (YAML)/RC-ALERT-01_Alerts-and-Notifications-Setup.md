@@ -4,14 +4,13 @@ title: Alerts & Notifications — Setup
 domain: Alerts & Notifications
 applies_to:
 - All REDCap project types
-- requires Project Design and Setup rights
+- requires the **Alerts & Notifications** user right
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured. §3.3 `datediff` behaviour checked against source code of v17.6.5
-  (Standard) / v17.3.31 and v16.0.61 (LTS)
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — alert
+  setup behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-PIPE-01 — Piping: Basics, Syntax & Field Types'
-version: '1.7'
+version: '1.8'
 last_updated: 2026-11
 related:
 - id: RC-PIPE-01
@@ -78,7 +77,7 @@ A setting available in longitudinal projects or projects using repeated instrume
 The second step of alert setup. Defines when REDCap sends the alert after the trigger fires (immediately, on a future day/time, or after a time delay) and how many times it sends.
 
 **Alert Expiration**
-An optional date and time after which REDCap will not send any further alerts, and will cancel any already-scheduled ones.
+An optional date and time at which REDCap deactivates the alert, so nothing further is sent from it.
 
 **datediff**
 A REDCap logic function that compares two dates or date-times and returns the numeric difference in a specified unit (days, hours, minutes, etc.). Commonly used to build time-based trigger logic for alerts. The returned value is **unsigned by default**; pass `true` as a fourth parameter when the direction of the difference matters. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md).
@@ -87,13 +86,15 @@ A REDCap logic function that compares two dates or date-times and returns the nu
 A special REDCap token that resolves to a dynamic value at send time, such as a survey link, a form link, or a survey queue URL. Smart variables are inserted into alert messages using bracket notation (e.g., `[survey-link:instrument_name]`).
 
 **Ensure Logic is Still True**
-An optional checkbox in the alert trigger setup. When enabled, REDCap re-evaluates the trigger logic immediately before sending the alert. If the logic is no longer true at send time, REDCap cancels that scheduled alert.
+An optional checkbox in the alert trigger setup. When enabled, REDCap re-evaluates the trigger logic immediately before sending the alert, and again whenever the record's data is later saved or imported. If the logic is no longer true, REDCap cancels that scheduled alert.
 
 ---
 
 # 3. Alert Triggers
 
 Navigate to **Alerts & Notifications** in the project Applications menu. Select **+ Add New Alert** to open the alert creation dialog.
+
+Only users with the **Alerts & Notifications** user right can see this page and create, edit or upload alerts. Project Design and Setup rights alone are not enough.
 
 Before configuring the trigger, give the alert a clear title. This is optional but strongly recommended for any project with more than a few alerts, as titles are the primary way to identify alerts in the management view and notification log.
 
@@ -113,11 +114,11 @@ Choose one of three trigger types. This selection determines what Step 1B asks f
 
 **For completion triggers and combination triggers:**
 
-Select the instrument from the dropdown. In longitudinal projects, the dropdown shows instrument-event combinations rather than instruments alone.
+Select the instrument from the dropdown. In longitudinal projects, the dropdown shows instrument-event combinations rather than instruments alone, plus an **[Any event]** option for each instrument when the alert should fire whichever event the instrument is saved in.
 
 Then select a form status requirement:
 
-- **"Is saved with any form status"** — fires the moment the instrument is saved, regardless of completion status.
+- **"Is saved with any form status"** — fires the moment the instrument is saved, regardless of completion status. This is the default for a new alert.
 - **"Is saved with Complete status only"** — fires only when the instrument's completion status is set to Complete (status value 2). Surveys completed by participants receive this status automatically. Partially saved surveys are excluded.
 
 **For combination triggers and logic triggers:**
@@ -130,11 +131,11 @@ The logic evaluates at the record level. You cannot write logic that counts reco
 
 **The "Ensure logic is still true before sending" checkbox**
 
-This checkbox appears beneath the logic editor for combination and logic triggers. When checked, REDCap re-evaluates the logic condition immediately before sending the alert. If the condition is no longer true at send time, REDCap cancels that queued alert instance.
+This checkbox appears beneath the logic editor for combination and logic triggers. When checked, REDCap re-evaluates the logic condition immediately before sending the alert, and also each time the record is saved or imported while the alert is waiting to send. If the condition is no longer true, REDCap cancels that queued alert instance. In practice it works as a kill switch: change the data so the logic is false and the pending alert is removed.
 
 This option is most valuable when the alert schedule includes a time delay. Example: an alert set to send a clinic visit reminder 14 days before the visit date should check at send time whether the participant is still enrolled. Without this check, a participant who has withdrawn would still receive the reminder.
 
-> **Note:** If the alert is set to send immediately (no delay), the "ensure logic" check has no practical effect — the alert fires and sends in the same moment.
+> **Note:** The check only has no practical effect when the alert sends **immediately and just once** — the alert fires and sends in the same moment. For any delayed or recurring alert it matters, because it is what stops later sends once the condition no longer holds.
 
 ## 3.3 Step 1B Sidebar — Date/Time Logic with datediff
 
@@ -176,6 +177,8 @@ Becomes true when today's date is exactly 14 days before the value in `[visit_da
 
 > **Pro tip:** Build and validate `datediff` logic in a calculated field first. This lets you see the live numeric output for real records before writing the trigger condition.
 
+> **Note — which alerts REDCap re-checks on its own.** A condition using `"today"` or `"now"` can become true without anyone saving the record. REDCap's scheduled background check picks this up only for **logic triggers** (conditional logic TRUE during data import, data entry, or time-based logic) whose logic uses `datediff` or `dayoftheweek` with `"today"` or `"now"`. A **combination trigger** is evaluated only when its instrument is saved, so a time-based condition in it will not fire on its own. Use a logic trigger for time-based alerts.
+
 ## 3.4 Step 1C — Trigger Limits (Longitudinal & Repeated Projects Only)
 
 Step 1C appears only when a project uses longitudinal mode or repeated instruments. It controls how many times per record the alert is allowed to fire.
@@ -187,7 +190,7 @@ Step 1C appears only when a project uses longitudinal mode or repeated instrumen
 | Once per event per record | Once for each event in which the trigger fires | Visit reminder sent separately for each study visit event |
 | Once per event and every repeat instance | Once for each event-instance combination | Serious Adverse Event notification sent for every repeat instance |
 
-> **Note:** The available options in Step 1C depend on which features (longitudinal mode, repeated instruments, repeated events) are enabled in the project.
+> **Note:** The available options in Step 1C depend on which features (longitudinal mode, repeated instruments, repeated events) are enabled in the project. A new alert defaults to once per record. REDCap shows a warning if you combine a logic trigger with a per-instance option, because time-based logic can then fire for every instance of every record.
 
 ---
 
@@ -203,17 +206,21 @@ The second step of alert setup defines when the alert is sent after the trigger 
 |---|---|
 | Immediately | REDCap sends the alert as soon as the trigger fires. |
 | Send on next... | Sends on the next occurrence of a specified day type (e.g., next Monday, next weekday) at a specified time. Use when consistent day-of-week timing matters regardless of when the trigger fires. |
-| Send after time lapse | Sends after a defined delay (days, hours, minutes, or a combination). Use for time-horizon alerts such as a 90-day follow-up. |
+| Send after time lapse | Sends after a defined delay (days, hours, minutes, or a combination). The delay can be counted from when the trigger fired, or **before or after a date/date-time field** in the record (e.g. 2 days before `[visit_date]`). A delay of 0 sends immediately. If the chosen date field is blank (or holds a missing-data code), nothing is scheduled. Use for time-horizon alerts such as a 90-day follow-up or an appointment reminder. |
 | Send at exact date/time | Sends at a specific future date and time. REDCap uses its server's internal time zone for this option — account for time zone differences when entering the value. |
 
 ## 4.2 How Many Times to Send
 
+There are three choices:
+
 **Just once** — the alert sends a single time per trigger event. This is the default and safest choice.
+
+**Every time the form is saved** — available only for the form-based triggers (completion and combination) when the alert sends immediately. A sub-option controls which saves count: any save, only saves that add new or modified data, or saves with new or modified data ignoring changes to calculated fields.
 
 **Multiple times on a recurring basis** — the alert sends repeatedly after the initial send. Requires two additional settings:
 
-- **Send every...** — the time delay between each recurring send (number + unit: days, hours, or minutes).
-- **Send up to...** — the total number of sends, including the first. If left blank, REDCap will continue sending indefinitely. Always set a cap.
+- **Send every...** — the time delay between each recurring send (number + unit: days, hours, or minutes; decimals such as 1.5 are accepted).
+- **Send up to...** — the total number of sends, including the first (2 to 9999). If left blank, REDCap will continue sending indefinitely. Always set a cap.
 
 > **Important:** Recurring alerts multiply quickly in projects with repeated instruments. An alert set to send 5 times for a repeated instrument with 5 instances will generate 25 total alert sends. Plan repeat counts carefully before enabling.
 
@@ -246,7 +253,9 @@ Scope, which is narrower than it first appears:
 - **Only the send time changes.** Sender, subject and message content are not re-evaluated.
 - For **ASIs with reminders**, if the initial invitation has already gone out, subsequent unsent reminders are **not** rescheduled.
 
-> **Note on defaults:** The option is **enabled by default for new** Alerts and ASIs. Anything created before the upgrade retains the legacy behaviour — no re-evaluation — for backward compatibility. So an upgraded project has a mix of both behaviours depending on when each alert was built, and nothing on screen flags the difference.
+> **Note on defaults:** The option is **off by default** — for new Alerts and ASIs as well as for anything created before the upgrade. If you want a reminder to follow a changed appointment date, tick the checkbox on that alert yourself, and check existing date-relative alerts for whether they have it.
+
+> **Version caveat (16.0 LTS):** Re-evaluate send time is not available in 16.0.61 LTS. On that line a scheduled reminder keeps its original send time when the date field changes; when an appointment moves, check that record's scheduled entry in the Notification Log and correct it by hand, or plan an upgrade to a 17.x line.
 
 > **Version caveat (17.2.0–17.4.0 Standard; ≤17.3.6 LTS):** This feature was unreliable for its entire life before 17.4.1. The checkbox **might not save**, leaving the feature permanently off however many times it was ticked; and where it did work, it could reschedule alerts and invitations **at incorrect times whenever any data was modified** — not only the date field it was supposed to watch. Both fixed in 17.4.1 Standard / 17.3.7 LTS. Separately, the setting's column was missing from the Alerts CSV upload and download files between 17.2.0 and 17.3.0 (fixed 17.3.1), so bulk-managed alerts could not carry it. **Treat this feature as requiring 17.4.1 / 17.3.7 or later.**
 
@@ -254,7 +263,7 @@ Scope, which is narrower than it first appears:
 
 ## 4.3 Alert Expiration (Optional)
 
-Set a hard expiration date and time. After this point, REDCap will not send any further alerts from this configuration and will cancel any queued instances. Useful for studies with a defined end date, ensuring no alerts send after the study closes.
+Set a hard expiration date and time. At that point REDCap deactivates the alert, so nothing further is sent from it. Already-scheduled entries are not deleted from the queue; if you re-activate the alert later, check the Notification Log first, because overdue entries may then go out. Useful for studies with a defined end date, ensuring no alerts send after the study closes.
 
 ---
 
@@ -267,33 +276,37 @@ The third step defines what the alert sends and to whom.
 Select the message delivery method. The available options depend on your REDCap installation:
 
 - **Email** (always available)
-- SMS Text Message (if enabled)
-- Voice Call (if enabled)
+- SMS Text Message (if enabled — via Twilio or Mosio)
+- Voice Call (if enabled — Twilio only)
 - SendGrid (if configured)
 
 This article covers email only. SMS, Voice Call, and SendGrid delivery are covered in RC-ALERT-03 — Alternative Alert Delivery Types *(coming soon)*.
 
 ## 5.2 From Email
 
-Select a "from" address from the dropdown. The dropdown is populated with email addresses associated with all current project users (each user may have up to 3 emails linked to their profile via My Profile).
+Select a "from" address from the dropdown. The dropdown is populated with the verified primary, secondary and tertiary email addresses of current project users (each user may have up to 3 emails linked to their profile via My Profile). If an alert carries a From address that does not belong to a project user (for example after a CSV upload or project copy), REDCap replaces it with the email of the person saving the alert, without warning — check the From address after uploading or copying alerts.
 
 Best practices:
 - Use a study-specific or team email rather than a personal address. This ensures continuity if the individual leaves the project.
 - If you need to use a non-institutional email domain (e.g., a Gmail address), confirm with your REDCap administrator that the domain is permitted. Unrecognized sender domains may be blocked by recipient spam filters.
 
-You may optionally set a **display name** for the from address (e.g., "Heart Congestion Study 2024" for `hs24@institution.edu`). Test display names with a test participant — some spam filters flag unfamiliar display names.
+If your administrator has enabled it, you may optionally set a **display name** for the from address (e.g., "Heart Congestion Study 2024" for `hs24@institution.edu`). Test display names with a test participant — some spam filters flag unfamiliar display names.
 
 ## 5.3 To, CC, and BCC
 
 REDCap supports standard To, Carbon Copy (CC), and Blind Carbon Copy (BCC) fields. CC and BCC are hidden by default; select **+ Show more options** to reveal them. All three fields work identically.
 
-There are three ways to specify recipients:
+There are several ways to specify recipients:
 
 **User emails** — select any email linked to a current project user from the "select recipients" dropdown. Open the dropdown again to add additional users. Best for alerts sent to study team members.
 
-**Variables** — any text field with email validation in your project appears in the dropdown below user emails. Selecting a variable dynamically resolves to that record's email value at send time. Best for alerts sent to participants. In longitudinal projects, use event-prefixed piping syntax in the CSV (e.g., `[baseline_arm_1][contact_email]`) to pull the email from a specific event — this is required if the same field appears in multiple events and you need a specific event's value. The GUI recipient dropdown typically handles this automatically based on the triggering event.
+**Variables** — any text field with email validation in your project appears in the dropdown below user emails. Selecting a variable dynamically resolves to that record's email value at send time. Best for alerts sent to participants. In longitudinal projects, use event-prefixed piping syntax in the CSV (e.g., `[baseline_arm_1][contact_email]`) to pull the email from a specific event — this is required if the same field appears in multiple events and you need a specific event's value. In the GUI recipient dropdown, longitudinal projects list each email variable as **[Current Event]** (the event that triggered the alert) plus one entry per event.
 
-**Manual entry** — type one or more email addresses directly into the "Or manually enter emails" field. Separate multiple addresses with a semicolon. Any valid email address is accepted, including addresses not associated with any project user.
+**Survey Participant** — sends to the participant's email address as REDCap knows it for surveys (for example from the participant list or the project's designated email field).
+
+**Manual entry** — type one or more email addresses directly into the "Or manually enter emails" field. Separate multiple addresses with a semicolon (commas are also accepted). Any valid email address is accepted, including addresses not associated with any project user. If your administrator does not allow free-form addresses, this box is not shown.
+
+> **Version caveat (17.6+ Standard; not in 17.3 LTS or 16.0 LTS):** Alerts can also be sent to **user roles** or to all project users, optionally limited by Data Access Group. When roles are used, REDCap sends an individual email to every recipient rather than one shared message, and CC/BCC are not used. On LTS instances, select the users individually instead.
 
 **Email failure notification:** Select a user email to receive a notification if REDCap fails to deliver the alert. Only one address is allowed for this field.
 
@@ -312,7 +325,7 @@ The message body supports:
 - **Piped variables** — any project variable can be inserted using standard piping syntax. See [RC-PIPE-01 — Piping: Basics, Syntax & Field Types](RC-PIPE-01_Piping-Basics-Syntax-and-Field-Types.md) and [RC-PIPE-04 — Piping: Emails, Notifications & Logic Features](RC-PIPE-04_Piping-in-Emails-and-Notifications.md) for full reference.
 - **Smart variables** — REDCap-specific tokens that resolve to dynamic links and values at send time. Access them via the green **Smart Variables** button below the message body.
 
-> **Important:** If you pipe a field designated as an Identifier in the project, you must **uncheck** the "Prevent piping of data for Identifier fields" checkbox that appears in the alert setup. If this box remains checked, REDCap will send the alert but will replace each Identifier field's value with the text **[\*DATA REMOVED\*]**. Fields not marked as Identifier pipe normally either way.
+> **Important:** If you pipe a field designated as an Identifier in the project, you must **uncheck** the "Prevent piping of data for Identifier fields" checkbox that appears in the alert setup (it is checked by default on a new alert). If this box remains checked, REDCap will send the alert but will replace each Identifier field's value in the subject and message with the text **[\*DATA REMOVED\*]**. The setting does not affect recipient fields, so an email variable marked as Identifier still works as a recipient. Fields not marked as Identifier pipe normally either way.
 
 Unlike Automated Survey Invitations (which pre-fill the message body with stock text and survey link tokens), alert message bodies start blank. REDCap does not know what kind of message you intend to send.
 
@@ -323,7 +336,8 @@ Unlike Automated Survey Invitations (which pre-fill the message body with stock 
 | `[survey-link:instrument_name]` | A clickable hyperlink to the named survey, using the survey name as link text. Specify the instrument name because alerts are not tied to a default survey. |
 | `[survey-link:instrument_name:Custom text]` | Same as above, but with custom display text. The third colon-delimited segment replaces the default link label (e.g., `[survey-link:phq9:Click here to start]`). |
 | `[survey-url:instrument_name]` | The raw URL to the named survey (not a styled hyperlink). |
-| `[survey-queue-url]` | A clickable hyperlink to the survey queue for the record that triggered the alert. No instrument name needed — each record has one queue. |
+| `[survey-queue-link]` | A clickable hyperlink to the survey queue for the record that triggered the alert. No instrument name needed — each record has one queue. |
+| `[survey-queue-url]` | The raw URL to that record's survey queue (not a styled hyperlink). |
 | `[form-link:instrument_name]` | A clickable link that opens the named instrument directly in REDCap's data entry interface (not as a survey). Useful for staff notification alerts. |
 
 For a complete smart variable reference, see [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md).
@@ -336,7 +350,7 @@ Select the green **Add Attachments** button at the bottom of the message panel.
 
 **Direct attachments** — upload a file that will be attached to every alert instance regardless of record. Up to 5 files allowed. Best for static documents like study flyers or protocol summaries.
 
-> **Note:** Most email providers enforce a maximum attachment size (typically 10–25 MB). For large files, consider using piping to link to the file instead of attaching it directly. For example, `[protocol_pdf:link]` produces a clickable download link for a file stored in a file upload field. Recipients select the link to download rather than receiving the file as an attachment.
+> **Note:** REDCap limits each attachment to 20 MB. An attachment over the limit is dropped: the alert is still sent without it, and the failure-notification address (if set) is told. Recipients' email providers may enforce lower limits (typically 10–25 MB in total). For large files, consider using piping to link to the file instead of attaching it directly. For example, `[protocol_pdf:link]` produces a clickable download link for a file stored in a file upload field. Recipients select the link to download rather than receiving the file as an attachment.
 
 ---
 
@@ -356,11 +370,11 @@ Select the green **Add Attachments** button at the bottom of the message panel.
 
 **Q: What does the "Ensure logic is still true" checkbox do, and when should I use it?**
 
-**A:** When enabled, REDCap checks whether the trigger logic is still true immediately before sending the alert. If the logic is false at send time, REDCap cancels that alert instance. Use this option whenever your alert has a scheduled delay — especially for time-sensitive reminders or follow-ups where participant status may change between the trigger event and the send date.
+**A:** When enabled, REDCap checks whether the trigger logic is still true immediately before sending the alert, and again whenever the record is saved or imported while the alert is waiting. If the logic is false, REDCap cancels that alert instance. Use this option whenever your alert has a scheduled delay or recurs — especially for time-sensitive reminders or follow-ups where participant status may change between the trigger event and the send date.
 
 **Q: My alert fires for date-based logic, but the datediff condition is only true for one day. Will the "Ensure logic is still true" checkbox cause REDCap to cancel it?**
 
-**A:** Yes, if the alert is not sent on the same day the condition becomes true. If `datediff("today", [visit_date], "d", true) = "14"` is only true on one specific calendar day, the alert must be sent that day. Schedule the alert for immediate send, or do not use the "Ensure logic" checkbox for this pattern.
+**A:** Yes, if the alert is not sent on the same day the condition becomes true. If `datediff("today", [visit_date], "d", true) = "14"` is only true on one specific calendar day, the alert must be sent that day. Keep the "Ensure logic" checkbox ticked — it is what stops sends once the condition no longer holds (for example, the visit date changes or the participant withdraws) — and schedule the send for immediately or later the same day. If you want the email to go out on a different day, change the number in the logic to match the send day rather than adding a delay.
 
 **Q: Can I send an alert to someone who is not a project user?**
 
@@ -384,7 +398,7 @@ Select the green **Add Attachments** button at the bottom of the message panel.
 
 **Q: Will alerts fire when a project is in draft/development mode?**
 
-**A:** No. Alerts only fire once a project has been moved to **Production status**. Projects in draft mode can have fully configured alerts, but they remain inactive and will not trigger or send until the project status is changed to production. This prevents unwanted alert sends during the design and testing phases of project development. To move a project to production, a user with Project Design and Setup rights must access the Project Home page and change the project status.
+**A:** Yes. Active alerts trigger and send in **Development** status exactly as they do in **Production**. They stop only when the project is in **Analysis/Cleanup** or **Completed** status (or deleted). While developing, use test records and your own or a team test email address as recipients, so no real participant receives a test message. Before moving to production, review every alert's recipients, logic and schedule, and check the Notification Log for test entries still waiting to send.
 
 ---
 
@@ -394,11 +408,11 @@ Select the green **Add Attachments** button at the bottom of the message panel.
 
 **Not setting a repeat cap on recurring alerts.** If "Send how many times" is set to "Multiple times on a recurring basis" and the "Send up to" field is left blank, REDCap sends the alert indefinitely. In projects with repeated instruments, this can generate an extremely large number of alert sends. Always set a numeric cap.
 
-**Forgetting the instrument name in survey smart variables.** Unlike ASIs — which are pre-linked to a single survey — alerts require you to specify the instrument name inside the smart variable token. Writing `[survey-link]` without the instrument name will not produce a working link. The correct format is `[survey-link:instrument_name]`.
+**Forgetting the instrument name in survey smart variables.** Unlike ASIs — which are pre-linked to a single survey — alerts require you to specify the instrument name inside the smart variable token. Writing `[survey-link]` without the instrument name will not produce a working link, and REDCap will not let you save the alert with it. The correct format is `[survey-link:instrument_name]`.
 
 **Using a personal email address as the "from" address.** If the team member whose email is used leaves the project, the alert may fail or generate confusion for recipients. Use a study-specific or shared team email as the from address whenever possible.
 
-**Leaving the "Prevent piping of identifier fields" checkbox checked when piping identifiers.** When this box is checked (the default), REDCap strips identifier field values from the sent message without warning. The alert sends successfully — but with blank spaces where names or other identifiers should appear. Uncheck the box if identifier piping is intentional, and verify with your IRB that including identifiers in email is appropriate for your study.
+**Leaving the "Prevent piping of identifier fields" checkbox checked when piping identifiers.** When this box is checked (the default), REDCap strips identifier field values from the subject and message without warning. The alert sends successfully — but with **[\*DATA REMOVED\*]** where names or other identifiers should appear. Uncheck the box if identifier piping is intentional, and verify with your IRB that including identifiers in email is appropriate for your study.
 
 **Using `[survey-link:instrument_name]` without an event prefix in a longitudinal project.** If the instrument appears at multiple events, REDCap may not know which event's link to generate, resulting in a broken or incorrect link. In longitudinal alerts, always prefix with the target event: `[event_name][survey-link:instrument_name]`. When constructing this in the CSV, this goes directly in the `alert-message` field as part of the HTML body.
 
@@ -419,7 +433,7 @@ Several Alerts & Notifications behaviors are controlled by system-level settings
 - **Allow normal users to use project variables for phone fields** — Controls whether phone number fields for SMS alerts can reference project data fields.
 - **Allow normal users to enter freeform phone numbers** — Controls whether manual phone number entry is permitted for SMS alerts.
 
-If you find that certain recipient options are unavailable in your alert configuration (e.g., the "enter email address" option is greyed out), a system-level restriction is likely in place. Contact your REDCap administrator.
+If you find that certain recipient options are unavailable in your alert configuration (e.g., the "Or manually enter emails" box is not shown), a system-level restriction is likely in place. Contact your REDCap administrator.
 
 > **See also:** [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)
 
@@ -427,15 +441,21 @@ If you find that certain recipient options are unavailable in your alert configu
 
 # 9. Bulk Management via CSV
 
-REDCap allows you to export and import all alert definitions for a project as a CSV file. This is the fastest way to copy a full alert configuration from one project to another, or to make batch edits (e.g., updating subject lines, swapping a from address, or adjusting time lags across many alerts at once) outside of the REDCap interface.
+REDCap allows you to export and import all alert definitions for a project as a CSV file. This is the fastest way to copy a full alert configuration from one project to another (with the ID column cleared — see Import below), or to make batch edits (e.g., updating subject lines, swapping a from address, or adjusting time lags across many alerts at once) outside of the REDCap interface.
 
 **Location:** Applications → Alerts & Notifications → "Upload or download alerts" button.
 
 **Export:** Downloads a CSV file containing every alert in the project. Each row is one alert. Use this file as a starting template for new alerts, or import it into a different project to replicate the configuration.
 
-**Import:** Upload a CSV in the same format. Import behavior is additive — imported alerts are added to the existing list; they do not overwrite or delete existing alerts.
+**Import:** Upload a CSV in the same format. What happens to each row depends on its **Unique Alert ID** column:
 
-**Rights required:** Project Design and Setup.
+- **ID of an existing alert in this project** — that alert is **updated** with the row's values.
+- **Blank ID** — a new alert is created and added at the end of the list.
+- **ID from another project** — the row is rejected with an error.
+
+The upload cannot delete or reorder alerts. **To copy alerts into another project**, export them, clear the Unique Alert ID column, and upload the file in the target project. Check the From addresses afterwards (see §5.2).
+
+**Rights required:** Alerts & Notifications.
 
 **Starting a file from scratch:** Always start from an exported file rather than building the column headers by hand — the column order and required JSON fields (`sendgrid-template-data`, `sendgrid-mail-send-configuration`) are easy to get wrong. Export even a single placeholder alert to get the correct structure.
 

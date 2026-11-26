@@ -5,12 +5,12 @@ domain: Surveys
 applies_to:
 - All projects with surveys enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — survey
+  queue behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-SURV-06 — Automated Survey Invitations (ASI)
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-SURV-06
   title: Automated Survey Invitations (ASI)
@@ -53,15 +53,15 @@ A feature that controls which surveys are presented to a participant and in what
 
 **Survey Queue Link**
 
-A unique URL tied to a specific record (not a specific survey). It directs the participant to their personal survey queue overview, where they can see completed and available surveys. The link remains valid as long as the record exists and the project is active.
+A unique URL tied to a specific record (not a specific survey). It directs the participant to their personal survey queue overview, where they can see completed and available surveys. The link does not expire, but it stops working if surveys are disabled in the project, the project is moved to Analysis/Cleanup or Completed status or deleted, or the queue has no active surveys. It is deleted along with the record.
 
 **Auto-Start**
 
-A per-survey setting in the queue that causes REDCap to skip the survey queue overview screen and launch the next survey automatically the moment the preceding one is completed.
+A per-survey setting in the queue that causes REDCap to skip the survey queue overview screen and launch the next survey automatically the moment the preceding one is completed. Auto-start happens only from a survey's completion page; opening the survey queue link itself never auto-starts a survey (unless the queue is hidden — see Section 5).
 
 **Activated Survey (in the queue)**
 
-A survey that has been turned on in the survey queue interface. Deactivated surveys are ignored by the queue even if they are enabled as surveys in the project.
+A survey that has been turned on in the survey queue interface. Deactivated surveys are ignored by the queue even if they are enabled as surveys in the project. An activated survey must have at least one trigger condition (completion, logic or both); if you save it with none, REDCap removes it from the queue.
 
 **Form Display Logic**
 
@@ -90,7 +90,7 @@ The survey queue, ASIs, and the auto-continue feature all direct participants to
 
 ## 4.1 Setup Location
 
-The survey queue is managed from the Online Designer. In the **Survey Options** header area at the top of the Online Designer, click the **Survey Queue** button and select **Edit Survey Queue**. This opens the survey queue configuration popup.
+The survey queue is managed from the Online Designer. In the **Survey Options** header area at the top of the Online Designer, click the **Survey Queue** button and select **Edit Survey Queue**. This opens the survey queue configuration popup. Setting up the queue requires the **Project Design and Setup** user right; opening a record's queue from the record pages (and exporting the queue link via the API) requires **Survey Distribution Tools**.
 
 The popup is populated by all surveys in the project. In longitudinal projects, the list shows every survey-event combination. For projects with many surveys or events, the list can be long and may take a moment to load.
 
@@ -116,7 +116,9 @@ Example: show the "Child Questionnaire" only when `[age] < 18`.
 
 For guidance on writing logic, see [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md) and [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md).
 
-> **Note:** All survey queue logic is re-evaluated whenever a participant completes any survey in the queue. This means branching-based routing updates dynamically as participants progress.
+> **Note:** The queue is recalculated every time it is displayed, so routing updates dynamically as participants progress. Changes made by staff count too: data entered or edited on a data entry form, and a staff-set **Complete** form status, are reflected the next time the queue is shown.
+
+> **Tip (longitudinal and repeating):** Logic is evaluated in the context of the queue item's own event (and instance). To reference a variable in a different event, always use an event prefix, e.g. `[screening_arm_1][age] < 18`.
 
 ### Combination Trigger
 
@@ -129,7 +131,9 @@ The fourth column, **Auto Start?**, contains a checkbox for each activated surve
 - **Checked** — When this survey's trigger conditions are met, REDCap immediately launches it without showing the survey queue overview screen. The participant moves seamlessly from one survey to the next.
 - **Unchecked** — When the conditions are met, the participant is taken to the survey queue overview screen, where they can see all available surveys and choose which to open.
 
-**Order of operations with auto-start:** If two surveys are triggered simultaneously and both have auto-start enabled, REDCap launches the one that appears first in the instrument list in the Online Designer. Take instrument order into account when designing sequential survey flows.
+**Order of operations with auto-start:** When the participant completes a survey, REDCap looks at the **first incomplete survey in queue order** whose conditions are met. Queue order is event order, then instrument order within the event (the order in the Online Designer). If that survey has auto-start enabled, it launches; if it does not, nothing auto-starts — even if a later survey in the queue has auto-start checked — and the participant sees the queue overview instead. Take event and instrument order into account when designing sequential survey flows.
+
+> **Important:** Auto-continue and a survey's **Redirect to a URL** termination option are applied before the survey queue. If either is set on a survey, the participant never reaches the queue or any auto-start after completing it.
 
 ---
 
@@ -138,10 +142,10 @@ The fourth column, **Auto Start?**, contains a checkbox for each activated surve
 Two additional settings affect the survey queue as a whole, visible at the top of the survey queue configuration popup:
 
 **Keep the Survey Queue Hidden from Participants?**
-When this box is checked, all surveys in the queue behave as if auto-start is enabled, regardless of their individual auto-start settings. Use this when you want to use the queue for routing logic but do not want participants to see the queue overview screen at all.
+When this box is checked, all surveys in the queue behave as if auto-start is enabled, regardless of their individual auto-start settings. The survey queue link in the survey page header is hidden, and opening the survey queue link sends the participant straight to their first incomplete available survey (or to a blank page when nothing is left). Use this when you want to use the queue for routing logic but do not want participants to see the queue overview screen at all.
 
 **Custom Text**
-Displays a custom message at the top of the survey queue overview screen. This text applies to the entire project — it cannot be conditioned on logic. Keep it generic enough to apply to all scenarios a participant might encounter in the queue.
+Displays a custom message at the top of the survey queue overview screen. This text applies to the entire project — it cannot be conditioned on logic. Keep it generic enough to apply to all scenarios a participant might encounter in the queue. You can pipe record data into it; in longitudinal projects, unprefixed piping uses the record's first event, so add event prefixes when you need a value from another event.
 
 ---
 
@@ -151,26 +155,28 @@ For projects with many surveys or survey-event combinations, the survey queue ca
 
 **Downloading:** In the Online Designer, click the Survey Queue button and select **Download Survey Queue Setup (CSV)**. The file reflects the current configuration.
 
-**Uploading:** Click the Survey Queue button and select **Upload Survey Queue Setup (CSV)**. REDCap validates the file and reports any errors before applying changes. If there are errors, they must be resolved before a successful upload. If there are none, REDCap confirms which surveys were modified.
+**Uploading:** Click the Survey Queue button and select **Upload Survey Queue Setup (CSV)**. REDCap checks the header row and duplicate rows first and stops if either is wrong. Other row-level errors are found as the rows are written, so rows before an error may already have been applied — after fixing an error, download the setup again to confirm the current state. If there are no errors, REDCap confirms which surveys were modified.
 
-Best practice before using this feature for the first time: manually configure a few surveys in the queue interface, then download the CSV to understand the expected format.
+**What the download contains:** only active queue rows for surveys that are currently enabled. When **Keep the Survey Queue Hidden from Participants?** is checked, every row exports with `auto_start` = `1`.
 
-The CSV has eight columns:
+Best practice before using this feature for the first time: manually configure a few surveys in the queue interface, then download the CSV from the same project to understand the expected format and get the right columns.
+
+The number of columns depends on the project type. **Longitudinal projects use all eight columns below. Classic (non-longitudinal) projects use six** — there are no `event_name` or `condition_surveycomplete_event_name` columns, and a classic-project upload that includes them fails.
 
 | Column | Accepted values | Notes |
 |---|---|---|
 | `form_name` | Instrument unique name | Find unique names in the Codebook ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)). |
-| `event_name` | Event unique name | Required for longitudinal projects. Leave blank for classic (non-longitudinal) projects. |
+| `event_name` | Event unique name | Longitudinal projects only (required). Not present in classic projects. |
 | `active` | `1` or `0` | `1` = activated in queue; `0` = deactivated. |
 | `condition_surveycomplete_form_name` | Instrument unique name, or blank | The survey whose completion triggers this survey. Leave blank for a logic-only trigger. |
-| `condition_surveycomplete_event_name` | Event unique name, or blank | The event of the completing survey. Can reference an event from a different arm than the survey being configured. Leave blank for a logic-only trigger. |
+| `condition_surveycomplete_event_name` | Event unique name, or blank | Longitudinal projects only. The event of the completing survey — normally an event in the same arm as the survey being configured (see the same-arm note below). Leave blank for a logic-only trigger. |
 | `condition_andor` | `AND` or `OR` | Defines how the completion and logic conditions combine. **Always populate this field**, even when only one condition type is used — REDCap requires a value. `AND` is the standard choice. |
 | `condition_logic` | REDCap branching logic expression, or blank | Logic trigger condition. Same syntax as standard branching logic. Cross-event references use the format `[event_name][field_name]`. Leave blank for a completion-only trigger. |
 | `auto_start` | `1` or `0` | `1` = auto-start enabled (participant moves directly to the next survey without seeing the queue overview); `0` = disabled. |
 
 ### Annotated example — multi-arm longitudinal project
 
-The following excerpt shows how a real export looks for a two-arm project with a screening arm and a baseline arm. Each instrument appears once per arm it belongs to; the same instrument can have different trigger logic per arm.
+The following excerpt shows how an export looks for a two-arm project in which each arm has a screening event and a baseline event. Each record belongs to one arm only. Each instrument appears once per arm it belongs to; the same instrument can have different trigger logic per arm.
 
 ```
 form_name,event_name,active,condition_surveycomplete_form_name,condition_surveycomplete_event_name,condition_andor,condition_logic,auto_start
@@ -182,17 +188,17 @@ contact_info,baseline_arm_1,1,social_history,baseline_arm_1,AND,,1
 phq9,baseline_arm_1,1,contact_info,baseline_arm_1,AND,,1
 
 # Arm 2: conditional participants — entry survey uses logic-only trigger (no completion trigger),
-# subsequent surveys use a cross-arm completion trigger combined with the same logic condition
+# subsequent surveys use a same-arm completion trigger combined with the same logic condition
 demographics,baseline_arm_2,1,,,AND,[screening_arm_2][screen_currently_pregnant]=1,0
-social_history,baseline_arm_2,1,demographics,baseline_arm_1,AND,[screening_arm_2][screen_currently_pregnant]=1,1
-contact_info,baseline_arm_2,1,demographics,baseline_arm_1,AND,[screening_arm_2][screen_currently_pregnant]=1,1
-phq9,baseline_arm_2,1,demographics,baseline_arm_1,AND,[screening_arm_2][screen_currently_pregnant]=1,1
+social_history,baseline_arm_2,1,demographics,baseline_arm_2,AND,[screening_arm_2][screen_currently_pregnant]=1,1
+contact_info,baseline_arm_2,1,demographics,baseline_arm_2,AND,[screening_arm_2][screen_currently_pregnant]=1,1
+phq9,baseline_arm_2,1,demographics,baseline_arm_2,AND,[screening_arm_2][screen_currently_pregnant]=1,1
 ```
 
 Key patterns to note from this example:
 
-- **Logic-only trigger (entry survey in a conditional arm):** `demographics` in `baseline_arm_2` has no completion trigger (`condition_surveycomplete_form_name` and `condition_surveycomplete_event_name` are both blank). It appears in the queue based solely on the logic condition. `condition_andor` is still set to `AND`. `auto_start` is `0` because there is no prior survey to auto-start from.
-- **Cross-arm completion trigger:** `social_history` and later surveys in `baseline_arm_2` reference `demographics` in `baseline_arm_1` as their completion trigger — an event from a different arm. This is valid and is the standard pattern for arm-specific routing in multi-arm projects.
+- **Logic-only trigger (entry survey in a conditional arm):** `demographics` in `baseline_arm_2` has no completion trigger (`condition_surveycomplete_form_name` and `condition_surveycomplete_event_name` are both blank). It appears in the queue based solely on the logic condition. `condition_andor` is still set to `AND`. `auto_start` is `0` here as a design choice, so the participant sees the queue overview first. A logic-only survey can auto-start: auto-start is checked whenever the participant completes any survey, so with `auto_start=1` it would launch from the screening survey's completion page once the logic is true.
+- **Same-arm completion trigger:** `social_history` and later surveys in `baseline_arm_2` reference `demographics` in `baseline_arm_2` — the arm the record is in. A completion trigger pointing at an event in another arm only fires if the same record completed that survey in that arm, which does not happen when each record belongs to one arm. Keep completion triggers within the record's own arm.
 - **Combination trigger:** Those same surveys also include a `condition_logic` expression. With `condition_andor=AND`, both conditions must be met before the survey appears in the queue.
 - **Cross-event logic syntax:** The logic condition `[screening_arm_2][screen_currently_pregnant]=1` uses the `[event_name][field_name]` format to reference a field in a specific event. This is the same cross-event reference syntax used in branching logic elsewhere in REDCap.
 - **Filename pattern:** REDCap names downloaded files `{ProjectTitle}_SurveyQueue_{YYYY-MM-DD}_{HHMM}.csv`.
@@ -207,9 +213,9 @@ Unlike individual survey links (which are instrument and event specific), the su
 
 ## 7.1 Participant List
 
-In Survey Distribution Tools → Participant List, the **Survey Queue** column displays a queue icon for any participant that has at least one data point in their record. Clicking the icon opens the survey queue for that record in a new tab. The participant list's **Export List** function includes survey queue links in bulk.
+In Survey Distribution Tools → Participant List, the **Survey Queue** column displays a queue icon for any participant row that has a record, in both identified and anonymous mode. Clicking the icon opens the survey queue for that record in a new tab. The participant list's **Export List** function includes survey queue links in bulk.
 
-> **Note:** Survey queue icons only appear in identified mode. In anonymous mode, the column is not clickable.
+You can also open a record's survey queue from its **Record Home Page**.
 
 ## 7.2 Smart Variables
 
@@ -224,7 +230,11 @@ A common workflow: send an ASI with the survey queue link (`[survey-queue-url]` 
 
 ## 7.3 Survey Options Menu
 
-When you open an instrument in a record and the survey queue is configured, the **Survey Options** dropdown inside the instrument gains a fifth option: **Survey Queue**. Clicking it opens the survey queue for that record in a new tab.
+When you open an instrument in a record and that record has at least one item in the survey queue, the **Survey Options** dropdown inside the instrument gains a fifth option: **Survey Queue**. Clicking it opens the survey queue for that record in a new tab.
+
+## 7.4 Participant Self-Service Link
+
+The survey queue overview offers participants a **Get link to my survey queue** option that emails the link to an address they enter. It is limited to 3 emails per 10 minutes.
 
 ---
 
@@ -232,7 +242,9 @@ When you open an instrument in a record and the survey queue is configured, the 
 
 ## 8.1 Non-Sequential Queue (Participant Chooses Order)
 
-If auto-start is disabled for all surveys and the queue is not hidden, participants see the survey queue overview after completing each survey. The overview shows completed surveys (with their status) and any surveys that are currently available based on trigger conditions. Participants can choose which available survey to open next.
+If auto-start is disabled for all surveys and the queue is not hidden, participants see the survey queue overview after completing each survey. The overview shows completed surveys (with their status) and any surveys that are currently available based on trigger conditions. Participants can choose which available survey to open next. When more than five surveys are completed, the completed entries are collapsed to keep the list short. Surveys that have reached their response limit are not shown.
+
+The queue page itself does not ask for survey login; survey login still applies when the participant opens an individual survey from it. The queue also works for surveys taken by SMS.
 
 A simple way to create this experience: activate all surveys in the queue and set each to trigger after the very first survey is completed.
 
@@ -247,15 +259,19 @@ A survey can be made repeatable so participants can take it multiple times withi
 1. The instrument must be set as a repeatable instrument (configured in Project Setup — see [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md)).
 2. The **"Repeat the survey"** option must be enabled in that survey's termination settings (Survey Settings → Survey Termination Options).
 
-When both conditions are met, the survey queue overview shows all previously completed instances of that survey and a button to take it again. A repeat button also appears at the end of the survey itself, so repeatable surveys can be taken again even without using the queue overview screen.
+When both conditions are met, the survey queue overview shows previously completed instances of that survey, with the button to take it again on the last completed instance. Where the repeat button appears depends on the survey's button-location setting — at the end of the survey, in the queue, or both — so choose a location that includes the queue if participants should repeat from there.
+
+In projects with **repeating events**, each queue item is evaluated, linked and auto-started for the same event instance the participant is working in.
+
+> **Version caveat (16.0.61 LTS and earlier):** For surveys in repeating events, completion of *any* instance of the event counts as completed, and the queue always links to instance 1. On these versions, do not rely on the queue to reach later instances — send instance-specific survey links instead, or upgrade to 17.3 or later, where the queue works per instance.
 
 ## 8.4 Save and Return Surveys in the Queue
 
-If a survey has the **Save and Return Later** feature enabled and the participant has previously completed it, an **Edit Response** button appears in the survey queue overview next to that survey's entry. This allows participants to reopen and modify a completed survey from the queue without needing to know the direct survey link.
+If a survey has the **Save and Return Later** feature enabled with **Allow respondents to edit completed responses** checked, and the participant has previously completed it, an **Edit Response** button appears in the survey queue overview next to that survey's entry. This allows participants to reopen and modify a completed survey from the queue without needing to know the direct survey link.
 
 This behavior also applies to completed instances of repeatable instruments.
 
-> **Note:** If a survey requires a return code for reopening (a sub-option of Save and Return Later), the participant will need that code to proceed. Ensure the code was communicated to them at the time of their original submission.
+> **Note:** If a survey requires a return code for reopening (a sub-option of Save and Return Later), the participant will need that code to proceed. Ensure the code was communicated to them at the time of their original submission. No return code is asked for when survey login applies to the survey or the return code requirement is bypassed.
 
 ---
 
@@ -271,7 +287,7 @@ This behavior also applies to completed instances of repeatable instruments.
 
 **Q: A participant completed Survey A, but Survey B is not showing in their queue. What could be wrong?**
 
-**A:** Check three things: (1) Survey B is activated in the queue; (2) Survey B's trigger conditions are configured correctly (check the AND/OR setting if using a combination trigger); (3) the trigger logic for Survey B is evaluating as true for that record (use the branching logic tester in the ASI screen or test the logic in the Online Designer).
+**A:** Check three things: (1) Survey B is activated in the queue; (2) Survey B's trigger conditions are configured correctly (check the AND/OR setting if using a combination trigger); (3) the trigger logic for Survey B is evaluating as true for that record (use the branching logic tester in the ASI screen or test the logic in the Online Designer). In longitudinal projects, also check that logic referring to another event uses an event prefix, that any completion trigger points at a survey in the record's own arm, and that Survey B has not reached its response limit.
 
 **Q: Can I send participants a link that takes them directly to their survey queue?**
 
@@ -279,11 +295,11 @@ This behavior also applies to completed instances of repeatable instruments.
 
 **Q: What happens if two surveys are triggered simultaneously and both have auto-start enabled?**
 
-**A:** REDCap launches the survey that appears first in the instrument order in the Online Designer. Design your instrument order to match your intended survey flow.
+**A:** REDCap looks only at the first incomplete available survey in queue order (event order, then instrument order in the Online Designer) and launches it if it has auto-start enabled. If that first survey does not have auto-start, nothing auto-starts and the participant sees the queue overview. Design your event and instrument order to match your intended survey flow.
 
 **Q: Does the survey queue link expire?**
 
-**A:** No. The survey queue link for a record remains valid as long as the record exists and the project is active.
+**A:** No. The survey queue link for a record has no expiry date. It stops working if surveys are disabled, the project is moved to Analysis/Cleanup or Completed status or deleted, or the queue has no active surveys. It is deleted along with the record, and when a project is moved to production with the option to delete all data.
 
 **Q: Can participants complete surveys in the queue across multiple sessions (i.e., not all at once)?**
 
@@ -291,7 +307,7 @@ This behavior also applies to completed instances of repeatable instruments.
 
 **Q: Can a completion trigger in the survey queue reference a survey from a different arm?**
 
-**A:** Yes. In the CSV, the `condition_surveycomplete_event_name` column accepts any valid event name in the project, including events that belong to a different arm than the survey being configured. This is useful in multi-arm longitudinal projects where downstream surveys in one arm should unlock only after a baseline survey in another arm has been completed. Set up the combination trigger (completion + logic, joined by AND) so the arm-specific logic condition also gates which participants see the survey.
+**A:** REDCap accepts it, but it rarely does what you want. A completion trigger only fires if the *same record* completed that survey in that event. Because each record should belong to one arm only, a trigger pointing at a survey in another arm will never fire for that record. Point completion triggers at a survey in the same arm as the survey being configured, and use logic (with event prefixes) to gate arm-specific routing.
 
 **Q: I have a conditional arm where the first survey should only appear when a screening field meets a condition. The survey never shows in the queue. What is wrong?**
 
@@ -305,15 +321,21 @@ This behavior also applies to completed instances of repeatable instruments.
 
 **Using auto-continue alongside the survey queue.** The auto-continue setting (in Survey Settings → Survey Termination Options) and the survey queue can conflict. Documented interactions between the two have produced unexpected behavior. If you are using the survey queue, disable auto-continue for all surveys in the project.
 
-**Designing trigger conditions without considering instrument order.** When multiple surveys trigger simultaneously with auto-start enabled, REDCap uses instrument order (in the Online Designer) as the tiebreaker. If you have not intentionally ordered your instruments to match your intended flow, participants may start the wrong survey. Review instrument order in the Online Designer before going live.
+**Designing trigger conditions without considering instrument order.** When multiple surveys trigger simultaneously with auto-start enabled, REDCap uses queue order (event order, then instrument order in the Online Designer) and considers only the first available survey. If you have not intentionally ordered your instruments to match your intended flow, participants may start the wrong survey. Review instrument order in the Online Designer before going live.
 
-**Expecting the survey queue icon to appear for anonymous participants.** The survey queue column in the participant list is only clickable in identified mode. Anonymous records show no clickable queue icon. Enable identified mode via participant identifier or a designated email field.
+**Pointing a completion trigger at a survey in another arm.** A completion trigger only fires when the same record completed that survey. Records belong to one arm, so a trigger referencing another arm's event never fires. Keep completion triggers within the record's own arm.
+
+**Expecting a later survey to auto-start when the first available one does not.** Auto-start is decided by the first incomplete available survey in queue order only. If that survey has auto-start unchecked, a later survey with auto-start checked will not launch.
+
+**Expecting auto-start when participants open the queue link.** Auto-start only happens from a survey's completion page. Participants who open the queue link see the overview and choose a survey (unless the queue is hidden).
+
+**Uploading an eight-column CSV to a classic project.** Classic projects use six columns; longitudinal projects use eight. Download the setup from the target project and edit that file rather than reusing one from another project.
 
 **Omitting the survey queue link from the ASI message for multi-survey time points.** If you use ASIs to kick off each time point and the survey queue to guide participants through subsequent surveys, the ASI message must include `[survey-queue-url]` or `[survey-queue-link:Custom Text]` — not just `[survey-url]`. Sending `[survey-url]` only takes the participant to a single survey, bypassing the queue entirely.
 
 **Adding a completion trigger to the first survey in a conditional arm.** In a multi-arm project where participants are routed by screening logic, the entry-point survey in each conditional arm has no prior survey to complete. Assigning a completion trigger to it means the trigger can never fire and the survey will never appear in the queue. Leave the completion trigger columns blank for any survey that is the first in its arm's flow, and use a logic-only trigger instead.
 
-**In multi-arm routing, surveys that share the same completion trigger all unlock simultaneously.** When several surveys in an arm are all configured to trigger after the same preceding survey completes (and the logic condition is also met), they become available at the same moment. If all of them have `auto_start=1`, REDCap will auto-launch whichever appears first in the instrument list in the Online Designer, then chain to the next in order. If your instrument order in the Online Designer does not match your intended survey flow, participants will be routed through the surveys in the wrong sequence. Review and adjust instrument order before going live with this pattern.
+**In multi-arm routing, surveys that share the same completion trigger all unlock simultaneously.** When several surveys in an arm are all configured to trigger after the same preceding survey completes (and the logic condition is also met), they become available at the same moment. If all of them have `auto_start=1`, REDCap will auto-launch whichever appears first in queue order (event order, then instrument order in the Online Designer), then chain to the next in order. If your instrument order in the Online Designer does not match your intended survey flow, participants will be routed through the surveys in the wrong sequence. Review and adjust instrument order before going live with this pattern.
 
 ---
 
