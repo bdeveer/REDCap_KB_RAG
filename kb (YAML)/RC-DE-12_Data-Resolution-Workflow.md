@@ -6,12 +6,12 @@ applies_to:
 - All REDCap project types
 - requires the Data Resolution Workflow mode to be enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Data Resolution
+  Workflow behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-DE-08 — Field Comment Log
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-DE-02
   title: Basic Data Entry
@@ -63,10 +63,14 @@ Each query has one of the following statuses at any given time:
 | Open / Unresolved (Unresponded) | Query has been opened; no response has been recorded yet |
 | Open / Unresolved (Responded) | A response has been added but the query has not been closed |
 | Closed / Resolved | The query has been marked as resolved |
+| Verified | The data value has been reviewed and confirmed as correct (not a query; see below) |
+| De-verified | A previous verification has been removed and the value is flagged for re-review |
+
+Verified and De-verified are tracked alongside query statuses and can be used as status filters on the Data Resolution Dashboard (Section 7.2).
 
 **Verified Data Value**
 
-A DRW designation indicating that a user has explicitly reviewed and confirmed that a variable's value is correct as entered. A verified value is not a query — it signals approval, not a problem. A verified value can be de-verified if circumstances change.
+A DRW designation indicating that a user has explicitly reviewed and confirmed that a variable's value is correct as entered. A verified value is not a query — it signals approval, not a problem. A verified value can be de-verified if circumstances change, and REDCap de-verifies it automatically if the verified value is later changed.
 
 **De-verified Data Value**
 
@@ -78,7 +82,7 @@ A project-level view accessible from the application menu that displays all quer
 
 **Resolution Metrics**
 
-A tab within the Data Resolution Dashboard that provides aggregate statistics about query activity — such as average time to close, most frequently queried variables, and team workload distribution. Useful for project management and identifying systemic data quality issues.
+A tab within the Data Resolution Dashboard that provides aggregate statistics about query activity — such as average time to resolution, average response time, and the most frequently queried variables, records and rules. Useful for project management and identifying systemic data quality issues.
 
 **Rule-Based Query**
 
@@ -98,7 +102,7 @@ REDCap projects support one of three tracking modes at a time:
 | Data Resolution Workflow | Structured queries with status, assignment, and resolution tracking |
 | None | All comment and query tracking features are disabled |
 
-Switching modes does not convert existing data. Comments created under the Field Comment Log will not appear in the DRW dashboard, and queries created under DRW will not appear in the Field Comment Log application. Establish your mode before data collection begins and avoid switching mid-project.
+Switching modes does not convert existing data. Comments created under the Field Comment Log are not turned into queries and are not tracked as issues in the DRW dashboard (they can still show in a field's comment history on the form), and queries created under DRW will not appear in the Field Comment Log application. Establish your mode before data collection begins and avoid switching mid-project.
 
 ### 3.2 Switching the Mode
 
@@ -119,7 +123,9 @@ After enabling DRW, two additional settings become available in the same customi
 
 **Prevent calc/CALCTEXT fields with closed/verified data queries from being fixed by DQ rule H** *(15.9.0+).* Rule H recalculates calculated fields and corrects stored values that disagree with the calculation — but where a calc field's value has been deliberately investigated and its query closed or verified, an automated correction silently undoes that decision. Enabling this setting excludes those fields from rule H. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md) §9.
 
-**DRW user rights.** Enabling DRW adds a new user rights setting to every user and user role in the project. The default for new users is View Only — users will not be able to interact with queries until their rights are updated. See Section 4.
+**DRW user rights.** Enabling DRW adds a new user rights setting to every user and user role in the project. Existing users (including the project creator) start at **No Access**; users added afterwards through **Add User** default to **View Only**. Either way, users cannot open, respond to or close queries until you set their DRW rights for each user or role on the **User Rights** page. See Section 4.
+
+> **Note:** The Field Comment Log mode has its own option for whether users may edit or delete their own comments. It does not apply to DRW. See [RC-DE-08 — Field Comment Log](RC-DE-08_Field-Comment-Log.md).
 
 ---
 
@@ -129,12 +135,20 @@ After DRW is enabled, each user in the project has a DRW-specific access level. 
 
 | Access Level | Can View Queries | Can Open Queries | Can Respond to Queries | Can Close Queries |
 |---|---|---|---|---|
-| No Access | No | No | No | No |
-| View Only *(default for new users)* | Yes | No | No | No |
+| No Access *(starting level for existing users when DRW is enabled)* | No | No | No | No |
+| View Only *(default for users added after DRW is enabled)* | Yes | No | No | No |
 | Open Queries Only | Yes | Yes | No | No |
 | Respond Only | Yes | No | Yes | No |
 | Open and Respond | Yes | Yes | Yes | No |
 | Open, Close, and Respond | Yes | Yes | Yes | Yes |
+
+Additional rules:
+
+- **De-verifying.** Only users with **Open and Respond** or **Open, Close, and Respond** rights can de-verify a data value.
+- **Reassigning.** Users with **Open Queries Only**, **Open and Respond**, or **Open, Close, and Respond** rights can reassign an open query.
+- **Answering.** Any user with a respond-capable level (**Respond Only**, **Open and Respond**, **Open, Close, and Respond**) can respond to a query, whether or not it is assigned to them.
+- **Administrators** always have the equivalent of **Open, Close, and Respond**, regardless of their project rights.
+- **Access Control Groups.** If your institution uses Access Control Groups, the DRW right is part of the group's rights like any other user right.
 
 **Assigning rights in practice.** Align DRW rights with each user's role in the study. A data entry coordinator who identifies problems should be able to open and respond; a statistician who only needs visibility should have View Only; a data manager responsible for resolving issues needs Open, Close, and Respond access.
 
@@ -158,7 +172,7 @@ The first option presented when clicking the query icon is **Verified data value
 
 To verify a value, click the query icon and then click **Verified data value**. Optionally, add a comment before confirming. Once verified, the text balloon is replaced by a green checkmark icon. The checkmark remains clickable and displays who performed the verification and when.
 
-**De-verifying a value.** Click the green checkmark to open the verification panel. Select **De-verify the data value** and provide a required comment. After de-verification, the icon changes to indicate the data point is flagged for re-review. From this state, the variable can be re-verified or a query can be opened.
+**De-verifying a value.** Click the green checkmark to open the verification panel. Select **De-verify the data value** and provide a required comment. After de-verification, the icon changes to indicate the data point is flagged for re-review. From this state, the variable can be re-verified or a query can be opened. If someone changes a verified value and saves the instrument, REDCap de-verifies it automatically, so a changed value never keeps its old verification.
 
 ### 5.3 Opening a New Query
 
@@ -167,7 +181,7 @@ To open a query on a variable:
 1. Click the text balloon icon next to the variable.
 2. Select **Open a query** (the second option in the popup).
 3. Enter a comment describing the issue — a comment is required.
-4. Optionally, assign the query to another user in the project by selecting their name from the dropdown.
+4. Optionally, assign the query to another user by selecting their name from the dropdown. The dropdown lists only users who can respond to queries (**Respond Only**, **Open and Respond**, or **Open, Close, and Respond**) and who have access to the record's Data Access Group.
 5. Optionally, notify the assigned user by checking the **Email** or **REDCap Messenger** notification boxes (messenger must be enabled for your REDCap installation).
 6. Click **Open query** to submit.
 
@@ -192,8 +206,10 @@ To respond to an open query, click the query icon in the record (or use the Data
 
 1. Select **Reply with a response** and choose a response category from the dropdown. If no preset category fits, use **Other**.
 2. Enter a required comment.
-3. Optionally, attach a file.
+3. Optionally, attach a file. The attachment option appears only if your REDCap administrator has enabled file uploads for data queries. Once attached, a file can be deleted only by an administrator.
 4. Click to submit.
+
+Any user with a respond-capable DRW level can respond, whether or not the query is assigned to them.
 
 After a response is added, the query status changes to **Open / Unresolved (Responded)** and the icon updates to reflect this.
 
@@ -201,13 +217,13 @@ After a response is added, the query status changes to **Open / Unresolved (Resp
 
 ### 6.2 Closing a Query
 
-Closing is available once a response has been recorded. To close:
+Closing requires **Open, Close, and Respond** rights. In the usual workflow a query is closed after a response has been recorded, but a user with these rights can also close a query that has not been responded to (for example, one opened in error). To close:
 
 1. Select **Close the query**.
 2. Enter a required short comment confirming resolution.
 3. Submit.
 
-After closure, the query icon changes to the **Closed / Resolved** status. Closed queries can be reopened at any time by clicking the icon — this resets the status to **Open / Unresolved (Unresponded)**.
+After closure, the query icon changes to the **Closed / Resolved** status. Closed queries can be reopened at any time by a user with **Open Queries Only**, **Open and Respond**, or **Open, Close, and Respond** rights by clicking the icon — this resets the status to **Open / Unresolved (Unresponded)**.
 
 ### 6.3 Sending Back for Further Attention
 
@@ -219,7 +235,7 @@ If a response was added but the issue is not yet resolved, use **Send back for f
 
 ### 7.1 Data Resolution Dashboard
 
-Navigate to **Resolve Issues** in the project application menu (located adjacent to the **Data Quality** link) to open the Data Resolution Dashboard. This view shows all queries in the project that the current user has rights to see.
+Navigate to **Resolve Issues** in the project application menu (located adjacent to the **Data Quality** link) to open the Data Resolution Dashboard. This view shows all queries in the project that the current user has rights to see. The **Resolve Issues** tab shows a badge with the number of unresolved issues. The page also has a **Find Issues** tab (the Data Quality rules), which appears only for users with Data Quality rights.
 
 **Dashboard columns:**
 
@@ -229,21 +245,21 @@ Navigate to **Resolve Issues** in the project application menu (located adjacent
 | Record | Record ID and, for longitudinal projects, the event the query is located in |
 | Data Quality rule and/or field | The variable name or rule the query is attached to |
 | User assigned | The project user currently assigned to the query |
-| Days open | Number of days elapsed since the query was opened |
+| Days open | Number of days elapsed since the query was opened; for a closed query, the days between its first and last update |
 | First update | The first comment recorded for the query (typically the comment that opened it) |
 | Last update | The most recent comment, if different from the first |
 
 ### 7.2 Filtering Queries
 
-The dashboard supports the following filters. Multiple filters can be combined. Filters do not apply automatically — click **Apply filters** to update the results. Use the **Reset** link to clear all filters to their defaults.
+The dashboard supports the following filters. Multiple filters can be combined. Each dropdown applies as soon as you change it — the page reloads with the filtered results; there is no separate apply or reset button. To clear a filter, set its dropdown back to its default.
 
 | Filter | Description |
 |---|---|
-| Status type | Filter by query status (e.g., show only Unresponded queries) |
+| Status type | Filter by query status (e.g., show only Unresponded queries); Verified and De-verified are also available |
 | Field and rules | Filter to a specific variable or Data Quality rule |
 | Events | Filter to a single event (longitudinal projects only; one event at a time) |
-| Data Access Group | Filter to queries from a specific DAG |
-| Users | Filter to queries assigned to a specific user |
+| Data Access Group | Filter to queries from a specific DAG (shown only to users who are not assigned to a DAG) |
+| Users | Filter to queries assigned to a specific user, or choose **User not assigned** for unassigned queries |
 
 ### 7.3 Exporting the Query Log
 
@@ -253,10 +269,10 @@ Click **Export** from the Data Resolution Dashboard to download all currently di
 
 A **Resolution Metrics** tab appears next to the **Resolve Issues** tab in the dashboard. It provides aggregate charts and statistics about query activity, including:
 
-- Average time to close a query
-- Query volume over time
-- Which variables generate the most queries
-- Team workload distribution by user
+- Summary statistics: average time to resolution, average response time, average time queries stay unresolved, and query counts
+- Top 5 fields, top 5 records and top 5 rules by number of queries
+- Charts by Data Access Group: open and closed queries, time to resolution and response time (shown only when the project has DAGs and you are not assigned to a DAG)
+- Average response time by user
 
 Use Resolution Metrics to identify recurring data entry problems (candidate fields for instrument redesign), to evaluate team performance on query resolution, and to document data quality activities for audits.
 
@@ -270,11 +286,11 @@ Use Resolution Metrics to identify recurring data entry problems (candidate fiel
 
 **Q: Can I use both the Field Comment Log and the DRW in the same project at the same time?**
 
-**A:** No. A project operates in one mode at a time. If you switch from the Field Comment Log to the DRW (or vice versa), existing comments and queries are preserved in their respective systems but will not appear in the other system's interface. Switching mid-project is strongly discouraged.
+**A:** No. A project operates in one mode at a time. If you switch from the Field Comment Log to the DRW (or vice versa), existing comments and queries are preserved, but they are not converted: old field comments are not tracked as queries, and DRW queries do not appear in the Field Comment Log application. Switching mid-project is strongly discouraged.
 
 **Q: A new user was added to the project but says they can't see any queries. Why?**
 
-**A:** The default DRW user rights for new users is View Only — but View Only still requires that DRW be enabled for the project. If the user truly cannot see any query icons or the Resolve Issues link, check two things: (1) confirm DRW is enabled in Project Setup, and (2) confirm the user's DRW rights are not set to No Access in User Rights.
+**A:** Users added through **Add User** after DRW was enabled default to View Only, but users who were already in the project when DRW was enabled (including the project creator) start at No Access, and a role or Access Control Group may carry a different level. If the user cannot see any query icons or the Resolve Issues link, check two things: (1) confirm DRW is enabled in Project Setup, and (2) confirm the user's (or their role's) DRW rights are not set to No Access in User Rights.
 
 **Q: Can I open a query on a variable that is currently hidden by branching logic?**
 
@@ -282,7 +298,7 @@ Use Resolution Metrics to identify recurring data entry problems (candidate fiel
 
 **Q: Who can reopen a closed query?**
 
-**A:** Any user with Open, Close, and Respond rights can reopen a closed query by clicking its icon and selecting the appropriate action. The query returns to Open / Unresolved (Unresponded) status and REDCap logs the reopening event.
+**A:** Any user with Open Queries Only, Open and Respond, or Open, Close, and Respond rights can reopen a closed query by clicking its icon and selecting the appropriate action. The query returns to Open / Unresolved (Unresponded) status and REDCap logs the reopening event.
 
 **Q: Will the Data Quality module find variables with closed or verified queries?**
 
@@ -290,13 +306,13 @@ Use Resolution Metrics to identify recurring data entry problems (candidate fiel
 
 **Q: Can I assign a query to a user who has No Access DRW rights?**
 
-**A:** The assignment dropdown will show project members, but assigning a query to a user with No Access means they will not be able to see or act on it. Set appropriate DRW rights before establishing assignment workflows.
+**A:** No. The assignment dropdown lists only users who can respond to queries (Respond Only, Open and Respond, or Open, Close, and Respond) and who have access to the record's Data Access Group. If someone is missing from the list, check their DRW rights and DAG assignment. Set appropriate DRW rights before establishing assignment workflows.
 
 ---
 
 # 9. Common Mistakes & Gotchas
 
-**Starting data collection before setting DRW user rights.** When DRW is enabled, all existing and new users default to View Only rights. Data entry staff who need to open queries will be unable to do so until rights are explicitly updated. Review and set DRW rights for every user or role before opening a project for data entry.
+**Starting data collection before setting DRW user rights.** When DRW is enabled, users already in the project (including the project creator) start at No Access, and users added afterwards default to View Only. Data entry staff who need to open or respond to queries will be unable to do so until rights are explicitly updated. Set DRW rights for every user or role on the User Rights page before opening a project for data entry.
 
 **Switching modes after data collection has begun.** Switching from the Field Comment Log to DRW (or the reverse) does not migrate existing annotations. Comments made under the Field Comment Log will not appear in the DRW dashboard, and vice versa. This creates a split record of data quality activity that complicates audits. Commit to one mode before data entry begins.
 

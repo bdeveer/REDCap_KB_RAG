@@ -5,12 +5,12 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — record
+  creation and Record Home Page behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-REC-01 — Record Navigation Overview
-version: '1.1'
-last_updated: 2026-08
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-DE-02
   title: Basic Data Entry
@@ -52,16 +52,25 @@ is associated with a specific record.
 
 The primary identifier for every record in a REDCap project. REDCap uses
 the Record ID as the internal reference linking all instruments and
-events to a single participant. By default, REDCap auto-assigns Record
-IDs as incrementing integers (1, 2, 3...). The Record ID field is the
-first field of the first instrument in every project.
+events to a single participant. By default, record auto-numbering is
+on and REDCap assigns Record IDs as incrementing integers (1, 2, 3...):
+the next ID is the highest existing numeric ID plus one, so gaps left by
+deleted records are not refilled. Users assigned to a Data Access Group
+get IDs prefixed with their group's number (for example, 3-1, 3-2). The
+Record ID field is the first field of the first instrument in every
+project.
 
 **Add/Edit Records Page**
 
 The main data-collection menu page for finding and creating individual
 records. Accessible from the left-hand Data Collection menu. It is the
-fastest route to a specific record when you know the Record ID or any
-other identifying value.
+fastest route to a specific record when you know the Record ID or
+another searchable value. Users without the Create Records right see the
+same page titled **View / Edit Records**, without the options to create
+records. The page header shows the project's total record count (and,
+for Data Access Group users, the count in their group); in Development
+status it may also show a notice if your instance limits how many
+records a Development project can hold.
 
 **Record Home Page**
 
@@ -71,9 +80,13 @@ within a single record.
 
 **Data Search**
 
-A search feature on the Add/Edit Records page that allows lookup by any
-variable value across all records in a project. Can be scoped to a
-single variable for speed in large projects.
+A search feature on the Add/Edit Records page that looks up records by
+stored variable values, such as text boxes and notes boxes. It does not
+search multiple-choice
+variables (drop-downs, radio buttons, checkboxes, yes/no, true/false),
+file uploads or descriptive text. It matches any value that contains
+what you type and lists up to 25 results. Can be scoped to a single
+variable for speed in large projects.
 
 ---
 
@@ -88,7 +101,9 @@ Several changes make the page easier to work with on projects holding many recor
 
 > **Note:** The "Maintain arm selection with Record Status Dashboard" preference appears only in projects with **more than one arm**. It was briefly shown on single-arm projects in 16.1.4 and corrected in 16.1.5.
 
-> **Version caveat (below 17.4.1 Standard):** Data Search failed to navigate correctly when the selected record's name contained a **pipe character** (`|`). Relevant only to projects using pipes in record IDs, which is unusual but not unheard of in imported data.
+> **Version caveat (16.x LTS):** The searchable drop-downs and the user preferences above are not present in the 16.x LTS line; they are available in 17.x (Standard and the 17.3 LTS). On 16.x, scroll the drop-downs and use Data Search as described in Section 3.4.
+
+> **Version caveat (below 17.4.1 Standard, and 16.x LTS):** Data Search failed to navigate correctly when the selected record's name contained a **pipe character** (`|`). The current 17.3 LTS is fixed. Relevant only to projects using pipes in record IDs, which is unusual but not unheard of in imported data. On an affected version, open such records from the record drop-down or the Record Status Dashboard instead, or avoid pipes in record IDs.
 
 **Save & Go To Next Record** — from **15.7.0**, selecting this on the last record when record auto-numbering is enabled behaves sensibly rather than leaving the user in an undefined state.
 
@@ -106,19 +121,32 @@ Several changes make the page easier to work with on projects holding many recor
 
 ## 3.2 Creating a New Record
 
-- On the Add/Edit Records page, select the Add new record button.
+- On the Add/Edit Records page, select the Add new record button. In
+    a project with more than one arm, first choose the arm; the button
+    then reads "Add new record for the arm selected above".
 
 - REDCap automatically assigns the next available Record ID
     (incrementing integer).
 
-- If the project contains only a single instrument, REDCap opens that
-    instrument directly.
+- If the project contains only a single instrument (or the arm has one
+    event with one instrument), REDCap opens that instrument directly.
 
 - If the project contains multiple instruments or events, REDCap opens
     the Record Home Page first.
 
+- The record does not exist until you save data on an instrument. The
+    Record Status Dashboard has its own Add new record button that works
+    the same way.
 
-> **Important:** The Record ID is permanent once assigned. It cannot be changed through normal data entry. Treat it as an opaque system identifier — avoid using it as a meaningful clinical or participant identifier.
+The Add new record button appears only when record auto-numbering is
+enabled and you have the Create Records right. When auto-numbering is
+off, the page instead shows a box labelled "Enter a new or existing
+[Record ID]" (using your project's Record ID label): type the ID you
+want and press Enter to create that record, or to open it if it already
+exists.
+
+
+> **Important:** A Record ID is never edited on the data entry form. To change one later, a user with the **Rename Records** user right uses the record action menu on the Record Home Page (see [RC-DE-13 — Record Administration: Choose Action for Record](RC-DE-13_Record-Administration-Choose-Action-for-Record.md)). In practice, treat the Record ID as fixed and as an opaque system identifier — avoid using it as a meaningful clinical or participant identifier.
 
 
 ## 3.3 Finding an Existing Record by ID
@@ -126,33 +154,45 @@ Several changes make the page easier to work with on projects holding many recor
 - On the Add/Edit Records page, use the Choose an existing record
     dropdown.
 
-- The dropdown lists all Record IDs in the project. Select the one you
-    want.
+- The dropdown lists all Record IDs in the project (in your own Data
+    Access Group, if you are assigned to one). If the project defines a
+    custom record label or a secondary unique field, those values are
+    shown next to each ID. Select the one you want.
 
 - Selecting a Record ID takes you directly to the Record Home Page for
     that record.
 
-- In projects with a large number of records, use Data Search (Section
-    3.4) instead — the dropdown becomes unwieldy at scale.
+- In projects with more than 25,000 records the dropdown is replaced
+    by a text box: type the exact Record ID and press Enter. For large
+    projects in general, Data Search (Section 3.4) is often quicker.
 
 ## 3.4 Finding an Existing Record by Value (Data Search)
 
 - On the Add/Edit Records page, locate the Data Search section.
 
-- **Best practice:** type the Record ID directly into the search box
-    and press Enter. This is the fastest path to any record when the ID
-    is known.
+- Type a value (e.g., a name, date of birth, email, or Record ID) into
+    the search box. Matching results appear in a list as you type;
+    select a result to open it. Pressing Enter alone does not open a
+    record here.
 
-- To search by a different value (e.g., name, date of birth, email):
-    enter the value in the search box. REDCap searches across all
-    variables in all records by default.
+- **Best practice:** when you know the exact Record ID and the page
+    offers a Record ID text box (auto-numbering off, or a project over
+    25,000 records), type the ID there and press Enter — it is the
+    fastest path.
+
+- By default REDCap searches all searchable variables (see Section 2).
+    Values from a custom record label or secondary unique field are
+    found too.
 
 - To narrow the search: select a specific variable from the variable
     dropdown before searching. This is significantly faster in large
-    projects.
+    projects, and in projects with more than 20,000 records you must
+    choose a variable (the all-variables option is not offered).
 
-- Matching results appear in a dropdown. Selecting a result takes you
-    directly to the instrument and record where that value was found.
+- Selecting a result takes you directly to the instrument and record
+    where that value was found. It opens the Record Home Page instead if
+    you have set the user preference to do so, or if you have no access
+    to that instrument.
 
 ## 3.5 The Record Home Page
 
@@ -182,17 +222,20 @@ Several changes make the page easier to work with on projects holding many recor
 
 **A:** The Record ID is the unique identifier that REDCap uses to link all
 forms, events, and data to a single participant. Every piece of data in
-a REDCap project is associated with a Record ID. It is automatically
-assigned as an incrementing integer when a new record is created.
+a REDCap project is associated with a Record ID. With record
+auto-numbering on (the default), it is automatically assigned as an
+incrementing integer when a new record is created.
 
 **Q: Can I assign my own Record ID instead of using the
 auto-incrementing number?**
 
-**A:** Yes. The Record ID field is the first field of the first instrument,
-and it can be edited like any other text field before the record is
-saved for the first time. However, once a record ID is assigned and data
-has been entered, changing it requires administrative intervention. For
-most projects, the auto-assigned ID is the recommended approach.
+**A:** Yes, if record auto-numbering is turned off for the project. The
+Record ID cannot be typed on the data entry form; instead, users with
+the Create Records right type the new ID into the "Enter a new or
+existing [Record ID]" box on the Add/Edit Records page. Once a record
+exists, its ID can be changed only by a user with the Rename Records
+user right, from the Record Home Page. For most projects, the
+auto-assigned ID is the recommended approach.
 
 **Q: What happens if I select 'Add new record' by accident?**
 
@@ -205,17 +248,20 @@ record.
 **Q: What is the fastest way to find a record when I know the Record
 ID?**
 
-**A:** Use the Data Search box on the Add/Edit Records page. Type the Record
-ID and press Enter. This is faster than scrolling through the dropdown
-in large projects.
+**A:** If the Add/Edit Records page shows a Record ID text box
+(auto-numbering off, or more than 25,000 records), type the ID there and
+press Enter. Otherwise, type the ID into the searchable record dropdown
+or the Data Search box and pick it from the matching results. Either is
+faster than scrolling through the dropdown in large projects.
 
 **Q: I can see the Record Home Page but some dots are missing. Why?**
 
 **A:** The most likely reasons are: (1) your user access does not include
 permission to view certain instruments, or (2) the project is
-longitudinal and those instruments are not assigned to every event. In a
-project with Data Access Groups, you may also only see records from your
-own group.
+longitudinal and those instruments are not assigned to every event, or
+(3) Form Display Logic is hiding or disabling those instruments until its
+conditions are met. In a project with Data Access Groups, you may also
+only see records from your own group.
 
 **Q: Can I navigate directly to an instrument without going through the
 Record Home Page?**
@@ -226,7 +272,7 @@ Page entirely.
 
 **Q: How can I bulk create multiple records at once instead of adding them one by one?**
 
-**A:** You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, go to Data Import & Export on the left menu and use the Bulk Upload feature. For programmatic creation, use the [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
+**A:** You can import multiple records at once using the CSV import feature or the REDCap API. For CSV import, select **Data Import Tool** in the left-hand menu. Creating new records this way requires the Create Records right in addition to data import rights. For programmatic creation, use the [RC-API-03 — Import Records API](RC-API-03_Import-Records.md) to create records in batch. Both methods are faster than manually creating records through the Add/Edit Records page.
 
 ---
 
@@ -238,13 +284,20 @@ Page entirely.
     know which field to search in.
 
 - Confusing the Add/Edit Records dropdown with Data Search: the
-    dropdown lists Record IDs only; Data Search can find records by any
-    field value. Use Data Search when you know a value but not the
-    Record ID.
+    dropdown lists Record IDs (plus any custom record label or secondary
+    unique field); Data Search finds records by stored text values. Use
+    Data Search when you know a value but not the Record ID.
 
-- Creating duplicate records by accident: if 'Add new record' is
-    selected more than once, multiple records are created. Check whether
-    a record already exists via Data Search before creating a new one.
+- Searching for a multiple-choice answer: Data Search does not look in
+    drop-down, radio, checkbox, yes/no or true/false variables. Use a
+    report with a filter to find records by those answers.
+
+- Creating duplicate records by accident: selecting 'Add new record'
+    more than once does not create extra records — nothing is created
+    until you save, and the same ID is offered again. Duplicates arise
+    when someone saves a new record for a participant who already has
+    one. Check whether a record already exists via Data Search before
+    creating a new one.
 
 - Expecting the Record Home Page to look the same in every project:
     simple projects show a single dot; longitudinal projects show a

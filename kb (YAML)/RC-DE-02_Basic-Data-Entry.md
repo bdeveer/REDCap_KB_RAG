@@ -5,12 +5,12 @@ domain: Data Entry
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — data entry
+  form behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-DE-01 — Record Creation & the Record Home Page
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-DE-01
   title: Record Creation & the Record Home Page
@@ -66,21 +66,24 @@ team but strongly recommended for tracking instrument completion.
 **Required Field**
 
 A field marked with a red asterisk (\*) that the project designer has
-designated as required. REDCap displays a warning if you attempt to save
-an instrument with a required field left empty, but the warning can be
-dismissed — required fields are a soft constraint for regular users.
+designated as required. On a data entry form, REDCap saves the instrument
+even if a required field is empty and then displays a warning that can be
+dismissed — required fields are a soft constraint on data entry forms (for
+every user, administrators included). Surveys enforce them.
 
 **Branching Logic**
 
 A project-level configuration that conditionally shows or hides fields
-based on the values of other fields. Branching logic is invisible to the
-user — fields simply appear or disappear as data is entered.
+based on the values of other fields. Fields appear or disappear as data
+is entered; if a field that is about to be hidden already has a value,
+REDCap asks you what to do with it (see Section 5).
 
 **Save Options**
 
 REDCap does not auto-save. Data is only committed to the database when
 the user explicitly saves the form using one of the save buttons at the
-bottom of every instrument.
+bottom of every instrument. Users with read-only access to an instrument
+see no save buttons.
 
 ---
 
@@ -96,12 +99,15 @@ validated format. They reduce entry errors and improve data consistency.
 
 | **Field Type** | **How It Works** |
 | --- | --- |
-| Radio button | Select exactly one option from a visible list. Cannot be deselected once chosen — use the reset button if available. |
+| Radio button | Select exactly one option from a visible list. Cannot be deselected by clicking again — use the **reset** link next to the field to clear it. |
+| Yes - No / True - False | Two-option radio buttons with fixed labels (stored as 1/0). They also have a **reset** link. |
 | Dropdown | Select exactly one option from a collapsed list. More compact than radio buttons for long option lists. |
-| Checkbox | Select one or more options independently. Each checkbox is stored as a separate yes/no variable in the dataset. |
+| Checkbox | Select one or more options independently. Each checkbox option is stored as a separate 0/1 variable in the dataset. |
 | Slider | Drag a handle along a scale to select a numeric value. Commonly used for visual analog scales (e.g., pain scores). |
 | File upload | Attach a file (PDF, image, etc.) to the record. One file per field per instance. |
-| Signature | Capture a drawn signature in the browser. Stored as an image file. |
+| Signature | Capture a drawn signature in the browser. Stored as a PNG image file. |
+| Calculated field | Read-only; REDCap computes the value from other fields as you enter data. You cannot type into it. |
+| Descriptive text | Displays text, an image or a file for information only. Collects no data. |
 
 ## 3.2 Unstructured Field Types
 
@@ -117,32 +123,46 @@ a predefined list.
 **Text Box Validation Types**
 
 A text box can be configured with a validation rule that restricts
-accepted input to a specific format. REDCap enforces the format on save
-and shows an error if the value does not match. Note: format enforcement
-is a hard stop, but min/max range constraints are **soft** by default —
+accepted input to a specific format. REDCap checks the format as you
+leave the field and shows an error if the value does not match. Note:
+format enforcement is a hard stop — an invalid value is not saved, though
+the rest of the form still saves — but min/max range constraints are **soft** by default —
 REDCap warns the user but allows out-of-range values to be saved. Add
 the `@FORCE-MINMAX` action tag to make a range constraint a hard stop.
 
 | **Validation Type** | **What It Enforces** |
 | --- | --- |
 | Date (various formats) | Requires a valid date. Available in multiple regional formats (MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD, etc.). |
-| Time | Requires a valid time value (HH:MM). |
-| Number | Requires a numeric value. Optionally accepts a min/max range — soft warning by default; use `@FORCE-MINMAX` to enforce. |
+| Time | Requires a valid time value (HH:MM; variants such as HH:MM:SS and MM:SS also exist). |
+| Number | Requires a numeric value. Variants fix the number of decimal places or accept a comma as the decimal separator. Optionally accepts a min/max range — soft warning by default; use `@FORCE-MINMAX` to enforce. |
 | Integer | Requires a whole number (no decimals). |
 | Email | Requires a valid email address format. |
-| Phone number | Requires a phone number format (format varies by configuration). |
-| Zipcode | Requires a US ZIP code format. |
+| Phone number | Requires a phone number format. North American format by default; other countries' formats may be enabled. |
+| Zipcode / postal code | Requires a US ZIP code format; postal-code formats for other countries may be enabled. |
+
+Which validation types appear is controlled by your REDCap administrators,
+so the list on your instance may be shorter or longer than this table.
+
+> **Version caveat (17.4.0+):** From 17.4.0 administrators can also define custom validation types, so you may see formats on your instance that are not listed here. If a text box rejects a value and you do not recognise the format, check the field's validation in the Online Designer or ask the project designer.
 
 ---
 
 # 4. Required Fields
 
 A required field is marked with a red asterisk (\*) next to the field
-label. If you attempt to save the instrument while a required field is
-empty, REDCap displays a warning listing the empty required fields.
+label. If you save the instrument while a required field is empty,
+REDCap **saves the data first**, then reloads the form with a message
+that the data was successfully saved but some required fields are empty,
+listing them. Choose **Okay** to go back and fill them in, or **Ignore**
+to continue to wherever your save button was taking you.
+
+- Required fields hidden by branching logic or by `@HIDDEN-FORM` are not
+    checked.
+- On surveys, required fields are enforced: the participant cannot move
+    on until they are answered.
 
 
-> **Important:** Required fields are a soft constraint for regular users. The save warning can be dismissed and the form saved anyway with the required field empty. If your study protocol requires these fields to be filled, enforce compliance through team training and data quality checks — not solely through REDCap's required-field mechanism.
+> **Important:** Required fields are a soft constraint on data entry forms, for every user (administrators included). The data is already saved when the warning appears, so the field can stay empty. If your study protocol requires these fields to be filled, enforce compliance through team training and data quality checks — not solely through REDCap's required-field mechanism.
 
 
 ---
@@ -153,8 +173,24 @@ Branching logic allows the project designer to conditionally show or
 hide fields based on the current values of other fields in the same
 instrument (or in some configurations, other instruments).
 
-- Fields hidden by branching logic do not appear on the form and their
-    values are cleared automatically when the logic hides them.
+- Fields hidden by branching logic do not appear on the form. If a field
+    that is about to be hidden already contains a value, REDCap prompts
+    you to choose:
+    - **Erase** — the value is cleared and the field is hidden. The
+        erasure becomes permanent when you save the form. If the field
+        holds an uploaded file, the prompt warns that the file will be
+        permanently deleted.
+    - **Keep All** — the value is kept and the field stays visible,
+        marked with an indicator that branching logic would normally
+        hide it.
+
+- On surveys there is no prompt: values in fields hidden by branching
+    logic are erased automatically. A field holding a missing-data code
+    is also erased without a prompt.
+
+- If the project setting **Prevent branching logic from hiding fields
+    that have values** is enabled, REDCap does not hide fields that
+    already contain a value.
 
 - Fields revealed by branching logic appear dynamically as you enter
     data — no page reload required.
@@ -163,9 +199,10 @@ instrument (or in some configurations, other instruments).
     'Male' is selected in a Sex field. The field reappears if the
     answer changes.
 
-- You cannot manually override branching logic during data entry. If a
-    field you expect to see is not visible, it means the logic condition
-    has not been met based on current values.
+- Apart from choosing **Keep All** for a field that already has a value,
+    you cannot override branching logic during data entry. If a field you
+    expect to see is not visible, it means the logic condition has not
+    been met based on current values.
 
 
 > **Troubleshooting:** If a field seems to be missing from an instrument, check whether branching logic may be hiding it before reporting it as a bug. Changing an earlier field value may reveal it.
@@ -199,6 +236,12 @@ dot in the Record Home Page and Record Status Dashboard.
     automatically and are separate from the manual form status described
     here.
 
+- On repeating instruments or events, a **blue stacked dot** means the
+    record has several instances of that instrument with different
+    statuses. Select it to see the individual instances.
+
+> **Version caveat (17.6 Standard; not in 17.3 LTS or 16.0 LTS):** In MyCap projects a **purple dot**, labelled **Partial MyCap Response**, marks an instrument a participant has started but not finished in the MyCap app. If you are on an LTS release you will not see this dot; check the instrument's data directly instead.
+
 ---
 
 # 6a. Navigating a Long Form
@@ -209,7 +252,9 @@ On data entry forms, a **Section Navigation** box is displayed on the right-hand
 
 It appears automatically — there is nothing to enable — and is most useful on long instruments where the section headers are the only structural landmarks.
 
-> **Version caveat (≤17.0.x):** Opening the REDCap Messenger panel while viewing a data entry form could leave the Section Navigation box **overlapping the form**, obscuring fields and making them difficult to complete. Fixed in 17.0.0. Separately, on forms with a large number of section headers some headers were not reachable from the box (fixed 17.2.1). On some forms, the box could also cover part of the data entry table and block entry; from 17.5.4 Standard / 17.3.18 LTS, on narrower windows it moves below the form instead of over it.
+> **Version caveat (≤17.0.x):** Opening the REDCap Messenger panel while viewing a data entry form could leave the Section Navigation box **overlapping the form**, obscuring fields and making them difficult to complete. Fixed in 17.0.0. Separately, on forms with a large number of section headers some headers were not reachable from the box (fixed 17.2.1). On some forms, the box could also cover part of the data entry table and block entry; from 17.5.4 Standard / 17.3.18 LTS its positioning was reworked so it sits to the right of the form and is hidden on very narrow (mobile-width) windows rather than covering fields. If the box covers fields on an older version, widen the browser window or scroll the page.
+
+> **Version caveat (16.0 LTS):** Section Navigation is not present on the 16.0 LTS line. Scroll the form, or use the section headers, to move through long instruments.
 
 For jumping to an individual *field* rather than a section, the Online Designer offers a Field Navigator — see [RC-FD-11 — Online Designer Advanced Options](RC-FD-11_Advanced-Online-Designer-Options.md).
 
@@ -218,21 +263,22 @@ For jumping to an individual *field* rather than a section, the Online Designer 
 # 7. Saving Data
 
 
-> **Critical:** REDCap does not auto-save. If you close the browser tab, navigate away, or select Cancel without saving, all unsaved data on the current form is lost.
+> **Critical:** REDCap does not auto-save. If you navigate away from a form with unsaved changes, REDCap shows a **SAVE YOUR CHANGES?** prompt so you can save or leave without saving — but closing the browser tab, or choosing to leave without saving, loses all unsaved data on the current form.
 
 
-Every instrument has the following core save options at the bottom of the page:
+Every instrument has the following core save options at the bottom of the page (users with read-only access to the instrument see none of them):
 
 | **Save Option** | **What Happens After Saving** |
 | --- | --- |
 | Save and Exit Form | Saves the form and returns you to the Record Home Page for that record. |
 | Save and Stay | Saves the form and remains on the current instrument. Use when making multiple edits or reviewing your entry. |
+| Save and Go To Next Form | Saves the form and opens the next instrument for the same record (and event). |
 | Save and Exit Record | Saves the form and returns you to the Add/Edit Records page. Use when you are done with this record entirely. |
-| Save and Go to Next Record | Saves the form and opens the same instrument in the next record (by Record ID order). Use for batch data entry across multiple records. |
+| Save and Go to Next Record | Saves the form and opens the **Record Home Page** of the next record (in the same arm, and within your Data Access Group if you are in one) — not the same instrument. Use for working through records one after another. |
 
 > **Note:** These core options are available in all instruments. Additional save options appear in specific contexts — for surveys (Save & Mark Survey as Complete) and for repeating instruments (Save & Go To Next Instance, Save & Add New Instance). See [RC-DE-11 — Instrument Save Options](RC-DE-11_Instrument-Save-Options.md) for the complete reference.
 
-> **Warning:** Selecting Cancel on an instrument discards all unsaved changes on that form and returns you to the Record Home Page. There is no undo.
+> **Warning:** Selecting Cancel on an instrument discards all unsaved changes on that form and returns you to the Record Home Page. If you have changed anything, REDCap asks you to confirm first; once confirmed, there is no undo.
 
 
 ---
@@ -242,9 +288,11 @@ Every instrument has the following core save options at the bottom of the page:
 **Q: A required field has a red asterisk but I need to save the form
 without filling it in. Can I?**
 
-**A:** Yes. The required field warning is a soft prompt. You can dismiss the
-warning and save the form anyway. REDCap will not block the save.
-However, your study's data quality rules may flag this for follow-up.
+**A:** Yes, on a data entry form. REDCap saves the data first and then
+shows a message listing the empty required fields; choose **Ignore** to
+carry on. REDCap will not block the save. However, your study's data
+quality rules may flag this for follow-up. On surveys, required fields
+are enforced.
 
 **Q: A field I expected to see on the form is not there. What
 happened?**
@@ -270,8 +318,11 @@ entered, especially in large projects with many instruments.
 **Q: What does 'Save and Go to Next Record' do if I am on the last
 record?**
 
-**A:** If there is no next record, REDCap will not navigate further. It
-behaves like 'Save and Stay' and you remain on the current form.
+**A:** The form is saved, and where you land depends on the project. If
+record auto-numbering is enabled, REDCap opens the Record Home Page for
+a new, auto-numbered record. Otherwise it takes you to the record
+selection page with a message that there is no next record. Either way
+you leave the current form.
 
 **Q: Can I enter data in checkboxes by selecting multiple options?**
 
@@ -282,17 +333,29 @@ binary variable in the dataset export.
 **Q: What happens to a field hidden by branching logic — is the data
 deleted?**
 
-**A:** Yes. When branching logic hides a field, REDCap clears and deletes
-any value previously stored in that field. This is by design. If the
-field becomes visible again (because the controlling value changed
-back), it starts empty.
+**A:** Not automatically on a data entry form. When branching logic is
+about to hide a field that has a value, REDCap asks you to **Erase** the
+value or **Keep All**. If you erase it, the value is deleted when you
+save the form, and if the field becomes visible again it starts empty.
+If you keep it, the field stays visible with an indicator. On surveys,
+values in hidden fields are erased without a prompt. Projects can also
+enable **Prevent branching logic from hiding fields that have values**.
 
 ---
 
 # 9. Common Mistakes & Gotchas
 
 - Losing data by closing the browser: REDCap does not auto-save.
-    Always use one of the save buttons before navigating away.
+    Always use one of the save buttons before navigating away, and do not
+    choose to leave without saving at the **SAVE YOUR CHANGES?** prompt
+    unless you mean to discard your edits.
+
+- Clicking **Erase** without thinking: when branching logic is about to
+    hide a field that has a value, **Erase** deletes that value (and any
+    uploaded file) once you save. Choose **Keep All** if you are unsure.
+
+- Expecting 'Save and Go to Next Record' to open the same instrument:
+    it opens the next record's Record Home Page.
 
 - Ignoring required field warnings: dismissing the warning is allowed,
     but doing so repeatedly without filling the field will cause data
