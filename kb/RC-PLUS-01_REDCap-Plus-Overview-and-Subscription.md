@@ -7,9 +7,9 @@
 | **Domain** | REDCap+ |
 | **Applies To** | REDCap Administrators; REDCap Licensed Institutions |
 | **Requires** | REDCap v17.0.0+ — the subscription and its features start at this version. Below it, 16.0.59 LTS shows only a **REDCap Plus** menu item and a "coming soon" page. The article itself is informational and useful on any version |
-| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only; §4 login protection and gating behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
+| **Verified Against** | REDCap 17.3.6 (LTS) and v17.5.6 (Standard) — the gating behaviour in §4a observed on live unsubscribed instances; feature list from release notes through 17.5.4 Standard; 16.0.59 (LTS) — the "coming soon" page checked live, read-only; whole article checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | Existing REDCap License (REDCap Core installation) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md); [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md); [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md); [RC-PLUS-05 — REDCap+: Email Verification & Unsubscribe](RC-PLUS-05_Email-Verification-and-Unsubscribe.md); [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md) |
@@ -91,9 +91,11 @@ The first REDCap+ features became available with v17.0.0 in April 2026. Addition
 
 A comprehensive tool to move one or more projects — including all settings and data — from one REDCap server to another. Key points:
 
-- Only the **destination (target)** server requires a REDCap+ subscription. The source server can be a REDCap Core installation.
+- Only the **destination (target)** server requires a REDCap+ subscription. The source server can be a REDCap Core installation on a 17.x release.
 - This tool can be used to consolidate multiple REDCap installations into a single instance, reducing administrative overhead.
 - See [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md) for procedural details, prerequisites and known issues by version.
+
+> **Version caveat (16.x LTS):** a server on 16.x cannot act as a migration source. Upgrade the source server to a 17.x release before planning a migration off it.
 
 ### REDCap Rewards
 
@@ -109,7 +111,9 @@ Supports participant-driven sharing of their electronic health record (EHR) data
 
 ### Project Administrator Groups (PAGs) *(17.1.0)*
 
-Delegates routine administrative work — project creation approvals, production status changes, draft approvals — from system administrators to designated project-level admins for a group of projects. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
+Delegates routine administrative work — production status changes, draft approvals and similar project requests — from system administrators to designated project-level admins for a group of projects. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
+
+> **Note:** New-project requests behave differently from other requests. In our reading, a request from a user assigned to a PAG is emailed to that group's admins instead of the central contact, but it does not appear in the PAG admins' To-Do List (central administrators still see it there). Where only administrators may create projects, PAG admins most likely cannot complete the request, so a central administrator has to. Confirm this on your server before relying on PAG admins for project creation.
 
 ### Email Verification & Email Unsubscribe *(17.3.0)*
 
@@ -120,6 +124,16 @@ Lets participants verify their email address and opt out of all emails from a pr
 Adds an **Enforce REDCap login protection** option to Survey Login, so respondents authenticate through the instance's normal REDCap login instead of entering stored field values. It can cover all surveys or selected ones, and it applies to the public survey link as well as participant-list links. The Survey Queue page itself is not protected, but each protected survey opened from it is. Page-1 survey fields can be prefilled with the logged-in user's username, name and email. The same protection can be applied to public reports and public project dashboards. A public dashboard still applies its small-cell threshold to logged-in viewers; the threshold is a configurable setting (default 5, or 11 on servers upgraded through 11.0.0). Public reports have no small-cell threshold. Under SSO or LDAP it admits anyone who can authenticate to the instance, not only existing REDCap users. See [RC-SURV-10 — Survey Login](RC-SURV-10_Survey-Login.md) §5.
 
 > **Version caveat (LTS 17.3.31 and 16.0.61):** login protection is not present on these LTS versions; it is present on 17.6.5 Standard. On an LTS server, use Survey Login with stored field values, or plan an upgrade to a Standard release that has the feature.
+
+### Features present in 17.6
+
+Three further REDCap+ features are present in 17.6 Standard:
+
+- **Instance Embedding**
+- **Audio and video recording fields**
+- **AI Chatbot**
+
+> **Version caveat (17.6 Standard vs 17.3 LTS):** these three features are present in 17.6 and not in 17.3 LTS (checked on 17.3.31). If you need them on an LTS server, wait for an LTS release that includes them or move to the Standard line; check the release notes for your target version.
 
 ### Additional Community Portal Seats
 
@@ -134,7 +148,7 @@ REDCap+ features are visible in the interface on an unsubscribed instance, but *
 | Gating style | Behaviour without a subscription | Example |
 | --- | --- | --- |
 | **Cosmetic** | Settings render normally and are then disabled in the browser. The full set of options and help text is readable | Reward Services on the Modules/Services Configuration page |
-| **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* | Project Administrator Groups |
+| **Hard-gated** | The interface is not rendered at all; a notice appears in its place — *"NOTICE: The page has been disabled because a REDCap+ subscription is not active."* — or, depending on version, an access-denied error | Project Administrator Groups (notice seen live on 17.3.6; access-denied error on 17.3.31 and 17.6.5) |
 | **Shell only** | The menu item and the page's introduction appear, followed by a differently worded notice — *"NOTICE: This feature is not available because it requires a REDCap+ subscription."* No working content is shown | Verified & Unsubscribed Emails (project-level) on 17.5.6 |
 | **Open** | The page works, because it is not subscriber-only | Project Migration Dashboard, which any institution may use |
 
@@ -162,6 +176,9 @@ REDCap+ is priced annually based on the number of active user logins on the targ
 
 **Additional pricing notes:**
 
+- In the application the tiers are labelled **S**, **M**, **L** and **XL**. Use **View REDCap+ tiers and pricing** on the Control Center's REDCap+ page for the current thresholds and prices, which take precedence over the table above.
+- A key for a higher tier also covers a lower one, and there is a small growth allowance (around 10%) above a tier's limit. The tier is checked only when the key is saved, not continuously.
+
 - Pricing is per installation, not per institution. An institution with three production installations may subscribe to any, all, or none of them independently.
 - Tier prices are locked for the duration of a subscription period but may change at renewal.
 - No discounts are available. The tiered structure is designed to accommodate institutions of varying sizes and resources.
@@ -172,17 +189,24 @@ REDCap+ is priced annually based on the number of active user logins on the targ
 
 ## 6. How to Subscribe
 
-Before accessing REDCap+, an institution must complete the following steps:
+The subscription is started from inside REDCap, in this order:
 
-1. **Hold a valid REDCap License** — institutions must already be licensed REDCap Consortium members.
-2. **Sign the REDCap+ Addendum** — a separate agreement specific to REDCap+. The existing REDCap License does not need to be re-executed.
-3. **Report active user count** — submit the number of users who have logged in during the past 6 months for the target installation (REDCap Stats report).
-4. **Submit payment** — pay the annual subscription fee for the applicable tier.
-5. **Upgrade to REDCap v17.0.0 or higher** — REDCap+ features are only available on v17.0.0+.
+1. **Upgrade to REDCap v17.0.0 or higher** — the subscription and its features exist only on v17.0.0+. You also need a valid REDCap License; the existing License does not need to be re-executed.
+2. **Open the REDCap+ page in the Control Center and click Subscribe.**
+3. **Pass the stats check** — the installation must have reported its stats within the last 14 days. The active user count is taken automatically from those stats; you do not submit it yourself.
+4. **Confirm your institution** on the page.
+5. **Copy the purchase code** that REDCap shows.
+6. **Pay on the Vanderbilt site** using that code, accepting the REDCap+ Addendum as part of checkout.
+7. **Receive the subscription key by email.**
+8. **Enter the key** on the Control Center's REDCap+ page to activate REDCap+ on that installation.
 
-Upon completing these steps, Vanderbilt generates a special license key. Enter this key in the REDCap Control Center to activate REDCap+ features on that installation.
+Any Control Center user can view the REDCap+ page, but saving the key needs the administrator privilege **Modify system configuration pages**.
 
-To retain the subscription at renewal, institutions must again report active users and submit payment before the current subscription expires.
+If the key is rejected on save, the usual causes are a key issued for a different institution, a different instance ID or a lower tier than the installation's current active users, or a non-production key entered on a server that reports stats. Test servers that use the non-production key must therefore not report stats.
+
+### Renewal
+
+To retain the subscription, renew before the current subscription expires; the active user count is again taken from the reported stats. Renewal cannot start more than 60 days before expiry. From 30 days before expiry a banner appears in the Control Center, and reminder emails go to the system contact at 60, 30, 15, 7 and 1 days before expiry, on the expiry day and at the end of the grace period.
 
 ---
 
@@ -194,11 +218,15 @@ REDCap+ is not a separate product or fork. It is the standard REDCap codebase wi
 
 ### Test / Non-Production Servers
 
-REDCap+ subscribers receive both a production and a non-production subscription key. There is no limit on the number of non-production (sandbox/test) REDCap+ installations a subscriber may run. Only the production installation key is subject to user metric reporting requirements.
+REDCap+ subscribers receive both a production and a non-production subscription key. There is no limit on the number of non-production (sandbox/test) REDCap+ installations a subscriber may run. Only the production installation key is subject to user metric reporting requirements, and a server using the non-production key must not report stats (see §6).
+
+### Changing the Server's Base URL
+
+The instance ID that a key is tied to is derived from the server's base URL. If you change the base URL, the installation gets a new instance ID and needs a new key. Plan the key reissue together with the URL change.
 
 ### What Happens When a Subscription Expires
 
-When the REDCap+ subscription key expires, all REDCap+ features are immediately deactivated for that installation — for both existing projects that used those features and any new projects. The installation reverts to REDCap Core. Data is not lost, but REDCap+-dependent workflows will stop functioning until the subscription is renewed.
+When the REDCap+ subscription key expires, a grace period starts (normally 30 days; the end date is shown on the Control Center's REDCap+ page). Features keep working during the grace period. When it ends, all REDCap+ features are deactivated for that installation — for both existing projects that used those features and any new projects. The installation reverts to REDCap Core. Data is not lost, but REDCap+-dependent workflows stop functioning until the subscription is renewed, and project migrations still in progress on that installation stop.
 
 Two features do not simply stop:
 

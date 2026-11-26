@@ -7,9 +7,9 @@
 | **Domain** | REDCap+ |
 | **Applies To** | Users moving a whole project between REDCap instances; REDCap Administrators (Sections 6–7) |
 | **Requires** | REDCap v17.0.0+ on **both** instances. A REDCap+ subscription is required on the **destination** instance only — see §2 |
-| **Verified Against** | REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against a live instance. The migration workflow itself (§3–4) is from release notes only and **cannot be verified without a REDCap+ subscription** — see the scope note; migration workflow checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
+| **Verified Against** | REDCap 17.3.6 (LTS) — Project Migration Dashboard verified against a live instance. The migration workflow itself (§3–4) has not been observed live, because that needs a REDCap+ subscription — see the scope note; migration workflow and dashboard checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md); [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md); [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md); [RC-INFRA-03 — REDCap Versions, Release Lines & Patching](RC-INFRA-03_REDCap-Versions-Release-Lines-and-Patching.md) |
@@ -17,7 +17,7 @@
 
 ---
 
-> **Scope note.** Section 6.2 (the Project Migration Dashboard) is verified against a live instance running 17.3.6 LTS. The rest of the article was first written from REDCap's release notes for 17.0.0 through 17.4.1. The migration workflow (Sections 2–4 and 6.1) has since been **checked against REDCap's source code** (17.6.5 Standard, 17.3.31 and 16.0.61 LTS), but **not yet observed on a live instance with a REDCap+ subscription**. Screen labels and the exact placement of controls in those sections should be confirmed before this article is used as a step-by-step guide.
+> **Scope note.** Section 6.2 (the Project Migration Dashboard) is verified against a live instance running 17.3.6 LTS. The rest of the article was first written from REDCap's release notes for 17.0.0 through 17.4.1. The migration workflow (Sections 2–4 and 6.1) and the dashboard's status values (§6.2) have since been **checked against REDCap's source code** (17.6.5 Standard, 17.3.31 and 16.0.61 LTS), but **not yet observed on a live instance with a REDCap+ subscription**. Screen labels and the exact placement of controls in those sections should be confirmed before this article is used as a step-by-step guide.
 >
 > **Why the rest cannot currently be verified — a standing limitation.** The instance this KB is maintained against does **not** hold a REDCap+ subscription. The dashboard could still be documented because it is reachable without one. (Gating varies by page: some Control Center pages render their REDCap+ settings server-side and merely disable them in the browser, while others replace the interface entirely with a subscription notice — see [RC-PLUS-01](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md) §4a.) The migration workflow is different: generating a migration key and receiving a project require the subscription, so §3–4 cannot be observed from this instance at all.
 >
@@ -43,6 +43,8 @@ The distinction from the long-standing Project XML approach is what it carries. 
 
 For a regulated study, that list is the point. A project moved by XML arrives with no audit trail, no randomization history and no query history; a project moved by PMT arrives with all three.
 
+How the history arrives matters for auditors. The source project's log is not merged into the destination's own log: it is kept separately and shown on a **Legacy Logging** tab of the destination project's Logging page (next to **Standard Logging**), with its own download button. Email Logging history is likewise kept as a separate file. See §3.3 for history that arrives without the original user names.
+
 The authoritative list of what the tool tracks is the **column set of the Project Migration Dashboard** — see §6.2, which enumerates all fifteen components individually.
 
 When it is available, the PMT is the preferred way to move a project. The Project XML approach is the fallback — for when either instance is below 17.0.0, the destination has no REDCap+ subscription, or you only need the design — see [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md).
@@ -53,7 +55,7 @@ When it is available, the PMT is the preferred way to move a project. The Projec
 
 ### 2.1 Both instances must be on 17.0.0 or later
 
-The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher.** If either is older, the tool is unavailable and the XML route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md) is the alternative.
+The PMT is not a one-sided feature. **Both the source and the destination instance must be running REDCap 17.0.0 or higher** — in practice, both on a 17.x release with the server trust configuration in §2.1a in place. If either is older, the tool is unavailable and the XML route in [RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations](RC-PROJ-05_Project-Migration.md) is the alternative.
 
 > **Version caveat (16.0.x LTS):** A reduced form of the Project Migration Tool also exists on the 16.0 LTS line (checked on 16.0.61). It has no destination Instance ID binding, no completion actions and no Project Migration Dashboard, and every inbound migration needs administrator approval. A 16.0.x server and a 17.x server **cannot migrate projects between each other**, because they use incompatible migration key formats. If one side is on 16.0.x, either upgrade both sides to 17.x before migrating, or use the Project XML route in [RC-PROJ-05](RC-PROJ-05_Project-Migration.md). The rest of this article describes the 17.x tool.
 
@@ -61,9 +63,14 @@ The PMT is not a one-sided feature. **Both the source and the destination instan
 
 On 17.x, the migration tool will not work between two servers until **the REDCap server administrators of both servers** have set up a server-side **trust configuration** between them. Each server's configuration names the other as a trusted peer, together with a key pair. This is done at the server level, outside the Control Center, and is separate from the REDCap+ subscription and the Control Center settings in §6.1.
 
-Without it, generating a migration key fails, and the failure is recorded only in the server's logs. The user sees nothing more specific than the migration key being reported as **not valid** at the destination ("The migration key provided was not valid").
+Where the problem shows up depends on which side is missing the configuration:
 
-> **Important — check this before anything else.** If a migration key is rejected as not valid even though it was generated recently and for the right destination, the most likely cause is a missing or mismatched trust configuration. Ask the REDCap server administrators of **both** servers to confirm that each lists the other as a trusted peer, and to check the server logs for the key-generation error. Users and Control Center administrators cannot fix this from the REDCap interface.
+- **Missing or incomplete on the source server** — clicking the button to generate the key on the source produces an error there, and **no key is created**. The details are recorded in the server's logs.
+- **Missing on the destination server, or the destination's configuration does not list the source** — the key is generated normally, but the destination reports it as **not valid** ("The migration key provided was not valid").
+
+The trust configuration also has network requirements. The two servers must be able to reach each other **directly over HTTPS by their public hostnames**. Outbound proxies and private (internal) network addresses are not supported. Ask your server team to confirm this before you plan a migration date.
+
+> **Important — check this before anything else.** If key generation fails on the source, or a key is rejected as not valid at the destination even though it was generated recently and for the right destination, a missing or mismatched trust configuration is a likely cause. Ask the REDCap server administrators of **both** servers to confirm that each lists the other as a trusted peer, that the servers can reach each other as described above, and to check the server logs for the error. Users and Control Center administrators cannot fix this from the REDCap interface. "Not valid" has other causes too — see the troubleshooting list in §3.1.
 
 ### 2.2 The subscription requirement is asymmetric
 
@@ -87,13 +94,28 @@ The PMT works **through the REDCap API**. To generate a migration key, the user 
 - **Project Design and Setup** rights (not needed if the user is a REDCap administrator), and
 - project rights that have **not expired**. A user whose project access has an expiration date in the past cannot generate a key.
 
+> **Version caveat (16.0.x LTS):** the expired-rights check is 17.x only. On a 16.0.x server, do not rely on an expiration date to stop a former team member from starting a migration; remove their API token or rights instead.
+
+The API token is used for the whole migration, not only to create the key. **Keep the source token valid until the migration has completed**: do not regenerate or delete it, and do not change the initiating user's rights or the project's settings mid-way. If the final step fails because the token no longer works, the migration is still shown as completed on the destination, but the completion action is **not** applied to the source project — check the source and apply it by hand.
+
 See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md).
 
-Data export rights also limit which records move: the user needs data export privileges for an instrument to migrate its data, and **Full Data Set** export privileges on every instrument to migrate all records and instruments. REDCap shows a notice on the migration page when the user's export rights only cover some instruments.
+Data export rights also limit which records move: the user needs data export privileges for an instrument to migrate its data, and **Full Data Set** export privileges on every instrument to migrate all records and instruments. REDCap shows a notice on the migration page when the user's export rights only cover some instruments. A user assigned to a **Data Access Group** migrates only the records of their own DAG, so a full migration should be run by a user who is not in a DAG.
 
-> **Note — randomization:** the migration page may offer the randomization component to a user who holds only the Randomization **Dashboard** right, but the server only migrates randomization for a user with the Randomization **Setup** right. Have the migration run by a user with Randomization Setup rights if randomization must come across.
+> **Note — randomization:** the migration page may offer the randomization component to a user who holds only the Randomization **Dashboard** right, but the server only migrates randomization for a user with the Randomization **Setup** right. In that case the randomization component fails and holds up completion of the whole migration until it is finished automatically after several days (§3.4). Have the migration run by a user with Randomization Setup rights if the project uses randomization.
 
 > **Important — you can only migrate what you can already access.** If the initiating user lacks privileges for a specific project component — Logging or the File Repository, for example — that component **cannot be migrated**. The tool does not elevate the user's access. A migration run by someone with partial rights produces a partial project, so the person initiating it should hold full rights in the source project.
+
+### 2.4 Before you start — checklist
+
+- Both servers are on 17.x, and both server teams have confirmed the trust configuration and the direct HTTPS connection between the servers (§2.1a).
+- The destination has an active REDCap+ subscription that will stay active for the whole migration (§2.2, §3).
+- You have the destination's **Instance ID** (§3.1).
+- The initiating user has an API token, API Export, Project Design and Setup, Full Data Set export rights, Randomization Setup (if used), Logging and File Repository access, unexpired rights, and no DAG assignment (§2.3).
+- Smart variables that return ID numbers have been replaced with name-based ones (§3.3).
+- The External Modules the project uses are installed on the destination (§6.2.2).
+- Data entry and survey collection on the source are paused for the migration window (§3).
+- You have chosen the completion action deliberately — not **Delete project** (§4).
 
 ---
 
@@ -105,7 +127,11 @@ The PMT is a two-sided handshake built around a **migration key**.
 2. **On the destination instance** — a user creates a new project using that migration key.
 3. The destination instance then **pulls** the project's components from the source using backend API processes driven by the REDCap **cron job**.
 
-Because step 3 is cron-driven rather than interactive, a migration completes over time rather than instantly. Administrators can watch progress on the Project Migration Dashboard (§6).
+Because step 3 is cron-driven rather than interactive, a migration completes over time rather than instantly. On the destination, the new project shows a **Migration in Progress** dialog with how many of the selected components have finished ("X of Y"). Destination administrators can watch progress on the Project Migration Dashboard (§6). The source side has no equivalent dashboard: source administrators only see migrations as a count on the System Statistics page and as entries in the project's logging.
+
+The cron job is the server's own scheduled task, not something set per project; if it is not running on the destination server, no migration progresses. The background jobs also stop if the destination's REDCap+ subscription lapses part-way through a migration.
+
+> **Important — pause data entry on the source.** Records are pulled from the source **once**. Data entered or changed on the source after records have been pulled does not follow the project. Stop data entry and survey collection on the source (for example by telling the team and setting the surveys offline) before the destination project is created, and keep it stopped until the migration has completed.
 
 ### 3.1 The migration key
 
@@ -114,11 +140,22 @@ Two constraints on the key matter operationally:
 - **It expires after three days.** A key generated and not used within that window is dead, and a new one must be generated.
 - **It is bound to one destination.** Before the key is generated, the user enters the **Instance ID** of the intended destination. The key works only for the instance matching that ID.
 
-The binding is a safety property rather than an obstacle — a leaked or mistakenly-shared key cannot be used to pull a project onto an arbitrary server. It does mean you need the destination's Instance ID before you start.
+The binding is a safety property rather than an obstacle — a leaked or mistakenly-shared key cannot be used to pull a project onto an arbitrary server. It does mean you need the destination's Instance ID before you start. The Instance ID is tied to the destination server's base URL, so if that server's address changes, its Instance ID changes too; get the current ID from the destination's administrators.
+
+A key used on the wrong server is not rejected with a specific message. The destination shows the same generic error as every other key problem.
+
+**Troubleshooting "The migration key provided was not valid".** This message is a catch-all. Check, in order:
+
+- the key is less than three days old;
+- the Instance ID entered on the source matches the destination exactly;
+- the destination's trust configuration lists the source server (§2.1a);
+- the user on the destination is allowed to create projects from a migration key under the destination's settings (§6.1);
+- the destination could connect to the source when it tested the key;
+- the initiating user on the source still has Project Design and Setup rights and unexpired project access (§2.3).
 
 ### 3.2 Choosing components
 
-When generating the key, the user selects which components to migrate. The essential project features (fields, instruments, events) always come across. Components that hang off records — **File Upload and Signature files, record locking, survey participants and timestamps, the Field Comment Log and the Data Resolution Workflow** — can only be migrated if **Records** is also selected.
+When generating the key, the user selects which components to migrate — and also the **completion action** for the source project (§4). Both are fixed into the key at that moment. The essential project features (fields, instruments, events) always come across. Components that hang off records — **File Upload and Signature files, record locking, survey participants and timestamps, the Field Comment Log and the Data Resolution Workflow** — can only be migrated if **Records** is also selected.
 
 The Field Comment Log and the Data Resolution Workflow are offered as alternatives, not together: the page offers whichever of the two the source project uses.
 
@@ -132,11 +169,18 @@ The Field Comment Log and the Data Resolution Workflow are offered as alternativ
 | Event IDs and DAG IDs | Change. Smart variables that return an ID number, such as `[project-id]`, `[event-id]` or `[record-dag-id]`, will not work as expected. Replace them with name-based equivalents, such as `[event-name]` or `[record-dag-name]`, before migrating |
 | Dynamic SQL fields | Converted to static drop-down fields |
 | Alerts & Notifications send history (Notification Log), Survey Invitation Log | Not migrated. Alert and ASI *settings* migrate, but sent statuses do not |
+| Alerts and ASIs on arrival | Arrive **enabled**. Review them, and deactivate any that should not fire, as soon as the destination project exists |
 | Scheduled survey invitations | Not migrated. Reschedule them on the destination |
 | ASIs | ASIs using `datediff` with today/now start triggering again on the destination; guard against re-sends (for example with `[form_complete]<>'2'` in the logic). Other ASIs must be re-evaluated |
 | Project Bookmarks | Not migrated |
 | MyCap participants | App configuration can migrate, but participants who already joined must rejoin and restart their scheduled tasks |
 | Data Resolution Workflow queries | Migrated with timestamps, but the user on each query is shown as **"System"** |
+| Field Comment Log entries | Migrated, but also lose the original user name |
+| Record locks | Re-created on the destination, with **SYSTEM** shown as the user who locked |
+| E-signatures | Not migrated. Records that were e-signed on the source arrive without the e-signature |
+| Logging and Email Logging | Kept as separate pre-migration history (the **Legacy Logging** tab on the Logging page), not merged into the destination's log — see §1 |
+
+> **Version caveat (16.0.x LTS):** Data Resolution Workflow import is 17.x only. If you migrate between two 16.0.x servers, expect the query history not to arrive; export the Data Resolution Workflow from the source first, or upgrade both servers to 17.x.
 
 ### 3.4 When the migration completes
 
@@ -144,13 +188,15 @@ Once all selected components have arrived:
 
 - the new project takes the **status the source project had** (REDCap states this status in the confirmation dialog before the request is submitted),
 - the user who created the project on the destination is **emailed a confirmation**, and
-- the chosen **completion action** (§4) is applied to the source project.
+- the chosen **completion action** (§4) is applied to the source project **automatically**. There is no separate confirmation step at this point; the action was fixed when the key was generated.
+
+**Migrations that do not finish on their own.** If some components never finish — for example the randomization case in §2.3 — REDCap finishes the migration automatically: after **2 days** if the records have arrived, or after **5 days** in any case. The migration is then marked completed and the chosen completion action is still applied to the source project, including **Delete project** if that was chosen. The only sign that something was left behind is the list of unfinished components in the confirmation email. Read that email carefully, and compare it with the dashboard row (§6.2).
 
 ---
 
 ## 4. Completion Actions
 
-When initiating a migration, the user chooses what should happen to the **source** project once the migration completes:
+When generating the migration key, the user chooses what should happen to the **source** project once the migration completes. The choice is stored in the key and applied automatically at the end (§3.4) — there is no later opportunity to verify the destination first and then confirm. To change it, generate a new key.
 
 | Option | Effect on the source project | When it is offered |
 | --- | --- | --- |
@@ -165,7 +211,7 @@ When initiating a migration, the user chooses what should happen to the **source
 
 > **The redirect option is the one to think about.** If a project has public survey links in circulation — printed on materials, embedded in a web page, sent in an email — those links point at the *source* instance. Choosing "Mark as Completed and redirect public survey(s)" is what keeps them working after the move. Any other option leaves them pointing at a project that is no longer collecting data.
 
-> **Note:** "Delete project" is recoverable by an administrator for the server's project-deletion delay (shown on the page as "can be restored up to N days later by an admin"), but that is a grace period, not a backup. Confirm the migration completed and the destination project is correct before relying on it.
+> **Important — do not choose "Delete project".** Because the completion action runs automatically, including when a stuck migration is finished after 2 or 5 days (§3.4), choosing Delete means the source can be deleted before anyone has checked the destination. Choose **Leave as is** or **Mark project as Completed** (or the redirect variant) instead, verify the destination project, and then delete the source project by hand. A deleted project is recoverable by an administrator for the server's project-deletion delay (shown on the page as "can be restored up to N days later by an admin"), but that is a grace period, not a backup.
 
 ---
 
@@ -185,7 +231,7 @@ The PMT is a young feature and several defects affected what actually arrived at
 
 > **Version caveat (below 17.1.4 Standard):** A PMT-related cron job could fail with a fatal PHP error when creating a new project, in rare cases.
 
-**Practical implication:** on any version below 17.2.0, treat a migration as needing verification rather than confirmation. Compare record counts, file counts, and locking status between source and destination before acting on the completion action — particularly before choosing "Delete project".
+**Practical implication:** on any version — and especially below 17.2.0 — treat a migration as needing verification rather than confirmation. Because the completion action is applied automatically when the migration ends, verification happens *after* it: choose a completion action that keeps the source (§4), then compare record counts, file counts and locking status between source and destination, and only then delete the source by hand if you need to.
 
 ---
 
@@ -202,9 +248,9 @@ The main one is **"Allow users to use the Project Migration Tool to move project
 | Disabled: Hidden from everyone | No inbound migrations. The Project Migration Dashboard link is also hidden from the Control Center menu |
 | Enabled: Visible only to administrators | Only administrators can create a project from a migration key |
 | Enabled: Visible to all users (requires admin approval) | Users can submit a migration; an administrator must approve it before it starts |
-| Enabled: Visible to all users (admin approval is NOT required) | Users can create the migrated project without administrator approval |
+| Enabled: Visible to all users (admin approval is NOT required) | Users can create the migrated project without administrator approval — but only users who are already allowed to create projects on this server, and only when project creation is not restricted to administrators. Everyone else still needs approval |
 
-The note under this setting says an administrator will always be required to approve every migration request. On 17.x that only holds for the first three values; the last value lets users migrate without approval.
+The note under this setting says an administrator will always be required to approve every migration request. On 17.x that only holds for the first three values; the last value lets users who may already create projects migrate without approval.
 
 > **Version caveat (16.0.x LTS):** on the 16.0 LTS line there is no no-approval value: every inbound migration needs administrator approval. Plan for an approval step on a 16.0.x server, or upgrade to 17.x if users need to migrate without one.
 
@@ -233,7 +279,7 @@ Each row is one migration into this instance:
 | **Source REDCap Version** | The version the source was running. Read this against §5 — it is how you tell whether a completed migration is subject to one of the silent-omission defects |
 | Source PID | The project ID on the source instance |
 | Source Title | The project's title on the source instance |
-| Source Project Status | Development / Production / Analysis-Cleanup / Completed at the source |
+| Source Project Status | Development, Production or Analysis/Cleanup at the source (a Completed project cannot be migrated) |
 | Source Completion Action | Which §4 completion action was chosen for the source project |
 
 #### 6.2.2 Per-component status columns
@@ -266,7 +312,12 @@ Three of these are worth calling out because they are easy to assume *would not*
 
 #### 6.2.3 Using it to verify a migration
 
-The per-component breakdown is what makes §5's silent-failure problem tractable. Rather than comparing the source and destination project by hand, read the row: if a component's status column does not report success, that component did not fully arrive — regardless of whether the migration as a whole reported completion.
+The per-component breakdown is the quickest first check, but it is not proof that everything arrived. Each component column shows only **"-"** (not finished) or **Completed**; a blank cell means the component was not selected. Read it this way:
+
+- A component still showing "-" did **not** finish — whatever the overall status says. This is what you will see for a component left behind by a migration that was finished automatically after 2 or 5 days (§3.4).
+- **Completed** means the tool has finished its part, not that every item arrived. **Records** shows Completed once the records have been handed to a background import on the destination, before that import has necessarily finished. File Upload files that fail to transfer twice are dropped, and the file component still shows Completed.
+
+So use the dashboard to spot what clearly did not finish, then confirm the important things by hand: compare record counts, spot-check file and signature fields, and check locking and randomization on the destination before deleting anything on the source.
 
 The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defaulting to 25) and shows the **newest migrations first** by default.
 
@@ -288,11 +339,11 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 **Q: Both instances need to be on 17.0.0?**
 
-**A:** Yes, for the tool this article describes. The 16.0 LTS line has a reduced version of the tool, but a 16.0.x server and a 17.x server cannot migrate projects between each other because their migration keys are incompatible. Where one side cannot be upgraded, use the Project XML approach in [RC-PROJ-05 — Project Migration](RC-PROJ-05_Project-Migration.md).
+**A:** Yes — in practice both on a 17.x release, with the server trust configuration (§2.1a) set up between them. The 16.0 LTS line has a reduced version of the tool, but a 16.0.x server and a 17.x server cannot migrate projects between each other because their migration keys are incompatible. Where one side cannot be upgraded, use the Project XML approach in [RC-PROJ-05 — Project Migration](RC-PROJ-05_Project-Migration.md).
 
 **Q: The destination says the migration key is not valid, but it was generated today for the right server. Why?**
 
-**A:** Most likely the two servers have not been configured to trust each other. On 17.x, the REDCap server administrators of both servers must set up a server-side trust configuration naming the other server as a peer. Without it, key generation fails and the error appears only in the server logs, so the user just sees the key reported as not valid. Ask the server administrators on both sides to check (§2.1a).
+**A:** "Not valid" is a catch-all message. A common cause is that the destination server's trust configuration is missing or does not list the source server; ask the server administrators on both sides to check (§2.1a). (If the configuration is missing on the *source*, you would not have a key at all: generating it fails with an error on the source.) Other causes are a wrong Instance ID, a user on the destination who is not allowed to create migrated projects, a failed connection between the servers, or the source user having lost Project Design rights or access. Work through the troubleshooting list in §3.1.
 
 **Q: Will user rights and survey links come across?**
 
@@ -300,7 +351,7 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 **Q: How long is a migration key valid?**
 
-**A:** Three days, and it only works for the destination instance whose Instance ID was entered before the key was generated. You need that Instance ID before you start.
+**A:** Three days, and it only works for the destination instance whose Instance ID was entered before the key was generated. You need that Instance ID before you start. A wrong Instance ID is not reported specifically — the destination just says the key is not valid.
 
 **Q: Our public survey links are printed on recruitment materials. Will they still work after migrating?**
 
@@ -308,11 +359,11 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 **Q: Why is the migration taking so long?**
 
-**A:** The destination pulls components through backend API processes driven by the cron job, so a migration progresses over time rather than completing on submission. Administrators can check progress on the Project Migration Dashboard. If a project's cron is not running, migrations will not progress — see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
+**A:** The destination pulls components through backend API processes driven by the cron job, so a migration progresses over time rather than completing on submission. The destination project shows a **Migration in Progress** dialog with how many components have finished, and destination administrators can check progress on the Project Migration Dashboard. The cron job is server-wide: if it is not running on the destination server, no migration progresses, and the jobs also stop if the destination's REDCap+ subscription lapses mid-migration. A component that never finishes (for example randomization run without Setup rights) holds the migration open until it is finished automatically after 2 or 5 days (§3.4). See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
 
 **Q: How do I check whether everything actually arrived?**
 
-**A:** Use the **Project Migration Dashboard** in the Control Center. It reports a separate status for each of fifteen components — records, file-field uploads, locking, survey participants, Field Comment Log, Data Resolution Workflow and its files, calendar events, randomization, Logging, Email Logging, File Repository folders and files, PDF Snapshot Archive, and External Module settings. Read the row rather than comparing projects by hand. The **Source REDCap Version** column tells you whether the migration was exposed to one of the defects in §5.
+**A:** Use the **Project Migration Dashboard** in the Control Center. It reports a separate status for each of fifteen components — records, file-field uploads, locking, survey participants, Field Comment Log, Data Resolution Workflow and its files, calendar events, randomization, Logging, Email Logging, File Repository folders and files, PDF Snapshot Archive, and External Module settings. Start there: any component still showing "-" did not finish. But **Completed** does not prove every item arrived (records may still be importing in the background, and files that failed twice are dropped), so also compare record counts and spot-check files, locking and randomization by hand, and read the confirmation email's list of unfinished components (§6.2.3). The **Source REDCap Version** column tells you whether the migration was exposed to one of the defects in §5.
 
 **Q: Do External Module settings come across?**
 
@@ -320,7 +371,7 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 **Q: Does the Data Resolution Workflow / query history survive?**
 
-**A:** Yes. The Field Comment Log, the Data Resolution Workflow and its files are all migrated components. So are Calendar events including record scheduling. This is a substantial difference from the Project XML route, which carries none of them.
+**A:** Yes, on 17.x. The Field Comment Log, the Data Resolution Workflow and its files are all migrated components, although the original user names are replaced (queries show "System"). So are Calendar events including record scheduling. This is a substantial difference from the Project XML route, which carries none of them. On the 16.0 LTS line, Data Resolution Workflow import is not available (§3.3).
 
 **Q: A colleague ran the migration and the logs did not come across. Why?**
 
@@ -330,11 +381,17 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 ## 8. Common Mistakes & Gotchas
 
-**Assuming a completed migration is a verified migration.** On versions below 17.2.0, several defects caused records, files, signatures and locking statuses to be omitted without any error. Check the **per-component status columns on the Project Migration Dashboard** (§6.2) before treating the move as done — and certainly before choosing a completion action that deletes the source. The dashboard reports each component separately precisely because the overall result can look fine while a component did not arrive.
+**Assuming a completed migration is a verified migration.** On versions below 17.2.0, several defects caused records, files, signatures and locking statuses to be omitted without any error. On any version, a stuck migration is finished automatically after 2 or 5 days and reported as completed even if components were left behind (§3.4), and a component showing Completed on the dashboard is not proof that every item arrived (§6.2.3). Check the dashboard row, the confirmation email and record and file counts before treating the move as done.
 
 **Migrating a project whose External Modules are not present on the destination.** Module configuration settings migrate; the modules do not. Settings arriving for a module the destination does not have are settings with nothing to attach to.
 
-**Choosing "Delete project" before checking the destination.** The source is recoverable by an administrator only for the server's project-deletion delay, which is a safety net rather than a plan. Verify first, delete afterwards.
+**Choosing "Delete project" as the completion action.** The completion action is fixed when the key is generated and runs automatically when the migration ends — including when a stuck migration is finished after 2 or 5 days. Choosing Delete therefore deletes the source before anyone can check the destination. Choose Leave as is or Mark project as Completed, verify the destination, then delete the source by hand. The administrator restore window after deletion is a safety net, not a plan.
+
+**Letting data entry continue on the source.** Records are pulled once. Anything entered on the source afterwards stays behind. Pause data entry and surveys on the source for the whole migration (§3).
+
+**Regenerating the source API token or changing rights mid-migration.** The migration uses the token until the end. If the final step fails, the migration still shows as completed but the completion action is not applied to the source (§2.3).
+
+**Forgetting that alerts and ASIs arrive enabled.** Review them on the destination straight away so participants are not contacted twice (§3.3).
 
 **Forgetting that circulating survey links point at the old instance.** Public survey links do not follow the project unless you pick the redirect completion action. Recruitment materials, emails and embedded links keep pointing at the source.
 
@@ -342,7 +399,7 @@ The table is searchable and pageable (10 / 25 / 50 / 100 / 500 / All rows, defau
 
 **Generating a migration key too early.** Keys expire after three days and are bound to one destination Instance ID. Generate the key when you are ready to migrate, not while still planning.
 
-**Assuming the subscription and Control Center settings are enough.** On 17.x the two servers must also be configured, at server level by their server administrators, to trust each other. Without that, every key is reported as not valid. Arrange it with both sides' server administrators before planning a migration date.
+**Assuming the subscription and Control Center settings are enough.** On 17.x the two servers must also be configured, at server level by their server administrators, to trust each other, and must be able to reach each other directly over HTTPS by public hostname (no outbound proxy, no private addresses). Without that, key generation fails on the source or the key is reported as not valid at the destination. Arrange it with both sides' server teams before planning a migration date.
 
 **Expecting to receive projects without a subscription.** The asymmetry catches institutions consolidating instances: the subscription is required on the instance being consolidated *into*, not the ones being retired.
 

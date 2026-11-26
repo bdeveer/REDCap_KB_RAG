@@ -121,9 +121,9 @@ A project-level default can be configured: new projects can default to reCAPTCHA
 
 ## Twilio (SMS & Voice Calls)
 
-Twilio is a third-party service that enables SMS and voice call delivery for survey invitations and alerts. Requires a Twilio account and configuration of account credentials in REDCap.
+Twilio is a third-party service that enables SMS and voice call delivery for survey invitations and alerts. Each project that uses it needs its own Twilio account credentials, entered in that project's Project Setup page; there are no system-wide Twilio credentials for projects.
 
-- **Enable Twilio** — Enables or disables the integration globally. Requires a Twilio account and credentials. The REDCap server must be able to make outbound HTTPS requests to `https://api.twilio.com`, and the server must be publicly reachable from the web so Twilio can POST back to it
+- **Enable Twilio** — Enables or disables the integration globally. It is **enabled** on a fresh install, so review it. Turning it off also stops texting in projects that already use it. The REDCap server must be able to make outbound HTTPS requests to `https://api.twilio.com`, and the server must be publicly reachable from the web so Twilio can POST back to it
 - **Who Can Enable Twilio in a Project** — Three options:
   - *All users* — any user with Project Design/Setup rights can enable Twilio in their project
   - *Admin approval* — users can see the setting and request activation, but an administrator must approve before the service is active

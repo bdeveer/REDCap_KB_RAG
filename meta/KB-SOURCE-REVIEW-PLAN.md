@@ -266,7 +266,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | — |
 | 8b Control Center II | CC-10–18 (9; LTS differences, 2–3 per agent) | — |
 | 8c Control Center III | CC-19–26 (8; LTS differences, 2 per agent) | — |
-| 8d REDCap+ and modules | PLUS-01–05, EM-01, TXT-02 (7) | — |
+| 8d REDCap+ and modules | PLUS-01–05, EM-01, TXT-02 (7) | Done 2026-11-25 (7 + 4 from the sweep) |
 | 8e AI and DDP | AI-01–04, DDP-02 (5) | — |
 | 8f CDIS | CDIS-01–05 (5) | — |
 | 9a MyCap I | MYCAP-01–04 (4) | — |
