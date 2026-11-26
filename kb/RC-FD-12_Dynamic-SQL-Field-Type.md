@@ -7,10 +7,10 @@
 | **Domain** | Form Design |
 | **Applies To** | All REDCap project types; requires REDCap administrator access to create or modify |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Dynamic SQL field behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md) |
 | **Synonyms** | what is a dynamic sql field; dropdown populated by a sql query; pull dropdown options from the database; dsql field type in redcap; list records from another project in a dropdown; sql driven dropdown choices; can dynamic sql auto-populate other fields; how to set up a sql field type |
@@ -23,11 +23,11 @@ Dynamic SQL (DSQL) is a special dropdown field type in REDCap where the list of 
 
 Because DSQL fields query the database directly, they are significantly more powerful than ordinary dropdowns. They can pull participant records from another REDCap project, reference the user table to list project team members, or draw from any custom lookup table that has been loaded into the database — such as MedDRA term lists, institutional department directories, or procedure code tables.
 
-DSQL appears in the Data Dictionary with field type `sql` and is otherwise invisible to non-administrator users. Only REDCap administrators can create, modify, or upload Data Dictionaries that contain DSQL fields.
+DSQL appears in the Data Dictionary with field type `sql`. Non-administrator users see and use a DSQL field like any other dropdown during data entry, but they cannot choose the `sql` field type or edit an existing DSQL field in the Online Designer (the field shows a "CANNOT MODIFY 'SQL' FIELD" notice). Only REDCap administrators can create a DSQL field or change its query; Section 3.1 explains what non-administrators can still do with a Data Dictionary that contains DSQL fields.
 
 > **Scope note — what DSQL cannot do:** DSQL populates the dropdown's option list only. It does not push data into other fields when a selection is made, and it does not trigger any downstream logic or auto-fill behavior. A common misconception is that DSQL can act as a lookup: the user selects a participant from the dropdown and other fields (name, date of birth, site) automatically populate. DSQL cannot do this. Functionality of that kind requires a custom external module or a Data Entry Trigger combined with API calls — and even with those approaches, achieving a seamless real-time experience is technically difficult given the way REDCap loads and renders pages.
 
-> **Availability note:** Not all REDCap installations support DSQL. The feature requires that an administrator explicitly enable it and have access to the backend database. Additionally, building and maintaining SQL queries requires database and SQL skills that not all administrators possess. Users who want to use DSQL should check with their local REDCap support team before designing a workflow that depends on it.
+> **Institution-specific:** There is no on/off setting for DSQL — any REDCap administrator can create a DSQL field. Institutions often have a local policy on who writes these queries and when they are allowed, and building and maintaining SQL queries requires database and SQL skills that not all administrators possess. Check with your REDCap administrators before designing a workflow that depends on DSQL.
 
 ---
 
@@ -39,10 +39,14 @@ A standard `dropdown` field has a fixed choice list defined in Column F of the D
 
 ### Required Query Output Format
 
-Every DSQL query must return exactly two columns per row:
+A DSQL query should return two columns per row:
 
 1. **Raw value** — the value that is stored in REDCap when the user selects this option. This becomes the stored field value and is what branching logic and calculated fields evaluate.
 2. **Label** — the human-readable text displayed to the user in the dropdown.
+
+If the query returns only one column, that column is used as both the raw value and the label. Any columns after the second are ignored.
+
+The query must begin with `SELECT`. Anything else at the start — a leading `--` comment, a `WITH` clause, or an opening parenthesis — gives an empty dropdown.
 
 This mirrors the `raw_value, Display Label` format used in ordinary dropdown and radio choice lists. How the query arrives at these two columns — via joins, concatenation, filtering, or any other SQL logic — does not matter, as long as the output conforms to this structure.
 
@@ -54,7 +58,7 @@ This is an important workflow consideration: in high-throughput data entry scena
 
 ### Auto-Complete
 
-DSQL fields automatically use REDCap's dropdown auto-complete feature, which allows users to type partial text to filter the visible options. This behavior cannot be disabled and is always active.
+DSQL fields can use REDCap's dropdown auto-complete feature, which allows users to type partial text to filter the visible options. It is optional: tick the auto-complete checkbox when editing the field in the Online Designer, or put `autocomplete` in the Text Validation Type column of the Data Dictionary. Turn it on for any DSQL field with more than a handful of options.
 
 ---
 
@@ -62,19 +66,24 @@ DSQL fields automatically use REDCap's dropdown auto-complete feature, which all
 
 ### 3.1 Who Can Create or Edit DSQL Fields
 
-Creating or modifying a DSQL field requires REDCap administrator access. This restriction applies in all contexts:
+Creating a DSQL field or changing its query requires REDCap administrator access. This restriction applies in all contexts:
 
-- The Online Designer does not expose the `sql` field type to non-administrators. It cannot be selected from the field type menu by regular users.
-- Uploading a Data Dictionary that contains one or more `sql`-type rows requires administrator access. If a non-administrator attempts to upload a Data Dictionary containing a DSQL field, REDCap will reject the upload.
-- This restriction applies even if the non-administrator is downloading and re-uploading their own project's Data Dictionary. If the project contains DSQL fields, only an administrator can perform the upload.
+- The Online Designer does not expose the `sql` field type to non-administrators. It cannot be selected from the field type menu by regular users, and existing DSQL fields cannot be edited by them.
+- A non-administrator **can** upload a Data Dictionary that contains the project's existing DSQL fields, as long as each field's query in Column F (Choices, Calculations, OR Slider Labels) is unchanged. Other columns of those rows — field label, branching logic, field annotation and so on — can be changed.
+- The upload is blocked if it adds a new DSQL field or changes the query of an existing one. The error tells the user to set Column F back to its original value.
+- When an administrator uploads a Data Dictionary that adds or changes a DSQL query, REDCap shows a warning asking them to review the query before committing the changes.
 
-> **Practical note for project teams:** If your project contains DSQL fields and you need to make Data Dictionary changes, coordinate with your REDCap administrator. The administrator can either perform the upload or temporarily replace DSQL rows with placeholder fields, let the non-administrator upload their changes, and then restore the DSQL configuration.
+> **Practical note for project teams:** Download the current Data Dictionary, make your changes, and leave Column F of every `sql` row exactly as it was. If you need a new DSQL field, add it as an ordinary `dropdown` with a placeholder choice (or leave it out) and ask your REDCap administrator to set the field type and query.
+
+> **Version caveat (17.x, not 16 LTS):** When a non-administrator copies and pastes fields in the Online Designer, any DSQL field among them is refused with the message "SQL fields can only be added by REDCap admins". Ask an administrator to add the DSQL field instead.
+
+> **Version caveat (17.x, not 16 LTS):** Project-level administrators (members of a Project Admin Group) are treated as non-administrators for DSQL: they cannot create or edit DSQL fields. Only a full REDCap administrator can. On 16 LTS, which has no Project Admin Groups, this does not arise. If you are a project-level administrator, route DSQL requests to a full administrator.
 
 ### 3.2 SQL Access Requirements
 
 Writing a DSQL query requires knowledge of the REDCap backend database schema and SQL skills. The administrator must know which tables to query, what the relevant field names are, and how to join tables correctly. REDCap's database structure is stable across minor versions, but administrators should validate queries after major REDCap version upgrades.
 
-The Control Center Database Query Tool ([RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md)) can be used to test and validate queries before embedding them in a DSQL field.
+The Control Center Database Query Tool ([RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md)) can be used to test and validate queries before embedding them in a DSQL field. It resolves smart variables such as `[data-table]` and `[project-id]`, but it has no record context, so `[record-name]` and other record-specific values come through blank there.
 
 ---
 
@@ -94,7 +103,7 @@ DSQL is most useful in three broad scenarios:
 
 ### 5.1 Output Structure
 
-The query must produce exactly two columns in this order:
+The query must start with `SELECT` and should produce two columns in this order (a single column is used as both value and label; extra columns are ignored):
 
 | Column | Purpose |
 |--------|---------|
@@ -141,14 +150,18 @@ REDCap solves this with the `[data-table]` smart variable, which REDCap resolves
 
 Use `[data-table]` when the DSQL queries its own project's data. Use `[data-table:NNNN]` when querying data from a different project, substituting the actual numeric project ID for `NNNN`.
 
+Querying the current project's own data:
+
 ```sql
--- Querying the current project's own data:
 SELECT record, value
 FROM [data-table]
 WHERE project_id = [project-id]
 AND field_name = 'your_field_name'
+```
 
--- Querying data from a different project (project ID 1234):
+Querying data from a different project (project ID 1234):
+
+```sql
 SELECT record, value
 FROM [data-table:1234]
 WHERE project_id = 1234
@@ -169,6 +182,11 @@ Commonly useful smart variables in DSQL queries:
 | `[record-name]` | The record ID of the record currently being viewed |
 | `[event-id]` | The numeric ID of the current event (longitudinal projects) |
 | `[event-name]` | The unique name of the current event (longitudinal projects) |
+| `[record-dag-name]` | The unique name of the current record's Data Access Group |
+
+**Do not wrap these in quotes.** REDCap inserts `[record-name]`, `[event-id]`, `[event-name]` and `[record-dag-name]` already quoted, so write `WHERE record = [record-name]`, not `WHERE record = '[record-name]'`. `[project-id]` and `[data-table]` are inserted as plain values (a number and a table name).
+
+**Where there is no current record.** On pages that are not tied to one record — reports, data exports that show labels, Data Quality, blank instrument PDFs and the Codebook — `[record-name]` resolves to blank. A query filtered only on `record = [record-name]` then returns nothing there. To fall back to the full list when there is no record, write the filter as `if([record-name] = '', 1=1, record = [record-name])`.
 
 **Examples of when this is useful:**
 
@@ -176,8 +194,9 @@ Commonly useful smart variables in DSQL queries:
 - Use `[record-name]` to filter query results to data associated with the current record. For example, a DSQL could present only the visits or specimens that belong to the record being entered, rather than the full list across all records.
 - Use `[event-id]` or `[event-name]` to restrict results to data collected at a particular event, useful when a longitudinal project stores event-specific lookup data.
 
+Example — query the current project's own data without hardcoding the project ID:
+
 ```sql
--- Example: query the current project's own data without hardcoding the project ID
 SELECT record, value
 FROM [data-table]
 WHERE project_id = [project-id]
@@ -195,13 +214,9 @@ ORDER BY value;
 
 This query pulls a participant identifier from one project and builds a label that combines the identifier with the participant's first and last name. The result appears in the dropdown as `P-1001 - Jane Smith`.
 
-```sql
--- Participant lookup: raw value is the participant identifier,
--- label combines identifier with full name.
--- Replace 1234 with the numeric project ID of the source project.
--- Replace field_name values with the actual field names in that project.
--- [data-table:1234] resolves to the correct data table for project 1234.
+The raw value is the participant identifier; the label combines the identifier with the full name. Replace `1234` with the numeric project ID of the source project and the `field_name` values with the actual field names in that project. `[data-table:1234]` resolves to the correct data table for project 1234. Paste the query exactly as shown — it must begin with `SELECT`, so do not put comments above it.
 
+```sql
 SELECT
     a.value,
     CONCAT_WS(' - ', a.value, CONCAT_WS(' ', b.value, c.value)) AS label
@@ -230,17 +245,9 @@ ORDER BY a.value;
 
 This query shows only participants from a source project who have not yet been linked in the target (current) project. As staff process participants and record their IDs in the target project, those participants disappear from the dropdown automatically on the next page load. This prevents double-assignment without requiring any manual maintenance of the choice list.
 
-```sql
--- Self-curating participant list: shows only participants not yet linked
--- in the target (current) project.
--- Replace 1234 with the numeric project ID of the source project.
--- Replace field_name values with the actual field names in each project.
--- 'study_id' is the identifier in the source project.
--- 'linked_participant_id' is the field in the current project that holds
--- the linked ID (i.e., the raw value from this dropdown once selected).
--- [data-table:1234] resolves the source project's data table.
--- [data-table] resolves the current project's data table.
+Replace `1234` with the numeric project ID of the source project and the `field_name` values with the actual field names in each project. `study_id` is the identifier in the source project; `linked_participant_id` is the field in the current project that holds the linked ID (the raw value from this dropdown once selected). `[data-table:1234]` resolves the source project's data table and `[data-table]` the current project's. As with Example 1, the query must begin with `SELECT`.
 
+```sql
 SELECT
     a.value,
     CONCAT_WS(', ', a.value, b.value) AS label
@@ -307,21 +314,37 @@ DSQL queries execute synchronously at page load. Slow or broad queries will dela
 
 **Q: Can I use DSQL on a longitudinal project?**
 
-**A:** Yes. DSQL is a field type and is compatible with longitudinal projects. The query itself is not event-aware — it queries the database and returns results regardless of which event the form is associated with.
+**A:** Yes. DSQL is a field type and is compatible with longitudinal projects. The query is not event-aware by default — it returns the same results regardless of which event the form is associated with — unless you filter it with `[event-id]` or `[event-name]` (Section 5.6).
 
 **Q: Why can't I upload my Data Dictionary after adding a DSQL field?**
 
-**A:** Uploading a Data Dictionary that contains `sql`-type rows requires administrator access. If you are not a REDCap administrator, your upload will be rejected. You will need to coordinate with an administrator to complete the upload.
+**A:** Only REDCap administrators can add a new DSQL field or change a DSQL query. If you are not an administrator, an upload that adds an `sql` row or changes the query in Column F of an existing one is blocked, and the error asks you to set Column F back to its original value. Ask your administrator to add the field or set the query.
 
 **Q: Can I download and re-upload my project's Data Dictionary if it already contains DSQL fields?**
 
-**A:** Not without administrator involvement. Even if you do not modify the DSQL rows, REDCap requires administrator credentials to upload any Data Dictionary that contains `sql`-type rows. Coordinate with your administrator before attempting a Data Dictionary upload on a project with existing DSQL fields.
+**A:** Yes. A non-administrator can upload a Data Dictionary that contains the project's existing DSQL fields, as long as each field's query in Column F is unchanged. You can change other columns of those rows, such as the field label, branching logic or field annotation. The safest approach is to start from a freshly downloaded Data Dictionary so Column F matches exactly.
+
+**Q: What happens to DSQL fields when a project is copied or moved?**
+
+**A:** Copying a project keeps the DSQL fields. The Copy Project page shows a notice with the number of Dynamic SQL fields and suggests checking whether their queries need changing to work in the new project — review any hardcoded project IDs in particular. The REDCap XML project export leaves out the dropdown options of DSQL fields, because they might include identifying data. In MyCap, a DSQL field is delivered as an ordinary dropdown with a fixed choice list.
+
+> **Version caveat (17.x, not 16 LTS):** Project Migration (moving a project to another REDCap instance) converts DSQL fields into static dropdown fields; the notice on the migration page says so. After a migration, ask an administrator on the destination instance to set the field back to `sql` and enter a query if the list needs to stay dynamic.
 
 ---
 
 ## 9. Common Mistakes & Gotchas
 
-**Returning more than two columns.** REDCap expects exactly two columns (raw value and label) from a DSQL query. If the query returns additional columns, behavior may be undefined or the field may not populate correctly. Select only what you need.
+**Returning the columns in the wrong order or number.** REDCap takes the first column as the raw value and the second as the label. A single column is used as both; any columns after the second are ignored. Select only what you need, in that order.
+
+**Starting the query with something other than `SELECT`.** A leading `--` comment, a `WITH` clause or an opening parenthesis gives an empty dropdown. Put the query's explanation in the field note or a nearby descriptive field, or place comments after the `SELECT` line.
+
+**Leaving Column F empty for an `sql` row.** A DSQL field needs a query in Column F of the Data Dictionary.
+
+> **Version caveat (17.x, not 16 LTS):** The Data Dictionary upload warns "This Dynamic SQL field has no query provided in column F" for an `sql` row with an empty Column F. On 16 LTS there is no warning, so check every `sql` row has its query before uploading.
+
+**Quoting smart variables.** `[record-name]`, `[event-id]`, `[event-name]` and `[record-dag-name]` are inserted already quoted; wrapping them in quotes yourself breaks the query. See Section 5.6.
+
+**Making the record ID field a DSQL field.** The record ID field (the first field in the project) cannot be of type `sql`.
 
 **No ORDER BY clause.** Omitting `ORDER BY` produces an unpredictably ordered dropdown that may present options in a different sequence on each page load. Always sort the output.
 
@@ -331,9 +354,9 @@ DSQL queries execute synchronously at page load. Slow or broad queries will dela
 
 **Hardcoding `redcap_data` instead of using `[data-table]`.** On installations that use data table sub-tables, a query written as `FROM redcap_data` may point to the wrong table and return no results. This is a silent failure — the DSQL field will simply appear empty. Always use `[data-table]` for the current project and `[data-table:NNNN]` for any other project. This also makes queries portable: if a project is migrated to a different installation or the table structure changes, the smart variable resolves correctly without requiring a manual query update.
 
-**Building DSQL workflows without confirming the feature is enabled.** Some institutions disable DSQL for security reasons. Confirm availability with your REDCap support team before designing a workflow that depends on it.
+**Building DSQL workflows without checking local policy.** Some institutions restrict who may write DSQL queries or when they are allowed. Confirm with your REDCap administrators before designing a workflow that depends on DSQL.
 
-**Editing DSQL rows in the Data Dictionary as a non-administrator.** Attempting to upload a Data Dictionary with `sql`-type rows without administrator privileges will fail. Note also: non-administrators should not modify the SQL content of existing DSQL rows even if they could upload the file — an incorrect query can break the field silently.
+**Changing DSQL queries in the Data Dictionary as a non-administrator.** A non-administrator's upload is blocked if it adds an `sql` row or changes the query in Column F of an existing one; the error asks you to set Column F back to its original value. Other columns of DSQL rows can be changed. Ask an administrator for any change to the query itself.
 
 **Not documenting SQL queries externally when they reference specific field names or table structures.** A DSQL query that joins on specific REDCap field names (e.g., filtering a user list by role or site using fields stored in the data table) silently breaks if those field names are ever renamed or the fields are moved. Unlike branching logic errors, a broken DSQL query produces no warning — the dropdown simply appears empty. For any DSQL field whose query references specific field variable names, role names, or project IDs, maintain an external record (a project documentation instrument, a README, or a comment in a nearby descriptive field) that identifies what the query depends on. Treat those field names and identifiers as frozen, and perform a DSQL audit whenever referenced fields are renamed or the data model changes.
 

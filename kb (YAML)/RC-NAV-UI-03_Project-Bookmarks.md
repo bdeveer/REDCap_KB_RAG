@@ -5,12 +5,12 @@ domain: Project Navigation
 applies_to:
 - All project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Project
+  Bookmarks behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 related:
 - id: RC-NAV-UI-01
   title: 'Project Navigation UI, RC-NAV-UI-02 — Project Menu Reference, RC-PROJ-01
@@ -28,6 +28,7 @@ synonyms:
 - adding navigation shortcuts to a project
 - how to link between related redcap projects
 - custom menu links for project managers
+- do project bookmarks copy with copy project
 ---
 
 # 1. Overview
@@ -40,7 +41,11 @@ Project Bookmarks is a project-level module that allows project managers to crea
 
 ## 2.1 Where Project Bookmarks Appear
 
-Project Bookmarks are configured from the left-hand project menu under the **Project Bookmarks** section. Once a bookmark is created and saved, it appears as a clickable link in that section for all users who have access to it. The section only appears in the menu if at least one bookmark has been created for the project.
+Project Bookmarks are configured from the **Project Setup** page (**Set up project bookmarks (optional)** → **Add or edit bookmarks**), which requires the **Project Design and Setup** user right. Once a bookmark is saved, it appears as a clickable link in the **Project Bookmarks** section of the left-hand project menu for every user allowed to see it. The section only appears when the current user can see at least one bookmark; users with Project Design and Setup rights also get an **Edit** link in that section, which opens the setup page.
+
+**Administrators** see every bookmark regardless of its User Access setting. When an administrator impersonates a user, the menu shows that user's view.
+
+**Custom Application Links** are the system-wide equivalent: administrators create them in **Control Center → Custom Application Links**, and they appear at the bottom of the **Applications** section in every project. They can be limited to certain users or excluded from certain projects. Custom Application Links support Smart Variables only; field-variable piping works only in project bookmarks.
 
 ## 2.2 Link Types
 
@@ -48,13 +53,13 @@ Each bookmark has a **link type** that determines how the link behaves when clic
 
 **Simple Link** — A standard HTML hyperlink that takes the user to the specified URL. The destination site receives no information about who is visiting. This is the appropriate choice for most use cases.
 
-**REDCap Project Link** — A simplified option for linking to another REDCap project. Instead of entering a URL manually, the user selects a project from a list of REDCap projects they have access to. The link is then built automatically. This is useful for connecting related projects that users must navigate between frequently. Note that administrators can link to any project, while regular users can only link to projects they have access to.
+**REDCap Project Link** — A simplified option for linking to another REDCap project. Instead of entering a URL manually, the user selects a project from a list of REDCap projects they have access to. The link is then built automatically. This is useful for connecting related projects that users must navigate between frequently. For a regular user, the list shows all of their own projects (including those in Analysis/Cleanup or marked Completed). For an administrator, the list shows Development and Production projects that any user of the current project can access. When the user clicks a REDCap Project bookmark from inside a record, the record name (and event, in longitudinal projects) is always appended; **Append project ID to URL** has no effect on this link type.
 
-**Advanced Link** — A developer-oriented option that uses an HTTP POST request to send an encrypted identity token (authkey) to the destination website, allowing the external site to verify who the REDCap user is. This requires that the destination site be developed or managed by someone who can write the necessary server-side code to receive and process the authkey. See Section 4 for technical details.
+**Advanced Link** — A developer-oriented option that uses an HTTP POST request to send an identity token (authkey) to the destination website, allowing the external site to verify who the REDCap user is. This requires that the destination site be developed or managed by someone who can write the necessary server-side code to receive and process the authkey. The option is only offered when the API is enabled on your REDCap server. See Section 4 for technical details.
 
 ## 2.3 User Access
 
-By default, a bookmark is visible to **all users** in the project. Access can instead be restricted to **selected users** or **selected Data Access Groups**, in which case a list of users or DAGs appears for selection. Users or DAGs not in the selected list will not see the bookmark in their menu.
+By default, a bookmark is visible to **All users** in the project. Access can instead be restricted to **Selected users** or **Selected DAGs** (the DAG option is offered only if the project has Data Access Groups), in which case a list of users or DAGs appears for selection. Users or DAGs not in the selected list will not see the bookmark in their menu, and users who are not assigned to any DAG do not see DAG-restricted bookmarks. Removing a user from the project also removes them from bookmark user lists.
 
 ## 2.4 Piping in Bookmark URLs
 
@@ -67,7 +72,7 @@ Field variables and Smart Variables can be piped directly into the URL of a Proj
 
 Two optional settings let a bookmark automatically append information to the URL:
 
-**Append record info to URL** — When checked, REDCap appends the current record name and (for longitudinal projects) the current event name to the URL's query string in the form `record=RECORDNAME&event=UNIQUEEVENTNAME`. This only works when the user clicks the bookmark while viewing a data collection form inside a record. If the user is not inside a record, nothing is appended. This is useful when linking to an external system that can display record-specific information.
+**Append record info to URL** — When checked, REDCap appends the current record name and (for longitudinal projects) the current event name to the URL's query string in the form `record=RECORDNAME&event=UNIQUEEVENTNAME`. This works when the user clicks the bookmark while viewing a data collection form inside a record, or from the Record Home Page (where only the record name is appended, with no event). If the user is not inside a record, nothing is appended. This is useful when linking to an external system that can display record-specific information.
 
 > **Privacy warning:** If record names in the project are themselves identifiers (e.g., social security numbers, medical record numbers), enabling this option will send those identifiers to the external site. Only use this option when you control or trust the destination site and have confirmed it is appropriate to share record names.
 
@@ -79,17 +84,17 @@ Two optional settings let a bookmark automatically append information to the URL
 
 ## 3.1 Navigate to Project Bookmarks
 
-From within a project, click **Project Bookmarks** in the left-hand menu. This opens the Project Bookmarks setup page.
+From within a project, go to **Project Setup** and, under **Set up project bookmarks (optional)**, click **Add or edit bookmarks**. This opens the Project Bookmarks setup page. Once at least one bookmark is visible, you can also use the **Edit** link in the **Project Bookmarks** section of the left-hand menu.
 
-> Configuring Project Bookmarks requires appropriate user rights. Users without the necessary privileges will not see the configuration interface, though they may still see published bookmarks in the menu.
+> Configuring Project Bookmarks requires the **Project Design and Setup** user right. Users without it will not see the configuration interface, though they still see the bookmarks they are allowed to see in the menu.
 
 ## 3.2 Add a New Bookmark
 
 1. On the Project Bookmarks setup page, click **Add a new bookmark** (or click directly into the empty row at the bottom of the bookmarks table).
 2. Fill in the **Link Label** — this is the text that will appear on the left-hand menu.
 3. Enter the **Link URL** — the full web address of the destination page. For REDCap Project links, select the project from the dropdown instead of typing a URL.
-4. Select the **Link Type** (Simple Link, Advanced Link, or REDCap Project).
-5. Set **User Access** to either "All users" or "Selected users." If "Selected users" is chosen, select which users or DAGs can see the link.
+4. Select the **Link Type** (Simple Link, Advanced Link, or REDCap Project). URLs starting with `javascript:` or `vbscript:` are not accepted.
+5. Set **User Access** to "All users," "Selected users" or "Selected DAGs," and if restricting, select which users or DAGs can see the link.
 6. Optionally check:
    - **Opens new window** — the link opens in a new browser tab/window
    - **Append record info to URL** — appends record name and event name (record context only)
@@ -98,7 +103,7 @@ From within a project, click **Project Bookmarks** in the left-hand menu. This o
 
 ## 3.3 Edit an Existing Bookmark
 
-Click on the label or URL of an existing bookmark row to edit it inline. Changes save automatically when you click away from the field.
+Click a bookmark's label or URL in the table to open it in an edit box, make the change, then click **Save**. Other options are changed in the same row. Changes are not saved until you click Save; clicking away from the field does not save them.
 
 ## 3.4 Reorder Bookmarks
 
@@ -106,7 +111,9 @@ Bookmarks can be dragged and reordered using the drag handle on the left side of
 
 ## 3.5 Delete a Bookmark
 
-Click the **Delete** button in the rightmost column of the bookmark row. The bookmark is removed immediately.
+Click the **Delete** button in the rightmost column of the bookmark row and confirm the prompt. The bookmark is then removed.
+
+Clicks on bookmarks are recorded in the project's Logging as "Click project bookmark".
 
 ---
 
@@ -116,8 +123,8 @@ The Advanced Link type is intended for scenarios where an external website needs
 
 **How it works:**
 
-1. When the user clicks an Advanced Link, REDCap generates an encrypted authkey and sends it to the destination URL via HTTP POST (the POST body contains a single field named `authkey`).
-2. The destination site receives the authkey and must immediately send it back to the REDCap API via a POST request. This API request requires only two parameters: `authkey` (the value received) and `format` (response format: `csv`, `json`, or `xml`). No API token is needed for this specific call.
+1. When the user clicks an Advanced Link, REDCap generates an authkey and sends it to the destination URL via HTTP POST (the POST body contains a single field named `authkey`).
+2. The destination site receives the authkey and posts it back to the REDCap API to confirm who the user is. This API request requires only two parameters: `authkey` (the value received) and `format` (response format: `csv`, `json`, or `xml`; defaults to `csv` if omitted). No API token is needed for this specific call. The authkey works only while the user's REDCap session is active, so the destination site should check it promptly.
 3. REDCap validates the authkey and returns the following fields: `username`, `project_id`, `data_access_group_name`, `data_access_group_id`, and `callback_url`. If the authkey is invalid or the user's session has expired, REDCap returns `0`.
 4. The external site can then use the returned values (e.g., the username) to verify identity and implement whatever user-specific logic it requires.
 
@@ -133,25 +140,28 @@ If the steps above are unclear or not feasible for your team, the Advanced Link 
 # 5. Common Questions
 
 **Q: Who can create and configure project bookmarks?**
-Users need the appropriate project user right to access the Project Bookmarks setup page. Project-level access to this feature is typically tied to project design or setup rights. Contact your REDCap administrator if you are unsure whether you have this right.
+Users with the **Project Design and Setup** user right. The setup page is reached from **Project Setup → Set up project bookmarks (optional) → Add or edit bookmarks**.
 
 **Q: Can I link to a REDCap project I don't have access to?**
-Regular users can only link to REDCap projects they have access to. Administrators can select any project in the system when creating a REDCap Project link.
+Not with a REDCap Project link. Regular users can only pick from their own projects. Administrators pick from Development and Production projects that any user of the current project can access.
 
 **Q: Do project bookmarks appear for survey participants?**
 No. Project Bookmarks appear in the left-hand project menu, which is only visible to authenticated REDCap users working within the project. Survey respondents do not see the project menu.
 
 **Q: Can I use the same bookmark setup in multiple projects?**
-No, bookmarks are configured per project and do not carry over to other projects. You must set them up separately in each project where they are needed.
+Yes, by copying the project. **Copy Project** copies bookmarks when the **Project bookmarks** box is ticked (it is ticked by default when the project has bookmarks), and projects created from a template get the template's bookmarks. Bookmarks are not included in the REDCap Project (XML) export, so a project created from an XML file starts without them. For a system-wide link in every project, ask an administrator about Custom Application Links.
+
+**Q: Who sees a bookmark limited to selected users or DAGs?**
+Only the selected users, or members of the selected DAGs. Administrators always see every bookmark; impersonate a user to check what that user sees.
 
 **Q: Can I use Smart Variables in the URL?**
 Yes. Smart Variables that work outside a record context (such as `[redcap-base-url]` or `[project-id]`) can be used freely. Field variables and record-context Smart Variables only resolve when the user is in a record context.
 
 **Q: What happens if the "Append record info" option is enabled but the user clicks the bookmark outside of a record?**
-Nothing is appended to the URL. The user is taken to the base URL without any record or event parameters added.
+Nothing is appended to the URL. The user is taken to the base URL without any record or event parameters added. From the Record Home Page, the record name is appended but not the event.
 
 **Q: Can I restrict a bookmark to a specific Data Access Group?**
-Yes. When setting User Access to "Selected users," you can choose specific users or specific Data Access Groups. Users in groups not selected will not see the bookmark.
+Yes. Set User Access to "Selected DAGs" (offered only when the project has DAGs) and choose the groups. Users in groups not selected, and users not assigned to any DAG, will not see the bookmark.
 
 ---
 
@@ -163,7 +173,9 @@ Yes. When setting User Access to "Selected users," you can choose specific users
 
 **Bookmark labels that are too long.** The label appears in the left-hand menu, which has limited horizontal space. Very long labels may be truncated or wrap in a way that looks awkward. Keep labels short and descriptive.
 
-**Links to other REDCap projects only list accessible projects.** When creating a REDCap Project link, only projects the current user can access appear in the selection list. If you need to link to a project you cannot access, an administrator must create the bookmark.
+**Links to other REDCap projects only list certain projects.** When a regular user creates a REDCap Project link, only that user's own projects appear in the selection list. An administrator's list shows Development and Production projects that any user of the current project can access.
+
+**Restricted bookmarks disappear after Copy Project.** The copy keeps each bookmark's User Access setting but not its list of selected users or DAGs, so bookmarks limited to selected users or DAGs are hidden from non-admin users in the new project. After copying, open the bookmarks setup page in the new project and re-select the users or DAGs for each restricted bookmark.
 
 **Field variables resolve only in record context.** Piping a field variable (e.g., `[my_field]`) into a bookmark URL will not work if the user clicks the bookmark from outside a record. Use Smart Variables that resolve globally (e.g., `[redcap-base-url]`) if the bookmark should work from anywhere in the project.
 

@@ -231,7 +231,7 @@ The branching logic on the "Other (specify)" field should match the exact code a
 
 Adjust to match whatever code your project assigns to the "Other" choice.
 
-**Do not embed the field name in the choice label as a substitute.** A pattern sometimes seen is writing the companion field name directly in the choice label (e.g., `666, Other — {specify_field}`). REDCap does not parse curly-brace or similar notation in choice labels — the text renders literally and the field remains unconditionally visible. Use standard branching logic on the companion field instead.
+**Embedding does not replace branching logic.** Writing the companion field in curly braces in a radio or checkbox choice label (e.g., `666, Other {specify_field}`) is Field Embedding: REDCap places the text box next to that choice, on the same instrument. Embedding only moves the field; it does not hide it when "Other" is not selected. Keep the branching logic above on the companion field whether or not you embed it. Drop-down choice labels cannot host an embedded field. See [RC-FD-07 — Field Embedding](RC-FD-07_Field-Embedding.md).
 
 **Rationale:** When the free-text field is hidden unless "Other" is selected, a blank value unambiguously means "not applicable." When it is always visible, a blank value is ambiguous — it could mean not applicable, not answered, or overlooked. Branching logic eliminates that ambiguity and keeps forms clean.
 

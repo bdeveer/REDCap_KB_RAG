@@ -256,7 +256,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 6b Data entry | DE-01/02/11/12, DDE-01 (5) | — |
 | 6c Data quality and navigation | DQ-01, NAV-REC-01/04, NAV-UI-01/02 (5) | Done 2026-11-26 (5 + 3 from the sweep) |
 | 6d Designer I | FD-01/04/05 (3) | Done 2026-11-26 (3 + 1 from the sweep) |
-| 6e Designer II | FD-07/11/12, NAV-UI-03/04 (5) | — |
+| 6e Designer II | FD-07/11/12, NAV-UI-03/04 (5) | Done 2026-11-26 (5 + 1 from the sweep) |
 | 6f Project and misc | PROJ-02/03/04, FILE-01, CAL-01, PROF-01 (6) | — |
 | 7a API | API-02–13 except 03, 08 (10; 5 per agent) | — |
 | 7b API | API-14–24 except 18 (10; 5 per agent) | — |
