@@ -265,6 +265,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-DE-05 — Field Validations
 - RC-EM-01 — External Modules: Overview & Manager
+- RC-TXT-02 — Texting: Administrator Setup
 
 ---
 
@@ -2940,6 +2941,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-SURV-07 — Survey Queue
 - RC-SURV-09 — PDF Snapshots of Records
+- RC-PLUS-03 — REDCap+: Reward Services
 
 ---
 
@@ -3547,9 +3549,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 - RC-CC-02 — Control Center: General System Configuration
 - RC-DE-13 — Record Administration: Choose Action for Record
+- RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-EM-03 — External Modules: Installed Catalog — Test / Staging
 - RC-EM-04 — External Modules: Installed Catalog — Development
-- RC-CC-06 — Control Center: Modules & Services Configuration
 
 **Inbound links (referenced by):**
 - RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)
@@ -6096,6 +6098,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Outbound links:**
 - RC-TXT-01 — Texting in REDCap: Setup and Usage
 - RC-CC-06 — Control Center: Modules & Services Configuration
+- RC-CC-08 — Control Center: Home Page, Templates & Project Defaults
 
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
@@ -6403,6 +6406,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-INFRA-03 — REDCap Versions, Release Lines & Patching
 - RC-CC-02 — Control Center: General System Configuration
+- RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 - RC-PIPE-03 — Smart Variables Overview
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 
