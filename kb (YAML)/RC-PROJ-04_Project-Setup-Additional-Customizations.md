@@ -6,12 +6,12 @@ applies_to:
 - All REDCap projects
 - requires Project Design and Setup rights
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Additional
+  customizations behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-PROJ-01 — Project Lifecycle: Status and Settings'
-version: '1.2'
-last_updated: 2026-08
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-PROJ-01
   title: 'Project Lifecycle: Status and Settings'
@@ -44,7 +44,11 @@ synonyms:
 
 # 1. Overview
 
-The **Additional Customizations** section of the Project Setup page contains a collection of project-level settings that control how records are displayed, how data quality annotation works, how PDFs are formatted, how missing data is handled, and how various data entry behaviors are enforced. These settings are independent of one another and can be configured in any order. Most take effect immediately upon saving; none require Draft Mode.
+The **Additional Customizations** section of the Project Setup page contains a collection of project-level settings that control how records are displayed, how data quality annotation works, how PDFs are formatted, how missing data is handled, and how various data entry behaviors are enforced. These settings are independent of one another and can be configured in any order. Most take effect immediately upon saving; none require Draft Mode. The one exception to free editing is the list of missing data codes, which becomes read-only once the project is in Production (see Section 7.1).
+
+Some options appear in the dialog only if a REDCap administrator has enabled the underlying feature at the system level: File Version History, Protected Email Mode, the Data Entry Trigger, and the record-locking and File Upload enhancements (Section 15).
+
+> **Institution-specific:** Which of these system-gated options are available, and whether an administrator must approve their use, varies between installations. Check with your REDCap administrators if an option described here does not appear in your project.
 
 This article covers all settings available in that section. For settings related to project status, moving to Production, or design changes via Draft Mode, see [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md).
 
@@ -66,9 +70,9 @@ By default, records are identified in REDCap drop-down lists and instrument head
 
 **Constraints and notes:**
 - Only field variables from the current project can be referenced.
-- Piping modifiers (e.g., `:value`) are not supported in the Custom Record Label.
+- The label uses REDCap's standard piping, so Smart Variables can also be used. Test any piping modifier (e.g., `:value`) on a few records before relying on it.
 - If a referenced field is blank for a given record, that portion of the label will appear empty.
-- In longitudinal projects, the label draws field values from the first event the variable appears in.
+- In longitudinal projects, a variable with no event prefix draws its value from the first event of the record's current arm. To pull the value from a specific event, prefix the unique event name, e.g. `[baseline_arm_1][last_name]`, or use `[first-event-name][last_name]`.
 - The label is displayed for usability purposes only; it does not affect how data is stored, exported, or addressed via the API.
 
 ---
@@ -79,8 +83,9 @@ REDCap's record ID is always unique, but a project may need a second field — s
 
 **Behavior when enabled:**
 - When a user enters or imports a value for the designated field, REDCap checks in real time whether that value already exists in another record.
-- If a duplicate is detected, REDCap prompts the user to enter a different value before saving.
-- This check applies both to data entry via the UI and to data imports.
+- If a duplicate is detected (in another record, or in another event of the same record), REDCap prompts the user to enter a different value before saving.
+- This check applies to data entry forms, surveys, the Data Import Tool and the API. An import is rejected if a value duplicates one already in the project or another row in the same import file.
+- Missing data codes (Section 7) are exempt from the check, so several records can hold the same missing code in this field.
 
 **Display options:** Two additional toggles control how the secondary unique field value is shown alongside record names throughout the project interface:
 
@@ -89,13 +94,13 @@ REDCap's record ID is always unique, but a project may need a second field — s
 
 **Notes:**
 - Only one field can be designated as the Secondary Unique Field per project.
-- The field must be a text field; calculated fields, notes fields, and other field types cannot be designated.
-- Existing records are not retroactively validated when the setting is first enabled. Only new or edited values are checked going forward.
+- The field must be a text field, and not one using @CALCTEXT or @CALCDATE; calculated fields, notes fields, and other field types cannot be designated.
+- A field that already holds duplicate values across records cannot be selected. REDCap rejects it with the message **FIELD CONTAINS DUPLICATE VALUES!** — remove the duplicates first, then designate the field.
 - The Secondary Unique Field value also appears at the top right of PDF exports (see Section 6).
 
 ---
 
-> **Best-practice warning added in 15.8.0.** The Secondary Unique Field section now carries a warning discouraging its casual use. It creates a second identifier that REDCap must keep unique across the project, and the uniqueness check has had its own defects — see the concurrency issue below. Prefer designing the record ID correctly over adding a second unique key.
+> **Warning — surveys and identifiers:** When surveys are enabled, the Secondary Unique Field section warns against using it on a survey for an identifier field such as a Medical Record Number, Social Security Number or email address. Because the duplicate check tells the participant when a value is already in use, a participant could test values to find out whether a specific person has taken the survey. Use a non-identifying field as the Secondary Unique Field on surveys.
 
 > **Version caveat (below 15.0.13 Standard):** With a Secondary Unique Field enabled, two users or survey participants submitting the **same SUF value at nearly the same time** could both succeed — the uniqueness check did not catch the collision (fixed 15.0.11), and where duplicates already existed from that defect, further handling was corrected in 15.0.13. If a project has relied on SUF uniqueness since before those versions, it is worth checking for duplicates rather than assuming.
 
@@ -109,8 +114,9 @@ Select the desired field from the drop-down menu. REDCap will use that field's v
 
 **Notes:**
 - The sort is applied to the displayed list only; stored record IDs and data are not affected.
-- Sorting is alphabetical/lexicographic. For date fields, this produces chronological order if ISO format dates are used.
-- If the selected field has no value for a given record, that record will appear at the top or bottom of the list depending on how empty strings sort relative to the chosen field's values.
+- Sorting is a natural, case-insensitive sort: "Smith" and "smith" sort together, and "2" sorts before "10". Date-validated fields sort chronologically, because REDCap stores dates in year-month-day form.
+- Records with no value in the selected field appear first in the list.
+- This option is not available in longitudinal projects.
 
 ---
 
@@ -125,7 +131,7 @@ REDCap provides two mutually exclusive annotation modes for tracking data questi
 **Data Resolution Workflow** — A structured query management system suited for clinical trials and studies with formal data quality requirements. Each annotation becomes a tracked query with an open/closed status and a full audit trail. Queries can be opened, responded to, and closed by users with appropriate privileges, and are accessible from both the data entry form and the Data Quality module. See [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md) for full details.
 
 **Additional options for Field Comments:**
-- **Allow users to edit or delete Field Comments** — When enabled, users who posted a comment may edit or delete it. This option is not available for Data Resolution Workflow comments, which are always immutable once posted.
+- **Allow users to edit or delete Field Comments** — On by default. While it is on, any user with View & Edit rights to an instrument can edit or delete any Field Comment on that instrument, including comments posted by other users. If comments must be preserved exactly as written (for example, as part of an audit trail), turn this option off. This option is not available for Data Resolution Workflow comments, which are always immutable once posted.
 
 **Additional options for Data Resolution Workflow:**
 - **Hide closed/verified data queries from Data Quality results** — When enabled, queries that have been closed or verified no longer appear in the Data Quality module results. This reduces visual noise for teams that have already resolved flagged issues.
@@ -145,30 +151,32 @@ PDFs generated from REDCap data entry forms and surveys can be customized using 
 
 **1. Custom header text**
 
-Text entered here appears at the top left of every PDF page. Only static text is supported — piping and variable references are not rendered. If left blank, REDCap displays "Confidential" by default.
+Text entered here appears at the top left of every PDF page. Only static text is supported — piping and variable references are not rendered. The default text is "Confidential". If you clear the text box, the header is left blank.
 
 This text is suppressed from PDFs that are emailed to, viewed by, or downloaded by survey participants.
+
+> **Version caveat (17.3 LTS and 17.6 Standard):** Stored PDF copies — PDF Snapshots and e-Consent PDFs — apply the project's PDF customizations, including the custom header text, even when the PDF comes from a survey. PDFs that participants view or download live still omit the header. On 16.0 LTS, stored survey copies omit it too. If your header text is meant for staff only, check a stored e-Consent or snapshot PDF on your version before relying on it being hidden from participants.
 
 **2. REDCap logo and website URL**
 
 Controls what appears at the bottom right of every PDF page.
 
-- **Display REDCap logo and website URL (default)** — Shows the standard REDCap logo and the system URL.
-- **Hide REDCap logo/URL and instead display the following text** — Replaces the logo and URL with custom text. The default replacement text is "Powered by REDCap," but this can be changed to any static string.
+- **Display REDCap logo and website URL (default)** — Shows the standard REDCap logo and a link to the REDCap project website (projectredcap.org).
+- **Hide REDCap logo/URL and instead display the following text** — Replaces the logo and URL with the static text you enter. The "Powered by REDCap" wording is fixed and cannot be changed.
 
 **3. Secondary Unique Field in PDF header**
 
 If the Secondary Unique Field is enabled and set to display (see Section 3), this option controls whether its value appears at the top right corner of every PDF page.
 
 - **Keep it displayed** (default)
-- **Hide it**
+- **Hide it** — Also hides the Custom Record Label (Section 2) from the PDF header.
 
 **4. Hide Record ID from PDF header**
 
 By default, the record ID appears in the header of every PDF page. This option removes the record ID from the header entirely.
 
 - **Keep it displayed** (default)
-- **Hide it** — Useful when printing PDFs for participants where the internal record ID should not be visible.
+- **Hide it** — Useful when printing PDFs for participants where the internal record ID should not be visible. The Secondary Unique Field value and the Custom Record Label are removed from the header along with the record ID.
 
 ---
 
@@ -186,11 +194,15 @@ REDCap provides an optional list of standardized codes (drawn from international
 
 If no codes are entered, the feature remains disabled and no M icon will appear on forms.
 
+Once the project is in Production, the code list is read-only. An **Unlock** option makes it editable again after a warning; change codes in a Production project only with care, because existing data may already use them.
+
 ## 7.2 Data Entry Usage
 
-Once codes are configured, an **M** icon appears next to every field on data entry forms. Clicking the icon opens a picker showing all defined codes. Selecting a code saves it as the literal data value for the field — the same way a text value would be saved.
+Once codes are configured, an **M** icon appears next to fields on data entry forms. Clicking the icon opens a picker showing all defined codes. Selecting a code saves it as the literal data value for the field — the same way a text value would be saved.
 
-Missing data codes can be applied to any field type, including dates, sliders, and file upload fields.
+The M icon is not shown for calculated fields, the form status field, the randomization field, or fields that are read-only or locked, and it never appears on survey pages.
+
+Missing data codes can otherwise be applied to most field types, including dates, sliders, and file upload fields.
 
 ## 7.3 Choosing Safe Codes
 
@@ -200,7 +212,9 @@ Because a missing code is stored as a literal field value, it must never overlap
 
 ## 7.4 Behavior with Branching Logic
 
-If a field hidden by branching logic has a missing data code saved for it, REDCap will hide the field but will not delete the missing data code. The field can remain "blank" with a missing code while being invisible on the form.
+If branching logic hides a field that holds a missing data code, REDCap clears the code without asking — on data entry forms and on surveys. Unlike a real value, there is no "Erase the Value of the Field?" prompt to cancel.
+
+If you need the missing code kept, do not use branching logic to hide that field, or reconsider the design so that the field stays visible whenever a missing code may need to be recorded.
 
 ## 7.5 Using Missing Codes in Logic
 
@@ -232,7 +246,7 @@ Missing data codes are exported as literal string values in the data export. Whe
 
 # 8. Data History Popup
 
-When enabled, a clock icon appears next to every field on every data collection instrument. Clicking the icon displays a chronological history of all values that field has held for that record — including the previous value, who made each change, and the timestamp of each change.
+This setting is on by default. When enabled, a clock icon appears next to every field on every data collection instrument. Clicking the icon displays a chronological history of all values that field has held for that record — including the previous value, who made each change, and the timestamp of each change.
 
 This feature is particularly useful for audit trail review and for studies that need to demonstrate a complete change history for regulatory purposes.
 
@@ -247,7 +261,9 @@ The **File Version History** feature applies to File Upload fields. When enabled
 This eliminates the need to delete an old file before uploading a replacement and ensures that older versions remain available for review or download.
 
 **Important constraints:**
+- The option appears only if a REDCap administrator has enabled File Version History at the system level. Where it is available, it is on by default in the project.
 - The Data History popup (Section 8) must be enabled for File Version History to work.
+- Signature fields are excluded from version history.
 - Previous file versions are accessible only through the Data History popup. They do not appear in other areas of the project, such as the bulk file download zip for a record or a project-wide file export.
 
 ---
@@ -256,7 +272,7 @@ This eliminates the need to delete an old file before uploading a replacement an
 
 When enabled, a **Today** button appears to the right of all date fields, and a **Now** button appears to the right of all time, datetime, and datetime_seconds fields on both forms and surveys. Clicking the button automatically populates the field with the current date or time.
 
-This setting applies project-wide. There is no per-field toggle for this button from Project Setup; to suppress the button on a specific field, use the `@HIDEBUTTON` action tag if available at your institution.
+This setting applies project-wide. There is no per-field toggle for this button from Project Setup; to suppress the button on a specific field, use the `@HIDEBUTTON` action tag.
 
 ---
 
@@ -266,9 +282,11 @@ By default, when a field is hidden by branching logic on a data entry form, REDC
 
 When this setting is **enabled**, the behavior changes: any field that currently contains a value will not be hidden by branching logic at all. Instead of asking the user whether to erase the value, the field stays visible even if its branching logic condition is no longer met. Fields with no value continue to hide normally.
 
-**Effect:** Data already entered is preserved. Fields with values are effectively exempt from branching logic.
+**Effect:** Data already entered is preserved. Fields with values are effectively exempt from branching logic. A field that stays visible only because it has a value is marked with an indicator icon (**Field should be hidden by branching logic but is shown because it has a value**). If the user clears that value, the field then hides.
 
-**Scope:** This setting affects both data entry forms and survey pages.
+**Scope:** This setting affects both data entry forms and survey pages: fields with values stay visible on both. The indicator icon that marks a field shown despite its branching logic appears on data entry forms only.
+
+**Data Quality:** While this setting is on, the Data Quality rule **Hidden fields that contain values** is relabelled **Fields that contain values that should be hidden**, since such fields are now shown on forms.
 
 **When to use:** Enable this setting if your workflow requires that previously entered data never be erased by branching logic — for example, in projects where data is collected in stages and earlier entries must remain visible even if later entries would otherwise trigger the field to hide.
 
@@ -280,12 +298,13 @@ When this setting is **enabled**, the behavior changes: any field that currently
 
 When enabled, REDCap prompts the user to enter a reason (up to 200 characters) in a text box whenever they click Save on an instrument that already has data saved for one or more fields.
 
-The reason text is stored in the project's Logging and can be reviewed on the Logging page at any time.
+The reason text is stored in the project's Logging and can be reviewed on the Logging page at any time. A reason is also requested when a user deletes a record.
 
 **Trigger conditions:**
 - The prompt appears only when there is at least one field on the instrument with a previously saved value.
 - It does not appear when entering data for the first time on an instrument (i.e., when all fields are blank for that instrument and record).
-- It applies to data entry via the user interface only. Data imported via the Data Import Tool or API does not trigger the reason prompt.
+- The Data Import Tool also asks for a reason: before the import is committed, each existing record that the import would change needs a reason (required, up to 200 characters).
+- API imports do not ask for a reason.
 
 **Use cases:** This setting is commonly used in studies with regulatory requirements for audit trails, or in any project where a change log with explanations is required for data quality or compliance purposes.
 
@@ -295,7 +314,9 @@ The reason text is stored in the project's Logging and can be reviewed on the Lo
 
 **Protected Email Mode** prevents sensitive identifying data (PHI/PII) from being sent in plain text within outgoing emails generated by REDCap — specifically, alerts, survey invitations, and survey confirmation emails.
 
-When triggered, REDCap does not send the full email content to the recipient. Instead, it sends a surrogate email containing a link to a secure REDCap page where the recipient can read the original message. If the recipient is accessing this page for the first time on a given device (or has not accessed it within the past 30 days), REDCap sends a security code to their inbox to authenticate before the protected message is displayed. Once authenticated, the recipient can view protected emails for up to 30 days on that device without needing to re-authenticate.
+When triggered, REDCap does not send the full email content to the recipient. Instead, it sends a surrogate email containing a link to a secure REDCap page where the recipient can read the original message. If the recipient is accessing this page for the first time on a given device (or has not accessed it within the past 30 days), REDCap sends a security code to their inbox to authenticate before the protected message is displayed. Once authenticated, the recipient can view protected emails for up to 30 days on that device without needing to re-authenticate. On a shared device, the recipient can tick **This is a public computer** so the device is not remembered.
+
+Protected Email Mode is available in a project only if a REDCap administrator has enabled it at the system level.
 
 **Important limitation:** Protected Email Mode does not apply to alerts that use SendGrid template emails, because those emails cannot be fully rendered within the REDCap web application.
 
@@ -325,12 +346,26 @@ The DET is an advanced integration feature intended for technical users or devel
 
 **Key points:**
 - Only one URL can be configured per project.
-- The DET fires on interactive data entry and survey submissions only. CSV imports, API imports, and Mobile App imports do not trigger it.
+- The DET fires on interactive data entry and survey submissions. CSV imports, API imports, and Mobile App imports do not trigger it; merging records in the Data Comparison Tool does.
+- The URL can include piped values (for example, `[record-name]`) and may be given as a relative path.
 - The URL must be accessible from the REDCap server and capable of receiving HTTP POST requests.
+- The field is available only if a REDCap administrator has enabled the Data Entry Trigger at the system level.
 
 ---
 
-# 15. Common Questions
+# 15. Record Locking and File Upload Enhancements
+
+Two compliance-oriented enhancements can be turned on per project in Additional Customizations, but only after a REDCap administrator has enabled them and configured an external storage server at the system level. Both are off by default.
+
+**Record-level Locking Enhancement: PDF confirmation & automatic external file storage** — When a user locks an entire record (record-level locking, not instrument-level locking), REDCap first shows a PDF of the whole record for the user to review and confirm. After confirmation the record is locked, the PDF is stored in the project's File Repository, and a duplicate copy is saved to the external server. Only users with Full data set export rights can download these archived PDFs. Because the PDF captures the record at the moment of locking, it may differ from PDFs generated later from current data.
+
+**'File Upload' field enhancement: Password verification & automatic external file storage** — Users must confirm each File Upload with their username and password, and a copy of every uploaded file is automatically saved to the external server.
+
+These enhancements are designed for projects with regulatory requirements such as 21 CFR Part 11.
+
+---
+
+# 16. Common Questions
 
 **Q: Can I use a calculated field as the Custom Record Label?**
 
@@ -340,7 +375,7 @@ The DET is an advanced integration feature intended for technical users or devel
 
 **Q: If I set a Secondary Unique Field and then import records via the Data Import Tool, will duplicates be rejected?**
 
-**A:** Yes. The uniqueness check applies to data imported through the user interface Data Import Tool. Attempts to import a value that is already used by another record will be flagged. However, the API does not enforce the Secondary Unique Field constraint by default — check with your local support team or the API documentation for the current behavior.
+**A:** Yes. The uniqueness check applies to imports through both the Data Import Tool and the API. An import is rejected if a value is already used by another record, or if two rows in the same import file share a value. Missing data codes are exempt from the check.
 
 ---
 
@@ -352,13 +387,13 @@ The DET is an advanced integration feature intended for technical users or devel
 
 **Q: Does the "Prevent branching logic from hiding fields with values" setting affect surveys?**
 
-**A:** Yes. This setting affects both data entry forms and survey pages. On surveys, the default behavior is to auto-erase and hide any field hidden by branching logic without prompting. With this setting enabled, survey fields with saved values will also stay visible rather than being erased.
+**A:** Yes. On surveys, the default behavior is to hide and erase any field hidden by branching logic without prompting. With this setting enabled, survey fields that already have values stay visible rather than being erased, just as on data entry forms (the indicator icon is shown on forms only).
 
 ---
 
 **Q: The Data History popup is enabled but I don't see previous versions of a file in a File Upload field. Why?**
 
-**A:** File Version History must also be explicitly enabled under Additional Customizations (Section 9). Enabling the Data History popup alone does not activate version tracking for file uploads. Enable both settings, then upload a new file using the "Upload new version" link — older versions will then be preserved and accessible through the Data History popup.
+**A:** File Version History must also be enabled under Additional Customizations (Section 9), and that option exists only if a REDCap administrator has turned the feature on at the system level. Enabling the Data History popup alone does not activate version tracking for file uploads. Signature fields never keep prior versions. Enable both settings, then upload a new file using the "Upload new version" link — older versions will then be preserved and accessible through the Data History popup.
 
 ---
 
@@ -370,11 +405,11 @@ The DET is an advanced integration feature intended for technical users or devel
 
 **Q: Will enabling "Require a reason when making changes" affect data imported via the API?**
 
-**A:** No. The reason prompt is triggered only when a user saves data through the REDCap data entry interface. API imports and the Data Import Tool bypass this prompt and do not require a reason to be entered.
+**A:** No. API imports do not ask for a reason. The Data Import Tool does: when an import would change existing records, it requires a reason (up to 200 characters) for each of those records before the import is committed. The prompt also appears on data entry forms and when deleting a record.
 
 ---
 
-# 16. Related Articles
+# 17. Related Articles
 
 - [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) (project statuses, moving to Production, Draft Mode)
 - [RC-PROJ-02 — Project Setup Checklist](RC-PROJ-02_Project-Setup-Checklist.md) (dependency-ordered walkthrough of full project configuration)

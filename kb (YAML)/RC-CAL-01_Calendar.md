@@ -6,12 +6,12 @@ applies_to:
 - All project types
 - primarily used in longitudinal projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Calendar
+  and Scheduling behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-UI-02 — Project Menu Reference
-version: '1.8'
-last_updated: 2026-08
+version: '1.9'
+last_updated: 2026-11
 related:
 - id: RC-LONG-01
   title: Longitudinal Project Setup
@@ -43,22 +43,22 @@ This article covers the REDCap Calendar module and the closely related Schedulin
 # 2. Key Concepts & Definitions
 
 ## Calendar Entry
-A record in the Calendar representing a single scheduled event. Each entry has a date, an optional time, a note or description, and optional links to a specific record ID, event (in longitudinal projects), or user. Calendar entries are not instruments or data fields — they store no collected data and do not appear in exports.
+A record in the Calendar representing a single scheduled event. Each entry has a date, an optional time, a required note, and optional links to a specific record ID and event (in longitudinal projects). An entry linked to a record also belongs to that record's Data Access Group. Entries are not linked to individual users. Calendar entries are not instruments or data fields — they store no collected data and do not appear in the Data Export Tool or the API.
 
 ## Calendar Module
-The project-level feature that provides the Calendar interface. The Calendar is enabled by default for all projects and appears in the **Applications** section of the left-side project menu. It cannot be disabled globally, but access can be removed per user through User Rights. Also referred to as the "Calendar" in the REDCap interface.
+The project-level feature that provides the Calendar interface. The Calendar is enabled by default for all projects and appears in the **Applications** section of the left-side project menu. There is no project-level switch to turn it off; access is controlled per user by the **Calendar** right in User Rights (ticked by default for new users). Also referred to as the "Calendar" in the REDCap interface.
 
 ## Scheduling Module
 A separate, optional REDCap feature for longitudinal projects that calculates and assigns target visit dates (and acceptable offset windows) to each event for each participant, based on a reference date (such as enrollment). When active, the Scheduling module can automatically populate Calendar entries for each scheduled visit. The Scheduling module and the Calendar module are distinct features; the Calendar can be used without Scheduling, and Scheduling data is only reflected in the Calendar when both are enabled.
 
 ## Visit Window
-In the Scheduling module context, the range of dates (defined by `offset_min` and `offset_max` around a target date) within which a participant's visit is considered on-schedule. Visit windows are configured per-event and displayed in the Calendar when Scheduling is active. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) for Scheduling module configuration details.
+In the Scheduling module context, the range of dates (defined by **Offset (Min)** and **Offset (Max)** around a target date) within which a participant's visit is considered on-schedule. Visit windows are configured per-event and displayed in the Calendar when Scheduling is active. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) for Scheduling module configuration details.
 
 ## Ad Hoc Event
-A Calendar entry that is tied to a specific record but not to a defined project event. Ad Hoc events are added from the View or Edit Schedule tab after selecting a record, so they are always record-linked. They are excluded from the bulk date-shift calculation when a scheduled event date is changed. Common uses include tracking contact attempts (e.g., called participant — no answer), logging reminders for study staff to follow up, or recording unplanned interactions that don't correspond to a formal protocol visit.
+A Calendar entry that is tied to a specific record but not to a defined project event. Ad Hoc events can be added from the View or Edit Schedule tab after selecting a record, or from the Calendar itself by choosing a record when creating an entry with **+New** (see Section 4.3). Ad Hoc events have no visit status. They are excluded from the bulk date-shift calculation when a scheduled event date is changed. Common uses include tracking contact attempts (e.g., called participant — no answer), logging reminders for study staff to follow up, or recording unplanned interactions that don't correspond to a formal protocol visit.
 
 ## Schedule Entry Status
-Each scheduled Calendar entry has a status field that tracks the visit state. Status options are: **Due Date**, **Scheduled**, **Confirmed**, **Cancelled**, and **No Show**. Status is set and updated on the View or Edit Schedule tab or in the event detail view.
+Each scheduled Calendar entry (one linked to a project event) has a status field that tracks the visit state. Status options are: **Due Date** (the default), **Scheduled**, **Confirmed**, **Cancelled**, and **No Show**. Ad Hoc entries and unlinked notes have no status. Status is set and updated on the View or Edit Schedule tab or in the event detail view.
 
 ---
 
@@ -83,7 +83,7 @@ The Calendar cannot be disabled project-wide, but access can be removed for indi
 3. Under the list of application access checkboxes, uncheck **Calendar**.
 4. Click **Save Changes**.
 
-The Calendar link will no longer appear in the project menu for that user. Users with the Calendar right unchecked cannot view, create, or delete Calendar entries.
+The Calendar link will no longer appear in the project menu for that user. Users with the Calendar right unchecked cannot view, create, or delete Calendar entries, and they also lose the **Scheduling** link. The same single right covers every Calendar and Scheduling action; when the Scheduling module is enabled the right is labelled **Calendar & Scheduling**.
 
 ## 3.3 Enabling the Scheduling module (optional)
 
@@ -94,11 +94,13 @@ The Scheduling module is a separate, optional feature that generates visit date 
 **To enable Scheduling:**
 
 1. In **Project Setup**, scroll to the **Enable optional modules and customizations** section.
-2. Check **Use the Scheduling module?** and save.
+2. Click the **Enable** button next to **Scheduling module (longitudinal only)**. The same button reads **Disable** once the module is on.
+
+> **Note:** Once a project is in production, only a REDCap administrator can change the Scheduling module setting.
 
 Enabling the Scheduling module does two things:
 
-- **Adds scheduling fields to Define My Events:** The `Days Offset`, `Offset (Min)`, and `Offset (Max)` columns become available for each event. Days Offset controls the event's position in the schedule (and its sort order); the min and max offsets define the acceptable visit window around the target date.
+- **Adds scheduling fields to Define My Events:** The `Days Offset`, `Offset (Min)`, and `Offset (Max)` columns become available for each event. Days Offset controls the event's position in the schedule (and its sort order); the min and max offsets define the acceptable visit window around the target date. (These columns also appear when MyCap is enabled. Because Days Offset sets the order, events can no longer be reordered by drag and drop.)
 - **Adds a Scheduling link to the project menu:** A **Scheduling** link appears under the **Data Collection** section of the left-side menu. This is the interface used to generate and manage participant schedules.
 
 ---
@@ -107,7 +109,7 @@ Enabling the Scheduling module does two things:
 
 ## 4.1 Accessing the Calendar
 
-Click **Calendar** in the left-side project menu under Applications. This opens the monthly calendar view by default. A brief description at the top of the page explains the Calendar's purpose and, if the project has defined events, provides a link to generate a schedule directly from that page.
+Click **Calendar** in the left-side project menu under Applications. This opens the monthly calendar view by default. A brief description at the top of the page explains the Calendar's purpose and, if the project is longitudinal and the Scheduling module is enabled, provides a link to generate a schedule. Users in a Data Access Group see a notice that they only see entries for their group.
 
 ## 4.2 Switching views
 
@@ -115,32 +117,41 @@ The Calendar supports four views:
 
 | View | Description |
 |---|---|
-| **Month** | Overview of all entries for the current month. Each entry appears as a short label on its date. |
-| **Week** | Seven-day view showing entries by day column with time slots. |
-| **Day** | Single-day view with time-slotted entries. Useful for days with many appointments. |
-| **Agenda** | List-style view of upcoming entries in chronological order. Useful for reviewing a large number of events without navigating day by day. |
+| **Month** | Grid of the whole month. Each day shows up to five entries, then a "+N more" link. |
+| **Week** | The same grid as Month, limited to one week. There are no time slots. |
+| **Day** | A list of the entries for a single day (agenda style). There are no time slots, and you cannot create entries from this view. |
+| **Agenda** | List of every entry in the selected month, in date order, including past dates. |
 
-Navigate between time periods using the **Previous** and **Next** arrows, or click **Today** to return to the current date.
+Navigate with the **Previous** and **Next** arrows, or jump to a date with the month, year and day dropdowns. There is no **Today** button. Use **Print Calendar** for a printable version of the current view.
+
+Entry labels show the record ID (or the project's custom record label / secondary unique field), the DAG name where relevant, and a status icon for scheduled visits.
 
 ## 4.3 Creating a Calendar entry manually
 
-1. In the Month view, click the **+New** button at the top of any day's box. In Week or Day view, click a time slot on the desired day.
+1. In the Month or Week view, click the **+New** button in the desired day's box.
 2. In the entry dialog, fill in:
-   - **Notes**: A free-text description of the appointment or event.
+   - **Notes** (required): A free-text description of the appointment or event.
    - **Time** (optional): The scheduled time.
+   - **Record** (optional): Choose a record to link the entry to a participant.
 3. Click **Save**.
 
-Any user with access to the Calendar can create entries. There is no separate user right for Calendar write access — access is controlled by whether the user has project access.
+Any user with the **Calendar** right can create entries (see Section 3.2).
 
-> **Note:** Manual Calendar entries created via **+New** are freestanding — they are not linked to a specific record, event, or user. They exist only as dated notes visible to all users with the Calendar right. If you need a calendar entry tied to a specific participant, use the Ad Hoc event feature on the View or Edit Schedule tab instead (see Section 5.3).
+> **Note:** An entry created via **+New** without a record is a freestanding dated note, visible to every user with the Calendar right, including users in a Data Access Group. If you choose a record, the entry becomes an **Ad Hoc** entry for that record and appears on the record's schedule on the View or Edit Schedule tab (see Section 5.3).
 
 ## 4.4 Editing and deleting entries
 
-Click on any existing entry to open it. From the entry dialog you can update the fields or click **Delete** to remove the entry. Deletion is immediate and not reversible through the interface.
+Click on any existing entry to open it. From the entry dialog you can update the fields or click **Delete** to remove the entry. REDCap asks you to confirm, and then the deletion is permanent: it cannot be undone and nothing recreates the entry later.
 
 ## 4.5 What users see
 
-The Calendar shows all entries the user has access to based on their project access. There are no filter controls — users cannot narrow the calendar down to a specific record, event, or user from within the Calendar interface. Users restricted to a Data Access Group will naturally only see entries for records within their DAG, but there is no manual filter to apply.
+The Calendar shows every entry the user has access to. There are no filter controls — users cannot narrow the calendar down to a specific record or event (in any project type). Users in a Data Access Group see entries for records in their DAG plus all entries that are not linked to any record, whoever created them. Entries follow their record: if a record is renamed or moved to a different DAG, its calendar entries move with it.
+
+## 4.6 Upcoming-entries widgets and smart variables
+
+- **Project Home** shows a list of calendar entries for the next seven days.
+- The **Record Home Page** has a button that shows the upcoming calendar entries for that record.
+- The smart variables `[calendar-url]` and `[calendar-link]` let you pipe a calendar feed URL or clickable link into emails, alerts or other text.
 
 ---
 
@@ -159,7 +170,7 @@ The Schedule Generator projects visit dates for all events using their configure
 
 1. Click **Scheduling** under Data Collection.
 2. On the **Create Schedule** tab, either:
-   - Enter a new Record ID in the **Add new Record ID** field, or
+   - Enter a new Record ID in the **Add new Record ID** field (requires the **Create Records** right), or
    - Select an existing unscheduled record from the **choose existing unscheduled** dropdown.
 3. Enter a **Start Date** — this is the baseline date (e.g., enrollment date) from which all event dates are calculated.
 4. Click **Generate Schedule**.
@@ -168,7 +179,7 @@ REDCap calculates a target date for each event by adding that event's Days Offse
 
 **The role of Offset Min and Offset Max:** After a schedule is generated, the min and max offset values define how far a visit date can be moved from its target date when rescheduling. For example, if an event has `Offset Min = 2` and `Offset Max = 2`, a user can schedule that visit up to two days earlier or two days later than the target. This flexibility is useful for practical situations like clinic closures on weekends — a two-day offset on either side lets staff book the visit on the nearest available weekday. REDCap displays a warning if a date is changed beyond the configured offset range but does not block the save.
 
-> **Note:** A record can only be scheduled once from the Create Schedule tab. To reschedule or modify an existing schedule, use the **View or Edit Schedule** tab.
+> **Note:** A record can only be scheduled once per arm from the Create Schedule tab. To reschedule or modify an existing schedule, use the **View or Edit Schedule** tab. If every event entry for a record is deleted, the record becomes unscheduled and can be scheduled again.
 
 ## 5.3 Viewing and editing a schedule (View or Edit Schedule tab)
 
@@ -211,7 +222,7 @@ Once a schedule is generated, Calendar entries appear for each event in the part
 - Can be individually rescheduled via the View or Edit Schedule tab, with REDCap warning if the new date falls outside the configured min/max offset window.
 - Can be viewed and supplemented with notes via the Calendar or event detail view.
 
-> **Note:** Deleting a Calendar entry does not cancel the underlying schedule. The entry will reappear if the schedule is recalculated. To cancel a visit, change its status to **Cancelled** via the View or Edit Schedule tab or the event detail view — do not delete the entry.
+> **Note:** The Calendar entries *are* the schedule — there is no separate schedule behind them. Deleting an entry removes that visit permanently; nothing recalculates or recreates it. To record a cancelled or missed visit, change its status to **Cancelled** or **No Show** via the View or Edit Schedule tab or the event detail view instead of deleting it, so the visit history is kept.
 
 ---
 
@@ -223,11 +234,13 @@ Understanding what the Calendar does *not* do prevents common misuse:
 
 **Not a survey scheduler.** Calendar entries do not trigger survey sends. Surveys are scheduled through Automated Survey Invitations or the Survey Queue, not through the Calendar.
 
-**External calendar integration is export-only.** REDCap can push calendar events out to external applications (Google Calendar, Outlook, Office 365, Zoho, Apple Calendar, or any iCal/ICS-compatible app) via a live feed URL or a one-time ICS file download. Both options are strictly one-way: changes made in REDCap propagate outward, but you cannot import events into REDCap from an external calendar. This means importing clinic schedules, OnCore visit lists, or Epic appointments into the REDCap Calendar is not supported — it is a commonly requested feature but not currently available. Downloading and re-importing the ICS file will create duplicate events in the external application.
+**External calendar integration is export-only.** REDCap can push calendar events out to external applications (Google Calendar, Outlook, Office 365, Zoho, Apple Calendar, or any iCal/ICS-compatible app) via a live feed URL or a one-time ICS file download. Both options are strictly one-way: changes made in REDCap propagate outward, but you cannot import events into REDCap from an external calendar. This means importing clinic schedules, OnCore visit lists, or Epic appointments into the REDCap Calendar is not supported — it is a commonly requested feature but not currently available. Downloading and re-importing the ICS file will create duplicate events in the external application. Each feed belongs to one user in one project and shows what that user is currently allowed to see (their rights and DAG). A REDCap administrator can turn calendar feeds off for the whole server.
 
 **Not a source of record for clinical scheduling.** The Calendar is a research project tool and is not connected to hospital appointment systems (Epic, etc.). It should not be used as the primary scheduling record for clinical care appointments.
 
-**Calendar actions are partially logged.** Calendar and scheduling activity is captured in the REDCap Logging module to some extent, under the Manage/Design action type. Confirmed examples include creating a calendar event ("Create calendar event (Record: 1, Date: 2026-04-28)") and generating a schedule ("Perform scheduling"). The full scope of what is logged (edits, deletions, status changes) may vary — check your project's Logging page if you need to verify a specific action.
+**Calendar actions are logged.** Calendar and scheduling activity appears on the project's Logging page under the Manage/Design action type. This covers creating an entry (e.g. "Create calendar event (Record: 1, Date: 2026-04-28)"), editing one (date, time, status or notes), deleting one, the bulk "adjust all later dates" update, and generating a schedule ("Perform scheduling").
+
+**Project-wide data actions include the Calendar.** Calendar entries are included when a project is exported and imported with Project Migration. **Erase all data** and deleting data when moving to production both remove all calendar entries. Deleting a record deletes all of its calendar entries, including Ad Hoc entries.
 
 ---
 
@@ -237,7 +250,7 @@ Understanding what the Calendar does *not* do prevents common misuse:
 **A:** The Calendar is on by default and appears in the Applications section of the left menu for all projects. If you can't see it, your user rights for this project likely have the Calendar checkbox unchecked. Ask your project owner to go to User Rights, edit your account, and check the Calendar option.
 
 **Q: Can I use the Calendar in a classic (non-longitudinal) project?**
-**A:** Yes. The Calendar is available in all project types. In classic projects you can create and manage manual entries, but the Event filter and Scheduling module (which require longitudinal mode) will not appear.
+**A:** Yes. The Calendar is available in all project types. In classic projects you can create and manage manual entries (with or without a linked record), but the Scheduling module requires longitudinal mode and will not be available. The Calendar has no event filter in any project type.
 
 **Q: How is the Calendar different from Alerts & Notifications?**
 **A:** The Calendar is a passive display tool — it shows scheduled events but does nothing on its own. Alerts & Notifications is an active system that evaluates conditions and sends messages when those conditions are met. They serve different purposes and can be used together: you might manually note an appointment in the Calendar while also setting up an alert to email the participant a reminder the day before.
@@ -246,7 +259,7 @@ Understanding what the Calendar does *not* do prevents common misuse:
 **A:** No. The Calendar does not send any notifications. Use Alerts & Notifications ([RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md)) or Automated Survey Invitations ([RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)) to send time-based communications.
 
 **Q: If I delete a record, will its scheduled Calendar entries also be deleted?**
-**A:** Scheduled entries (generated by the Scheduling module) are tied to the record. Manually created Calendar entries (added via the +New button) are freestanding notes not linked to any record, so they are unaffected by record deletion regardless.
+**A:** Yes. Deleting a record deletes every calendar entry linked to it — scheduled visits and Ad Hoc entries alike, including any created via **+New** with that record selected. Entries created via **+New** without a record are not linked to any record and are unaffected.
 
 **Q: Can I sync the REDCap Calendar with Google Calendar or Outlook?**
 **A:** Yes. The Calendar page includes two export options: a live iCal/ICS URL feed (subscribe to it in Google Calendar, Outlook, Office 365, Zoho Calendar, Apple Calendar, or any iCal-compatible app) and a one-time ICS file download for manual import. Both are one-way — changes made in REDCap push out to the external app, but you cannot edit entries from the external app. Note that live feeds may not refresh immediately; the external application controls the refresh interval.
@@ -255,10 +268,10 @@ Understanding what the Calendar does *not* do prevents common misuse:
 **A:** Not through the standard data export. Calendar entries are not part of the project data export (Data Export Tool) and have no dedicated API export method. However, you can download a snapshot of all Calendar entries as an ICS file from the Calendar page itself, or subscribe an external calendar app to the live iCal feed.
 
 **Q: What statuses can a scheduled visit have?**
-**A:** Five statuses are available: Due Date (default when first scheduled), Scheduled, Confirmed, Cancelled, and No Show. Status is set via the View or Edit Schedule tab or the event detail view.
+**A:** Five statuses are available: Due Date (default when first scheduled), Scheduled, Confirmed, Cancelled, and No Show. Status is set via the View or Edit Schedule tab or the event detail view. Ad Hoc entries have no status.
 
 **Q: Can I add a visit that wasn't part of the original schedule?**
-**A:** Yes. On the View or Edit Schedule tab, use the **Add new Ad Hoc calendar event** field at the bottom of the table. Ad Hoc events are not tied to a defined project event and are excluded when you bulk-shift later dates after rescheduling a visit.
+**A:** Yes. On the View or Edit Schedule tab, use the **Add new Ad Hoc calendar event** field at the bottom of the table, or click **+New** on the Calendar and choose the record. Ad Hoc events are not tied to a defined project event and are excluded when you bulk-shift later dates after rescheduling a visit.
 
 **Q: I rescheduled one visit and want all later visits to shift by the same number of days — is that possible?**
 **A:** Yes. When you change the date of a scheduled event on the View or Edit Schedule tab, REDCap prompts you to adjust all later events by the same number of days. Accepting the prompt shifts all subsequent scheduled events. Ad Hoc events are not included in this bulk shift.
@@ -270,7 +283,7 @@ Understanding what the Calendar does *not* do prevents common misuse:
 **A:** No. The Calendar cannot be disabled at the project level — it is always present. The only way to restrict access is per-user through User Rights.
 
 **Q: Can I control which users can add or delete Calendar entries?**
-**A:** The Calendar right in User Rights controls both read and write access together — a user with the Calendar right can view, create, edit, and delete entries. There is no more granular split between read-only and read-write Calendar access. Users restricted to a Data Access Group will only see calendar entries for records within their DAG.
+**A:** The Calendar right in User Rights controls both read and write access together — a user with the Calendar right can view, create, edit, and delete entries. There is no more granular split between read-only and read-write Calendar access. Users restricted to a Data Access Group see calendar entries for records within their DAG, plus all entries not linked to any record.
 
 ---
 
@@ -282,7 +295,7 @@ Understanding what the Calendar does *not* do prevents common misuse:
 
 **Trying to enable Scheduling without longitudinal mode.** The Scheduling option in Project Setup is only available after longitudinal mode is enabled. If you don't see the Scheduling option in the optional modules list, check that longitudinal mode is turned on first.
 
-**Deleting Calendar entries expecting that to cancel a schedule.** When the Scheduling module is active, deleting a Calendar entry does not cancel the underlying participant schedule. The entry will reappear if the schedule is recalculated. To reschedule or remove a visit, use the **View or Edit Schedule** tab in the Scheduling page, not the Calendar.
+**Expecting a deleted entry to come back.** The Calendar entries are the schedule itself. Deleting one is permanent — nothing recalculates or restores it. To move a visit, edit its date on the **View or Edit Schedule** tab; to record that it did not happen, change its status rather than deleting it.
 
 **Relying on the Calendar for clinical appointment management.** The REDCap Calendar is a research tracking tool and is not connected to hospital scheduling systems (such as Epic). Using it as the primary record for clinical care appointments risks miscommunication and missed visits. Use it alongside — not instead of — your institutional scheduling systems.
 
@@ -290,16 +303,16 @@ Understanding what the Calendar does *not* do prevents common misuse:
 
 **Not clicking "Create Schedule" after generating a projected schedule.** Clicking **Generate Schedule** only previews the projected dates — it does not save anything. The schedule is not created and no Calendar entries are added until the user reviews the dates and clicks **Create Schedule**. This is one of the most common mistakes with the Scheduling module: a user generates a schedule, assumes it is saved, and later finds no Calendar entries and no schedule on the View or Edit Schedule tab.
 
-**Deleting a scheduled Calendar entry instead of setting status to Cancelled.** Deleting a scheduled entry removes it from view, but the underlying schedule record is not cancelled — the entry may reappear on recalculation. To properly close out a missed or cancelled visit, set the entry's status to **Cancelled** or **No Show** via the View or Edit Schedule tab. This preserves the visit record in the schedule history.
+**Deleting a scheduled Calendar entry instead of setting status to Cancelled.** Deleting a scheduled entry removes the visit permanently, and with it any record that the visit was planned. To properly close out a missed or cancelled visit, set the entry's status to **Cancelled** or **No Show** via the View or Edit Schedule tab. This keeps the visit in the record's schedule history.
 
-**Assuming Calendar and scheduling actions are fully absent from the audit log.** Both calendar and scheduling activity is logged to some extent — creating a calendar event and generating a schedule are both confirmed logged. However, not all actions (edits, deletions, status changes) may be captured, so if your protocol requires a complete audit trail of scheduling activity, verify coverage in the Logging page rather than assuming it is either fully tracked or fully absent.
+**Assuming Calendar and scheduling actions are absent from the audit log.** Creating, editing (date, time, status, notes), deleting and bulk-shifting entries, and generating schedules all appear on the Logging page under Manage/Design. Calendar entries are still not part of the Data Export Tool, so use the Logging page or the ICS download when you need a record of scheduling activity.
 
 ---
 
 # 9. Related Articles
 
 - [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (Calendar listed as a conditional project menu item)
-- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (Scheduling module configuration, `day_offset` and offset windows)
+- [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (Scheduling module configuration, Days Offset and offset windows)
 - [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md) (time-based automated notifications)
 - [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md) (scheduling survey delivery)
 - [RC-DE-10 — Longitudinal & Repeated Data Entry](RC-DE-10_Longitudinal-and-Repeated-Data-Entry.md) (navigating data entry across events)

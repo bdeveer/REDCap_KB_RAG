@@ -7,10 +7,10 @@
 | **Domain** | Project |
 | **Applies To** | All REDCap projects; requires Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Project Setup page behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) |
-| **Version** | 1.3 |
-| **Last Updated** | 2026 |
+| **Version** | 1.4 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md); [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md); [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md) |
 | **Synonyms** | how do i set up a new redcap project; step by step project setup guide; what order to build a project in; project setup checklist for beginners; prepare a project before launching; pre-launch review for a redcap project; new project walk-through; required steps to set up a project |
@@ -19,9 +19,11 @@
 
 ## 1. Overview
 
-This article provides a dependency-ordered checklist for setting up a REDCap project from creation to Production. Steps are organized so that each item can only be completed once its prerequisites are in place — for example, you cannot assign instruments to events until both instruments and events exist; you cannot set up a Survey Queue until at least two surveys are enabled.
+This article provides a dependency-ordered checklist for setting up a REDCap project from creation to Production. Steps are organized so that each item can only be completed once its prerequisites are in place — for example, you cannot assign instruments to events until both instruments and events exist; you cannot set up a Survey Queue until at least one instrument is enabled as a survey.
 
 Use this as a walk-through guide for new projects or as a pre-launch review for existing ones.
+
+> **Note — the built-in checklist:** While the project is in Development, the Project Setup page shows its own step-by-step checklist with a counter of completed steps. Each step shows a status (**Complete!**, **In progress** or **Not complete**); optional steps can be marked done with the **I'm done!** button. This article goes further than that checklist and covers the dependencies between steps.
 
 Steps marked **[Required]** must be completed for every project. All other steps are conditional or optional: steps marked **[Longitudinal]** apply only to projects using longitudinal mode; **[Repeating]** applies to projects using repeating instruments or events (repeating instruments can be used in any project type — repeating events require longitudinal mode); **[Surveys]** applies only if collecting data via surveys; **[DAGs]** applies only if using Data Access Groups; **[Randomization]** applies only if the project includes randomization.
 
@@ -31,12 +33,21 @@ Steps marked **[Required]** must be completed for every project. All other steps
 
 These steps happen once and unlock all subsequent configuration.
 
-- [ ] **[Required] Create the project** via the "New Project" button on the My Projects page. Enter a project title, choose a purpose, and select whether to start from scratch or copy an existing project.
-- [ ] **Set the project purpose and IRB number** on the Project Setup page (if required by your institution).
+- [ ] **[Required] Create the project** from the **New Project** tab in the top navigation (shown only if your account is allowed to create or request projects). Enter a project title, choose a purpose, and choose how to start: an empty project, an uploaded project XML file, or a template (some servers offer further options, such as a Clinical Data Mart project).
+  - To copy an existing project instead, open that project and use **Project Setup → Other Functionality → Copy the project**.
+- [ ] **Set the project purpose and IRB number** on the Project Setup page (if required by your institution). The IRB number is asked for only when the purpose is Research.
 - [ ] **[Surveys] Enable surveys** by toggling "Use surveys in this project?" on the Project Setup page. This must be done before any instrument can be designated as a survey.
 - [ ] **[Longitudinal] Enable longitudinal mode** by toggling "Use longitudinal data collection with defined events?" on the Project Setup page. This must be done before arms or events can be defined.
+- [ ] **Decide on record auto-numbering** ("Auto-numbering for records" on the Project Setup page). It is forced on when the first instrument is enabled as a survey.
+- [ ] **[Longitudinal, optional] Enable the Scheduling module** if you want to generate event schedules from day offsets.
+- [ ] **[Optional] Enable the AI Chatbot module** among the optional modules on the Project Setup page, if your server offers it.
 
-> **Note:** Enabling or disabling longitudinal mode after data has been collected is destructive. Enable it before building instruments if you know your project will be longitudinal. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6.4 and [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §3 for consequences of disabling longitudinal mode with existing data.
+> **Version caveat (present in 17.6; not in 17.3 or 16.0 LTS):** The AI Chatbot optional module is not available on the LTS releases. If you do not see it, check your REDCap version or ask your administrators whether it is enabled.
+- [ ] **[Surveys, optional] Designate a survey participant email field** if you will invite participants by email using an address stored in the record.
+
+> **Note:** Enabling longitudinal mode does not delete data — records collected before it was enabled sit in the first event. Disabling it later hides all arms and events except the first, with their data; nothing is deleted, and re-enabling longitudinal mode brings them back. Even so, decide before building instruments if you know your project will be longitudinal. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6.4 and [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §3 for consequences of disabling longitudinal mode with existing data.
+
+> **Note — what locks in Production:** Once the project is in Production, non-administrators can no longer change the longitudinal, survey or auto-numbering toggles, and the repeating instruments and events setup is locked unless your administrators allow it. Settle these in Development.
 
 ---
 
@@ -47,12 +58,14 @@ Instruments (forms) are the foundation for every other configuration step. Field
 - [ ] **[Required] Create instruments** using the Online Designer ([RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md)) or by uploading a Data Dictionary CSV ([RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md)). Add as many instruments as your data collection plan requires.
 - [ ] **[Required] Add fields to each instrument.** Choose the appropriate field type, enter field labels, and assign variable names. Variable names cannot be easily changed after data has been collected — choose them carefully.
 - [ ] **Set field validation** on text fields where applicable (e.g., date, integer, email). See [RC-DE-05 — Field Validations](RC-DE-05_Field-Validations.md).
-- [ ] **Mark required fields** (fields that must be completed before a form can be saved). Use sparingly — over-use of required fields frustrates data entry and survey respondents.
+- [ ] **Mark required fields.** On a survey, the respondent cannot continue until required fields are answered. On a data entry form, the form still saves but REDCap warns the user about any required fields left empty. Use sparingly — over-use of required fields frustrates data entry and survey respondents.
 - [ ] **Add branching logic** to fields that should only appear under certain conditions. In longitudinal projects, cross-event references must include the unique event name (e.g., `[baseline_arm_1][field_name]`). See [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md)
 - [ ] **Add calculated fields** for any derived values (totals, scores, age from date of birth). Calculations reference existing fields and update automatically. See [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md).
 - [ ] **Add action tags** to fields that require special behavior (auto-fill, hidden display, read-only, etc.). See [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md)
-- [ ] **Set a custom record label** to make individual records identifiable at a glance in the record list. Configure this under Project Setup → Additional Customizations using piping syntax (e.g., `[first_name] [last_name] ([email])`). Without a custom label, records display only by their numeric record ID, which is unhelpful for staff who need to locate a specific participant.
-- [ ] **Set a secondary unique field** if the project needs to prevent duplicate entries based on a respondent-supplied value (e.g., email address, employee ID). Configure this under Project Setup → Additional Customizations. REDCap will warn users when a new record's value in that field matches an existing record. This is particularly useful for public-facing signup surveys where the same person might submit multiple times.
+- [ ] **Set a custom record label** to make individual records identifiable at a glance in the record list. Configure this under Project Setup → Additional Customizations using piping syntax (e.g., `[first_name] [last_name] ([email])`). Without a custom label, records display only by their record ID, which is unhelpful for staff who need to locate a specific participant.
+- [ ] **Set a secondary unique field** if the project needs a second value that must be unique across records (e.g., a study or screening ID entered by staff). Configure this under Project Setup → Additional Customizations; only text fields can be chosen. REDCap checks the value as soon as it is entered, and if another record already has it, the user must enter a different value before continuing.
+  - **Do not use an identifier (MRN, SSN, email address) as the secondary unique field on a field that appears on a survey.** REDCap itself warns against this: because the survey tells the respondent when a value already exists, a participant could probe which values are in the project.
+- [ ] **Run the Identifier Check** (linked from the Project Setup page) to confirm that every field containing identifying information is marked as an identifier.
 - [ ] **Review the Codebook** ([RC-FD-05 — Codebook](RC-FD-05_Codebook.md)) to confirm field types, variable names, and choice codes before proceeding. Errors are much easier to fix now than after data collection has started.
 
 > **Dependency note:** All subsequent phases — longitudinal setup, repeating instruments, survey configuration, user rights, alerts, reports, and randomization — reference fields or instruments by name. Build and review your instruments before configuring anything else.
@@ -66,9 +79,10 @@ Complete this phase only if longitudinal mode was enabled in Phase 1. Arms must 
 - [ ] **[Multi-arm only] Define arms** on the Define My Events page. Arms separate participant cohorts that follow different event schedules. Single-arm projects can skip this step — REDCap creates "Arm 1" automatically. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §4.1.
 - [ ] **Define events** within each arm (e.g., Baseline, Month 3, Month 6). Events must exist before instruments can be designated to them. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §4.2–4.3.
   - Assign meaningful, consistent event labels — the unique event name REDCap generates from the label is used in all logic references and cannot be manually changed through the UI.
-  - If event display order matters and multiple events share the same day offset, assign sequential day offsets (0, 1, 2…) to enforce display order.
+  - **Renaming an event label changes its unique event name.** Any branching logic, calculations, Automated Survey Invitations or API scripts that use the old name stop working. Settle event labels before writing cross-event logic.
+  - If event display order matters and multiple events share the same day offset, assign sequential day offsets (0, 1, 2…) to enforce display order (events with the same offset are ordered alphabetically).
 - [ ] **Designate instruments to events** on the Designate Instruments for My Events page. Check every instrument-event combination where data should be collected. See [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) §5.
-  - **Always designate the first instrument (containing the record ID field) to the first event in every arm.** Omitting this causes records to save incorrectly.
+  - **Best practice: designate the first instrument (containing the record ID field) to the first event in every arm.** REDCap does not enforce this, but records are normally created on that instrument and event, and leaving it out makes record creation and navigation confusing.
   - An instrument can be designated to multiple events (e.g., a vitals form collected at every visit).
 - [ ] **Review branching logic and calculated fields** that cross event boundaries. All cross-event references must use the unique event name prefix (e.g., `[baseline_arm_1][dob]`). See [RC-BL-05 — Branching Logic — Longitudinal Projects](RC-BL-05_Branching-Logic-in-Longitudinal-Projects.md)
 
@@ -80,7 +94,7 @@ Repeating instruments allow multiple instances of a single form to be collected 
 
 - [ ] **[Repeating instruments] Identify which instruments need to repeat** within a record or event. Repeating instruments are available in both classical and longitudinal projects. Examples: a medication log where each row is a separate drug, or an adverse event form completed once per event.
 - [ ] **[Repeating events — Longitudinal only] Identify which events need to repeat.** Repeating events are only available in longitudinal projects and require events to be defined first (Phase 3). Examples: unscheduled visits, repeated lab draws within a single study phase.
-- [ ] **Configure repeating instruments and/or events** via the "Repeating Instruments and Events" popup accessed from the Project Setup page. For each arm, designate which instruments repeat (within their event) and which events repeat entirely. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md).
+- [ ] **Configure repeating instruments and/or events** via the "Repeating Instruments and Events" popup accessed from the Project Setup page. For each event, designate which instruments repeat within it or whether the whole event repeats. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md).
 - [ ] **[Longitudinal] Confirm instrument-event designations include the repeating instruments** in the correct events. An instrument must be designated to an event before it can be set as repeating within that event.
 
 > **Key distinction:** Repeating instruments repeat a single form within a record or event; repeating events repeat an entire collection of instruments together. Choose based on what your data model requires. See [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) for guidance on which to use.
@@ -94,9 +108,9 @@ Survey features become available after enabling surveys in Phase 1. Each instrum
 - [ ] **Enable each instrument as a survey** from the Online Designer by selecting the "Enable" button next to that instrument under the Survey column. This reveals the survey settings panel for that instrument.
 - [ ] **Configure survey settings per instrument:** set the survey title, instructions, completion text, auto-continue behavior, save-and-return options, and any response limit. See [RC-SURV-02 — Survey Settings: Basic Options & Design](RC-SURV-02_Survey-Settings-Basic-Options-and-Design.md).
 - [ ] **Configure access and termination settings** for each survey: public vs. private link, stop actions, response limits. See [RC-SURV-03 — Survey Settings: Behavior, Access & Termination](RC-SURV-03_Survey-Settings-Behavior-Access-and-Termination.md).
-- [ ] **[Survey Queue] Set up the Survey Queue** to chain multiple surveys in sequence. Requires at least two instruments to be enabled as surveys. Define the condition under which each subsequent survey is activated. See [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md).
+- [ ] **[Survey Queue] Set up the Survey Queue** to chain multiple surveys in sequence. REDCap does not require a minimum number of surveys, but a queue is only useful with two or more. Define the condition under which each subsequent survey is activated. See [RC-SURV-07 — Survey Queue](RC-SURV-07_Survey-Queue.md).
 - [ ] **[Automated invitations] Set up Automated Survey Invitations (ASI)** for any survey that should be sent automatically based on a trigger condition or schedule. Requires the survey to be enabled and any trigger fields to already exist. See [RC-SURV-06 — Automated Survey Invitations (ASI)](RC-SURV-06_Automated-Survey-Invitations.md)
-- [ ] **[e-Consent] Set up the e-Consent framework** if the project collects electronic informed consent. Requires a dedicated consent instrument with a signature field. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
+- [ ] **[e-Consent] Set up the e-Consent framework** if the project collects electronic informed consent. Each consent form needs a version and a location for the consent form text or file. Signature fields are optional: you can designate up to five, which must be required free-text, signature or number fields. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md).
 
 ---
 
@@ -122,6 +136,7 @@ Alerts, data quality rules, and randomization all depend on instruments and fiel
 - [ ] **Configure Data Quality rules** to catch missing or out-of-range values. Rules reference field names and can be run manually or scheduled. See [RC-DQ-01 — Data Quality Module](RC-DQ-01_Data-Quality-Module.md).
 - [ ] **[Randomization] Prepare the randomization allocation table** (a CSV of strata and assignments) before configuring the module. The randomization field must already exist in an instrument. See [RC-RAND-01 — Randomization Concepts & Terminology](RC-RAND-01_Randomization-Concepts.md) and [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md).
 - [ ] **[Randomization] Configure the Randomization module** by uploading the allocation table and designating the randomization field and any stratification fields. See [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md).
+  - Upload a **production** allocation table as well as the development one — a project with randomization enabled cannot be moved to Production without it.
 
 ---
 
@@ -156,9 +171,15 @@ Before moving to Production, enter test data and verify that every aspect of the
 
 When the project is fully tested and ready for live data collection, move it to Production. This step enables change-control safeguards and signals that real data collection has begun.
 
-- [ ] **[Required] Delete all test data** before going live. On the Project Setup page, use "Delete all records" (under Other Functionality) or choose to delete test data when prompted during the move-to-Production step.
+- [ ] **[Required] Delete all test data** before going live. Either choose to delete all data in the move-to-Production dialog (it offers keeping or deleting existing data), or beforehand use **Erase all data** under **Project Setup → Other Functionality**. If your server has it enabled, **Delete records in bulk** can remove selected records instead.
+
+> **Version caveat (present in 17.6; not in 17.3 or 16.0 LTS):** When randomization is enabled, the move-to-Production dialog shows a red warning that the randomization values of records randomized in Development are deleted, even if you choose to keep the data. Re-randomize any test records you keep, or delete all test data.
+
 - [ ] **[Required] Move the project to Production** by selecting "Move project to Production" at the bottom of the Project Setup page. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §2.2.
-- [ ] **Confirm Production protections are active** — verify that the Online Designer now shows the "Enter Draft Mode" button, indicating that design changes require review before taking effect.
+
+> **Institution-specific:** On many servers this button submits a request that a REDCap administrator must approve, rather than moving the project immediately. Check with your REDCap administrators how long approval takes.
+
+- [ ] **Confirm Production protections are active** — verify that the Online Designer now shows the "Enter Draft Mode" button, indicating that design changes are made in a draft and submitted before taking effect (some changes may be approved automatically, depending on server settings).
 - [ ] **Communicate the go-live to your team.** Ensure all users know the project is live and that any future design change requests must go through the Draft Mode review process.
 
 > **After go-live:** Any structural change (new fields, modified branching logic, new instruments) must be made through Draft Mode and submitted for review. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) §6 — Making Production Changes for the rules that protect existing data.
@@ -178,7 +199,7 @@ The table below summarizes the key dependencies between setup steps. If a step i
 | Repeating instruments | Instruments exist (any project type) |
 | Repeating events | Longitudinal mode enabled; events defined |
 | Enable instrument as survey | Survey mode enabled (Phase 1); instrument exists |
-| Survey Queue | ≥2 instruments enabled as surveys |
+| Survey Queue | ≥1 instrument enabled as a survey (useful with ≥2) |
 | Automated Survey Invitations | Survey enabled on instrument; trigger fields exist |
 | Branching logic (cross-event) | Longitudinal mode enabled; events defined |
 | Create User Roles | Project created |
@@ -188,7 +209,7 @@ The table below summarizes the key dependencies between setup steps. If a step i
 | Alerts & Notifications | Fields/instruments exist for trigger conditions |
 | Randomization module | Randomization field exists; allocation table ready |
 | Custom reports | Fields/instruments exist |
-| Move to Production | All above steps complete; test data deleted |
+| Move to Production | All above steps complete; test data deleted; production allocation table uploaded (if randomization is enabled) |
 
 ---
 

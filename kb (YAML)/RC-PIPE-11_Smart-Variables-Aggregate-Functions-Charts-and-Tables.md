@@ -142,7 +142,7 @@ Grouping fields must be categorical (multiple choice, radio, dropdown, or checkb
 
 **Chart Display on Dashboards**
 
-Charts and tables are rendered as interactive widgets on Project Dashboards. They display inline on the dashboard page and can be configured with titles, descriptions, and sizing options by the dashboard administrator. A dashboard shows a saved snapshot that is kept for up to 10 minutes, so values may lag behind recent data entry (see Common Mistakes & Gotchas).
+On Project Dashboards, charts and tables display inline wherever you place their Smart Variable in the dashboard's content box, alongside any text or formatting you add around them. A dashboard shows a saved snapshot that is kept for up to 10 minutes, so values may lag behind recent data entry (see Common Mistakes & Gotchas).
 
 **Optional Parameters**
 

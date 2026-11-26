@@ -1073,6 +1073,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-SURV-06 — Automated Survey Invitations (ASI)
 - RC-PIPE-05 — Smart Variables: User
 - RC-BL-01 — Branching Logic: Overview & Scope
+- RC-FD-07 — Field Embedding
 - RC-PIPE-11 — Smart Variables: Aggregate Functions, Charts, and Tables
 - RC-SURV-01 — Surveys – Basics
 
@@ -4100,6 +4101,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 
 **Inbound links (referenced by):**
+- RC-DSGN-01 — REDCap Project Design Best Practices
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-DE-08 — Field Comment Log
 - RC-FD-02 — Online Designer

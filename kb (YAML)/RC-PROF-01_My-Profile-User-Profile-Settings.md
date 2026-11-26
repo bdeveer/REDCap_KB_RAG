@@ -5,13 +5,12 @@ domain: Profile (PROF)
 applies_to:
 - All REDCap users
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured. The username answer was checked on v17.5.6 and v16.0.59 test instances,
-  read-only. Authenticator-secret handling checked against source code of v17.6.5
-  (Standard) / v17.3.31 and v16.0.61 (LTS)
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — My Profile
+  behaviour checked against source code; pages not re-captured. The username answer
+  was checked on v17.5.6 and v16.0.59 test instances, read-only
 prerequisites:
 - Active REDCap user account
-version: '1.4'
+version: '1.5'
 last_updated: 2026-11
 related:
 - id: RC-CC-03
@@ -40,7 +39,7 @@ synonyms:
 
 # 1. Overview
 
-Every REDCap user has a **My Profile** page where they can view and update their personal account information, set display preferences, manage notification settings, and access their API tokens. My Profile is a user-facing page — it controls only your own account and is separate from the administrator tools in the Control Center.
+Every REDCap user has a **My Profile** page where they can view and update their personal account information, set display preferences, manage notification settings and, if they hold one, see their Super API Token. My Profile is a user-facing page — it controls only your own account and is separate from the administrator tools in the Control Center.
 
 What is available on My Profile depends partly on how your REDCap instance is configured, particularly the authentication method in use. Some settings (such as password management) are only shown for users on table-based authentication; Single Sign-On (SSO) users manage credentials through their institution's external system.
 
@@ -48,7 +47,11 @@ What is available on My Profile depends partly on how your REDCap instance is co
 
 # 2. Accessing My Profile
 
-My Profile is accessible from the top of any REDCap page. Click on your username in the global navigation bar to reveal a dropdown menu, then click **Profile**. This takes you directly to your profile settings page.
+Open My Profile from the top navigation bar of the REDCap home-area pages (such as **Home** and **My Projects**): click **Profile**. On medium-width screens the link is tucked into the **More** menu in that bar. The link is not shown inside a project, so leave the project (for example via **My Projects**) first.
+
+The whole page is a single form behind its several **Save** buttons, so it is safest to edit and save one section at a time.
+
+Your profile also shows your **user sponsor**, if an administrator has assigned one to your account.
 
 ---
 
@@ -58,10 +61,14 @@ The **Basic Information** section of My Profile contains your core contact detai
 
 - **First name** and **Last name**
 - **Primary email** — the main email address for your account; used for system notifications, password recovery, and 2FA codes sent via email. A confirmation field requires you to enter the address twice when changing it.
-- **Phone number** — optional; used for SMS-based 2FA if configured at your institution. Supports extensions (enter a comma between the number and extension).
-- **Mobile phone number** — a separate field from the phone number above; also optional.
+- **Phone number** — optional; used for 2FA by phone call. Supports extensions (enter a comma between the number and extension).
+- **Mobile phone** — optional; used for 2FA codes sent by SMS text message.
+
+Both phone fields only appear when your institution has enabled the matching 2FA method (SMS or phone call).
 
 After editing fields, click **Save Basic Info** to apply changes.
+
+> **Institution-specific:** administrators can lock the name and email fields so users cannot edit them, and can restrict which email domains are accepted. Your primary email also cannot be the same as your secondary or tertiary email. If a field is read-only or an address is rejected, check with your REDCap administrators.
 
 > **Email verification:** If you change your primary email address, REDCap sends a verification email to the new address. Your account will remain inaccessible until you confirm the new address via that email. Do not change your primary email to an address you cannot immediately access.
 
@@ -78,7 +85,7 @@ These additional addresses have a specific and limited purpose:
 - They **can** be used as the "From" address when REDCap sends survey invitations, alerts, and similar outbound emails on your behalf.
 - They **cannot** be used for account retrieval or important system notifications — only your primary email address is used for those.
 
-To add a secondary or tertiary email, enter the address and click **Add email**. Addresses can be removed at any time; removing an address means it can no longer be used as a "From" address in REDCap emails, though you can re-add it later.
+To add a secondary or tertiary email, enter the address and click **Add email**. REDCap sends a verification email to the new address, and it becomes usable once you confirm it. Addresses can be removed at any time; removing an address means it can no longer be used as a "From" address in REDCap emails, though you can re-add it later.
 
 > **Practical use case:** If you want survey invitation emails to appear to come from a study-specific address rather than your personal institutional address, add that address here and select it as the "From" address in your alert or invitation settings.
 
@@ -114,7 +121,7 @@ After adjusting any preference, click **Save Preferences**.
 
 # 6. Messenger Notification Preferences
 
-The **Notification Preferences for REDCap Messenger** section controls how REDCap notifies you about incoming messages in the Messenger system when you are not actively logged in.
+The **Notification Preferences for REDCap Messenger** section appears only when REDCap Messenger is enabled on your server. It controls how REDCap notifies you about incoming messages in the Messenger system when you are not actively logged in.
 
 ## 6.1 Message Digest Frequency
 
@@ -142,11 +149,11 @@ After adjusting settings, click **Save Messenger Preferences**.
 
 # 7. Password Management
 
-For users authenticated via **table-based (local) authentication**, the profile page includes a section to change your password. Enter your current password and then the new password twice to confirm.
+For users authenticated via **table-based (local) authentication**, the profile page includes a **Reset password** button. Clicking it sets a temporary password on your account and takes you to a password reset page, where you enter your new password twice. You are not asked for your current password.
 
-Password requirements (minimum length, complexity, reuse rules) are set by your administrator and are displayed in this section. See [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) for a description of the system-level password policy settings.
+Password requirements (minimum length, complexity, reuse rules) are set by your administrator and are shown on the password reset page. See [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) for a description of the system-level password policy settings.
 
-> **SSO users** (Shibboleth, Google OAuth2, Microsoft Entra ID, LDAP, etc.) do not see a password change section here. Your password is managed through your institution's identity system, not REDCap.
+> **SSO users** (Shibboleth, Google OAuth2, Microsoft Entra ID, LDAP, etc.) do not see the **Reset password** button here. Your password is managed through your institution's identity system, not REDCap.
 
 ---
 
@@ -158,35 +165,33 @@ If two-factor authentication (2FA) is enabled on your REDCap instance, users can
 
 If the **Google/Microsoft Authenticator** option is enabled by your administrator, a QR code is displayed on your profile page. Scan this code with the Google Authenticator or Microsoft Authenticator app on your phone to register REDCap. After setup, the app generates a 6-digit code you enter at login.
 
-This setup step must be completed on My Profile before you can use the authenticator app option at login.
+You do not have to set this up on My Profile in advance. If you have not yet registered an authenticator app, REDCap shows you a one-time setup QR code at the 2FA step of login, which you can scan there. My Profile remains the place to view the QR code again later.
 
 > **If your administrator asks you to re-enrol:** secrets issued before REDCap 17.5.1 Standard / 17.3.14 LTS / 16.0.52 LTS were generated by a weaker method, so administrators may arrange for your authenticator secret to be regenerated after upgrading. REDCap has no reset button for this: your REDCap server administrator has to make the change behind the scenes. Once it is done, scan the new QR code on My Profile, then delete the old REDCap entry from your authenticator app, because the old one will no longer produce valid codes.
 
 ## 8.2 Other 2FA Methods
 
-Other methods — email-based codes, SMS via Twilio, Duo push — do not require setup on the profile page. They use the email address or phone number already on your account, or authenticate via the Duo service.
+Other methods — email-based codes, SMS text messages, phone calls, Duo push — do not require setup on the profile page. Email codes go to your primary email, SMS codes to your **Mobile phone**, phone calls to your **Phone number**, and Duo authenticates through the Duo service.
 
 ## 8.3 Trusted Devices
 
-If your administrator has enabled device trust, you may see a list of previously trusted devices on your profile page. You can remove trusted devices here to force re-authentication on the next login from those devices.
+My Profile has no list of trusted devices. If your administrator allows REDCap to remember a device after 2FA, that trust is stored in the browser you logged in with, one browser at a time. To stop a browser being trusted, clear that browser's cookies for the REDCap site.
 
 ---
 
 # 9. API Tokens
 
-The My Profile page includes an **API Tokens** section listing all REDCap API tokens associated with your account — one per project for which you have been granted API access.
+My Profile does **not** list your project API tokens. The only token it can show is a **Super API Token**, and only if an administrator has issued you one; it is displayed masked. Most users have no Super API Token, so most users see no token on My Profile at all.
 
-From this section you can:
+Project API tokens live on each project's **API** page (in the project's left-hand menu, visible to users with API rights in that project). There you can:
 
-- **View** your token for each project (click to reveal or copy)
-- **Request a new token** for a project where you have API access but no token yet (subject to administrator approval, depending on system configuration)
-- See which projects you currently hold tokens for
+- **View** your token for that project
+- **Request** a token if you have API rights but no token yet (subject to administrator approval, depending on system configuration)
+- **Regenerate** or **Delete** your own token, for example if it was accidentally shared. These actions are logged.
 
-> **Tokens are project-specific.** Each token grants API access to exactly one project. If you need access to multiple projects via the API, you will have one token per project.
+> **Tokens are project-specific.** Each token grants API access to exactly one project. If you need access to multiple projects via the API, you will have one token per project, each found on that project's API page.
 
-> **Administrators** have a system-wide API Tokens view in the Control Center ([RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)) that shows all tokens across all users and projects. Standard users only see their own tokens.
-
-If you need a token revoked or regenerated (for example, if a token was accidentally shared), contact your REDCap administrator — only administrators can delete or regenerate tokens.
+> **Administrators** have a system-wide API Tokens view in the Control Center ([RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)) that shows all tokens across all users and projects. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) for requesting and using tokens.
 
 ---
 
@@ -209,7 +214,7 @@ If you need to change your username or resolve an account access issue, contact 
 # 11. Common Questions
 
 **Q: How do I access My Profile?**
-Click your username in the global navigation bar at the top of any REDCap page and select "Profile" from the dropdown menu.
+Click **Profile** in the top navigation bar of a home-area page such as **Home** or **My Projects** (on medium-width screens, look under **More**). The link does not appear inside a project, so leave the project first.
 
 **Q: I changed my primary email address but now I can't log in. What happened?**
 When you change your primary email, REDCap sends a verification email to the new address. Your account is inaccessible until you click the confirmation link in that email. Check your inbox (and spam folder) for the verification message. If you cannot access the new email address, contact your REDCap administrator to resolve the account.
@@ -217,14 +222,14 @@ When you change your primary email, REDCap sends a verification email to the new
 **Q: What is the difference between my primary, secondary, and tertiary email addresses?**
 Your primary email is the one REDCap uses for all system notifications, password recovery, and 2FA codes — it is the authoritative contact address for your account. Secondary and tertiary emails are optional extras that can only be used as the "From" address on outbound survey invitations and alerts. They cannot be used to recover your account.
 
-**Q: Why don't I see a password change section on my profile?**
-If your institution uses Single Sign-On (such as Shibboleth, LDAP, or Google OAuth2), your password is managed outside of REDCap. The password change section only appears for table-based (local) authentication accounts. Change your password through your institution's standard password management tools.
+**Q: Why don't I see a Reset password button on my profile?**
+If your institution uses Single Sign-On (such as Shibboleth, LDAP, or Google OAuth2), your password is managed outside of REDCap. The **Reset password** button only appears for table-based (local) authentication accounts. Change your password through your institution's standard password management tools.
 
 **Q: I set up the Google Authenticator app on my profile, but now I've lost access to my phone. What do I do?**
 Contact your REDCap administrator. From the Control Center, an administrator can email you the authenticator-app setup instructions, so you can add your existing REDCap entry to the app on a new phone. If other 2FA methods are enabled on your server (such as email), you can also choose one of those at login.
 
 **Q: Where do I find my API token?**
-API tokens are listed in the API Tokens section of My Profile. You will see one token listed per project for which you have been granted API access. If no token is listed for a project, you may need to request one (from the project's API page or your profile), which may require administrator approval.
+Project API tokens are on each project's **API** page, not on My Profile. Open the project, click **API** in the left-hand menu (you need API rights in that project), and your token for that project is shown there. If you have none yet, request one on that page; this may require administrator approval. My Profile only shows a Super API Token, and only if an administrator has issued you one.
 
 **Q: My date format preference doesn't seem to apply everywhere in REDCap. Is that expected?**
 User preferences affect how dates and numbers are displayed in the data entry interface and similar views. Some system-generated outputs (such as exported files or reports) may use a fixed format regardless of your personal preference setting. If a specific downstream tool requires a particular date or CSV format, use the export options at the time of download rather than relying solely on your profile preference.
@@ -249,9 +254,11 @@ No. User account deletion is an administrator function. Contact your REDCap admi
 
 **Expecting the profile page to control project access.** My Profile only manages your own account details. It has no controls for which projects you are a member of or what your user rights are within those projects. Project access is managed by the project owner or a user with User Rights privileges on each individual project.
 
-**Sharing a screenshot of your profile that includes your API token.** The API Tokens section displays your actual token values. Redact token values in any screenshot shared with support staff or used for documentation. An exposed token grants API access to your project data immediately — without a password. Contact your administrator to regenerate a token if one is accidentally shared.
+**Sharing a screenshot of a project's API page that includes your token.** The project API page displays your actual token value. Redact it in any screenshot shared with support staff or used for documentation. An exposed token grants API access to your project data immediately — without a password. If a token is accidentally shared, regenerate or delete it yourself on that project's API page.
 
-**Not completing authenticator app setup before a login is required.** If your administrator has enforced 2FA with the authenticator app option, you must complete the QR code setup on My Profile before your next login that requires 2FA. Complete the setup proactively, not after you are locked out.
+**Looking for project API tokens on My Profile.** They are not there. Each project token is on that project's API page; My Profile only shows a Super API Token if you have one.
+
+**Entering your SMS number in the wrong phone field.** SMS 2FA codes go to **Mobile phone**; **Phone number** is used for phone-call 2FA. Put your cell number in **Mobile phone** if you want codes by text message.
 
 ---
 
