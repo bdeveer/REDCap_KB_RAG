@@ -5,13 +5,13 @@ domain: Data Import
 applies_to:
 - All REDCap project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Form Display
+  Logic CSV upload behaviour checked against source code; pages not re-captured
 prerequisites:
 - 'RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap'
 - RC-FDL-01 — Form Display Logic
-version: '1.0'
-last_updated: '2026-05-07'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-IMP-03
   title: 'CSV Upload Reference: All Bulk Upload Options in REDCap'
@@ -39,7 +39,9 @@ The Form Display Logic (FDL) module supports CSV export and import of FDL rules.
 
 **Location:** Online Designer → Form Display Logic → "Upload or download form display logic" option.
 
-**Upload behavior — Additive/update:** Imported rules replace or update the existing FDL configuration for the instruments named in the file.
+**Upload behavior — Replace:** The upload **replaces all existing FDL conditions** in the project with the conditions in the file. Instruments that are not in the file lose their FDL. The upload is all-or-nothing: if any row has an error, REDCap reports it and saves nothing. A file with no condition rows offers to delete all existing conditions (and resets the two FDL options in the setup dialog).
+
+> **Important:** FDL is not part of Draft Mode. In a production project an uploaded file takes effect immediately for all users, so download the current setup first and test the new file in a development copy of the project.
 
 **Rights required:** Project Design and Setup.
 
@@ -51,18 +53,23 @@ For full coverage of Form Display Logic and its use cases, see [RC-FDL-01 — Fo
 
 # 2. Column Reference
 
-The FDL CSV always has exactly six columns in this order:
+The columns depend on the project type:
+
+- **Longitudinal projects:** six columns, in the order shown below.
+- **Classic (non-longitudinal) projects:** five columns — the same list without `event_name`. A file that contains an `event_name` column is rejected in a classic project.
 
 | Column | Required | Accepted Values | Notes |
 |---|---|---|---|
 | `form_name` | Yes | Any valid instrument name (internal name, no spaces) | Must match the instrument's `form_name` exactly as it appears in the Data Dictionary. |
-| `event_name` | No | A valid unique event name, or blank | Leave blank to apply the condition to **all events** where the form appears. In classic (non-longitudinal) projects this column is always blank. |
+| `event_name` | No | A valid unique event name, or blank | Longitudinal projects only. Leave blank to apply the condition to **all events** where the form appears. Classic projects do not have this column. |
 | `control_condition` | Yes | Any valid REDCap logic expression | Same syntax as branching logic. When the expression evaluates to true the form is enabled; when false the form is disabled. |
 | `apply_to_data_entry` | Yes | `y` or `n` (lowercase) | `y` — the condition controls whether the form is accessible in the standard data entry UI. |
 | `apply_to_survey_autocontinue` | Yes | `y` or `n` (lowercase) | `y` — the condition also controls Survey Auto-Continue behavior for this instrument. |
-| `apply_to_mycap_tasks` | Yes | `y` or `n` (lowercase) | `y` — the condition controls whether this instrument appears as a task in MyCap. |
+| `apply_to_mycap_tasks` | Yes | `y` or `n` (lowercase) | `y` — the condition controls whether this instrument appears as a task in MyCap. `n` leaves MyCap out of this condition's control; it does not hide the task. |
 
-> **Flag values are lowercase.** REDCap exports and expects `y`/`n`, not `Y`/`N`. Using uppercase will cause the import to fail.
+> **Flag values are lowercase.** REDCap exports `y`/`n`, and on upload only a lowercase `y` counts as yes. Anything else — including `Y` or `yes` — is silently read as `n`, with no error. A row whose three flags all end up `n` is rejected.
+
+> **Identical conditions are merged.** Rows with exactly the same `control_condition` text are combined into one condition covering all their forms and events. The flags of the first such row are kept for the combined condition, so give rows that need different flags different condition text.
 
 > **Multiple rows for the same form use OR logic.** If the same instrument appears in two rows, the form is enabled when *either* condition is true. To require multiple simultaneous conditions, combine them with `and` in a single `control_condition` cell.
 
@@ -70,35 +77,44 @@ The FDL CSV always has exactly six columns in this order:
 
 # 3. Annotated Example
 
-The file below comes from a classic project where two baseline forms are enrolled in FDL solely to suppress them as MyCap tasks, without restricting data entry access.
+The file below comes from a classic project (five columns, no `event_name`) where two baseline forms are enrolled in FDL with an always-true condition, so data entry and Survey Auto-Continue are never restricted.
 
 ```csv
-form_name,event_name,control_condition,apply_to_data_entry,apply_to_survey_autocontinue,apply_to_mycap_tasks
-demographics,,"[record_id]<>""""",y,y,n
-contact_info,,"[record_id]<>""""",y,y,n
+form_name,control_condition,apply_to_data_entry,apply_to_survey_autocontinue,apply_to_mycap_tasks
+demographics,"[record_id]<>""""",y,y,n
+contact_info,"[record_id]<>""""",y,y,n
 ```
 
+In a longitudinal project the same rows carry an `event_name` column after `form_name`; a blank `event_name` applies the condition at every event where the form appears.
+
 **`demographics` row:**
-- `event_name` is blank → the condition applies at every event where the form appears.
 - `control_condition` is `[record_id]<>""` — always true for any saved record, so data entry is never blocked.
 - `apply_to_data_entry=y`, `apply_to_survey_autocontinue=y` — the always-true condition keeps both enabled.
-- `apply_to_mycap_tasks=n` — MyCap task visibility is excluded from FDL control; the form's MyCap task state is governed separately.
+- `apply_to_mycap_tasks=n` — this condition does not control MyCap. It does **not** hide or suppress the form as a MyCap task.
 
-**`contact_info` row:** identical pattern applied to a second instrument.
+**`contact_info` row:** identical pattern applied to a second instrument. Because both rows have the same condition text, REDCap stores them as one condition covering both forms.
 
-**Why enroll a form in FDL with an always-true condition?** This pattern is used when you only want to set one or two flags (such as `apply_to_mycap_tasks=n`) without actually restricting data entry. It is also useful as a placeholder row you plan to tighten later.
+**Why enroll a form in FDL with an always-true condition?** This pattern keeps a form in the FDL setup without actually restricting access. It is also useful as a placeholder row you plan to tighten later.
 
-**Note on the raw CSV escaping.** The condition `[record_id]<>""` (comparing against an empty string) exports as `"[record_id]<>""""`  in the raw file. The outer double-quotes delimit the CSV cell; the inner `""` is the CSV escape for a literal `"` character. Spreadsheet applications display this correctly as `[record_id]<>""`. If you edit the file in a plain text editor or parse it programmatically, account for standard CSV double-quote escaping — writing the wrong number of quotes will cause the import to fail or the logic to behave unexpectedly.
+**MyCap and the `n` flag.** If no condition in the project applies to MyCap Tasks, FDL has no effect in MyCap. Once any condition applies to MyCap Tasks, MyCap uses only those MyCap-flagged conditions, and a task whose form has no MyCap-flagged condition is not shown. To keep a MyCap task always available in that situation, set `apply_to_mycap_tasks` to `y` on its always-true row. See [RC-FDL-01 — Form Display Logic](RC-FDL-01_Form-Display-Logic.md) for details.
+
+**Note on the raw CSV escaping.** The file follows standard CSV quoting: every `"` inside a cell is doubled, and the cell is wrapped in quotes. So the condition `[record_id]<>""` (comparing against an empty string) is written `"[record_id]<>"""""` in the raw file — four quotes for the two literal `"` characters, plus the closing quote of the cell. Spreadsheet applications display this correctly as `[record_id]<>""`. If you edit the file in a plain text editor or parse it programmatically, account for standard CSV double-quote escaping — writing the wrong number of quotes will cause the import to fail or the logic to behave unexpectedly.
 
 ---
 
 # 4. Common Mistakes
 
-**Using uppercase `Y`/`N` for flags.** REDCap exports lowercase `y`/`n` and expects the same on import. Uppercase values will cause the row to be rejected.
+**Using uppercase `Y`/`N` or `yes` for flags.** REDCap exports lowercase `y`/`n`. On upload anything other than a lowercase `y` is silently read as `n` — the row is not flagged as an error, so the condition simply stops applying to that area. A row that ends up with all three flags `n` is rejected. Use lowercase `y`.
 
-**Editing empty-string conditions in a plain text editor.** Conditions like `[record_id]<>""` are double-escaped in the raw CSV (`""""`). Editors that don't respect CSV quoting rules will corrupt the escaping and break the logic on re-import.
+**Uploading a partial file.** The upload replaces every FDL condition in the project. A file containing only the conditions you changed removes all the others. Start from a full download.
 
-**Leaving `event_name` blank unintentionally.** A blank `event_name` applies the condition to *every* event where the form appears. If you only intended to restrict one event, specify the event name explicitly.
+**Adding an `event_name` column in a classic project.** Classic projects use five columns; a file with `event_name` is rejected. Download from the target project to get the right layout.
+
+**Using `apply_to_mycap_tasks=n` to hide a MyCap task.** An `n` flag only leaves MyCap out of that condition's control; it never hides a task by itself. To control a task in MyCap, set the flag to `y` on a condition that is false when the task should be unavailable.
+
+**Editing empty-string conditions in a plain text editor.** Conditions like `[record_id]<>""` are escaped in the raw CSV as `"[record_id]<>"""""`. Editors that don't respect CSV quoting rules will corrupt the escaping and break the logic on re-import.
+
+**Leaving `event_name` blank unintentionally (longitudinal projects).** A blank `event_name` applies the condition to *every* event where the form appears. If you only intended to restrict one event, specify the event name explicitly.
 
 **Expecting AND behavior from multiple rows.** Two rows for the same form combine with OR — the form is enabled if either condition is true. To enforce multiple simultaneous requirements, write them as a single `control_condition` joined by `and`.
 
