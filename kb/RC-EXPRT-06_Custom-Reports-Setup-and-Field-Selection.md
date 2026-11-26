@@ -274,5 +274,5 @@ If the public reports option does not appear in the report builder, the feature 
 - [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md) (saving, copying, deleting, and organizing reports into folders)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAGs referenced in user access configuration)
 - [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (covers Add/Edit/Organize Reports and instrument-level access)
-- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) (any Record ID displayed in a report is a clickable link that opens the Record Home Page for that record)
+- [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md) (each Record ID in a report is a clickable link: in longitudinal projects it opens the Record Home Page for that record, in classic projects it opens the record's first instrument, and on repeating-instance rows it opens that instrument)
 - [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md) (reports are one of several locations in REDCap where Record ID links appear; custom dashboards and custom reports serve complementary purposes)

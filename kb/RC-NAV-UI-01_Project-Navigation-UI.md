@@ -7,10 +7,10 @@
 | **Domain** | Project Navigation |
 | **Applies To** | All project types |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — project navigation and left menu behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | None |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md), [RC-NAV-UI-04 — My Projects Page](RC-NAV-UI-04_My-Projects-Page.md), [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md), [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md)[RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md), [RC-SURV-01 — Surveys – Basics](RC-SURV-01_Surveys-Basics.md)[RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md)[RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md)[RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md), [RC-MOB-01 — REDCap Mobile App](RC-MOB-01_REDCap-Mobile-App.md) |
 | **Synonyms** | how is the redcap project screen laid out; what is the left-hand menu; why do some menu items not show up for me; how to expand the collapsed hamburger menu; understanding the project layout and workspace; where are project features located on screen; why does the menu change between users; redcap two-panel project interface |
@@ -31,9 +31,9 @@ Every REDCap project uses a consistent two-panel layout: a persistent left-hand 
 
 **User Rights** — Permission settings that control which menu items and features a given user can see and interact with. Set per project, not globally.
 
-**Hamburger mode** — A collapsed view of the left menu that activates when the browser window is narrow or on a mobile device. Named after the three-line icon (☰) used to toggle it. The menu is still accessible; it is just hidden by default to save screen space.
+**Hamburger mode** — A collapsed view of the left menu that activates when the browser window is narrow (below about 768 pixels wide) or on a mobile device. The left menu is hidden and a fixed bar across the top of the page shows the project title and a three-line icon (☰). Selecting the icon lays the menu over the page. The menu is still accessible; it is just hidden by default to save screen space.
 
-**Project Status** — One of four lifecycle stages a REDCap project can be in: Development, Production, Analysis/Cleanup, or Completed. Controls what changes are allowed and whether certain menu items appear. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details.
+**Project Status** — One of four lifecycle stages a REDCap project can be in: Development, Production, Analysis/Cleanup, or Completed. Controls what changes are allowed and whether certain menu items appear. The **Project Home and Design** section of the left menu shows the current status as **Project status:** Development, Production or Analysis/Cleanup, with an icon showing whether the project is classic or longitudinal and a lock icon when Analysis/Cleanup data has been locked. See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for full details.
 
 ---
 
@@ -45,7 +45,7 @@ Every REDCap project uses a consistent two-panel layout: a persistent left-hand 
 | --- | --- |
 | **1 — Log in** | Open your institution's REDCap URL (see [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for this installation's URL) and log in with your credentials. You will land on the My Projects page. |
 | **2 — Find your project** | Locate your project in the list. Projects can be searched or filtered. Select the project name to open it. |
-| **3 — Confirm you are in the project** | The left menu will appear with project-specific sections. The workspace will show the Project Home page by default. |
+| **3 — Confirm you are in the project** | The left menu will appear with project-specific sections. If the project is in Development and you have Project Design and Setup rights, the workspace opens on the Project Setup page; otherwise it opens on the Project Home page. |
 
 ### 3.2 Using the two-panel layout
 
@@ -53,16 +53,16 @@ Once inside a project, the interface is split into two panels that are always pr
 
 | **Panel** | **Description** |
 | --- | --- |
-| **Left — Menu** | Persistent navigation. Always visible (unless in hamburger mode). Organized into labeled sections. Changes based on user rights and enabled features. |
+| **Left — Menu** | Persistent navigation. Always visible (unless in hamburger mode). Organized into labeled sections; each section header has a collapse/expand toggle, and REDCap remembers which sections you collapsed, per user and per project. Changes based on user rights and enabled features. |
 | **Right — Workspace** | Variable content area. Displays whatever section you have navigated to: a form designer, a data entry screen, user rights settings, reports, etc. |
 
 ### 3.3 Recovering from hamburger mode
 
 | **Step** | **Action & Detail** |
 | --- | --- |
-| **1 — Recognize the state** | The left menu has disappeared. You may see a three-line icon (☰) in the upper area of the page. |
+| **1 — Recognize the state** | The left menu has disappeared. A fixed bar across the top of the page shows the project title and a three-line icon (☰). |
 | **2 — Option A: Widen the window** | Drag your browser window wider. The menu will reappear automatically once the window exceeds the breakpoint width. |
-| **3 — Option B: Select the hamburger icon** | Select the ☰ icon to toggle the menu open without resizing the window. |
+| **3 — Option B: Select the hamburger icon** | Select the ☰ icon to open the menu over the page without resizing the window. Select it again to close it. |
 
 > **Note:** Hamburger mode is useful for previewing how a survey will look on a participant's mobile device while still working on a desktop computer.
 
@@ -71,7 +71,7 @@ Once inside a project, the interface is split into two panels that are always pr
 ## 4. Common Questions
 
 **Q: Why can't I see a feature I expect to find in the menu?**
-Menu items are only visible when two conditions are both true: (1) your user rights for this specific project include access to that feature, and (2) the feature is enabled in Project Setup. Check both before concluding something is missing.
+Most menu items are only visible when two conditions are both true: (1) your user rights for this specific project include access to that feature, and (2) the feature is enabled in Project Setup. Check both before concluding something is missing. A few items, such as the Codebook, the Record Status Dashboard and Help & Information, always show. Others, such as API, REDCap Mobile App, REDCap Messenger and Email Logging, also depend on system settings your REDCap administrator controls rather than on Project Setup. If one of those is missing even though your rights include it, ask your administrator whether it is enabled on this installation.
 
 **Q: Why does the menu look different on someone else's screen?**
 Each user's menu reflects their individual user rights and the project's feature settings. Two users in the same project can see different menus if their rights differ.
@@ -86,7 +86,7 @@ Yes. Select the REDCap logo or the My Projects link at the top of the left menu 
 
 ## 5. Common Mistakes & Gotchas
 
-**Assuming a missing menu item is a bug.** Before escalating, check (1) your user rights for the specific project, and (2) whether the feature is enabled in Project Setup. Both must be true for an item to appear. Contact the project's user rights manager to review permissions, or enable the feature in Project Setup if you have access.
+**Assuming a missing menu item is a bug.** Before escalating, check (1) your user rights for the specific project, and (2) whether the feature is enabled in Project Setup. For most items both must be true for the item to appear. Contact the project's user rights manager to review permissions, or enable the feature in Project Setup if you have access. Some items (API, REDCap Mobile App, REDCap Messenger, Email Logging) also depend on system settings only your REDCap administrator can change.
 
 **Collecting real data while in Development status.** Development mode is not protected — structural changes can be made at any time, risking data integrity. Move the project to Production status before collecting any real participant data. If data has already been collected in Development, contact your REDCap administrator; migration is possible but not guaranteed.
 

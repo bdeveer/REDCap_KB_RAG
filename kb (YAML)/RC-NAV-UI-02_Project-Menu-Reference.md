@@ -5,12 +5,12 @@ domain: Project Navigation
 applies_to:
 - All project types
 requires: Any supported version
-verified_against: REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — left project
+  menu items and visibility behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 related:
 - id: RC-NAV-UI-01
   title: 'Project Navigation UI, RC-NAV-REC-01 — Record Navigation Overview, RC-NAV-REC-04
@@ -41,6 +41,8 @@ synonyms:
 
 This article is a structured reference for every section and item that can appear in the REDCap left-hand project menu. The menu is divided into labeled sections, each grouping related functionality. Not all items are visible to all users — visibility depends on user rights and project configuration. Each section below lists its items in a reference table with the item name, its visibility rule, and a plain-language description of what it does.
 
+From top to bottom, the panels appear in this order: the top block (logo, username, My Projects), **Project Home and Design**, **Data Collection**, **Applications**, the **Clinical Data Interoperability Services** / **Clinical Data Pull** panels (where enabled), **Project Bookmarks**, **Project Dashboards**, **Reports**, **External Modules**, and **Help & Information**. Empty panels are not shown.
+
 ---
 
 # 2. Key Concepts & Definitions
@@ -69,15 +71,23 @@ project.
 | --- | --- |
 | **REDCap logo** | Always           Returns to the My Projects page. Equivalent to clicking My Projects. |
 | **My Projects** | Always           Returns to the My Projects page. Same destination as clicking the logo. |
-| **Logged in as \[username\] / Log out** | Always           Displays the current username. The Log Out link ends the session completely. |
+| **Logged in as \[username\] / Log out** | Always           Displays the current username. The Log Out link ends the session completely. Log out is hidden when the installation runs without authentication. If your project belongs to a Project Admin Group and you are one of its Project-level Administrators, a **Project-level Administrator** badge shows under the username. |
+| **Control Center** | Conditional      Shown to REDCap administrators only. Opens the Control Center. |
+| **Impersonate user** | Conditional      Administrators only. A dropdown that lets the admin view the project as one of its users, to check what that user can see. |
+| **Enter PID** | Conditional      Administrators only. A box where the admin types a project ID to jump straight to that project. |
 | **REDCap Messenger** | Always\*         A HIPAA-compliant in-project messaging tool for user-to-user communication. Cannot send external email, texts, or messages to other REDCap installations. (\*Availability depends on whether your institution has enabled this feature.) |
 | **Contact REDCap Administrator** | Always           Links to your institution's REDCap support channel (email, website, or survey). Configured by your local admin team. See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for what this link opens at this installation. |
+
+> **Version caveat (17.x, not 16 LTS):** The **Project-level Administrator** badge (Project Admin Groups) is present in 17.x but not in 16 LTS. On 16 LTS, project administration stays with system-level administrators; contact your REDCap admin.
 
 ## 3.2 Project Home and Design
 
 This section covers features related to the setup and design of a
 project. It is most relevant during the project build phase and for
-ongoing project management.
+ongoing project management. The links are grouped on compact lines, for
+example **Home · Setup · Codebook** and **Designer · Events ·
+Dictionary**, and the **Project status:** label (Development,
+Production, Analysis/Cleanup or Completed) sits in this box.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
@@ -86,18 +96,25 @@ ongoing project management.
 | **Project Setup** | Conditional      The main project configuration page. Used heavily during project design. Requires Project Setup/Design user rights. |
 | **Designer (Online Designer)** | Conditional      Direct link to the instrument and field design interface. Requires Project Setup/Design user rights. |
 | **Dictionary (Data Dictionary)** | Conditional      Direct link to the Data Dictionary — a spreadsheet-style view of all fields. Requires Project Setup/Design user rights. |
+| **Events (Define My Events)** | Conditional      Longitudinal projects only, for users with Project Setup/Design rights. Opens the page for defining arms and events. A **Designate Instruments for My Events** icon sits next to it. |
+
+> **Version caveat (present in 17.6 Standard, not in 17.3 LTS):** The **Designate Instruments for My Events** icon next to Events is not shown on 17.3 LTS. On LTS, open **Events** and use the **Designate Instruments for My Events** tab on that page.
 
 **Project Status**
 
 Project status is displayed and managed from the Project Home or Project
-Setup pages. Any user with sufficient rights can advance the status
-forward. Reverting to an earlier status requires a REDCap administrator.
+Setup pages. A user with Project Design and Setup rights can move a
+project from Development to Production, unless a system setting
+restricts that step to administrators; the user then submits a request
+and an admin approves it. A design user can also move an Analysis/Cleanup
+project back to Production. Moving a project back to Development, and
+restoring a Completed project, are admin-only.
 
 | **Status** | **Visibility**   **What it means** |
 | --- | --- |
 | **Development** | Always           Default status. All changes are immediate. No real participant data should be collected in this status. Use for building and testing. |
 | **Production** | Always           Active data collection status. Structural changes require Draft Mode and may need admin approval. Protects data from accidental field edits. |
-| **Analysis / Cleanup** | Always           Data collection complete. Most functionality disabled. Data intact. Can be returned to Production at any time by a user or admin. |
+| **Analysis / Cleanup** | Always           Data collection complete. Most functionality disabled. Data intact. Can be returned to Production at any time by a user with Project Design and Setup rights, or by an admin. |
 | **Completed** | Always           Locks the project entirely. Only REDCap administrators can access or revert a completed project. Use only when absolutely certain no further access is needed. |
 
 **Other Functionality & Project Revision History**
@@ -119,15 +136,24 @@ users with appropriate rights):
 
 The primary section for day-to-day data entry and participant
 management. Users with any data entry rights will see at least the two
-core items.
+core items. If the user is assigned to a Data Access Group, the DAG name
+is shown in the section header. While the project is in Development,
+each item has a short grey description line under it.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
 | **Record Status Dashboard** | Always           Overview of form completion status across all records. Shows which forms are complete, incomplete, or unverified at a glance. From 17.5.3, users with Project Design rights also see a **Manage** link beside it for creating, editing and deleting custom dashboards. |
-| **Add / Edit Records** | Always           Create new records or look up and edit existing ones. Primary data entry entry point. |
-| **Survey Distribution Tools** | Conditional      Appears when surveys are enabled in the project. Manage survey links, send email/SMS invitations, and view the invitation log. |
+| **Add / Edit Records** | Always           Create new records or look up and edit existing ones. Primary data entry entry point. Reads **View / Edit Records** for users without the Create Records right. |
+| **Show / Hide data collection instruments** | Conditional      Classic (non-longitudinal) projects. A toggle that expands or collapses the list of instruments for the current record in this section. |
+| **Lock/Unlock entire record** | Conditional      Shown while viewing a record, for users with the Lock/Unlock entire records right. Locks or unlocks every instrument in the record at once. |
+| **Scheduling** | Conditional      Longitudinal projects with scheduling enabled, for users with the Calendar right. Generates a visit schedule for a record and adds it to the Calendar. |
+| **Survey Distribution Tools** | Conditional      Appears when surveys are enabled in the project **and** the user has the Survey Distribution Tools right. Manage survey links, send email/SMS invitations, and view the invitation log. |
+| **Rewards** | Conditional      Where enabled (a REDCap+ feature). Manages participant rewards. See [RC-PLUS-01 — REDCap+: Overview and Subscription](RC-PLUS-01_REDCap-Plus-Overview-and-Subscription.md). |
+| **Clinical Data Mart** | Conditional      Where Clinical Data Mart is enabled for the project. Pulls EHR data into the project. See [RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage](RC-CDIS-03_Clinical-Data-Mart-Setup-and-Usage.md). |
 | **MyCap Participant Management** | Conditional      Manage participants using the MyCap mobile app. Requires MyCap to be enabled. As of MyCap 2.0 (September 2023, REDCap v13.10.0+), longitudinal projects are supported. Consult your support team before using. |
 | **Record shortcuts** | Conditional      When a user is actively viewing a record, shortcuts to that record's instruments and record home page appear dynamically in this section. |
+
+> **Version caveat (present in 17.6 Standard, not in 17.3 LTS):** The **Manage** link next to Record Status Dashboard is not shown on 17.3 LTS. On LTS, open the Record Status Dashboard and create or edit custom dashboards from that page.
 
 ## 3.4 Applications
 
@@ -137,26 +163,37 @@ Each application is self-contained.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
-| **Project Dashboards** | Conditional      Create aggregate data dashboards to track project progress (e.g. enrollment rates, survey responses). Dashboards can be made public — never include PHI in public dashboards. Use as an operational tool, not an analysis tool. |
+| **Project Dashboards** | Conditional      Requires Project Design and Setup rights. Create aggregate data dashboards to track project progress (e.g. enrollment rates, survey responses). Dashboards can be made public — never include PHI in public dashboards. Use as an operational tool, not an analysis tool. |
 | **Alerts & Notifications** | Conditional      Configure rule-based email alerts triggered by data entry events, survey completions, date comparisons, or custom logic. Supports piped (merged) REDCap field values in email content. |
-| **Multi-Language Management (MLM)** | Conditional      Apply multiple language translations to instruments and parts of the REDCap interface. Useful for multilingual survey populations. REDCap identifies text that needs translation but does not translate it — use a native speaker. |
+| **Multi-Language Management (MLM)** | Conditional      Apply multiple language translations to instruments and parts of the REDCap interface. Useful for multilingual survey populations. Requires Project Design and Setup rights; where the administrator requires it, MLM must first be activated for the project by an admin. REDCap identifies text that needs translation but does not translate it — use a native speaker. |
 | **Calendar** | Conditional      Originally designed for longitudinal projects to track participant follow-up schedules. Not a replacement for hospital scheduling systems or a survey scheduler. Can sync with external calendaring systems. |
 | **Data Exports, Reports, and Stats** | Conditional      Export project data in multiple formats (Excel, CSV, SPSS, SAS, Stata, R). Create and save custom filtered reports. Includes basic visualizations and connections to tools like Tableau. |
 | **Data Import Tool** | Conditional      Import data into the project using a generated template. Validates formatting before import and shows a preview of changes including overwrite conflicts. |
 | **Data Comparison Tool** | Conditional      Compare two records side by side. Primarily used with the Double Data Entry feature to identify discrepancies between two independent data entry attempts. |
 | **Logging** | Conditional      Full audit log of all user activity in the project, down to page views. Filterable by user, event type, and date. Exportable — useful for regulatory compliance. |
-| **Email Logging** | Conditional      Audit log of all emails sent from this project. Allows resending emails. Caution: in anonymous survey projects, this log may inadvertently link email addresses to records. |
-| **Field Comment Log** | Conditional      Review and edit all comments added to specific fields across all records. Useful for capturing data situations not anticipated during design. |
+| **Email Logging** | Conditional      Shown when the administrator has enabled Email Logging system-wide **and** the user has the Email Logging right. Labelled **Email & SMS Logging** when Twilio texting is enabled. Audit log of all emails sent from this project. Allows resending emails. Caution: in anonymous survey projects, this log may inadvertently link email addresses to records. |
+| **Field Comment Log** | Conditional      Shown when the Field Comment Log is in use (Data Resolution Workflow not enabled). There is no separate user right: all project users see it. Review and edit all comments added to specific fields across all records. Useful for capturing data situations not anticipated during design. |
 | **Data Resolution Workflow (Resolve Issues)** | Conditional      Replaces the Field Comment Log when enabled. Adds the ability to assign field-level issues to specific users for resolution. Used in teams with formal data validation roles. |
 | **File Repository** | Conditional      Access files uploaded to the project repository or auto-generated files (e.g., e-consent PDFs, data export files). Note: files uploaded within a record are accessed from that record, not here. |
 | **User Rights** | Conditional      Manage user permissions for this project. Assign individual rights or create roles (e.g., Data Entry, Statistician, Data Coordinator) and add users to those roles. |
+| **Access Control Groups** | Conditional      Shown next to User Rights / DAGs for users who are account managers. Manages access control group membership. See [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md). |
 | **DAGs (Data Access Groups)** | Conditional      Designate record-level access groups so users only see records in their assigned group. Common use case: multi-site studies where site A users should not see site B records. |
-| **Customize & Manage Locking / E-signatures** | Conditional      Configure record and instrument locking for projects requiring independent validation. Locked instruments cannot be edited by regular users. |
+| **Customize & Manage Locking / E-signatures** | Conditional      Configure record and instrument locking for projects requiring independent validation. Locked instruments cannot be edited by regular users. Reads **Customize & Manage Locking** (without "/ E-signatures") when e-signatures are turned off system-wide. |
+| **Randomization** | Conditional      Shown when randomization is enabled in the project and the user has the Randomization Setup or Dashboard right. See [RC-RAND-02 — Randomization Setup Guide](RC-RAND-02_Randomization-Setup.md). |
 | **Data Quality** | Conditional      Run predefined or custom rules across the entire dataset to identify data issues (blank required fields, validation errors, custom logic violations). Used primarily during data cleaning. |
 | **API** | Conditional      Generate or request an API token to allow external programs to interact with the project programmatically. Advanced feature requiring programming skills. |
 | **API Playground** | Conditional      Explore and test available API methods with built-in documentation and code examples in multiple languages (PHP, Python, R, Java, etc.). |
-| **REDCap Mobile App** | Conditional      Manage device connections for the REDCap Mobile App. Used for offline data collection by study staff in the field. See note below on Mobile App vs. MyCap. |
+| **REDCap Mobile App** | Conditional      Requires the Mobile App right, and the API must be enabled for the installation. Manage device connections for the REDCap Mobile App. Used for offline data collection by study staff in the field. See note below on Mobile App vs. MyCap. |
 | **Custom Links** | Conditional      Links added by your local REDCap admin team pointing to institution-specific support resources (ticketing systems, training calendars, LMS portals, etc.). See [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md) for the specific links available at this installation. |
+| **REDCap SHARE** | Conditional      Shown when REDCap SHARE is enabled system-wide and for the project, and the user has the SHARE right. See [RC-CDIS-05 — REDCap SHARE: Overview & Onboarding](RC-CDIS-05_REDCap-SHARE-Overview-and-Onboarding.md). |
+| **Verified & Unsubscribed Emails** | Conditional      Shown when the administrator has enabled it system-wide and the user has the Alerts & Notifications or Survey Distribution Tools right. Lists email addresses that have been verified or have unsubscribed from project emails. |
+| **AI Chatbot** | Conditional      Where the administrator has enabled it. See [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md). |
+
+> **Version caveat (17.x, not 16 LTS):** **REDCap SHARE** and **Verified & Unsubscribed Emails** are present in 17.x but not in 16 LTS. If you are on 16 LTS and need them, plan an upgrade with your REDCap admin.
+
+> **Version caveat (present in 17.6 Standard, not in 17.3 LTS):** The **AI Chatbot** item is not shown on 17.3 LTS. Ask your admin whether it will be available after your next upgrade.
+
+> **Note:** When an Analysis/Cleanup project has its data locked, the **Data Import Tool**, **Data Comparison Tool**, **Rewards** and **Clinical Data Mart** items disappear from the menu. Unlock the data (or return the project to Production) to get them back.
 
 > **Note:** *REDCap Mobile App vs. MyCap: These are two separate apps
 > with different purposes. REDCap Mobile App is for study staff to
@@ -171,29 +208,52 @@ automatically adds new labeled sections to the left menu listing those
 reports or dashboards. These sections only appear if at least one report
 or dashboard has been created and the user has access to it.
 
-- **Reports section:** Lists all custom reports the user has access
-    to. Reports can be organized into folders (defined by name, then
-    reports are added to the folder) — useful for projects with large
-    numbers of reports.
+These panels sit below Applications and the Clinical Data
+Interoperability Services / Clinical Data Pull panels. **Project
+Bookmarks** comes first, then **Project Dashboards**, then **Reports**.
+
+- **Clinical Data Pull panel:** Appears in projects using Clinical Data
+    Pull (see [RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage](RC-CDIS-02_Clinical-Data-Pull-Setup-and-Usage.md)).
+    Admins see it, and so do non-admin users who are allowed to set up
+    the field mappings.
+
+> **Version caveat (17.x, not 16 LTS):** On 16 LTS the Clinical Data Pull panel is shown to administrators only. On 16 LTS, ask your REDCap admin to adjust CDP mappings for you.
 
 - **Project Dashboards section:** Lists all dashboards accessible to
     the user.
+
+- **Reports section:** Lists all custom reports the user has access
+    to. Reports can be organized into folders (defined by name, then
+    reports are added to the folder) — useful for projects with large
+    numbers of reports. The **Reports** section title is itself a link
+    to the Data Exports, Reports, and Stats page.
+
+> **Version caveat (present in 17.6 Standard, not in 17.3 LTS):** On 17.3 LTS the **Reports** section title is plain text. Use the **Data Exports, Reports, and Stats** item under Applications instead.
+
+Both section headers show **Edit** and **Organize** (folders) links to
+users with the Data Exports/Reports right (Reports) or Project Design
+and Setup rights (Project Dashboards), plus a search box for filtering
+the list. Items that have been made public show a link icon.
 
 ## 3.6 External Modules
 
 External modules are community-developed add-ons that extend REDCap's
 functionality. They must be downloaded and enabled by your local REDCap
-admin team. This menu section only appears if at least one module is
-active in the project and has a dedicated page. For the list of modules
+admin team. Users with Project Design and Setup rights (and admins)
+always see this section, because it always contains a **View Logs**
+link for them. A **Manage** link is added for admins, and for design
+users when modules are enabled in the project or available to enable.
+Other users see the section only when an enabled module adds its own
+link. For the list of modules
 available at this installation and the local policy on enabling them, see
 **[RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)
 
-- Click Manage in the External Modules section header to see available
+- Click **Manage** in the External Modules section to see available
     modules and enable/disable them (depending on your permissions and
     local policy).
 
-- View Logs is available for module developers and troubleshooting ---
-    not typically needed by end users.
+- **View Logs** shows module log entries. It is useful for module
+    developers and troubleshooting --- not typically needed by end users.
 
 > **⚠ Warning:** *External modules are reviewed by Vanderbilt at
 > submission time, but that is not an ongoing guarantee of functionality
@@ -203,14 +263,15 @@ available at this installation and the local policy on enabling them, see
 
 ## 3.7 Help & Information
 
-Support and documentation resources. Always visible to all users.
+Support and documentation resources. The section is visible to all users; only Learn Advanced Design Features depends on rights.
 
 | **Menu Item** | **Visibility**   **What it does** |
 | --- | --- |
-| **Help & FAQ** | Always           Links to the Help & FAQ section on the REDCap home page. Good first stop for common questions. |
+| **Help & FAQ** | Always           Opens the REDCap Help & FAQ in a pop-up window. Good first stop for common questions. |
+| **Learn Advanced Design Features** | Conditional      Shown to users with Project Design and Setup rights. Links to guidance on advanced instrument design features. |
 | **Video Tutorials** | Always           Links to Vanderbilt's official REDCap training videos. These are generic and do not reflect institution-specific configurations. |
 | **Suggest a New Feature** | Always           Submits a feature idea to the Vanderbilt REDCap development team. Not a support channel — no direct response is given. Suggestions may influence the development roadmap over time. |
-| **Contact REDCap Administrator** | Always           Connects to your institution's support team. Includes project metadata automatically so the support team knows which project you are asking about. This is the correct channel for immediate assistance. |
+| **Contact REDCap Administrator** | Always           Connects to your institution's support team. Includes project metadata automatically so the support team knows which project you are asking about. This is the correct channel for immediate assistance. When a project contact has been set for the project, the link reads **Contact \<project contact name\>** instead. |
 
 ---
 

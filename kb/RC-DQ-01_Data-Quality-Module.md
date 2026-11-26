@@ -7,9 +7,9 @@
 | **Domain** | Data Quality |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.3.10 — Data Quality Rules page captured 2026-09-21; the A–I rule set and bulk-execution controls verified directly against it |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Data Quality rules, execution and exclusions behaviour checked against source code; pages not re-captured (A–I rule set and bulk-execution controls earlier checked against a 17.3.10 page capture) |
 | **Prerequisite** | [RC-DE-02 — Basic Data Entry](RC-DE-02_Basic-Data-Entry.md) |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-BL-01 — Branching Logic: Overview & Scope](RC-BL-01_Branching-Logic-Overview-and-Scope.md); [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md); [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md); [RC-CALC-02 — Calculated Fields](RC-CALC-02_Calculated-Fields.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
@@ -43,11 +43,11 @@ An optional setting on each custom rule that causes it to run automatically when
 
 ### Exclusion
 
-A record-level flag that suppresses a specific discrepancy from appearing in future rule results. Excluded discrepancies are not deleted — they can be viewed and un-excluded at any time. Exclusion is appropriate when a discrepancy is known and expected (e.g., a legitimately missing required value due to eligibility).
+A flag that suppresses one specific discrepancy from appearing in future rule results. An exclusion applies to one rule for one record, event and instance (and, for default rules, one field) — not to the whole record. Excluded discrepancies are not deleted — they can be viewed and un-excluded at any time. Exclusion is appropriate when a discrepancy is known and expected (e.g., a legitimately missing required value due to eligibility).
 
 ### Rule H
 
-The built-in default rule that detects calculated fields whose stored database value differs from their currently computed value. This mismatch can occur after a calculated field's formula is changed, or when automatic calculations are turned off for the project. Rule H includes a **Fix calcs now** option that rewrites all affected stored values project-wide.
+The built-in default rule that detects calculated fields whose stored database value differs from their currently computed value. This mismatch can occur after a calculated field's formula is changed, or when automatic calculations are turned off for the project. Rule H includes a **Fix calcs now** option that rewrites the affected stored values shown in the current results.
 
 ---
 
@@ -79,17 +79,17 @@ Rules can be scoped before running, which matters on large projects where a full
 
 > **Note (16.1.8):** Server-side calculation of `age_at_date()` in **rule H** returned blank whenever either date fell on **29 February** in a leap year. If a rule H pass on an older instance reported no discrepancies for date-of-birth calculations, that result is not trustworthy.
 
-After execution, REDCap shows a count of discrepancies found for each rule. Click **View** next to any rule to see the specific records (and event/instance details for longitudinal or repeating projects) that triggered it.
+After execution, REDCap shows a count of discrepancies found for each rule. Click **View** next to any rule to see the specific records (and event/instance details for longitudinal or repeating projects) that triggered it. The on-screen list for a rule stops at 10,000 discrepancies (the count shows "10,000+"); the CSV export of the results is not capped.
 
 #### Bulk Execution Options (REDCap 16+)
 
-Starting in REDCap 16, three bulk execution options are available instead of a single "Execute All" button:
+Starting in REDCap 16, the page reads **Execute rules:** followed by three buttons instead of a single "Execute All" button:
 
 | Button | What It Runs |
 |---|---|
 | **All** | All default rules (A–I) and all custom rules |
 | **All except A&B** | All default rules except the two blank-value scans, A and B, plus all custom rules |
-| **Run all custom** | Custom rules only — default rules are skipped |
+| **All custom** | Custom rules only — default rules are skipped. Not shown when the project has no custom rules |
 
 "All except A&B" is useful for routine data checks on large datasets. Rules A and B both scan every record for blank values (A across all fields, B across required fields only), so they dominate the run time of a full pass; skipping them is what makes a routine check quick.
 
@@ -99,7 +99,16 @@ Also introduced in REDCap 16, a field selector allows you to limit which fields 
 
 #### User Rights
 
-Users must have the **Data Quality** user right to access the module. Users without view or edit access to specific instruments will not see data from those instruments in discrepancy results, even if those fields are involved.
+Data Quality has two separate user rights:
+
+| Right | What it allows |
+|---|---|
+| **Data Quality (create/edit rules)** | Add, edit, reorder and delete custom rules; upload a rules CSV |
+| **Data Quality (execute rules)** | Run rules, use **Fix calcs now**, export results |
+
+Either right shows the module in the menu and allows downloading the rules CSV. A user who should both write and run rules needs both.
+
+Instrument access still applies. A custom rule that references a field on an instrument the user has no access to returns an error for that user; default rules show "[cannot display data]" for those fields.
 
 #### Data Access Groups
 
@@ -123,7 +132,9 @@ REDCap includes nine pre-defined default rules. They appear in red text and cann
 | H | Incorrect values for calculated fields |
 | I | Fields containing missing data codes |
 
-> **Note:** Not all rules are relevant to every project. Rules E and H produce no results in a project with no calculated fields, and rule I none in a project that does not use missing data codes.
+Rules A and B skip fields hidden by branching logic and fields holding Missing Data Codes (rule I reports those). Rule E flags values more than 2 standard deviations from the field's mean.
+
+> **Note:** Not all rules are relevant to every project. Rule H produces no results in a project with no calculated fields, and rule I none in a project that does not use missing data codes. Rule E still checks number- and integer-validated text fields and sliders, so it can return results without calculated fields.
 
 ---
 
@@ -153,7 +164,7 @@ A custom rule must always evaluate to true or false — not to a numeric value. 
 
 #### Managing Custom Rules
 
-Custom rules can be created, edited, deleted, and reordered from the bottom of the Data Quality module table. Order affects how rules appear in results and in the pop-up displayed during real-time execution.
+Custom rules can be created, edited, deleted, and reordered from the bottom of the Data Quality module table. Order affects how rules appear in results and in the pop-up displayed during real-time execution. Deleting a custom rule also deletes any data queries attached to its results; REDCap warns before deleting.
 
 ---
 
@@ -165,13 +176,13 @@ Default rules (A–I) are not included in the export — only custom rules are e
 
 #### CSV Format
 
-The export and import file uses a three-column CSV with a header row:
+The export and import file uses a three-column CSV with a header row. The headers must be exactly `rule_name`, `rule_logic`, `real_time_execution`:
 
 | Column | Description | Accepted Values |
 |---|---|---|
 | `rule_name` | Display name shown in the Data Quality module table | Any text string |
 | `rule_logic` | The boolean logic expression for the rule | Valid REDCap branching logic syntax |
-| `real_time_execution` | Whether to enable real-time execution for this rule | `y` to enable; empty or `n` to disable |
+| `real_time_execution` | Whether to enable real-time execution for this rule | Lowercase `y` to enable; lowercase `n` or blank to disable. Nothing else is accepted |
 
 **Example file:**
 
@@ -207,9 +218,9 @@ Rules using event-prefixed references are portable only to projects that have ma
 
 #### Importing Rules
 
-To import, navigate to the Data Quality module and use the import option. REDCap will add the imported rules to the bottom of the existing custom rule list — it does not replace existing rules. Review imported rules after loading to confirm logic and real-time settings are correct before executing.
+To import, navigate to the Data Quality module and use the import option. REDCap shows a preview before anything is saved, then adds the imported rules to the bottom of the existing custom rule list — it does not replace existing rules. Review imported rules after loading to confirm logic and real-time settings are correct before executing.
 
-> **Note:** Importing does not validate rule logic before saving. A rule with a syntax error will be imported but will fail when executed. Test imported rules individually before running them across the full dataset.
+> **Note:** The upload checks the logic syntax of every row. If any row has an error, the whole file is rejected and nothing is imported. Field and event names are **not** checked at upload: a rule naming a field or event that does not exist in the project imports fine and only errors when it is run. Test imported rules individually before running them across the full dataset.
 
 ---
 
@@ -221,7 +232,13 @@ Each custom rule has a **Real-Time Execution** checkbox. When enabled:
 2. If any rule is violated, a warning pop-up appears listing the violated rules and the specific fields involved with their current values.
 3. If no rules are violated, the form saves normally with no pop-up.
 
-The user can acknowledge the warning and proceed — real-time execution is advisory, not blocking. Individual results displayed in the pop-up can be excluded so they will not appear again on future saves, even if the condition persists.
+The user can acknowledge the warning and proceed — real-time execution is advisory, not blocking. The data is saved, but the user stays on the form so the pop-up can show (**Save & Exit Form** behaves like **Save & Stay**). The pop-up appears only if at least one violation is not excluded. Individual results displayed in the pop-up can be excluded so they will not appear again on future saves, even if the condition persists.
+
+Scope of real-time execution:
+
+- **Which rules:** custom rules only; default rules A–I cannot run in real time. A rule runs only if it references at least one field on the form being saved. In longitudinal projects, a rule that refers only to fields in other events is skipped.
+- **Which users:** anyone who saves the form, whatever their Data Quality rights. Users without the execute right can still exclude a custom-rule result from the pop-up if they have edit rights to one of the rule's instruments.
+- **Which saves:** data entry forms only — never surveys, the Data Import Tool or the API.
 
 > **Important:** Real-time execution works only on **data entry forms**. It is not available for surveys. A user completing a survey will never see a data quality pop-up, regardless of rule configuration.
 
@@ -238,6 +255,10 @@ Any individual discrepancy in the results list can be excluded. Excluding a disc
 Excluded discrepancies are accessible at any time via the **view** link at the top of the results table for that rule. They can be un-excluded if the situation changes and the discrepancy should once again appear in results.
 
 Exclusion is appropriate when a discrepancy reflects a known and accepted condition — for example, a required field that is intentionally left blank because the question was not applicable.
+
+An exclusion covers one rule for one record, event and instance — and for default rules, one field. It does not suppress other rules or other events or instances of the same record.
+
+**With the Data Resolution Workflow enabled**, the **Exclude** link in results is replaced by a query button, so discrepancies are handled as data queries instead; users with no Data Resolution Workflow right get no action at all. A project uses either the Field Comment Log or the Data Resolution Workflow (or neither), never both. For query roles and statuses, and which role can close a query, see [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md).
 
 ---
 
@@ -256,9 +277,11 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 1. Execute Rule H. REDCap returns a count of affected records. Running the rule only lists the discrepancies; nothing is changed yet.
 2. Click **View** to see the specific records and fields.
-3. Click **Fix calcs now** and confirm ("Fix ALL incorrect calculated values?"). REDCap recalculates and overwrites the stored value for all affected records project-wide. Excluded discrepancies and calculated fields on locked forms or records are skipped.
+3. Click **Fix calcs now** (the text "Fix ALL incorrect calculated values?" sits next to the button). There is no confirmation dialog — one click runs the fix. REDCap recalculates and overwrites the stored values for the results currently shown. Excluded discrepancies and calculated fields on locked forms or records are skipped.
 
-> **Important:** Fix calcs now updates all flagged calculated fields simultaneously across the entire project. Review the list of affected records before clicking. This action cannot be undone through the interface — it overwrites stored values.
+**What the fix covers.** It applies to the results of the run you are looking at, so it honours the record, DAG and field filters in use (a field filter also includes calculated fields that depend on the chosen fields). It only touches records in your own DAG. With no filters and no DAG assignment, that is every flagged calculated field in the project.
+
+> **Important:** Fix calcs now updates all flagged calculated fields in the current results at once, with no confirmation step. Review the list of affected records before clicking. This action cannot be undone through the interface — it overwrites stored values.
 
 > **Institution-specific:** Local policy may require supervisor review or audit trail documentation before using Fix calcs now in Production. Contact your REDCap administrator to confirm any institutional requirements before using this feature on live data.
 
@@ -267,19 +290,19 @@ Rule H deserves separate attention because it serves a specific remediation func
 ## 10. Common Questions
 
 **Q: Do I need special user rights to access Data Quality?**
-**A:** Yes. A user must have the Data Quality user right assigned in their project role. Users without this right will not see the module in the Applications menu.
+**A:** Yes. There are two rights: **Data Quality (create/edit rules)** to manage rules and **Data Quality (execute rules)** to run them, fix calcs and export results. Either one shows the module in the Applications menu; users with neither will not see it.
 
 **Q: Can I use special functions like `datediff()` in a custom rule?**
 **A:** Yes. All special functions listed in [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) are available in custom rule logic, just as they are in calculated fields.
 
 **Q: Why does a real-time execution pop-up appear even after I've excluded the result?**
-**A:** Real-time exclusions are per-record and per-rule. If the exclusion was applied to one record, it will not suppress the same violation on a different record. Verify that the exclusion was applied to the correct record.
+**A:** Exclusions apply per rule, record, event and instance. An exclusion on one record, event or instance will not suppress the same violation elsewhere — including another event or repeating instance of the same record. Verify that the exclusion was applied to the correct record, event and instance.
 
 **Q: Can surveys trigger real-time data quality rules?**
 **A:** No. Real-time execution only fires when a user saves a data entry form through the normal REDCap interface. Survey submissions do not trigger real-time data quality checks.
 
 **Q: My calculated field values look wrong after I changed the formula. What should I do?**
-**A:** Run Rule H. It will identify all records where the stored value no longer matches the current formula. Then click **Fix calcs now** to update them all at once.
+**A:** Run Rule H. It will identify all records where the stored value no longer matches the current formula. Then click **Fix calcs now** to update all results shown at once (it runs on one click, with no confirmation).
 
 **Q: Can a user in a Data Access Group see discrepancies from other groups?**
 **A:** No. Users assigned to a DAG see only discrepancies from their own group's records. Project administrators not assigned to a DAG see discrepancies stratified by group.
@@ -291,24 +314,24 @@ Rule H deserves separate attention because it serves a specific remediation func
 **A:** No. The Data Quality module does not expose rule execution through the REDCap API. Rules must be executed from the module interface.
 
 **Q: Can I copy custom rules from one project to another?**
-**A:** Yes. Export the rules from the source project as a CSV, then import that CSV into the destination project. Review and adjust any field names or event references that differ between projects before importing.
+**A:** Yes. To copy a whole project, it is easier to let the rules travel with it: **Copy Project** has an option to copy the data quality rules, and rules are included in the REDCap Project (XML) export. To move rules into an existing project, export them from the source project as a CSV, then import that CSV into the destination project. Review and adjust any field names or event references that differ between projects before importing.
 
 **Q: Does importing rules overwrite my existing custom rules?**
 **A:** No. Importing appends the new rules to the bottom of the existing custom rule list. Existing rules are not modified or removed.
 
 **Q: My project has hundreds of fields and running rules is slow. Is there a faster way?**
-**A:** In REDCap 16 and later, use the field selector to limit standard default rules to specific fields rather than running them across the entire project. You can also use the "Run all custom" button to skip default rules entirely if only custom rule results are needed.
+**A:** In REDCap 16 and later, use the field selector to limit standard default rules to specific fields rather than running them across the entire project. You can also use the **All custom** button to skip default rules entirely if only custom rule results are needed.
 
-**Q: What is the difference between "Run all rules except A & B" and "Run all custom"?**
-**A:** "All except A&B" still runs default rules C through I alongside all custom rules — it only skips the two blank-value scans, A (all fields) and B (required fields only). "Run all custom" skips all default rules and runs only the rules you have written yourself.
+**Q: What is the difference between "All except A&B" and "All custom"?**
+**A:** **All except A&B** still runs default rules C through I alongside all custom rules — it only skips the two blank-value scans, A (all fields) and B (required fields only). **All custom** skips all default rules and runs only the rules you have written yourself; it is not shown until the project has at least one custom rule.
 
 ---
 
 ## 11. Common Mistakes & Gotchas
 
-**Writing a rule that returns a value instead of true/false.** A custom rule must evaluate to a boolean. Writing `[bmi]` as a rule (which returns a number) will not work as expected. The rule must be a comparison: `[bmi] > 30`. If the rule produces no discrepancies or behaves unexpectedly, check that the logic resolves to true or false, not a numeric or text value.
+**Writing a rule that returns a value instead of true/false.** A custom rule must evaluate to a boolean. Any result that is not false counts as a discrepancy, so writing `[bmi]` alone as a rule flags nearly every record. The rule must be a comparison: `[bmi] > 30`. If the rule flags far too many records or behaves unexpectedly, check that the logic resolves to true or false, not a numeric or text value.
 
-**Clicking Fix calcs now in Rule H without reviewing the affected records first.** Fix calcs now rewrites calculated field values for every flagged record simultaneously. If the formula change was intentional but only applies to new records going forward, using Fix calcs now will also update historical records — which may not be desired. Always review the Rule H results list before correcting.
+**Clicking Fix calcs now in Rule H without reviewing the affected records first.** Fix calcs now runs on a single click, with no confirmation, and rewrites calculated field values for every flagged record in the current results simultaneously. If the formula change was intentional but only applies to new records going forward, using Fix calcs now will also update historical records — which may not be desired. Always review the Rule H results list before correcting.
 
 **Assuming a pop-up means data was not saved.** Real-time execution warnings are advisory. REDCap still saves the record even when a violation is detected. The pop-up is a notification, not a block. Users may dismiss it and continue — the data is already saved.
 
@@ -318,7 +341,7 @@ Rule H deserves separate attention because it serves a specific remediation func
 
 **Forgetting to escape double quotes when building the import CSV manually.** If you construct a rules CSV in a text editor or programmatically, empty-string comparisons in rule logic (`""`) must be written as `""""` inside a CSV-quoted field. Failing to escape them will cause the CSV parser to misread the row, resulting in a malformed or truncated rule. When building these files in code, use a proper CSV library rather than string concatenation to handle escaping automatically.
 
-**Importing rules without testing them first.** REDCap does not validate rule logic on import — a rule with a syntax error will be saved but will fail when executed. After importing, execute each rule individually on a small dataset or test project before running across full production data.
+**Importing rules without testing them first.** The upload rejects the whole file if any row has a logic syntax error, but it does not check field or event names — a rule that names a field or event missing from the project imports fine and errors when it is run. After importing, execute each rule individually on a small dataset or test project before running across full production data.
 
 ---
 

@@ -597,6 +597,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-DAG-01 — Data Access Groups
 - RC-EM-01 — External Modules: Overview & Manager
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 - RC-USER-03 — User Rights: Configuring User Privileges
@@ -668,6 +669,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
 - RC-CDIS-04 — CDP vs CDM: Feature Comparison
 - RC-CDIS-05 — REDCap SHARE: Overview & Onboarding
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -689,6 +691,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CDIS-04 — CDP vs CDM: Feature Comparison
 - RC-CDIS-05 — REDCap SHARE: Overview & Onboarding
 - RC-IMP-01 — Data Import Overview
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -725,6 +728,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-CDIS-04 — CDP vs CDM: Feature Comparison
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -1362,6 +1366,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MCP-01 — REDCap MCP Server: Setup and Management
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
 - RC-INFRA-02 — Self-Hosting REDCap on a Synology NAS with Docker Compose
+- RC-NAV-UI-02 — Project Menu Reference
 
 ---
 
@@ -3447,6 +3452,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-DE-08 — Field Comment Log
 - RC-DDE-01 — Double Data Entry
+- RC-DQ-01 — Data Quality Module
 - RC-LOG-01 — Logging — Project Audit Trail
 - RC-LOCK-01 — Record Locking & E-Signatures
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
@@ -3505,6 +3511,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-NAV-UI-02 — Project Menu Reference
 - RC-NAV-REC-04 — Record Status Dashboard & Other Record Links
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
+- RC-DE-12 — Data Resolution Workflow
 - RC-DE-04 — Editing Data & Audit Trail
 - RC-DAG-01 — Data Access Groups
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
@@ -5242,6 +5249,13 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-MYCAP-01 — MyCap: Overview & Enabling
 - RC-NAV-UI-03 — Project Bookmarks
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
+- RC-PLUS-01 — REDCap+: Overview and Subscription
+- RC-CDIS-03 — Clinical Data Mart (CDM): Setup and Usage
+- RC-CC-25 — Control Center: Access Control Groups
+- RC-RAND-02 — Randomization Setup Guide
+- RC-CDIS-05 — REDCap SHARE: Overview & Onboarding
+- RC-AI-01 — REDCap AI Tools: Overview & Security
+- RC-CDIS-02 — Clinical Data Pull (CDP): Setup and Usage
 
 **Inbound links (referenced by):**
 - RC-CC-22 — Admin: Administrator Project Tools (View as User, Project Switcher)
@@ -5711,6 +5725,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-52 — Randomize Record API
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-LONG-03 — Longitudinal Clinical Research Design Patterns
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-RAND-01 — Randomization Concepts & Terminology
 - RC-RAND-03 — Working with & Managing Randomization
 
@@ -6384,6 +6399,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-INFRA-03 — REDCap Versions, Release Lines & Patching
+- RC-NAV-UI-02 — Project Menu Reference
 - RC-SURV-10 — Survey Login
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-PLUS-03 — REDCap+: Reward Services

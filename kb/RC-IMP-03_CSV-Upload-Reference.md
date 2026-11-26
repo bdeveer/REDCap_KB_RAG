@@ -231,13 +231,15 @@ The record data CSV has a detailed column-by-column format reference, including 
 
 **Rights required:** Uploading needs the Data Quality right to create/edit rules; downloading needs either Data Quality right (create/edit or execute).
 
+**Upload checks:** The column headers must be exactly `rule_name`, `rule_logic` and `real_time_execution`. The upload checks the logic syntax of every row; if any row has an error, the whole file is rejected and nothing is imported. It does not check that the field or event names in the logic exist, so a rule with a misspelled name imports but fails when run. Check names against the Codebook before uploading.
+
 **Column reference:**
 
 | Column | Description | Accepted Values |
 |---|---|---|
 | `rule_name` | Display name shown in the Data Quality module | Any text string |
 | `rule_logic` | Boolean logic expression; records where this evaluates to true are flagged | Valid REDCap branching logic syntax; use `[event][field]` notation in longitudinal projects |
-| `real_time_execution` | Whether the rule runs in real time as data is entered | `y` to enable; `n` or empty to disable |
+| `real_time_execution` | Whether the rule runs in real time as data is entered | `y` to enable; `n` or empty to disable (lowercase only; other values are rejected) |
 
 > **CSV escaping:** Any `rule_logic` cell containing `""` (empty-string comparison) must double every `"`. The pattern `[field] <> ""` in REDCap logic becomes `"[field] <> """""` in the CSV (four escaped-quote characters plus one closing delimiter = five trailing `"`). Most spreadsheet apps apply this automatically; apply it manually if building the file in a text editor or code.
 

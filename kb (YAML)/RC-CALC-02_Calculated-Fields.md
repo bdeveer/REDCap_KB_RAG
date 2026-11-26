@@ -70,7 +70,7 @@ Calculated fields are read-only for all users, regardless of user rights. Users 
 
 **Data Quality Rule H**
 
-A built-in Data Quality rule that re-evaluates all calculated fields across all records in a project and lists every stored value that differs from what the formula now gives. Running the rule only lists the incorrect values; they are saved only when you select **Fix calcs now** and confirm. See Section 6.
+A built-in Data Quality rule that re-evaluates all calculated fields across all records in a project and lists every stored value that differs from what the formula now gives. Running the rule only lists the incorrect values; they are saved only when you click **Fix calcs now** (one click runs the fix; there is no separate confirmation step). See Section 6.
 
 ---
 
@@ -175,7 +175,7 @@ Calculated values in the import file itself are not stored: REDCap ignores them,
 
 > **Note (observed on 17.5.6 Standard):** calculations using the Missing Data Code functions (`ismissingcode()`, `isblankormissingcode()`, `hasmissingcode()`) were stored as **false** after an API import even when the input held a defined code, while the data entry form computed them correctly. See [RC-CALC-01 — Special Functions Reference](RC-CALC-01_Special-Functions-Reference.md) §7.
 
-**When Data Quality rule H is run and fixed.** Rule H evaluates every calculated field expression for every record and **lists** each stored value that differs from the current result. Running the rule alone changes nothing. To save the corrections, select **Fix calcs now** in the rule H results and confirm **Fix ALL incorrect calculated values?**. Results you have marked as excluded, and locked forms or records, are skipped. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
+**When Data Quality rule H is run and fixed.** Rule H evaluates every calculated field expression for every record and **lists** each stored value that differs from the current result. Running the rule alone changes nothing. To save the corrections, click **Fix calcs now** in the rule H results (the text **Fix ALL incorrect calculated values?** appears next to the button; there is no separate confirmation, so one click runs the fix). The fix applies to the results shown, so any record, DAG or field filters in use limit it. Results you have marked as excluded, and locked forms or records, are skipped. This is useful after making formula changes, after bulk imports, or when formula dependencies have changed.
 
 **Exceptions that apply to every background recalculation.** Background recalculation (on save of another form, on import, on DDE merge and on rule H fix) never changes a value on a **locked** form or record; it is skipped without a message. A calc value saved in the background also does not change the form status of an instrument that has not been started (gray). Background recalculation ignores branching logic (see Section 8).
 
@@ -187,7 +187,7 @@ Calculated values in the import file itself are not stored: REDCap ignores them,
 
 > **Version caveat (below 17.5.4 Standard / 17.3.18 LTS; probably all 16.x LTS):** Calculations containing **inline comments**, or static text with an **apostrophe or quotation mark**, could fail to evaluate on the form or survey. The fix does not appear to be in the 16.x LTS line, so on 16.x avoid inline comments and apostrophes or quotation marks in static text within calculations. See [RC-BL-02 — Branching Logic: Syntax & Atomic Statements](RC-BL-02_Branching-Logic-Syntax-and-Atomic-Statements.md) §3.3 and §3.6.
 
-> **Note:** Calculated fields are not updated when you edit a branching logic condition, rename a field, or make other project design changes. Run Data Quality rule H and select **Fix calcs now** after any design changes that affect a formula to ensure all stored values are current.
+> **Note:** Calculated fields are not updated when you edit a branching logic condition, rename a field, or make other project design changes. Run Data Quality rule H and click **Fix calcs now** after any design changes that affect a formula to ensure all stored values are current.
 
 > **Note:** While the project is in Development, editing the equation of a calculated field that already has data shows the notice **Calculation was changed - Data is affected!**. No such notice appears in Production, so after a formula change there, run rule H yourself.
 
@@ -221,7 +221,7 @@ Calculated values in the import file itself are not stored: REDCap ignores them,
 
 **Q: Does changing a formula update all existing records automatically?**
 
-**A:** No. Changing a formula in the Online Designer updates how future calculations are performed but does not retroactively recalculate existing records. To update all existing records after a formula change, run Data Quality rule H from the Data Quality module, then select **Fix calcs now** and confirm **Fix ALL incorrect calculated values?**. Running the rule alone only lists the incorrect values. Excluded results and locked forms or records are not fixed.
+**A:** No. Changing a formula in the Online Designer updates how future calculations are performed but does not retroactively recalculate existing records. To update all existing records after a formula change, run Data Quality rule H from the Data Quality module, then click **Fix calcs now**. One click runs the fix; there is no confirmation dialog. Running the rule alone only lists the incorrect values. The fix covers the results shown, so filters in use limit it. Excluded results and locked forms or records are not fixed.
 
 **Q: Can I use branching logic to control whether a calculated field is visible?**
 
@@ -256,7 +256,7 @@ If a calc must be blank when a condition is false, build the condition into the 
 
 **Adding up coded answers that weren't coded as scores.** `sum([q1], [q2], [q3])` on radio fields adds the raw codes. With choices coded `1, Always | 2, Sometimes | 3, Never | 99, Don't know`, a higher total means *less* of the thing being measured, and a single "Don't know" adds 99 and makes the score meaningless. REDCap gives no warning, because the formula is valid. Before writing a total, check the codes in the Codebook. If they aren't already in score order without high "unknown" codes, recode each item (see the scoring note in Section 4). Changing the codes on a production field with data instead changes the meaning of existing responses, so don't fix it that way.
 
-**Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the form is opened and saved, the inputs are re-imported, or the rule H corrections are saved. After any formula change in a project with existing data, run rule H and select **Fix calcs now** to synchronize all records; running the rule without fixing only lists the incorrect values.
+**Not running Data Quality rule H after a formula change.** Editing a formula updates future calculations but leaves existing records with their old computed values. Stale values persist until the form is opened and saved, the inputs are re-imported, or the rule H corrections are saved. After any formula change in a project with existing data, run rule H and click **Fix calcs now** to synchronize all records; running the rule without fixing only lists the incorrect values.
 
 **Forgetting parentheses in exponentiation.** REDCap requires both the base and the exponent to be individually wrapped in parentheses: `([base])^([exponent])`. Writing `[height]^2` is a syntax error — on 17.x the Online Designer and Data Dictionary upload refuse the equation for everyone. The correct form is `([height])^(2)`.
 

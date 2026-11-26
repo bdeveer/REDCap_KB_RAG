@@ -5,12 +5,13 @@ domain: Record Navigation
 applies_to:
 - All project types
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — record
+  navigation and form status icons behaviour checked against source code; pages not
+  re-captured
 prerequisites:
 - None
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 related:
 - id: RC-NAV-REC-02
   title: 'Longitudinal Mode & Arms, RC-NAV-REC-03 — Repeated Instruments & Repeated
@@ -89,21 +90,44 @@ opening individual records.
 ## 3.2 Add/Edit Records (Quickest Path to a Single Record)
 
 - In the left-hand menu, find the Data Collection section and click
-    Add / Edit Records.
+    Add / Edit Records. If you do not have the right to create records,
+    the link reads **View / Edit Records** instead.
 
-- To find a record by ID: use the Choose an existing record dropdown
-    — it lists all record IDs in the project.
+- To find a record by ID: use the **Choose an existing [Record ID]**
+    dropdown. It lists only the records in your Data Access Group (if
+    you are in one) and, in longitudinal projects with several arms, in
+    the current arm. Once the project has more than 25,000 records, the
+    dropdown is replaced by a text box where you type the record ID.
 
 - To search by value: use the Data Search feature.
 
-- Search across all variables — useful when you only know a value
-    but not which field contains it.
+- Search across all variables ("All fields") — useful when you only
+    know a value but not which field contains it. This option is not
+    available once the project has more than 20,000 records.
 
 - Search within a specific variable — faster in large projects
     (e.g., search only the Date of Birth field).
 
-- Selecting a result takes you directly to the Record Home Page or to
-    the specific instrument where the value was found.
+- Data Search limits: multiple-choice (dropdown, radio), checkbox,
+    yes/no, true/false, file upload and descriptive fields cannot be
+    searched; at most 25 results are shown; results only include
+    records in your Data Access Group and instruments you have rights
+    to view.
+
+- Selecting a result opens the record either on the data entry form
+    where the value was found or on the Record Home Page, depending on
+    your version (see the caveat below).
+
+> **Version caveat (17.x vs 16.x LTS):** In 17.x, Data Search lets you
+> choose whether a result opens on the **Data Entry Form** or the
+> **Record Home Page**, and REDCap remembers your choice. 17.x also
+> offers **Remember this selection** for the search field and
+> **Maintain arm selection with Record Status Dashboard**. In 16.x LTS
+> none of these options exist: a result always opens the form where the
+> value was found (the Record Home Page for hits on the record ID). If
+> you are on 16.x and want the Record Home Page, note the record ID and
+> select it from the **Choose an existing [Record ID]** dropdown
+> instead.
 
 ## 3.3 Record Status Dashboard
 
@@ -121,8 +145,18 @@ opening individual records.
 - In the left-hand menu, click Data Exports, Reports, and Stats, then
     select a report.
 
-- Any Record ID displayed in a report is a clickable link that opens
-    the Record Home Page for that record.
+- A Record ID displayed in a report is a clickable link. Where it
+    goes depends on the row:
+
+    - Classic projects: the first instrument you have access to for
+        that record.
+    - Longitudinal projects, rows that are not repeating instances: the
+        Record Home Page.
+    - Rows for a repeating instrument or repeating event instance: that
+        instrument or event instance.
+
+- Record IDs are not links when the project is in Analysis/Cleanup or
+    Completed status.
 
 ## 3.5 Using the Record Home Page
 
@@ -143,27 +177,46 @@ encodes the completion status of that instrument for a given record.
 
 | **Dot Appearance** | **Meaning** |
 | --- | --- |
-| Grey | Not started — no data has been entered. This is the default state. |
-| Red | Data has been saved, but the Form Status field is still set to Incomplete. |
+| Grey | Not started — no form status has been saved for this instrument yet. This is the default state. |
+| Red | The instrument has been saved (or data imported into it), but the Form Status field is still set to Incomplete. |
 | Yellow | Form Status field is set to Unverified by a user. |
 | Green | Form Status field is set to Complete by a user. |
-| Orange with white checkmark | The instrument was opened as a survey but only partially completed (e.g., participant closed the browser mid-survey). |
-| Green with white checkmark | The instrument was completed in full as a survey. |
+| Orange with white checkmark | A survey response was started but not finished (partial response, e.g. the participant left mid-survey), or a completed survey whose Form Status was later changed to Incomplete or Unverified. |
+| Green with white checkmark | The survey was completed in full and its Form Status is still Complete. |
+| Blue stacked icon | Several instances (repeating instrument or event) with mixed statuses. |
+| Stacked icon in one colour | Several instances, all with that status. |
+
+> **Version caveat (present in 17.6 Standard, not in 17.3 LTS):** A
+> purple **Partial MyCap Response** icon marks an instrument a
+> participant started but did not finish in the MyCap app. If you use
+> MyCap on 17.3 LTS, such responses show with the ordinary form status
+> icons; check the MyCap task data rather than relying on the icon.
 
 **Important distinctions:**
 
-- REDCap automatically enforces grey (no data) and red (data present,
-    incomplete) statuses.
+- REDCap sets grey and red automatically: an instrument stays grey
+    until it is saved or data is imported into it, then turns red
+    while its Form Status is Incomplete.
+
+- Values saved in the background from another instrument (for example
+    a calculated field updated when a different form is saved) do not
+    turn a grey dot red. The dot changes only when that instrument
+    itself is saved or data is imported into it.
+
+- Importing data into an instrument without its `[instrument]_complete`
+    column sets its Form Status to Incomplete, so the dot turns red.
 
 - Yellow and green statuses are set manually by the study team ---
     they are optional but recommended for projects with many
     instruments.
 
-- Survey statuses (orange and green with checkmarks) are set
-    automatically when a survey is submitted or partially completed.
+- Survey icons (orange and green with checkmarks) come from the survey
+    response itself: REDCap marks a response as partial when it was
+    started but not finished, and complete when the participant
+    finished it. The icon then combines that with the Form Status.
 
 
-> **Technical Note:** Form completion status is stored in `[instrument_complete]` with three coded values: 0 = Incomplete (covers both grey/not-started and red/data-saved-but-incomplete), 1 = Unverified, 2 = Complete. Survey completion status is stored in a separate field and also uses coded values: 1 = partial completion (orange checkmark), 2 = full completion (green checkmark). These are distinct fields — codes 1 and 2 mean different things in each system. Both can be set or exported via the API and data import/export.
+> **Technical Note:** Form completion status is stored in `[instrument]_complete` with three coded values: 0 = Incomplete, 1 = Unverified, 2 = Complete. Grey (not started) and red both export as 0 by default; an API export option can return a blank value for grey instruments instead (`exportBlankForGrayFormStatus`). There is no separate coded survey-status field, and survey status cannot be set through data import or the API. Exports only include the survey timestamp column (`[instrument]_timestamp`), which holds the completion date-time or "[not completed]" and is ignored on import.
 
 
 ---
@@ -180,9 +233,11 @@ across all variables.
 **Q: Can I navigate to an instrument directly without going through the
 Record Home Page?**
 
-**A:** Yes. Clicking any colored dot in the Record Status Dashboard or in a
-report takes you directly to the corresponding instrument without
-visiting the Record Home Page first.
+**A:** Yes. Clicking any colored dot in the Record Status Dashboard takes
+you directly to the corresponding instrument without visiting the Record
+Home Page first. Reports have no status dots, but in classic projects a
+Record ID link in a report opens the first instrument you can access, and
+for repeating-instance rows it opens that instance.
 
 **Q: What does a red dot mean — is something wrong?**
 
@@ -194,21 +249,25 @@ not indicate an error.
 
 **A:** Yes. Instrument statuses are stored in the dataset and can be set in
 bulk using REDCap's data import tools. Use coded values: 0 =
-incomplete, 1 = unverified, 2 = complete.
+incomplete, 1 = unverified, 2 = complete. Survey status (partial or
+complete) cannot be imported; it comes only from the survey response.
 
 **Q: What happens to the dot color if I enter a single data point but
 leave everything else blank?**
 
-**A:** The dot turns red. Any data saved to an instrument — even a single
-field — changes the dot from grey to red.
+**A:** The dot turns red. Saving the instrument — even with a single
+field filled in — changes the dot from grey to red. Values written in the
+background from another instrument (such as calculations) do not.
 
 ---
 
 # 6. Common Mistakes & Gotchas
 
-- Confusing grey and red: grey means no data at all; red means data is
-    present but the form status has not been updated. They are both
-    coded as 0 in the dataset, but have different visual meanings.
+- Confusing grey and red: grey means no form status has been saved
+    yet; red means the instrument has been saved but the form status is
+    still Incomplete. Both export as 0 by default, but have different
+    visual meanings. A grey instrument can still hold background values
+    such as calculations saved from another form.
 
 - Ignoring optional statuses: teams that skip yellow/green statuses on
     large projects often lose track of which instruments have been
@@ -256,4 +315,5 @@ field — changes the dot from grey to red.
     status values (the colored dots) via data import
 
 - [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md)
-    in custom reports are clickable links back to the Record Home Page
+    — building custom reports; Record IDs in reports link back to the
+    record (see §3.4 for where each link opens)
