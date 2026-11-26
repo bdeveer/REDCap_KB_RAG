@@ -12,7 +12,7 @@ verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review
   v16.0.61 (LTS)
 prerequisites:
 - 'RC-USER-03 — User Rights: Configuring User Privileges'
-version: '1.6'
+version: '1.7'
 last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation
 related:
@@ -285,7 +285,7 @@ When exporting records or reports, you can specify the format and type of return
 **Format options:**
 - **JSON** — Easily consumed by Python, R (via jsonlite), and most modern programming languages. Not the default: you must ask for it with `format=json`.
 - **CSV** — Flat text file, compatible with Excel, R (via read.csv), and SAS. Familiar format for analysts who use manual exports.
-- **XML** — The default when `format` is omitted. Available as standard XML or as CDISC ODM, which includes full metadata and can be re-imported into REDCap or other EDC systems.
+- **XML** — The default when `format` is omitted. Available as standard XML or as CDISC ODM (`format=odm`). An ODM record export holds the data only, not the project's metadata; it can be imported into another REDCap project with the same fields, or into other EDC systems. To get metadata and data together (for example to clone a project), use Export Project XML ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)).
 
 Always set `format` explicitly, so a script never receives XML when it expects JSON or CSV.
 

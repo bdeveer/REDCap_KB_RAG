@@ -7,10 +7,11 @@ applies_to:
 - requires File Repository user right
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Data Export Files folder behaviour checked against source code
+  of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-NAV-UI-01 — Project Navigation UI
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-USER-01
@@ -61,7 +62,7 @@ Folders and subfolders created manually by project users or administrators to or
 
 A set of automatically managed folders that REDCap maintains for its own purposes. Files in these folders do not count against the project's storage quota:
 
-- **Data Export Files** — Every data export run from the project is saved here automatically. Users can re-download any previous export without re-running it. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
+- **Data Export Files** — Every export run from the Export Data dialog on the Data Exports, Reports, and Stats page is saved here automatically (API exports and the ZIP of uploaded files are not). Users can re-download a previous export without re-running it, if their export rights allow: the folder is empty for users whose export rights are De-identified or Remove Identifiers on every instrument, a file can only be downloaded with Full Data Set rights on every instrument it contains, and users in a DAG see only exports made by users in their DAG. An administrator can set a project to delete these files automatically after a number of days. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
 - **PDF Snapshot Archive** — Signed e-Consent PDFs, and any PDF Snapshot set to save to the File Repository, are stored here automatically. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) and [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 - **Miscellaneous File Attachments** — Files uploaded via the rich text editor anywhere in the project (field labels, survey invitations, project dashboards, etc.) are auto-stored here with publicly accessible download links. Anyone with the link can download these files without logging in to REDCap — PHI or other sensitive content should never be uploaded through the rich text editor.
 - **Recycle Bin** — Deleted files are held here for up to 30 days, after which they are permanently deleted. Files can be restored during this window.

@@ -7,10 +7,10 @@
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; requires Add/Edit/Organize Reports privilege for most actions |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — report management and folder behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-08 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md); [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
 | **Synonyms** | how to save and edit a custom report; organize reports into folders; my reports and exports page; find a report id for the api; copy delete or rename a report; manage existing reports; where are my saved reports; unique report name for dashboards |
@@ -31,16 +31,16 @@ This article covers saving custom reports and working with the My Reports & Expo
 The main landing page of the Data Exports, Reports & Stats menu. It lists all available report options — built-in options at the top, followed by all custom reports — along with action buttons and management controls for each.
 
 **Report ID**
-A short numeric identifier that is unique across the entire REDCap installation. Primarily used for API calls that export a specific report. Assigned automatically when a report is saved.
+A short numeric identifier that is unique across the entire REDCap installation. Primarily used for API calls that export a specific report. Assigned automatically when a report is saved. It also appears in your browser's address bar as `report_id=` when you view or edit the report.
 
 **Unique Report Name**
-A longer alphanumeric identifier, also unique across the entire REDCap installation. Primarily used to reference a report in the Project Dashboard feature for building charts and visualizations from report data.
+A text identifier made of "R-" followed by 10 letters and digits (for example, `R-2554F4TCNT`). It is unique **within the project**, not across the installation: a copied project keeps the same unique report names as the original. Used to reference a report in Smart Charts, Smart Tables and Smart Functions (for example, on Project Dashboards) and in the `[report-access-code]` smart variable.
 
 **Report Folder**
-A named grouping that organizes custom reports in the My Reports & Exports overview. Reports can be assigned to one or more folders. Folders are visible to all users who have view access to at least one report in the folder.
+A named grouping that organizes custom reports in the **Reports** panel of the left-hand project menu. Folders are created explicitly by a user with the Add/Edit/Organize Reports privilege, and a report can be assigned to one or more folders. Folders do not appear in the My Reports & Exports list itself. A folder is shown only to users who have view access to at least one report in it.
 
 **Public Link**
-A URL generated for reports that have been made public. Clicking the public link in the overview opens the report in a new browser tab without requiring a login. See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) for the criteria and considerations for making a report public.
+A URL generated for reports that have been made public. Clicking the public link in the overview opens the report in a new browser tab. By default no login is required to view it (for the REDCap+ login-protection exception, see Section 4.4). See [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) for the criteria and considerations for making a report public.
 
 ---
 
@@ -64,6 +64,8 @@ There is no auto-save. Use **Continue Editing Report** to checkpoint your work i
 
 The overview lists all custom reports below the built-in export options. Each custom report row includes a set of action buttons and, after the report is saved, two unique identifiers.
 
+Users with the Add/Edit/Organize Reports privilege see every custom report in this list, regardless of the report's View Access setting. The **Reports** panel in the left-hand menu shows each user only the reports they have view access to.
+
 ### 4.1 Standard Action Buttons
 
 All custom reports share the same three primary action buttons available on built-in reports:
@@ -82,77 +84,91 @@ Each custom report also has three management buttons in the Management Options c
 
 | Button | Description |
 |---|---|
-| Edit | Opens the report builder for that report. Only available if the user has edit access to the report and holds the Add/Edit/Organize Reports privilege. |
-| Copy | Clones the entire report — all settings, fields, filters, and access rules — into a new report. The copy appears in the overview and can be renamed and modified independently. Useful for building a new report based on an existing one. |
-| Delete | Permanently removes the report from the project. **This action does not delete any data.** Only the report definition is removed. |
+| Edit | Opens the report builder for that report. |
+| Copy | After a confirmation prompt, clones the report — settings, fields, filters, and access rules — into a new report. The copy is titled with " (copy)" added to the original name and is placed directly after the original in the list. It gets its own report ID and unique report name, is **not** public (even if the original was), and is **not** placed in the original's folders. Rename and modify it independently. Useful for building a new report based on an existing one. |
+| Delete | After a confirmation prompt, permanently removes the report from the project. **This action does not delete any data.** Only the report definition is removed. The deletion is recorded in the project's Logging. |
 
-> **Important:** The Delete button removes the report immediately without a secondary confirmation step in all REDCap versions. Verify you are deleting the correct report before clicking.
+All three management buttons require the Add/Edit/Organize Reports privilege **and** edit access to that specific report. REDCap checks this on the server, not just by hiding the buttons.
+
+> **Important:** REDCap asks you to confirm before deleting, but once confirmed the deletion cannot be undone. Read the report name in the prompt before confirming.
+
+> **Note:** A report cannot be edited while it is public. To change a public report, turn public access off, edit and save the report, then make it public again (see [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) §4.2).
 
 ### 4.3 Report Identifiers
 
 Each saved custom report displays two identifiers in the overview:
 
-**Report ID:** A short numeric ID unique to the entire REDCap installation. Used primarily in API calls to export a specific report. Refer to your installation's API documentation or the API Playground for details on report-based API exports.
+**Report ID:** A short numeric ID unique to the entire REDCap installation. Used primarily in API calls to export a specific report. Clicking the ID opens a short explanation of where it is used (the API and Smart Charts). Refer to your installation's API documentation or the API Playground for details on report-based API exports.
 
-**Unique Report Name:** A longer alphanumeric string, also unique installation-wide. Used in the Project Dashboard feature to build charts and graphs sourced from a specific report's data.
+**Unique Report Name:** "R-" followed by 10 letters and digits (for example, `R-2554F4TCNT`), unique within the project. A copied project keeps the same unique report names. Used to point Smart Charts, Smart Tables and Smart Functions at a specific report's data (see [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md)) and in the `[report-access-code]` smart variable.
 
 ### 4.4 Public Link
 
-If a report has been made public (see [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md), Section 4.2), a blue **Public** link appears in its row in the overview. Clicking this link opens the public report in a new browser tab. This provides a quick way to preview or verify the public report without navigating through the report edit menu.
+If a report has been made public (see [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md), Section 4.2), a blue **Public** link appears in its row in the overview. Clicking this link opens the public report in a new browser tab. This provides a quick way to preview or verify the public report without navigating through the report edit menu. The link is shown only to users who hold the User Rights privilege, and only when public reports are enabled on your instance.
+
+> **Version caveat (REDCap+, 17.5.0+):** A public link normally opens without a login, but on instances with an active REDCap+ subscription the report may be set to require a REDCap login first. This option does not exist on 17.3 or 16.0 LTS. If a colleague reports being asked to log in, check the report's login protection setting (see [RC-EXPRT-06 — Custom Reports: Setup & Field Selection](RC-EXPRT-06_Custom-Reports-Setup-and-Field-Selection.md) §4.2).
 
 ---
 
 ## 5. Report Folders
 
-Projects with many custom reports can become difficult to navigate. Report folders allow you to group related reports under named headings in the My Reports & Exports overview.
+Projects with many custom reports can become difficult to navigate. Report folders allow you to group related reports under named, collapsible headings in the **Reports** panel of the left-hand project menu. Folders appear only in that panel; the My Reports & Exports list on the Data Exports, Reports & Stats page is not grouped by folder.
 
 ### 5.1 Accessing the Folder Manager
 
-The folder management interface is accessed via the **Organize** link in the report section header in the **left-hand project menu** — not from within the Data Exports, Reports & Stats page itself. This is a common point of confusion.
+The folder management interface is accessed via the **Organize** link in the report section header in the **left-hand project menu** — not from within the Data Exports, Reports & Stats page itself. This is a common point of confusion. The link is shown only to users with the Add/Edit/Organize Reports privilege.
 
-### 5.2 Creating a Folder
+### 5.2 Creating, Renaming and Deleting Folders
 
-In the folder manager, enter a name in the **New Folder** text box and click **Add**. The folder is created immediately and will appear in the overview for all users who have view access to at least one report assigned to it.
+In the folder manager, enter a name (up to 64 characters) in the **New Folder** text box and click **Add**. The folder is created immediately and will appear in the left-hand Reports panel for all users who have view access to at least one report assigned to it.
+
+Existing folders can be renamed or deleted from the same manager. Deleting a folder does not delete the reports in it. Creating, renaming and deleting folders is recorded in the project's Logging.
 
 Folder names should be meaningful to all users of the project, not just the creator.
 
 ### 5.3 Assigning Reports to a Folder
 
 1. Select a folder from the dropdown in the folder manager.
-2. REDCap displays a list of all reports in the project. Check the box next to each report you want to assign to that folder.
+2. REDCap displays a list of all reports in the project. Check the box next to each report you want to assign to that folder. Use the **hide reports already assigned** option to shorten the list to reports you have not yet placed in a folder.
 3. Unchecking a report removes it from the folder.
 
 A report can be assigned to more than one folder simultaneously. This is useful when a report is relevant to multiple working groups or purposes.
 
-### 5.4 Search and Edit Links
+### 5.4 Reordering Reports and Folders
+
+Users with the Add/Edit/Organize Reports privilege can drag and drop reports into a new order, and can also reorder folders. Within a folder, reports follow the overall report order.
+
+### 5.5 Search and Edit Links
 
 The report section header also includes two additional navigation links:
 
-**Search:** Opens a search box that filters all reports by name. Useful when a project has a large number of reports and you need to locate one quickly. Clicking a result in the search navigates directly to that report.
+**Search:** Opens a search box that filters all reports by title. Type at least 2 characters; each word is matched separately (a report matching any of the words is listed), and up to 20 results are shown. Useful when a project has a large number of reports and you need to locate one quickly. Clicking a result in the search navigates directly to that report.
 
 **Edit:** Returns you to the Data Exports, Reports & Stats overview page. This link is relevant when you have navigated away to the folder manager and want to return to the main report list.
+
+> **Note:** The **Reports** header itself in the left-hand menu is also a link to My Reports & Exports (present in 17.6). On older versions, use the Edit link or the Data Exports, Reports & Stats menu item.
 
 ---
 
 ## 6. Common Questions
 
 **Q: I deleted a report by accident. Can I recover it?**
-**A:** No. Deleting a report is permanent and there is no undo. The report definition is gone; you would need to recreate it from scratch. The data the report displayed is not affected — only the report configuration is lost.
+**A:** No. REDCap asks for confirmation first, but once confirmed, deleting a report is permanent and there is no undo. The report definition is gone; you would need to recreate it from scratch. The data the report displayed is not affected — only the report configuration is lost.
 
 **Q: What is the difference between the Report ID and the Unique Report Name?**
-**A:** Both are unique identifiers, but they are used in different contexts. The Report ID (short numeric) is used in API calls to export a specific report's data programmatically. The Unique Report Name (longer alphanumeric) is used in the Project Dashboard feature to build charts from a report. Neither is user-facing in the report itself.
+**A:** Both are unique identifiers, but they are used in different contexts. The Report ID (short numeric) is used in API calls to export a specific report's data programmatically. The Unique Report Name ("R-" plus 10 letters and digits) is used in Smart Charts, Smart Tables and Smart Functions to build charts and tables from a report, and in the `[report-access-code]` smart variable. The Report ID is unique across the installation; the Unique Report Name is unique only within the project, and a copied project keeps the same names. Neither is user-facing in the report itself.
 
 **Q: Can I assign a report to more than one folder?**
 **A:** Yes. A report can belong to multiple folders simultaneously. This is intentional — if a report is relevant to two different teams, it can appear in both teams' folders.
 
 **Q: Who can see report folders?**
-**A:** All project users who have view access to at least one report in a folder will see the folder in the overview. Users with no access to any report in a folder will not see that folder.
+**A:** All project users who have view access to at least one report in a folder will see the folder in the left-hand Reports panel (folders are not shown in the My Reports & Exports list). Users with no access to any report in a folder will not see that folder.
 
 **Q: Can I reorder reports within the overview?**
-**A:** Custom reports appear in the order they were created by default. Report folders provide the primary means of organization. Within a folder, the order is determined by the order reports were assigned to it.
+**A:** Yes, if you have the Add/Edit/Organize Reports privilege. New reports are added at the end of the list (a copy is placed directly after its original), and you can drag and drop reports into a different order. Folders can be reordered the same way. Within a folder, reports follow the overall report order.
 
 **Q: Where do I find the Report ID for an API call?**
-**A:** The Report ID is displayed in the My Reports & Exports overview, in the row for the report. It is a short numeric value. You can also find it in the report URL when editing the report (the `id=` parameter in the URL).
+**A:** The Report ID is displayed in the My Reports & Exports overview, in the row for the report. It is a short numeric value. You can also find it in your browser's address bar when viewing or editing the report (the `report_id=` parameter in the URL).
 
 **Q: I don't see the Organize link to access report folders. Why?**
 **A:** The Organize link is located in the left-hand project menu under the reports section header — not on the Data Exports, Reports & Stats page. If you do not see it, your version of REDCap may not support report folders, or you may not have the Add/Edit/Organize Reports privilege.
@@ -163,13 +179,17 @@ The report section header also includes two additional navigation links:
 
 **Looking for report folders in the Data Exports menu.** The folder manager is accessed via the left-hand project menu (the Organize link), not from within the Data Exports, Reports & Stats page. Users who expect it on the export page will not find it there.
 
-**Clicking Delete assuming there is a confirmation step.** REDCap may not prompt for confirmation before deleting a report. Double-check you have selected the correct report before clicking Delete. There is no recovery option.
+**Treating the Delete confirmation as a safety net.** REDCap asks you to confirm before deleting a report, but there is no recovery once you confirm. Check the report name in the prompt before clicking through.
+
+**Expecting a copy to keep the original's folders or public status.** A copied report is not public and is not in any folder. Add it to folders and make it public again if needed.
 
 **Confusing Copy with Export.** The Copy button clones the report definition (settings, fields, filters), not the report's data. It creates a new report that can be edited independently. It is not the same as exporting data from the report.
 
+**Looking for folders in the My Reports & Exports list.** Folders group reports only in the left-hand Reports panel; the list on the Data Exports, Reports & Stats page is not grouped by folder.
+
 **Assigning a report to a folder and assuming all users can see it.** Folders are visible only to users who have view access to at least one report inside the folder. If all reports in a folder are restricted to a small group, other users will not see the folder at all.
 
-**Expecting the Search link to search data, not report names.** The Search function in the report header searches report names only. It does not search the data within reports. Use the View Report and Export Data buttons to interact with report data.
+**Expecting the Search link to search data, not report names.** The Search function in the report header searches report titles only. It does not search the data within reports. Use the View Report and Export Data buttons to interact with report data.
 
 ---
 
@@ -188,3 +208,5 @@ The report section header also includes two additional navigation links:
 - [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md) (configuring filters and result ordering)
 - [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (covers Add/Edit/Organize Reports and export privileges)
 - [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md) (background on DAG-based report access and filtering)
+- [RC-PIPE-14 — Smart Variables: Project Dashboards](RC-PIPE-14_Smart-Variables-Project-Dashboards.md) (using a unique report name in Smart Charts, Tables and Functions)
+- [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md) (the `[report-access-code]` smart variable)

@@ -7,9 +7,9 @@
 | **Domain** | Exports, Reports & Stats |
 | **Applies To** | All project types; requires Add/Edit/Organize Reports privilege |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.4 (Standard) / v17.3.18 (LTS) — changelog review; page not re-captured; §4.2 public-report login protection checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — report builder and public report behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-EXPRT-05 — Data Export: Report Types & Other Export Options](RC-EXPRT-05_Data-Export-Report-Types-and-Other-Export-Options.md) |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md); [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md); [RC-EXPRT-08 — Custom Reports: Management & Organization](RC-EXPRT-08_Custom-Reports-Management-and-Organization.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-NAV-REC-01 — Record Navigation Overview](RC-NAV-REC-01_Record-Navigation-Overview.md); [RC-NAV-REC-04 — Record Status Dashboard & Other Record Links](RC-NAV-REC-04_Record-Status-Dashboard-and-Links.md)|
@@ -41,7 +41,7 @@ A report made accessible via a shareable URL to anyone who has the link, includi
 A variable designated as an on-the-fly filter for a report. Live filters let users narrow report results without editing the report itself. Covered in [RC-EXPRT-07 — Custom Reports: Filtering & Ordering](RC-EXPRT-07_Custom-Reports-Filtering-and-Ordering.md).
 
 **Add/Edit/Organize Reports Privilege**
-The user right that controls who can create, edit, copy, and delete custom reports. A user without this right can view reports they have been granted access to, but cannot modify them.
+The user right that controls who can create, edit, copy, and delete custom reports. A user without this right can view reports they have been granted access to, but cannot modify them. Users who hold this right see and can open every report in the project's report list, whatever the report's View Access setting.
 
 ---
 
@@ -51,7 +51,7 @@ Custom reports are accessed through the Data Exports, Reports & Stats menu in th
 
 From the project home page, click the project name to open it, then locate **Data Exports, Reports & Stats** in the left menu. This page lists all available report options, including built-in options (All Data, single-instrument reports) and any existing custom reports.
 
-To create a new custom report from scratch, click the **+ Create New Report** button in the report name column header.
+To create a new custom report from scratch, click **+ Create New Report** — it appears as a tab at the top of the page and as a button in the last row of the report list. Both are shown only to users with the Add/Edit/Organize Reports privilege.
 
 Alternatively, if you want to base a new custom report on one of the built-in options (e.g., a single-instrument view you have already filtered), configure that view and then click **+ Create report based on the selections above**. This opens the report builder with your current selections pre-filled, which you can then refine.
 
@@ -63,27 +63,33 @@ Before selecting fields, the report builder presents several report-level settin
 
 ### 4.1 Title
 
-The report name is required. It appears in the report list and in any export filenames. Best practice is to use a short, descriptive title that is meaningful to any user who will interact with the report. Titles can be changed at any time after saving.
+The report name is required and can be up to 60 characters. It appears in the report list and in any export filenames. Best practice is to use a short, descriptive title that is meaningful to any user who will interact with the report. Titles can be changed at any time after saving, except while the report is public (see §4.2).
 
 ### 4.2 Public Reports
 
 The public report option, when enabled, generates a shareable URL that allows anyone with the link to view the report — no REDCap login required unless login protection (below) is turned on. This is useful for sharing non-sensitive lists (e.g., a public sign-up sheet) with people outside your project.
 
-Before a report can be made public, REDCap automatically checks three criteria:
+The report must be saved first. To make it public you need the Add/Edit/Organize Reports privilege, edit access to that report, and User Rights privileges in the project (REDCap administrators can always make a report public). REDCap then automatically checks three criteria:
 
 | Criterion | Description |
 |---|---|
 | User Rights privilege | The user enabling public access must have User Rights privileges in the project |
-| No Identifier fields | The report must not contain any fields marked as identifiers |
-| Report viewed | The user must have viewed the report to confirm the correct report is being made public |
+| No Identifier fields | The report must not contain any fields marked as identifiers. If the record ID is in the report, the project's secondary unique field and any custom record label variables are checked too |
+| Report viewed | You must have run the report during your current session. REDCap detects this automatically; there is nothing to tick |
 
-If any criterion is not met, REDCap blocks activation. When all three pass, REDCap also requires you to attest that you understand the data will be fully accessible to anyone with the link. This action is logged in the audit trail.
+If any criterion is not met, REDCap blocks activation. When all three pass, REDCap asks you to tick two attestation checkboxes, including one confirming you understand the data will be fully accessible to anyone with the link. This action is logged in the audit trail.
 
-Once public, you can optionally create a custom short link to make the URL easier to share.
+The identifier check is repeated every time the public link is opened: if an identifier field has been added to the report or flagged since it was published, viewers see a notice instead of the data. The survey identifier is never shown on a public report.
+
+Only users with User Rights privileges see the public link. If your administrator has enabled custom short links, you can also create a short link to make the URL easier to share.
+
+**A public report cannot be edited.** To change its fields, filters or settings, make it non-public, edit and save it, then make it public again (which repeats the checks above).
 
 #### Access Code Protection *(16.0.5+)*
 
-A public report can be protected with a single **access code**. Once set, the report cannot be viewed without entering it. You may define your own code or have REDCap generate one.
+A public report can be protected with a single **access code**. Once set, the report cannot be viewed without entering it. You may define your own code (at least 4 characters, case sensitive) or have REDCap generate a 12-character one. Repeated wrong attempts are rate-limited. After a correct entry, the browser is remembered for a period, so the viewer is not asked again on every visit.
+
+The code is visible to anyone who can open the report in the report builder. Treat it as a shared secret, not a personal password.
 
 The code can be retrieved programmatically with the `[report-access-code:unique_report_name]` smart variable — for example `[report-access-code:R-2554F4TCNT]`. The unique report name appears in the far-right column of the reports list. See [RC-PIPE-15 — Smart Variables: Public Reports](RC-PIPE-15_Smart-Variables-Public-Reports.md).
 
@@ -120,9 +126,9 @@ An optional free-text description that accepts basic rich-text formatting. The d
 
 ## 5. Step 1: User Access
 
-Step 1 defines who can view and edit the report. By default, all project users can view and edit a new report, subject to their existing user rights.
+Step 1 defines who can view and edit the report. By default, View Access and Edit Access are both set to **All users**, subject to their existing user rights. When you switch Edit Access to a custom selection, you are preselected so you do not lock yourself out.
 
-> **Note:** A user can only edit a report if they also hold the Add/Edit/Organize Reports privilege. The report-level edit access setting does not override that user right.
+> **Note:** A user can only edit a report if they also hold the Add/Edit/Organize Reports privilege. The report-level edit access setting does not override that user right. View Access limits who sees the report in the left-hand Reports panel; users with the Add/Edit/Organize Reports privilege can still see and open every report from the main report list.
 
 ### 5.1 Access by Individual User, Role, or DAG
 
@@ -136,11 +142,11 @@ The access controls offer three selection boxes — individual users, user roles
 
 Selecting a role or DAG is preferred over selecting individual users when the project has a defined team structure, because these selections are **dynamic**: users added to a role or DAG later will automatically gain access to the report. Selecting individual users requires manual updates each time someone joins the project.
 
-The three selection boxes are not mutually exclusive. You can combine individual users, roles, and DAGs in any combination for either view or edit access.
+The three selection boxes are not mutually exclusive. You can combine individual users, roles, and DAGs in any combination for either view or edit access; a user who matches any one selection gets access. The role and DAG boxes only appear if the project has roles or DAGs.
 
 ### 5.2 Verifying Access
 
-To check exactly which users will have access based on your current selections, click **View user access list**. REDCap evaluates your selections and displays the resulting list of users, which is helpful when users belong to overlapping roles and DAGs.
+To check exactly which users will have access based on your current selections, click **View user access list** (there is one button for view access and one for edit access). REDCap evaluates your selections and displays the resulting list of users, which is helpful when users belong to overlapping roles and DAGs.
 
 > **Note:** A user's report access does not override their instrument-level user rights. If a report includes variables from an instrument the user cannot view, those variables will be hidden from that user's view of the report — but the report itself will still appear to them.
 
@@ -148,9 +154,9 @@ To check exactly which users will have access based on your current selections, 
 
 ## 6. Step 2: Field Selection
 
-Step 2 is where you choose which variables the report displays. REDCap provides four methods for adding variables; all four can be used in combination within the same report.
+Step 2 is where you choose which variables the report displays. REDCap provides five methods for adding variables; all of them can be used in combination within the same report.
 
-### 6.1 Four Methods for Adding Variables
+### 6.1 Five Methods for Adding Variables
 
 **Choose Instrument method**
 Select an instrument from the dropdown in the top-right of the field section. REDCap adds every variable in that instrument to the report at once. Useful for quickly adding all fields from a known instrument. Note that adding a large instrument may cause a brief slowdown as REDCap loads all variables into the list.
@@ -171,7 +177,7 @@ Below the field list header, there is always one blank row. Clicking it opens a 
 **Dropdown method**
 Click the small icon next to the look-up search box to switch it to a dropdown menu. The dropdown lists all available variables for scrolling and selection. Selecting a variable from the dropdown adds it to that row.
 
-> **Note:** REDCap will not add the same variable to a report twice. All four methods check for duplicates automatically.
+> **Note:** REDCap will not add the same variable to a report twice. All five methods check for duplicates automatically.
 
 ### 6.2 Reordering Variables
 
@@ -183,15 +189,18 @@ To remove a variable from the report, click the small red **X** at the far right
 
 ### 6.4 Additional Report Options
 
-These options appear below the field list and apply to the full report. The defaults are appropriate for most use cases.
+These options appear below the field list and apply to the full report. The defaults are appropriate for most use cases. Some options only appear when the project uses the matching feature (DAGs, surveys, repeating instruments or events, missing data codes).
 
-| Option | Effect |
-|---|---|
-| Include DAG name for each record | Adds a Data Access Group column to the report. DAGs are not stored as variables, so this is the only way to display DAG membership in a report. |
-| Combine checkbox options into single column | By default, each checkbox option becomes its own column. This option merges all options into a single column showing only the checked values. Affects export output as well as the on-screen display. |
-| Remove line breaks from text data | Strips carriage returns from text and notes fields. Improves readability when exporting reports as CSV files that contain multi-line free-text responses. |
-| Header display | Controls whether report column headers show the field label, variable name, or both. Affects display only — does not affect exports. |
-| Data display | Controls whether values appear as option labels, raw values, or both. Affects display only — does not affect exports. |
+| Option | Default | Effect |
+|---|---|---|
+| Include DAG name for each record | Off | Adds a Data Access Group column to the report. DAGs are not stored as variables, so this is the only way to display DAG membership in a report. The column is never shown to users who are themselves assigned to a DAG. |
+| Include the survey identifier field and survey timestamp field(s) | Off | Adds the survey identifier and survey timestamp columns for survey-enabled instruments in the report. |
+| Include the repeating instance fields | On | Adds the repeat instrument and repeat instance columns so each row of repeating data can be identified, in the report and its exports. |
+| Display any Missing Data Codes in place of blank values | Off | Shows missing data codes where a value is blank, for projects that define them. |
+| Combine checkbox options into single column | Off | By default, each checkbox option becomes its own column. This option merges all options into a single column showing only the checked values. Affects export output as well as the on-screen display. |
+| Remove line breaks from text data | On | Strips carriage returns from text and notes fields. Applies to CSV exports (raw and labels); improves readability when the report contains multi-line free-text responses. |
+| Header display | Both | Controls whether report column headers show the field label, variable name, or both. Affects display only — does not affect exports. |
+| Data display | Both | Controls whether values appear as option labels, raw values, or both. Affects display only — does not affect exports. |
 
 ---
 
@@ -224,7 +233,9 @@ These options appear below the field list and apply to the full report. The defa
 
 **Confusing report-level access with user rights.** Granting a user edit access to a report does not give them the Add/Edit/Organize Reports privilege — they still need that user right. Conversely, taking away report-level access for a user does not prevent them from seeing the report if they have broad user rights. The two systems operate in parallel.
 
-**Making a report public before reviewing it.** REDCap requires you to have viewed the report before enabling public access, but the requirement is a checkbox confirmation, not a content review. Always open the report, review its contents, and confirm there is no sensitive data before enabling public access. The action is logged under your name.
+**Making a report public before reviewing it.** REDCap requires you to have viewed the report before enabling public access, but it only checks that you ran the report in your current session, not that you reviewed what it shows. Always open the report, review its contents, and confirm there is no sensitive data before enabling public access. The action is logged under your name.
+
+**Trying to edit a public report.** A public report cannot be edited or re-saved. Make it non-public, make your changes, save, and then make it public again.
 
 **Using Choose Instrument on very large instruments.** Selecting a large instrument (dozens of variables) via the dropdown can cause the browser to freeze briefly. For instruments with many fields, use Quick Add with selective checking, or use the Look Up method for specific variables.
 
@@ -245,7 +256,7 @@ These options appear below the field list and apply to the full report. The defa
 
 ## 9. Administrator Configuration
 
-Whether project-level users can make reports publicly accessible is controlled by a system-wide setting in the Control Center under System Configuration → User Settings & Defaults (see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Reports to Be Made Public").
+Whether project-level users can make reports publicly accessible is controlled by a system-wide setting in the Control Center under System Configuration → User Settings (the "System-level User Settings" page; see **[RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)**, "Allow Reports to Be Made Public").
 
 Administrators can configure this permission to one of three levels: disabled entirely (no public reports allowed on the instance), allowed with admin approval (the request appears in the administrator's To-Do List before the public URL is activated), or allowed without approval (users can publish reports on their own). In some REDCap instances — particularly those operating under strict data privacy requirements — public reports are disabled entirely.
 

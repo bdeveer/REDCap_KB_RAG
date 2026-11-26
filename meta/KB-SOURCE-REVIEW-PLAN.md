@@ -252,7 +252,7 @@ version on every article, because each source-reviewed article gets a pinned
 | 5b Surveys core | SURV-01/02/04/05 (4) | Done 2026-11-25 (4; sweep found nothing) |
 | 5c Automation | SURV-06/07, ALERT-01/02 (4) | Done 2026-11-25 (4; sweep: IMP-10 column count left to 5d) |
 | 5d MLM and upload formats | MLM-01, IMP-05–10 (7; IMP 3 per agent) | Done 2026-11-25 (7; sweep: ALERT-02 codes already fixed by 5c) |
-| 6a Exports | EXPRT-01/02/05/06/07/08 (6) | — |
+| 6a Exports | EXPRT-01/02/05/06/07/08 (6) | Done 2026-11-25 (6 + 2 from the sweep) |
 | 6b Data entry | DE-01/02/11/12, DDE-01 (5) | — |
 | 6c Data quality and navigation | DQ-01, NAV-REC-01/04, NAV-UI-01/02 (5) | — |
 | 6d Designer I | FD-01/04/05 (3) | — |

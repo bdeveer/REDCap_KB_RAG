@@ -1031,6 +1031,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 
 **Inbound links (referenced by):**
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
 - RC-PLUS-02 — REDCap+: Project Migration Tool
 
@@ -1528,6 +1529,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROF-01 — My Profile: User Profile Settings
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
 - RC-API-54 — Export Survey Access Code API
+- RC-API-36 — Export Project XML API
 - RC-ALERT-01 — Alerts & Notifications: Setup
 - RC-DAG-01 — Data Access Groups
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
@@ -2464,6 +2466,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-CC-23 — Backup Options
+- RC-API-01 — REDCap API
 - RC-API-34 — Export Project Info API
 - RC-API-37 — Import Project (Create Project) API
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
@@ -2960,6 +2963,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-BL-05 — Branching Logic — Longitudinal Projects
 - RC-CALC-01 — Special Functions Reference
+- RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 
 ---
 
@@ -3669,8 +3673,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
-- RC-API-01 — REDCap API
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
+- RC-IMP-01 — Data Import Overview
+- RC-API-01 — REDCap API
 - RC-API-02 — Export Records API
 - RC-FD-03 — Data Dictionary
 
@@ -3738,10 +3743,14 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
 - RC-EXPRT-04 — Data Export: De-identification & Formatting Options
+- RC-EXPRT-08 — Custom Reports: Management & Organization
+- RC-EXPRT-06 — Custom Reports: Setup & Field Selection
+- RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-API-01 — REDCap API
 - RC-API-38 — Export Reports API
 - RC-EXPRT-02 — Data Export: Export Formats
 - RC-FD-03 — Data Dictionary
+- RC-FILE-01 — File Repository
 
 **Inbound links (referenced by):**
 - RC-EXPRT-01 — Data Export: Overview & Workflow
@@ -3774,6 +3783,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-AI-04 — AI Summarization
 - RC-API-38 — Export Reports API
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 - RC-EXPRT-08 — Custom Reports: Management & Organization
 - RC-NAV-REC-01 — Record Navigation Overview
@@ -3791,6 +3801,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-08 — Custom Reports: Management & Organization
 - RC-BL-01 — Branching Logic: Overview & Scope
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
+- RC-BL-03 — Branching Logic: Combining Statements
 - RC-DAG-01 — Data Access Groups
 - RC-LONG-01 — Longitudinal Project Setup
 - RC-API-01 — REDCap API
@@ -3813,6 +3824,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-PIPE-15 — Smart Variables: Public Reports
+- RC-PIPE-14 — Smart Variables: Project Dashboards
 - RC-API-01 — REDCap API
 - RC-API-38 — Export Reports API
 - RC-DAG-01 — Data Access Groups
@@ -3820,6 +3832,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
 - RC-API-38 — Export Reports API
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 - RC-EXPRT-06 — Custom Reports: Setup & Field Selection
 - RC-EXPRT-07 — Custom Reports: Filtering & Ordering
 
@@ -4230,6 +4243,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-API-01 — REDCap API
 - RC-API-03 — Import Records API
+- RC-EXPRT-02 — Data Export: Export Formats
 - RC-IMP-02 — XML / CDISC ODM Import: Format Reference and Workflow
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 - RC-IMP-04 — Record Data CSV Import — Column Reference and Format Guide
@@ -5591,6 +5605,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PROJ-03 — Project Dashboards
+- RC-EXPRT-08 — Custom Reports: Management & Organization
 
 ---
 
@@ -6338,6 +6353,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-CC-05 — Control Center: File Storage & Upload Settings
 - RC-API-46 — List Files and Folders (File Repository) API
+- RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 
 ---
 

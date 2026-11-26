@@ -7,9 +7,9 @@
 | **Domain** | File Repository |
 | **Applies To** | All REDCap project types; requires File Repository user right |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Data Export Files folder behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-NAV-UI-01 — Project Navigation UI](RC-NAV-UI-01_Project-Navigation-UI.md) |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md); [RC-SENDIT-01 — Send-It: Secure File Transfer](RC-SENDIT-01_Send-It-Secure-File-Transfer.md); [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md) through [RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md)|
@@ -37,7 +37,7 @@ Folders and subfolders created manually by project users or administrators to or
 
 A set of automatically managed folders that REDCap maintains for its own purposes. Files in these folders do not count against the project's storage quota:
 
-- **Data Export Files** — Every data export run from the project is saved here automatically. Users can re-download any previous export without re-running it. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
+- **Data Export Files** — Every export run from the Export Data dialog on the Data Exports, Reports, and Stats page is saved here automatically (API exports and the ZIP of uploaded files are not). Users can re-download a previous export without re-running it, if their export rights allow: the folder is empty for users whose export rights are De-identified or Remove Identifiers on every instrument, a file can only be downloaded with Full Data Set rights on every instrument it contains, and users in a DAG see only exports made by users in their DAG. An administrator can set a project to delete these files automatically after a number of days. See [RC-EXPRT-01 — Data Export: Overview & Workflow](RC-EXPRT-01_Data-Export-Overview-and-Workflow.md).
 - **PDF Snapshot Archive** — Signed e-Consent PDFs, and any PDF Snapshot set to save to the File Repository, are stored here automatically. See [RC-SURV-08 — e-Consent Framework: Setup & Management](RC-SURV-08_e-Consent-Framework-Setup-and-Management.md) and [RC-SURV-09 — PDF Snapshots of Records](RC-SURV-09_PDF-Snapshots-of-Records.md).
 - **Miscellaneous File Attachments** — Files uploaded via the rich text editor anywhere in the project (field labels, survey invitations, project dashboards, etc.) are auto-stored here with publicly accessible download links. Anyone with the link can download these files without logging in to REDCap — PHI or other sensitive content should never be uploaded through the rich text editor.
 - **Recycle Bin** — Deleted files are held here for up to 30 days, after which they are permanently deleted. Files can be restored during this window.
