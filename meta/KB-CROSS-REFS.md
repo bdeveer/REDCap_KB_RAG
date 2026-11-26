@@ -890,6 +890,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-02 — Project Setup Checklist
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
+- RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-FD-07 — Field Embedding
@@ -1969,6 +1970,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-API-09 — Export Instruments API
+- RC-FD-01 — Form Design Overview
 - RC-SURV-09 — PDF Snapshots of Records
 
 ---
@@ -3849,10 +3851,12 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-05 — Codebook
 - RC-NAV-UI-01 — Project Navigation UI
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-API-01 — REDCap API
 - RC-API-07 — Export Metadata (Data Dictionary) API
 - RC-API-08 — Import Metadata (Data Dictionary) API
 - RC-API-09 — Export Instruments API
+- RC-API-15 — Export Instruments PDF API
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
@@ -3999,6 +4003,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
+- RC-FD-05 — Codebook
 - RC-FD-06 — Online Designer – Instrument and Field Management
 - RC-IMP-01 — Data Import Overview
 
@@ -4014,6 +4019,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-FD-03 — Data Dictionary
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-FD-04 — Instrument Library & Zip Files
 - RC-BL-02 — Branching Logic: Syntax & Atomic Statements
 - RC-BL-04 — Branching Logic: Structured Fields & Checkboxes
 - RC-LONG-01 — Longitudinal Project Setup

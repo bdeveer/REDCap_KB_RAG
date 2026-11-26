@@ -5,15 +5,15 @@
 | **Article ID** | [RC-FD-05 — Codebook](RC-FD-05_Codebook.md) |
 |---|---|
 | **Domain** | Form Design |
-| **Applies To** | All REDCap project types; requires Project Design and Setup rights |
+| **Applies To** | All REDCap project types; every project user can open the Codebook (no Project Design and Setup rights needed); the inline edit links appear only for users with Project Design and Setup rights |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
-| **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-04 |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Codebook page checked against source code; pages not re-captured |
+| **Prerequisite** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md) (background only; no user rights are needed to view the Codebook) |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-FD-01 — Form Design Overview](RC-FD-01_Form-Design-Overview.md); [RC-FD-02 — Online Designer](RC-FD-02_Online-Designer.md); [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md); [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md); [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) |
-| **Synonyms** | what is the codebook; view all fields and variables at a glance; read-only list of project variables; where to see all variable names and choices; printable reference of project structure; codebook vs data dictionary; look up a field definition quickly; see every instrument and field in one place |
+| **Synonyms** | what is the codebook; view all fields and variables at a glance; read-only list of project variables; where to see all variable names and choices; printable reference of project structure; how do i save the codebook as a pdf; codebook vs data dictionary; look up a field definition quickly; see every instrument and field in one place |
 
 ---
 
@@ -22,8 +22,9 @@
 The Codebook is a read-only, human-readable view of every instrument and
 variable in a REDCap project. It provides a comprehensive, always
 up-to-date reference of the project's structure without requiring the
-user to navigate the Online Designer or parse a CSV file. This article
-explains what the Codebook shows, where to find it, and when to use it.
+user to navigate the Online Designer or parse a CSV file. Every user on
+the project can open it. This article explains what the Codebook shows,
+where to find it, and when to use it.
 
 ---
 
@@ -42,43 +43,68 @@ The Codebook is not a design tool. You cannot add, edit, delete, or
 reorder instruments or variables from the Codebook view. Its purpose is
 inspection and reference, not modification.
 
+**Who can see it**
+
+Every project user can open the Codebook; no Project Design and Setup
+rights are needed. The Codebook lists all instruments in the project,
+regardless of a user's instrument-level (form) rights.
+
 **Inline Edit Links**
 
 Despite being read-only, the Codebook contains direct links that open
 the edit interface for individual variables in the Online Designer, and
 links that open the branching logic editor for specific variables. These
 links are shortcuts — they take you to the appropriate design tool,
-not to an editable state within the Codebook itself.
+not to an editable state within the Codebook itself. They appear only
+for users with Project Design and Setup rights, and only while the
+project is in Development or, in Production, while it is in Draft Mode.
+After an edit, the Online Designer offers a **Return to Codebook** link.
 
 ---
 
 ## 3. Accessing the Codebook
 
-- From the Project Setup page: click **Codebook** in the Design Your Data
-    Collection Instruments section.
+- **Left-hand menu:** click **Codebook** in the top panel of the project
+    menu (**Project Home · Project Setup · Codebook**). It is visible to all
+    project users in both Development and Production.
 
-- From the left-hand menu: click **Codebook** under the Data Collection
-    section (available in both Development and Production modes).
+- **Online Designer / Data Dictionary pages:** use the **Codebook** tab
+    next to the **Online Designer** and **Data Dictionary** tabs.
 
-- The Codebook opens to a full listing of all instruments and their
-    variables, organized by instrument.
+- **Online Designer field-edit dialog:** click the **Codebook** link to
+    look up other variables while editing a field.
+
+- **Logic editor:** click the **Codebook** button in the branching logic
+    or calculation editor dialog.
+
+- **Data Import Tool:** the page links to the Codebook so you can check
+    variable names and codes before importing.
+
+The Codebook opens to a full listing of all instruments and their
+variables, organized by instrument.
 
 ---
 
 ## 4. Codebook Layout
 
-The Codebook is structured in three main sections:
+The Codebook is structured in three main sections, followed by optional
+tables for missing data codes and languages.
 
 ### 4.1 Header
 
-At the top of the Codebook (and the PDF export), REDCap displays:
+At the top of the Codebook page, REDCap displays the label
+**"Data Dictionary Codebook"**. A printout (see §4.6) adds:
 
-- The label **"Data Dictionary Codebook"**
 - The **project title** and **PID** (e.g., *alignment check (PID: 8172)*)
-- A **timestamp** of when the codebook was generated (e.g., *04-11-2026 7:27pm*)
+- A **timestamp** of when the page was printed (e.g., *04-11-2026 7:27pm*)
 
-This header is useful for documentation and audit purposes — it makes
-clear exactly which project and snapshot the codebook represents.
+This printed header is useful for documentation and audit purposes — it
+makes clear exactly which project and snapshot the printout represents.
+
+> **Version caveat (timestamp):** In 16.0.x LTS and 17.3.x LTS the
+> timestamp also shows on screen. In 17.6 Standard it appears only in the
+> printout. If you need a dated record, print the page rather than
+> relying on a screenshot of the screen view.
 
 ### 4.2 Instruments (and Events) Summary Table
 
@@ -101,39 +127,89 @@ This Events table is particularly useful when writing branching logic or
 piping expressions that reference specific events, since it provides the
 exact unique event names needed in syntax like `[event_name][field_name]`.
 
-The **Instruments table** also uses the repeat icon, but with a different
-meaning: when the icon appears next to an event name in an instrument's
-row, it means that specific instrument is configured as a **repeating
-instrument** within that event. An instrument can repeat in some events
-but not others, so it's worth checking each event individually in this
-table. Together, the two tables give a complete picture of the project's
-repeating structure at a glance — before you even reach the field definitions.
+The **Instruments table** uses a repeat badge with a different meaning:
+a badge next to the **instrument name** means that instrument is set up
+as a **repeating instrument** in at least one event. It does not tell you
+which events. In a classic (non-longitudinal) project, this badge is the
+Codebook's only repeating indicator. To see exactly which events an
+instrument repeats in, open the repeating instruments and events setup
+on the Project Setup page.
 
-> **Navigation and export additions.** From **15.0.3** the form names in the Instruments table are **internal links** to that form's section of the field table, so you can jump straight to a form on a long codebook. From **16.1.4** each instrument row carries a **download icon** for downloading that instrument's codebook directly. In longitudinal projects, the Events table shows **event IDs** from **15.4.1**, which is useful when you need the numeric ID for an API call or a smart variable rather than the display name.
+> **Navigation additions.** From **15.0.3** the form names in the Instruments table are **internal links** to that form's section of the field table, so you can jump straight to a form on a long codebook. In longitudinal projects, the Events table shows **event IDs** from **15.4.1**, which is useful when you need the numeric ID for an API call or a smart variable rather than the display name.
+
+> **Version caveat (download icon, v17):** In v17 (Standard and 17.3.x LTS),
+> users with Project Design and Setup rights see a download icon on each
+> instrument row. It downloads the **instrument ZIP** (the same file as
+> **Download instrument ZIP** in the Online Designer), not a codebook for
+> that instrument. The icon is absent in 16.0.61 LTS; there, download the
+> ZIP from the Online Designer instead. See
+> [RC-FD-04 — Instrument Library and Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md).
 
 ### 4.3 Field Table
 
-The main body of the Codebook is a field-by-field table with three columns:
+The main body of the Codebook is a field-by-field table, one per
+instrument, with these columns:
 
 | Column | Contents |
 |--------|----------|
+| *(edit)* | Edit and branching logic links (Design rights only; see §2) |
 | **#** | Sequential field number, counting across the entire project (not per instrument) |
-| **Variable / Field Name** + *Field Note* | The internal variable name (in red/monospaced in the web view), and the branching logic and field note below it |
-| **Field Label** | The human-readable label displayed to users; section headers appear here in italics |
-| **Field Attributes** | Field type, validation, choices, calculation, annotations, alignment, required/identifier flags |
+| **Variable / Field Name** | The internal variable name (red, monospaced), with branching logic below it |
+| **Field Label** | The label displayed to users, with the field note below it; section headers appear here in italics |
+| **Field Attributes (Field Type, Validation, Choices, Calculations, etc.)** | Field type, validation, choices, calculation, annotations, alignment, required/identifier flags and other settings |
 
 Each instrument is introduced by a banner row showing the instrument's
 display name, form name, and whether it is **Enabled as survey** (shown
 in green).
 
+> **Version caveat (17.6+):** In 17.6 Standard you can click a variable
+> name to copy it to the clipboard, and fields used by a chatbot
+> configuration carry a **Connected** badge. On 16.0.x or 17.3.x LTS,
+> select and copy the name manually; no such badge exists.
+
+### 4.4 Finding and collapsing instruments
+
+- **Field finder:** use the field finder at the top of the page to jump
+  to a specific variable instead of scrolling.
+- **Expand / collapse:** each instrument's field table can be collapsed
+  or expanded individually, and there is a control to collapse or expand
+  all instruments at once. Your collapse choices are saved, so the
+  Codebook reopens the same way next time.
+
+### 4.5 Missing data codes and languages
+
+- **Missing Data Codes:** if the project defines missing data codes, the
+  Codebook shows them in their own table with each code and its label.
+- **Multi-Language Management:** if the project uses Multi-Language
+  Management, the Codebook shows a table of the project's languages, and
+  each field gets extra rows with its translations. **???** marks a
+  missing translation, which makes the Codebook a quick way to spot
+  untranslated fields.
+
+### 4.6 Printing and saving as PDF
+
+The Codebook has no PDF export of its own. To get a file, click
+**Print page** and use your browser's print dialog to save as PDF.
+
+- The printout includes the project title, PID and a timestamp (§4.1).
+- Each table has an **include in printout** checkbox, so you can leave
+  out tables you don't need.
+- An instrument that is collapsed on screen prints only as its header,
+  marked as collapsed. Expand any instrument whose fields you want in the
+  printout.
+
+> **Note:** **Download PDF of All Instruments** is a different output: it
+> produces blank data-entry forms, not the Codebook's attribute tables.
+
 ---
 
 ## 5. What the Codebook Shows
 
-For each variable, the Codebook displays the following:
+For each variable, the Codebook displays the following. All text is shown
+as plain text: HTML formatting in labels and notes is stripped.
 
 **Variable name**
-The internal REDCap identifier shown in the Variable/Field Name column.
+The internal REDCap identifier shown in the Variable / Field Name column.
 
 **Field note**
 If a field note was set, it appears in italics below the field label in
@@ -148,20 +224,24 @@ own row — they attach to the next field's row.
 **Field type**
 Shown in the Field Attributes column. Includes all standard types: text,
 notes, radio, dropdown, checkbox, calc, yesno, truefalse, file, slider,
-descriptive. Matrix groups appear as **radio (Matrix)** and list their
-group members together.
+descriptive. Radio fields in a matrix appear as **radio (Matrix)** or
+**radio (Matrix - ranking)**. Checkbox fields in a matrix appear as plain
+checkbox, and the matrix group name is not shown. To confirm matrix
+grouping, check the Online Designer or the Data Dictionary.
 
 **Choices or options**
 For radio, dropdown, and checkbox fields: each coded value and its label
 are shown in a box. For **checkbox fields**, the Codebook also lists the
 **subvariable name** for each option in the format `fieldname___code`
-(e.g., `checkbox_rv___1`). This naming convention appears in the Codebook
-and in data exports, but it is **not** the syntax used in REDCap
-expressions. In branching logic, calculated fields, and action tags,
-individual checkbox options are referenced as `[fieldname(code)]`
-(e.g., `[checkbox_rv(1)] = '1'`). The Codebook is useful for looking up
-the numeric code for a given option; use the expression syntax `[field(code)]`
-everywhere else in REDCap.
+(e.g., `checkbox_rv___1`). Negative or decimal codes have the minus sign
+or decimal point turned into an underscore in these names (as in data
+exports). This naming convention appears in the Codebook and in data
+exports, but it is **not** the syntax used in REDCap expressions. In
+branching logic, calculated fields, and action tags, individual checkbox
+options are referenced as `[fieldname(code)]` (e.g.,
+`[checkbox_rv(1)] = '1'`). The Codebook is useful for looking up the
+numeric code for a given option; use the expression syntax
+`[field(code)]` everywhere else in REDCap.
 
 **Validation type and range**
 For text fields with validation (e.g., `text (date_mdy)`, `text (email)`).
@@ -173,10 +253,9 @@ For calculated fields, the full formula is shown in the Field Attributes
 column (e.g., `Calculation: 1+1`).
 
 **Branching logic**
-Displayed in the Variable/Field Name column, below the variable name, in
-grey text: *"Show the field ONLY if:"* followed by the logic expression.
-This is greyed out in both the web view and the PDF export to visually
-distinguish it from the variable name itself.
+Displayed in the Variable / Field Name column, below the variable name:
+*"Show the field ONLY if:"* followed by the logic expression. The prefix
+is greyed out; the expression itself is shown in normal text.
 
 **Field annotations (action tags)**
 All action tags and annotations applied to a field are shown in the
@@ -201,19 +280,24 @@ filename and display format in the Field Attributes column
 (e.g., `Attachment: BERD_FAQs_2024-12-20.pdf, Display format: Link` or
 `Display format: Inline image/PDF`).
 
+**Other attributes**
+Where set, the Field Attributes column also shows the question number
+(surveys with custom numbering), survey stop actions, a media/video URL,
+and the SQL query of a dynamic SQL field.
+
 **Completion status field (`_complete`)**
 Every instrument automatically ends with a system-generated completion
 status field. Its variable name is `{form_name}_complete` (e.g.,
 `application_complete`, `review_1_complete`). It is a dropdown with
 three fixed choices: 0 = Incomplete, 1 = Unverified, 2 = Complete.
-This field appears in the Codebook — both the web view and PDF export —
+This field appears in the Codebook — both on screen and in a printout —
 just like any user-defined field, and it also appears in all data
 exports. However, `_complete` fields are **not** present in the Data
 Dictionary CSV, because they are auto-generated by REDCap rather than
 user-defined. They cannot be added, modified, or removed through a
 Data Dictionary upload.
 
-As a result, the Codebook PDF will always show exactly one more field
+As a result, the Codebook will always show exactly one more field
 per instrument than the Data Dictionary CSV. For a project with N
 instruments, the Codebook will have N additional `_complete` fields.
 This is expected behavior, not a discrepancy.
@@ -240,7 +324,8 @@ The Codebook is the right tool in these situations:
 - **Writing or debugging branching logic** — the Codebook lets you look
     up variable names, their exact coded values, and checkbox
     subvariable names without switching to the Online Designer or opening
-    the Data Dictionary.
+    the Data Dictionary. The **Codebook** button in the logic editor
+    opens it right where you need it.
 
 - **Getting event names for longitudinal expressions** — the Events
     table at the top of the Codebook lists the exact unique event names
@@ -257,29 +342,34 @@ The Codebook is the right tool in these situations:
 - **Quickly navigating to a variable's edit interface** — use the
     inline edit link rather than scrolling through the Online Designer.
 
+- **Checking translations** — in Multi-Language Management projects,
+    look for **???** in the translation rows to find missing translations.
+
 - **Onboarding to an unfamiliar project** — the Codebook gives a rapid,
     readable summary of what the project collects and how it is
     structured, including all branching logic conditions and annotations.
 
-- **Documentation and archival** — generating the PDF export captures
-    the project structure at a point in time, useful for IRB submissions,
-    handoffs, or version records.
+- **Documentation and archival** — use **Print page** and save as PDF
+    from your browser to capture the project structure at a point in
+    time, useful for IRB submissions, handoffs, or version records.
 
-- **LLM-assisted project analysis** — the Codebook (or its PDF export)
-    is the most efficient way to give a large language model a complete
-    understanding of a REDCap project's structure. It consolidates in a
-    single document everything that would otherwise require ingesting
-    multiple files (data dictionary CSV, longitudinal events CSV) or
-    making multiple API calls and interpreting their combined output.
-    This is especially true for repeating instrument and repeating event
-    configuration: the Instruments and Events summary tables are the
-    only place in the REDCap UI where this information is directly
-    visible in one view. The alternatives — an API call to the repeating
-    instruments endpoint, or inferring repeating setup from the shape of
-    a data export — are indirect and require additional steps. A single
-    Codebook PDF gives an LLM the full picture: instruments, events,
-    arm/event assignments, repeating setup, field types, choices, branching
-    logic, and action tags, all in one structured document.
+- **LLM-assisted project analysis** — the Codebook (or a PDF saved from
+    its **Print page**) is the most efficient way to give a large language
+    model a complete understanding of a REDCap project's structure. It
+    consolidates in a single document everything that would otherwise
+    require ingesting multiple files (data dictionary CSV, longitudinal
+    events CSV) or making multiple API calls and interpreting their
+    combined output. This is especially true for repeating instrument and
+    repeating event configuration: apart from the repeating instruments
+    and events setup on the Project Setup page, the Instruments and Events
+    summary tables are the easiest place to see this information in one
+    view. The alternatives — an API call to the repeating instruments
+    endpoint, or inferring repeating setup from the shape of a data
+    export — are indirect and require additional steps. A single Codebook
+    PDF gives an LLM the full picture: instruments, events, arm/event
+    assignments, repeating setup, field types, choices, branching logic,
+    and action tags, all in one structured document. Expand all
+    instruments before printing so none are left out.
 
 ---
 
@@ -287,15 +377,16 @@ The Codebook is the right tool in these situations:
 
 | **Reference Tool** | **Format** | **Editable?** | **Best For** |
 | --- | --- | --- | --- |
-| Codebook | Web view, organized by instrument | No (links to editors) | Human-readable review; looking up variable names while designing; getting event names |
+| Codebook | Web view, organized by instrument; **Print page** to save as PDF | No (links to editors) | Human-readable review; looking up variable names while designing; getting event names; attribute-rich printed snapshot |
 | Data Dictionary (downloaded CSV) | Spreadsheet | Yes (upload to apply changes) | Bulk editing; offline reference; version control |
-| Download PDF of All Instruments | PDF | No | Documentation; IRB submissions; stakeholder review |
+| Download PDF of All Instruments | PDF | No | Blank data-entry forms for paper collection or showing stakeholders what participants see |
 | Online Designer | Web interface, one instrument at a time | Yes | Making edits; previewing form appearance |
 
-> **Note:** The **PDF export of the Codebook** (accessible from the Design Your Data Collection Instruments section) and the
-> **Download PDF of All Instruments** option produce similar outputs but differ in layout. The Codebook PDF follows the
-> tabular structure described in this article and includes the header, instruments/events summary tables, and the full
-> field-by-field table with all attributes. Use it when you need a compact, attribute-rich snapshot of your project structure.
+> **Note:** There is no Codebook PDF export. A PDF saved from the Codebook's **Print page** follows the tabular
+> structure described in this article: the header, instruments/events summary tables, and the field-by-field table
+> with all attributes. **Download PDF of All Instruments** is a different document: blank data-entry forms that show
+> how instruments look, without the attribute tables. Use the Codebook printout when you need a compact,
+> attribute-rich snapshot of your project structure.
 
 ---
 
@@ -303,10 +394,17 @@ The Codebook is the right tool in these situations:
 
 **Q: Can I edit variables directly from the Codebook?**
 
-**A:** No. The Codebook is read-only. It contains inline links that open the
-Online Designer's edit interface or branching logic editor for
-individual variables, but the editing itself happens in those tools —
-not in the Codebook.
+**A:** No. The Codebook is read-only. Users with Project Design and Setup
+rights see inline links that open the Online Designer's edit interface or
+branching logic editor for individual variables (in Development, or in
+Production while in Draft Mode), but the editing itself happens in those
+tools — not in the Codebook.
+
+**Q: Do I need design rights to see the Codebook?**
+
+**A:** No. Every project user can open the Codebook, and it lists all
+instruments regardless of the user's instrument-level rights. Only the
+edit links require Project Design and Setup rights.
 
 **Q: Does the Codebook update in real time as I make changes?**
 
@@ -324,12 +422,14 @@ They present similar content but serve entirely different purposes.
 
 **Q: Can I export the Codebook as a file?**
 
-**A:** Not directly as a Codebook export from the Codebook page itself.
-For a portable version, use **Download the current Data Dictionary
-(CSV)** or **Download PDF of All Instruments**, both available from
-the Design Your Data Collection Instruments section. The PDF option
-produces a structured document similar to what you see in the web
-Codebook view.
+**A:** Not as a download. Click **Print page** on the Codebook and save as
+PDF from your browser's print dialog. The printout includes the project
+title, PID and a timestamp; use the **include in printout** checkboxes to
+choose tables, and expand any collapsed instruments first, since
+collapsed instruments print only as a header. For a machine-readable
+version, use **Download the current Data Dictionary (CSV)** instead.
+**Download PDF of All Instruments** gives blank data-entry forms, not the
+Codebook.
 
 **Q: I'm new to a project and need to understand its structure quickly.
 Is the Codebook the best starting point?**
@@ -362,9 +462,14 @@ be different.
     the inline links to jump to the Online Designer if you need to make
     a change, but the edit happens there.
 
-- **Treating the Codebook as an export:** the Codebook is a live web view,
-    not a downloadable file. Use the Data Dictionary download or the PDF
-    export for portable versions of your project structure.
+- **Looking for a Codebook PDF export:** there isn't one. Use **Print
+    page** and save as PDF from the browser, or download the Data
+    Dictionary CSV. **Download PDF of All Instruments** produces blank
+    forms, not a codebook.
+
+- **Printing with instruments collapsed:** collapsed instruments print
+    only as a header marked collapsed. Expand everything you need before
+    printing.
 
 - **Relying on the Codebook in Production when changes are pending:** the
     Codebook only reflects the live, approved project state. Pending
@@ -376,7 +481,8 @@ be different.
     the Online Designer and branching logic editor are easy to miss but
     save significant time. They let you jump directly to a specific
     variable's edit interface without scrolling through the full Online
-    Designer.
+    Designer. If you don't see them, you either lack Project Design and
+    Setup rights or the project is in Production without Draft Mode.
 
 - **Misreading action tag syntax:** action tags shown in the Codebook are
     displayed verbatim as entered in the data dictionary. They show the
@@ -419,6 +525,9 @@ be different.
 - [RC-FD-03 — Data Dictionary](RC-FD-03_Data-Dictionary.md) (the CSV-format alternative reference
     and design tool)
 
+- [RC-FD-04 — Instrument Library and Zip Files](RC-FD-04_Instrument-Library-and-Zip-Files.md) (the
+    instrument ZIP downloaded from the Codebook's instrument table in v17)
+
 - [RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques](RC-FD-08_Data-Dictionary-Column-Reference-and-Advanced-Techniques.md)
     (deeper reference for what each field attribute means)
 
@@ -434,8 +543,8 @@ be different.
     summary tables)
 
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (the repeating
-    instrument and repeating event indicators shown in the Codebook
-    summary tables are the only direct UI view of this configuration)
+    instruments and events setup that the Codebook's repeating
+    indicators summarize)
 
 - [RC-AT-01 — Action Tags: Overview](RC-AT-01_Action-Tags-Overview.md) (action tags are displayed
     verbatim in the Codebook's Field Attributes column; this article
@@ -448,6 +557,6 @@ be different.
     expressions in field labels appear as raw syntax in the Codebook
     rather than resolved values)
 
-- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Code Book link appears
+- [RC-NAV-UI-02 — Project Menu Reference](RC-NAV-UI-02_Project-Menu-Reference.md) (the Codebook link appears
     in the Project Home and Design menu section; always visible to
     all users regardless of rights)
