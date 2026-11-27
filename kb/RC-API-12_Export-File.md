@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects with file upload fields |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured. Export File behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)|
@@ -37,15 +37,17 @@ To use this method, you must specify the record, the file-upload field variable 
 | `action` | Required | Always `'export'` for this method. |
 | `record` | Required | The value of the primary key (record ID) for the record from which to export the file. |
 | `field` | Required | The variable name of the file-upload field containing the file to export. |
-| `event` | Conditional | The unique event name (longitudinal projects only). Required only if the file-upload field is associated with a specific event. |
-| `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. |
+| `event` | Conditional | The unique event name. Required in longitudinal projects: a missing or invalid event returns HTTP 400. Ignored in classic projects. |
+| `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. Ignored (treated as `1`) when the field's instrument or event is not repeating. |
 | `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the returned file content. Defaults to `xml` if omitted. Note: does not apply when using a background process. |
+
+Export File works in any project status (Development, Production, Analysis/Cleanup). Each download is recorded in the project Logging as "Download file (API)".
 
 ---
 
 ## 3. Data Export Rights
 
-Data Export user rights apply to this API request. The following table summarises what happens for each rights level:
+Data Export user rights apply to this API request. What counts is the token owner's Data Export right for the instrument that contains the file-upload field. The following table summarises what happens for each rights level (a refused export returns HTTP 403):
 
 | Export Rights Level | File Upload field tagged as Identifier? | Result |
 |---|---|---|
@@ -56,7 +58,12 @@ Data Export user rights apply to this API request. The following table summarise
 | Remove All Identifier Fields | Yes | ❌ Export fails with error |
 | No Access | Either | ❌ Export always fails with error |
 
-To guarantee that the export will not return an error regardless of field tagging, the API token owner must have **Full Data Set** export rights in the project.
+To guarantee that the export will not return an error regardless of field tagging, the API token owner must have **Full Data Set** export rights for that instrument.
+
+Two other rights settings also block the export with HTTP 403:
+
+- **Data Access Groups:** if the token owner is in a DAG, files on records outside their DAG cannot be exported.
+- **Double Data Entry:** users designated as DDE person 1 or 2 cannot use this method.
 
 ---
 
@@ -162,10 +169,14 @@ The method returns the raw binary file content (e.g., a PDF, image, Word documen
 **Getting the filename from the response header.** The filename, file extension, and MIME type are not embedded in the response body — they are in the response header. To determine these attributes, parse the `content-type` header of the response. Example:
 
 ```
-content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
+content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document; name="FILE_NAME.docx"
 ```
 
+The filename is in double quotes. There is no `Content-Disposition` header, so libraries or tools that look only there for a filename will not find one; read it from `Content-Type` instead.
+
 The `returnFormat` parameter controls the format of error messages only and does not affect the returned file content.
+
+**Common error responses (HTTP 400)** include: the record does not exist in the given event, the field is not a file-upload field, and "no file to download" when the field is empty for that record, event and instance.
 
 ---
 
@@ -177,15 +188,15 @@ The `returnFormat` parameter controls the format of error messages only and does
 
 **Q: Do I need to include the `event` parameter for classic (non-longitudinal) projects?**
 
-**A:** No. For classic projects, omit the `event` parameter entirely. If a file-upload field is not event-specific, the API call will work without it.
+**A:** No. For classic projects, omit the `event` parameter; if you send it, it is ignored. In longitudinal projects it is always required.
 
 **Q: What happens if the field I request is not a file-upload field or does not exist?**
 
-**A:** The API will return an error response, typically with HTTP status 400 or a JSON error message. Check that the field variable name is correct and that the field type in your data dictionary is set to "File" upload.
+**A:** The API returns HTTP 400 with an error message, formatted according to your `returnFormat` (XML if omitted). Check that the field variable name is correct and that the field type in your data dictionary is set to "File" upload.
 
 **Q: Can I export a file that was uploaded to a repeating instrument?**
 
-**A:** Yes. Include the `repeat_instance` parameter with the instance number you want to retrieve. The `field` parameter should still be the variable name of the file-upload field. If you omit `repeat_instance`, the API defaults to instance 1.
+**A:** Yes. Include the `repeat_instance` parameter with the instance number you want to retrieve. The `field` parameter should still be the variable name of the file-upload field. If you omit `repeat_instance`, the API defaults to instance 1. If the instrument or event is not repeating, `repeat_instance` is ignored.
 
 **Q: Can I export a file stored in a Signature field using this method?**
 
@@ -197,9 +208,9 @@ The `returnFormat` parameter controls the format of error messages only and does
 
 **Writing to a file in text mode instead of binary mode.** The most common mistake is opening the file for writing in text mode (`'w'` or `'wt'`). This corrupts binary files. Always use binary mode: `'wb'` in Python, `writeBin()` in R, or `fopen($filename, 'wb')` in PHP.
 
-**Forgetting the `event` parameter in longitudinal projects.** In longitudinal projects, if the file-upload field is associated with a specific event, the `event` parameter is required. Omitting it will result in an error. Check your instrument-to-event mapping to confirm which event the field belongs to.
+**Forgetting the `event` parameter in longitudinal projects.** In longitudinal projects the `event` parameter is required; omitting it returns HTTP 400. Check your instrument-to-event mapping to confirm which event the field belongs to.
 
-**Assuming the response is JSON.** By default, Export File returns raw binary data, not JSON. Do not attempt to parse the response as JSON unless you explicitly set `returnFormat='json'`. Binary data parsed as JSON will produce garbage.
+**Assuming the response is JSON.** A successful Export File always returns raw binary data, even if you set `returnFormat='json'`; `returnFormat` only changes how error messages are formatted. Check the HTTP status code first: write the body to disk on 200, and parse it as an error message otherwise.
 
 ---
 

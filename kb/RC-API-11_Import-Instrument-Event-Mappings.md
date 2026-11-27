@@ -7,15 +7,15 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4, §6–§8 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4, §6–§8 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog. Import Instrument-Event Mappings behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)|
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md); [RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)|
 | **Synonyms** | how do i import instrument-event mappings via the api; import instrument event mapping api call; set which forms appear at each event through the api; api method to assign forms to events; configure longitudinal instrument event map via api; bulk update form-to-event assignments with the api; api endpoint to import event form mappings; map instruments to events programmatically |
-| **Important** | **Longitudinal projects only** — This method is only available for longitudinal projects (projects with multiple arms and/or repeating events). Classic projects do not have instrument-event mappings. |
+| **Important** | **Longitudinal projects only** — This method is only meaningful for projects with longitudinal data collection enabled (including a longitudinal project with a single arm). Classic projects do not have instrument-event mappings. |
 
 ---
 
@@ -30,9 +30,11 @@ When to use this method: When you need to programmatically assign instruments to
 ## 2. Important Notes
 
 - **Longitudinal Only:** Mappings only mean something in longitudinal projects. On a classic project the call is not rejected — it returns HTTP 200 with a count — so check the project type yourself first.
-- **Development Status Only:** This method is only available for projects in Development status. It cannot be used on projects in Production or Analysis status.
-- **Requires API Import/Update AND Project Design/Setup:** You must have both API Import/Update privileges and Project Design/Setup privileges in the project. API Import/Update alone is not sufficient.
-- **Replaces Existing Mappings:** This method replaces the entire mapping structure. All existing mappings are removed and replaced with the provided data.
+- **Development Status Only:** This method is only available for projects in Development status. On a project in Production, Analysis/Cleanup or a later status it returns HTTP 400 ("cannot be used while the project is in Production status"). There is no override, and an administrator's token is blocked too; administrators can still change mappings on the **Designate Instruments for My Events** page.
+- **Requires API Import/Update AND Project Design/Setup:** You must have both API Import/Update privileges and Project Design/Setup privileges in the project. API Import/Update alone is not sufficient. Without API Import/Update the call returns HTTP 403; without Project Design/Setup it returns HTTP 400.
+- **Replaces Existing Mappings:** This method replaces the entire mapping structure **in every arm**. All existing mappings are removed and replaced with the provided data — importing only arm 1's rows into a two-arm project removes all of arm 2's mappings. Data already entered on an instrument stays in the project, but it is no longer reachable at an event where that instrument is no longer mapped.
+- **All or nothing:** Every row is checked (the arm, event and instrument must all exist). If any row fails, all errors are returned together and no mappings change. An empty `data` value returns HTTP 400, so you cannot use this method to remove every mapping.
+- **Automated survey invitations:** After changing mappings, review your automated survey invitations.
 - **Instruments Must Exist:** All instruments referenced in the mappings must already exist in the project. Use [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (Export Metadata) or [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) (Export Instruments) to verify.
 - **Events Must Exist:** All events referenced in the mappings must already exist in the project. Create events using [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (Import Events) if needed.
 
@@ -45,7 +47,7 @@ When to use this method: When you need to programmatically assign instruments to
 | `token` | Required | Your project API token. Requires API Import/Update **and** Project Design/Setup rights. |
 | `content` | Required | Always `'formEventMapping'` for this method. |
 | `format` | Required | Data format of the `data` parameter: `'csv'`, `'json'`, or `'xml'` [default: `xml`]. |
-| `data` | Required | The mappings to import. Each mapping must contain `arm_num` (arm number), `unique_event_name` (the auto-generated unique event name), and `form` (the instrument's unique form name). Provide in the format specified by `format`. |
+| `data` | Required | The mappings to import. Each mapping must contain `arm_num` (arm number), `unique_event_name` (the auto-generated unique event name), and `form` (the instrument's unique form name). Provide in the format specified by `format`. For CSV, use the token owner's delimiter preference from their REDCap profile. |
 | `returnFormat` | Optional | Specifies the format of error messages: `'csv'`, `'json'`, or `'xml'`. If omitted, defaults to the `format` value (or `xml` if `format` was also omitted). Does not apply when using a background process (`backgroundProcess=true`) — in that case, `success:true` or `success:false` is returned in the appropriate format. |
 
 ---
@@ -98,7 +100,7 @@ arm_num,unique_event_name,form
 </items>
 ```
 
-> **Note:** Some REDCap API client libraries (e.g., RCurl in R) may also accept a nested structure grouping forms under each event. The flat format above is the officially documented format and should be preferred for reliability.
+> **Note:** The endpoint accepts only this flat format. A nested structure (forms grouped under each event, events under each arm) is rejected with HTTP 400. If your data starts out nested, flatten it to one row per instrument per event before sending.
 
 ---
 
@@ -112,23 +114,13 @@ arm_num,unique_event_name,form
 from config import config
 import requests, json
 
-record = {
-    'arm': {
-        'number': 1,
-        'event': [
-            {
-                'unique_event_name': 'event_1_arm_1',
-                'form': ['instr_1', 'instr_2',]
-            },
-            {
-                'unique_event_name': 'event_2_arm_1',
-                'form': ['instr_1',]
-            },
-        ]
-    }
-}
+mappings = [
+    {'arm_num': '1', 'unique_event_name': 'event_1_arm_1', 'form': 'instr_1'},
+    {'arm_num': '1', 'unique_event_name': 'event_1_arm_1', 'form': 'instr_2'},
+    {'arm_num': '1', 'unique_event_name': 'event_2_arm_1', 'form': 'instr_1'},
+]
 
-data = json.dumps([record])
+data = json.dumps(mappings)
 
 fields = {
     'token': config['api_token'],
@@ -151,23 +143,13 @@ source('config.R')
 library(RCurl)
 library(jsonlite)
 
-record <- list(
-	arm=list(
-		number=1,
-		event=list(
-			list(
-				unique_event_name='event_1_arm_1',
-				form=list('instr_1', 'instr_2')
-			),
-			list(
-				unique_event_name='event_2_arm_1',
-				form=list('instr_1')
-			)
-		)
-	)
+mappings <- data.frame(
+	arm_num=c('1', '1', '1'),
+	unique_event_name=c('event_1_arm_1', 'event_1_arm_1', 'event_2_arm_1'),
+	form=c('instr_1', 'instr_2', 'instr_1')
 )
 
-data <- toJSON(record, auto_unbox=TRUE)
+data <- toJSON(mappings)
 
 result <- postForm(
     api_url,
@@ -186,7 +168,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=formEventMapping&format=json&data=[{\"arm\":{\"number\":\"1\",\"event\":[{\"unique_event_name\":\"event_1_arm_1\",\"form\":[\"instr_1\",\"instr_2\"]}]}},{\"arm\":{\"number\":\"2\",\"event\":[{\"unique_event_name\":\"event_2_arm_1\",\"form\":[\"instr_1\"]}]}}]"
+DATA="token=$API_TOKEN&content=formEventMapping&format=json&data=[{\"arm_num\":\"1\",\"unique_event_name\":\"event_1_arm_1\",\"form\":\"instr_1\"},{\"arm_num\":\"1\",\"unique_event_name\":\"event_1_arm_1\",\"form\":\"instr_2\"},{\"arm_num\":\"1\",\"unique_event_name\":\"event_2_arm_1\",\"form\":\"instr_1\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -249,13 +231,15 @@ print $output;
 
 On success, the method returns the number of instrument-event mappings imported as a plain integer (e.g., `4`). On failure, an error message is returned in the format specified by `returnFormat` (or `format`, or `xml` by default).
 
+> **Note:** Check the response body (a count) rather than relying on the HTTP status alone.
+
 ---
 
 ## 7. Common Questions
 
 **Q: What happens to existing mappings when I import new ones?**
 
-**A:** All existing mappings are replaced by the provided mappings. If an instrument-event pair exists in the old mappings but not in the new data, it is removed. Always export and back up existing mappings before updating.
+**A:** All existing mappings, in all arms, are replaced by the provided mappings. If an instrument-event pair exists in the old mappings but not in the new data, it is removed. Always export and back up existing mappings before updating, and review your automated survey invitations afterwards.
 
 **Q: Can I add mappings without removing existing ones?**
 
@@ -267,11 +251,11 @@ On success, the method returns the number of instrument-event mappings imported 
 
 **Q: What if an instrument or event referenced in the data doesn't exist?**
 
-**A:** The import fails with a validation error. Ensure all instruments and events exist before importing mappings. Create missing instruments using [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) (Import Metadata) and events using [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (Import Events).
+**A:** The import fails with a validation error listing every invalid row, and no mappings are changed. Ensure all instruments and events exist before importing mappings. Create missing instruments using [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md) (Import Metadata) and events using [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (Import Events).
 
 **Q: Can I use this on a project that's already in Production?**
 
-**A:** No. This method only works on projects in Development status. If your project is in Production, you would need to move it back to Development first (which typically requires REDCap administrator involvement), or make the mapping changes manually through the REDCap interface.
+**A:** No. This method only works on projects in Development status, with no override (administrator tokens included). Draft mode does not cover event mappings. In Production, ask a REDCap administrator to make the change on the **Designate Instruments for My Events** page, or make it there yourself if your server allows non-administrators to add mappings in Production (removing a mapping in Production is administrator-only).
 
 **Q: Can I use this method to set up repeating instruments?**
 
@@ -281,9 +265,9 @@ On success, the method returns the number of instrument-event mappings imported 
 
 ## 8. Common Mistakes & Gotchas
 
-**Calling this method on a project in Production or Analysis status.** This method only works on projects in Development status. If your project is in Production, you cannot use this endpoint — you need to move to Development first (or use the REDCap interface to make mapping changes via a revision/move-to-dev workflow).
+**Calling this method on a project in Production or Analysis status.** This method only works on projects in Development status. If your project is in Production, you cannot use this endpoint (HTTP 400). Draft mode does not cover event mappings: ask a REDCap administrator to change them on the **Designate Instruments for My Events** page, or add them there yourself if your server allows it.
 
-**Using only API Import/Update right without Project Design/Setup.** Both privileges are required. A user with only API Import/Update will get a permissions error even though that right sounds sufficient for an import operation.
+**Using only API Import/Update right without Project Design/Setup.** Both privileges are required. A user with only API Import/Update will get an error (HTTP 400, not 403) even though that right sounds sufficient for an import operation.
 
 **Forgetting to format data as JSON array.** The data must be a JSON-encoded array, even if you're only importing a few mappings. Single mapping objects must be wrapped in an array.
 
@@ -295,7 +279,7 @@ On success, the method returns the number of instrument-event mappings imported 
 
 **Failing to back up current mappings.** Since this method replaces all existing mappings, always export the current state ([RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)) before importing changes. If something goes wrong, you can restore the previous mappings.
 
-**Incomplete mapping data.** If you omit important arms or events, the resulting project structure will be incomplete. Ensure your mapping data covers all arms and events that should exist.
+**Incomplete mapping data.** If you omit important arms or events, the resulting project structure will be incomplete. Importing one arm's rows removes every other arm's mappings. Ensure your mapping data covers all arms and events that should exist.
 
 **Not testing on a development copy.** Always test instrument-event mapping changes on a development or test project first. Mistakes can disrupt the entire project workflow.
 

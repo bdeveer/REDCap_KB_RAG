@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§8 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §4–§8 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog. Export Instruments behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md); [RC-API-15 — Export Instruments PDF API](RC-API-15_Export-Instruments-PDF.md)|
@@ -20,7 +20,7 @@
 
 ## 1. Overview
 
-The Export Instruments API method retrieves a list of all instruments (forms) defined in a REDCap project. Each instrument has metadata including its name, display name, and other properties. This method provides a lightweight way to discover the structure of a project's instruments without downloading the full data dictionary.
+The Export Instruments API method retrieves a list of all instruments (forms) defined in a REDCap project. Each instrument is returned with its unique name and its display label. This method provides a lightweight way to discover the structure of a project's instruments without downloading the full data dictionary.
 
 When to use this method: When you need to list all instruments in a project, discover instrument names for use in other API calls, or build dynamic menus or forms based on a project's instruments.
 
@@ -166,6 +166,14 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **CSV format:** A table with columns for instrument_name and instrument_label, one row per instrument.
 
+> **Version caveat (16.x LTS vs 17.x):** On 16.x LTS the CSV is always comma-delimited. On 17.x it uses the CSV delimiter set in the token owner's My Profile, so it may be a semicolon or tab. Set your CSV parser's delimiter to match, or use `format=json`.
+
+Other points about the response:
+
+- There are always exactly these two columns, and the method has no filter parameters: it always returns every instrument.
+- `instrument_label` is plain text: HTML tags in the instrument name are stripped and HTML entities decoded.
+- In a production project, an instrument created in Draft Mode is not listed until the draft changes are approved.
+
 ---
 
 ## 7. Common Questions
@@ -188,7 +196,7 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **Q: Can I use this to discover system fields like record_id?**
 
-**A:** No, system fields like record_id are not in instruments; they are special project properties. This method returns only user-defined instruments (forms).
+**A:** No. This method returns instruments, not fields. The record ID field is the first field of the first instrument; to identify it, call [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) and take the first row, or [RC-API-06 — Export Field Names API](RC-API-06_Export-Field-Names.md).
 
 ---
 
@@ -196,7 +204,7 @@ The method returns the project's instruments in the requested format, **ordered 
 
 **Assuming all returned names are instruments.** This method returns only form (instrument) names. Do not confuse these with field names or event names.
 
-**Not using the correct name in follow-up calls.** Always use instrument_name (not instrument_label) in API calls that accept form or instrument parameters. Using the label instead of the name causes API errors.
+**Not using the correct name in follow-up calls.** Always use instrument_name (not instrument_label) in API calls that accept form or instrument parameters. Using the label instead of the name causes errors in some methods and, in others, silently unfiltered results (for example, Export Metadata returns the whole data dictionary).
 
 **Expecting detailed instrument properties.** This method returns only the name and label. To get detailed information about fields within an instrument, use [RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md) (Export Metadata) and filter by form_name.
 

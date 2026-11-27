@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 and the case caveat (delete_logging not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 and the case caveat (delete_logging not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog. Delete Records behaviour checked against source code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-02 — Export Records API](RC-API-02_Export-Records.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md)|
@@ -30,16 +30,18 @@ When to use this method: When you need to remove records from the project, clean
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires Delete Record user privilege in the project. |
+| `token` | Required | Your project API token. The token's user needs both the **Delete Records** and the **API Import/Update** user privileges in the project. |
 | `content` | Required | Always `'record'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `records` | Required | Array of record names specifying the records to delete. |
-| `arm` | Optional | The arm number to delete records from. Only applicable in longitudinal projects with more than one arm. If omitted, specified records are deleted from all arms in which they exist. If provided, records are deleted from that arm only. |
+| `records` | Required | Array of record names specifying the records to delete, sent as `records[0]=...`, `records[1]=...`. A plain `records=1` string (not an array) is rejected with HTTP 400. |
+| `arm` | Optional | The arm number to delete records from. Only applicable in longitudinal projects with more than one arm. If omitted, specified records are deleted from all arms in which they exist. If provided, records are deleted from that arm only. An arm number that doesn't exist returns HTTP 400. |
 | `instrument` | Optional | The unique instrument name (column B in the Data Dictionary) to delete data for. If specified, only that instrument's data is deleted for the specified records — the record itself is not removed. For longitudinal projects, `event` is mandatory when `instrument` is provided. |
 | `event` | Optional | The unique event name — longitudinal projects only. If provided, only data for that event is deleted. If `instrument` is also provided, only that instrument's data for that event is deleted. |
-| `repeat_instance` | Optional | The repeating instance number for a repeating instrument or repeating event. If provided, only the data for that specific instance is removed. |
-| `delete_logging` | Optional | `'0'` (keep logging) or `'1'` (delete logging). Only available in projects where an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings. When that setting is enabled, the default is `'1'` (logging deleted with the record); pass `'0'` to preserve the log. If the setting is not enabled in the project, this parameter has no effect and defaults to `'0'`. |
+| `repeat_instance` | Optional | The repeating instance number for a repeating instrument or repeating event. Only applied **together with `event` and/or `instrument`**: with `instrument` (plus `event` if longitudinal) it removes that instance of a repeating instrument; with `event` alone it removes that instance of a repeating event. Sent on its own, it is ignored — see the warning below. |
+| `delete_logging` | Optional | `'0'` (keep logging) or `'1'` (delete logging). Only available in projects where an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings. When that setting is enabled, the default is `'1'` (logging deleted with the record); pass `'0'` to preserve the log. If the setting is not enabled in the project, this parameter has no effect and defaults to `'0'`. Applies only to whole-record deletes. The log rows stay, but the logged data values (including logged outgoing emails and text messages) are replaced with `[*DATA REMOVED*]`. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. |
+
+> **Critical — `repeat_instance` on its own deletes the whole record.** If you send `repeat_instance` without `event` or `instrument`, REDCap ignores it and performs a whole-record delete — in every arm, unless `arm` is given. To remove one instance, always include `instrument` (and `event` in a longitudinal project) or, for a repeating event, `event`. Deletion is irreversible: test the exact request on a copy of the project first.
 
 > **Critical — match the stored case of the record name exactly (version caveat, below 16.0.0 Standard).** When deleting a specific instrument's data in a **longitudinal** project, supplying the record name in different case to how it is stored — `taylor-101` where the project holds `TAYLOR-101` — could cause **all data in the entire record to be deleted** rather than just the named instrument's data. Fixed in 16.0.0 (on 17.5.6, `taylor-101` deleted only the named instrument's data of `TAYLOR-101`). Deletion is irreversible, so on any earlier version match the stored case exactly, and test against a copy of the project first.
 
@@ -146,10 +148,15 @@ print $output;
 
 On success, the API returns:
 
-- The **number of records deleted** — when no `instrument`, `event`, or `repeat_instance` is specified.
-- For partial deletes (`instrument`, `event` and/or `repeat_instance`): also a plain number — the count of records whose data was deleted (records without data in that instrument aren't counted).
+- The **number of records deleted** — when neither `instrument` nor `event` is specified (a whole-record delete).
+- For partial deletes (`instrument` and/or `event`, optionally with `repeat_instance`): also a plain number — the count of records whose data was deleted (records without data in that instrument aren't counted).
 
 On error, the API returns an error message describing the problem (e.g., invalid record ID, missing required parameter, insufficient permissions).
+
+The request is **all-or-nothing**: if any record in the batch can't be deleted, nothing is deleted and the API returns HTTP 400. Record access is enforced as in the user interface:
+
+- A user in a Data Access Group gets HTTP 403 for a record outside their DAG, and nothing is deleted. Administrators are not limited by DAGs.
+- In a double data entry project, a user designated as data entry person 1 or 2 can only delete their own `--1` or `--2` copies of records.
 
 ---
 
@@ -173,11 +180,11 @@ On error, the API returns an error message describing the problem (e.g., invalid
 
 **Q: Can I delete only a specific repeating instance without removing the whole instrument?**
 
-**A:** Yes. Provide the `instrument`, `event` (if longitudinal), and `repeat_instance` parameters together. Only that one instance will be removed; other instances and the record itself remain intact.
+**A:** Yes. Provide the `instrument`, `event` (if longitudinal), and `repeat_instance` parameters together. Only that one instance will be removed; other instances and the record itself remain intact. For a repeating event, send `event` and `repeat_instance` without `instrument` to remove that event instance. Never send `repeat_instance` without `event` or `instrument`: it is then ignored and the whole record is deleted.
 
 **Q: Will the audit log be deleted when I delete a record?**
 
-**A:** By default, no — logging is preserved. However, if an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings, then logging is deleted with the record by default. Pass `delete_logging='0'` to override and keep the log even when that setting is enabled.
+**A:** By default, no — logging is preserved. However, if an administrator has enabled the "Delete a record's logging activity when deleting the record?" setting on Edit Project Settings, then logging is deleted with the record by default. Pass `delete_logging='0'` to override and keep the log even when that setting is enabled. "Deleted" here means the log entries remain but their data values are replaced with `[*DATA REMOVED*]`; it only happens on whole-record deletes.
 
 **Q: Can I undo a deletion?**
 
@@ -193,7 +200,9 @@ On error, the API returns an error message describing the problem (e.g., invalid
 
 **Assuming deletion respects event filters in longitudinal projects.** If you specify an `event` parameter, deletion is limited to that event. But if you also specify an `instrument`, the instrument data is deleted for that event only. Always be clear about the scope of your deletion.
 
-**Not having the right permissions.** Deleting records requires the **Delete Record** user privilege in the project — this is a separate permission from API Import or API Export. A user can have full API import/export rights but still be blocked from deletions if Delete Record is not granted.
+**Sending `repeat_instance` on its own.** `repeat_instance` only narrows a delete that already names an `instrument` and/or `event`. On its own it is ignored and the entire record is deleted (across all arms if `arm` is omitted). Test on a copy of the project first.
+
+**Not having the right permissions.** Deleting records via the API requires both the **Delete Records** user privilege and the **API Import/Update** privilege in the project. Delete Records is a separate permission: a user can have full API import/export rights but still be blocked from deletions if Delete Records is not granted.
 
 **Event is mandatory when instrument is specified in a longitudinal project.** If you provide `instrument` in a longitudinal project, you must also provide `event`. Omitting `event` in that scenario will result in an API error.
 
