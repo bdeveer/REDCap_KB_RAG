@@ -261,8 +261,8 @@ version on every article, because each source-reviewed article gets a pinned
 | 7a API | API-02–13 except 03, 08 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
 | 7b API | API-14–24 except 18 (10; 5 per agent) | Done 2026-11-27 (10 + 1 from the sweep) |
 | 7c API | API-25–36 except 31, 32 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
-| 7d API | API-37–46 (10; 5 per agent) | — |
-| 7e API | API-47–56 (10; 5 per agent) | — |
+| 7d API | API-37–46 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
+| 7e API | API-47–56 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
 | 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | — |
 | 8b Control Center II | CC-10–18 (9; LTS differences, 2–3 per agent) | — |
 | 8c Control Center III | CC-19–26 (8; LTS differences, 2 per agent) | — |

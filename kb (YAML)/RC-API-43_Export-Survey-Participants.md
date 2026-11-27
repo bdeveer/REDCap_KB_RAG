@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - REDCap projects with participant-list surveys enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — participant
+  list behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API official documentation (Export a Survey Participant List)
 related:
 - id: RC-API-01
@@ -33,7 +33,9 @@ synonyms:
 
 The Export Survey Participants API retrieves the participant list for a survey-enabled instrument. It returns contact information, invitation status, response status, and direct survey access links. This is useful for tracking invitation delivery, monitoring response rates, and programmatically retrieving per-participant survey links.
 
-**Permissions required:** The calling user must have both API Export privileges and Survey Distribution Tools privileges. If either is missing, the API returns an error. If the specified instrument has not been enabled as a survey, an error is also returned.
+**Permissions required:** The calling user must have both API Export privileges and Survey Distribution Tools privileges. If either is missing, the API returns an HTTP 403 error. A missing or invalid `instrument`, an instrument that has not been enabled as a survey, or an invalid `event` each return an HTTP 400 error.
+
+**Which participants you see:** Users assigned to a Data Access Group see participants whose record is in their DAG, plus participants not yet linked to any record. Users in a Double Data Entry project see only their own records. In a multi-arm longitudinal project, only participants for records in the requested event's arm are returned.
 
 ---
 
@@ -52,7 +54,7 @@ A flag indicating whether an invitation has been sent to the participant (via RE
 A value indicating the completion state of a survey: `0` (No response), `1` (Partial response), or `2` (Completed).
 
 ### Email Occurrence
-A count of how many times a particular email address appears in the participant list. Used with the email field to uniquely identify a participant row, since the same email can be added multiple times.
+The running number of that email address within the participant list: `1` for its first appearance, `2` for its second, and so on. It is not a total count. Used with the email field to uniquely identify a participant row, since the same email can be added multiple times.
 
 ### Survey Distribution Tools Privilege
 A user-level permission required to access participant lists and survey distribution features. Required along with API Export privilege to use this method.
@@ -164,20 +166,32 @@ print $output;
 
 # 5. Response
 
-The API returns an array of participant records. Each record contains exactly these eight fields:
+The API returns an array of participant rows. Every row contains these nine columns, in this order:
 
 | Field | Description |
 |---|---|
 | `email` | The participant's email address |
-| `email_occurrence` | Count of how many times this email appears in the list. Because the same email can be added more than once, `email` + `email_occurrence` together form a unique identifier |
+| `email_occurrence` | The running number of this email in the list (`1` for its first appearance, `2` for its second, and so on). Because the same email can be added more than once, `email` + `email_occurrence` together form a unique identifier |
 | `identifier` | The participant identifier (typically a name or label entered in the participant list) |
+| `record` | The record name linked to this participant. Filled only when the participant has an identifier, or when the email comes from the project's designated email field; otherwise blank, so that participants stay anonymous |
 | `invitation_sent_status` | `1` if an invitation has been sent; `0` if not |
 | `invitation_send_time` | Date/time of the next scheduled invitation. Blank if no invitation is scheduled |
 | `response_status` | `0` = No response, `1` = Partial, `2` = Completed |
 | `survey_access_code` | The unique access code for this participant's survey session |
 | `survey_link` | The direct, participant-specific URL to the survey |
 
-Example JSON response:
+Extra columns appear only when relevant to the project:
+
+| Field | When it appears |
+|---|---|
+| `phone` | Only when Twilio SMS/voice is enabled for the project; placed near `email` |
+| `repeat_instance` | The instrument or event is repeating |
+| `survey_link_expiration` | The survey has a time limit enabled |
+| `survey_queue_link` | The survey queue is enabled |
+
+> **Note:** For a completed response, `survey_access_code` and `survey_link` are blank when the survey does not allow respondents to edit completed responses.
+
+In JSON output, `invitation_sent_status` and `response_status` are numbers, not strings. Example JSON response (classic project, no optional columns):
 
 ```json
 [
@@ -185,26 +199,32 @@ Example JSON response:
     "email": "john.doe@example.com",
     "email_occurrence": "1",
     "identifier": "John Doe",
-    "invitation_sent_status": "1",
+    "record": "1",
+    "invitation_sent_status": 1,
     "invitation_send_time": "",
-    "response_status": "2",
+    "response_status": 2,
     "survey_access_code": "ABCD1234",
     "survey_link": "https://redcap.example.edu/surveys/?s=ABCD1234"
   },
   {
     "email": "jane.smith@example.com",
     "email_occurrence": "1",
-    "identifier": "Jane Smith",
-    "invitation_sent_status": "0",
+    "identifier": "",
+    "record": "",
+    "invitation_sent_status": 0,
     "invitation_send_time": "2026-05-01 09:00:00",
-    "response_status": "0",
+    "response_status": 0,
     "survey_access_code": "EFGH5678",
     "survey_link": "https://redcap.example.edu/surveys/?s=EFGH5678"
   }
 ]
 ```
 
-> **Note:** This response does not include `first_name`, `last_name`, `record`, or `optout`. To retrieve record-level data, use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)).
+In this example the first participant has an identifier, so `record` is filled; the second has none, so `record` is blank and the participant stays anonymous. (In the first row, the code and link are shown because this survey allows editing completed responses.)
+
+> **Note:** This response does not include `first_name`, `last_name`, `optout`, or any data-entry fields. To retrieve record-level data, use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)).
+
+> **Version caveat (16.0.61 LTS):** On 16.x the participant list may be served from a cache, so `invitation_sent_status` and `invitation_send_time` can lag behind invitations that were recently scheduled or sent until other activity happens in the project. 17.3.31 LTS and 17.6 read invitation status live. On 16.x, if the status looks stale, confirm it on the **Participant List** page in **Survey Distribution Tools**.
 
 ---
 
@@ -214,31 +234,36 @@ Example JSON response:
 **A:** `1` means an invitation has been sent to the participant; `0` means no invitation has been sent yet. Note: this reflects REDCap's tracking of distribution — it is not confirmation of email delivery.
 
 **Q: What does `email_occurrence` mean?**
-**A:** It is the count of how many times that email address appears in the participant list. Because the same email can be added more than once (e.g., to send multiple surveys), `email` alone is not unique. Use `email` + `email_occurrence` together as the unique identifier.
+**A:** It is the running number of that email address within the participant list: `1` for the first row with that email, `2` for the second, and so on (not a total count). Because the same email can be added more than once (e.g., to send multiple surveys), `email` alone is not unique. Use `email` + `email_occurrence` together as the unique identifier.
 
 **Q: What does `response_status` mean?**
 **A:** `0` = No response, `1` = Partial response, `2` = Completed. This is the same status shown in the Survey Distribution Tools interface.
 
 **Q: What are `survey_access_code` and `survey_link`?**
-**A:** Each participant receives a unique access code and a direct URL to their survey session. The `survey_link` is the full URL a participant would use to access the survey; you can send this in a custom notification rather than using REDCap's built-in invitation system.
+**A:** Each participant receives a unique access code and a direct URL to their survey session. The `survey_link` is the full URL a participant would use to access the survey; you can send this in a custom notification rather than using REDCap's built-in invitation system. For a completed response, both are blank if the survey does not allow editing completed responses.
+
+**Q: Why is `record` blank for some participants?**
+**A:** `record` is filled only when the participant has an identifier, or when the email comes from the project's designated email field. Otherwise it is left blank so that participants stay anonymous.
 
 **Q: Can I modify participant information via API?**
-**A:** No. This method is read-only. To manage participants, use the Survey Distribution Tools interface in REDCap.
+**A:** No. This method does not change your data or let you edit participants. REDCap may prepare participant and survey link entries for existing records when the list is exported, and the call is logged. To manage participants, use the Survey Distribution Tools interface in REDCap.
 
 **Q: For longitudinal projects, what happens if I don't specify an event?**
-**A:** REDCap will return an error. The `event` parameter is required for longitudinal projects.
+**A:** REDCap will return an HTTP 400 error. The `event` parameter is required for longitudinal projects.
 
 ---
 
 # 7. Common Mistakes & Gotchas
 
-**Calling without Survey Distribution Tools privilege:** This method requires both API Export and Survey Distribution Tools rights. If your token belongs to a user without Survey Distribution Tools access, the API returns an error — not an empty result. Verify user privileges before troubleshooting elsewhere.
+**Calling without Survey Distribution Tools privilege:** This method requires both API Export and Survey Distribution Tools rights. If your token belongs to a user without Survey Distribution Tools access, the API returns an HTTP 403 error — not an empty result. Verify user privileges before troubleshooting elsewhere.
 
-**Instrument not enabled as a survey:** If the instrument exists in the project but hasn't been enabled as a survey, the API returns an error. Enable it via Survey Settings in the Online Designer first.
+**Instrument not enabled as a survey:** If the instrument exists in the project but hasn't been enabled as a survey, the API returns an HTTP 400 error. Enable it via Survey Settings in the Online Designer first. A missing or misspelled `instrument` name also returns 400.
 
-**Missing event for longitudinal projects:** The `event` parameter is required for longitudinal projects. Omitting it produces an error.
+**Missing or invalid event for longitudinal projects:** The `event` parameter is required for longitudinal projects. Omitting it or passing an invalid unique event name produces an HTTP 400 error.
 
-**Expecting record-level fields in the response:** This API does not return `first_name`, `last_name`, `record`, `optout`, or other data-entry fields. It returns only the eight participant-list fields. Use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) if you need record data.
+**Expecting every participant in a DAG, DDE or multi-arm project:** DAG users see only participants whose record is in their DAG plus participants not yet linked to a record; Double Data Entry users see only their own records; in multi-arm projects only the requested event's arm is returned. A shorter list than the Participant List page shows an administrator is usually this, not a fault.
+
+**Expecting record-level fields in the response:** This API does not return `first_name`, `last_name`, `optout`, or other data-entry fields. It returns the participant-list columns only (plus optional columns such as `phone` or `repeat_instance` when relevant). The `record` column is blank for anonymous participants (no identifier and no designated email field). Use the Export Records API ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)) if you need record data.
 
 **Treating `email` as a unique key:** The same email address can appear multiple times in the participant list. Always use `email` + `email_occurrence` together to uniquely identify a participant row.
 

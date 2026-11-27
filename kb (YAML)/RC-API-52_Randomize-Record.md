@@ -5,13 +5,13 @@ domain: API
 applies_to:
 - REDCap projects with Randomization enabled
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Randomize
+  Record behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
 - RC-RAND-01 — Randomization Concepts & Terminology
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -40,7 +40,7 @@ The Randomize Record API method triggers the randomization of an existing record
 
 The method requires that the record already exists and that all stratification fields for the specified randomization have been filled in. If stratification data is missing or incomplete, the call will fail with an error.
 
-You must specify a `randomization_id`, which corresponds to a specific randomization definition (target field + event). Projects can have multiple randomization definitions; the `randomization_id` tells REDCap which one to use. This ID is visible on the Randomization page (for users with Design permissions) or on the API Playground page.
+You must specify a `randomization_id`, which corresponds to a specific randomization definition (target field + event). Projects can have multiple randomization definitions; the `randomization_id` tells REDCap which one to use. This ID is shown on the project's Randomization page (setup or dashboard view, which requires Randomization Setup or Dashboard rights) or on the API Playground page.
 
 **Concealed vs. open allocations:** For open allocations, the actual allocation group value is returned. For concealed allocations, the `target_field_alt` value is always `'*'` to preserve blinding — the real allocation group is not exposed.
 
@@ -71,7 +71,7 @@ A randomization setup where the actual treatment group assigned is hidden behind
 | `action` | Required | Always `'randomize'` |
 | `record` | Required | The record name (ID) of the record to randomize. Must already exist and have all stratification data filled in. |
 | `randomization_id` | Required | The unique ID of the randomization definition. Viewable on the Randomization page or API Playground. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to match `format` if not specified. |
 | `returnAlt` | Optional | `'false'` (default) or `'true'`. When `'true'`, includes the alternative target field value (i.e., the randomization number for open allocations). For concealed allocations, always returns `'*'`. |
 
@@ -175,13 +175,14 @@ print $output;
 
 # 5. Response
 
-On success, returns the randomization result. The response includes the randomization ID, the record name, the value assigned to the target field, and (if `returnAlt=true`) the alternative target field value.
+On success, returns the randomization result. The response includes the randomization ID, the record name, the variable name of the target field (`target_field_name`), the value assigned to it (`target_field`), and (if `returnAlt=true`) the alternative target field value. `target_field_name` is included in JSON, CSV and XML responses.
 
 **JSON:**
 ```json
 {
     "randomization_id": 123,
     "record": "21",
+    "target_field_name": "randomization_group",
     "target_field": "1",
     "target_field_alt": "R-1005"
 }
@@ -189,22 +190,43 @@ On success, returns the randomization result. The response includes the randomiz
 
 **CSV:**
 ```
-randomization_id,record,target_field,target_field_alt
-123,21,1,R-1005
+randomization_id,record,target_field_name,target_field,target_field_alt
+123,21,randomization_group,1,R-1005
 ```
 
 **XML:**
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
-<item>
+<items>
     <randomization_id>123</randomization_id>
     <record>21</record>
+    <target_field_name>randomization_group</target_field_name>
     <target_field>1</target_field>
     <target_field_alt>R-1005</target_field_alt>
-</item>
+</items>
 ```
 
-On failure, an error message is returned in the requested `returnFormat`. Common failure reasons include: the record does not exist, stratification information is missing or incomplete, or the user lacks the Randomize privilege.
+> **Note:** The XML root element is `<items>`, although REDCap's own API help page shows `<item>`.
+
+**Errors.** Most "cannot randomize" failures come back as an HTTP 200 response with a plain-text message (not wrapped in the `returnFormat`). The messages are:
+
+- `Invalid data supplied` (bad `randomization_id`, or randomization is not enabled in the project)
+- `Cannot randomize. Record does not exist.`
+- `Cannot randomize. Randomization already completed for record.`
+- `Cannot randomize. Missing stratification data for fields: <fields>`
+- `Cannot randomize. Record not assigned to a DAG`
+- `Cannot randomize. No allocations available.`
+
+Only permission problems (403), DAG or Double Data Entry access problems (403), and `Cannot randomize. An error occurred.` (400) are returned as real HTTP errors. Scripts should therefore check the response body, not only the HTTP status code.
+
+**Rules that apply to every call:**
+
+- A user assigned to a DAG can only randomize records in their own DAG.
+- The record must exist in the arm that contains the target field's event.
+- For randomization stratified by DAG, the record must already be in a DAG; the API cannot assign one.
+- Allocations, and the "already randomized" check, are separate for development and production status.
+- For blinded randomization (the target field is a text field), `target_field_alt` is returned as `'*'` (see the concealed allocation note in Section 1).
+- The action is logged.
 
 ---
 
@@ -212,7 +234,7 @@ On failure, an error message is returned in the requested `returnFormat`. Common
 
 **Q: Where do I find the `randomization_id`?**
 
-**A:** It is shown on the Randomization page in the REDCap UI (requires Design permissions) or on the API Playground page when you select the Randomize Record method. Each randomization definition in a project has a unique ID.
+**A:** It is shown on the Randomization page in the REDCap UI (requires Randomization Setup or Dashboard rights) or on the API Playground page when you select the Randomize Record method. Each randomization definition in a project has a unique ID.
 
 **Q: Can a project have more than one randomization?**
 
@@ -224,7 +246,7 @@ On failure, an error message is returned in the requested `returnFormat`. Common
 
 **Q: What happens if I try to randomize a record that's already been randomized?**
 
-**A:** REDCap will return an error. A record can only be randomized once per randomization definition. To re-randomize, the existing randomization would need to be reverted through the UI by a user with appropriate permissions.
+**A:** REDCap will return the message `Cannot randomize. Randomization already completed for record.` (as an HTTP 200 plain-text response). A record can only be randomized once per randomization definition. To re-randomize, the existing randomization (the record's allocation) would need to be undone by a REDCap administrator.
 
 **Q: Does the record need to already exist before I call this method?**
 
@@ -238,11 +260,13 @@ On failure, an error message is returned in the requested `returnFormat`. Common
 
 **Wrong `randomization_id`.** Each randomization definition has a unique numeric ID. Passing the wrong one targets a different randomization (or fails entirely). Always verify the ID in the REDCap UI or API Playground first.
 
-**Insufficient permissions.** The API token must belong to a user with the **Randomize** privilege specifically — general API Export or Edit rights are not sufficient.
+**Insufficient permissions.** The API token must belong to a user with the **Randomize** privilege specifically. Only the Randomize right is checked; API Import/Export rights are not required for this method (administrators always pass).
 
 **Expecting the real group value with concealed allocations.** When `returnAlt=true` and allocations are concealed, `target_field_alt` returns `'*'`, not the actual group. Do not build logic around this field for concealed studies.
 
-**Record already randomized.** Attempting to randomize a record a second time returns an error. There is no `force` or `overwrite` option — reverting must be done through the UI.
+**Record already randomized.** Attempting to randomize a record a second time returns an error message (HTTP 200, see Section 5). There is no `force` or `overwrite` option — undoing a randomization, or editing the allocation table, can only be done by a REDCap administrator.
+
+**Checking only the HTTP status code.** Most "cannot randomize" failures return HTTP 200 with a plain-text message. Always inspect the response body.
 
 ---
 

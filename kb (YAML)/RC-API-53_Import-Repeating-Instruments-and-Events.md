@@ -6,11 +6,12 @@ applies_to:
 - Projects with repeating instruments or repeating events
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §4–§10 live-tested via the API on a
-  sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+  sandbox project (2026-10); behaviour also checked against v17.6.5 / v17.3.31 / v16.0.61
+  source code
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -263,6 +264,10 @@ On success, the method returns the **number of repeating instruments or repeatin
 
 On failure, an error message is returned in the format specified by `returnFormat`.
 
+Errors are all-or-nothing: if any row has an error, the call returns HTTP 400 and nothing is changed. A row that is missing the `form_name` key (or, in a longitudinal project, the `event_name` key) returns HTTP 400 with a "required key not present" message. In a classic project the `event_name` value is ignored.
+
+> **Warning:** Because the import replaces the whole repeating setup, sending an empty list (for example JSON `[]`, or a CSV with only a header row) clears **all** repeating instruments and events and returns `0`. Export the current configuration first and keep a copy.
+
 ---
 
 # 9. Common Questions
@@ -293,15 +298,17 @@ On failure, an error message is returned in the format specified by `returnForma
 
 **Submitting a partial list and losing existing configuration.** This method overwrites the full repeating configuration. If you only include one instrument in the payload, all other repeating instruments are removed. Always export the current configuration first ([RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md)) and merge your changes before importing.
 
-**Forgetting Project Setup/Design permission.** This method requires both API Import/Update and Project Setup/Design. A token with only API Import/Update will receive a permissions error. Confirm both privileges are enabled in User Rights.
+**Forgetting Project Setup/Design permission.** This method requires both API Import/Update and Project Setup/Design. A token with only API Import/Update will receive an HTTP 400 error (not 403) with an "Insufficient user privileges" message. Confirm both privileges are enabled in User Rights.
 
 **Using instrument labels instead of internal names.** The `form_name` field must be the internal instrument name from the Data Dictionary (e.g., `adverse_events`), not the human-readable label (e.g., `Adverse Events`). Using the label causes a validation error.
 
-**Omitting event_name in longitudinal projects.** In a longitudinal project, each repeating instrument entry must include the correct `event_name`. Omitting it or providing a wrong event name will result in an error or misassignment.
+**Omitting event_name in longitudinal projects.** In a longitudinal project, each repeating instrument entry must include the correct `event_name`. Omitting the `event_name` key returns HTTP 400 "required key not present", and an invalid or blank event name gives an error. However, REDCap only checks that the event and the instrument each exist in the project. It does not check that the instrument is designated to that event, so an event/instrument pair that is not mapped is accepted. Validate pairs against the instrument-event mappings yourself ([RC-API-10 — Export Instrument-Event Mappings API](RC-API-10_Export-Instrument-Event-Mappings.md)).
 
 **Using the old column name `custom_repeat_instrument_label`.** The label column is `custom_form_label`. An import that uses the older name still succeeds (HTTP 200, count returned), but the label is silently dropped and the instrument ends up with no custom label. Export the configuration afterwards ([RC-API-51 — Export Repeating Instruments and Events API](RC-API-51_Export-Repeating-Instruments-and-Events.md)) to confirm the labels were saved.
 
-**Misreading the return value.** The method returns a count of imported entries, not a success/failure boolean. A return of `0` may indicate that no items were actually processed — verify your payload if you receive an unexpected zero.
+**Misreading the return value.** The method returns a count of imported entries, not a success/failure boolean. A return of `0` means no items were imported. Because the import replaces the whole repeating setup, an empty list (for example JSON `[]`, or a CSV with only a header row) clears **all** repeating instruments and events and returns `0`. Export the current configuration first and keep a copy; verify your payload if you receive an unexpected zero.
+
+**Sending an empty list.** An empty payload is not a no-op: it removes every repeating instrument and event in the project. See the warning in the Response section.
 
 ---
 

@@ -5,13 +5,14 @@ domain: API
 applies_to:
 - REDCap projects with custom reports configured
 requires: Any supported version
-verified_against: REDCap v17.5.6 (Standard) — §1, §3, §5–§7 (report created for the
-  test) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed
-  against the v17.3.7 (LTS) changelog
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — export
+  rights, required rights, report access, DAG filtering, record ID hashing and `csvDelimiter`
+  handling checked against source code; §1, §3, §5–§7 (report created for the test)
+  live-tested via the API on a sandbox project on v17.5.6 (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.3'
-last_updated: 2026-10
+version: '1.4'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -38,7 +39,9 @@ The Export Reports API retrieves data from a custom report created in the REDCap
 
 This is particularly useful for recurring report generation, integration with downstream analytics systems, and scheduled data extracts.
 
-> **Data export rights apply to API report exports.** If your account has *No Access* export rights, the request will fail with an error. If you have *De-Identified* or *Remove All Identifier Fields* rights, some fields may be filtered out of the response. To ensure no data is excluded, the API token's user should have *Full Data Set* export rights in the project.
+> **Rights required.** The API token's user needs the **API Export** right; without it the request fails with HTTP 403. Users in a Double Data Entry project who are assigned as data entry person 1 or 2 cannot use this method.
+
+> **Data export rights apply to API report exports.** Export rights are set per instrument. If your account has *No Access* export rights, the request fails with HTTP 403 and a message saying you have "No Access" data export rights. If you have *De-Identified* or *Remove All Identifier Fields* rights, some fields are filtered out of the response (see Data Export Rights in Section 2). To ensure no data is excluded, the API token's user should have *Full Data Set* export rights on every instrument in the report.
 
 > **The `type` parameter is not supported.** Unlike the Export Records method, Export Reports does not accept a `type` (flat/eav) parameter. All data is always returned in flat format. If you pass `type` in your request, it will be silently ignored.
 
@@ -53,7 +56,16 @@ A user-defined view of project data created in the REDCap interface that filters
 The numeric identifier of a custom report, visible in the URL or report management table. Required to export a specific report via API.
 
 ### Data Export Rights
-User-level permissions controlling field-level access during export: Full Data Set (no restrictions), De-Identified (strips identifiers), or Remove All Identifier Fields (more aggressive stripping). These rights are enforced on API exports.
+User permissions, set per instrument, that control which fields an export includes. These rights are enforced on API exports:
+
+| Level | Effect on the report export |
+|---|---|
+| Full Data Set | No restrictions |
+| Remove All Identifier Fields | Removes only fields tagged as identifiers |
+| De-Identified | The stricter level: removes identifier-tagged fields **and** unvalidated free-text fields, notes fields and date/datetime fields |
+| No Access | Blocks the export (HTTP 403) |
+
+If the record ID field is tagged as an identifier and the user's export right is anything other than Full Data Set, record IDs are exported hashed rather than as the real values.
 
 ### Flat Format
 The standard tabular data structure (one row per record/event) with columns for each field. All data exported via the Export Reports API is in flat format regardless of the project structure.
@@ -78,8 +90,10 @@ The character used to separate fields in CSV output. Options include comma (defa
 | `rawOrLabel` | Optional | `'raw'` (default) for raw coded values, `'label'` for display labels |
 | `rawOrLabelHeaders` | Optional | For CSV flat format only: `'raw'` (default) for field variable names, `'label'` for field labels in headers |
 | `exportCheckboxLabel` | Optional | `'true'` to export checkbox option labels when checked (blank if unchecked); `'false'` (default) exports `'Checked'`/`'Unchecked'`. Only applies when `rawOrLabel=label`. |
-| `csvDelimiter` | Optional | CSV delimiter: `','` (default), `'tab'`, `';'`, `'\|'`, or `'^'`. Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21. |
+| `csvDelimiter` | Optional | CSV delimiter: `','` (default), `'tab'`, `';'`, `'\|'`, or `'^'`. See the version caveat below for `'tab'` on older versions. |
 | `decimalCharacter` | Optional | Force decimal format: `'.'` or `','`. If blank, uses each field's native format. Applies to calc fields and number-validated text fields. |
+
+> **Version caveat (below 17.5.7 Standard / 17.3.21 LTS, including all 16.x LTS):** `csvDelimiter=tab` makes CSV **exports** fail with HTTP 400 and an HTML error page instead of data. On these versions, send a literal tab character instead (URL-encoded `%09`) or use another delimiter. Fixed in 17.5.7 Standard / 17.3.21 LTS; present in 17.3.31 LTS and 17.6, not in 16.0.61 LTS.
 
 ---
 
@@ -205,7 +219,7 @@ The API returns data rows as configured in the report, ordered first by record (
 **A:** In the REDCap interface, go to "Manage" > "Custom reports." The report ID appears in the URL bar (e.g., `...?pid=123&report_id=1`) or is listed in the report management table.
 
 **Q: What happens if a user doesn't have access to a report?**
-**A:** If the report is restricted to specific users, your API token must belong to a user with permission to view that report. Otherwise, you receive an access denied error.
+**A:** If the report's "who can view" setting excludes the API token's user, the request fails with HTTP 403 and a message that you do not have access to the report. Users with the **Add/Edit Reports** right, and administrators, can export any report in the project regardless of that setting.
 
 **Q: Can I export all reports at once?**
 **A:** No. You must call the API separately for each report ID. Loop through your report IDs and call the API for each one.
@@ -220,17 +234,17 @@ The API returns data rows as configured in the report, ordered first by record (
 
 # 7. Common Mistakes & Gotchas
 
-**`csvDelimiter=tab` crashes the export:** Below 17.5.7 Standard / 17.3.21 LTS, `'tab'` crashes CSV **exports** with a PHP fatal error (HTTP 400, HTML page) — send a literal tab character instead (URL-encoded `%09`). Fixed in 17.5.7 / 17.3.21.
+**`csvDelimiter=tab` fails on older versions:** Below 17.5.7 Standard / 17.3.21 LTS (including 16.x LTS), `'tab'` makes CSV **exports** fail with HTTP 400 and an HTML page. Send a literal tab character instead (URL-encoded `%09`) or use another delimiter. Fixed in 17.5.7 Standard / 17.3.21 LTS.
 
-**Incorrect report_id format:** Report IDs are numeric. Passing a string like `"my_report"` will fail. Always use the numeric ID from the URL or report list.
+**Incorrect report_id format:** Report IDs are numeric. Passing a string like `"my_report"`, or the ID of a report in a different project, fails with HTTP 403 and a message that the report does not belong to this project. Always use the numeric ID from the URL or report list of the same project the token belongs to.
 
-**Ignoring report permissions:** Reports respect user-level restrictions, DAG assignments, and role-based access control. Verify your API token user has permission to the report before automating exports.
+**Ignoring report permissions:** Reports respect the report's "who can view" setting, DAG assignments, and export rights. Verify your API token user can view the report before automating exports. Users with the **Add/Edit Reports** right, and administrators, can export any report in the project regardless of its "who can view" setting.
 
 **Missing parameter defaults:** If you don't specify `rawOrLabel`, the API defaults to `'raw'` (coded values). If you need human-readable labels, explicitly set `rawOrLabel='label'`.
 
 **Assuming `type=flat` is required:** Export Reports always returns flat format. There is no `type` parameter — unlike Export Records, passing `type` here does nothing. Don't copy it from an Export Records call and expect it to have any effect.
 
-**Data export rights silently filter results:** If the API token's user has De-Identified or Remove All Identifier Fields export rights, identifier fields will be stripped from the response without any error or warning. If your export is missing expected fields, check the user's data export rights in User Rights, not the report definition.
+**Data export rights silently filter results:** If the API token's user has Remove All Identifier Fields export rights on an instrument, identifier-tagged fields are stripped from the response without any error or warning. De-Identified is stricter: it also strips unvalidated free-text fields, notes fields and date/datetime fields. If the record ID field is tagged as an identifier, record IDs come back hashed for any right other than Full Data Set. If your export is missing expected fields or shows unfamiliar record IDs, check the user's per-instrument data export rights in User Rights, not the report definition.
 
 **Wrong `format` default assumption:** The default format for Export Reports is `xml`, not `json`. Always pass `format='json'` or `format='csv'` explicitly in your requests if you don't want XML.
 

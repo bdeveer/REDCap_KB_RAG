@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Import
+  User-Role Assignments behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.0'
-last_updated: '2026'
+version: '1.1'
+last_updated: 2026-11
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -35,7 +35,9 @@ synonyms:
 
 # 1. Overview
 
-The Import User-Role Assignments API method assigns existing project users to existing user roles, or removes users from their current role. The payload is a list of username-to-role mappings. Passing an empty `unique_role_name` for a user will remove them from any role assignment.
+The Import User-Role Assignments API method assigns users to existing user roles, or removes users from their current role. The payload is a list of username-to-role mappings. Passing an empty `unique_role_name` for a user will remove them from any role assignment.
+
+A username that is not yet in the project is added to the project (with no individual rights) and then placed in the role. Best practice: add users deliberately first (Import Users, [RC-API-23 — Import Users API](RC-API-23_Import-Users.md), or the User Rights page) and use this method only to assign roles. In REDCap 17, a username that has no REDCap account returns an error.
 
 Use this method to automate bulk role assignments, replicate role structures across projects, or programmatically manage access when user lists change.
 
@@ -63,11 +65,11 @@ A logical division of project users and records. Can be assigned to a user at th
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import and Full User Rights access (Read-Only User Rights is not enough). A token without it returns HTTP 400 with a message about user rights privileges. |
 | `content` | Required | Always `'userRoleMapping'` for this method. |
-| `action` | Required | Always `'import'` for this method. |
+| `action` | Optional | Not needed for this method and ignored (sending `data` makes the request an import). Examples may still show `'import'`. |
 | `format` | Optional | Data format: `'csv'`, `'json'`, or `'xml'` (default). |
-| `data` | Required | List of user-role mapping objects. Each must include `username` and `unique_role_name`. See Section 2.1 for details and format examples. |
+| `data` | Required | List of user-role mapping objects. The first row must include both `username` and `unique_role_name`, otherwise the request fails with a message that components are missing ("username, unique_role_name"). See Section 2.1 for details and format examples. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
 
 ---
@@ -78,9 +80,9 @@ Each record in the `data` payload contains:
 
 | Field | Required | Description |
 |---|---|---|
-| `username` | Required | The existing REDCap username to assign. Must already be a user in the project. |
+| `username` | Required | The REDCap username to assign. A username not yet in the project is added to it (with no individual rights) and put in the role; best practice is to add users first. In REDCap 17, a username with no REDCap account returns an error. |
 | `unique_role_name` | Required | The system ID of the role to assign (e.g., `U-2119C4Y87T`). Pass an empty string to remove the user from any role. |
-| `data_access_group` | Optional | A valid unique DAG name. If the project uses DAGs, you may assign the user to a DAG at the same time as assigning their role. |
+| `data_access_group` | Optional | A valid unique DAG name. If the project uses DAGs, you may assign the user to a DAG at the same time as assigning their role. An invalid DAG unique name is silently ignored (no error), and a blank value leaves the user's current DAG unchanged. |
 
 **JSON example:**
 
@@ -241,15 +243,19 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 **Q: How do I remove a user from their role without deleting the user?**
 
-**A:** Include the user in your data payload with an empty `unique_role_name`. The user will be unassigned from their role but remain in the project with no role-based permissions. Their permissions will effectively drop to zero unless individual permissions are set separately.
+**A:** Include the user in your data payload with an empty `unique_role_name`. The user is taken out of the role but remains in the project. They then have whatever individual rights were stored for them before (for users added through this method, that means no rights). Check the User Rights page afterwards.
 
 **Q: What happens if I omit `unique_role_name` entirely (rather than passing an empty string)?**
 
-**A:** Per the official documentation, if `unique_role_name` is not provided, the user will not be assigned to any role — the behavior is the same as passing an empty string. Always include the field explicitly to avoid ambiguity.
+**A:** On rows after the first, a missing `unique_role_name` is treated as blank, which removes the user's role. The first row must contain both `username` and `unique_role_name`, otherwise the request fails with a message that components are missing ("username, unique_role_name"). Always include the field explicitly to avoid ambiguity.
 
 **Q: Can I assign a user to a role and a DAG in the same call?**
 
-**A:** Yes. Include the optional `data_access_group` field with a valid unique DAG name in the same record. This allows you to set both the role assignment and DAG membership in one API call.
+**A:** Yes. Include the optional `data_access_group` field with a valid unique DAG name in the same record. This allows you to set both the role assignment and DAG membership in one API call. An invalid DAG unique name is silently ignored (no error), and a blank value leaves the user's current DAG unchanged. This method cannot remove a user from a DAG; use Import User-DAG Assignments ([RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md)) for that.
+
+**Q: What errors can this method return?**
+
+**A:** An unknown role returns "Invalid Unique Role Names: <name>". The same username twice returns 'Username "<user>" occurs in more than one record.' A caller without Full User Rights access gets HTTP 400 with a message about user rights privileges. Errors are all-or-nothing: if any row fails, nothing is changed. A caller assigned to a DAG can only change users in their own DAG and cannot move them to another DAG or add new users (error "Invalid usernames: ...").
 
 **Q: What if I submit two records for the same username?**
 
@@ -269,13 +275,17 @@ On success, the API returns a count of user-role assignments added or updated. F
 
 **Omitting `unique_role_name` when you meant to keep the assignment.** If you build your data payload from a partial record and forget to include the role field, the user will be unassigned. Always verify your payload includes both `username` and `unique_role_name` for every record you intend to keep assigned.
 
-**Duplicate usernames in the payload.** Each username must appear exactly once. If the same username appears twice (even with different role names), the import will fail. Deduplicate your data before calling the API.
+**Duplicate usernames in the payload.** Each username must appear exactly once. If the same username appears twice (even with different role names), the import fails with 'Username "<user>" occurs in more than one record.' Deduplicate your data before calling the API.
 
 **Using `role_label` instead of `unique_role_name`.** The `unique_role_name` is the system ID (e.g., `U-2119C4Y87T`), not the human-readable label (e.g., `'Data Entry Person'`). Export roles first to get the correct IDs.
 
-**Assigning a user to a role they don't have access to.** The user must already exist in the project. This method assigns role templates; it does not add new users. Use Import Users ([RC-API-23 — Import Users API](RC-API-23_Import-Users.md)) first if the user isn't yet in the project.
+**Relying on this method to add users.** A username that is not yet in the project is added (with no individual rights) and put in the role, which can hide typos. Best practice is to add users deliberately first with Import Users ([RC-API-23 — Import Users API](RC-API-23_Import-Users.md)) or the User Rights page, then use this method to assign roles. In REDCap 17, a username with no REDCap account returns an error.
 
-**Forgetting the User Rights permission.** This method requires both API Import and User Rights rights. A token with only API Import will fail.
+**Forgetting the User Rights permission.** This method requires both API Import and Full User Rights access. A token with only API Import, or with Read-Only User Rights, fails with HTTP 400.
+
+**Expecting partial success.** Errors are all-or-nothing: if any row is invalid (for example "Invalid Unique Role Names: <name>"), nothing is changed. Fix the payload and resend it.
+
+**Trying to remove a DAG with this method.** A blank `data_access_group` leaves the current DAG unchanged. Use [RC-API-32 — Import User-DAG Assignments API](RC-API-32_Import-User-DAG-Assignments.md) instead.
 
 ---
 

@@ -7,12 +7,12 @@ applies_to:
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §1, §7, §8 live-tested via the API on
   a sandbox project (2026-10; empty-configuration error also seen on v17.5.5); Project
-  Setup/Design right requirement not re-tested; LTS line last reviewed against the
-  v17.3.7 (LTS) changelog
+  Setup/Design right requirement checked against source code; behaviour also checked
+  against v17.6.5 / v17.3.31 / v16.0.61 source code
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API official documentation
 related:
 - id: RC-API-01
@@ -182,7 +182,7 @@ print $output;
 
 # 7. Response
 
-The method returns results ordered according to their order in the project. Each row or object represents either a repeating instrument or a repeating event.
+The method returns results ordered according to their order in the project. In a classic project, rows come in instrument order. In a longitudinal project, events come in event order, but the order of instruments within a single event is not guaranteed, so sort client-side if order matters. Each row or object represents either a repeating instrument or a repeating event.
 
 **Key fields:**
 
@@ -240,6 +240,8 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 **A:** REDCap treats information about which instruments are repeating as project configuration metadata, not just data. The Project Setup/Design privilege is required to access configuration-level details via the API. This is the same permission needed to configure repeating instruments in the project setup UI.
 
+If either right is missing, the response is HTTP 400 with the message "Insufficient user privileges: You must have 'API Export' privileges and 'Project Setup/Design' privileges in the project." Tests with an administrator's token do not show this error, because administrators always pass the Project Setup/Design check.
+
 **Q: Does this method work for classic (non-longitudinal) projects?**
 
 **A:** Yes. For classic projects the response has no `event_name` column (only `form_name` and `custom_form_label`), and it lists only repeating instruments. Repeating events are only applicable to longitudinal projects.
@@ -262,7 +264,7 @@ In the second entry above, `form_name` is blank, indicating that the entire `fol
 
 **Misreading blank form_name as an error.** A blank `form_name` in the response is intentional — it signals a repeating event, not missing data. Always check for this before processing the result set.
 
-**Forgetting the Project Setup/Design permission.** Most API export calls require only API Export. This method also requires Project Setup/Design. If a user's token lacks this permission, the call returns a permissions error even though the token is otherwise valid. Confirm both privileges are enabled in User Rights.
+**Forgetting the Project Setup/Design permission.** Most API export calls require only API Export. This method also requires Project Setup/Design. If a user's token lacks this permission, the call returns HTTP 400 with "Insufficient user privileges: You must have 'API Export' privileges and 'Project Setup/Design' privileges in the project." even though the token is otherwise valid. (An administrator's token will not show this, since administrators always pass the Design check.) Confirm both privileges are enabled in User Rights.
 
 **Using form_name values in the wrong context.** The `form_name` returned here matches the instrument name in the Data Dictionary (form_name column) and in other API calls like [RC-API-02 — Export Records API](RC-API-02_Export-Records.md) (Export Records). Do not confuse it with the human-readable instrument label.
 

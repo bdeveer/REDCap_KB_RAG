@@ -5,14 +5,15 @@ domain: API
 applies_to:
 - All REDCap instances (requires Super API Token)
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured. Section 4.5, the plain-text token response and the `purpose_other`
-  error tested live on v16.0.49; §1, §3, §5, §7 live-tested on v17.5.6 (Standard),
-  2026-10
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — parameters,
+  data formats, defaults, creator rights, `odm` behaviour and error messages checked
+  against source code; §4.5, the plain-text token response and the `purpose_other`
+  error live-tested via the API on v16.0.49; §1, §3, §5, §7 live-tested via the API
+  on a sandbox project on v17.5.6 (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: 2026-10
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -47,7 +48,9 @@ The Import Project API creates new projects from scratch or imports a complete p
 
 This API is essential for programmatic project creation workflows, bulk project provisioning, project cloning across instances, and automated project setup pipelines.
 
-When a project is created via this method, REDCap automatically seeds it with defaults identical to creating a new empty project through the UI: a single data collection instrument with a Record ID field and Form Status field, and (for longitudinal projects) one arm with one event. The user who issued the request is automatically added to the new project with full user privileges and receives a project-level API token, which can immediately be used for subsequent project-level API calls.
+When a project is created via this method, REDCap automatically seeds it with defaults identical to creating a new empty project through the UI: a single data collection instrument with a Record ID field and Form Status field, and (for longitudinal projects) one arm with one event. These defaults are not created when you send an `odm` XML; the XML then defines the instruments, fields, arms and events (see the `odm` parameter below). The user who issued the request is automatically added to the new project and receives a project-level API token, which can immediately be used for subsequent project-level API calls.
+
+The creator gets the same rights as when creating a project in the web interface: Project Design and Setup, User Rights, Data Access Groups, Logging, Reports, Data Quality, Alerts & Notifications, full data entry and full data export on every instrument, API Export and API Import, External Modules and the Mobile App. Not included by default: Lock/Unlock Records, Delete Records, Rename Records, Data Quality resolution and Randomization. Add these in **User Rights** if the creator needs them.
 
 ---
 
@@ -66,7 +69,7 @@ A standardized XML format (Operational Data Model) containing project metadata a
 A system feature that automatically assigns sequential numeric or alphanumeric identifiers to new records. Can be enabled via the `record_autonumbering_enabled` field.
 
 ### Longitudinal Configuration
-A project structure supporting multiple time points (events) and study arms. Requires `is_longitudinal: 1` and can include event and arm definitions.
+A project structure supporting multiple time points (events) and study arms. Set with `is_longitudinal: 1`, or automatically when the `odm` XML defines more than one event.
 
 ---
 
@@ -76,22 +79,24 @@ A project structure supporting multiple time points (events) and study arms. Req
 |---|---|---|
 | `token` | Required | **Super API Token** (64-character admin token, NOT a regular project token) |
 | `content` | Required | Always `'project'` |
-| `format` | Optional | Data format: `'json'` (default), `'xml'`, or `'csv'` |
-| `data` | Required | Project definition: JSON object or XML with project settings and structure |
-| `returnFormat` | Optional | Format for error messages: `csv`, `json`, or `xml`. Defaults to the value of `format` if not specified. Not used when `backgroundProcess=true`. |
-| `odm` | Optional | An XML string in CDISC ODM format containing project metadata (fields, forms, events, arms) and optionally record data. When provided, REDCap imports the XML contents into the newly created project — allowing fields, forms, project attributes, events, arms, and records to all be imported in a single API call. The XML can come from a REDCap Project XML export ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) or any system that exports in CDISC ODM format. |
+| `format` | Optional | Format of `data`: `'xml'` (default), `'json'`, or `'csv'`. Always pass it: JSON sent without `format=json` fails with "The data is not in the specified format." |
+| `data` | Required | The project settings for one project. In JSON, a JSON **array holding one object** (`[{...}]`); in CSV, a header row and one data row; in XML, an `<item>` root element (see Section 4.4). Only one project can be created per call. |
+| `returnFormat` | Optional | Format for error messages: `csv`, `json`, or `xml`. Defaults to the value of `format` if not specified, and to `xml` if neither is sent. |
+| `odm` | Optional | An XML string in CDISC ODM format containing project metadata (fields, forms, events, arms) and optionally record data. When provided, REDCap imports the XML contents into the newly created project — allowing fields, forms, project attributes, events, arms, and records to all be imported in a single API call. The default instrument, Record ID field, arm and event are not created; the XML defines everything. An XML with more than one event makes the project longitudinal automatically, and any records in the file are imported too. The XML can come from a REDCap Project XML export ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)) or any system that exports in CDISC ODM format. |
 
 **Data Field Options (for new project creation):**
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `project_title` | String | Required | Project name (1–255 characters) |
+| `project_title` | String | Required | Project name. HTML tags are removed. |
 | `purpose` | Integer | Required | Project purpose: `0` (Practice/just for fun), `1` (Other), `2` (Research), `3` (Quality Improvement), `4` (Operational Support) |
-| `purpose_other` | String | Optional | Required text description if `purpose` is `1` (Other) |
+| `purpose_other` | String | Optional | Required text description if `purpose` is `1` (Other). Stored only when `purpose` is `1`; ignored for other codes. |
 | `project_notes` | String | Optional | Additional project notes |
 | `is_longitudinal` | Integer | Optional | `0` (classic, default) or `1` (longitudinal) |
 | `surveys_enabled` | Integer | Optional | `0` (disabled, default) or `1` (enabled) |
 | `record_autonumbering_enabled` | Integer | Optional | `0` (disabled) or `1` (enabled, default) |
+
+Attributes not in this table are dropped without an error, so check spelling if a setting does not take effect.
 
 ---
 
@@ -111,7 +116,7 @@ record = {
     'project_notes': 'Some notes about the project'
 }
 
-data = json.dumps(record)
+data = json.dumps([record])  # must be an array holding one object
 
 fields = {
     'token': config['api_super_token'],
@@ -140,8 +145,8 @@ record <- c(
 	project_notes='Some notes about the project'
 )
 
-#data <- toJSON(list(as.list(record)), auto_unbox=TRUE)
-data <- toJSON(as.list(record), auto_unbox=TRUE)
+# must be an array holding one object: [{...}]
+data <- toJSON(list(as.list(record)), auto_unbox=TRUE)
 
 result <- postForm(
     api_url,
@@ -181,26 +186,24 @@ $record = array(
 	'project_notes'  => 'Some notes about the project',
 );
 
-$data = json_encode($record);
+$data = json_encode(array($record)); // must be an array holding one object
 
 /* xml
 $data = <<<EOF
 <?xml version="1.0" encoding="UTF-8" ?>
-<items>
-<project>
+<item>
 <project_title><![CDATA[New Project via API]]></project_title>
 <purpose>0</purpose>
 <purpose_other></purpose_other>
 <project_notes><![CDATA[Some notes about the project]]></project_notes>
-</project>
-</items>
+</item>
 EOF;
 */
 
 /* csv
 $data = <<<EOF
 project_title,purpose,purpose_other,project_notes
-"Project ABC","",0,"Some notes about the project"
+"Project ABC",0,"","Some notes about the project"
 EOF;
 */
 
@@ -229,6 +232,8 @@ curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
 $output = curl_exec($ch);
 print $output;
 ```
+
+> **Note:** For XML, the project settings go directly inside an `<item>` root element, as above. The XML wrapper this method accepts differs from other import methods (an `<items><project>` wrapper is rejected), so JSON is the safest format.
 
 > **Note:** In PHP examples, `CURLOPT_SSL_VERIFYPEER` is `FALSE` for compatibility. Set to `TRUE` in production. See [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) Section 3.5.
 
@@ -299,13 +304,19 @@ A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6
 
 Read the response body as a string and trim whitespace rather than parsing it as JSON — the response is labelled `Content-Type: application/json` but contains only the token.
 
-On error, you receive an error message:
+On error, you receive an error message in `returnFormat` (or `format` if `returnFormat` is not sent; `xml` if neither is sent). For example, a request missing the title or purpose returns:
 
 ```json
 {
-  "error": "Project title is required"
+  "error": "One or more components are missing in your input data. The following attributes are required: project_title, purpose. Also, 'purpose' must have a value of 0, 1, 2, 3, or 4."
 }
 ```
+
+Other errors to expect:
+- **HTTP 403** if the token is not a 64-character Super API Token (for example, a 32-character project token).
+- **"The data is not in the specified format."** (HTTP 400) if `data` does not match `format`, including a JSON object sent without the surrounding array, or JSON sent without `format=json`.
+- An error if `data` holds more than one project (for example, more than one CSV data row). Create one project per call.
+- An error if the `odm` XML is empty or not valid project XML.
 
 ---
 
@@ -330,15 +341,17 @@ On error, you receive an error message:
 **A:** No. [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md) returns the link for a specific record, not the public link. Copy the public link from **Survey Distribution Tools** in the project.
 
 **Q: Can I create a longitudinal project with arms and events via API?**
-**A:** Yes, if you include a complete XML export with arm and event definitions. Use `is_longitudinal: 1` and provide the full XML structure from [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md).
+**A:** Yes, two ways. (1) Create the project with `is_longitudinal: 1`, then define arms and events with Import Arms and Import Events (use `override=1` to replace the default arm and event; see Section 7). (2) Pass a project XML with the arm and event definitions in `odm`, for example from [RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md); an XML with more than one event makes the project longitudinal automatically.
 
 ---
 
 # 7. Common Mistakes & Gotchas
 
-**Super token confusion:** Many developers attempt this with regular project tokens and receive authentication errors. Verify you are using a Super API Token, not a project-specific token.
+**Super token confusion:** Many developers attempt this with regular project tokens and receive an HTTP 403 error. Verify you are using a Super API Token, not a project-specific token.
 
 **Missing purpose field:** The `purpose` field is required. Requests without it will fail. Always include `purpose` as an integer (0–4).
+
+**Sending a JSON object instead of an array, or leaving out `format`:** `data` must be a JSON array holding one object (`[{...}]`), and `format=json` must be sent because the default is `xml`. Either mistake returns HTTP 400 "The data is not in the specified format."
 
 **Purpose `1` without `purpose_other` text:** `1` means *Other*, not a generic default. Sending `purpose: 1` with an empty `purpose_other` fails with HTTP 400 ("You must provide some text for 'purpose_other'..."). Use another code, or describe the purpose in `purpose_other`.
 
@@ -346,7 +359,7 @@ On error, you receive an error message:
 
 **Renaming the form after creating it with survey settings:** Survey settings are tied to the form name. If the data dictionary you import afterwards uses a different form name, the new instrument is not a survey. Keep the form name from the XML.
 
-**Project title length:** a 307-character title was accepted and stored in full on 17.5.6, so the API doesn't enforce a 255-character limit. Keep titles short anyway — they appear in menus, emails and file names.
+**Project title length:** a 307-character title was accepted and stored in full on 17.5.6, so the API doesn't enforce a length limit. Keep titles short anyway — they appear in menus, emails and file names.
 
 **Importing complete XML vs. minimal fields:** To clone a project, provide complete XML from Export Project XML ([RC-API-36 — Export Project XML API](RC-API-36_Export-Project-XML.md)). To create a simple project quickly, provide only basic fields like `project_title` and `purpose`.
 

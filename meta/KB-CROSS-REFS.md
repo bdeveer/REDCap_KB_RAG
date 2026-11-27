@@ -1706,6 +1706,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-04 — Delete Records API
 - RC-API-05 — Rename Record API
 - RC-API-13 — Import File API
+- RC-API-40 — Export Survey Link API
 - RC-API-50 — Generate Next Record Name API
 - RC-API-52 — Randomize Record API
 - RC-DE-01 — Record Creation & the Record Home Page
@@ -2406,6 +2407,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-30 — Delete DAGs API
 - RC-API-31 — Export User-DAG Assignments API
 - RC-API-33 — Switch DAG API
+- RC-API-56 — Import User-Role Assignments API
 - RC-DAG-01 — Data Access Groups
 - RC-DE-09 — Data Entry with Data Access Groups
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
@@ -2560,9 +2562,10 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-41 — Export Survey Queue Link API
 - RC-API-42 — Export Survey Return Code API
+- RC-API-03 — Import Records API
+- RC-SURV-04 — Survey Link Types & Access Methods
 - RC-API-43 — Export Survey Participants API
 - RC-SURV-01 — Surveys – Basics
-- RC-SURV-04 — Survey Link Types & Access Methods
 
 **Inbound links (referenced by):**
 - RC-API-37 — Import Project (Create Project) API
@@ -2682,6 +2685,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-DAG-01 — Data Access Groups
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-FILE-01 — File Repository
+- RC-API-47 — Export a File (File Repository) API
+- RC-API-49 — Delete a File (File Repository) API
 - RC-API-25 — Export User Roles API
 - RC-API-28 — Export DAGs API
 
@@ -2708,6 +2713,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-API-15 — Export Instruments PDF API
+- RC-API-46 — List Files and Folders (File Repository) API
 - RC-API-48 — Import a File (File Repository) API
 - RC-API-49 — Delete a File (File Repository) API
 - RC-FILE-01 — File Repository
@@ -2725,6 +2731,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-47 — Export a File (File Repository) API
 - RC-API-13 — Import File API
 - RC-USER-03 — User Rights: Configuring User Privileges
+- RC-API-49 — Delete a File (File Repository) API
 - RC-API-12 — Export File API
 - RC-API-14 — Delete File API
 
@@ -2750,6 +2757,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-13 — Import File API
 
 **Inbound links (referenced by):**
+- RC-API-46 — List Files and Folders (File Repository) API
+- RC-API-48 — Import a File (File Repository) API
 - RC-FILE-01 — File Repository
 
 ---
@@ -2872,6 +2881,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-25 — Export User Roles API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-API-23 — Import Users API
+- RC-API-32 — Import User-DAG Assignments API
 - RC-API-26 — Import User Roles API
 - RC-DAG-01 — Data Access Groups
 

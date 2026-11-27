@@ -5,13 +5,14 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.5.6 (Standard) — §2, §3, §5, §7 (admin token) live-tested
-  via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7
-  (LTS) changelog
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — permissions,
+  parameters, filters, time boundaries and response columns checked against source
+  code; §2, §3, §5, §7 (admin token) live-tested via the API on a sandbox project
+  on v17.5.6 (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -37,7 +38,7 @@ The Export Logging API retrieves audit trail entries from your project's activit
 
 Logging is essential for HIPAA compliance, data governance, and understanding what happened in your project at a specific time.
 
-> **Permissions required:** The API token user must have both **API Export** privileges *and* **Logging** privileges in the project. Having only one of the two will result in an error.
+> **Permissions required:** The API token user must have both **API Export** privileges *and* **Logging** privileges in the project. Having only one of the two will result in an error. In addition, the user's data export right must not be **No Access** (otherwise the call returns a 403 error), and users assigned as Double Data Entry person 1 or 2 cannot use this method.
 
 ---
 
@@ -68,12 +69,12 @@ Optional parameters (username, record, DAG, date range) that restrict which log 
 | `content` | Required | Always `'log'` |
 | `format` | Optional | Response format: `'csv'`, `'json'`, `'xml'` (default: `'xml'`) |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, `'xml'`. Defaults to match `format` if omitted. Not applicable when using a background process. |
-| `logtype` | Optional | Filter by event type: `'export'`, `'manage'`, `'user'`, `'record'`, `'record_add'`, `'record_edit'`, `'record_delete'`, `'lock_record'`, `'page_view'` (empty string = all types). Note: `'record'` is an API-only aggregate that returns all record-related events (add, edit, delete) and has no corresponding UI dropdown option. |
+| `logtype` | Optional | Filter by event type: `'export'`, `'manage'`, `'user'`, `'record'`, `'record_add'`, `'record_edit'`, `'record_delete'`, `'lock_record'`, `'page_view'` (empty string = all types except page views; page views are returned only with `logtype=page_view`). Note: `'record'` returns all record-related events (add, edit, delete); it is the equivalent of the **Record created-updated-deleted** option in the Logging page filter. |
 | `user` | Optional | Filter by username (exact match). If not specified, returns events for all users. |
-| `record` | Optional | Filter by record name (exact match). It matches the log entry's key, so non-record entries with the same key can appear too (e.g. `record=2` also returns File Repository actions on folder ID 2). Combine with `logtype=record` to get record events only. If not specified, returns events for all records. |
-| `dag` | Optional | Filter by DAG `group_id`. If not specified, returns events for all DAGs. |
-| `beginTime` | Optional | Return only events logged *after* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, no begin cutoff is applied. |
-| `endTime` | Optional | Return only events logged *before* this date/time. Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, uses current server time. |
+| `record` | Optional | Filter by record name (exact match). It matches the log entry's key, so non-record entries with the same key can appear too (e.g. `record=2` also returns File Repository actions on folder ID 2). Combine with `logtype=record` to get record events only. Ignored when `logtype` is `export`, `manage`, `user`, `page_view` or `lock_record`. If not specified, returns events for all records. |
+| `dag` | Optional | Filter by DAG `group_id`. Only works for users not assigned to a DAG: a user assigned to a DAG always gets only their own DAG's entries, whatever `dag` says. An invalid value is ignored. Like `record`, ignored when `logtype` is `export`, `manage`, `user`, `page_view` or `lock_record`. If not specified, returns events for all DAGs (or the user's own DAG). |
+| `beginTime` | Optional | Return only events logged at or after this date/time (inclusive from the start of that minute, e.g. `17:00` includes `17:00:00`). Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, no begin cutoff is applied. |
+| `endTime` | Optional | Return only events logged up to the start of this minute: `17:37` includes `17:37:00` but not `17:37:01`–`17:37:59`. To include a whole minute, use the next minute (e.g. `17:38`). Format: `YYYY-MM-DD HH:MM` (e.g., `2017-01-01 17:00`). Uses server time. If not specified, uses current server time. |
 
 ---
 
@@ -178,7 +179,9 @@ print $output;
 
 # 5. Response
 
-The API returns an array of log entries, newest first. Each entry has five fields: `timestamp`, `username`, `action`, `details` and `record` (blank for entries that don't concern a record). For record changes, `action` names the change, the source and the record, and `details` holds the changed values; other actions are logged as `Manage/Design` with a description in `details`.
+The API returns an array of log entries, newest first. Each entry has five fields: `timestamp`, `username`, `action`, `details` and `record` (blank for entries that don't concern a record). For record changes, `action` names the change, the source and the record, and `details` holds the changed values; other actions are logged as `Manage/Design` with a description in `details`. When the project requires a reason for changes, each entry has an extra `reason` column.
+
+Some administrator-only entries (for example an administrator using **View project as user**) are hidden from users who are not REDCap administrators, so an admin token and a user token can return different results for the same filters.
 
 ```json
 [
@@ -204,10 +207,10 @@ The API returns an array of log entries, newest first. Each entry has five field
 # 6. Common Questions
 
 **Q: What is the time format for beginTime and endTime?**
-**A:** Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time.
+**A:** Use `YYYY-MM-DD HH:MM` format (e.g., `2020-10-06 17:37`). All timestamps are in the REDCap server's local time. Omit `endTime` to include all entries up to the current server time. Both values use the start of the minute; see the next question.
 
 **Q: Can I export logs for a specific date range?**
-**A:** Yes. Set both `beginTime` and `endTime` to define the range. Timestamp is inclusive on both boundaries.
+**A:** Yes. Set both `beginTime` and `endTime` to define the range. Both boundaries are inclusive to the start of the minute: `endTime=2020-10-06 17:37` includes entries at 17:37:00 but excludes 17:37:01–17:37:59. To include all of a minute, set `endTime` to the next minute (`17:38`).
 
 **Q: Which logtypes are most useful for compliance audits?**
 **A:** `'export'` (data exports), `'record_edit'` (field modifications), `'record_delete'` (deleted records), and `'user'` (user access logs) are typically most relevant for compliance tracking.
@@ -222,7 +225,7 @@ The API returns an array of log entries, newest first. Each entry has five field
 
 # 7. Common Mistakes & Gotchas
 
-**Timestamp format errors:** The correct format for `beginTime` and `endTime` is `YYYY-MM-DD HH:MM` (e.g., `2020-10-06 17:37`). Using other formats such as `M/D/YYYY HH:MM` will cause the filter to fail silently and return unfiltered results.
+**Timestamp format errors:** The correct format for `beginTime` and `endTime` is `YYYY-MM-DD HH:MM` (e.g., `2020-10-06 17:37`). Other formats such as `M/D/YYYY HH:MM` fail silently: a malformed `beginTime` effectively applies no lower limit, and a malformed `endTime` returns no entries at all. Always use `YYYY-MM-DD HH:MM`.
 
 **Empty filter strings vs. omitted parameters:** An empty string (`''`) for logtype, user, or record means "no filter on that field." Omitting the parameter entirely has the same effect, but always be explicit.
 
