@@ -5,11 +5,11 @@
 | **Article ID** | [RC-CC-24 — Control Center: Edit Project Settings](RC-CC-24_Control-Center-Edit-Project-Settings.md) |
 |---|---|
 | **Domain** | Control Center (Admin) |
-| **Applies To** | REDCap administrators only |
+| **Applies To** | REDCap administrators (on 17.x with REDCap+, also Project Administrator Group admins for their group's projects) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields for one project and the install values in §9; v17.3.7 (LTS) — changelog review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the File Repository upload override's absence |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Edit Project Settings behaviour checked against source code; earlier live checks (v17.5.6 page fields and install values, v16.0.59 File Repository override) kept; pages not re-captured |
 | **Prerequisite** | [RC-CC-21 — Control Center: Overview & Navigation](RC-CC-21_Control-Center-Overview.md) |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-08 — Control Center: Home Page, Templates & Project Defaults](RC-CC-08_Control-Center-Home-Page-Templates-and-Defaults.md); [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-PROJ-04 — Project Setup: Additional Customizations](RC-PROJ-04_Project-Setup-Additional-Customizations.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup](RC-CDIS-01_Clinical-Data-Interoperability-Services-Overview-and-Setup.md)|
@@ -19,7 +19,9 @@
 
 ## 1. Overview
 
-The **Edit Project Settings** page (`ControlCenter/edit_project.php`) is an administrator-only tool that allows REDCap admins to view and override the governing settings for any specific project on the instance. It is accessed from the **Projects** section of the Control Center left menu.
+The **Edit Project Settings** page is an administrator tool that allows REDCap admins to view and override the governing settings for any specific project on the instance. It is accessed from the **Projects** section of the Control Center left menu.
+
+> **Version caveat (17.x with REDCap+):** Admins of a Project Administrator Group can also open this page for their group's projects — see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md). On 17.6 they cannot change the project's AI configuration here (on 17.3 LTS they can). On 16 LTS the page is for REDCap administrators only. If you rely on PAGs, decide whether group admins should hold these overrides and brief them accordingly.
 
 This page is distinct from two similar-sounding areas:
 
@@ -43,6 +45,8 @@ Edit Project Settings exposes a superset of those settings, including ones only 
 **Date Shifting** — A de-identification export option that shifts all date values for a record by a random number of days within a defined range. The range is configured on this page.
 
 **Rapid Retrieval** — An internal REDCap caching mechanism that stores certain pages in temporary cache to accelerate load time when no data or metadata has changed recently. It is automated per project, with no setting on this page. The system-level settings are on Modules/Services Configuration ([RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md)), and each project has a **Clear all record & page caches** button on Project Setup → Other Functionality.
+
+> **Version caveat (16 LTS vs 17.x):** On 16 LTS the **Clear all record & page caches** button is shown to REDCap administrators only; on 17.x anyone with Project Design & Setup rights sees it. On 16 LTS, project users who need caches cleared must ask an administrator.
 
 ---
 
@@ -92,7 +96,7 @@ When enabled, users deleting a record are prompted to also delete all logged dat
 
 ### 5.2 Auto-Delete Data Export Files in the File Repository
 
-Accepts a number of days (1–999). When set to a value greater than 0, a cron job runs every 12 hours and deletes Data Export Files in the File Repository that are older than the specified number of days.
+Accepts a number of days (0–999; the page shows a warning when you enter a value). When set to a value greater than 0, a cron job runs every 12 hours and deletes Data Export Files in the File Repository that are older than the specified number of days.
 
 - **Scope:** Only files under the **Data Export Files** tab of the File Repository. No other file types are affected.
 - **To disable:** Set the value to 0 or leave blank.
@@ -118,6 +122,8 @@ A text block displayed at the bottom of all survey pages in this specific projec
 The section contains a single **Select AI Configuration** drop-down. It offers the AI configurations an administrator has already defined on the **AI Configuration Settings** page — see [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md). REDCap's wording on the page: *if one or more AI Configuration settings are added globally, then one may select one of them at project level so that the respective AI resource/endpoint values will be utilized for this project.*
 
 Selecting a configuration here applies that configuration's service and credentials to this project. The project can also be set to use no AI at all, overriding a system-wide default. On 17.5.6 the section also shows the selected configuration's details and which AI features it offers.
+
+> **Version caveat (17.6+):** The configuration details include an **AI Chatbot** line only on 17.6. On 17.3 LTS and 17.5, check chatbot availability on the AI Configuration Settings page instead.
 
 > **Note:** The drop-down only lists configurations that already exist. An empty drop-down means none have been created yet on the AI Configuration Settings page — it does not mean AI is unavailable.
 
@@ -152,6 +158,8 @@ Software packages such as LM Studio, LocalAI, GPT4All, and Ollama allow institut
 | API Key | Password field; may be left blank for local deployments |
 | API Model Version/Name | For Azure: date string (e.g., `2024-02-01`); for others: model identifier (e.g., `mistral-tiny`, `hermes-3-llama-3.2-3b`) |
 
+> **Note (16.0.x):** If the system-level AI service is **Google Gemini**, the page shows Gemini fields instead of the OpenAI ones: an API key, a model name and an API version. Fill those in for a Gemini project override.
+
 Project-level values **overwrite** any system-level AI configuration for this project. Administrators who wanted AI enabled on only a few projects were advised to leave the system-level fields blank and populate these project-level fields instead — an approach superseded by the scope settings described in [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md).
 
 ---
@@ -172,7 +180,7 @@ Only one person can be designated as Person #1 or #2 at a time.
 
 ### 7.3 Date Shifting De-Identification: Date Shift Range
 
-Sets the maximum number of days used when date shifting is applied during data export. The actual shift per record is a random number between 0 and this value.
+Sets the maximum number of days used when date shifting is applied during data export. The shift for each record is a number between 0 and this value, derived from the record and the project, so the same record gets the same shift on every export.
 
 Date shifting is applied when a user selects the date-shifting de-identification option on the Data Export, Reports & Stats page.
 
@@ -201,6 +209,20 @@ Applies only when the External Storage server ("The Vault") is enabled for the e
 When enabled (default): any PDF Snapshot being saved to the File Repository that contains at least one completed e-Consent response is *also* stored on the External Storage server — even if the snapshot is not itself e-Consent governed.
 
 When disabled: only e-Consent governed PDF Snapshots are sent to the Vault for this project.
+
+### 7.9 Two-Step Login Settings
+
+When two-step login is enabled for the instance ([RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md)), the page offers three project-level settings:
+
+| Setting | What it does |
+|---|---|
+| **Exempt the project from 2-step login?** | If Yes, users are not shown the 2-step login page when entering this project. Use for projects where the extra step is not needed. |
+| **Always force 2-step login in this project for EVERY login session?** | If Yes, a user who has not done 2-step login during the current session (because a trusted device skipped it) must do it before entering the project. Use for very sensitive data. Only useful when the system's authentication interval is not 0. |
+| **E-sign once per session** | For users who e-sign with their two-factor PIN instead of a password: after one e-signature, they are not asked again during the same session. |
+
+The exempt and always-force settings cannot both be Yes; choose one.
+
+> **Version caveat (16 LTS vs 17.x):** On 16 LTS the e-sign once-per-session option refers only to the 6-digit PIN; on 17.x it covers a PIN or a Duo push notification. Match local instructions to the wording on your version.
 
 ---
 
@@ -254,7 +276,7 @@ Default Project Settings (Control Center → System Configuration) set the syste
 Set Online Status to OFFLINE on this page. Normal users are denied access immediately. The project and all its data remain intact. Admins can still access the project. Change back to ONLINE when ready to restore access.
 
 **Q: Can a project admin (non-administrator) access Edit Project Settings?**
-No. This page is accessible only to REDCap system administrators. Project administrators (users with Design & Setup rights in a project) can access the Additional Customizations section of their project's Project Setup page, but they cannot reach Edit Project Settings in the Control Center.
+No. This page is for REDCap system administrators. Project administrators (users with Design & Setup rights in a project) can access the Additional Customizations section of their project's Project Setup page, but they cannot reach Edit Project Settings in the Control Center. The exception is REDCap+ on 17.x: Project Administrator Group admins can open this page for their group's projects ([RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md)); on 17.6 they cannot change the AI configuration there, on 17.3 LTS they can. This does not apply on 16 LTS.
 
 **Q: If I disable auto-calculations for a project, what happens to existing calculated field values?**
 Existing values remain as-is. Going forward, calculations will only update when a user manually saves the data entry form containing the field. Cross-form or cross-event calculations will not update via API imports or the Data Import Tool. Data Quality Rule H can be used to find and fix stale calculated values.
@@ -269,7 +291,7 @@ Yes. The project-level AI configuration applies to all AI-powered features withi
 Yes. The two erasure settings are independent of each other. You can enable deletion of logging upon record deletion, enable auto-deletion of export files, or enable both — they operate separately.
 
 **Q: How does the Date Shift Range interact with the Data Export Tool?**
-When a user exports data from the Data Exports, Reports & Stats page and selects the date-shifting de-identification option, REDCap randomly shifts each record's date values by 0 to N days, where N is the Date Shift Range configured here (default: 364 days). Each record gets a different random shift, which is applied consistently to all date fields in that record during that export.
+When a user exports data from the Data Exports, Reports & Stats page and selects the date-shifting de-identification option, REDCap randomly shifts each record's date values by 0 to N days, where N is the Date Shift Range configured here (default: 364 days). Each record gets its own shift, applied consistently to all date fields in that record. The shift is derived from the record and the project, so the same record is shifted by the same amount on every export, not just within one export.
 
 ---
 

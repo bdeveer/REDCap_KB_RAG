@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: the menu structure and privilege list; v17.3.7 (LTS) — changelog review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the menu |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Control Center menu and access behaviour checked against source code; earlier live checks (v17.5.6 menu and privileges, v16.0.59 menu) kept; pages not re-captured |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md); [RC-CC-25 — Control Center: Access Control Groups](RC-CC-25_Access-Control-Groups.md)|
@@ -19,7 +19,9 @@
 
 ## 1. Overview
 
-The Control Center is the administrative hub of a REDCap instance. It is only accessible to REDCap **administrators** (also called super users). Standard project users and project-level admins do not have access to the Control Center. Administrators reach it via the **Control Center** link in the left-hand navigation menu, which is only visible to accounts with administrator privileges.
+The Control Center is the administrative hub of a REDCap instance. It is only accessible to REDCap **administrators** (also called super users). Ordinary project users, including those with User Rights privileges, can't open the Control Center. Administrators reach it via the **Control Center** link in the left-hand navigation menu, or the **Control Center** tab in the top navigation on pages outside a project; both are only visible to accounts with administrator privileges.
+
+> **Version caveat (17.x with REDCap+):** Project Administrator Group admins see a reduced Control Center (To-Do List, Browse Projects, Edit Project Settings, API Tokens), limited to their group's projects. If you use Project Administrator Groups, tell those admins what they will and won't see. 16.0 LTS has no Project Administrator Groups. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
 
 From the Control Center, an administrator can configure system-wide settings, manage users, enable or disable features, monitor activity, and control how REDCap behaves across all projects on the instance.
 
@@ -31,7 +33,18 @@ From the Control Center, an administrator can configure system-wide settings, ma
 
 The Control Center is organized into several top-level sections, each accessible from a sidebar menu. The sections and their primary purposes are:
 
-> **Version caveat (16.0.59 LTS):** The menu has no **AI Configuration Settings** (AI is on Modules/Services Configuration), **Project Migration Dashboard**, **Project Administrator Groups** or **REDCap SHARE**. Three items also have older labels: **REDCap Plus** (REDCap+), **Language File Creator/Updater** (Language File Updater) and **Fix Legacy Image/File URL** (Fix Legacy Image/File URLs).
+The 17.3 LTS menu matches 17.x Standard.
+
+> **Version caveat (16.0 LTS):** The menu has no **AI Configuration Settings** (AI is on Modules/Services Configuration), **Project Migration Dashboard**, **Project Administrator Groups** or **REDCap SHARE**. Three items also have older labels: **REDCap Plus** (REDCap+), **Language File Creator/Updater** (Language File Updater) and **Fix Legacy Image/File URL** (Fix Legacy Image/File URLs). On 16.0 LTS, look for the older labels when following this article.
+
+Not every administrator sees every item. Most menu items depend on the viewer's administrator privileges, so admins with partial privileges see a shorter menu:
+
+- **Access to All Projects and Data with Maximum User Privileges** — Edit Project Settings, Link Lookup, Fix Legacy Image/File URLs, API Tokens, Database Query Tool and Recent Errors
+- **Manage User Accounts** — the user-management pages in the Users section
+- **Access to Control Center Dashboards** — the Dashboards & Activity pages
+- Without **Modify System Configuration Pages**, the System Configuration pages are marked read-only
+
+Some items also depend on the instance's setup; these are noted in the sections below.
 
 ### Control Center Home
 The landing page of the Control Center, **Notifications & Reporting**, displays server information, system notifications and stats reporting. No configurable settings live here. The **To-Do List** and **REDCap+** are separate pages in this section; **Recent Errors** is under Dashboards & Activity. See **[RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md)** for full details on the Notifications & Reporting dashboard, and **[RC-CC-09 — Control Center: To-Do List](RC-CC-09_To-Do-List.md)** for the To-Do List.
@@ -40,7 +53,8 @@ The landing page of the Control Center, **Notifications & Reporting**, displays 
 
 ### Administrator Resources
 Links to REDCap community resources, training materials, API documentation, and plugin/hook documentation. Also includes:
-- **Language File Updater** — for managing system language files. On 17.5.6 it also has **Validate a Language File**, which checks an uploaded or pasted `.ini` file's syntax in the browser. 16.0.59 LTS doesn't have the validator
+- **REDCap Release Timelines & Info** — a link to release information (17.x only; not on 16.0 LTS)
+- **Language File Updater** — for managing system language files. On 17.3 and later it also has **Validate a Language File**, which checks an uploaded or pasted `.ini` file's syntax in the browser. 16.0 LTS doesn't have the validator
 - **URL Shortener** — a utility for generating shortened URLs from any link in the system (see **[RC-CC-10 — Control Center: URL Shortener](RC-CC-10_URL-Shortener.md)**)
 
 ### Dashboards & Activity
@@ -61,12 +75,12 @@ Tools for looking up and managing individual projects:
 - **Edit Project Settings** — modify settings for a specific project directly; individual project defaults are configured in other sections of the Control Center
 - **Link Lookup** — reverse-lookup which project and record a given REDCap link belongs to. Rebranded from "Survey Link Lookup" in 15.9.0 and expanded beyond survey links to also search **survey queue links, public report links and public project dashboard links**
 - **Fix Legacy Image/File URLs** — regenerates a working URL from a broken legacy link (see [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md))
-- **Project Migration Dashboard** — REDCap+ label; monitors migrations into this server (see [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md))
+- **Project Migration Dashboard** — REDCap+ label; monitors migrations into this server. Shown only when the project migration tool is enabled (see [RC-PLUS-02 — REDCap+: Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md))
 
 ### Users
 Administrative tools for user account management. See **[RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)** for full details. Includes:
 - Browse Users
-- Add Users (Table-based Only)
+- Add Users (Table-based Only) — shown only when the instance uses table-based authentication (or none)
 - User Allowlist
 - Email Users
 - API Tokens
@@ -74,6 +88,8 @@ Administrative tools for user account management. See **[RC-CC-07 — Control Ce
 - Administrator Privileges
 - Project Administrator Groups (REDCap+; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md))
 - [Access Control Groups](RC-CC-25_Access-Control-Groups.md)
+
+> **Version caveat (17.x vs 16.0 LTS):** On 17.x the **Access Control Groups** link appears only to admins with **Access to All Projects and Data with Maximum User Privileges**, **Manage User Accounts** or **Set Administrator Privileges**. On 16.0 LTS other admins see it with a read-only badge. If an admin can't find the page, check their privileges on **Administrator Privileges**.
 
 ### Miscellaneous Modules
 Configuration for optional or institution-specific modules:
@@ -90,7 +106,7 @@ The largest section of the Control Center, containing all system-wide behavioral
 | Sub-page | KB Article | Summary |
 | --- | --- |---|
 | Configuration Check | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Diagnostic tests for the installation |
-| MyCap Configuration Check | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Diagnostic tests for MyCap |
+| MyCap Configuration Check | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Diagnostic tests for MyCap; shown only when MyCap is enabled |
 | General Configuration | [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md) | Server settings, email config, system-wide text and branding |
 | Security & Authentication | [RC-CC-03 — Control Center: Security & Authentication](RC-CC-03_Control-Center-Security-and-Authentication.md) | Authentication method, 2FA, login rules, security settings |
 | User Settings | [RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md) | Project creation permissions, user defaults, public report access |
@@ -111,9 +127,9 @@ A separate section of the menu with two pages: **Manage** (enable, configure and
 
 ## 3. Who Can Access the Control Center?
 
-The Control Center is visible **only to REDCap administrators** (super users). On the left navigation, regular users will not see the Control Center link. Administrator accounts are managed under **Users → Administrator Privileges** in the Control Center itself (see [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)).
+The Control Center is visible **only to REDCap administrators** (super users). Regular users, including project users with User Rights privileges, will not see the Control Center link or tab. Administrator accounts are managed under **Users → Administrator Privileges** in the Control Center itself (see [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)).
 
-Administrator access is split into seven separate privileges, and a user can hold any mix of them. See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
+Administrator access is split into seven separate privileges, and a user can hold any mix of them. Admins with only some privileges see a shorter menu (see §2). See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
 
 ---
 
@@ -123,13 +139,15 @@ Administrator access is split into seven separate privileges, and a user can hol
 Most Control Center changes take effect immediately. For example, disabling a feature, enabling a module, or changing email settings updates the behavior system-wide right away. However, some changes may require users to log out and log back in to see the effect, or may only apply to new data created after the change. Always document when you make changes so you can explain timing to affected users.
 
 **Q: Can I restrict certain administrators to have limited Control Center access (e.g., only certain sections)?**
-Yes. The **Administrator Privileges** page has seven separate privileges, such as Manage user accounts and Modify system configuration pages, granted per user. Project-level admins never have Control Center access.
+Yes. The **Administrator Privileges** page has seven separate privileges, such as Manage user accounts and Modify system configuration pages, granted per user. Each admin sees only the menu items their privileges allow (see §2).
 
 **Q: What happens if two administrators make changes to the Control Center settings at the same time?**
 REDCap typically handles concurrent changes gracefully, but if two administrators save contradictory settings simultaneously, the last save will overwrite the previous one. To avoid confusion, coordinate major changes with your administration team or use a change management log to document who is making what changes and when.
 
 **Q: Can project users see the Control Center?**
-No. Standard project users and project-level admins do not have access to the Control Center. The Control Center link only appears in the left-hand menu for accounts with super-user administrator privileges. Project-level admins can configure their own project settings, but they cannot access system-wide Control Center functions.
+No. Ordinary project users, including those with User Rights privileges, can't open the Control Center. The Control Center link only appears for accounts with administrator privileges. Project users can configure their own project settings, but they cannot access system-wide Control Center functions.
+
+> **Version caveat (17.x with REDCap+):** Project Administrator Group admins see a reduced Control Center (To-Do List, Browse Projects, Edit Project Settings, API Tokens), limited to their group's projects. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md).
 
 **Q: How do I know which Control Center changes are safe to make on a live (production) instance?**
 Many Control Center changes are low-risk (e.g., updating contact information, adding custom links). However, some changes are disruptive (e.g., disabling a feature used by active projects, changing authentication settings). Review the documentation for each setting, test changes in a development instance first if possible, and communicate planned changes to relevant project managers before implementing on production.

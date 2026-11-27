@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page tabs and ACG table columns; the feature was off, so enforcement was not exercised; v17.3.7 (LTS) — changelog review only |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Access Control Group behaviour checked against source code; earlier live check (v17.5.6) of page tabs and table columns kept; pages not re-captured |
 | **Prerequisite** | REDCap administrator access; familiarity with REDCap user rights |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-02 — User Rights: Adding Users & Managing Roles](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -33,13 +33,22 @@ Key characteristics:
 | --- | --- |
 | Defined at | System level (Control Center only) |
 | Applied to | All projects system-wide when enabled |
-| Enforcement points | When adding a user to a project; when modifying user privileges in a project |
+| Enforcement points | When adding a user to a project; when modifying user privileges in a project (including User Rights CSV and API imports); when a project is created, copied or built from a template; when a new instrument is added |
 | Feature status | Optional — can be enabled or disabled at any time |
-| Scope | Every user on the instance receives an ACG assignment when the feature is enabled |
+| Scope | Users who don't yet have an assignment, including new accounts, are placed into the Default ACG |
 
-The ACG page is located at `ControlCenter/access_control_groups.php`.
+The ACG page is in the Control Center left-hand menu under **Users → Access Control Groups**.
+
+**Who can manage ACGs:** administrators with any of the **Access to all projects and data**, **Manage user accounts** or **Admin rights** privileges.
 
 > **Note:** Enabling or disabling ACGs does not retroactively modify any existing user rights records in projects. The ceiling is enforced only at the point of the next privilege assignment or modification.
+
+While ACGs are enabled, REDCap also applies the ceiling automatically in two places where no one is choosing rights by hand:
+
+- **New projects.** When a project is created, copied or created from a template, every user's rights in the new project are cut back to what their ACG allows.
+- **New instruments.** When an instrument is added to a project, the default instrument-level rights given to existing users are reduced so they fit within each user's ACG.
+
+> **Note:** Users who do not have a REDCap account record (for example, externally authenticated usernames that have never logged in) cannot be added to projects while ACGs are enabled. Ask them to log in once first, or create the account, then add them.
 
 > **Critical — if you use the "Security Access Groups" External Module, read this before upgrading.** Access Control Groups is the productised form of Andrew Poppe's *Security Access Groups* module, introduced in **16.0.0**. Upgrading **does not disable the module and does not migrate its settings**. An instance that had the module enabled ends up running both systems side by side, each with its own configuration, each enforcing a ceiling on user rights, and neither aware of the other. Decide which implementation to keep and disable the other deliberately. See [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md) §7a for the other core features absorbed from community modules.
 
@@ -49,18 +58,22 @@ The ACG page is located at `ControlCenter/access_control_groups.php`.
 
 The ACG feature is toggled via the **ACG enabled** toggle at the top right of the page. The feature is off by default and must be explicitly turned on by an administrator.
 
+While the feature is off, the page is locked: you **cannot create ACGs or assign users to them before enabling**. Setup happens after the toggle is switched on.
+
 ### Enabling ACGs for the First Time
 
 Before enabling, read the warning carefully. When ACGs are first turned on:
 
-- **Every existing user is immediately assigned to the Default ACG.** The built-in default is the **"No Rights"** group, which has no rights (or minimal rights) across all privilege categories.
-- If you have not yet created a custom Default ACG, User Rights managers in every project will be unable to add users or modify user privileges until you have created ACGs and assigned users to them. This can cause an immediate operational disruption if done without preparation.
+- **Existing users go into the Default ACG immediately** — REDCap's own enable warning says so. The built-in default is the **"No Rights"** group, which has no rights (or minimal rights) across all privilege categories.
+- Until you have created your ACGs and assigned users to them, User Rights managers will be unable to grant those users anything beyond the Default ACG's ceiling. This can cause operational disruption if you leave a gap between enabling and setup.
 
-> **Recommended sequence:** Create your ACGs first → assign users to them via CSV import → then enable the feature.
+> **Recommended sequence:** Enable ACGs at a quiet time (outside working hours) → right away create your groups → mark one as the Default → bulk-assign users with the **Upload user assignments (CSV)** option. Plan the groups and prepare the assignment CSV in advance so the gap is as short as possible.
+
+If you later disable ACGs, your saved groups and user assignments stay in place and are used again when you re-enable.
 
 > **Version caveat — the first weeks of ACGs were rough (16.0.0 to 16.1.8).** Two blocking defects shipped with or shortly after the feature: with ACGs enabled, **non-admin users could not access any project at all** — every page failed with a fatal PHP error (fixed 16.1.9 Standard / 16.0.20 LTS) — and **uploading a Data Dictionary** with ACGs enabled could fail fatally (fixed 17.0.2). Several further fixes followed for report loading, compliance evaluation and CSV import. If you are enabling ACGs, do it on a current version rather than an older one that happens to include the feature.
 
-> **Version caveat (below 16.1.4 Standard):** ACG compliance checks could be **bypassed entirely** by uploading user rights or role assignments via the User Rights CSV import or the API. The ceiling held in the interface but not through those paths. Fixed in 16.1.4 — see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a.
+> **Version caveat (below 16.1.4 Standard):** ACG compliance checks could be **bypassed entirely** by uploading user rights or role assignments via the User Rights CSV import or the API. The ceiling held in the interface but not through those paths. Fixed in 16.1.4 — see [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) §9a. The 16.0.x LTS line already enforces compliance for CSV and API imports on 16.0.61; if you run an older Standard release, upgrade before relying on ACGs for imported rights.
 
 ### Disabling ACGs
 
@@ -89,12 +102,13 @@ This tab lists every user registered on the instance along with their current AC
 The user list displays each user's **name** and their **Access Control Group**. To change a user's assignment:
 
 1. Click **Enter edit mode**.
-2. Use the drop-down next to each user to select a new ACG.
-3. Exit edit mode to save.
+2. Use the drop-down next to each user to select a new ACG. Each change saves immediately — there is no separate save step.
 
-Once the feature is enabled, every user has an ACG assignment. Users are initially placed in the Default ACG and can subsequently be moved to any defined group.
+Users who don't yet have an assignment, including new accounts, are placed into the Default ACG and can then be moved to any defined group.
 
-> **From 16.1.8:** a user's ACG can also be set **at the point of account creation** for table-based users, and changed later from the **Edit User** page — you no longer have to create the account first and then reassign it here. See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
+> **From 16.1.8 Standard (17.x):** a user's ACG can also be set **at the point of account creation** for table-based users, changed later from the **Edit User** page, and is shown on **View User**. See [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md).
+
+> **Version caveat (16.0.x LTS):** there is no ACG picker on the Create User or Edit User pages, and View User does not show the ACG. Create the account first, then assign its ACG on this tab (individually or by CSV).
 
 ### Bulk Assignment via CSV
 
@@ -119,12 +133,15 @@ Enter a name in the **Create new Access Control Group** field and click **Create
 
 ### ACG Table Actions
 
+Click a group's name in the table to open its options:
+
 | Action | Description |
 | --- | --- |
 | Edit | Modify the rights configuration for an existing ACG |
 | Copy Group | Duplicate an existing ACG under a new name |
-| Delete Group | Permanently delete the ACG (cannot be undone) |
-| Set as Default | Mark this ACG as the default for newly enabled instances |
+| Delete Group | Permanently delete the ACG (cannot be undone). Its members lose their assignment and go to the Default ACG |
+
+**Setting the Default ACG:** tick **Make this ACG the Default Group?** in the group's edit dialog. The Default is marked with a star in the table. It applies to any user who doesn't have an assignment — not only at the moment the feature is first enabled.
 
 > **Note:** The built-in **"No Rights"** group is the system default and cannot be deleted. It serves as the initial default ACG when the feature is first enabled.
 
@@ -161,7 +178,7 @@ Controls the maximum level of User Rights access a user may be granted.
 | Read Only | Can view the User Rights page but cannot make changes |
 | Full Access | Can add, modify, and remove users and roles in projects |
 
-> **Important:** Users whose ACG does not allow Full Access User Rights are also blocked from **creating or copying projects**. This is because a user who creates a project and cannot manage their own User Rights would immediately be locked out of administering that project.
+> **Important:** Users whose ACG does not allow Full Access User Rights are also blocked from **creating or copying projects**. This is because a user who creates a project and cannot manage their own User Rights would immediately be locked out of administering that project. REDCap administrators are exempt from this block.
 
 ### Data Viewing Rights (Form-Level)
 
@@ -185,7 +202,11 @@ Controls the maximum data export rights that can be granted per form:
 
 ### Survey Distribution Tools
 
-Controls the maximum level of access to survey distribution features:
+On/off toggle: controls whether users may be granted the Survey Distribution Tools right.
+
+### Data Resolution Workflow
+
+Controls the maximum level of Data Resolution Workflow access (when the workflow is enabled on the instance):
 
 - No Access
 - View Only
@@ -196,34 +217,21 @@ Controls the maximum level of access to survey distribution features:
 
 ### Randomization
 
-Controls access to the randomization module:
+Randomization is three separate checkboxes in the edit dialog, each allowing or blocking one part of the module:
 
-| Level | Description |
+| Checkbox | Allows the user to be granted |
 | --- | --- |
-| No Access | Cannot access randomization |
-| Setup | Can configure the randomization setup |
-| Dashboard | Can view the randomization dashboard |
-| Randomize | Can perform randomizations |
-| Setup & Dashboard | Setup plus dashboard access |
-| Setup & Perform | Setup plus the ability to randomize |
-| Dashboard & Perform | Dashboard access plus the ability to randomize |
-| Setup + Dashboard + Perform | Full randomization access |
+| **Setup** | Configuring the randomization setup |
+| **Dashboard** | Viewing the randomization dashboard |
+| **Randomize** | Randomizing records |
 
-There is also a separate **Randomization (Setup)** right that controls access to the randomization setup independently.
+The ACG CSV has a separate column for each, such as **Randomization (Setup)**. The table shows a combined summary label in a single **Randomization** column.
 
 > **Version caveat (below 16.1.0 Standard):** When importing ACG assignments by CSV, the review dialog misreported changes to **API** and **Randomization** privileges. Check those columns on the User Rights page after an import on an older version rather than trusting the review summary.
 
 ### API Access
 
-Controls the maximum API rights that can be granted:
-
-- No Access
-- Import
-- Export
-- Import & Export
-- External Modules API
-- Import + External Modules API
-- Export + External Modules API
+API is also three separate checkboxes: **API Export**, **API Import** and **External Modules API**. The ACG CSV has a separate column for each, such as **API (Import)**; the table shows a combined summary label in a single **API** column.
 
 ### Calendar & Scheduling
 
@@ -273,6 +281,10 @@ This is a departure from the rest of ACG behaviour and worth noting: elsewhere a
 
 > **From 17.3.3, the deny setting also blocks project copying.** Setting project creation to "No (overrides the user-level setting)" originally did not stop a user copying an existing project — an obvious way around the restriction. Copying now requires **both** project creation permission and Full Access user rights. On 17.1.0–17.3.2 the restriction is incomplete.
 
+> **Version caveat (16.0.x LTS):** there is no per-ACG project creation setting. Control project creation with the user-level privilege on each account (see [RC-CC-07 — Control Center: Users & Access Management](RC-CC-07_Control-Center-User-Management.md)). Copying a project on 16 requires only Full Access user rights in the source project, so a user without create permission can still copy; if that matters, restrict Full Access user rights in their ACG.
+
+> **17.x only:** the Project Migration Tool (REDCap+) applies the same ACG check as copying a project. See [RC-PLUS-02 — Project Migration Tool](RC-PLUS-02_Project-Migration-Tool.md).
+
 ---
 
 ## 8. ACG Smart Variables
@@ -281,10 +293,13 @@ ACGs support **ACG-specific Smart Variables** that can be used in certain REDCap
 
 | Smart Variable | Purpose |
 | --- | --- |
+| `[user-acg-name]` | The name of the user's assigned ACG |
 | `[user-acg-noncompliant-rights]` | Lists the recipient's own non-compliant rights |
-| `[acg-noncompliance-table]` | Renders the non-compliance table |
+| `[acg-noncompliance-table]` | Renders the non-compliance table for the project. The recipient must have User Rights access in the project (all versions) |
 
 > **From 17.1.3:** `[user-acg-noncompliant-rights]` no longer requires the *recipient* to hold the User Rights privilege. The requirement was dropped because the variable only ever shows a user their own non-compliant rights, never anyone else's — so gating it behind User Rights prevented exactly the people who needed the message from receiving it.
+
+> **Version caveat (16.0.x LTS):** in alerts, `[user-acg-noncompliant-rights]` still shows only when the recipient has User Rights access in the project. To reach users without it, list the non-compliant rights in the alert text yourself, or upgrade to 17.x.
 
 For details on Smart Variables in general, see [RC-PIPE-03 — Smart Variables Overview](RC-PIPE-03_Smart-Variables-Overview.md).
 
@@ -317,7 +332,7 @@ Each report table supports filtering by user, ACG, project, and specific non-com
 
 ## 10. ACG Compliance at the Project Level
 
-In addition to the system-wide Reports tab, each individual project has an **ACG Compliance** page accessible to administrators. This is most relevant when:
+In addition to the system-wide Reports tab, each individual project has an **ACG Compliance** page accessible to administrators, opened from the **ACGs** link in the project menu. It has two tabs: **Project Compliance** and **Compliance Alert Logs**. This is most relevant when:
 
 1. ACGs are first enabled on a system that already has projects and users — existing rights are not automatically trimmed.
 2. A user's ACG assignment is changed — their existing project rights may now exceed the new ACG's ceiling.
@@ -326,26 +341,29 @@ From the project-level ACG Compliance page, an administrator can:
 
 - View all users in the project whose current rights exceed their ACG.
 - See exactly which rights are non-compliant for each user.
-- **Email users** (or User Rights managers) a Compliance Alert about the violation.
-- **Expire users** directly from the compliance view to immediately remove their project access.
+- **Email users** (or User Rights managers) a Compliance Alert about the violation, optionally with reminders.
+- **Expire users** from the compliance view — set the expiration a number of days out, or enter 0 to expire them now.
 
-An **alert log** records past compliance alert emails for audit purposes.
+Compliance alerts are sent on a schedule that runs every 15 minutes, so allow a short delay before they arrive. The **Compliance Alert Logs** tab records past compliance alert emails for audit purposes.
 
 ---
 
 ## 11. Common Questions
 
 **Q: If I enable ACGs and a user already has rights in a project that exceed their ACG, do those rights get removed automatically?**
-No. Enabling ACGs does not retroactively modify existing user rights. The ACG ceiling is only enforced at the point of a future rights assignment or modification. Use the ACG Compliance page (per project) or the Reports tab to identify and remediate existing violations.
+No. Enabling ACGs does not retroactively modify existing user rights in existing projects (only new projects, copies and new instruments are trimmed automatically). The ACG ceiling is only enforced at the point of a future rights assignment or modification. Use the ACG Compliance page (per project) or the Reports tab to identify and remediate existing violations.
 
 **Q: Can I create an ACG that allows everything?**
 Yes — configure all rights at their maximum values. This effectively removes the ceiling for users in that group, making ACG enforcement a no-op for them. This can be useful for trusted power users or administrators who should not be restricted.
 
 **Q: What happens to users who are not yet assigned to an ACG when I enable the feature?**
-All users are immediately assigned to the Default ACG at the moment the feature is enabled. If you have not defined a custom Default ACG, they are placed in the built-in "No Rights" group, which prevents User Rights managers from granting them any privileges.
+Users who don't yet have an assignment, including new accounts, are placed into the Default ACG. Right after you first enable the feature that is the built-in "No Rights" group, which prevents User Rights managers from granting them any privileges — so create your groups, mark your own Default and bulk-assign users straight after enabling.
+
+**Q: Can I create my ACGs and assign users before I turn the feature on?**
+No. The ACG page is locked while the feature is off. Enable it at a quiet time and do the setup immediately afterwards (see §2).
 
 **Q: Can I disable ACGs temporarily and re-enable them later?**
-Yes. The feature can be toggled at any time without affecting existing project rights. When re-enabled, enforcement resumes from the point of the next rights assignment or modification.
+Yes. The feature can be toggled at any time without affecting existing project rights, and your saved ACGs and user assignments stay in place. When re-enabled, enforcement resumes from the point of the next rights assignment or modification.
 
 **Q: How do I bulk-reassign all users to a new ACG?**
 Use the CSV export from the User Assignments tab, modify the ACG column in the exported file, and re-upload using the Upload user assignments (CSV) option. Review the proposed changes in the confirmation dialog before committing.
@@ -357,7 +375,9 @@ User Roles (defined within an individual project) are templates that specify wha
 
 ## 12. Common Mistakes & Gotchas
 
-**Enabling ACGs without first assigning users to appropriate groups.** The moment ACGs are enabled, all users are placed in the Default ACG. If that default is "No Rights" (the system default), User Rights managers across every project immediately lose the ability to add or modify users. Always create and populate your ACGs before enabling the feature, and set an appropriate default group.
+**Enabling ACGs without a plan to assign users straight away.** The moment ACGs are enabled, existing users are placed in the Default ACG. If that default is "No Rights" (the system default), User Rights managers cannot grant those users anything until they are reassigned. You cannot set up groups before enabling, so enable at a quiet time and then immediately create your groups, mark an appropriate Default and bulk-assign users by CSV — with the groups planned and the CSV prepared in advance.
+
+**Deleting an ACG that still has members.** Its members lose their assignment and fall back to the Default ACG. Reassign them first if the Default is more restrictive than you intend.
 
 **Not planning for non-compliant users in existing projects.** Existing rights are not automatically adjusted when ACGs are enabled. Projects with active users may immediately be out of compliance once the feature is on. Run a compliance review (using the Reports tab or per-project ACG Compliance page) as part of your rollout plan.
 
