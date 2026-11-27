@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects (all types) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Export File (File Repository) behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md); [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md); [RC-API-12 — Export File API](RC-API-12_Export-File.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -47,7 +47,7 @@ The raw bytes of the file itself (as opposed to metadata or structured data). Th
 | `content` | Required | Always `'fileRepository'` for this method. |
 | `action` | Required | Always `'export'` for this method. |
 | `doc_id` | Required | The `doc_id` of the specific file in the File Repository to download. |
-| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the returned file content. If omitted, defaults to `xml`. Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the returned file content. If omitted, defaults to `xml`. |
 
 Note: this method has **no `format` parameter**, because the body of a successful response is binary file content rather than a structured data format. `returnFormat` only controls how error messages are serialized.
 
@@ -60,7 +60,11 @@ To call this method, the API token's owner must have **both** of the following i
 - **API Export** privilege
 - **File Repository** privilege
 
-In addition, the user's DAG and User Role assignments must grant access to the folder containing the target file. Attempting to export a file that sits in a DAG- or Role-restricted folder the user cannot see will fail.
+In addition, the user must be allowed to access the folder containing the target file. A folder limited to a DAG or user role blocks users who are assigned to a different DAG or role; users with no DAG or role assignment can still reach it. A folder limited to administrators blocks non-administrators. Restrictions on a parent folder also apply to the files in its subfolders. Attempting to export a file from a folder the user is blocked from fails with a 403 error.
+
+Users in Double Data Entry mode (person 1 or person 2) cannot use the File Repository API methods (403).
+
+Each download is recorded in the project's Logging page.
 
 ---
 
@@ -99,7 +103,7 @@ with open('/tmp/exported_file.bin', 'wb') as f:
     f.write(r.content)
 ```
 
-> **Tip:** The filename and MIME type can be recovered from the response's `Content-Disposition` and `Content-Type` headers when present.
+> **Tip:** REDCap does not send a `Content-Disposition` header. The filename is given in the `Content-Type` header as a `name="<filename>"` parameter (e.g. `Content-Type: application/pdf; name="report.pdf"`), so read the `name=` part of `Content-Type` to recover the filename and the leading part for the MIME type.
 
 ### 6.2 R
 
@@ -172,11 +176,16 @@ file_put_contents('/tmp/exported_file.bin', $output);
 
 ## 7. Response
 
-On success, the response **body is the raw contents of the file** (binary data). The HTTP status code will be 200. Filename and MIME type information is typically provided via response headers (e.g., `Content-Disposition: attachment; filename="consent_form_v3.pdf"` and `Content-Type: application/pdf`).
+On success, the response **body is the raw contents of the file** (binary data). The HTTP status code will be 200. The filename and MIME type are provided in the `Content-Type` header, with the filename as a `name` parameter (e.g., `Content-Type: application/pdf; name="consent_form_v3.pdf"`). REDCap does not send a `Content-Disposition` header.
 
-On error, the response body is an error message serialized in the format specified by `returnFormat` (or `xml` by default).
+On error, the response body is an error message serialized in the format specified by `returnFormat` (or `xml` by default). Common errors:
 
-When called as a background process (`backgroundProcess=true`), the response is `success:true` or `success:false` in the appropriate format instead of the file contents.
+| HTTP status | Cause |
+|---|---|
+| 403 | The token's user lacks API Export or File Repository rights. |
+| 400 | `Invalid doc_id or missing doc_id`. |
+| 403 | The file cannot be accessed: it is in a folder the user is blocked from, it is in the Recycle Bin (deleted), or the `doc_id` is not a File Repository file (e.g. a record file-upload attachment, which uses the Export File method instead). |
+| 403 | The user is in Double Data Entry mode (person 1 or 2). |
 
 ---
 
@@ -192,15 +201,15 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: How do I recover the original filename and extension?**
 
-**A:** The original filename is provided in the `Content-Disposition` response header, and the MIME type is provided in `Content-Type`. If your HTTP client exposes response headers, you can use those to save the file with its original name and detect its type.
+**A:** REDCap does not send a `Content-Disposition` header. The original filename is given in the `Content-Type` response header as a `name="<filename>"` parameter (e.g. `Content-Type: application/pdf; name="report.pdf"`), and the MIME type is the leading part of the same header. If your HTTP client exposes response headers, parse the `name=` part of `Content-Type` to save the file with its original name.
 
 **Q: What's the difference between this method and Export File ([RC-API-12 — Export File API](RC-API-12_Export-File.md))?**
 
 **A:** [RC-API-12 — Export File API](RC-API-12_Export-File.md) exports a file from a **record-level file-upload field** — the file is attached to a specific record through a field on an instrument. [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md) exports a file from the **project-level File Repository**, which is a shared, project-wide file store separate from record data. They use different `content` values (`file` vs `fileRepository`) and different parameters ([RC-API-12 — Export File API](RC-API-12_Export-File.md) takes `record`/`field`/`event`, [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md) takes `doc_id`).
 
-**Q: Is there a file size limit?**
+**Q: Can I export a file that was deleted?**
 
-**A:** The API respects the same file size limits the File Repository imposes in the web UI. Very large files may require increased timeouts on your HTTP client.
+**A:** No. A file in the File Repository's Recycle Bin cannot be exported; the call fails with a 403 error. Very large files may also require increased timeouts on your HTTP client.
 
 **Q: Can I export a whole folder's worth of files in one call?**
 
@@ -212,9 +221,9 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Treating the response as JSON or text.** The body on success is raw file bytes. Parsing it as JSON or decoding it as UTF-8 will corrupt binary files (PDFs, images, Office docs, zip archives). Write the response directly to disk in binary mode and then open it as the appropriate file type.
 
-**Confusing `doc_id` with `folder_id` or `record_id`.** `doc_id` uniquely identifies a file in the File Repository. Passing a `folder_id` (from a list response) or a record's primary key will not work — you will get a not-found or permissions error. Confirm you are passing the identifier that came from the `doc_id` field of a List response.
+**Confusing `doc_id` with `folder_id` or `record_id`.** `doc_id` uniquely identifies a file in the File Repository. Passing a `folder_id` (from a list response) or a record's primary key will not work — you will get a 400 `Invalid doc_id or missing doc_id` or a 403 error. Confirm you are passing the identifier that came from the `doc_id` field of a List response.
 
-**Assuming the caller sees every file in the project.** If the target file lives inside a folder restricted to a DAG or User Role that the API token owner is not part of, the export will fail. For an audit or full-backup use case, use a token owned by a user with unrestricted access across the project's folders.
+**Assuming the caller sees every file in the project.** If the target file lives inside a folder restricted to a DAG or User Role other than the one the API token owner is assigned to (or a folder restricted to administrators, for a non-admin), the export will fail with a 403. Users with no DAG or role assignment can still reach DAG- and role-restricted folders, and restrictions on a parent folder apply to files in its subfolders. For an audit or full-backup use case, use a token owned by a user with unrestricted access across the project's folders.
 
 **Forgetting that `returnFormat` only shapes errors.** Setting `returnFormat=json` does not wrap the file contents in JSON. On success, the response body remains the raw file. `returnFormat` only affects how errors are returned when something goes wrong.
 

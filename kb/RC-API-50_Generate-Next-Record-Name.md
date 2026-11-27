@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §3, §5–§7 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §3, §5–§7 live-tested via the API on a sandbox project (2026-10); behaviour also checked against v17.6.5 / v17.3.31 / v16.0.61 source code |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-03 — Import Records API](RC-API-03_Import-Records.md); [RC-API-05 — Rename Record API](RC-API-05_Rename-Record.md) |
@@ -25,6 +25,8 @@ The Generate Next Record Name API method returns what the next record ID would b
 **Important:** This method does not create a record. It only predicts the next name. The returned value may be stale if another user or process creates a record between your call and your subsequent import.
 
 The method works whether or not your project has record auto-numbering enabled.
+
+In longitudinal projects with several arms, the highest record ID is taken across all arms. For users who are not in a DAG, only purely numeric record IDs count toward the maximum; IDs such as `101-3` or `ABC` are ignored.
 
 **Behavior with Data Access Groups (DAGs):** If the API user is in a DAG, the returned name follows the DAG-prefixed format (e.g., `223-3`), where the prefix is the DAG's numeric ID (`data_access_group_id` in Export DAGs). The method determines the next value for IDs within the DAG of the API user, considering all records in the entire project — including records that were originally created in that DAG but later reassigned to another DAG.
 
@@ -47,7 +49,7 @@ A logical division of project users and records that enforces row-level access c
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires **API Export** privileges in the project. |
+| `token` | Required | Your project API token. Requires **API Export** privileges in the project. The user must also have data export rights other than "No Access" on at least one instrument; if their data export rights are "No Access" on every instrument, the call returns HTTP 403 with a message about "No Access" data export rights. |
 | `content` | Required | Always `'generateNextRecordName'` |
 
 ---
@@ -70,7 +72,7 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.text)
 ```
 
-### 3.2 R
+### 4.2 R
 
 ```r
 #!/usr/bin/env Rscript
@@ -160,7 +162,11 @@ On error, an error message string is returned.
 
 **Q: Does this method work if auto-numbering is disabled on my project?**
 
-**A:** Yes. The method works regardless of whether record auto-numbering is enabled. It always finds the current maximum numeric ID and adds one.
+**A:** Yes. The method works regardless of whether record auto-numbering is enabled. It always finds the current maximum numeric ID and adds one. In multi-arm longitudinal projects the maximum is taken across all arms, and for users not in a DAG, non-numeric IDs (e.g., `101-3`, `ABC`) are ignored.
+
+**Q: Why do I get a 403 error when calling this method?**
+
+**A:** Besides API Export privileges, the user needs data export rights other than "No Access" on at least one instrument. If the user's data export rights are "No Access" on every instrument, the call returns HTTP 403 with a message about "No Access" data export rights.
 
 **Q: How does the DAG number affect the result?**
 

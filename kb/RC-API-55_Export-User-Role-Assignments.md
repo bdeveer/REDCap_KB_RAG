@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §5–§7 (admin token; role-assigned users not yet tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §5–§7 (admin token) live-tested via the API on a sandbox project (2026-10); rights requirements for role-assigned users checked against source code; behaviour also checked against v17.6.5 / v17.3.31 / v16.0.61 source code |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md); [RC-API-56 — Import User-Role Assignments API](RC-API-56_Import-User-Role-Assignments.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md) |
@@ -43,7 +43,7 @@ The mapping between a specific user and a user role. Determines what permissions
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export and User Rights rights (Full Access or Read Only). |
+| `token` | Required | Your project API token. Requires API Export and User Rights rights (Full Access or Read Only). Without User Rights access the request fails with HTTP 400 and an "insufficient privileges" message (not 403). |
 | `content` | Required | Always `'userRoleMapping'` for this method. |
 | `format` | Optional | Return format: `'csv'`, `'json'`, or `'xml'` (default). |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
@@ -134,12 +134,14 @@ print $output;
 
 ## 5. Response
 
-On success, the method returns one row per project user in the requested format. Each record contains three fields:
+On success, the method returns one row per project user in the requested format. Each record contains up to three fields:
 
 - `username` — The REDCap username of the assigned user.
 - `unique_role_name` — The system-generated role ID the user is assigned to (e.g., `U-527D39JXAC`). Use the Export User Roles method ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) to look up what role name and privileges correspond to each ID.
 
-- `data_access_group` — The user's Data Access Group (unique group name); blank when the user is not in a DAG.
+- `data_access_group` — The user's Data Access Group (unique group name); blank when the user is not in a DAG. This column is returned only when the project has Data Access Groups. Without DAGs, each row has only `username` and `unique_role_name`.
+
+If the result is empty, a CSV response contains just the header `username,unique_role_name`.
 
 Users without a role are included with a blank `unique_role_name`:
 
@@ -180,7 +182,7 @@ Users without a role are included with a blank `unique_role_name`:
 
 **Interpreting `unique_role_name` directly.** The `unique_role_name` is a system ID (e.g., `U-527D39JXAC`), not a human-readable label. You need to cross-reference it against Export User Roles to get the `role_label`.
 
-**Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. Read-only User Rights access is sufficient (Full Access is not required).
+**Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. Read-only User Rights access is sufficient (Full Access is not required). Without User Rights access, the request returns HTTP 400 (not 403) with an "insufficient privileges" message.
 
 ---
 

@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects (all types) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Import File (File Repository) behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md); [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md); [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -48,7 +48,7 @@ A numeric identifier for a specific folder in the File Repository. Obtained from
 | `action` | Required | Always `'import'` for this method. |
 | `file` | Required | The actual file to upload. Sent as multipart form data, not as a string. |
 | `folder_id` | Optional | The `folder_id` of the folder into which the file should be placed. If omitted, the file is placed at the top level of the File Repository. |
-| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. If omitted, defaults to `xml`. Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. If omitted, defaults to `xml`. |
 
 Note: this method has **no `format` parameter**. The successful response is not a structured data payload (see Section 7), so there is no response format to choose. `returnFormat` only controls how error messages are serialized.
 
@@ -61,7 +61,7 @@ To call this method, the API token's owner must have **both** of the following i
 - **API Import/Update** privilege
 - **File Repository** privilege
 
-If `folder_id` is provided and the target folder is restricted to a DAG or User Role the user is not part of, the call will fail.
+If `folder_id` is provided and the target folder is restricted to a DAG or User Role, users assigned to a different DAG or role are blocked; users with no DAG or role can upload there. Uploads are recorded in the project's logging.
 
 ---
 
@@ -198,8 +198,6 @@ If you need the `doc_id` of the file you just imported (e.g., to download, delet
 
 On error, the response body is an error message serialized in the format specified by `returnFormat` (or `xml` by default).
 
-When called as a background process (`backgroundProcess=true`), the response is `success:true` or `success:false` in the appropriate format instead of an empty body.
-
 > **Note:** If your institution runs a different REDCap version, confirm the response shape via the API Playground.
 
 ---
@@ -220,7 +218,30 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: What file types and sizes are allowed?**
 
-**A:** The File Repository respects the same file type and size limits configured for the project. The API does not bypass those limits — a file that would be rejected through the web interface will also be rejected through the API.
+**A:** The API does not bypass the limits that apply in the web interface — a file that would be rejected there is also rejected through the API.
+
+- **File type:** the system's restricted file-type list applies, and some executable and script types are always blocked. Files with no extension are rejected.
+- **Size per file:** the maximum upload size is the smaller of the server limit and the REDCap setting. In REDCap 17, a project-level per-file upload limit set by the administrator also applies to API uploads; REDCap 16 (LTS) uses only the system-wide value.
+- **Total storage:** an administrator can set a total File Repository storage cap for the project; uploads that would exceed it are rejected.
+
+**Q: What errors can this method return?**
+
+**A:**
+
+| HTTP status | Message / situation |
+|---|---|
+| 400 | `Invalid folder_id` — the `folder_id` is not numeric |
+| 403 | The folder does not exist, has been deleted, or is restricted for the token owner (DAG, role, or admin-only) |
+| 400 | File Repository uploads are disabled system-wide |
+| 400 | `No valid file was uploaded` — no usable `file` was received |
+| 400 | `ERROR: The file cannot be uploaded.` — the file type is rejected |
+| 400 | A size or storage-limit error — the file is too large or the project's File Repository storage cap would be exceeded |
+
+The token owner also needs both API Import/Update and File Repository rights.
+
+**Q: Does importing into an AI chatbot folder do anything extra?**
+
+**A:** Present in 17.6: files uploaded into a folder connected to the AI chatbot are also added to the chatbot's documents.
 
 **Q: Can I upload a file to a folder that is restricted to a DAG or User Role I'm not in?**
 
@@ -240,11 +261,11 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Uploading to a non-existent or inaccessible `folder_id`.** If the `folder_id` does not exist in this project, or if it points to a folder restricted to a DAG or User Role the token owner is not part of, the call will error. List the File Repository first to confirm the `folder_id` is valid for your token before uploading.
 
-**Assuming files with duplicate names are de-duplicated.** The File Repository does not enforce unique filenames within a folder. Uploading a file with the same name as an existing one creates a second entry, each with its own `doc_id`. If you want to "replace" a file, delete the old `doc_id` first (once the Delete File API is covered — see Section 9) and then import the new version.
+**Assuming files with duplicate names are de-duplicated.** Importing never overwrites an existing file. If a file with the same name already exists in the same folder, the new upload is stored as a separate file renamed with a number, for example `report (1).pdf` (then `(2)`, and so on), each with its own `doc_id`. If you want to "replace" a file, delete the old `doc_id` first ([RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md)) and then import the new version.
 
 **Using this method to attach a file to a record.** Record-attached files belong in file-upload fields, not the File Repository. Use [RC-API-13 — Import File API](RC-API-13_Import-File.md) (Import File) for record-level uploads. The two endpoints look superficially similar but write to different storage areas.
 
-**Closing the file handle too early in Python.** When using `requests.post(..., files={'file': file_obj})`, keep the file handle open until after the request returns. A `with open(...)` context manager (as shown in Section 5.1) is the safest pattern.
+**Closing the file handle too early in Python.** When using `requests.post(..., files={'file': file_obj})`, keep the file handle open until after the request returns. A `with open(...)` context manager (as shown in Section 6.1) is the safest pattern.
 
 ---
 
@@ -256,5 +277,6 @@ When called as a background process (`backgroundProcess=true`), the response is 
 - [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md) (download a file from the File Repository)
 - [RC-API-13 — Import File API](RC-API-13_Import-File.md) (upload files to record-level file-upload fields — distinct from File Repository uploads)
 - [RC-API-12 — Export File API](RC-API-12_Export-File.md) (download files from record-level file-upload fields)
+- [RC-API-49 — Delete a File (File Repository) API](RC-API-49_Delete-File-File-Repository.md) (delete a File Repository file, e.g. before re-importing a replacement)
 - [RC-API-14 — Delete File API](RC-API-14_Delete-File.md) (remove files from record-level file-upload fields)
 - [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) (granting API Import/Update and File Repository privileges)

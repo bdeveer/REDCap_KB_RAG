@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects (all types) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Delete a File (File Repository) behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-45 — Create Folder (File Repository) API](RC-API-45_Create-Folder-File-Repository.md); [RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md); [RC-API-47 — Export a File (File Repository) API](RC-API-47_Export-File-File-Repository.md); [RC-API-48 — Import a File (File Repository) API](RC-API-48_Import-File-File-Repository.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -20,7 +20,7 @@
 
 ## 1. Overview
 
-The Delete a File (File Repository) API method removes a single file from the project's **File Repository** by its `doc_id`. The deletion is a **soft delete** — the file is moved to the project's File Repository Recycle Bin, where it remains for up to **30 days** before being permanently purged. During that retention window the file can be restored from the Recycle Bin through the web interface.
+The Delete a File (File Repository) API method removes a single file from the project's **File Repository** by its `doc_id`. The deletion is a **soft delete** — the file is moved to the project's File Repository Recycle Bin, where it remains for at least **30 days** (about 30 days in practice) and is then permanently purged by REDCap's scheduled cleanup job. During that retention window the file can be restored from the Recycle Bin through the web interface. Each deletion adds a "Deleted by <user> on <time>" note to the file's comment and is recorded in the project's Logging.
 
 This method is the File Repository counterpart to Delete File ([RC-API-14 — Delete File API](RC-API-14_Delete-File.md)), which removes a file attached to a record-level file-upload field. The two endpoints look similar but act on different storage areas.
 
@@ -29,13 +29,13 @@ This method is the File Repository counterpart to Delete File ([RC-API-14 — De
 ## 2. Key Concepts & Definitions
 
 #### Soft Delete
-A deletion method where files are moved to the Recycle Bin rather than immediately destroyed. They can be restored within 30 days through the web interface.
+A deletion method where files are moved to the Recycle Bin rather than immediately destroyed. They can be restored through the web interface while they remain in the Recycle Bin (about 30 days).
 
 #### Doc ID
 A numeric identifier that uniquely identifies a file in the File Repository. Used to specify which file to delete.
 
 #### Recycle Bin
-A temporary storage area in the File Repository where deleted files are retained for up to 30 days before permanent purge.
+A temporary storage area in the File Repository where deleted files are retained for at least 30 days before being permanently purged by REDCap's scheduled job.
 
 ---
 
@@ -47,7 +47,7 @@ A temporary storage area in the File Repository where deleted files are retained
 | `content` | Required | Always `'fileRepository'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
 | `doc_id` | Required | The `doc_id` of the file to delete. |
-| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. If omitted, defaults to `xml`. Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. If omitted, defaults to `xml`. |
 
 Note: this method has **no `format` parameter** because a successful response does not include a structured data payload (see Section 7). `returnFormat` only controls how errors are serialized.
 
@@ -60,7 +60,7 @@ To call this method, the API token's owner must have **both** of the following i
 - **API Import/Update** privilege
 - **File Repository** privilege
 
-The user must also have access to the folder containing the target file. Files in folders restricted to a DAG or User Role the user is not part of cannot be deleted through this method.
+The user must also have access to the folder containing the target file. Files in folders restricted to a DAG or User Role cannot be deleted through this method by users assigned to a different DAG or User Role; users with no DAG or User Role assignment are not blocked by these restrictions.
 
 ---
 
@@ -167,7 +167,13 @@ A successful delete returns an **HTTP 200** response with no structured data pay
 
 On error, the response body is an error message serialized in the format specified by `returnFormat` (or `xml` by default).
 
-When called as a background process (`backgroundProcess=true`), the response is `success:true` or `success:false` in the appropriate format instead of an empty body.
+Errors you may see:
+
+| HTTP status | Cause |
+|---|---|
+| 403 | The token's owner lacks API Import/Update or File Repository rights in the project. |
+| 400 | The `doc_id` is missing or invalid. |
+| 403 | The file cannot be accessed — for example, it is already in the Recycle Bin (deleting the same file twice fails) or it is in a folder restricted to a different DAG or User Role. |
 
 > **Note:** If your institution runs a different REDCap version, confirm the response shape via the API Playground.
 
@@ -177,7 +183,7 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: What happens to the file after I delete it?**
 
-**A:** The file is moved to the project's File Repository **Recycle Bin**, where it remains for up to **30 days**. During that retention window, a user with File Repository access can restore the file through the web interface. After 30 days the file is permanently purged and cannot be recovered.
+**A:** The file is moved to the project's File Repository **Recycle Bin**, where it remains for at least **30 days** (about 30 days in practice). During that retention window, any user with File Repository rights who can access the folder can restore the file through the web interface. Restoring also restores any deleted parent folders, and the file may be renamed if a file with the same name now exists. After the retention period REDCap's scheduled job permanently purges the file and it cannot be recovered. The deletion also adds a "Deleted by <user> on <time>" note to the file's comment and is logged in the project's Logging.
 
 **Q: How do I find the `doc_id` of the file I want to delete?**
 
@@ -193,11 +199,11 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: Can I restore a file I deleted through the API?**
 
-**A:** Yes — within the 30-day retention window. The API does not currently expose a "restore" action, but a user with File Repository access can restore files from the Recycle Bin through the web interface.
+**A:** Yes — while the file is still in the Recycle Bin (about 30 days). The API does not currently expose a "restore" action, but any user with File Repository rights who can access the folder can restore files from the Recycle Bin through the web interface. Restoring also restores deleted parent folders and may rename the file if a same-named file now exists.
 
 **Q: What happens if I try to delete a file I do not have access to?**
 
-**A:** The call will fail with a permissions error. Access is governed by the same DAG and User Role rules that apply to the web interface — a file inside a folder restricted to a DAG or User Role you are not part of is not visible or deletable via the API.
+**A:** The call will fail with an HTTP 403 error. This happens if your token's owner lacks API Import/Update or File Repository rights, or if the file cannot be accessed — including a file already in the Recycle Bin (deleting twice fails). Access is governed by the same DAG and User Role rules that apply to the web interface — a file inside a folder restricted to a DAG or User Role other than the one you are assigned to is not deletable via the API. Users with no DAG or User Role assignment are not blocked by these restrictions. A missing or invalid `doc_id` returns HTTP 400.
 
 ---
 
@@ -205,13 +211,13 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Passing a `folder_id` instead of a `doc_id`.** These are distinct identifier spaces. A `folder_id` targets a folder; a `doc_id` targets a file. Confirm the value you are passing came from the `doc_id` field of a List response ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)), not the `folder_id` field.
 
-**Assuming deletion is immediate and permanent.** Files are **soft-deleted**, not immediately destroyed. They remain in the Recycle Bin for up to 30 days. If your use case is a compliance-driven hard delete (e.g., immediate purge of PHI), the API alone does not achieve that — coordinate with your REDCap administrator for immediate purge from the Recycle Bin.
+**Assuming deletion is immediate and permanent.** Files are **soft-deleted**, not immediately destroyed. They remain in the Recycle Bin for about 30 days (at least 30 days, then purged by REDCap's scheduled job). If your use case is a compliance-driven hard delete (e.g., immediate purge of PHI), the API alone does not achieve that — permanent deletion before the 30 days is admin-only, so coordinate with your REDCap administrator for immediate purge from the Recycle Bin.
 
 **Using this method to delete files from record file-upload fields.** Record-attached files are not in the File Repository — use [RC-API-14 — Delete File API](RC-API-14_Delete-File.md) (Delete File) for those. The two endpoints look superficially similar but act on different storage areas.
 
-**Deleting files inside restricted folders without appropriate access.** If the containing folder is DAG- or Role-restricted and the API token's owner does not have access, the call will error. For auditing or full-cleanup workflows, use a token belonging to a user with access across the relevant folders.
+**Deleting files inside restricted folders without appropriate access.** If the containing folder is DAG- or Role-restricted and the API token's owner is assigned to a different DAG or Role, the call will fail with HTTP 403 (users with no DAG or Role assignment are not blocked). For auditing or full-cleanup workflows, use a token belonging to a user with access across the relevant folders.
 
-**Deleting a file without keeping a record of its metadata.** Once deleted, the file's metadata may be difficult to reconstruct if it's purged after 30 days. If you need an audit trail of what was deleted, capture the file's `doc_id`, filename, and containing `folder_id` from List ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) *before* calling delete.
+**Deleting a file without keeping a record of its metadata.** Once deleted, the file's metadata may be difficult to reconstruct if it's purged after the retention period (about 30 days). If you need an audit trail of what was deleted, capture the file's `doc_id`, filename, and containing `folder_id` from List ([RC-API-46 — List Files and Folders (File Repository) API](RC-API-46_List-Files-Folders-File-Repository.md)) *before* calling delete.
 
 ---
 

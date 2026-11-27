@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects with surveys enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Export Survey Access Code behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API official documentation |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md); [RC-API-41 — Export Survey Queue Link API](RC-API-41_Export-Survey-Queue-Link.md); [RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)|
@@ -24,7 +24,7 @@ The Export Survey Access Code API returns a short alphanumeric access code for a
 
 This is distinct from the survey link ([RC-API-40 — Export Survey Link API](RC-API-40_Export-Survey-Link.md)), which returns a full clickable URL, and the return code ([RC-API-42 — Export Survey Return Code API](RC-API-42_Export-Survey-Return-Code.md)), which allows resuming an in-progress survey.
 
-> **Permissions required:** API Export privileges AND **Survey Distribution Tools** privileges. If the user lacks Survey Distribution Tools access, the API will return an error even if the token is otherwise valid.
+> **Permissions required:** API Export privileges AND the **Survey Distribution Tools** user right. If the token owner lacks the Survey Distribution Tools right, the API returns a 403 error: "The API request cannot complete because currently you do not have "Manage Survey Participants" privileges, which are required for this operation." The check uses the token owner's actual project rights, so an administrator's token without that project right is refused too.
 
 Surveys must be enabled on the project, and the instrument must be marked as a survey in the project design.
 
@@ -151,8 +151,10 @@ print $output;
 The API returns a survey access code as **plain text**:
 
 ```
-ABCD1234
+A7KD3XQ2M
 ```
+
+Access codes are 9 characters long. The code is created the first time it is requested for a given record, instrument, event and repeat instance, and the same code is returned on every later call.
 
 Participants enter this code at the REDCap survey login page (e.g., `https://redcap.institution.edu/surveys/`) to access their assigned survey without needing a direct link.
 
@@ -167,10 +169,10 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 **A:** Access codes are useful when a full URL is impractical — for example, printed participant packets, in-person enrollment, SMS with tight character limits, or when participants may have difficulty clicking links.
 
 **Q: Is the access code unique per record?**
-**A:** Yes. Each access code is tied to a specific record, instrument, and event (if longitudinal), just like a survey link.
+**A:** Yes. Each access code is unique to a specific record, instrument, event (if longitudinal) and repeat instance, just like a survey link.
 
 **Q: Does an access code expire?**
-**A:** Access codes do not have a built-in expiration. They remain valid until the record is deleted or the instrument is disabled as a survey.
+**A:** The code itself does not expire. However, survey settings such as an expiration date, or a survey that has been set to inactive, can still stop the participant from taking the survey.
 
 **Q: Can I use both a survey link and an access code for the same record?**
 **A:** Yes. Both methods grant access to the same survey entry for that record. You can generate both and use whichever is appropriate for your distribution channel.
@@ -179,13 +181,20 @@ Participants enter this code at the REDCap survey login page (e.g., `https://red
 
 ## 7. Common Mistakes & Gotchas
 
-**Missing Survey Distribution Tools privilege:** API Export alone is not sufficient. The user account associated with the token must also have Survey Distribution Tools access in the project. Without it, the call returns an error even if the token is otherwise valid.
+**Missing Survey Distribution Tools privilege:** API Export alone is not sufficient. The user account associated with the token must also have the Survey Distribution Tools right in the project. Without it, the call returns a 403 error ("...you do not have "Manage Survey Participants" privileges, which are required for this operation.") even if the token is otherwise valid, and this applies to administrator tokens that lack the right in that project.
 
-**Missing event parameter for longitudinal projects:** For longitudinal studies, the `event` parameter is required. Omitting it results in an error.
+**Missing event parameter for longitudinal projects:** For longitudinal studies, the `event` parameter is required. Omitting it returns "The parameter 'event' is missing"; an unknown event name returns "Invalid event".
 
 **Using instrument label instead of variable name:** The `instrument` parameter must be the instrument's variable name (e.g., `baseline_survey`), not its display label (e.g., "Baseline Survey").
 
-**Requesting an access code for a non-survey instrument:** The instrument must be enabled as a survey in the project design. Regular data collection instruments will return an error.
+**Requesting an access code for a non-survey instrument:** The instrument must be enabled as a survey in the project design. Regular data collection instruments return the error "The instrument '<name>' has not been enabled as a survey". The same error is returned when surveys are turned off for the project. An unknown instrument name returns "Invalid instrument".
+
+**Other errors:**
+- 400 if the instrument is not designated to the requested event.
+- 400 "An unknown error occurred" if the record is not in the arm that contains the requested event.
+- 403 if the record belongs to a different Data Access Group than the token owner's.
+- 403 for Double Data Entry users requesting records outside their own.
+- `repeat_instance` on an instrument that is not repeating is treated as 1.
 
 **Parsing the response as JSON:** The response is plain text — just the access code string. Do not attempt to parse it as JSON.
 
