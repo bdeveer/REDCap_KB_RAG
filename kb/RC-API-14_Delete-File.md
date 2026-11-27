@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects with file upload fields |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Delete File behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-12 — Export File API](RC-API-12_Export-File.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md)|
@@ -24,7 +24,20 @@ The Delete File API method removes a file from a file-upload field in REDCap. Th
 
 This method also works for **Signature fields** (i.e. file-upload fields with the `signature` validation type).
 
+> **Version caveat (REDCap 16.0.61 LTS vs 17.x):** REDCap 17.3 and later add an enhanced signature field type. It is deleted through this method exactly like any other file-upload field. On 16.0.x LTS only the classic signature field exists, so check which signature type your project uses before scripting against it.
+
 To use this method, you must specify the record, the file-upload field variable name, and (for longitudinal projects) the event. After deletion, the field will be empty.
+
+**Rights and project status.** The API user needs a valid API token for the project **and** the **Delete Records** user right. An API right on its own is not enough: without Delete Records the call fails with HTTP 403 "You do not have Delete Record privileges", even if the user has API Import/Update. The method works in Development and Production, but is blocked in **Analysis/Cleanup** status (HTTP 403, "...cannot be deleted because the project is in Analysis/Cleanup status"), even when the project's data is still editable in that status.
+
+**Other limits.** The same protections as data entry apply:
+
+| Situation | Result |
+|---|---|
+| The record, or the instrument holding the field, is locked (including an e-signed instrument) | HTTP 400; the error says the data "could not be saved". Unlock the instrument (and remove the e-signature) first. |
+| The user is in a Data Access Group and the record belongs to another DAG (or none) | HTTP 403. Users only reach records in their own DAG. |
+| Double Data Entry project and the user is data entry person 1 or 2 | The user can only delete files in their own copy of the record. |
+| The record has no data in the given event | Error; the record must exist in that event. |
 
 ---
 
@@ -32,14 +45,14 @@ To use this method, you must specify the record, the file-upload field variable 
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update right. |
+| `token` | Required | Your project API token. The token's user needs the **Delete Records** user right (see Section 1). |
 | `content` | Required | Always `'file'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
 | `record` | Required | The value of the primary key (record ID) for the record from which the file will be deleted. |
 | `field` | Required | The variable name of the file-upload field from which to delete the file. |
-| `event` | Conditional | The unique event name (longitudinal projects only). Required only if the file-upload field is associated with a specific event. |
+| `event` | Conditional | The unique event name. Required for every request in a longitudinal project, and must be a valid event; ignored in classic projects. |
 | `repeat_instance` | Conditional | For projects with repeating instruments or events: the repeat instance number of the repeating event (longitudinal) or repeating instrument (classic or longitudinal). Default value is `1`. |
-| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. Defaults to `xml` if omitted. Note: does not apply when using a background process. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. Does not affect the success response. If omitted, REDCap uses the value of `format` if you sent one, otherwise `xml`. |
 
 ---
 
@@ -140,15 +153,9 @@ print $output;
 
 ## 4. Response
 
-On success, the method returns a success message or JSON response (if `returnFormat='json'` is set). The HTTP status code will be 200. The file will no longer be accessible from that field.
+On success, the method returns HTTP status **200 with an empty response body**, whatever `returnFormat` you set. Check the status code, not the body. The file is no longer accessible from that field, and the project's Logging shows a "Delete uploaded document (API)" entry naming the field (and instance, for repeating data).
 
-Example success response (JSON):
-```json
-{
-  "success": true,
-  "message": "File deleted successfully"
-}
-```
+Errors come back as a non-200 status (400 or 403) with a message in the `returnFormat` format. For example, if the field holds no file for that record, event and instance, the response is HTTP 400 "There is no file to delete for this record".
 
 ---
 
@@ -160,15 +167,19 @@ Example success response (JSON):
 
 **Q: What happens if the field is already empty or the file does not exist?**
 
-**A:** Depending on your REDCap version, the API may return success or an error. It is safe to attempt deletion on an empty field; the operation is idempotent.
+**A:** The API returns HTTP 400 "There is no file to delete for this record". The call is not idempotent: a second delete of the same file fails. Nothing is changed, so in a script either treat this specific error as "already empty" or check first with [RC-API-12 — Export File API](RC-API-12_Export-File.md).
 
 **Q: Is there an undo function if I accidentally delete a file?**
 
-**A:** No. The file is permanently deleted. If you need to keep the file, export it (using [RC-API-12 — Export File API](RC-API-12_Export-File.md)) before deleting it. REDCap maintains an audit trail, but deleted files cannot be undeleted via the API.
+**A:** No. The file is permanently deleted. If you need to keep the file, export it (using [RC-API-12 — Export File API](RC-API-12_Export-File.md)) before deleting it. REDCap logs the deletion, but deleted files cannot be undeleted via the API or by users; the server purges the file after a retention period (about 30 days).
 
 **Q: Do I need the `event` parameter for classic projects?**
 
-**A:** No. For classic (non-longitudinal) projects, omit the `event` parameter if the file-upload field is not event-specific.
+**A:** No. For classic (non-longitudinal) projects, omit the `event` parameter; it is ignored if sent.
+
+**Q: My token has API Import/Update rights but I get "You do not have Delete Record privileges". Why?**
+
+**A:** Delete File also needs the **Delete Records** user right; API Import/Update alone is not enough. Ask a project user with User Rights access to give the API user Delete Records (or a role that includes it).
 
 **Q: Can I delete a file from a specific instance of a repeating instrument?**
 
@@ -178,7 +189,15 @@ Example success response (JSON):
 
 ## 6. Common Mistakes & Gotchas
 
-**Forgetting the `event` parameter in longitudinal projects.** For longitudinal projects, if the file-upload field belongs to a specific event, the `event` parameter is required. Omitting it will result in an error.
+**Forgetting the `event` parameter in longitudinal projects.** In longitudinal projects the `event` parameter is required on every request and must be a valid unique event name. Omitting it will result in an error.
+
+**Granting only API rights.** API Import/Update alone does not allow file deletion; the API user also needs the **Delete Records** right.
+
+**Treating "no file" as success.** Deleting from an empty field returns HTTP 400, not 200. Scripts that retry or re-run deletions should handle "There is no file to delete for this record" explicitly.
+
+**Running against a project in Analysis/Cleanup.** Deletion is blocked in that status even if data editing is still allowed. Finish file deletions before the status change, or ask your REDCap administrators to return the project to Production.
+
+**Locked or e-signed instruments.** A locked record or instrument, including an e-signed one, makes the call fail with HTTP 400. Unlock it first.
 
 **Assuming the file can be recovered.** Delete File permanently removes the file from REDCap. There is no recycle bin or recovery option via the API. If you need to preserve files, back them up before deletion.
 

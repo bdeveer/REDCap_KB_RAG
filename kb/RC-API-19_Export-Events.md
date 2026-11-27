@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog; export behaviour (incl. rights) checked against source code on v17.6.5 / v17.3.31 / v16.0.61 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md); [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md)|
@@ -35,7 +35,7 @@ This method is useful for discovering the event structure of a project or valida
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'event'` for this method. |
 | `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'`. Default is `'xml'`. |
-| `arms` | Optional | An array of arm numbers to filter events. If omitted, returns events for all arms. |
+| `arms` | Optional | An array of arm numbers (or a comma-separated list) to filter events. If omitted, returns events for all arms. An arm number that does not exist returns an empty list (HTTP 200), not an error. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to whatever `format` is set to. If neither is provided, defaults to `'xml'`. Not applicable when using background processing. |
 
 ---
@@ -128,7 +128,7 @@ print $output;
 
 ## 4. Response
 
-The method returns all events in the project in the requested format. Each event has `event_name`, `arm_num`, `unique_event_name`, `custom_event_label` and `event_id` (the numeric event ID). The scheduling columns `day_offset`, `offset_min` and `offset_max` are returned **only when the Scheduling module is enabled** for the project; with scheduling off they are left out entirely.
+The method returns all events in the project in the requested format. Each event has `event_name`, `arm_num`, `unique_event_name`, `custom_event_label` and `event_id` (the numeric event ID). The scheduling columns `day_offset`, `offset_min` and `offset_max` are returned **only when the Scheduling module is enabled** for the project; with scheduling off they are left out entirely. Each call is recorded in the project's Logging as "Export events (API)".
 
 Example JSON response (Scheduling enabled):
 ```json
@@ -166,7 +166,7 @@ Example JSON response (Scheduling enabled):
 
 **Q: How do I filter events by arm?**
 
-**A:** Set the `arms` parameter to an array of arm numbers (e.g., `[1, 2]` in Python/JSON). If you omit the parameter, all events from all arms are returned.
+**A:** Set the `arms` parameter to an array of arm numbers (e.g., `[1, 2]` in Python/JSON). If you omit the parameter, all events from all arms are returned. If you pass an arm number that does not exist, you get an empty list back (HTTP 200) rather than an error, so check for an empty result before assuming the arm has no events.
 
 **Q: What is the difference between `event_name` and `unique_event_name`?**
 

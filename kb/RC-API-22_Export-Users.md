@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §3, §5, §7 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §3, §5, §7 live-tested via the API on a sandbox project (2026-10); Export Users behaviour (incl. rights) checked against source code on v17.6.5 / v17.3.31 / v16.0.61; other sections not re-tested live |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -23,6 +23,8 @@
 The Export Users API method retrieves a list of all users in a project and their associated permissions. This method returns user information in JSON or CSV format, including username, email, expiration date, and a complete set of permission flags that indicate what actions each user is allowed to perform (data export, API access, record creation, deletion, and so on).
 
 Use this method to audit user access, generate reports of project team members, or integrate with external user management systems. The method returns all users currently assigned to the project, regardless of their assigned role.
+
+> **Version caveat (REDCap 16.0.61 LTS vs 17.x):** On 17.x, if the token owner is assigned to a Data Access Group, the export lists only the users in that same DAG. On 16.0.61 the export lists all project users regardless of the token owner's DAG. If you need the complete user list on 17.x, use a token belonging to a user who is not assigned to a DAG.
 
 > **Note:** If a user has been assigned to a user role, the method returns that user with the role's defined privileges — not any individually configured privileges.
 
@@ -129,11 +131,15 @@ print $output;
 
 ## 5. Response
 
-On success, the method returns an array (JSON, CSV, or XML) of user objects. Each object includes the user's profile fields and a complete set of permission flags. The `forms` attribute is the only attribute with sub-elements — one entry per data collection instrument, each with its own Form Rights value.
+On success, the method returns an array (JSON, CSV, or XML) of user objects. Each object includes the user's profile fields and a complete set of permission flags. Two attributes have sub-elements, with one entry per data collection instrument: `forms` (each instrument's Form Rights value) and `forms_export` (each instrument's Data Export Rights value).
 
 ### 5.1 Returned attributes
 
 `username`, `email`, `firstname`, `lastname`, `expiration`, `data_access_group`, `data_access_group_id`, `data_access_group_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
+
+> **Note:** The attribute set is not fixed. Some attributes appear only when the related feature is enabled on the server or in the project — for example `mobile_app` and `mobile_app_download_data`, `mycap_participants`, `data_quality_resolution`, `double_data`, and the randomization attributes (`random_*`). Parse the response by attribute name rather than assuming a fixed list or column order.
+
+> **Version caveat (REDCap 16.0.61 LTS vs 17.x):** On 17.x, a `redcap_share` attribute is also returned when Clinical Data Interoperability Services (CDIS) is enabled. If your script maps CSV columns by position, switch to mapping by header name before upgrading.
 
 > **Note:** There is no project-level `data_export` attribute. Data export rights are set per instrument, so they are returned per instrument in `forms_export` (e.g. `{"demographics": 1, "lab_results": 0}`).
 
@@ -146,6 +152,8 @@ On success, the method returns an array (JSON, CSV, or XML) of user objects. Eac
 | `forms_export` (per instrument) | `0` = No Access, `1` = Full Data Set, `2` = De-Identified, `3` = Remove Identifier Fields |
 | Form-level rights (REDCap < 15.6) | `0` = No Access, `1` = View & edit records (survey responses read-only), `2` = Read Only, `3` = Edit Survey Responses |
 | Form-level rights (REDCap ≥ 15.6) | `128` = No Access, `129` = Read Only, `130` = View & edit records (survey responses read-only); add `8` to also grant Edit Survey Responses; add `16` to also grant Delete |
+| `user_rights` | `0` = No Access, `1` = Full Access, `2` = Read Only |
+| `lock_records` | `0` = Disabled, `1` = Locking / Unlocking, `2` = Locking / Unlocking with E-signature authority |
 | All other permission attributes | `0` = No Access, `1` = Access |
 
 See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for a full explanation of each permission name.
@@ -156,7 +164,7 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 
 **Q: How can I export just one user instead of all users?**
 
-**A:** The Export Users method always returns all users in the project. To extract a single user, filter the API response in your code using the username field.
+**A:** The Export Users method has no filter parameter; it returns every user the token can see (all project users, or on 17.x only the token owner's DAG if the owner is in a DAG — see §1). To extract a single user, filter the API response in your code using the username field.
 
 **Q: What's the difference between `forms_export` and `api_export`?**
 
@@ -168,21 +176,21 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 
 **Q: Can I see which role a user is assigned to?**
 
-**A:** The Export Users method returns each user's individual permission flags, but not the role name if the user is role-based. To see role assignments, use the Export User-DAG Assignments method ([RC-API-31 — Export User-DAG Assignments API](RC-API-31_Export-User-DAG-Assignments.md)) to see DAG assignments, and export the user roles separately using Export User Roles ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)).
+**A:** The Export Users method returns each user's effective permission flags (the role's rights for role members), but not the role name. To see which role each user is in, use the Export User-Role Assignments method ([RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md)). To see what each role grants, use Export User Roles ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)).
 
 ---
 
 ## 7. Common Mistakes & Gotchas
 
-**Forgetting that two privileges are required, not one.** This method requires both API Export *and* User Rights privileges. Having API Export alone is not enough — the call will fail with an authentication error if User Rights access (Full or Read Only) is absent.
+**Forgetting that two privileges are required, not one.** This method requires both API Export *and* User Rights privileges. Having API Export alone is not enough — the call fails with HTTP 400 if User Rights access (Full or Read Only) is absent.
 
 **Assuming the export returns only active users.** Users with expired accounts remain in the export. Your code must check the `expiration` field to identify and filter out expired users if needed.
 
-**Forgetting that permission flags are integers, not booleans.** Permission values are `0` (false/not granted) or `1` (true/granted). Do not compare them using boolean `true`/`false` in your code — compare to `0` or `1`.
+**Forgetting that permission flags are integers, not booleans.** Most permission values are `0` (not granted) or `1` (granted), but some take more values — `user_rights` and `lock_records` can be `2` (see §5.2). Do not compare them using boolean `true`/`false` in your code — compare to the specific integer.
 
 **Using the wrong format parameter.** If your code expects CSV but you request JSON (or vice versa), parsing will fail. Specify the correct `format` parameter and parse the response accordingly.
 
-**Attempting to export users from a project where you lack API Export right.** If your API token does not include the API Export right, the method will fail with an authentication error. Verify your token permissions in the API Credentials settings.
+**Attempting to export users from a project where you lack API Export right.** If your API token does not include the API Export right, the method fails with HTTP 403. Verify your token permissions in the API Credentials settings.
 
 **Looking for a project-level `data_export` field.** Older scripts read `data_export` (or `data_export_tool`) for a user's export rights. Neither is returned: export rights are per instrument, in `forms_export`. When importing users or roles, set `forms_export` too — a role imported with only `data_export=2` kept No Access on every instrument.
 
@@ -196,3 +204,4 @@ See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Ri
 - [RC-API-23 — Import Users API](RC-API-23_Import-Users.md) (create and modify users via API)
 - [RC-API-24 — Delete Users API](RC-API-24_Delete-Users.md) (remove users from a project via API)
 - [RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md) (export custom role definitions)
+- [RC-API-55 — Export User-Role Assignments API](RC-API-55_Export-User-Role-Assignments.md) (see which role each user is assigned to)

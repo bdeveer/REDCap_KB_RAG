@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog; import behaviour (incl. rights and Production status, which were not live-tested) checked against source code on v17.6.5 / v17.3.31 / v16.0.61 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-API-21 — Delete Events API](RC-API-21_Delete-Events.md)|
@@ -28,7 +28,11 @@ To modify an existing event, provide its `unique_event_name`. If `unique_event_n
 
 > **Important:** Events exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project.
 
-> **Important:** This method is only available for projects in **Development** status. It cannot be used on projects in Production or Analysis/Cleanup status.
+> **Important:** In **Development** status this method always works (given the right privileges). In **Production** it is blocked unless a REDCap administrator has enabled the Control Center setting that lets normal users add or modify events while a project is in production. When that setting is on, imports with `override=0` work in Production, but `override=1` is always refused. REDCap administrators are not exempt: the same rules apply to their API tokens.
+
+> **Institution-specific:** Whether normal users may add or modify events in Production is a system-wide choice made by each installation's REDCap administrators. Check with your REDCap administrators before planning event changes on a Production project.
+
+> **Important:** Imports are all-or-nothing. If any row fails validation, no events are created or changed.
 
 ---
 
@@ -39,9 +43,9 @@ To modify an existing event, provide its `unique_event_name`. If `unique_event_n
 | `token` | Required | Your project API token. Requires API Import/Update privileges and Project Design/Setup privileges. |
 | `content` | Required | Always `'event'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
-| `override` | Required | `0` = add new events or modify existing ones without deleting others (default); `1` = delete all existing events and replace with the provided set. |
+| `override` | Optional | `0` = add new events or modify existing ones without deleting others (default); `1` = delete all existing events and replace with the provided set. |
 | `format` | Optional | Data format: `'csv'`, `'json'`, or `'xml'`. Default is `'xml'`. |
-| `data` | Required | The event records to import. Each record must include `event_name` (the human-readable label) and `arm_num` (the arm the event belongs to; assumes `1` if the project has only one arm). To modify an existing event, you must also provide `unique_event_name`. The offset fields `day_offset`, `offset_min`, and `offset_max` are optional and must be numeric; if `day_offset` is omitted, events are auto-numbered in the order provided. You can't choose the `unique_event_name`; it is generated from the label and changes when the label changes. |
+| `data` | Required | The event records to import. Each record must include `event_name` (the human-readable label, maximum 30 characters) and `arm_num` (the arm the event belongs to; assumes `1` if the project has only one arm — but always include `arm_num` in every row, which is the safest practice). To modify an existing event, you must also provide `unique_event_name`. The optional `custom_event_label` sets the event's custom label. The offset fields `day_offset`, `offset_min`, and `offset_max` are optional and must be numeric (`day_offset` may be negative; `offset_min` and `offset_max` must be 0 or more); if `day_offset` is omitted, events are auto-numbered in the order provided. You can't choose the `unique_event_name`; it is generated from the label and changes when the label changes. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to whatever `format` is set to. If neither is provided, defaults to `'xml'`. Not applicable when using background processing. |
 
 ---
@@ -208,7 +212,11 @@ Example response:
 
 **Q: My project is in Production. Can I still use Import Events?**
 
-**A:** No. Import Events is only available for projects in **Development** status. If you need to add or modify events on a Production project, you must first move it back to Development status, make your changes, and then return it to Production. Be aware that this process requires careful coordination to avoid disrupting active data collection.
+**A:** Only if your REDCap administrators have enabled the Control Center setting that lets normal users add or modify events in production. If it is off, the call is refused, even with an administrator's token. If it is on, imports with `override=0` work, but `override=1` (replace all events) is always refused in Production. Ask your REDCap administrators which applies on your installation.
+
+**Q: If I update an existing event, do I only need to send the columns I want to change?**
+
+**A:** No. An update overwrites the whole event with the row you send. Columns you leave out are not kept: an omitted `day_offset` is reset to the row's position in your data, omitted `offset_min` and `offset_max` are reset to `0`, and an omitted `custom_event_label` is cleared. Always send full rows, ideally taken from Export Events ([RC-API-19 — Export Events API](RC-API-19_Export-Events.md)) and edited.
 
 **Q: Do I need any special permissions beyond API access?**
 
@@ -216,7 +224,7 @@ Example response:
 
 **Q: What happens if I specify an `arm_num` that does not exist?**
 
-**A:** The API will return an error. You must specify `arm_num` values that correspond to existing arms in the project. Use Export Arms ([RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)) to discover valid arm numbers.
+**A:** The API returns the error `The arm number "N" does not exist in the project.` and imports nothing. You must specify `arm_num` values that correspond to existing arms in the project. Use Export Arms ([RC-API-16 — Export Arms API](RC-API-16_Export-Arms.md)) to discover valid arm numbers.
 
 ---
 
@@ -224,7 +232,13 @@ Example response:
 
 **Calling Import Events on a classic project.** Events are a longitudinal-only feature. This method will fail on classic projects. Always verify your project is longitudinal before calling this method.
 
-**Calling Import Events on a Production project.** This method only works when the project is in Development status. Calling it on a Production project will return an error. Move the project back to Development before making structural event changes.
+**Calling Import Events on a Production project.** In Production the call is refused unless your administrators have enabled the Control Center setting that lets normal users add or modify events in production, and `override=1` is refused in Production even then. Administrators' tokens follow the same rules. Check with your REDCap administrators before relying on this in Production.
+
+**Sending partial rows when updating an event.** An update replaces the event's settings with exactly what you send: omitted offsets are reset (`day_offset` to the row's position, `offset_min`/`offset_max` to `0`) and an omitted `custom_event_label` is cleared. Export the events first ([RC-API-19 — Export Events API](RC-API-19_Export-Events.md)), edit those full rows, and import them back.
+
+**Leaving out `arm_num`.** Include `arm_num` in every row, even in a one-arm project. It is the safest practice and removes any doubt about which arm an event belongs to.
+
+**Using an `event_name` longer than 30 characters.** Event names are limited to 30 characters. Because imports are all-or-nothing, one invalid row stops the whole import.
 
 **Forgetting to JSON-encode the `data` parameter.** The `data` parameter must be a valid JSON array. Use `json.dumps()` in Python, `toJSON()` in R, or `json_encode()` in PHP to properly format it.
 

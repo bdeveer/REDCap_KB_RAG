@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | Longitudinal REDCap projects only |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 (Production-status restriction and rights not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog; Delete Events behaviour (incl. rights and Production status, which were not live-tested) checked against source code on v17.6.5 / v17.3.31 / v16.0.61 |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-19 — Export Events API](RC-API-19_Export-Events.md); [RC-API-20 — Import Events API](RC-API-20_Import-Events.md)|
@@ -22,9 +22,9 @@
 
 The Delete Events API method removes one or more events from a longitudinal REDCap project. You specify the unique event names to delete, and REDCap will remove them along with all data stored in those events.
 
-> **Important:** Events exist only in longitudinal projects. On a classic project the call is not rejected — it returns `0`. Additionally, deleting events will permanently remove all data stored in those events. This action cannot be undone.
+> **Important:** Events exist only in longitudinal projects. On a classic project the call is not rejected: event names that don't exist in the project simply return `0`. That does not make it a safe no-op. A classic project has one hidden event of its own, and sending its name would delete it. Do not call this method on classic projects. Deleting events permanently removes all data stored in those events; recreating an event with the same name does not bring the data back. This action cannot be undone.
 
-> **Important:** Because of this method's destructive nature, it is only available for projects in **Development** status. It cannot be used on projects in Production or Analysis/Cleanup status.
+> **Important:** Because of this method's destructive nature, it is only available for projects in **Development** status. It cannot be used on projects in Production or Analysis/Cleanup status. This holds even when your administrators have turned on the Control Center setting that lets normal users add or modify events in production, and it applies to REDCap administrators' tokens too. An administrator can still delete an event from a Production project in the Online Designer.
 
 ---
 
@@ -32,7 +32,7 @@ The Delete Events API method removes one or more events from a longitudinal REDC
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update privileges and Project Design/Setup privileges. |
+| `token` | Required | Your project API token. The token owner needs the **Delete Records** user right and the **Project Design and Setup** user right. |
 | `content` | Required | Always `'event'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
 | `events` | Required | An array of unique event names (strings) to delete. E.g., `events[0]=event_1_arm_1&events[1]=event_2_arm_1` in URL encoding. |
@@ -130,6 +130,10 @@ print $output;
 
 On success, the method returns the number of events deleted as a plain integer. The HTTP status code will be 200. All data stored in those events will be permanently removed.
 
+If you send a mix of valid and unknown event names, the valid ones are deleted and the unknown ones are silently skipped: there is no error and nothing is rolled back. Always compare the returned count with the number of names you sent.
+
+The project's Logging page records a generic event-deletion entry that does not list which events were deleted. Keep your own record (for example, the Export Events output from just before the call) of what you removed.
+
 Example response:
 ```
 1
@@ -141,15 +145,15 @@ Example response:
 
 **Q: Can I delete an event on a classic project?**
 
-**A:** No. Events are a longitudinal-only feature; on a classic project the call returns `0` (HTTP 200).
+**A:** No. Events are a longitudinal-only feature. For event names that don't exist, the call returns `0` (HTTP 200), but it is not a safe no-op: a classic project has one hidden event, and deleting it would leave the project without an event. Don't call this method on classic projects.
 
 **Q: My project is in Production. Can I use Delete Events?**
 
-**A:** No. Delete Events is only available for projects in **Development** status. Because deletion causes irreversible data loss, REDCap restricts this method to Development as a safeguard. If you need to remove an event from a Production project, you must move it back to Development first, which should be done with great care to avoid disrupting active data collection.
+**A:** No. Delete Events is only available for projects in **Development** status. Because deletion causes irreversible data loss, REDCap restricts this method to Development as a safeguard. The Control Center setting that lets normal users add or modify events in production does not lift this restriction, and administrators' tokens are blocked as well. An administrator can delete an event from a Production project in the Online Designer instead. If you need to remove an event from a Production project, you must move it back to Development first, which should be done with great care to avoid disrupting active data collection.
 
 **Q: Do I need any special permissions beyond API access?**
 
-**A:** Yes. You need both **API Import/Update** privileges and **Project Design/Setup** privileges. API Export rights alone are not sufficient.
+**A:** Yes. The token owner needs both the **Delete Records** user right and the **Project Design and Setup** user right. Without Delete Records, REDCap returns HTTP 403 "You do not have Delete Record privileges". The error message returned when Project Design and Setup is missing also mentions API Import rights, so its text can be misleading.
 
 **Q: What happens to the data when I delete an event?**
 
@@ -169,13 +173,15 @@ Example response:
 
 **Not backing up data before deletion.** Deleting an event deletes all data in that event. There is no undo. Always export your project data before deleting events if you may need it later.
 
-**Calling Delete Events on a classic project.** Events are a longitudinal-only feature. This method will fail on classic projects. Always verify your project is longitudinal before calling this method.
+**Calling Delete Events on a classic project.** Events are a longitudinal-only feature. The call is not rejected on classic projects: names that don't exist return `0`, but the project's one hidden event can still be deleted. Always verify your project is longitudinal (Export Project Info, `is_longitudinal`) before calling this method.
 
-**Calling Delete Events on a Production project.** This method is restricted to Development status by design — deleting events causes irreversible data loss and REDCap blocks this on Production projects. If you get an unexpected error, check your project's status first.
+**Calling Delete Events on a Production project.** This method is restricted to Development status by design — deleting events causes irreversible data loss and REDCap blocks this on Production and Analysis/Cleanup projects, for administrators too. If you get an unexpected error, check your project's status first.
 
 **Using `event_name` instead of `unique_event_name`.** Always use the `unique_event_name` (e.g., `event_1_arm_1`), not the `event_name` (e.g., "Baseline Visit"). Using the wrong name deletes nothing — and there's no error: the call returns HTTP 200 with `0`. Check that the count matches the number of events you meant to delete.
 
 **Misformatting the `events` parameter.** The `events` parameter must be an array. In URL encoding, use `events[0]=event_1_arm_1&events[1]=event_2_arm_1`. Do not send `events=event_1_arm_1` or `events="event_1_arm_1,event_2_arm_1"`: nothing is deleted and the call quietly returns `0`.
+
+**Relying on the Logging page to see what was deleted.** The log entry for an API event deletion does not name the events. Save the Export Events output before you delete so you have your own record.
 
 ---
 
