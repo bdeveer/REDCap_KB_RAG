@@ -36,7 +36,7 @@ When to use this method: When you need to rename a record ID to a new value, and
 | `record` | Required | The current record ID (the one to be renamed). |
 | `new_record_name` | Required | The new record ID to assign. |
 | `arm` | Optional | The arm number. Only meaningful in multi-arm projects. If omitted, all records with the same name across all arms are renamed to the new record name. If specified, only the record in that arm is renamed. An arm number that doesn't exist returns HTTP 400. |
-| `returnFormat` | Optional | `'json'` (default) or `'xml'`. Has little practical effect: the success body and most failure messages are plain text whatever you choose (see §4). |
+| `returnFormat` | Optional | `'csv'`, `'json'` or `'xml'`. If omitted, the value of `format` is used, or `'xml'` if neither is sent. Has little practical effect: the success body and most failure messages are plain text whatever you choose (see §4). |
 
 ---
 
