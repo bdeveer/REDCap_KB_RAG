@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page header, process columns, refresh options and the kill setting's default; v17.3.7 (LTS) — changelog review only |
-| **Prerequisite** | REDCap super-user administrator access |
-| **Version** | 1.1 |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Database Activity Monitor behaviour checked against source code; checked live on v17.5.6 (read-only): page header, process columns, refresh options and kill setting default |
+| **Prerequisite** | REDCap administrator account with the "Access to Control Center dashboards" right |
+| **Version** | 1.2 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-15 — Control Center: Top Usage Report](RC-CC-15_Top-Usage-Report.md); [RC-CC-17 — Control Center: Database Query Tool](RC-CC-17_Database-Query-Tool.md); [RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)|
@@ -19,13 +19,13 @@
 
 ## 1. Overview
 
-The Database Activity Monitor displays a real-time, enhanced view of the MySQL/MariaDB process list for the REDCap database server. It shows all active database queries currently being executed, which makes it useful for diagnosing database-level performance issues, identifying long-running queries, and understanding what is happening on the database server at any given moment.
+The Database Activity Monitor displays a real-time, enhanced view of the MySQL/MariaDB process list for the REDCap database server. It shows the database connections that REDCap's database account currently has open, including idle ones (state "Sleep"), sorted with the longest-running first. It does not show connections from other database accounts. This makes it useful for diagnosing database-level performance issues, identifying long-running queries, and understanding what is happening on the database server at any given moment.
 
 ---
 
 ## 2. Accessing the Monitor
 
-The Database Activity Monitor is located in the REDCap Control Center under "Dashboards & Activity" in the sidebar. Requires super-user administrator access.
+The Database Activity Monitor is located in the REDCap Control Center under "Dashboards & Activity" in the sidebar. It requires the **Access to Control Center dashboards** administrator right, not full super-user status. An administrator without that right still sees the menu link but is sent back to the Home page when opening it.
 
 ---
 
@@ -34,7 +34,8 @@ The Database Activity Monitor is located in the REDCap Control Center under "Das
 The page header shows:
 - Database server hostname and database name
 - Current server timestamp
-- Total active processes (queries) at the time of the last refresh
+- Total processes at the time of the last refresh (this count includes idle "Sleep" connections)
+- On servers with a read replica, a **Primary / Replica** dropdown and a **Replica Lag** figure
 
 ---
 
@@ -48,7 +49,12 @@ For each active database process, the monitor displays:
 - **URL** — the REDCap page URL being executed (e.g., `/DataEntry/record_status_dashboard.php?pid=XXXX`)
 - **Script Time (seconds)** — how long the overall REDCap page/script has been running
 - **Query Time (seconds)** — how long the specific database query has been executing
+- **Query State** — the database's own state for the connection (for example "Sleep" for an idle connection)
 - **Query text** — the SQL statement being executed (shown as full or partial)
+
+Project, user and URL are filled in only for REDCap requests that started within the last 60 minutes. Scheduled background (cron) jobs show as "CRON JOB". Connections that cannot be matched to a recent request leave these columns blank.
+
+If the server uses a read replica, choose **Primary** or **Replica** in the dropdown to view that server's process list. A kill acts on the server currently selected.
 
 ---
 
@@ -56,21 +62,23 @@ For each active database process, the monitor displays:
 
 Administrators can toggle between these with the **Show full queries** button:
 
-- **Partial queries** (default) — truncated for readability
-- **Full queries** — complete SQL text for each process
+- **Partial queries** (default) — truncated at roughly 100 characters for readability
+- **Full queries** — complete SQL text for each process; the button changes to a **Don't show full queries** link to switch back
 
 ---
 
 ## 6. Auto-Refresh
 
-The page automatically reloads at a configurable interval. Administrators can select from:
-- Every 2 seconds
+By default the monitor does not refresh itself. To refresh automatically, choose an interval from the dropdown:
+- Every 2 seconds (the shortest)
 - Every 5 seconds
 - Every 10 seconds
 - Every 30 seconds
 - Every 60 seconds
 
-A **Refresh** button reloads the page on demand. The page continues auto-refreshing until the browser tab is closed or refreshed manually.
+Only the process table refreshes, not the whole page. A **Refresh** button updates the table on demand. Auto-refresh continues until you click **Stop refresh**, or reload or close the browser tab (a reload returns the monitor to no auto-refresh).
+
+> **Version caveat (REDCap 16.0.x LTS):** After an auto-refresh at 5 seconds, the dropdown may show the placeholder again instead of "Every 5 seconds". Refreshing continues anyway; use **Stop refresh** to end it. REDCap 17.x is not affected.
 
 ---
 
@@ -78,13 +86,14 @@ A **Refresh** button reloads the page on demand. The page continues auto-refresh
 
 > **Off by default.** The kill option is not available until someone with database access enables it, as the page explains: `UPDATE redcap_config SET value = '1' WHERE field_name = 'allow_kill_mysql_process';`. A new 17.5.6 installation starts with this value at `0`, so the kill behaviour below was not exercised on the test instance.
 
-Once enabled, administrators can kill (terminate) a running MySQL process by clicking the kill button for that process. A confirmation dialog warns that:
+There is no Control Center setting for this; it can only be turned on in the database. Once enabled, any administrator with the **Access to Control Center dashboards** right can kill (terminate) a running MySQL process by clicking the kill button for that process. A confirmation dialog warns that:
 
 - Killing a process will prevent that query from completing
 - It may affect other queries in the same script
-- This should be used carefully, only for genuinely problematic long-running queries
 
-**Important:** Use this feature cautiously. Terminating database processes can have cascading effects on active user sessions and ongoing operations.
+REDCap shows a message after each attempt to say whether the kill succeeded or failed. The dialog's advice to use this carefully, only for genuinely problematic long-running queries, is also good practice.
+
+**Important:** Use this feature cautiously. Terminating database processes can have cascading effects on active user sessions and ongoing operations. Kills do not appear in REDCap's logging, so record any kill yourself (who, when, which process and why).
 
 ---
 
@@ -104,14 +113,14 @@ The Database Activity Monitor is helpful in these scenarios:
 
 - **Monitor periodically during peak usage** to establish baseline performance
 - **Never kill a process without understanding its context** — verify the associated user and project first
-- **Use shorter refresh intervals (10 seconds) only when actively troubleshooting** to reduce page load overhead
+- **Use short refresh intervals (2 to 10 seconds) only when actively troubleshooting** to reduce page load overhead
 - **Keep the monitor open in a separate tab** during large data operations or batch imports to watch for bottlenecks
 
 ---
 
 ## 10. Access Requirements
 
-This page requires full super-user administrator access. Because it provides visibility into all database activity across all users and projects, access should be restricted to trusted administrators.
+This page requires the **Access to Control Center dashboards** administrator right, not full super-user status. Because it provides visibility into all database activity across all users and projects, and anyone with this right can kill processes once killing is enabled, grant the right only to trusted administrators.
 
 ---
 
@@ -127,7 +136,7 @@ Not necessarily. Very long-running queries sometimes indicate a legitimate large
 No. The Database Activity Monitor shows only currently active queries at the moment of the page load or auto-refresh. It does not log historical queries. To troubleshoot a query that ran in the past, use the Database Query Tool to examine log data, or check your database server logs if available.
 
 **Q: Does the auto-refresh interval affect database performance?**
-Yes. Very frequent auto-refresh (every 10 seconds) means the monitor itself is generating queries to fetch the process list. If you are using a 10-second refresh interval, you are adding some load to the database. Use a 10-second interval only when actively troubleshooting, and use 30 or 60 seconds for periodic monitoring.
+Yes. Each refresh runs a query to fetch the process list, so a short interval adds some load to the database. The 2-second option is the most frequent. Use short intervals (2 to 10 seconds) only when actively troubleshooting, and use 30 or 60 seconds for periodic monitoring.
 
 **Q: What happens to the monitor if the database server becomes unavailable?**
 If the database is down or unreachable, the monitor will not load and will display an error. The monitor cannot function without an active database connection, as it relies on the MySQL/MariaDB process list API.
@@ -138,7 +147,7 @@ If the database is down or unreachable, the monitor will not load and will displ
 
 **Killing a process without understanding its impact.** Terminating a database process can cause cascading effects. The query may have been initiated by a scheduled task, API call, or user action. Killing it can interrupt data imports, break user sessions, or leave partial data in an inconsistent state. Always verify the context before killing a process.
 
-**Using a very short auto-refresh interval all the time.** Setting the monitor to refresh every 10 seconds is useful for active troubleshooting, but leaving it enabled 24/7 creates continuous database load. Switch to a 30 or 60-second interval when the issue has been resolved, or stop monitoring altogether if the problem has been identified and fixed.
+**Using a very short auto-refresh interval all the time.** Setting the monitor to refresh every 2 to 10 seconds is useful for active troubleshooting, but leaving it enabled 24/7 creates continuous database load. Switch to a 30 or 60-second interval when the issue has been resolved, or stop monitoring altogether if the problem has been identified and fixed.
 
 **Assuming all long-running queries are problems.** Some queries are legitimately slow because they involve large datasets, complex joins, or intensive calculations. A 5-minute query may be normal for a large data export or complex report. Check the URL and understand what operation the user is performing before deciding a long query is a problem.
 

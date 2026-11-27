@@ -274,8 +274,8 @@ A common workflow for a formal audit or inspection:
 | Feature | Project Logging ([RC-LOG-01 — Logging — Project Audit Trail](RC-LOG-01_Logging-Project-Audit-Trail.md)) | CC User Activity Log ([RC-CC-12 — Control Center: User Activity Log](RC-CC-12_User-Activity-Log.md)) |
 |---|---|---|
 | **Scope** | Single project only | All projects on the REDCap instance |
-| **Who can access** | Users with Logging right in the project | REDCap system administrators only |
-| **Filter options** | Event type, user, record, DAG (users not in a DAG), date range | Project title, date range |
+| **Who can access** | Users with Logging right in the project | Administrators with the "Access to Control Center dashboards" privilege |
+| **Filter options** | Event type, user, record, DAG (users not in a DAG), date range | Date range only (sort by column to group by user or event) |
 | **Use case** | Project-level audit, compliance, user activity review | Instance-wide monitoring, security investigation |
 | **Access location** | Project left menu → Applications → Logging | Control Center → Dashboards & Activity → User Activity Log |
 
