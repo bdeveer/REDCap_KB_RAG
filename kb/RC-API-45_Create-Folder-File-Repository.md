@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | REDCap projects (all types) |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — folder creation behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.0 |
-| **Last Updated** | 2026 |
+| **Version** | 1.1 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-12 — Export File API](RC-API-12_Export-File.md); [RC-API-13 — Import File API](RC-API-13_Import-File.md); [RC-API-14 — Delete File API](RC-API-14_Delete-File.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -20,7 +20,7 @@
 
 ## 1. Overview
 
-The Create Folder (File Repository) API method creates a new folder inside the project's **File Repository** — the project-level file storage area that holds shared documents, auto-generated files (e.g., e-consent PDFs, data export archives), and any files uploaded through the File Repository page.
+The Create Folder (File Repository) API method creates a new folder inside the project's **File Repository** — the project-level file storage area that holds shared documents, auto-generated files (e.g., e-consent PDFs, data export archives), and any files uploaded through the File Repository page. The data export archives are visible on the File Repository page only; the API's File Repository methods do not expose them.
 
 Unlike the Import File / Export File / Delete File methods ([RC-API-12 — Export File API](RC-API-12_Export-File.md), [RC-API-13 — Import File API](RC-API-13_Import-File.md), [RC-API-14 — Delete File API](RC-API-14_Delete-File.md)), which operate on **file-upload fields attached to individual records**, this method operates on the **project-wide File Repository** and only creates directory structure (no file content). The method returns the `folder_id` of the newly created folder, which can then be used as a parent reference for subsequent nested folders or for uploading files into that folder.
 
@@ -31,16 +31,16 @@ The method optionally supports creating the new folder as a **sub-folder** of an
 ## 2. Key Concepts & Definitions
 
 #### File Repository
-The project-level file storage area in REDCap, separate from record-level file-upload fields. It holds shared documents, generated files (e.g., e-consent PDFs, data exports), and any files uploaded through the File Repository interface. Access is controlled by folder-level permissions.
+The project-level file storage area in REDCap, separate from record-level file-upload fields. It holds shared documents, generated files (e.g., e-consent PDFs, data exports — the latter shown in the UI only, not through the API), and any files uploaded through the File Repository interface. Access is controlled by folder-level permissions.
 
 #### Folder ID
 A numeric identifier that uniquely identifies a folder in the File Repository. Used as the parent reference when creating sub-folders or uploading files into specific locations.
 
 #### Data Access Group (DAG)
-A logical division of project users and records that enforces row-level access control. When a folder is restricted to a DAG, only users in that DAG can access it.
+A logical division of project users and records that enforces row-level access control. When a folder is restricted to a DAG, users in that DAG and users not assigned to any DAG can access it; users in other DAGs cannot.
 
 #### User Role
-A template of permissions that can be assigned to users as a group. When a folder is restricted to a role, only users assigned to that role can access it.
+A template of permissions that can be assigned to users as a group. When a folder is restricted to a role, users assigned to that role and users with no role can access it; users in other roles cannot.
 
 ---
 
@@ -51,12 +51,14 @@ A template of permissions that can be assigned to users as a group. When a folde
 | `token` | Required | The API token specific to your REDCap project and username. Each token is unique per user per project. Requires API Import/Update privileges **and** File Repository privileges in the project. |
 | `content` | Required | Always `'fileRepository'` for this method. |
 | `action` | Required | Always `'createFolder'` for this method. |
-| `name` | Required | The desired name of the folder to be created. Maximum length = **150 characters**. |
+| `name` | Required | The desired name of the folder to be created. Must be unique among the folders directly under the same parent. Maximum length = **150 characters**; longer names are shortened, not rejected. Avoid the characters `/ \ : * ? " < > \|` (see the version caveat below). |
 | `format` | Optional | Response format: `csv`, `json`, or `xml`. Defaults to `xml` if omitted. |
 | `folder_id` | Optional | The `folder_id` of the parent folder under which the new folder should be created. If omitted, the folder is created at the **top level** of the File Repository. |
-| `dag_id` | Optional | The `dag_id` of a DAG to restrict access to. If omitted, the folder is accessible to users in all DAGs and users in no DAGs. |
-| `role_id` | Optional | The `role_id` of a User Role to restrict access to. If omitted, the folder is accessible to users in all User Roles and users in no User Roles. |
-| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. If omitted, defaults to the value of `format` (or `xml` if neither is provided). Does not apply to background process calls — in that case, the response is `success:true` or `success:false` in the response format. |
+| `dag_id` | Optional | The numeric `dag_id` of a DAG to restrict access to. If omitted, the folder is accessible to users in all DAGs and users in no DAGs. |
+| `role_id` | Optional | The numeric `role_id` of a User Role to restrict access to. If omitted, the folder is accessible to users in all User Roles and users in no User Roles. |
+| `returnFormat` | Optional | `csv`, `json`, or `xml` — specifies the format of **error messages only**. If omitted, defaults to the value of `format` (or `xml` if neither is provided). |
+
+> **Version caveat (16.0.61 LTS vs 17.3.31 LTS / 17.6):** REDCap cleans special characters out of folder names, and the two lines do it differently. On 16.0.61 LTS, characters such as `/ \ : * ? " < > |` are removed and accented letters are converted to plain ones (`É` becomes `E`). On 17.3.31 LTS and 17.6, accents are kept, `< > : " | ? *` are replaced with `_`, and only the part after the last `/` or `\` is kept — so `Site A/Visits` becomes `Visits` on 17 but `Site AVisits` on 16. Avoid `/ \ : * ? " < > |` in folder names so the result is the same on every version.
 
 ---
 
@@ -67,7 +69,7 @@ To call this method, the API token's owner must have **both** of the following i
 - **API Import/Update** privilege
 - **File Repository** privilege
 
-Calls from tokens lacking either privilege will fail with a permissions error.
+Calls from tokens lacking either privilege will fail with a permissions error (HTTP 403). In projects using Double Data Entry, users designated as Data Entry Person #1 or #2 also receive a 403.
 
 ---
 
@@ -201,14 +203,25 @@ Example success response (XML, default):
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
-<folders>
-    <folder>
+<items>
+    <item>
         <folder_id>45</folder_id>
-    </folder>
-</folders>
+    </item>
+</items>
 ```
 
-When called as a background process (`backgroundProcess=true`), the response is `success:true` or `success:false` in the appropriate format instead of the `folder_id`.
+The `backgroundProcess` parameter has no effect on this method; the normal `folder_id` response is always returned.
+
+### 7.1 Errors
+
+| Situation | HTTP status | Message / behaviour |
+|---|---|---|
+| `name` missing or empty | 400 | Error stating the folder name is missing |
+| A folder with the same name already exists directly under the same parent | 400 | Error stating a folder with that same name already exists in this directory |
+| `folder_id` is not numeric | 400 | `folder_id is not valid` |
+| Parent `folder_id` does not exist, was deleted, or is DAG/role-restricted away from you | 400 | `The File Repository folder folder_id=N does not exist or else you do not have permission to that folder because it is DAG-restricted or Role-restricted.` |
+| Token user lacks API Import/Update or File Repository rights, or is a Double Data Entry person | 403 | Permissions error |
+| `dag_id` or `role_id` is not a valid ID in the project | — | No error; the folder is created **without** that restriction |
 
 ---
 
@@ -224,19 +237,19 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Q: Can I restrict a folder to both a DAG and a User Role at the same time?**
 
-**A:** Yes. If you provide both `dag_id` and `role_id`, access to the folder is restricted to users who are in that DAG **and** assigned to that User Role. Omitting either parameter means no restriction on that dimension.
+**A:** Yes. If you provide both `dag_id` and `role_id`, a user must pass both checks: they must be in that DAG (or in no DAG) **and** assigned to that User Role (or to no role). Omitting either parameter means no restriction on that dimension.
 
 **Q: What happens if I create a folder with a name that already exists at the same level?**
 
-**A:** REDCap does not enforce unique folder names within the File Repository — you can end up with two folders at the same level with identical `name` values but different `folder_id`s. To avoid confusion, check for existing folders before creating a new one.
+**A:** The call is rejected with HTTP 400 and a message saying a folder with that same name already exists in this directory. Folder names must be unique among the folders directly under the same parent; the same name can be reused under a different parent. If your script may run more than once, list the parent folder's contents first and reuse the existing `folder_id` instead of creating a new folder.
 
 **Q: Is the folder name limited in length?**
 
-**A:** Yes — maximum 150 characters. Names longer than that will be rejected by the API.
+**A:** Yes — maximum 150 characters. Longer names are not rejected; REDCap silently shortens them to 150. The limit is counted in bytes, so names with accented or non-Latin characters keep fewer than 150 characters. Keep names well under the limit so the stored name matches what you sent.
 
 **Q: Does this method support calling through a background process?**
 
-**A:** Yes. When `backgroundProcess=true`, the response format changes to `success:true` / `success:false` instead of returning the `folder_id`, and the `returnFormat` parameter does not apply.
+**A:** No. The `backgroundProcess` parameter has no effect on this method; the folder is created immediately and the normal `folder_id` response is returned.
 
 ---
 
@@ -246,9 +259,13 @@ When called as a background process (`backgroundProcess=true`), the response is 
 
 **Forgetting the File Repository privilege.** The API token's owner must have **both** API Import/Update and File Repository privileges assigned in User Rights. Tokens issued to users with API rights but no File Repository access will fail this call with a permissions error. See [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for how to grant File Repository access.
 
-**Assuming DAG/Role restriction is inherited from the parent folder.** Access restrictions must be set explicitly on each folder via `dag_id` and/or `role_id`. A sub-folder does **not** automatically inherit the restrictions of its parent — each folder's access is evaluated independently.
+**Assuming DAG/Role restriction is inherited from the parent folder.** Access restrictions must be set explicitly on each folder via `dag_id` and/or `role_id`. A new sub-folder does **not** copy its parent's DAG or role setting. In practice, REDCap checks every parent folder on the path, so users blocked from a parent folder cannot reach its sub-folders anyway. Still, set restrictions explicitly on each folder so that each folder's own setting matches who should see it.
 
-**Passing the DAG name instead of the `dag_id`.** The `dag_id` parameter is the numeric internal ID of the DAG, not its unique name or display label. Call the Export DAGs API ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) first to retrieve the `dag_id` values if you do not already know them.
+**Passing the DAG name instead of the `dag_id`.** The `dag_id` parameter is the numeric internal ID of the DAG, not its unique name or display label (the same applies to `role_id`). An invalid value — such as a unique DAG name — is ignored without any error, and the folder is created **unrestricted**. Call the Export DAGs API ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) or Export User Roles API ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) first to retrieve the numeric IDs, and after creating a restricted folder, check it with the File Repository list method to confirm the restriction was applied.
+
+**Creating duplicate folders when a script re-runs.** A second `createFolder` call with the same name under the same parent fails with HTTP 400. Build scripts to look up existing folders first rather than treating that error as unexpected.
+
+**Using path separators or special characters in the name.** A name like `Site A/Visits` does not create nested folders, and REDCap 16 and 17 clean it differently (see the version caveat in Section 3). Create nested folders with separate calls using `folder_id`, and avoid `/ \ : * ? " < > |` in names.
 
 **Leaving `dag_id` and `role_id` unset when you want the folder to be generally accessible.** When both are omitted, the folder is accessible to users in all DAGs and all User Roles — including users assigned to no DAG and no User Role. This is almost always the desired behavior, but be aware that "unrestricted" means exactly that.
 

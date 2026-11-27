@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap instances |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — version export behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.1 |
-| **Last Updated** | 2026 |
+| **Version** | 1.2 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
@@ -20,11 +20,16 @@
 
 ## 1. Overview
 
-The Export REDCap Version API returns the version number of your REDCap instance. This is the simplest API method available and requires no additional parameters beyond the token. It is useful for scripting, compatibility checks, and verifying instance connectivity in automated workflows.
+The Export REDCap Version API returns the version number of your REDCap instance. This is the simplest API method available and requires no parameters beyond `token` and `content`. It is useful for scripting, compatibility checks, and verifying instance connectivity in automated workflows.
 
-The method is read-only and works across all REDCap instances regardless of project configuration or user permissions.
+The method is read-only and works the same on every REDCap instance, whatever the project's configuration. It does still check the token:
 
-> **Super API Tokens are accepted.** In addition to a standard project-level API token, a Super API Token can be used for this method. Super tokens are granted by a REDCap administrator via the API Tokens page in the Control Center.
+- **With a project API token**, the token's user needs **API Export** rights in that project. A token with API Import only is refused with HTTP 403 and the message "You do not have API Export privileges". If the project is offline, the call returns an error instead of the version.
+- **With a Super API Token**, no project rights are needed.
+
+Each call is recorded in REDCap's logging, like other API requests.
+
+> **Super API Tokens are accepted.** In addition to a standard project-level API token, a Super API Token can be used for this method. Super API Tokens are 64 characters long (project tokens are 32), and only REDCap administrators can issue them, via the API Tokens page in the Control Center.
 
 ---
 
@@ -47,7 +52,7 @@ A special administrator-issued token that grants API access across multiple proj
 |---|---|---|
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'version'` |
-| `format` | Required | Response format: `'csv'`, `'json'`, `'xml'` (default) |
+| `format` | Optional | Ignored for the result: the version is always returned as plain text. `format` (or `returnFormat`) only changes how error messages are formatted |
 
 ---
 
@@ -94,7 +99,6 @@ print(result)
 DATA="token=$API_TOKEN&content=version"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
-      -H "Accept: application/json" \
       -X POST \
       -d $DATA \
       $API_URL
@@ -134,11 +138,13 @@ print $output;
 
 ## 5. Response
 
-The API returns the version string as plain text:
+The API returns the version string as plain text, with no JSON, XML or CSV wrapping, whatever `format` you send:
 
 ```
-16.1.3
+17.6.5
 ```
+
+The response is sent with a `text/csv` content type even though it is a bare string. Read the raw response body as text; do not pass it to a JSON or XML parser.
 
 The format is `MAJOR.MINOR.PATCH`. For example:
 - `16.1.3` (typical production version)
@@ -153,7 +159,7 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 **A:** Use this method to (1) verify API connectivity, (2) detect instance version before calling version-specific APIs, (3) log version information in automated workflows, or (4) ensure compatibility with your script.
 
 **Q: How do I parse the response in my script?**
-**A:** The response is plain text. Simply read the returned string and split on periods to extract major, minor, and patch versions. Example: `version.split('.')` returns `['16', '1', '3']`.
+**A:** The response is plain text. Read the returned string (trimming any surrounding whitespace) and split on periods to extract major, minor, and patch versions. Example: `version.split('.')` returns `['16', '1', '3']`.
 
 **Q: Does the version change frequently?**
 **A:** REDCap typically releases major and minor versions annually. Patch versions address critical issues more frequently. Check with your administrator for your instance's update schedule.
@@ -162,7 +168,7 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 **A:** Partially. Version number indicates when features were introduced, but not all features are available in every instance. Consult the REDCap documentation for version-specific features.
 
 **Q: What format does the response come in?**
-**A:** The version endpoint accepts `format` values of `csv`, `json`, or `xml`, with `xml` as the default. That said, since the response is a single string value, the format distinction matters very little in practice — most callers just read the raw response text regardless of format.
+**A:** Always plain text, such as `17.6.5`. The `format` parameter does not change the result: `format=json` does not return JSON, and `format=xml` does not return XML. `format` (or `returnFormat`) only affects how error messages are formatted, so you can omit it.
 
 ---
 
@@ -170,7 +176,9 @@ The format is `MAJOR.MINOR.PATCH`. For example:
 
 **Incorrect content value:** Use exactly `'version'` (lowercase). Using `'Version'` or other variations will fail.
 
-**Defaulting to XML without realizing it:** Like several other API methods, the default `format` is `xml`, not `json`. If you omit the `format` parameter and try to parse the response as JSON, it will fail. Pass `format='json'` explicitly if that's what your code expects.
+**Parsing the response as JSON or XML:** Unlike most API methods, this one ignores `format` for the result. Even with `format=json`, the body is the bare version string (e.g. `17.6.5`), so `r.json()` or an XML parser will fail. Read it as text, e.g. `r.text.strip()` in Python.
+
+**Using an import-only project token:** A project token whose user lacks **API Export** rights gets HTTP 403 "You do not have API Export privileges". Use a token with API Export rights, or a Super API Token.
 
 ---
 
