@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects with Data Access Groups enabled
 requires: Any supported version
-verified_against: REDCap v17.5.6 (Standard) — §2, §4–§7 live-tested via the API on
-  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — DAG import
+  behaviour checked against source code; §2, §4–§7 live-tested via the API on v17.5.6
+  (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -36,7 +37,7 @@ synonyms:
 
 # 1. Overview
 
-The Import DAGs API method creates new Data Access Groups or updates existing ones in your project. You provide a JSON or CSV payload containing DAG definitions: a human-readable display name and an optional unique group name. If the `unique_group_name` is omitted or empty, REDCap auto-generates it. Use this method to automate DAG creation, migrate DAGs between projects, or bulk-import DAG structures from external systems.
+The Import DAGs API method creates new Data Access Groups or updates existing ones in your project. You provide a JSON or CSV payload containing DAG definitions: a human-readable display name and a unique group name. Every record must include both keys, but the `unique_group_name` value may be blank — a blank value creates a new DAG and REDCap generates its unique name from the display name. Use this method to automate DAG creation, migrate DAGs between projects, or bulk-import DAG structures from external systems.
 
 ---
 
@@ -44,11 +45,11 @@ The Import DAGs API method creates new Data Access Groups or updates existing on
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. The token's user must not be assigned to a DAG (a DAG-assigned user gets HTTP 403). |
 | `content` | Required | Always `'dag'` for this method. |
 | `action` | Required | Always `'import'` for this method. |
 | `format` | Required | Format of the `data` payload and response: `'csv'`, `'json'`, or `'xml'` (default). |
-| `data` | Required | Array of DAG records in the specified format. Each record must contain `data_access_group_name` and `unique_group_name`. Set `unique_group_name` to blank to create a new DAG; provide an existing value to update it. |
+| `data` | Required | Array of DAG records in the specified format. Each record must contain both `data_access_group_name` and `unique_group_name` keys — leaving a key out fails the call with a missing-attributes error. Set `unique_group_name` to blank to create a new DAG; provide an existing value to update it. Display names longer than 100 characters are rejected. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value passed in `format`. Not applicable when using a background process. |
 
 ---
@@ -128,13 +129,16 @@ $CURL -H "Content-Type: application/x-www-form-urlencoded" \
 include 'config.php';
 
 $data = array(
-	array(
-		'data_access_group_name' => 'Group API 1',
-		'unique_group_name'    => 'group_api'
-	),
+	// New DAG: leave unique_group_name blank so REDCap generates it
 	array(
 		'data_access_group_name' => 'Group API 2',
 		'unique_group_name'    => ''
+	),
+	// Update: unique_group_name must already exist in the project,
+	// otherwise the whole call fails and nothing is imported
+	array(
+		'data_access_group_name' => 'Group API',
+		'unique_group_name'    => 'group_api'
 	),
 );
 
@@ -186,7 +190,9 @@ When submitting the `data` payload as CSV (`format='csv'`), the file uses the fo
 | **Column** | **Type** | **Required** | **Notes** |
 |---|---|---|---|
 | `data_access_group_name` | Free text | Required | Human-readable display name for the DAG (e.g., `Boston Site`). Shown in the REDCap UI. Values containing spaces or commas must be enclosed in double quotes. |
-| `unique_group_name` | Alphanumeric/underscore | Optional | System identifier used in all API calls and data entry. Leave blank to create a new DAG — REDCap generates it from the display name (lowercase, other characters to underscores — e.g., `"New Haven Clinic #2"` → `new_haven_clinic_2`). Fill it in only to update an existing DAG; you can't choose it for a new one. |
+| `unique_group_name` | Alphanumeric/underscore | Column required; value optional | System identifier used in all API calls and data entry. The column must be present, but the value may be blank. Leave it blank to create a new DAG — REDCap generates it from the display name: spaces become underscores, other non-alphanumeric characters are removed, the result is lower-cased and cut to 18 characters, and a trailing underscore is dropped (e.g., `"New Haven Clinic #2"` → `new_haven_clinic_2`). If that name is already taken, a letter suffix is added; a label with no usable letters or digits gets a generated name. Fill it in only to update an existing DAG; you can't choose it for a new one. |
+
+> **Version caveat (17.3+):** On 17.3 and later, a project setting can convert accented letters to their plain equivalents before the unique name is generated (`"Bogotá"` → `bogota`). On 16.0, and on later versions with the setting off, accented letters are simply dropped (`bogot`). Export the DAGs after importing ([RC-API-28 — Export DAGs API](RC-API-28_Export-DAGs.md)) to see the names actually assigned, rather than predicting them.
 
 Example CSV (two new DAGs, auto-generated unique names):
 ```
@@ -195,7 +201,7 @@ data_access_group_name,unique_group_name
 Seattle,
 ```
 
-Example CSV (two DAGs with explicit unique names):
+Example CSV (updating two DAGs that already exist with these unique names):
 ```
 data_access_group_name,unique_group_name
 "New Haven",new_haven
@@ -220,9 +226,9 @@ Seattle,seattle
 
 **A:** The existing DAG gets the new `data_access_group_name`, and its unique name is regenerated from it (`site_one` + "Site One Renamed" → `site_one_renamed`). Users and records keep the DAG, but anything that uses the old unique name — scripts, logic, filters — must be updated.
 
-**Q: What format should the `unique_group_name` have?**
+**Q: How do I get a sensible `unique_group_name`?**
 
-**A:** It should be alphanumeric and lowercase, typically without spaces (e.g., `'boston_site'`, `'group_1'`). Avoid special characters.
+**A:** Choose the display name with the unique name in mind, since REDCap derives one from the other. Short labels made of plain letters, digits and spaces give predictable names (`Boston Site` → `boston_site`). Keep the distinctive part within the first 18 characters, because the unique name is cut there — `Boston Medical Center North` and `Boston Medical Center South` would collide and one would get a letter suffix.
 
 **Q: What permissions are required?**
 
@@ -232,9 +238,15 @@ Seattle,seattle
 
 # 7. Common Mistakes & Gotchas
 
-**Using spaces or special characters in `unique_group_name`.** While REDCap may accept them, stick to alphanumeric characters and underscores for consistency and to avoid downstream issues. If you provide a complex name, it may not work properly in data entry or other operations.
+**Choosing display names that give poor unique names.** You can't set the unique name directly, so pick labels that produce good ones: plain letters, digits and spaces, with the distinctive part early. Punctuation is stripped and anything after 18 characters is cut, so long labels that differ only at the end produce near-identical unique names with letter suffixes.
 
-**Forgetting to provide `data_access_group_name`.** This field is required and must be a non-empty string. Each DAG must have a human-readable display name.
+**Sending a new unique name to "create" a DAG.** A `unique_group_name` that doesn't already exist is an error (HTTP 400), and the whole batch is rolled back — no DAG in the call is created or updated. Leave it blank for new DAGs.
+
+**Leaving out the `unique_group_name` key.** The value may be blank, but the key must be present in every record. A record with only `data_access_group_name` fails the call with a missing-attributes error.
+
+**Using a DAG-assigned user's token.** A user who is assigned to a DAG gets HTTP 403, even with the right privileges. Use a token belonging to a user who is not assigned to any DAG.
+
+**Forgetting to provide `data_access_group_name`.** This field is required and must be a non-empty string of no more than 100 characters. Each DAG must have a human-readable display name.
 
 **Attempting to import without the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only API Import is not sufficient — the token must also have Data Access Groups access enabled at the project level.
 
@@ -244,7 +256,7 @@ Seattle,seattle
 
 **Renaming a DAG changes its unique name.** Updating the display name of `site_one` also renames the unique group name. Update every reference to it afterwards, or leave the display name alone.
 
-**Trying to update a DAG by display name alone.** You must use the `unique_group_name` to target an existing DAG for updates. If you omit it, a new DAG is created instead.
+**Trying to update a DAG by display name alone.** You must use the `unique_group_name` to target an existing DAG for updates. If you leave it blank, a new DAG is created instead.
 
 ---
 

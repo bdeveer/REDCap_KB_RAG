@@ -6,11 +6,13 @@ applies_to:
 - All REDCap projects
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on
-  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog.
+  Export Metadata behaviour checked against source code of v17.6.5 (Standard) / v17.3.31
+  and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -48,8 +50,10 @@ When to use this method: When you need to understand the complete structure of a
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'metadata'` for this method. |
 | `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` (default). |
-| `fields` | Optional | Array of field names to pull. By default, all fields are returned. |
-| `forms` | Optional | Array of form names (unique instrument names from Column B of the data dictionary — not the display labels) to pull. By default, all forms are returned. |
+| `fields` | Optional | Array of field names to pull (a comma-separated string also works). By default, all fields are returned. Field names that do not exist in the project are silently dropped; if none of them exist, the response is an empty list (`[]` in JSON). |
+| `forms` | Optional | Array of form names (unique instrument names from Column B of the data dictionary — not the display labels) to pull. By default, all forms are returned. Pass `forms` as an array (`forms[0]=demographics`). |
+
+If you pass both `fields` and `forms`, the response contains the union: every requested field plus every field on the requested instruments.
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to match `format` if omitted; defaults to `'xml'` if neither is passed. Does not apply when using a background process. |
 
 ---
@@ -193,7 +197,20 @@ The method returns the complete data dictionary in the requested format. Each ro
 ]
 ```
 
-**CSV format:** The response is the raw data dictionary CSV with all standard columns.
+**CSV format:** The response is the data dictionary as CSV, one row per field. Points to know:
+
+- **Short column headers.** The API CSV uses the same short headers as the JSON keys (`field_name`, `form_name`, … `field_annotation`). The data dictionary downloaded from the **Data Dictionary** page in the UI uses the long label headers instead (e.g. "Variable / Field Name"). Code that reads one will not read the other without mapping the headers.
+- **Always comma-delimited**, regardless of the delimiter preference in your My Profile.
+- **Leading apostrophe on some cells.** To protect against spreadsheet formula injection, a cell whose value starts with `=`, `+`, `-` or `@` gets a leading `'` in the CSV output. For example, choices `-1, No | 1, Yes` export as `'-1, No | 1, Yes`. Import Metadata strips the apostrophe again, so an export → re-import round trip is safe. If you parse the CSV yourself, strip it, or use `format=json`, which is not affected.
+
+> **Version caveat (16.x LTS):** On 16.x LTS the apostrophe is also added to field annotations that start with an action tag, so `@HIDDEN` exports as `'@HIDDEN`. On 17.x, annotations that start with an action tag are exported unchanged. If you read annotations from a CSV export on 16.x, strip the leading apostrophe before looking for action tags, or use `format=json`.
+
+**What the response covers (all formats):**
+
+- Every field type is included (descriptive, file upload, SQL, slider and so on), except the automatic `<instrument>_complete` status fields, which are never listed.
+- Values are returned in data dictionary form: for example `dropdown` (not "select"), `notes` (not "textarea"), validation `integer` and `number`, and `y` for the identifier and required flags.
+- Only the **current production** metadata is returned. In a project in production with Draft Mode changes pending, the draft changes do not appear until they are approved.
+- The output is not filtered by the token owner's instrument-level rights: an API Export token returns the metadata for every instrument.
 
 ---
 
@@ -205,15 +222,15 @@ The method returns the complete data dictionary in the requested format. Each ro
 
 **Q: Can I export metadata for only certain instruments or fields?**
 
-**A:** Yes. Use the optional `forms` parameter to pass an array of instrument names, and/or the `fields` parameter to pass an array of field names. Only the matching metadata will be returned. Note that `forms` takes the unique instrument name (Column B of the data dictionary), not the display label you see in the UI.
+**A:** Yes. Use the optional `forms` parameter to pass an array of instrument names, and/or the `fields` parameter to pass an array of field names. Only the matching metadata will be returned; if you pass both, you get the union of the two. Note that `forms` takes the unique instrument name (Column B of the data dictionary), not the display label you see in the UI.
 
 **Q: What format is best for metadata export?**
 
-**A:** JSON is easiest to parse programmatically and preserves structure. CSV is the native REDCap format and can be imported back (see [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)). XML works but is more verbose.
+**A:** JSON is easiest to parse programmatically and preserves structure. CSV is the native REDCap format and can be imported back (see [RC-API-08 — Import Metadata (Data Dictionary) API](RC-API-08_Import-Metadata.md)); note that some CSV cells carry a leading apostrophe (see §4), which the import removes. XML works but is more verbose.
 
 **Q: Does the metadata include calculated fields and matrices?**
 
-**A:** Yes, all field types are included: text, choice, calculated, checkbox, radio, matrix, file upload, and custom fields. All field properties are returned.
+**A:** Yes. Every field type is included (text, dropdown, radio, checkbox, calculated, matrix, file upload, descriptive, slider, SQL and so on), with all field properties. The one exception is the automatic `<instrument>_complete` status fields, which are never listed.
 
 **Q: Can I use this to audit project structure changes?**
 
@@ -227,7 +244,9 @@ The method returns the complete data dictionary in the requested format. Each ro
 
 # 6. Common Mistakes & Gotchas
 
-**Passing the form display label instead of the form name in the `forms` parameter.** The `forms` parameter takes the unique instrument name as it appears in Column B of the data dictionary (e.g., `baseline_survey`), not the human-readable label shown in the UI (e.g., `Baseline Survey`). REDCap does not match it and does not filter either: on 17.5.6, `forms[0]=Lab Results` returned the **entire** data dictionary with HTTP 200 and no warning. Check that the response contains only the instruments you asked for. (Export Records, by contrast, rejects an unknown form name with an error.)
+**Passing the form display label instead of the form name in the `forms` parameter.** The `forms` parameter takes the unique instrument name as it appears in Column B of the data dictionary (e.g., `baseline_survey`), not the human-readable label shown in the UI (e.g., `Baseline Survey`). REDCap does not match it and does not filter either: on 17.5.6, `forms[0]=Lab Results` returned the **entire** data dictionary with HTTP 200 and no warning. Check that the response contains only the instruments you asked for. (Export Records, by contrast, rejects an unknown form name with an error.) Unknown names in `fields` behave the other way: they are dropped, and if none match, the response is empty.
+
+**Expecting Draft Mode changes in the export.** In a production project, the export reflects the approved production metadata only. Fields added or changed in Draft Mode appear after the changes are approved.
 
 **Assuming metadata is lightweight.** For large projects with hundreds of fields and instruments, the metadata response can be large (megabytes). Plan accordingly in your code, especially for network-constrained environments.
 

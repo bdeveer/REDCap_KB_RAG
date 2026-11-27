@@ -5,13 +5,14 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.5.6 (Standard) — §1, §3, §5 (admin token; export-rights
-  and DAG-member behaviour not re-tested) live-tested via the API on a sandbox project
-  (2026-10); LTS line last reviewed against the v17.3.18 (LTS) changelog
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — export-rights,
+  DAG and parameter behaviour checked against source code; §1, §3, §5 (admin token;
+  export-rights and DAG-member behaviour not re-tested) live-tested via the API on
+  a sandbox project on v17.5.6 (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.4'
-last_updated: 2026-10
+version: '1.5'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -39,9 +40,18 @@ The Export Project XML API exports the entire project — all records, events, a
 
 By default, the export includes both metadata and data. Setting `returnMetadataOnly=true` returns only the project structure without any records.
 
-**Important — data export rights apply:** When `returnMetadataOnly` is `false` (the default), your Data Export user rights are enforced. If you have De-Identified or Remove All Identifier Fields export rights, some fields may be stripped from the returned data. Use Full Data Set export rights to ensure no data is filtered out.
+**Important — data exports need Full Data Set rights:** When `returnMetadataOnly` is `false` (the default), your Data Export user rights are checked. Despite the API help page wording that fields "might" be removed, REDCap does not strip fields for users with limited export rights — it refuses the whole export with HTTP 403:
 
-This method requires only the API Export right.
+- Any De-Identified or Remove All Identifier Fields export right in the project returns 403 "You do not have full data export privileges".
+- If you pass `fields`, you need Full Data Set export rights on every instrument that contains those fields. If you do not pass `fields`, you need Full Data Set rights on every instrument.
+- If the record ID field is marked as an identifier, you also need Full Data Set rights on the first instrument.
+- `exportSurveyFields=true` needs Full Data Set rights on every survey-enabled instrument.
+- Double Data Entry users (person 1 or person 2) get 403 for data exports.
+- An unknown field name in `fields` returns HTTP 400.
+
+Metadata-only exports (`returnMetadataOnly=true`) need none of these. **Administrator tokens** are checked against the admin's own user rights in that project (as a project user), so give the admin Full Data Set export rights on all instruments, or use a metadata-only export. Users in a data access group receive only their own DAG's records.
+
+Apart from these data export rights, this method requires only the API Export right.
 
 > **Version caveat (below 17.4.5 Standard / 17.3.11 LTS / 16.0.50 LTS):** The Project XML export endpoint could **bypass the full data export privilege check**, so a user with limited export rights could receive more data than their rights allow. A major security fix; on older instances, treat API Export on any account with restricted export rights as potentially full export through this method.
 
@@ -58,7 +68,7 @@ A standardized XML format (Operational Data Model version 1.3.1) used for repres
 Project structure including field definitions, forms/instruments, events, arms, and validation rules. This is always exported regardless of the `returnMetadataOnly` setting.
 
 ### Data Export Rights
-User-level permissions that control which fields a user can export. Options include Full Data Set, De-Identified, or Remove All Identifier Fields. These rights are enforced even when exporting via API.
+User-level permissions that control which fields a user can export. Options include Full Data Set, De-Identified, or Remove All Identifier Fields. For this method, a data export needs Full Data Set rights on the instruments involved; with lesser rights the export is refused (HTTP 403) rather than filtered (see §1).
 
 ### returnMetadataOnly Parameter
 A boolean flag that determines whether the export includes only the project structure (true) or both structure and record data (false, the default).
@@ -218,7 +228,7 @@ The ODM XML includes all metadata (fields, forms, events, arms) and, unless `ret
 
 **Data included by default:** `returnMetadataOnly` defaults to `'false'`, meaning data is exported unless you explicitly opt out. If you only want the project structure, always pass `returnMetadataOnly='true'`.
 
-**Data export rights apply to returned data:** If your account has De-Identified or Remove All Identifier Fields export rights, those restrictions are enforced on any data returned by this method. Use Full Data Set rights to avoid unexpected field omissions. From 17.5.7 Standard / 17.3.21 LTS / 16.0.57 LTS, a data export needs Full Data Set rights on **all** requested fields; with mixed per-instrument rights, export only the instruments you have full rights to with Export Records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)), or use `returnMetadataOnly=true`. Before those versions, mixed rights were not enforced here at all (see the version caveat in §1).
+**Limited export rights refuse the export:** If your account has De-Identified or Remove All Identifier Fields export rights, a data export through this method fails with HTTP 403 rather than returning filtered data (see §1). Admin tokens are checked against the admin's own rights in the project. From 17.5.7 Standard / 17.3.21 LTS / 16.0.57 LTS, a data export needs Full Data Set rights on **all** requested fields; with mixed per-instrument rights, export only the instruments you have full rights to with Export Records ([RC-API-02 — Export Records API](RC-API-02_Export-Records.md)), or use `returnMetadataOnly=true`. Before those versions, mixed rights were not enforced here at all (see the version caveat in §1).
 
 **`returnFormat` controls errors, not the response:** The response is always CDISC ODM XML. `returnFormat` only affects the format of any error messages returned. Don't confuse it with a general format selector.
 

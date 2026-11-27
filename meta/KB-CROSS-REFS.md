@@ -1657,6 +1657,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-06 — Export Field Names API
 - RC-API-07 — Export Metadata (Data Dictionary) API
 - RC-BL-05 — Branching Logic — Longitudinal Projects
+- RC-API-09 — Export Instruments API
 - RC-API-04 — Delete Records API
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-02 — Data Export: Export Formats
@@ -1770,6 +1771,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-API-02 — Export Records API
 - RC-API-07 — Export Metadata (Data Dictionary) API
+- RC-API-09 — Export Instruments API
 - RC-FD-08 — Data Dictionary: Column Reference & Advanced Techniques
 
 ---
@@ -1836,10 +1838,12 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-15 — Export Instruments PDF API
 - RC-API-02 — Export Records API
 - RC-API-10 — Export Instrument-Event Mappings API
+- RC-API-06 — Export Field Names API
 - RC-FD-01 — Form Design Overview
 - RC-FD-02 — Online Designer
 
 **Inbound links (referenced by):**
+- RC-API-02 — Export Records API
 - RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-11 — Import Instrument-Event Mappings API
 - RC-API-51 — Export Repeating Instruments and Events API
@@ -1857,6 +1861,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-09 — Export Instruments API
 - RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-19 — Export Events API
 - RC-API-20 — Import Events API
 - RC-API-02 — Export Records API
 - RC-API-07 — Export Metadata (Data Dictionary) API
@@ -1971,8 +1976,11 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Outbound links:**
 - RC-API-01 — REDCap API
-- RC-FD-01 — Form Design Overview
+- RC-SURV-08 — e-Consent Framework: Setup & Management
 - RC-SURV-09 — PDF Snapshots of Records
+- RC-API-47 — Export a File (File Repository) API
+- RC-FD-01 — Form Design Overview
+- RC-FILE-01 — File Repository
 
 **Inbound links (referenced by):**
 - RC-API-09 — Export Instruments API
@@ -1989,6 +1997,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-API-17 — Import Arms API
 - RC-API-18 — Delete Arms API
+- RC-API-34 — Export Project Info API
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
@@ -2010,6 +2019,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-16 — Export Arms API
 - RC-API-18 — Delete Arms API
 - RC-API-20 — Import Events API
+- RC-API-34 — Export Project Info API
 - RC-LONG-01 — Longitudinal Project Setup
 
 **Inbound links (referenced by):**
@@ -2054,6 +2064,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-LONG-02 — Repeated Instruments & Events Setup
 
 **Inbound links (referenced by):**
+- RC-API-10 — Export Instrument-Event Mappings API
 - RC-API-20 — Import Events API
 - RC-API-21 — Delete Events API
 - RC-API-51 — Export Repeating Instruments and Events API
@@ -2116,7 +2127,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-01 — REDCap API
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
-- RC-API-31 — Export User-DAG Assignments API
+- RC-API-55 — Export User-Role Assignments API
 - RC-API-25 — Export User Roles API
 - RC-API-23 — Import Users API
 - RC-API-24 — Delete Users API
@@ -2145,8 +2156,10 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-API-22 — Export Users API
-- RC-API-24 — Delete Users API
 - RC-API-26 — Import User Roles API
+- RC-API-56 — Import User-Role Assignments API
+- RC-API-55 — Export User-Role Assignments API
+- RC-API-24 — Delete Users API
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
@@ -2172,6 +2185,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-USER-03 — User Rights: Configuring User Privileges
 - RC-API-22 — Export Users API
+- RC-API-55 — Export User-Role Assignments API
 - RC-API-23 — Import Users API
 
 **Inbound links (referenced by):**
@@ -2357,7 +2371,6 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-33 — Switch DAG API
 
 **Inbound links (referenced by):**
-- RC-API-22 — Export Users API
 - RC-API-28 — Export DAGs API
 - RC-API-29 — Import DAGs API
 - RC-API-30 — Delete DAGs API
@@ -2436,6 +2449,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-API-11 — Import Instrument-Event Mappings API
+- RC-API-16 — Export Arms API
+- RC-API-17 — Import Arms API
 - RC-API-19 — Export Events API
 - RC-API-35 — Import Project Info API
 - RC-API-36 — Export Project XML API
@@ -2692,6 +2707,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-14 — Delete File API
 
 **Inbound links (referenced by):**
+- RC-API-15 — Export Instruments PDF API
 - RC-API-48 — Import a File (File Repository) API
 - RC-API-49 — Delete a File (File Repository) API
 - RC-FILE-01 — File Repository
@@ -2835,6 +2851,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-26 — Import User Roles API
 
 **Inbound links (referenced by):**
+- RC-API-22 — Export Users API
+- RC-API-23 — Import Users API
+- RC-API-24 — Delete Users API
 - RC-API-25 — Export User Roles API
 - RC-API-26 — Import User Roles API
 - RC-API-27 — Delete User Roles API
@@ -2858,6 +2877,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-PROJ-02 — Project Setup Checklist
+- RC-API-23 — Import Users API
 - RC-API-55 — Export User-Role Assignments API
 - RC-IMP-03 — CSV Upload Reference: All Bulk Upload Options in REDCap
 
@@ -6027,6 +6047,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-INST-02 — Institution-Specific Settings & Policies — Test / Staging
 - RC-INST-03 — Institution-Specific Settings & Policies — Development
 - RC-PROJ-02 — Project Setup Checklist
+- RC-API-15 — Export Instruments PDF API
 - RC-FD-02 — Online Designer
 - RC-IMP-07 — Survey Settings CSV — Column Reference and Format Guide
 - RC-SURV-01 — Surveys – Basics
@@ -6375,6 +6396,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 
 **Inbound links (referenced by):**
 - RC-CC-05 — Control Center: File Storage & Upload Settings
+- RC-API-15 — Export Instruments PDF API
 - RC-API-46 — List Files and Folders (File Repository) API
 - RC-EXPRT-05 — Data Export: Report Types & Other Export Options
 

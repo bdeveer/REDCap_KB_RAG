@@ -6,11 +6,13 @@ applies_to:
 - All REDCap projects
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §1–§6 live-tested via the API on a sandbox
-  project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+  project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog. Export
+  Field Names behaviour checked against source code of v17.6.5 (Standard) / v17.3.31
+  and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -40,7 +42,7 @@ The Export Field Names API method returns the export/import-specific version of 
 
 For non-checkbox fields, the export field name is identical to the original field name.
 
-**Note:** File Upload (`file`) and `descriptive` fields are excluded from the returned list. Calculated (`calc`) fields **are** included, and so is each instrument's form status field (`<instrument_name>_complete`), listed after that instrument's last field.
+**Note:** File Upload (`file`) and `descriptive` fields are excluded from the returned list. Calculated (`calc`) fields **are** included, and so is each instrument's form status field (`<instrument_name>_complete`), listed after that instrument's last field. The record ID field is always the first entry.
 
 When to use this method: When you need to construct correct field name references for checkbox fields during data exports or imports, or when you want a lightweight list of importable field names without pulling the full data dictionary.
 
@@ -52,8 +54,8 @@ When to use this method: When you need to construct correct field name reference
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'exportFieldNames'` for this method. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` [default]. |
-| `field` | Optional | A single field's variable name. If provided, returns export field name(s) for that field only. If the field name is invalid, an error is returned. If omitted, all fields are returned. |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'` (default). Set it explicitly. |
+| `field` | Optional | A single field's variable name. If provided, returns export field name(s) for that field only. If the field name is invalid, an error is returned; naming a File Upload or descriptive field returns HTTP 400 `An unknown error occurred`. If omitted, all fields are returned. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is set. |
 
 ---
@@ -192,7 +194,11 @@ The method returns a list ordered by field order. Each entry contains three attr
 ]
 ```
 
-**CSV format:** Returns the same three columns (`original_field_name`, `choice_value`, `export_field_name`) with a header row, one row per field/choice combination.
+**CSV format:** Returns the same three columns (`original_field_name`, `choice_value`, `export_field_name`) with a header row, one row per field/choice combination. The delimiter follows the token owner's CSV delimiter preference in My Profile, so it is not necessarily a comma.
+
+**Checkbox codes that are not plain numbers.** In `export_field_name` the coded value is lowercased, `-` and `.` become `_`, and other special characters are dropped. A choice coded `-1` exports as `symptoms____1` (four underscores) and `1.5` as `symptoms___1_5`; `choice_value` keeps the original code.
+
+**Missing data codes.** If the project defines missing data codes (Project Setup → Additional customizations), each checkbox also gets one `field___<code>` entry per missing data code (for example `symptoms___unk`), unless the field has the `@NOMISSING` action tag. Expect more checkbox columns than the field has choices.
 
 ---
 
@@ -200,7 +206,7 @@ The method returns a list ordered by field order. Each entry contains three attr
 
 **Q: What's the difference between export_field_name and other field identifiers?**
 
-**A:** The `export_field_name` is the internal field name used in API calls, data exports, and calculations. It is the same as the "Variable Name" shown in the Data Dictionary. Other identifiers like field label (the descriptive name shown to users) are different.
+**A:** The `export_field_name` is the column name used in data exports and record imports (CSV headers, flat JSON/XML keys). For most fields it is the same as the "Variable Name" shown in the Data Dictionary. Checkboxes are the exception: each option gets its own `field_name___code` export name, while branching logic and calculations refer to the option as `[field_name(code)]`, not by its export name. The field label (the descriptive text shown to users) is a different thing again.
 
 **Q: Can I query multiple fields at once?**
 

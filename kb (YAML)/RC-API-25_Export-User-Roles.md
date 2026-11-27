@@ -5,12 +5,13 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on
-  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — user role
+  export behaviour checked against source code; §2, §4–§6 live-tested via the API
+  on a sandbox project on v17.5.6 (2026-10); pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -45,7 +46,7 @@ Use this method to audit role configurations, generate reports of role-based acc
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Export and User Rights rights (Read Only access to User Rights is enough). |
 | `content` | Required | Always `'userRole'` for this method. |
 | `format` | Optional | Return format: `'csv'`, `'json'`, or `'xml'` (default). |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
@@ -140,6 +141,17 @@ On success, the method returns an array (or CSV table) of role objects in the re
 
 `unique_role_name`, `role_label`, `design`, `alerts`, `user_rights`, `data_access_groups`, `reports`, `stats_and_charts`, `manage_survey_participants`, `calendar`, `data_import_tool`, `data_comparison_tool`, `logging`, `email_logging`, `file_repository`, `data_quality_create`, `data_quality_execute`, `api_export`, `api_import`, `api_modules`, `mobile_app`, `mobile_app_download_data`, `record_create`, `record_rename`, `record_delete`, `lock_records_customization`, `lock_records`, `lock_records_all_forms`, `forms`, `forms_export`
 
+Some attributes appear only when the related feature is in use:
+
+- `mycap_participants` — MyCap is enabled for the project.
+- `data_quality_resolution` — the Data Resolution Workflow is enabled.
+- `double_data` — the project uses Double Data Entry.
+- `random_setup`, `random_dashboard`, `random_perform` — randomization is enabled.
+- `redcap_share` — Clinical Data Interoperability Services (FHIR) is enabled.
+- `mobile_app`, `mobile_app_download_data` — dropped when the REDCap Mobile App is disabled system-wide.
+
+> **Version caveat (17.3 and later):** `redcap_share` is returned only on 17.3 and later; a 16.0 instance does not include it even when Clinical Data Interoperability Services is enabled. If your script compares role exports across servers, treat the attribute as optional.
+
 The `forms` attribute is the only one with sub-elements — it contains one entry per data collection instrument, each with its own Form Rights value.
 
 **Value KEY:**
@@ -147,8 +159,8 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 | Attribute | Value meanings |
 |---|---|
 | `forms_export` (per instrument) | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
-| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses |
-| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only); add 8 to also grant Edit Survey Responses; add 16 to also grant Delete rights |
+| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses. Still accepted on import. |
+| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only). The extra rights apply to View & Edit only: 138 = View & Edit + Edit Survey Responses, 146 = View & Edit + Delete, 154 = View & Edit + Edit Survey Responses + Delete |
 | All other attributes | 0 = No Access, 1 = Access |
 
 ---
@@ -173,7 +185,7 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 **Q: Are built-in roles (like 'Admin') included in the export?**
 
-**A:** No. Only custom roles defined in the project are exported. Built-in REDCap roles (Admin, Standard User, etc.) are not returned by this method.
+**A:** REDCap has no built-in roles. Every role defined in the project is exported, whoever created it.
 
 ---
 
@@ -185,7 +197,7 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 **Comparing values as integers.** In this export the permission flags are strings (`"0"`/`"1"`), while Export Users ([RC-API-22 — Export Users API](RC-API-22_Export-Users.md)) returns them as integers. `forms` and `forms_export` values are integers in both. Normalise the type before comparing roles with users.
 
-**Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. If your token lacks User Rights, the export will fail with an authentication error.
+**Forgetting the User Rights permission.** This method requires both API Export and User Rights rights. If your user has no User Rights access, the request returns HTTP 400 with "Insufficient user privileges…"; without API Export it returns HTTP 403. Neither is an authentication error — the token is valid, the rights are missing. Read Only access to User Rights is enough for this export.
 
 **Using exported roles to directly import to another project.** Role definitions exported from one project can be imported to another, but ensure the permission flags match your target project's configuration. Verify that the roles are compatible before importing.
 

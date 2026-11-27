@@ -253,14 +253,14 @@ version on every article, because each source-reviewed article gets a pinned
 | 5c Automation | SURV-06/07, ALERT-01/02 (4) | Done 2026-11-25 (4; sweep: IMP-10 column count left to 5d) |
 | 5d MLM and upload formats | MLM-01, IMP-05–10 (7; IMP 3 per agent) | Done 2026-11-25 (7; sweep: ALERT-02 codes already fixed by 5c) |
 | 6a Exports | EXPRT-01/02/05/06/07/08 (6) | Done 2026-11-25 (6 + 2 from the sweep) |
-| 6b Data entry | DE-01/02/11/12, DDE-01 (5) | — |
+| 6b Data entry | DE-01/02/11/12, DDE-01 (5) | Done 2026-11-26 (5) |
 | 6c Data quality and navigation | DQ-01, NAV-REC-01/04, NAV-UI-01/02 (5) | Done 2026-11-26 (5 + 3 from the sweep) |
 | 6d Designer I | FD-01/04/05 (3) | Done 2026-11-26 (3 + 1 from the sweep) |
 | 6e Designer II | FD-07/11/12, NAV-UI-03/04 (5) | Done 2026-11-26 (5 + 1 from the sweep) |
-| 6f Project and misc | PROJ-02/03/04, FILE-01, CAL-01, PROF-01 (6) | — |
-| 7a API | API-02–13 except 03, 08 (10; 5 per agent) | — |
-| 7b API | API-14–24 except 18 (10; 5 per agent) | — |
-| 7c API | API-25–36 except 31, 32 (10; 5 per agent) | — |
+| 6f Project and misc | PROJ-02/03/04, FILE-01, CAL-01, PROF-01 (6) | Done 2026-11-26 (6 + 2 from the sweep) |
+| 7a API | API-02–13 except 03, 08 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
+| 7b API | API-14–24 except 18 (10; 5 per agent) | Done 2026-11-27 (10 + 1 from the sweep) |
+| 7c API | API-25–36 except 31, 32 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
 | 7d API | API-37–46 (10; 5 per agent) | — |
 | 7e API | API-47–56 (10; 5 per agent) | — |
 | 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | — |

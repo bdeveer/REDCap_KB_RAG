@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - Longitudinal REDCap projects only
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Export
+  Arms behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -36,9 +36,11 @@ synonyms:
 
 The Export Arms API method retrieves the list of arms (study branches) in a longitudinal REDCap project. Arms exist only in longitudinal projects and represent parallel or sequential study pathways. Each arm has a number and a name.
 
-This method returns metadata about arms: their arm numbers, names, and any other configured properties. It is useful for programmatically discovering the project structure or validating arm configuration.
+This method returns two values per arm: its arm number (`arm_num`) and its name. Arms are sorted by arm number. Only arms that have at least one event are exported; an arm you created but have not yet given any events is left out of the response. The method is useful for programmatically discovering the project structure or validating arm configuration.
 
-> **Important:** Arms exist only in longitudinal projects. This method will return an error if called on a classic (non-longitudinal) project.
+> **Important:** Arms exist only in longitudinal projects. Called on a classic (non-longitudinal) project, this method returns HTTP 400 with the error "You cannot export arms for classic projects".
+
+> **Version caveat (REDCap 16.0.61 LTS vs 17.x):** On 16.0.61 LTS, Export Arms also returns "You cannot export arms for classic projects" for a project that has longitudinal data collection enabled but only one event defined. On 17.x the method only checks whether longitudinal data collection is enabled. If you are on 16.0.61 and get this error on a longitudinal project, check that it has more than one event (Export Events or Project Setup → Define My Events).
 
 ---
 
@@ -46,7 +48,7 @@ This method returns metadata about arms: their arm numbers, names, and any other
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Export right. |
+| `token` | Required | Your project API token. Requires the API Export right; Project Design and Setup rights are not needed. |
 | `content` | Required | Always `'arm'` for this method. |
 | `format` | Optional | Output format: `csv`, `json`, or `xml`. Default is `xml`. |
 | `arms` | Optional | Array of specific arm numbers to export. If omitted, all arms are returned. |
@@ -154,13 +156,17 @@ Example JSON response:
 ]
 ```
 
+In JSON, `arm_num` is returned as a number, not a string. The XML response wraps each arm in an `<item>` element inside `<arms>`, with `<arm_num>` and `<name>` children. CSV returns a header row `arm_num,name` followed by one row per arm.
+
+Each call is recorded in the project Logging as "Export arms (API)".
+
 ---
 
 # 5. Common Questions
 
 **Q: I called Export Arms on my project and got an error. Why?**
 
-**A:** Export Arms only works on longitudinal projects. If your project is classic (non-longitudinal), this method will not work. Check your project setup under Project Setup → Project Type to confirm that your project is longitudinal.
+**A:** Export Arms only works on longitudinal projects. On a classic (non-longitudinal) project it returns HTTP 400 with "You cannot export arms for classic projects". Check on the Project Setup page whether longitudinal data collection is enabled, or call Export Project Info and check `is_longitudinal`. On 16.0.61 LTS, the same error also appears for a longitudinal project with only one event (see the version caveat in Section 1).
 
 **Q: Can I export arms from a classic project?**
 
@@ -178,13 +184,19 @@ Example JSON response:
 
 **A:** Yes. Pass an array of arm numbers in the `arms` parameter to limit the response to only those arms. If you omit the parameter, all arms in the project are returned.
 
+**Q: I just created an arm but it is missing from the export. Why?**
+
+**A:** Export Arms only returns arms that have at least one event. Add an event to the new arm (Import Events or Project Setup → Define My Events) and it will appear in the export.
+
 ---
 
 # 6. Common Mistakes & Gotchas
 
-**Calling Export Arms on a classic project.** Arms are a longitudinal-only feature. If your project is not longitudinal, this method will fail. Always verify your project type before calling this method.
+**Calling Export Arms on a classic project.** Arms are a longitudinal-only feature. If your project is not longitudinal, this method fails with "You cannot export arms for classic projects". Always verify your project type before calling this method.
 
-**Not checking if the project is longitudinal.** If your code is designed to work with multiple projects, check whether each project is longitudinal before calling Export Arms. Use the Project Metadata API or check the project setup.
+**Not checking if the project is longitudinal.** If your code is designed to work with multiple projects, check whether each project is longitudinal before calling Export Arms. Use [Export Project Info](RC-API-34_Export-Project-Info.md) and check `is_longitudinal` (the metadata/data dictionary export does not tell you this). Note that `is_longitudinal` is only `1` when longitudinal data collection is enabled and the project has more than one event, which also matches when 16.0.61 LTS will accept the call.
+
+**Expecting every arm in the export.** Arms without any events are not returned. If you just created an arm with Import Arms, add its events before relying on it appearing in Export Arms.
 
 **Assuming arm numbers are sequential starting from 1.** Although arm numbers are typically sequential (1, 2, 3), do not assume this. Always parse the response and use the actual `arm_num` values returned.
 
@@ -197,4 +209,5 @@ Example JSON response:
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
 - [RC-API-17 — Import Arms API](RC-API-17_Import-Arms.md) (add or modify arms in a project)
 - [RC-API-18 — Delete Arms API](RC-API-18_Delete-Arms.md) (remove arms from a project)
+- [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md) (check `is_longitudinal` before calling Export Arms)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms are configured in a longitudinal project)

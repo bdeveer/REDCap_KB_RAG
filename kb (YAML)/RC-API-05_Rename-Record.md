@@ -6,11 +6,13 @@ applies_to:
 - All REDCap projects
 requires: Any supported version
 verified_against: REDCap v17.5.6 (Standard) — §2, §4–§6 live-tested via the API on
-  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog
+  a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog.
+  Rename Record behaviour checked against source code of v17.6.5 (Standard) / v17.3.31
+  and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: 2026-10
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -52,8 +54,8 @@ When to use this method: When you need to rename a record ID to a new value, and
 | `action` | Required | Always `'rename'` for this method. |
 | `record` | Required | The current record ID (the one to be renamed). |
 | `new_record_name` | Required | The new record ID to assign. |
-| `arm` | Optional | The arm number (for multi-arm projects). If omitted, all records with the same name across all arms are renamed to the new record name. If specified, only the record in that arm is renamed. |
-| `returnFormat` | Optional | Response format: `'json'` (default) or `'xml'`. |
+| `arm` | Optional | The arm number. Only meaningful in multi-arm projects. If omitted, all records with the same name across all arms are renamed to the new record name. If specified, only the record in that arm is renamed. An arm number that doesn't exist returns HTTP 400. |
+| `returnFormat` | Optional | `'json'` (default) or `'xml'`. Has little practical effect: the success body and most failure messages are plain text whatever you choose (see §4). |
 
 ---
 
@@ -160,8 +162,11 @@ On success, the API returns `1`. Most failures are **also HTTP 200**, with a pla
 | New name already exists | `Study ID "1" could not be changed to "2" because that record already exists! Please try again.` |
 | Record doesn't exist | `Current Record does not exists.` |
 | `new_record_name` missing | `New record name must be provided.` |
+| `record` missing | `Current record name must be provided.` |
 
-A missing Rename Record privilege is a real error (non-200). Check that the body is exactly `1`.
+Some failures are real errors (non-200): a missing Rename Record privilege or a record outside the user's Data Access Group (HTTP 403), and an invalid `arm` (HTTP 400). Check that the body is exactly `1`.
+
+The rename is recorded in the project's Logging (old name, new name and arm), and the record's history follows it to the new name. In a double data entry project the `--1` / `--2` suffix is kept.
 
 ---
 
@@ -169,7 +174,7 @@ A missing Rename Record privilege is a real error (non-200). Check that the body
 
 **Q: Can I rename a record to a record ID that already exists?**
 
-**A:** No. The new record name must be unique within the project. If you try to rename a record to an ID that already exists, the API returns an error.
+**A:** No. If the new name already exists in the arm(s) being renamed, the API returns the "already exists" message and nothing changes. In a multi-arm project, however, the check only covers the arm(s) being renamed: renaming to a name that exists only in another arm succeeds and the two become one record across arms (the casing is adjusted to match the existing record). Check all arms with Export Records before renaming if you don't intend that.
 
 **Q: Does renaming a record delete the old record?**
 
@@ -181,7 +186,7 @@ A missing Rename Record privilege is a real error (non-200). Check that the body
 
 **Q: Can I rename a record that has already been locked?**
 
-**A:** This depends on your project's locking configuration. If records are locked, you may not be able to rename them. Check your project settings and user permissions.
+**A:** Yes. Locking does not block a rename: locked instruments and e-signatures stay in place and follow the record to its new name. If a record is locked because it must not change, agree on renames with whoever manages locking first.
 
 **Q: What format should the new record name be in?**
 
@@ -199,7 +204,7 @@ A missing Rename Record privilege is a real error (non-200). Check that the body
 
 **Not handling non-existent records.** If you attempt to rename a record that doesn't exist, the API returns a message instead of `1`. Your code must verify that the record exists before attempting to rename it.
 
-**Duplicate new_record_name.** If the new record name already exists in the project, the rename operation fails. Always check for uniqueness first.
+**Duplicate new_record_name.** If the new record name already exists in the arm being renamed, the rename operation fails. In a multi-arm project a name that exists only in another arm is not rejected — the records are joined under that name. Always check for uniqueness across all arms first.
 
 **Arm mismatch in multi-arm projects.** In a multi-arm project, specifying the wrong arm number will cause the operation to fail or rename the wrong record. Be explicit about arm assignment.
 

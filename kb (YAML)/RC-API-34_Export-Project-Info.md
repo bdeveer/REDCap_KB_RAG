@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Export
+  Project Info behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.2'
-last_updated: '2026'
+version: '1.3'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -38,7 +38,7 @@ synonyms:
 
 The Export Project Info API retrieves project metadata and configuration settings without exporting the actual data or instruments. This is useful for auditing project structure, verifying project properties programmatically, or comparing projects across instances. You receive information such as project title, production status, longitudinal configuration, survey enablement, and other key project attributes.
 
-This method requires only the API Export right and returns a JSON object containing all project-level configuration fields.
+This method requires only the API Export right and returns a single item containing all project-level configuration fields, in XML by default or in JSON or CSV if you set `format`.
 
 ---
 
@@ -48,13 +48,13 @@ This method requires only the API Export right and returns a JSON object contain
 Project-level configuration and properties including title, production status, longitudinal/survey settings, PI information, and structural flags. This does not include data or instrument designs.
 
 ### Production Status
-A boolean field indicating whether the project is in production (active data collection) or in development/draft mode. Once a project is in production, certain structural changes are restricted.
+The `in_production` field holds the project status: `0` = Development, `1` = Production, `2` = Analysis/Cleanup. Once a project is in production, certain structural changes are restricted.
 
 ### API Export Privilege
 A permission that allows reading project data, metadata, and configuration via the API. This is the only privilege required for the Export Project Info method.
 
 ### Boolean Fields
-Metadata fields that represent true/false values returned as `'0'` (false) or `'1'` (true) in the API response, rather than as JSON boolean types.
+Metadata fields that represent true/false values as `0` (false) or `1` (true) rather than as JSON boolean types. In JSON they come back as numbers (`1`), not strings (`"1"`); in CSV and XML they are plain text.
 
 ### Configuration Flag
 A binary setting that controls project behavior, such as `surveys_enabled`, `randomization_enabled`, `record_autonumbering_enabled`, or `is_longitudinal`.
@@ -158,7 +158,7 @@ print $output;
 
 # 5. Response
 
-The API returns project metadata in the format specified. Boolean values are represented as `'0'` (false) or `'1'` (true). All date/time values are returned in `Y-M-D H:M:S` format.
+The API returns project metadata in the format specified. Boolean values are represented as `0` (false) or `1` (true) — as numbers in JSON. All date/time values are returned in `Y-M-D H:M:S` format.
 
 **Returned fields:**
 
@@ -168,12 +168,12 @@ The API returns project metadata in the format specified. Boolean values are rep
 | `project_title` | String | Project name |
 | `creation_time` | DateTime | When the project was created |
 | `production_time` | DateTime | When the project was moved to production |
-| `in_production` | Boolean | Whether the project is currently in production |
+| `in_production` | Integer | Project status: `0` = Development, `1` = Production, `2` = Analysis/Cleanup |
 | `project_language` | String | Language used in the project interface |
 | `purpose` | Integer | Project purpose code |
 | `purpose_other` | String | Free-text description when purpose is "Other" |
 | `project_notes` | String | Notes about the project |
-| `custom_record_label` | String | Custom label for the record ID field |
+| `custom_record_label` | String | The project's Custom Record Label (shown next to record names, e.g. in the record dropdown) — not a label for the record ID field |
 | `secondary_unique_field` | String | Field name designated as a secondary unique field |
 | `is_longitudinal` | Boolean | Whether the project is longitudinal |
 | `has_repeating_instruments_or_events` | Boolean | Whether repeating instruments or events are enabled |
@@ -188,8 +188,8 @@ The API returns project metadata in the format specified. Boolean values are rep
 | `project_pi_lastname` | String | Principal investigator last name |
 | `project_pi_email` | String | Principal investigator email address |
 | `display_today_now_button` | Boolean | Whether the Today/Now button is shown |
-| `missing_data_codes` | String | Configured missing data codes |
-| `external_modules` | String | Enabled external modules |
+| `missing_data_codes` | String | Configured missing data codes, as `code, label \| code, label` |
+| `external_modules` | String | Comma-separated list of the prefixes of the external modules enabled in the project |
 | `bypass_branching_erase_field_prompt` | Boolean | Corresponds to the **Prevent branching logic from hiding fields that have values** project setting. `1` does not mean "erase silently" — it means fields holding a value are exempt from branching logic and stay visible, so the prompt never arises. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md) §11. |
 
 ---
@@ -219,7 +219,7 @@ The API returns project metadata in the format specified. Boolean values are rep
 
 **Assuming read/write permission:** This API method uses only the Export right. You do not need (and should not have) Project Setup or Data Import/Manipulation rights to run this method.
 
-**Checking `in_production` vs production status in UI:** The `in_production` field returned is an integer (0 or 1), not a boolean. Always test with `== "1"` rather than boolean checks in scripting languages.
+**Checking `in_production` vs production status in UI:** The `in_production` field is the project status, not a boolean: `0` Development, `1` Production, `2` Analysis/Cleanup. A truthy check treats Analysis/Cleanup as production, so compare against the exact value. In JSON the value is a number, so compare with `== 1` (or convert with `int()` first); in CSV and XML it is text, so compare with `== "1"`.
 
 ---
 

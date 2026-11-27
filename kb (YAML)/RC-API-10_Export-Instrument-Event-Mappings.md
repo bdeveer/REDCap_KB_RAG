@@ -6,11 +6,12 @@ applies_to:
 - Longitudinal REDCap projects only
 requires: Any supported version
 verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+  not re-captured. Export Instrument-Event Mappings behaviour checked against source
+  code of v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS)
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -19,6 +20,8 @@ related:
   title: Export Instruments API
 - id: RC-API-11
   title: Import Instrument-Event Mappings API
+- id: RC-API-19
+  title: Export Events API
 - id: RC-API-20
   title: Import Events API
 tags:
@@ -44,8 +47,10 @@ When to use this method: When you need to understand the instrument-event struct
 
 # 2. Important Notes
 
-- **Longitudinal Only:** This method only works with longitudinal projects. If you use it on a classic (non-longitudinal) project, it returns an error or empty result.
-- **Requires API Export Right:** You must have API Export permission on the project.
+- **Longitudinal Only:** This method only works with longitudinal projects. On a classic (non-longitudinal) project it returns HTTP 400 with the error "You cannot export form/event mappings for classic projects".
+- **Requires API Export Right:** You must have API Export permission on the project. Project Design/Setup is not needed to export.
+- **Do not send a `data` parameter:** Export and import share the same `content` value. A request that includes `data` is treated as an import (see [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md)), which replaces the project's mappings.
+- **Logged:** Each export is recorded in the project's Logging.
 - **Read-Only:** This method only exports mappings. To modify mappings, use [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md) (Import Instrument-Event Mappings).
 
 ---
@@ -56,8 +61,8 @@ When to use this method: When you need to understand the instrument-event struct
 |---|---|---|
 | `token` | Required | Your project API token. Requires API Export right. |
 | `content` | Required | Always `'formEventMapping'` for this method. |
-| `format` | Required | Response format: `'csv'`, `'json'`, or `'xml'` [default: `xml`]. |
-| `arms` | Optional | An array of arm numbers to filter results to specific arms. By default, mappings for all arms are returned. |
+| `format` | Optional | Response format: `'csv'`, `'json'`, or `'xml'` [default: `xml`]. |
+| `arms` | Optional | An array of arm numbers (or a comma-separated string, e.g. `1,2`) to filter results to specific arms. By default, mappings for all arms are returned. Arm numbers that do not exist are ignored; if none match, the result is empty. |
 | `returnFormat` | Optional | Specifies the format of error messages: `'csv'`, `'json'`, or `'xml'`. If omitted, defaults to the `format` value (or `xml` if `format` was also omitted). Does not apply when using a background process (`backgroundProcess=true`) — in that case, `success:true` or `success:false` is returned in the appropriate format. |
 
 ---
@@ -181,7 +186,9 @@ The method returns the mapping of instruments to events, organized by arm and ev
 ]
 ```
 
-**CSV format:** A table with columns arm_num, unique_event_name, and form, with one row per instrument-event mapping.
+**CSV format:** A table with columns arm_num, unique_event_name, and form, with one row per instrument-event mapping. The CSV delimiter follows the token owner's delimiter preference in their REDCap profile.
+
+Rows are ordered by arm, then event, then instrument. If no mappings match (for example, an `arms` filter with no matching arm), JSON returns `[]` and XML returns an empty `<items>` element.
 
 ---
 
@@ -205,7 +212,7 @@ The method returns the mapping of instruments to events, organized by arm and ev
 
 **Q: Can I use this to clone a longitudinal project's structure?**
 
-**A:** Yes. Export the mappings from the source project, export events ([RC-API-20 — Import Events API](RC-API-20_Import-Events.md)), export instruments ([RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md)), and export metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)). Use these to recreate the structure in a new project.
+**A:** Yes. Export the mappings from the source project, export events ([RC-API-19 — Export Events API](RC-API-19_Export-Events.md)), export instruments ([RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md)), and export metadata ([RC-API-07 — Export Metadata (Data Dictionary) API](RC-API-07_Export-Metadata.md)). Use these to recreate the structure in a new project.
 
 **Q: Can I retrieve mappings for just one arm instead of all arms?**
 
@@ -217,7 +224,7 @@ The method returns the mapping of instruments to events, organized by arm and ev
 
 **Not specifying `format` and getting XML back unexpectedly.** The default format for this method is `xml`, not `json`. If you omit the `format` parameter, you will receive an XML response. Always pass `format=json` (or `format=csv`) explicitly if you want non-XML output.
 
-**Using on a classic (non-longitudinal) project.** This method does not work on classic projects. If you call it on a non-longitudinal project, you get an error or empty result. Always verify the project is longitudinal first.
+**Using on a classic (non-longitudinal) project.** This method does not work on classic projects. If you call it on a non-longitudinal project, you get an HTTP 400 error. Always verify the project is longitudinal first.
 
 **Confusing form and instrument names.** The `form` column in the response contains instrument (form) names, not field names. Do not try to use these names as field names in other API calls.
 
@@ -234,6 +241,7 @@ The method returns the mapping of instruments to events, organized by arm and ev
 - [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) (overview; authentication, tokens, playground)
 - [RC-API-09 — Export Instruments API](RC-API-09_Export-Instruments.md) (list available instruments)
 - [RC-API-11 — Import Instrument-Event Mappings API](RC-API-11_Import-Instrument-Event-Mappings.md) (modify the mappings)
+- [RC-API-19 — Export Events API](RC-API-19_Export-Events.md) (list events and their unique event names)
 - [RC-API-20 — Import Events API](RC-API-20_Import-Events.md) (create or update events)
 - [RC-LONG-01 — Longitudinal Project Setup](RC-LONG-01_Longitudinal-Project-Setup.md) (how arms and events are configured; instrument-event mapping context)
 - [RC-LONG-02 — Repeated Instruments & Events Setup](RC-LONG-02_Repeated-Instruments-and-Events-Setup.md) (how repeating instruments affect event mappings)

@@ -5,12 +5,12 @@ domain: API
 applies_to:
 - All REDCap projects
 requires: Any supported version
-verified_against: REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page
-  not re-captured
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — user role
+  import behaviour checked against source code; pages not re-captured
 prerequisites:
 - RC-API-01 — REDCap API
-version: '1.1'
-last_updated: '2026'
+version: '1.2'
+last_updated: 2026-11
 source: REDCap API v16.1.3 official documentation examples
 related:
 - id: RC-API-01
@@ -44,10 +44,10 @@ Use this method to automate role management, create role templates programmatica
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import and full User Rights access (Read Only User Rights is not enough). |
 | `content` | Required | Always `'userRole'` for this method. |
 | `format` | Optional | Data format: `'csv'`, `'json'`, or `'xml'` (default). |
-| `data` | Required | Array of role objects in the specified format. Each object must include `role_label` and permission flags. Optionally include `unique_role_name` to update an existing role. See Section 2.1 for the full attribute list, value KEY, and format examples. |
+| `data` | Required | Array of role objects in the specified format. Each object must include `role_label` and permission flags. Include an existing `unique_role_name` to update that role; leave it blank to create a new one. See Section 2.1 for the full attribute list, value KEY, and format examples. |
 | `returnFormat` | Optional | Format for error messages: `'csv'`, `'json'`, or `'xml'`. Defaults to the value of `format` if not specified, or `'xml'` if neither is provided. Does not apply when using background processing. |
 
 ## 2.1 Data Attribute Reference
@@ -62,21 +62,25 @@ The `forms` attribute is the only one with sub-elements — it contains one entr
 
 | Attribute | Value meanings |
 |---|---|
-| `data_export_tool` | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
-| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses |
-| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only); add 8 to also grant Edit Survey Responses; add 16 to also grant Delete rights |
-| All other attributes | 0 = No Access, 1 = Access |
+| `forms_export` (per instrument) | 0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields |
+| `forms` (legacy, before v15.6) | 0 = No Access, 1 = View & Edit records (survey responses read-only), 2 = Read Only, 3 = Edit Survey Responses. Still accepted on import. |
+| `forms` (from v15.6) | 128 = No Access, 129 = Read Only, 130 = View & Edit records (survey responses read-only). The extra rights apply to View & Edit only: 138 = View & Edit + Edit Survey Responses, 146 = View & Edit + Delete, 154 = View & Edit + Edit Survey Responses + Delete |
+| All other attributes | 0 = No Access, 1 = Access (send numbers, not words like `yes`) |
+
+Roles have no `data_export_tool` or `data_export` attribute; if you send one it is ignored. Export rights are set per instrument in `forms_export`.
+
+> **Version caveat (16.0):** updating a role whose form rights use the newer values (128–154) may silently not save — the role is not counted in the returned number and no error is given. After updating a role on 16.0, check it on the User Rights page, or upgrade.
 
 **Missing attribute behavior:**
 
-- **New role**: any attribute not provided defaults to minimum privileges (typically 0 = No Access).
-- **Existing role update**: any attribute not provided is left unchanged — only the attributes you include will be modified.
+- **New role**: any attribute not provided defaults to minimum privileges (0 = No Access; instruments not listed get No Access).
+- **Existing role update**: any right flag not provided is reset to 0 (off) — it is **not** left unchanged. Only `forms` and `forms_export` are kept as they are if you omit them entirely; if you supply them partially, any instrument you don't list becomes No Access. The safe pattern is to export the role first ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)), change the values you need, and send back the full role.
 
 **JSON example:**
 
 ```json
 [{"unique_role_name":"U-2119C4Y87T","role_label":"Project Manager",
-"design":"0","user_rights":"1","data_access_groups":"1","data_export_tool":"0","reports":"1","stats_and_charts":"1",
+"design":"0","user_rights":"1","data_access_groups":"1","reports":"1","stats_and_charts":"1",
 "manage_survey_participants":"1","calendar":"1","data_import_tool":"0","data_comparison_tool":"0","logging":"0",
 "file_repository":"1","data_quality_create":"0","data_quality_execute":"0","api_export":"0","api_import":"0","api_modules":"0",
 "mobile_app":"0","mobile_app_download_data":"0","record_create":"1","record_rename":"0","record_delete":"0",
@@ -96,7 +100,7 @@ U-2119C4Y87T,Project Manager,0,0,"demographics:1,day_3:2,other:0","demographics:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
-<users>
+<userRoles>
    <item>
       <unique_role_name>U-527D39JXAC</unique_role_name>
       <role_label>Data Entry Person</role_label>
@@ -113,7 +117,7 @@ U-2119C4Y87T,Project Manager,0,0,"demographics:1,day_3:2,other:0","demographics:
          <other>2</other>
       </forms_export>
    </item>
-</users>
+</userRoles>
 ```
 
 ---
@@ -125,10 +129,11 @@ U-2119C4Y87T,Project Manager,0,0,"demographics:1,day_3:2,other:0","demographics:
 from config import config
 import requests, json
 
+# Updating an existing role: any right flag left out is reset to 0,
+# so send the full role (export it first, change values, send it back).
 record = {
     'unique_role_name'           : 'U-527D39JXAC',
     'role_label'                 : 'Project Manager',
-    'data_export_tool'           : 1,
     'mobile_app'                 : 1,
     'mobile_app_download_data'   : 1,
     'lock_records_all_forms'     : 1,
@@ -151,6 +156,8 @@ record = {
     'reports'                    : 1,
     'user_rights'                : 1,
     'design'                     : 1,
+    'forms'                      : {'demographics': 130, 'day_3': 130, 'other': 129},
+    'forms_export'               : {'demographics': 1, 'day_3': 2, 'other': 0},
 }
 
 data = json.dumps([record])
@@ -178,7 +185,6 @@ library(jsonlite)
 record <- c(
 	'unique_role_name'='U-527D39JXAC',
     'role_label'='ProjectManager',
-    'data_export_tool'=1,
     'mobile_app'=1,
     'mobile_app_download_data'=1,
     'lock_records_all_forms'=1,
@@ -221,7 +227,7 @@ print(result)
 
 . ./config
 
-DATA="token=$API_TOKEN&content=userRole&format=json&data=[{\"unique_role_name\":\"U-2119C4Y87T\",\"role_label\":\"Project Manager\",\"data_export_tool\":\"0\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_records_all_forms\":\"0\",\"lock_records\":\"0\",\"lock_records_customization\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_create\":\"1\",\"file_repository\":\"1\",\"logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"stats_and_charts\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
+DATA="token=$API_TOKEN&content=userRole&format=json&data=[{\"unique_role_name\":\"U-2119C4Y87T\",\"role_label\":\"Project Manager\",\"mobile_app\":\"0\",\"mobile_app_download_data\":\"0\",\"lock_records_all_forms\":\"0\",\"lock_records\":\"0\",\"lock_records_customization\":\"0\",\"record_delete\":\"0\",\"record_rename\":\"0\",\"record_create\":\"1\",\"api_import\":\"1\",\"api_export\":\"1\",\"api_modules\":\"1\",\"data_quality_execute\":\"1\",\"data_quality_create\":\"1\",\"file_repository\":\"1\",\"logging\":\"1\",\"data_comparison_tool\":\"1\",\"data_import_tool\":\"1\",\"calendar\":\"1\",\"stats_and_charts\":\"1\",\"reports\":\"1\",\"user_rights\":\"1\",\"design\":\"1\"}]"
 
 $CURL -H "Content-Type: application/x-www-form-urlencoded" \
       -H "Accept: application/json" \
@@ -239,7 +245,6 @@ include 'config.php';
 $record = array(
     'unique_role_name'           => 'U-527D39JXAC',
     'role_label'                 => 'Project Manager',
-    'data_export_tool'           => '1',
     'mobile_app'                 => '1',
     'mobile_app_download_data'   => '1',
     'lock_records_all_forms'     => '1',
@@ -298,13 +303,15 @@ print $output;
 
 On success, the API returns a count of roles created or modified. For example: `1` means one role was created or updated.
 
+Badly formed JSON returns HTTP 200 with the body `The data is not in the specified format.` rather than an error status, so scripts should check the response body, not just the status code.
+
 ---
 
 # 5. Common Questions
 
 **Q: How do I update an existing role?**
 
-**A:** Include the `unique_role_name` field in your import data. If the role ID exists, the API will update that role's label and permissions. If the ID is omitted or does not exist, a new role is created.
+**A:** Include the role's `unique_role_name` in your import data; the API updates that role's label and permissions. To create a new role, leave `unique_role_name` blank. A `unique_role_name` that does not exist in the project is rejected with HTTP 400 `Invalid Unique Role Names: …`, and nothing in that import is saved.
 
 **Q: What is `unique_role_name`?**
 
@@ -312,11 +319,19 @@ On success, the API returns a count of roles created or modified. For example: `
 
 **Q: Do I have to include all permission fields?**
 
-**A:** It depends on whether you are creating or updating. For a **new role**, omitted fields default to minimum privileges (0 = No Access). For an **existing role** (identified by `unique_role_name`), only the fields you include will be changed — omitted fields retain their current values. In both cases, `role_label` is always required.
+**A:** It depends on whether you are creating or updating. For a **new role**, omitted fields default to minimum privileges (0 = No Access). For an **existing role** (identified by `unique_role_name`), yes in practice: every right flag you leave out is reset to 0 (off). Only `forms` and `forms_export` are kept if omitted entirely; if supplied partially, instruments not listed become No Access. Export the role first, change the values, and send back the full role. In both cases, `role_label` is always required.
 
 **Q: Can I create a role with minimal permissions?**
 
-**A:** Yes. For example, a read-only role could set `data_export=1` but leave all other permissions at 0. This restricts the role's abilities to only data export.
+**A:** Yes. For example, a read-only reviewer role could set every instrument to Read Only in `forms` and grant de-identified export in `forms_export`, leaving all other permissions at 0:
+
+```json
+[{"unique_role_name":"","role_label":"Read-only reviewer",
+"forms":{"demographics":"129","day_3":"129","other":"129"},
+"forms_export":{"demographics":"2","day_3":"2","other":"2"}}]
+```
+
+The role can view records and export de-identified data, but cannot create, edit or delete anything.
 
 **Q: What happens if I import a role with the same label as an existing role but different ID?**
 
@@ -326,13 +341,17 @@ On success, the API returns a count of roles created or modified. For example: `
 
 # 6. Common Mistakes & Gotchas
 
-**Confusing field names between role imports and user imports.** User permission fields sometimes differ from role permission fields. For example, roles use `data_export_tool` while users use `data_export`. Consult [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for the exact field names required for each operation.
+**Sending a project-level export right.** Roles have no `data_export_tool` or `data_export` attribute; either is ignored and grants no export rights. Set export rights per instrument in `forms_export` (0 = No Access, 1 = Full Data Set, 2 = De-Identified, 3 = Remove Identifier Fields). Consult [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) for what each right means.
+
+**Updating a role with a partial payload.** On an update, every right flag you leave out is reset to 0, and a partial `forms` or `forms_export` sets unlisted instruments to No Access. Export the role, edit it, and send back the full definition.
 
 **Omitting `role_label`.** This field is required when creating a new role. If omitted, the import will fail. Ensure every role object in your data includes a label.
 
-**Sending invalid JSON.** Ensure your data is valid JSON (or CSV). Invalid syntax will cause the API to reject the request. Test your JSON in a validator.
+**Sending invalid JSON.** Ensure your data is valid JSON (or CSV). Badly formed JSON returns HTTP 200 with `The data is not in the specified format.` — check the response body, not just the status code. Flag values must be numeric (`0`/`1`, not `yes`/`no`).
 
-**Forgetting the User Rights permission.** This method requires both API Import and User Rights rights. If your token lacks User Rights, the import will fail.
+**Forgetting the User Rights permission.** This method requires API Import and full User Rights access. A user with Read Only User Rights gets HTTP 400.
+
+**Breaking Access Control Group compliance.** If the project uses Access Control Groups, an edit that would make users assigned to the role non-compliant is rejected. Adjust the role so its assigned users stay compliant, or reassign them first.
 
 **Attempting to import roles with admin-level permissions without careful review.** Roles with `design` or `user_rights` permissions grant powerful access. Test such roles in a development project before deploying to production.
 

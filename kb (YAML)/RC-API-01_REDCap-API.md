@@ -205,7 +205,7 @@ The REDCap API organizes its functionality into method groups. The methods avail
 | Import Arms | Add or modify arms |
 | Delete Arms | Remove arms |
 
-> **Important — design methods in Production:** **Import Metadata** is refused in a Production project (error 400); it does not go through Draft Mode. Make Production design changes in Draft Mode through the Online Designer or a Data Dictionary upload instead. **Import Instrument-Event Mappings** is also refused in Production. **Import/Delete Events** and **Import/Delete Arms** are refused in Production unless an administrator has allowed event changes in Production and the request explicitly asks to override. Import Metadata also needs the **Project Design and Setup** right; without it the call fails with 400.
+> **Important — design methods in Production:** **Import Metadata** is refused in a Production project (error 400); it does not go through Draft Mode. Make Production design changes in Draft Mode through the Online Designer or a Data Dictionary upload instead. **Import Instrument-Event Mappings** is also refused in Production. **Import Events** and **Import Arms** are refused in Production unless an administrator has enabled the Control Center setting that lets normal users add or modify events in Production; even then, `override=1` (replace all) is refused. **Delete Events** and **Delete Arms** are refused in Production whatever that setting says, for administrators too. Import Metadata and the event and arm import/delete methods also need the **Project Design and Setup** right; without it the call fails with 400.
 
 ## 4.3 Users and Access
 
@@ -237,6 +237,8 @@ The REDCap API organizes its functionality into method groups. The methods avail
 | Import File | Upload a file to a file-upload field for a specific record |
 | Delete File | Remove a file from a file-upload field |
 | Export PDF | Generate and download a PDF of an instrument or all instruments for a record |
+
+> **Note — rights for API delete methods:** Delete File, Delete Events, Delete Arms and Delete Users also need the **Delete Records** user right, not just an API right. Without it the call fails with 403 "You do not have Delete Record privileges". See each method's article for the full list of rights.
 
 ## 4.5 Reports and Logging
 
@@ -365,7 +367,7 @@ If the limit is exceeded, REDCap **bans that IP address permanently** — it is 
 
 **Q: Can I use the API in a project that is in Production?**
 
-**A:** Yes, for data: record, file, report and user methods work in Production. Design methods do not go through Draft Mode. **Import Metadata** (uploading a modified data dictionary) and **Import Instrument-Event Mappings** are refused in Production, and arm and event changes are refused unless an administrator allows them (§4.2). Make Production design changes in Draft Mode in the interface. Projects that are Completed, Offline or deleted refuse all API calls.
+**A:** Yes, for data: record, file, report and user methods work in Production. Design methods do not go through Draft Mode. **Import Metadata** (uploading a modified data dictionary) and **Import Instrument-Event Mappings** are refused in Production, arm and event imports are refused unless an administrator allows event changes in Production, and arm and event deletes are always refused (§4.2). Make Production design changes in Draft Mode in the interface. Projects that are Completed, Offline or deleted refuse all API calls.
 
 **Q: How do I export data from a specific instrument only?**
 
