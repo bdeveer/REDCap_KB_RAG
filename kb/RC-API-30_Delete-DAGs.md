@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects with Data Access Groups enabled |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §1, §2, §4–§6 live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — DAG deletion behaviour checked against source code; §1, §2, §4–§6 live-tested via the API on v17.5.6 (2026-10); pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-DAG-01 — Data Access Groups](RC-DAG-01_Data-Access-Groups.md); [RC-DE-09 — Data Entry with Data Access Groups](RC-DE-09_Data-Entry-with-DAGs.md) |
@@ -30,10 +30,10 @@ Caution: Deleting a DAG is a significant operation. Users in deleted DAGs may lo
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. |
+| `token` | Required | Your project API token. Requires API Import/Update **and** Data Access Groups privileges at the project level. The token's user must not be assigned to a DAG (a DAG-assigned user gets HTTP 403). |
 | `content` | Required | Always `'dag'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `dags[0]`, `dags[1]`, ... | Required | Array of unique group names to delete. Pass as `dags[0]=group_1&dags[1]=group_2`, etc. |
+| `dags[0]`, `dags[1]`, ... | Required | Array of unique group names to delete. Pass as `dags[0]=group_1&dags[1]=group_2`, etc. A missing `dags` parameter, or one sent as a single value instead of an array (`dags=group_1`), returns HTTP 400. |
 
 ---
 
@@ -156,7 +156,7 @@ Example response: `1`
 
 **Q: What permissions do I need?**
 
-**A:** Your API token must have both API Import/Update **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient.
+**A:** Your API token must have both API Import/Update **and** Data Access Groups privileges enabled at the project level. Having only one of the two is not sufficient. A token without the Data Access Groups right gets HTTP 400 `Insufficient user privileges…` (not 403). Separately, the token's user must not be assigned to a DAG: a DAG-assigned user gets HTTP 403 `…because you have been assigned to a Data Access Group`. Use the token of a user who is not assigned to any DAG.
 
 ---
 
@@ -168,7 +168,11 @@ Example response: `1`
 
 **Including a DAG name that doesn't exist.** One unknown unique group name makes the whole call fail with HTTP 400, and nothing is deleted. Export the DAGs first and only send names from that list.
 
-**Forgetting the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only one is not sufficient — the deletion will fail if either is missing.
+**Forgetting the correct permissions.** This method requires both API Import/Update **and** Data Access Groups privileges. Having only one is not sufficient — the deletion will fail if either is missing. Missing the Data Access Groups right returns HTTP 400 `Insufficient user privileges…`, so don't rely on checking for a 403 to detect a rights problem.
+
+**Using the token of a user assigned to a DAG.** Even with both privileges, a DAG-assigned user gets HTTP 403 `…because you have been assigned to a Data Access Group`. Run DAG deletions with a token belonging to a user who is not assigned to any DAG.
+
+**Sending `dags` as a single value.** `dags=group_api` (no index) or omitting `dags` altogether returns HTTP 400. Always use array syntax, even for one DAG: `dags[0]=group_api`.
 
 **Inadvertently deleting the wrong DAG.** DAG names are easy to mistype. Always verify the correct unique group name by exporting existing DAGs before deletion.
 

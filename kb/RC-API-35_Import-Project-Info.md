@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — §2, §3, §5–§7 (production behaviour not re-tested) live-tested via the API on a sandbox project (2026-10); LTS line last reviewed against the v17.3.7 (LTS) changelog |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — import, response-count and rights behaviour checked against source code; §2, §3, §5–§7 (production behaviour not re-tested) live-tested via the API on a sandbox project on v17.5.6 (2026-10); pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026-10 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-API-34 — Export Project Info API](RC-API-34_Export-Project-Info.md); [RC-API-37 — Import Project (Create Project) API](RC-API-37_Import-Project-Create-Project.md) (Create Project) |
@@ -35,7 +35,7 @@ A permission that allows the API user to modify project data, metadata, and conf
 A permission that allows the user to modify project structure and settings. This privilege is required in addition to API Import/Update to use this method.
 
 #### Updatable Fields
-The subset of project metadata that can be modified via the API, such as title, purpose, PI information, survey/scheduling flags, and missing data codes. Some read-only fields (creation_time, production_time) cannot be changed.
+The subset of project metadata that can be modified via the API, such as title, purpose, PI information, survey/scheduling flags, and missing data codes. Export-only fields returned by Export Project Info (for example `creation_time`, `production_time`, `in_production` and `ddp_enabled`) cannot be changed: if you include them, they are silently ignored and no error is returned.
 
 #### Configuration Flag
 A binary setting that controls project behavior (e.g., `is_longitudinal`, `surveys_enabled`, `randomization_enabled`) represented as `0` (false/disabled) or `1` (true/enabled).
@@ -52,7 +52,7 @@ The ability to modify only specific project fields in a single API call. Fields 
 | `token` | Required | Your unique API token string |
 | `content` | Required | Always `'project_settings'` |
 | `format` | Required | Data format: `'csv'`, `'json'`, or `'xml'` |
-| `data` | Required | Project settings to update, in the format specified |
+| `data` | Required | Project settings to update, in the format specified. Send a **single object**: a JSON object (not an array), or for CSV a header row plus one data row (only the first data row is used). |
 
 **Updatable fields:**
 
@@ -78,7 +78,7 @@ The ability to modify only specific project fields in a single API call. Fields 
 | `display_today_now_button` | Integer | `0` (hidden) or `1` (shown) |
 | `bypass_branching_erase_field_prompt` | Integer | `0` (default: forms prompt "Erase the Value of the Field?", surveys erase silently) or `1` (fields holding a value are exempt from branching logic and stay visible on both forms and surveys). The parameter name describes the mechanism, not the effect — `1` preserves data rather than erasing it without asking. See [RC-PROJ-04](RC-PROJ-04_Project-Setup-Additional-Customizations.md) §11. |
 
-Boolean-type fields use `0` (false/no) or `1` (true/yes).
+Boolean-type fields use `0` (false/no) or `1` (true/yes). Values are not validated on import, so send exactly the values REDCap expects (`0`/`1` for flags, a valid purpose code, an existing field name for `secondary_unique_field`).
 
 ---
 
@@ -124,7 +124,7 @@ print $output;
 
 ## 5. Response
 
-On success, the API returns the **number of values accepted for update** (including fields whose values did not change). For example, if you submitted 3 fields, you will receive `3`.
+On success, the API returns the **number of top-level keys submitted** — including fields whose values did not change and any unknown or read-only keys that were ignored. For example, if you submitted 3 fields, you will receive `3`. The count does not prove the values changed; confirm the result with Export Project Info ([RC-API-34](RC-API-34_Export-Project-Info.md)).
 
 On error, you receive an error message with details about what failed.
 
@@ -136,13 +136,13 @@ On error, you receive an error message with details about what failed.
 **A:** You only need to include the fields you want to change. Fields omitted from the data payload are left untouched.
 
 **Q: What does the return value mean?**
-**A:** The API returns a count of how many field values were accepted — including fields that already had the submitted value. A return of `3` means 3 fields were processed, not necessarily that 3 things changed.
+**A:** The API returns a count of the top-level keys you submitted — including fields that already had the submitted value and unknown or read-only keys that were ignored. A return of `3` means 3 keys were received, not necessarily that 3 things changed. Verify with Export Project Info.
 
 **Q: Do I need special permissions to use this method?**
 **A:** Yes. You need both **API Import/Update** privileges and **Project Setup/Design** privileges. Having only one of these is not sufficient.
 
 **Q: Can I update surveys_enabled after the project is in production?**
-**A:** Yes. You can enable or disable surveys on a project at any time, even after data collection has begun.
+**A:** Yes. You can enable or disable surveys on a project at any time, even after data collection has begun. In the web interface, changes to these project-setup settings on a production project need an administrator, so coordinate production changes with your REDCap admin before scripting them.
 
 ---
 
@@ -150,9 +150,11 @@ On error, you receive an error message with details about what failed.
 
 **Incomplete field list:** The API supports 19 updatable fields, including PI information, IRB/grant numbers, scheduling, randomization, and record autonumbering. Don't assume only title, longitudinal mode, and surveys are available.
 
-**Misreading the response:** The return value is an integer count, not a success/error JSON object. A numeric response indicates success; an error message string indicates failure.
+**Misreading the response:** The return value is an integer count, not a success/error JSON object. A numeric response means the request was accepted; an error message string indicates failure. Because the count includes ignored keys, a misspelled field name still counts — check the result with Export Project Info.
 
-**Missing permissions:** Both API Import/Update privileges and Project Setup/Design privileges are required. If you receive a permissions error, check that both are granted — not just one.
+**Sending an array instead of an object:** Wrap your settings in a single JSON object, not a JSON array (`{...}`, not `[{...}]`). An array updates nothing but still returns a count. In CSV, only the first data row is used.
+
+**Missing permissions:** Both API Import/Update privileges and Project Setup/Design privileges are required. Missing Project Setup/Design returns HTTP 400; missing API Import/Update returns HTTP 403. Check that both are granted — not just one.
 
 **JSON encoding requirement:** The `data` parameter must be properly encoded in the format you specified. Test your serialization carefully, especially for special characters in free-text fields like `project_title` or `project_notes`.
 

@@ -7,10 +7,10 @@
 | **Domain** | API |
 | **Applies To** | All REDCap projects |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.4.1 (Standard) / v17.3.7 (LTS) — changelog review; page not re-captured |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Delete User Roles behaviour checked against source code; pages not re-captured |
 | **Prerequisite** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md) |
-| **Version** | 1.2 |
-| **Last Updated** | 2026 |
+| **Version** | 1.3 |
+| **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Source** | REDCap API v16.1.3 official documentation examples |
 | **Related Topics** | [RC-API-01 — REDCap API](RC-API-01_REDCap-API.md); [RC-USER-01 — User Rights: Overview & Three-Tier Access](RC-USER-01_User-Rights-Overview-and-Three-Tier-Access.md); [RC-USER-03 — User Rights: Configuring User Privileges](RC-USER-03_User-Rights-Configuring-User-Privileges.md) |
@@ -22,7 +22,7 @@
 
 The Delete User Roles API method removes custom user roles from your project. You provide a list of role IDs (the `unique_role_name` values) to delete.
 
-> **Unassign users first.** In the user interface REDCap **refuses** to delete a role that still has users assigned to it (see [RC-USER-02](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) §130 and [RC-USER-04](RC-USER-04_User-Rights-User-Management.md) §124); the role must be emptied first, by moving its users to another role or to individual rights. Whether this API method enforces the same guard or proceeds regardless has **not been verified**. Treat unassigning first as the required step either way: if the guard applies, the call fails until you do it, and if it does not, the users silently lose the permissions the role granted.
+> **Unassign users first.** In the user interface REDCap **refuses** to delete a role that still has users assigned to it (see [RC-USER-02](RC-USER-02_User-Rights-Adding-Users-and-Managing-Roles.md) §5 and [RC-USER-04](RC-USER-04_User-Rights-User-Management.md) §7); the role must be emptied first. This API method has **no such guard**: it deletes the role even if users are still assigned to it. Those users are left with no role and fall back to the individual rights stored on their own account from before they were put in the role, which may be more or less than the role granted. Move the role's users to another role or to deliberately set individual rights before you call this method.
 
 Use this method to clean up unused roles, automate role lifecycle management, or revoke access granted through a specific role.
 
@@ -32,10 +32,10 @@ Use this method to clean up unused roles, automate role lifecycle management, or
 
 | Parameter | Required | Description |
 |---|---|---|
-| `token` | Required | Your project API token. Requires API Import and User Rights rights. |
+| `token` | Required | Your project API token. Requires API Import/Update and User Rights (full access, not Read Only), and the token's user must also have the Delete Records right. |
 | `content` | Required | Always `'userRole'` for this method. |
 | `action` | Required | Always `'delete'` for this method. |
-| `roles[0]`, `roles[1]`, ... | Required | Array of role IDs to delete (the `unique_role_name` values). Pass as `roles[0]=U-527D39JXAC&roles[1]=U-XXXXX`, etc. |
+| `roles[0]`, `roles[1]`, ... | Required | Array of role IDs to delete (the `unique_role_name` values). Pass as `roles[0]=U-527D39JXAC&roles[1]=U-XXXXX`, etc. If `roles` is missing or is not sent as an array, the call returns HTTP 400. |
 
 ---
 
@@ -128,7 +128,13 @@ print $output;
 
 ## 4. Response
 
-On success, the API returns a count of roles deleted. For example: `1` means one role was removed from the project. If a role ID does not exist in the project, it is ignored and does not affect the response.
+On success, the API returns a count of roles deleted. For example: `1` means one role was removed from the project.
+
+If any role ID in the request does not exist in the project, the whole call fails with HTTP 400 and an error saying that one or more of the roles are not valid and no roles were deleted. Nothing in the call is deleted, including the valid IDs. Export the roles first ([RC-API-25 — Export User Roles API](RC-API-25_Export-User-Roles.md)) and copy the exact `unique_role_name` values.
+
+If the token's user lacks the Delete Records right, the call returns HTTP 403 with `You do not have Delete Record privileges`.
+
+Deleting a role also removes any File Repository folder restriction tied to that role; those folders are no longer limited to the role.
 
 ---
 
@@ -136,7 +142,7 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 **Q: What happens to users assigned to a deleted role?**
 
-**A:** The role is removed, but the users are not deleted. However, they lose the permissions granted by that role. You must either reassign them to another role or set individual permissions to maintain their access.
+**A:** The role is removed, but the users are not deleted and the API does not stop you. They lose the permissions granted by that role and fall back to the individual rights stored on their account from before they were put in the role. That is not necessarily zero access: it can be broader or narrower than the role was. Reassign them to another role or set their individual rights deliberately, ideally before deleting the role.
 
 **Q: What is the `unique_role_name`?**
 
@@ -144,7 +150,7 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 **Q: What if I try to delete a role that doesn't exist?**
 
-**A:** The API ignores the role ID and does not report an error. If you delete a role and the API returns 0, it means the role was not found in the project.
+**A:** The call fails with HTTP 400, saying one or more roles are not valid and no roles were deleted. This applies to the whole request: if one ID in a multi-role call is wrong, none of the roles are deleted. Correct the ID and send the call again.
 
 **Q: Can I delete multiple roles at once?**
 
@@ -158,13 +164,13 @@ On success, the API returns a count of roles deleted. For example: `1` means one
 
 ## 6. Common Mistakes & Gotchas
 
-**Deleting a role without reassigning its users.** Empty the role before calling this method. Use [RC-API-55 — Export User-Role Assignments](RC-API-55_Export-User-Role-Assignments.md) to list who is currently assigned, then move those users to another role or give them individual permissions. The interface blocks deletion of a populated role outright; it is unverified whether this API method does the same, so do not rely on the call failing to protect you from a mistake.
+**Deleting a role without reassigning its users.** Empty the role before calling this method. Use [RC-API-55 — Export User-Role Assignments](RC-API-55_Export-User-Role-Assignments.md) to list who is currently assigned, then move those users to another role or give them individual permissions. The interface blocks deletion of a populated role outright, but this API method does not: the call succeeds and the users silently fall back to whatever individual rights were stored on their accounts.
 
 **Confusing role labels with role IDs.** The `unique_role_name` is the system ID (e.g., `U-522RX7WM49`), not the human-readable label (e.g., `'Project Manager'`). Use the ID, not the label, in the delete request.
 
-**Expecting an error when deleting a non-existent role.** The API does not return an error if a role ID is not found; it simply returns 0. Check the response count to verify the expected number of roles were deleted.
+**Including one wrong role ID in a batch.** A single role ID that does not exist makes the whole call fail with HTTP 400, and none of the roles in the request are deleted. Export the roles first and use the exact IDs; check the returned count matches the number you sent.
 
-**Forgetting the User Rights permission.** This method requires both API Import and User Rights rights. If your token lacks User Rights, the deletion will fail.
+**Forgetting the User Rights or Delete Records right.** This method requires API Import/Update and full User Rights (Read Only is not enough). The token's user also needs the Delete Records right; without it the call returns HTTP 403 `You do not have Delete Record privileges`.
 
 **Inadvertently deleting the wrong role.** Role IDs are alphanumeric and easy to mistype. Always verify the correct role ID by exporting existing roles before deletion.
 
