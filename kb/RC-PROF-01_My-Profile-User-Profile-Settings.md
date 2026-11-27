@@ -215,7 +215,7 @@ Project API tokens are on each project's **API** page, not on My Profile. Open t
 User preferences affect how dates and numbers are displayed in the data entry interface and similar views. Some system-generated outputs (such as exported files or reports) may use a fixed format regardless of your personal preference setting. If a specific downstream tool requires a particular date or CSV format, use the export options at the time of download rather than relying solely on your profile preference.
 
 **Q: Can I change my REDCap username?**
-You can't change it yourself, but a REDCap administrator can. From REDCap 17.5.0, administrators have a **Change Username** button on the user's Browse Users page. On earlier versions, including 16.0.59 LTS, the page has no such option, and a change typically requires direct database intervention. Either way, contact your REDCap administrator and treat it as exceptional.
+You can't change it yourself, but a REDCap administrator can. From REDCap 17.5.0 (Standard), administrators have a **Change Username** button on the user's Browse Users page. On earlier versions and on the LTS releases (17.3 and 16.0), the page has no such option, and a change typically requires direct database intervention. Either way, contact your REDCap administrator and treat it as exceptional.
 
 **Q: Can I delete my own account?**
 No. User account deletion is an administrator function. Contact your REDCap administrator if you need your account removed.

@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: File Upload Settings fields and the install values quoted; v17.3.18 (LTS) — changelog review only |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — file storage and upload behaviour checked against source code; File Upload Settings fields and the install values quoted checked live on v17.5.6 (read-only) |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-01 — Control Center: Notifications & Reporting (Dashboard)](RC-CC-01_Control-Center-Notifications-and-Reporting.md); [RC-CC-06 — Control Center: Modules & Services Configuration](RC-CC-06_Control-Center-Modules-and-Services.md); [RC-DE-12 — Data Resolution Workflow](RC-DE-12_Data-Resolution-Workflow.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md)|
@@ -19,7 +19,7 @@
 
 ## 1. Overview
 
-The **File Upload Settings** page controls the infrastructure for how and where all uploaded files are stored across the REDCap instance, as well as what types of files can be uploaded and what size limits apply in different contexts. This includes configuring storage backends (local, S3, Azure, etc.), file blocklists for security, and upload limits for the File Repository, file upload fields, Send-It, and other file upload locations. Settings here apply uniformly to all projects on the instance.
+The **File Upload Settings** page controls the infrastructure for how and where all uploaded files are stored across the REDCap instance, as well as what types of files can be uploaded and what size limits apply in different contexts. This includes configuring storage backends (local, S3, Azure, etc.), file blocklists for security, and upload limits for the File Repository, file upload fields, Send-It, and other file upload locations. Settings here apply uniformly to all projects on the instance. Administrators without the **Modify system configuration pages** privilege can open the page but see it read-only.
 
 ---
 
@@ -75,6 +75,11 @@ Options: *Disabled* / *Enabled*. A new 17.5.6 installation starts on *Enabled*; 
 
 > This setting also applies to Google Cloud Storage for App Engine hosting.
 
+**Organize Stored Files into Project ID Groups of 100** *(present in 17.6)*
+A further layer on top of the project-ID subfolders, for Local storage and Google Cloud Storage for App Engine: project folders are grouped into parent folders of 100 project IDs each, which keeps the top-level storage directory from growing to thousands of entries. A new installation starts on *Enabled*; an upgraded instance starts on *Disabled*.
+
+> **Version caveat (17.6+ only):** On 17.3 and 16.0 LTS this setting is not on the page and project subfolders all sit directly in the storage directory. On 17.6, existing projects' files still stay where they are by default; REDCap also ships a background job, off by default, that can move the files of projects inactive for 60+ months into the new layout. If your backups, retention scripts or storage monitoring assume a fixed folder layout, review them before enabling the grouping or that job.
+
 ---
 
 > **Note (15.2.1):** The **Microsoft Azure Blob Storage** option supports the **Azure Government Cloud** (US only), for institutions required to keep data within that boundary.
@@ -85,11 +90,16 @@ Options: *Disabled* / *Enabled*. A new 17.5.6 installation starts on *Enabled*; 
 
 > **Enforcement strengthened in 15.8.0.** Earlier versions applied the restriction only to some upload paths. From 15.8.0 it is enforced consistently. If you set this before 15.8.0 and assumed it covered everything, it may not have.
 
-> **Note (16.1.8):** Where this setting is left **unset**, the Configuration Check page now warns that some file types should be blocked to protect the server. See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md).
+> **Note (16.1.8; also in 17.3 LTS):** Where this setting is left **unset**, the Configuration Check page now warns that some file types should be blocked to protect the server. See [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md). On 16.0 LTS there is no such warning: check this field yourself after installing or upgrading.
 
 A system-level blocklist of file extensions prevents users from uploading potentially dangerous file types into REDCap. This applies to all upload locations across the system (File Repository, file upload fields, Send-It, etc.).
 
 Extensions are specified as a comma-, semicolon-, or line-break-delimited list. Case-insensitive — no need to list both `.EXE` and `.exe`.
+
+Two further checks apply on every version, whatever the list contains:
+
+- **Files with no extension are always rejected.**
+- **The file's content type is checked as well as its name**, so renaming a blocked file (e.g. `setup.exe` to `setup.txt`) does not get it through.
 
 The default REDCap blocklist includes:
 
@@ -120,7 +130,7 @@ These are server-executable formats. They are blocked in code, not by the settin
 
 Upload limits and enable/disable controls are set independently for each file upload context in REDCap.
 
-> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The value depends on the server: one 17.5.6 test instance reported 64 MB. On a new 17.5.6 installation REDCap's own per-context limits below are **blank**, which means the server default applies. Per-context limits in REDCap can only be set *lower* than the server default.
+> **Server default:** The web server's maximum file upload size is determined by two values in `PHP.INI`: `upload_max_filesize` and `post_max_size`. The lower of the two applies. To change the server default, modify these values and restart the web server. The value depends on the server: one 17.5.6 test instance reported 64 MB. On a new 17.5.6 installation REDCap's own per-context limits below are **blank**, which means the server default applies. Per-context limits in REDCap can only be set *lower* than the server default; a value above it is silently ignored (no error is shown) and the server default applies.
 
 ### File Repository
 
@@ -133,7 +143,7 @@ Options: *Disabled* / *Enabled*
 Maximum size (in MB) for a single file uploaded by a user to the File Repository. If left blank, the server default applies.
 
 **File Repository: File Storage Limit Per Project (in MB)**
-The on-page label reads "for all projects", but the limit is applied to each project separately. Sets a cap on total storage per project within the File Repository, counting only user-uploaded files (not system-generated files like exports or eConsent PDFs). Set to blank or `0` to disable the limit. This value can be overridden per project via the 'Edit Project Settings' page.
+The on-page label reads "for all projects", but the limit is applied to each project separately. Sets a cap on total storage per project within the File Repository, counting only user-uploaded files (not system-generated files like exports or eConsent PDFs). Deleted Repository files and files attached through the rich text editor do not count toward it. Set to blank or `0` to disable the limit. This value can be overridden per project via the 'Edit Project Settings' page, but only with another positive number: leaving the project value blank or `0` makes the project fall back to the system cap, not to "no limit". To give one project more room, enter a larger number there.
 
 **File Repository: Allow Users to Share Files via Public Links**
 When enabled, project users can generate a unique public URL for any file in the File Repository. Anyone with the link can download the file without authenticating to REDCap.

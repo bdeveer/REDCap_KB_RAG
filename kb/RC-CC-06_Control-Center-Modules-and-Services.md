@@ -7,9 +7,9 @@
 | **Domain** | Control Center (Admin) |
 | **Applies To** | REDCap administrators |
 | **Requires** | Any supported version |
-| **Verified Against** | REDCap v17.5.6 (Standard) — checked live on a test instance, read-only: page fields, the Project Migration Tool settings and the REDCap+ badge; v17.3.6 (LTS) and v16.0.39 (LTS) — earlier verification; v16.0.59 (LTS) — checked live on a test instance, read-only: the AI Services fields, and that the Project Migration Tool settings don't appear |
+| **Verified Against** | REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Modules/Services settings behaviour checked against source code; page fields, the Project Migration Tool settings and the REDCap+ badge checked live on v17.5.6 (read-only); v16.0.59 (LTS) — checked live on a test instance, read-only: the AI Services fields, and that the Project Migration Tool settings don't appear |
 | **Prerequisite** | REDCap administrator access |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last Updated** | 2026-11 |
 | **Author** | [See KB-SOURCE-ATTESTATION.md](KB-SOURCE-ATTESTATION.md) |
 | **Related Topics** | [RC-CC-05 — Control Center: File Storage & Upload Settings](RC-CC-05_Control-Center-File-Storage-Settings.md); [RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md); [RC-ALERT-01 — Alerts & Notifications: Setup](RC-ALERT-01_Alerts-and-Notifications-Setup.md); [RC-EM-01 — External Modules: Overview & Manager](RC-EM-01_External-Modules-Overview-and-Manager.md); [RC-INST-01 — Institution-Specific Settings & Policies — Production](RC-INST-01_Institution-Specific-Settings-and-Policies.md); [RC-AI-01 — REDCap AI Tools: Overview & Security](RC-AI-01_REDCap-AI-Tools-Overview-and-Security.md); [RC-CC-26 — Control Center: AI Configuration Settings](RC-CC-26_Control-Center-AI-Configuration-Settings.md); [RC-AI-02 — AI Writing Tools](RC-AI-02_AI-Writing-Tools.md); [RC-AI-03 — AI Translations](RC-AI-03_AI-Translations.md); [RC-AI-04 — AI Summarization](RC-AI-04_AI-Summarization.md) |
@@ -24,6 +24,8 @@ The **Modules/Services Configuration** page is the control panel for enabling/di
 ---
 
 The **Modules/Services Configuration** page (under **System Configuration**) is the largest configuration page in the Control Center. It controls which features and integrations are enabled across the entire instance, and includes settings for third-party services like SMS platforms and email delivery providers.
+
+> **Note:** Administrators without system configuration rights can open this page but see it read-only.
 
 ---
 
@@ -54,7 +56,7 @@ The following features can be enabled or disabled system-wide. When a feature is
 | **MyCap Mobile App** | Enables MyCap participant mobile app support. When enabled, a per-project toggle determines whether individual projects use MyCap. A sub-setting controls whether project users can enable MyCap themselves or whether an administrator must do so. See [RC-MYCAP-01 — MyCap: Overview & Enabling](RC-MYCAP-01_MyCap-Overview-and-Enabling.md). **Note on limitations:** MyCap does not support piping, smart variables, field embedding, special functions, calculated fields, or most action tags (@HIDDEN and @MC-prefixed tags *are* supported). Branching logic is partially supported (simple single-statement logic only — no AND, OR, or special functions) |
 | **External Modules Alternate Directory** | Allows loading external modules from a non-default directory path. Useful for staging or internal module development. Multiple directories can be separated with a pipe \| |
 | **File Version History for 'File Upload' Fields** | When enabled, users can upload a new file to a File Upload field without deleting the current one — previous versions are preserved and accessible from the Data History popup. If disabled, users must delete the current file before uploading a replacement. Can be enabled or disabled per project on the Project Setup page |
-| **Standardized Field (CDE) feature in the Online Designer** | Formerly Field Bank. Lets users pull fields from standardized catalogs in the Online Designer. If disabled, the feature is hidden for all users. See [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) |
+| **Standardized Field (CDE) feature in the Online Designer** | Formerly Field Bank. Lets users pull fields from standardized catalogs in the Online Designer. If disabled, the feature is hidden for all users. On 16.0 LTS the setting is labelled **Enable the Field Bank in the Online Designer?** See [RC-FD-06 — Online Designer: Instrument & Field Management](RC-FD-06_Online-Designer-Instrument-and-Field-Management.md) |
 | **Video Embedding on Forms & Surveys** | Allows a video URL to be attached to a Descriptive field, displaying a play button that opens the video in a popup. Compatible with most hosting services; most reliable with YouTube and Vimeo |
 | **Text-to-Speech for Surveys** | Enables text-to-speech on survey pages, reading survey text aloud via the IBM Watson Text-to-Speech API hosted by Vanderbilt University. Requires the REDCap server to be able to make outbound HTTP requests to `https://redcap.vumc.org` |
 | **Auto-Suggest for Biomedical Ontologies** | Enables the BioPortal ontology lookup service for fields on forms and surveys. Requires a valid BioPortal API token and outbound HTTP access to `https://data.bioontology.org/` |
@@ -106,7 +108,7 @@ Mosio is an alternative SMS service provider. Configuration mirrors Twilio, incl
 
 ### SendGrid (Email Templates)
 
-SendGrid is an external email delivery service that enables template-based emails for Alerts & Notifications. Requires a SendGrid account and API key, and outbound HTTPS access to `https://api.sendgrid.com/v3`. Access control has two options: *All users* or *Administrators only* (no Admin approval option). Includes the same "Display information to all users" visibility toggle. See your institution's email delivery architecture before enabling.
+SendGrid is an external email delivery service that enables template-based emails for Alerts & Notifications. Requires a SendGrid account and API key, and outbound HTTPS access to `https://api.sendgrid.com/v3`. The API key for alert templates is entered per project on the Project Setup page, not on this page. Access control has two options: *All users* or *Administrators only* (no Admin approval option). Includes the same "Display information to all users" visibility toggle. See your institution's email delivery architecture before enabling.
 
 ---
 
@@ -221,11 +223,15 @@ The **FROM** setting adds a button on the Project Setup **Other Functionality** 
 
 The **TO** setting adds a choice on the **Create New Project** page and requires a REDCap+ subscription. Without one, the control is shown but disabled. The page states that an administrator must approve every migration request, even where users can normally create projects without approval.
 
+Migration uses the REDCap API, so the API must be enabled on both servers.
+
+> **Version caveat (16.0 LTS):** These settings don't appear on this page on 16.0 LTS, and there is no Completion Action setting. The FROM and TO settings can still carry stored values in the background, and they take effect once you upgrade to 17.x — review all three settings right after upgrading.
+
 ---
 
 ## Reward Services *(REDCap+, 17.0.0+)*
 
-Participant compensation via electronic gift cards, integrating with the third-party vendor **Tango** through its Card API. Requires a REDCap+ subscription; the section is present on the page but not configurable without one.
+Participant compensation via electronic gift cards, integrating with the third-party vendor **Tango** through its Card API. Requires a REDCap+ subscription; the section is present on the page but not configurable without one. On 16.0 LTS the section doesn't appear at all without a subscription.
 
 Settings hosted here:
 
@@ -246,9 +252,15 @@ See [RC-PLUS-03 — REDCap+: Reward Services](RC-PLUS-03_Reward-Services.md) for
 
 ---
 
+## AI Chatbot Services *(REDCap+, present in 17.6)*
+
+Standard 17.6 adds an **Enable Chatbot Services?** section. Its settings cover whether chatbot conversations are logged, who can enable the chatbot in development and in production projects, whether enabling is immediate or needs administrator approval, and a custom message shown to users. The section isn't on 17.3 LTS or 16.0 LTS.
+
+---
+
 ## e-Consent Framework: PDF External Storage Settings
 
-When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location (same options as the File Upload Settings storage configuration). Leave disabled unless required for regulatory compliance.
+When the e-Consent Framework is used in Part 11-compliant workflows, this section allows the e-Consent PDFs to be automatically archived to an external storage location: SFTP, WebDAV, Microsoft Azure Blob Storage or Amazon S3. These are separate from the system File Storage Method set on the File Upload Settings page. Leave disabled unless required for regulatory compliance.
 
 ---
 
@@ -313,7 +325,7 @@ System-level settings on this page are the master on/off switches — if a featu
 It is safe to leave unused features enabled — they simply will not appear in projects where they are not configured. Leaving the Mobile App enabled allows projects to start using it if research needs change, without requiring administrator intervention to toggle the system setting. However, if your institutional policy is to restrict certain features (e.g., for compliance reasons), disable them here.
 
 **Q: What do I need to configure to use SendGrid for alerts and notifications?**
-System-level configuration of SendGrid on this page (Modules/Services) enables SendGrid as an option for template-based emails in Alerts & Notifications. A separate SendGrid API key in General Configuration is used for sending general REDCap emails. Both configurations are required if you want to use SendGrid for both email delivery and alert templates.
+Enabling SendGrid on this page (Modules/Services) makes it available for template-based emails in Alerts & Notifications; each project then enters its own SendGrid API key on its Project Setup page. The SendGrid API key in General Configuration is a separate thing: it is used for REDCap's own outgoing email. Set up both only if you want SendGrid for REDCap's email delivery as well as for alert templates.
 
 **Q: Should I enable text-to-speech if my users' browsers do not support it?**
 Text-to-speech relies on the IBM Watson service hosted by Vanderbilt and is supported in modern browsers. If your users are on older browsers that do not support the Web Audio API, text-to-speech will fail silently. Enabling it causes no harm — users on unsupported browsers simply will not see the text-to-speech button on surveys.
