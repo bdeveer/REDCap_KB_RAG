@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  User Settings fields and the two install values quoted; v17.3.7 (LTS) — changelog
-  review only'
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — User Settings
+  behaviour and install/upgrade values checked against source code; User Settings
+  fields and the two fresh-install values quoted checked live on v17.5.6 (read-only)
 prerequisites:
 - REDCap administrator access
-version: '1.2'
+version: '1.3'
 last_updated: 2026-11
 related:
 - id: RC-CC-02
@@ -38,9 +38,9 @@ synonyms:
 - prevent printing forms without export rights
 ---
 
-> **Settings governing how users are added to projects (16.1.5+).** Two settings at the bottom of this page control what happens when someone adds a user to a project — via the User Rights page or the API — where that person does **not** yet have a REDCap account. Worth reviewing deliberately: the behaviour determines whether project managers can effectively cause accounts to be created, which is an account-governance decision rather than a project one.
+> **Settings governing how users are added to projects (16.1.5+).** Two settings at the bottom of this page control what happens when someone adds a user to a project — via the User Rights page or the API — where that person does **not** yet have a REDCap account. Worth reviewing deliberately: the behaviour determines whether project managers can effectively cause accounts to be created, which is an account-governance decision rather than a project one. Not on 16.0 LTS; present in 17.3 LTS and later.
 
-> **Print restriction setting (17.0.4+).** The system-level setting controlling whether users **without Full Data Set export privileges** may print data entry forms also lives on this page. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history, and verify its state after upgrading across 17.0.2–17.0.4.
+> **Print restriction setting (17.0.4+).** The system-level setting controlling whether users **without Full Data Set export privileges** may print data entry forms also lives on this page. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history, and verify its state after upgrading across 17.0.2–17.0.4. Not on 16.0 LTS; present in 17.3 LTS and later.
 
 # 1. Overview
 
@@ -70,7 +70,7 @@ Sets the default data access rights applied to all existing project users whenev
 - *View & Edit / De-Identified* — Users can access the new instrument but export rights are de-identified
 - *View & Edit / Full Data Set* — Users have full view, edit, and export rights to the new instrument
 
-This setting applies to all projects. Note that the selected access level is applied automatically when draft mode changes are approved.
+This setting applies to all projects. Note that the selected access level is applied automatically when draft mode changes are approved. If [Access Control Groups](RC-CC-25_Access-Control-Groups.md) are in use, a user's group still caps what they get: the default never grants more than their group allows.
 
 **Custom Surveys for Project Status Transitions (Optional)**
 Presents a public REDCap survey to users when they perform certain project lifecycle actions. Used to collect project metadata (e.g., IRB numbers, PI details, data governance agreements) at key milestones. Each transition can have its own survey project (identified by PID):
@@ -79,7 +79,7 @@ Presents a public REDCap survey to users when they perform certain project lifec
 - *Move to Analysis/Cleanup status survey* — Triggered at the Analysis/Cleanup transition
 - *Mark project as Completed survey* — Triggered when a project is marked Complete
 
-Surveys must be one-page public surveys and cannot use Survey Queue, Auto-Continue, or Redirect features. Administrators are exempt from completing these surveys. If a field named `project_id` exists in the survey project, REDCap will automatically populate it with the PID of the project being transitioned, allowing cross-referencing of survey responses to projects.
+Surveys must be one-page public surveys and cannot use Survey Queue, Auto-Continue, or Redirect features. Administrators are exempt from completing these surveys. If a field named `project_id` exists in the survey project, REDCap will automatically populate it with the PID of the project being transitioned, allowing cross-referencing of survey responses to projects. In a longitudinal survey project, put `project_id` on an instrument in the first event of the first arm. Use a different survey project for each of the four transitions.
 
 > See [RC-PROJ-01 — Project Lifecycle: Status and Settings](RC-PROJ-01_Project-Lifecycle-Status-and-Settings.md) for context on project lifecycle statuses.
 
@@ -231,12 +231,14 @@ This setting does not apply when viewing charts/reports from inside a REDCap pro
 
 Two settings at the bottom of the page control what happens when someone adds a person without a REDCap account to a project, through the User Rights page or the API.
 
-| Setting | Options | Install value (17.5.6) |
+| Setting | Options | Fresh-install value |
 | --- | --- | --- |
 | **Allow adding non-existent users to projects?** | *No, only allow users to be added to projects if they have an account* / *Yes* | No |
 | **Custom error when adding a user** | Rich text shown with the error | Blank |
 
 > **Note:** On a Table-based 17.5.6 test instance the first setting was shown as disabled, so its Yes behaviour was not tested.
+
+> **Version caveat (upgraded instances):** The *No* above is what a fresh installation starts with. An instance that was upgraded across 16.1.5 starts with **Allow adding non-existent users to projects?** set to *Yes*. After upgrading, open this page and set it deliberately.
 
 ---
 
@@ -246,7 +248,11 @@ Two settings at the bottom of the page control what happens when someone adds a 
 - *No, allow printing forms regardless of data export rights*
 - *Yes, prevent printing forms if user does not have data export rights*
 
-A new 17.5.6 installation starts on *Yes*. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history.
+A fresh installation starts on *Yes*. See [RC-EXPRT-03 — Data Export: User Rights & Export Access](RC-EXPRT-03_Data-Export-User-Rights-and-Export-Access.md) §4a for the version history.
+
+> **Version caveat (upgraded instances):** An instance that was upgraded across 17.0.4 starts on *No* (printing allowed), not *Yes*. After upgrading, check this setting and set it to match your policy.
+
+Treat this setting as a deterrent, not a hard control: the page's own help text notes that it can be bypassed. Data export rights remain the real control over who can take data out of a project.
 
 ---
 

@@ -5,13 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators only
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  the dropdown and switcher fields, the help popover and the code that defines the
-  targets; no view-as-user session or target navigation was run; v17.3.7 (LTS) — changelog
-  review only'
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — view-as-user
+  and project switcher behaviour checked against source code; earlier live check (v17.5.6)
+  of the dropdown, switcher fields and help popover kept; pages not re-captured
 prerequisites:
 - 'RC-CC-21 — Control Center: Overview & Navigation'
-version: '1.1'
+version: '1.2'
 last_updated: 2026-11
 related:
 - id: RC-CC-07
@@ -55,9 +54,11 @@ When an administrator activates this feature, REDCap reloads the current project
 
 ## 2.2 Accessing the Feature
 
-The **View Project as User** dropdown appears at the top-left of any project page, just below the "Contact REDCap Administrator" link. It is only visible to administrators — regular project users do not see it.
+The **View Project as User** dropdown appears at the top-left of any project page, just below the "Contact REDCap Administrator" link. It is visible only to administrators with the **Access to all projects and data** privilege — regular project users do not see it.
 
-When expanded, the dropdown lists all users currently assigned to the project.
+> **Version caveat (17.x):** On 17.x instances with REDCap+, Project Administrator Group admins also see the dropdown and the Project Switcher inside their group's projects. See [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md). On 16.x LTS, only administrators with **Access to all projects and data** see them.
+
+When expanded, the dropdown lists the users assigned to the project, grouped by user role; users without a role appear under **[Not assigned to a role]**. You are not listed yourself.
 
 ## 2.3 Starting a Session
 
@@ -69,7 +70,9 @@ REDCap confirms the change before reloading:
 
 > *SUCCESS! You are now viewing this project as the user "[username]". This user's project user privileges will be applied to you within this project. The page will now reload to reflect this change.*
 
-After the reload, the interface reflects only what that user is permitted to see and do.
+After the reload, the interface reflects only what that user is permitted to see and do. The Project Switcher is hidden while you view the project as a user.
+
+Starting and stopping a view-as-user session are both recorded in the project's **Logging**, so other administrators can see when it was used.
 
 ## 2.4 Identifying an Active Session
 
@@ -96,7 +99,7 @@ The administrator's full access is restored after the reload.
 
 ## 3.1 What It Does
 
-The Project Switcher is a text input field that accepts a Project ID (PID). Pressing Enter navigates directly to that project, bypassing the main project list. It is an admin-only tool — regular users do not see it.
+The Project Switcher is a text input field that accepts a Project ID (PID). Pressing Enter navigates directly to that project, bypassing the main project list. It is an admin-only tool, shown to the same administrators as the View Project as User dropdown (see §2.2) — regular users do not see it. It is hidden while you are viewing a project as a user.
 
 ## 3.2 Locations
 
@@ -159,11 +162,22 @@ Enter a PID, or `cc` for the Control Center, optionally followed by a space and 
 | `eu` | Email Users | | |
 | `fus` | File Upload Settings | | |
 
-The 17.5.6 code also defines `hf` (Help & FAQ), `home` (Home), `mp` (My Projects), `np` (New Project) and `sd` (Sponsor Dashboard). The list can change between versions, so the popover is the reference for your instance.
+**Other codes (typed on their own, without a PID or `cc`):**
+
+| Code | Destination | Code | Destination |
+| --- | --- | --- | --- |
+| `hf` | Help & FAQ | `sd` | Sponsor Dashboard |
+| `home` | Home | `send` | Send-It |
+| `mp` | My Projects | `tv` | Training Videos |
+| `np` | New Project | | |
+
+To open a specific record's home page, add the record name after `rhp` — for example, `1234 rhp 1001` opens the Record Home Page for record 1001 in project 1234.
+
+If you type a code the switcher does not recognise, the field is outlined in red and nothing happens; correct the entry and try again. The list can change between versions, so the popover is the reference for your instance.
 
 ## 3.5 Keyboard Shortcuts
 
-In the 17.5.6 code, **Ctrl+Alt+N** (or **Cmd+Alt+N** on a Mac) moves focus to the field, and **Ctrl+Enter** opens the destination in a new tab. These were read from the code, not tried in a browser.
+**Ctrl+Alt+N** (or **Cmd+Alt+N** on a Mac) moves focus to the field; pressing it again shows or hides the help popover. **Enter** or **Tab** goes to the destination, and **Ctrl+Enter** opens it in a new tab. These were read from the code, not tried in a browser.
 
 ---
 
@@ -178,13 +192,16 @@ Yes — you retain the ability to act within the project, but only within the bo
 All actions remain attributed to the administrator's account in the audit log. Nothing is logged under the impersonated user. The view-as-user session does not transfer identity — it only applies the user's rights as a filter.
 
 **Q: Does the view-as-user session persist if I navigate to a different project?**
-No. The session is scoped to the current project. Navigating away from the project ends the impersonation.
+Only in that project. Other projects are unaffected, but view-as-user stays on for that project until you choose **[Stop viewing as user]** or your login session ends. If you go back to the project later, even in another tab, you are still viewing it as that user.
+
+**Q: Does View Project as User respect the user's expiration date?**
+No. You can view the project as a user whose project access has expired. The expired user really has no access, so do not conclude from the view-as-user session that they can get in — check their expiration date on the **User Rights** page.
 
 **Q: Do I need to know a user's password to use View Project as User?**
 No. The feature works entirely through the REDCap interface and does not require any credentials from the user being impersonated.
 
 **Q: Can I use the Project Switcher to navigate to a project I am not assigned to?**
-Yes. Administrators have access to all projects on the instance regardless of project membership. The Project Switcher will navigate to any valid PID.
+Yes. Administrators with **Access to all projects and data** can open any project on the instance regardless of project membership. The Project Switcher will navigate to any valid PID.
 
 **Q: Can I see which PID a project has?**
 The PID appears in the URL when you are inside a project (e.g., `...redcap.php?pid=1234`). It is also listed in the Control Center's project list.
@@ -193,11 +210,13 @@ The PID appears in the URL when you are inside a project (e.g., `...redcap.php?p
 
 # 5. Common Mistakes & Gotchas
 
-**Forgetting an active view-as-user session.** If you open a different browser tab or return to the project later in the same browser session, you may still be in view-as-user mode. Always check for the green banner at the top of the page if a project behaves unexpectedly.
+**Forgetting an active view-as-user session.** Leaving the project does not end view-as-user. If you return to that project later in the same login session, even in another tab, you are still viewing it as that user, and this can be true for several projects at once. Always check for the green banner at the top of the page if a project behaves unexpectedly, and choose **[Stop viewing as user]** when you are done.
+
+**Treating view-as-user as proof that an expired user can get in.** View-as-user ignores the user's expiration date, so the project looks normal even when the user's access has expired. The real user has no access; check their expiration date on the **User Rights** page.
 
 **Trusting the impersonated view for data export troubleshooting.** Administrator privileges can bleed through in certain areas even during a view-as-user session. The Data Export module is the most documented example — some export options restricted by user rights may still appear. If a user reports they cannot export data, corroborate with the user directly rather than relying solely on the impersonated view.
 
-**Entering an invalid PID in the Project Switcher.** If the PID does not correspond to an existing project, the switcher will either produce an error or land on an unexpected page. Double-check the PID before navigating, especially if entering it from memory.
+**Entering an invalid PID in the Project Switcher.** If the PID does not correspond to an existing project, the switcher will either produce an error or land on an unexpected page. Double-check the PID before navigating, especially if entering it from memory. An unrecognised target code is different: the field is outlined in red and the switcher does not navigate.
 
 **Using the Project Switcher target codes unintentionally.** Appending certain suffixes (like `eps`) to a PID in the Project Switcher triggers a redirect to a specific admin page rather than the project home. If you find yourself unexpectedly in the Control Center, you may have used a shortcut unintentionally.
 

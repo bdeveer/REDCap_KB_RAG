@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  page form and buttons; no short URL was created; v17.3.7 (LTS) — changelog review
-  only'
+verified_against: 'REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — URL Shortener
+  behaviour checked against source code; checked live on v17.5.6 (read-only): page
+  form and buttons'
 prerequisites:
 - REDCap administrator access
-version: '1.1'
+version: '1.2'
 last_updated: 2026-11
 related:
 - id: RC-CC-01
@@ -30,7 +30,11 @@ synonyms:
 
 # 1. Overview
 
-The URL Shortener creates short redirect links beginning with `https://redcap.link/` for distribution. The service is provided by Vanderbilt, hosted on AWS rather than on the local REDCap server, and the page recommends using it for REDCap-related matters only. It is accessible from the Administrator Resources section of the Control Center sidebar.
+The URL Shortener creates short redirect links beginning with `https://redcap.link/` for distribution. The service is provided by Vanderbilt, hosted on AWS rather than on the local REDCap server, and the page recommends using it for REDCap-related matters only. It is accessible from the Administrator Resources section of the Control Center sidebar. Any administrator who has access to the Control Center can use it, not only full administrators.
+
+> **Version caveat (17.x):** REDCap 17.x hides the Administrator Resources section, including this page, from administrators who only have REDCap+ Project Admin Group access. REDCap 16.0.x LTS shows it to every Control Center user. If an administrator cannot see the page, check their administrator rights.
+
+The REDCap server must be able to make outbound HTTPS connections to `redcap.link`; the Configuration Check page tests this. REDCap sends the destination URL and any custom alias to the service. REDCap does not keep a list of the links you create and does not log them, so keep your own record. The in-project **URL shortening service** setting does not turn this Control Center page on or off.
 
 ---
 
@@ -43,7 +47,7 @@ To use this feature:
 2. Enter the full destination URL in the web address box
 3. Click **Create a random short URL**
 4. The system will generate a short URL with a random alphanumeric string
-5. Copy and distribute the shortened URL as needed
+5. Copy the shortened URL (the success dialog has a copy button) and distribute it as needed
 
 ---
 
@@ -54,10 +58,10 @@ The Custom Alias option allows administrators to define a custom alphanumeric st
 To use this feature:
 1. Navigate to the URL Shortener tool in the Control Center
 2. Enter the full destination URL in the same web address box
-3. Under **OPTION 2: Define a custom alias**, enter your custom ending (alphanumeric characters only; special characters and spaces are not permitted)
+3. Under **OPTION 2: Define a custom alias**, enter your custom ending (keep to letters and numbers; the shortener service rejects characters it does not accept)
 4. Click **Create a custom short URL**
-5. The system validates that your alias is not already in use
-6. If validation passes, the custom shortened URL is created and ready to share
+5. The service checks that your alias is not already in use
+6. If the check passes, the custom shortened URL is created and ready to share; otherwise the service's error message is shown
 
 ---
 
@@ -88,16 +92,16 @@ Since the shortening service is managed externally and not by the local institut
 A random short URL is generated automatically with a random alphanumeric string and requires no additional input from you. A custom alias lets you specify a memorable alphanumeric string to make the URL more recognizable and easier to share verbally. Both redirect to the same destination URL.
 
 **Q: Can I use special characters or spaces in a custom alias?**
-No. Custom aliases accept alphanumeric characters only. Spaces and special characters (hyphens, underscores, slashes, etc.) are not permitted. Choose a simple, easy-to-remember alias using only letters and numbers.
+Keep to letters and numbers. REDCap itself does not check the alias; the shortener service decides what it accepts and rejects the rest with an error message. Spaces and special characters are the likeliest to be refused, so choose a simple, easy-to-remember alias using only letters and numbers.
 
 **Q: What happens if the custom alias I want is already in use?**
-The system will notify you that the alias is unavailable. You must choose a different alias. If a specific alias is important for your project, try to create it early before others claim it.
+The shortener service returns an error message saying the alias is unavailable. You must choose a different alias. If a specific alias is important for your project, try to create it early before others claim it.
 
 **Q: Can I edit or change a shortened URL after it has been created?**
 Typically, shortened URLs cannot be edited once created. If you need to change the destination URL, you would need to create a new shortened URL. Always test a shortened URL before distributing it widely to catch errors before they are shared.
 
 **Q: Are shortened URLs tracked or can I see how many people have used them?**
-The external shortener service may offer analytics (click counts, referrer information, etc.), but this depends on the service provider. Most external shorteners maintain basic analytics. Contact your REDCap administrator or the service provider for information about accessing these analytics.
+REDCap does not track clicks and keeps no list of the short links created from this page, so there are no usage statistics in REDCap. Any analytics would have to come from the external service provider, and the page does not offer a way to view them.
 
 **Q: How long do shortened URLs remain active?**
 Shortened URLs remain active as long as the external service maintains them. Since the service is external and not under your institution's control, there is no guaranteed lifespan. It is best to maintain records of the original long URLs in case you need to recreate shortened links or switch services.

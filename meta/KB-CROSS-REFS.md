@@ -90,6 +90,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-PROF-01 — My Profile: User Profile Settings
 - RC-INFRA-01 — Self-Hosting a Private REDCap Instance for Development, Testing & Validation
@@ -109,6 +110,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-EXPRT-03 — Data Export: User Rights & Export Access
+- RC-CC-25 — Control Center: Access Control Groups
 - RC-CC-03 — Control Center: Security & Authentication
 
 **Inbound links (referenced by):**
@@ -483,6 +485,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-09 — Control Center: To-Do List
 - RC-CC-25 — Control Center: Access Control Groups
+- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-PLUS-01 — REDCap+: Overview and Subscription
 - RC-CC-10 — Control Center: URL Shortener
 - RC-CC-11 — Control Center: System Statistics
@@ -493,7 +496,6 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-16 — Control Center: Database Activity Monitor
 - RC-CC-17 — Control Center: Database Query Tool
 - RC-PLUS-02 — REDCap+: Project Migration Tool
-- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-CC-20 — Control Center: Multi-Language Management
 - RC-MLM-01 — Multi-Language Management
 - RC-CC-18 — Control Center: Custom Application Links
@@ -528,6 +530,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-CC-24 — Control Center: Edit Project Settings
 - RC-USER-01 — User Rights: Overview & Three-Tier Access
 - RC-NAV-UI-02 — Project Menu Reference
+- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-USER-02 — User Rights: Adding Users & Managing Roles
 
 **Inbound links (referenced by):**
@@ -543,6 +546,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-API-36 — Export Project XML API
 - RC-API-37 — Import Project (Create Project) API
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-PLUS-02 — REDCap+: Project Migration Tool
+- RC-LOG-01 — Logging — Project Audit Trail
+- RC-CC-25 — Control Center: Access Control Groups
 - RC-EXPRT-01 — Data Export: Overview & Workflow
 - RC-EXPRT-02 — Data Export: Export Formats
 
@@ -563,7 +569,9 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PROJ-04 — Project Setup: Additional Customizations
 - RC-AI-01 — REDCap AI Tools: Overview & Security
 - RC-CDIS-01 — Clinical Data Interoperability Services: Overview & Control Center Setup
+- RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-CC-26 — Control Center: AI Configuration Settings
+- RC-CC-03 — Control Center: Security & Authentication
 - RC-PROJ-01 — Project Lifecycle: Status and Settings
 - RC-TXT-02 — Texting: Administrator Setup
 
@@ -588,12 +596,15 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)
 - RC-EM-01 — External Modules: Overview & Manager
 - RC-API-01 — REDCap API
+- RC-PLUS-02 — REDCap+: Project Migration Tool
 - RC-PIPE-03 — Smart Variables Overview
 - RC-DAG-01 — Data Access Groups
 
 **Inbound links (referenced by):**
+- RC-CC-04 — Control Center: User Settings & Defaults
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-23 — Backup Options
 - RC-INST-01 — Institution-Specific Settings & Policies — Production
 - RC-DAG-01 — Data Access Groups
 - RC-EM-01 — External Modules: Overview & Manager
@@ -4633,6 +4644,7 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 - RC-ALERT-01 — Alerts & Notifications: Setup
 
 **Inbound links (referenced by):**
+- RC-CC-23 — Backup Options
 - RC-DE-13 — Record Administration: Choose Action for Record
 - RC-LOCK-01 — Record Locking & E-Signatures
 - RC-MOB-01 — REDCap Mobile App
@@ -6459,6 +6471,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-CC-06 — Control Center: Modules & Services Configuration
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-23 — Backup Options
+- RC-CC-25 — Control Center: Access Control Groups
 - RC-PROJ-05 — Project Migration: Moving a Project Between REDCap Installations
 - RC-RAND-03 — Working with & Managing Randomization
 - RC-PLUS-01 — REDCap+: Overview and Subscription
@@ -6505,6 +6519,8 @@ Per-article prerequisites, outbound links, and inbound links for all KB articles
 **Inbound links (referenced by):**
 - RC-CC-07 — Control Center: Users & Access Management
 - RC-CC-21 — Control Center: Overview & Navigation
+- RC-CC-22 — Admin: Administrator Project Tools (View as User, Project Switcher)
+- RC-CC-24 — Control Center: Edit Project Settings
 - RC-CC-25 — Control Center: Access Control Groups
 - RC-DAG-01 — Data Access Groups
 - RC-PLUS-01 — REDCap+: Overview and Subscription

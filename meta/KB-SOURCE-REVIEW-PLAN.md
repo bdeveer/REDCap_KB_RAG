@@ -263,9 +263,9 @@ version on every article, because each source-reviewed article gets a pinned
 | 7c API | API-25–36 except 31, 32 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
 | 7d API | API-37–46 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
 | 7e API | API-47–56 (10; 5 per agent) | Done 2026-11-27 (10; sweep found nothing) |
-| 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | — |
-| 8b Control Center II | CC-10–18 (9; LTS differences, 2–3 per agent) | — |
-| 8c Control Center III | CC-19–26 (8; LTS differences, 2 per agent) | — |
+| 8a Control Center I | CC-01, 02, 04–09 (8; LTS differences, 2 per agent) | Done 2026-11-27 (8 + 1 from the sweep) |
+| 8b Control Center II | CC-10–18 (9; LTS differences, 2–3 per agent) | Done 2026-11-27 (9 + 1 from the sweep) |
+| 8c Control Center III | CC-19–26 (8; LTS differences, 2 per agent) | Done 2026-11-27 (8; sweep found nothing) |
 | 8d REDCap+ and modules | PLUS-01–05, EM-01, TXT-02 (7) | Done 2026-11-25 (7 + 4 from the sweep) |
 | 8e AI and DDP | AI-01–04, DDP-02 (5) | — |
 | 8f CDIS | CDIS-01–05 (5) | — |

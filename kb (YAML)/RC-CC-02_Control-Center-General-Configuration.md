@@ -5,14 +5,14 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  General Configuration fields and the record limit default; v17.3.18 (LTS) — changelog
-  review only; v16.0.59 (LTS) — checked live on a test instance, read-only: the cron
-  setting''s absence and the Language File label, with the cron default from its install
-  file'
+verified_against: 'REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — General
+  Configuration and Configuration Check behaviour checked against source code; General
+  Configuration fields and the record limit default checked live on v17.5.6 (read-only);
+  v16.0.59 (LTS) — checked live on a test instance, read-only: the cron setting''s
+  absence and the Language File label, with the cron default from its install file'
 prerequisites:
 - REDCap administrator access
-version: '1.4'
+version: '1.5'
 last_updated: 2026-11
 related:
 - id: RC-CC-01
@@ -49,6 +49,8 @@ The **General Configuration** page is the central hub for REDCap instance-level 
 ---
 
 > **API key fields are masked, with one exception (17.5.0+).** The Mandrill, SendGrid and Mailgun API key fields are shown as a password mask, so those keys are not exposed to anyone looking at the screen. On 17.5.6 the **Azure Communication Services API Key** field is still a plain text field, so its value is visible on the page.
+>
+> **Version caveat (16.0 and 17.3 LTS):** All four third-party email API key fields are shown as plain text. Avoid opening General Configuration while sharing your screen, and limit which administrators can view system configuration.
 
 The **General Configuration** page contains the core technical and operational settings that govern how REDCap runs at the instance level. It is organized into three sub-sections: **Server Configuration Settings**, **Configuration for Outgoing Emails**, and **Other System Settings**. A separate **Configuration Check** tool also lives under System Configuration.
 
@@ -81,6 +83,29 @@ These are passive indicator checks shown as pass/warn/fail icons. They do not st
 - **PHP Fileinfo extension** — Required for file-type detection on uploads.
 - **Dangerous PHP functions disabled** *(17.5.4+)* — recommends adding functions such as `system` and `exec` to the `disable_functions` setting in the web server's `php.ini` where they are not already listed. These functions let PHP run operating-system commands, so disabling them limits what a code-execution flaw can do. Check that no External Module you use depends on them before disabling.
 - **REDCap can send emails** — Confirms the mail subsystem is functional.
+- **PHP DOM, XMLReader and OpenSSL extensions** — Each is checked separately; install any that are reported missing.
+- **MySQL 8.0.30+ "Generated Invisible Primary Keys" disabled** — This MySQL feature is not compatible with REDCap and can cause false "database structure issues" results. The page tells you how to turn off `sql_generate_invisible_primary_key` in `my.cnf`/`my.ini`.
+
+In 17.x, the Automatic Version Redirect and dangerous PHP functions sections can be collapsed, or hidden for good once you have dealt with them.
+
+## Which Checks Appear on Each Release Line
+
+Several checks below carry a Standard-release introduction date. On LTS they arrived at different points, so use this table to tell whether a check should appear on your instance:
+
+| Check or feature | 16.0 LTS | 17.3 LTS | 17.6 |
+| --- | --- | --- | --- |
+| Main REDCap directory not writable | Yes | Yes | Yes |
+| Old version directory recommendations | Yes | Yes | Yes |
+| Survey and API calls via a version directory rejected | Yes | Yes | Yes |
+| Fix Legacy Image/File URLs page | Yes | Yes | Yes |
+| `.bcmap` / `.woff2` MIME type checks | No | Yes | Yes |
+| Uploaded-files directory not under the webroot | No | Yes | Yes |
+| Restricted upload file types configured | No | Yes | Yes |
+| Automatic Version Redirect instructions | No | Yes | Yes |
+| Available versions listed when Easy Upgrade is not possible | No | Yes | Yes |
+| Dangerous PHP functions disabled | No | No | Yes |
+
+If a check marked "No" matters to you (for example, keeping uploads outside the webroot), verify it by hand on the server until you upgrade.
 
 ## MySQL / MariaDB Configuration Recommendations
 
@@ -104,13 +129,13 @@ The check also confirms that **subdirectories can be created** under REDCap's `t
 
 ## Directory Security Checks
 
-Beyond writability, the Configuration Check verifies that directories which should not be reachable from the web are in fact not reachable.
+Beyond writability, the Control Center verifies that directories which should not be reachable from the web are in fact not reachable.
 
 | Check | Detail | Introduced |
 | --- | --- | --- |
-| **REDCap `temp/` directory not publicly accessible** | REDCap attempts to protect it automatically by writing a `web.config` (IIS) or `.htaccess` (Apache) file into the directory. Where it cannot — **notably NGINX, where neither file has any effect** — the Control Center provides a recommendation to implement the block in the server configuration | 15.3.2 |
+| **REDCap `temp/` directory not publicly accessible** | Reported on the **Notifications & Reporting** page, not on Configuration Check (which only tests that `temp/` is writable). REDCap attempts to protect it automatically by writing a `web.config` (IIS) or `.htaccess` (Apache) file into the directory. Where it cannot — **notably NGINX, where neither file has any effect** — the Control Center provides a recommendation to implement the block in the server configuration | 15.3.2 |
 | **Uploaded-files directory not under the webroot** | When using Local file storage, verifies the directory holding all user-uploaded files does not sit beneath the web server's document root | 17.0.2 |
-| **Main REDCap directory not writable by the application** | Flags the case where REDCap *can* write to its own main directory, and recommends tightening the permissions so it cannot. This closes an attack vector where a compromise could modify application files. Wording clarified in 16.1.5 | 16.1.4 |
+| **Main REDCap directory not writable by the application** | Flags the case where REDCap *can* write to its own main directory, and recommends tightening the permissions so it cannot. This closes an attack vector where a compromise could modify application files. Wording clarified in 16.1.5 | 16.1.4 (also in 16.0 LTS) |
 | **Restricted upload file types configured** | Warns when "Restricted file types for uploaded files" is unset on the File Upload Settings page, since some types should be blocked to protect the server | 16.1.8 |
 
 > **Important — this check conflicts with Easy Upgrade.** Easy Upgrade requires REDCap to be able to write to the main `redcap` directory, which is exactly what the 16.1.4 check recommends preventing. See the Easy Upgrade section below; the two cannot both be satisfied on the same server.
@@ -126,7 +151,7 @@ The Configuration Check verifies that two file types are served with correct MIM
 
 ## Scope of Service Checks
 
-> **Version caveat (behaviour change in 17.0.7):** The Configuration Check now runs service checks **only for features actually enabled** on the instance. Earlier versions checked every service regardless. If you are comparing against notes or a screenshot from an older version, expect fewer checks to appear — their absence indicates the feature is disabled, not that the check failed or was removed.
+> **Note:** The Configuration Check runs service checks **only for features actually enabled** on the instance. 17.0.7 tightened this, but 16.0 LTS already skips checks for services that are not enabled. If a check you expect is missing, its absence indicates the feature is disabled, not that the check failed or was removed.
 
 Two checks were withdrawn as unreliable rather than fixed, so do not chase them if you saw them on an older version:
 
@@ -137,13 +162,13 @@ Two checks were withdrawn as unreliable rather than fixed, so do not chase them 
 
 ## Old Version Directory Recommendations
 
-From **16.1.4** the Configuration Check page recommends removing specific old `redcap_vXX.X.X/` directories left behind by past upgrades, and **names the versions concerned**. The rationale is that known vulnerabilities in those versions remain executable for as long as their directories exist on the server.
+From **16.1.4** (also in 16.0 LTS) the Configuration Check page recommends removing specific old `redcap_vXX.X.X/` directories left behind by past upgrades, and **names the versions concerned**. The rationale is that known vulnerabilities in those versions remain executable for as long as their directories exist on the server.
 
 REDCap's stated position is that it is *not* necessary to remove all older version directories at every future upgrade, though you may choose to. In practice that means treating the flagged versions as the actionable list, and deciding separately whether to purge the rest.
 
 Two related changes:
 
-- From **16.1.5**, REDCap rejects survey and API calls whose URL contains a version directory. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`. REDCap noted no known vulnerabilities in those endpoints at the time — this is pre-emptive.
+- From **16.1.5** (also in 16.0 LTS), REDCap rejects survey and API calls whose URL contains a version directory. The API must be called at `/api/index.php`, not `/redcap_vXX.X.X/API/index.php`. REDCap noted no known vulnerabilities in those endpoints at the time — this is pre-emptive.
 - From **17.2.2**, the **Automatic Version Redirect** feature can redirect stale bookmarks and old survey invitation links to the current version rather than returning a 404. The Configuration Check page carries setup instructions for Apache, NGINX and IIS. It requires web server configuration changes and should be implemented by whoever administers that layer.
 
 The redirect instructions were refined again: the Apache test also recognises the modern `rewrite_module` identifier as well as `mod_rewrite.c` (17.4.4 Standard / 17.3.10 LTS), the first mod_rewrite step notes that `AllowOverride` must permit it (17.5.1 / 17.3.14), and the NGINX recommendation now ends the default location block with a plain **404** rather than handing unmatched requests to `redcap_redirect.php` (17.5.4 / 17.3.18).
@@ -158,8 +183,8 @@ The redirect instructions were refined again: the Apache test also recognises th
 
 A security fix in **17.3.11 LTS / 17.4.5 Standard** (and 16.0.50 LTS) changed the document-hash algorithm used in image and file-download links. Links created before an instance reached **15.7.3** — typically images uploaded through the rich text editor into field labels, survey instructions or emails, and file-download links that someone copied and pasted as static text — stopped working.
 
-- **Manual tool (17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS):** a Control Center page, **Fix Legacy Image/File URLs** (in the **Projects** section of the menu), regenerates a valid URL from a broken one. When a user reports a broken image or download link, they send the URL to an administrator, who generates the replacement and gives it back for pasting in place of the old one.
-- **Automatic repair (17.3.14 LTS / 17.5.1 Standard onward):** the upgrade process rewrites broken legacy URLs across the system itself. Coverage was extended to Community Platform Software posts in 17.5.3 Standard / 17.3.16 LTS and completed in **17.3.18 LTS / 17.5.4 Standard**, where earlier passes had missed some URLs. Nothing needs to be done by users or admins.
+- **Manual tool (17.4.6 Standard / 17.3.12 LTS / 16.0.51 LTS):** a Control Center page, **Fix Legacy Image/File URLs** (in the **Projects** section of the menu), regenerates a valid URL from a broken one. When a user reports a broken image or download link, they send the URL to an administrator, who generates the replacement and gives it back for pasting in place of the old one. On 16.0 LTS the menu label is singular: **Fix Legacy Image/File URL**.
+- **Automatic repair (17.3.14 LTS / 17.5.1 Standard onward):** the upgrade process rewrites broken legacy URLs across the system itself. Coverage was extended to Community Platform Software posts in 17.5.3 Standard / 17.3.16 LTS and completed in **17.3.18 LTS / 17.5.4 Standard**, where earlier passes had missed some URLs. On the 16.0 LTS line, the upgrade to **16.0.55** runs the same repair. Nothing needs to be done by users or admins.
 
 > **Version caveat (17.3.11–17.3.17 LTS / 17.4.5–17.5.3 Standard):** Some legacy image and file links may still be broken. Upgrade to 17.3.18 LTS / 17.5.4 Standard, which repairs them during the upgrade, or fix individual links with the Fix Legacy Image/File URLs page.
 
@@ -171,7 +196,7 @@ Easy Upgrade lets an administrator apply a REDCap upgrade from within the Contro
 | --- | --- |
 | A "Check again" link is always shown at the top of the Control Center when Easy Upgrade is available, so admins can check for new releases on demand | 15.0.6 |
 | Easy Upgrade start, completion and failure are written to the **User Activity Log** | 15.9.2 |
-| The list of available REDCap versions is displayed **even when Easy Upgrade is not enabled** on the instance | 17.0.0 |
+| The list of available REDCap versions is displayed **even when Easy Upgrade is not enabled** on the instance (not on 16.0 LTS) | 17.0.0 |
 | Usable on AWS CloudFormation and Elastic Beanstalk deployments without added security risk, because of how upgrades occur on those platforms | 17.4.0 |
 
 > **Important — Easy Upgrade is no longer recommended on production servers.** From **16.1.4** the Control Center warns admins when Easy Upgrade is enabled. The reason is structural rather than incidental: Easy Upgrade requires the REDCap application to be able to write files into the main `redcap` directory, and application write access to its own code directory is the attack vector the 16.1.4 Configuration Check flags. **These two recommendations are in direct tension and cannot both be satisfied** — you are choosing between upgrade convenience and a tighter permission model. The 17.4.0 AWS Elastic Beanstalk exception exists because those deployments replace the application directory wholesale rather than writing into a live one.
@@ -191,6 +216,8 @@ Tests outbound connectivity to third-party services. Failures do not break core 
 | Service | Purpose |
 | --- | --- |
 | Twilio | SMS/voice survey invitations and reminders |
+| SendGrid | Third-party email delivery and SendGrid template emails |
+| Google reCAPTCHA | Bot protection on public surveys and other public pages |
 | Mosio | SMS messaging service integration |
 | PROMIS | NIH PROMIS assessment API (Computer Adaptive Tests) |
 | BioPortal | Biomedical ontology lookups in field design |
@@ -231,7 +258,7 @@ To run the secondary API tests, select a MyCap-enabled project (one with at leas
 
 Controls whether REDCap is accessible to normal users. Options: **SYSTEM ONLINE** (default) or **SYSTEM OFFLINE**.
 
-When set to Offline, all normal (non-admin) users are denied access to all pages. Administrators can still log in.
+When set to Offline, all normal (non-admin) users are denied access to all pages. The API and surveys are also blocked, and cron jobs stop running, so scheduled invitations and alerts wait until the system is back online. Administrators with full rights, or with the right to modify system configuration, can still log in and work.
 
 An optional **custom offline message** can be set — the text shown to users when they try to access REDCap while it is offline. HTML is supported in this message, allowing you to include formatted text, links to a status page, or estimated downtime information.
 
@@ -262,7 +289,7 @@ Controls whether REDCap automatically sends anonymized usage statistics to the R
 
 The public-facing root URL of the REDCap installation (e.g., `https://redcap.[your-institution].edu/`). REDCap uses this to construct all internal links and survey invitation URLs. This value is typically set during initial installation and should match the actual URL through which users access the system.
 
-> A warning is displayed on this page if the saved Base URL does not match the URL from which the administrator is currently accessing REDCap.
+> A warning is displayed on this page, and on the Notifications & Reporting page, if the saved Base URL does not match the URL from which the administrator is currently accessing REDCap.
 
 ## Survey Base URL (optional)
 
@@ -272,9 +299,13 @@ An alternative base URL used only when constructing survey links. Leave blank if
 
 If the REDCap web server must route outbound HTTP calls through a proxy, enter the proxy hostname and port here. Optionally add `username:password` credentials in the second field if the proxy requires authentication. These settings apply only to outbound requests originating from the REDCap server (e.g., API calls, third-party integrations).
 
+In 17.6, **Use the configured proxy for same-host requests?** controls requests REDCap makes to itself, such as from the API Playground. The default, **No**, bypasses the proxy when the destination is the REDCap server's own address. Set it to **Yes** only if your network requires those requests to go through the proxy, and the proxy can reach REDCap.
+
 ## Is This a Development/Test/Staging Server?
 
 When set to Yes, PHP error reporting is enabled on all pages to aid with debugging. This should only be set to Yes on non-production servers. Production instances should always be set to No.
+
+The setting also changes some Configuration Check wording (for example, the writable main directory warning is phrased for a non-production server) and makes the External Module framework stricter, so a module error may surface on a test server that production would tolerate.
 
 ## Can REDCap Server Access the Web?
 
@@ -364,7 +395,7 @@ Sets a maximum number of records that can be created in a project while it is in
 
 Sets the maximum number of REDCap cron jobs that may run simultaneously across the entire system. Allowed range: 1–50; default: 10. Increasing this value allows more background jobs to run in parallel but increases server load. Monitor system resources for a few days after any increase.
 
-> **Version caveat (16.0.x LTS):** On 16.0.59 this setting is not on the page, and the install default is 20. REDCap's 16.1.2 upgrade script sets the value to 10.
+> **Version caveat (16.0.x LTS):** On 16.0.59 this setting is not on the page, and the install default is 20. 16.0 LTS applies no system-wide cap on concurrent cron jobs, so watch server load if many jobs run at once. 17.3 LTS has the setting. REDCap's 16.1.2 upgrade script sets the value to 10.
 
 ## Rate Limiter: Page Hit Threshold
 
@@ -386,7 +417,7 @@ An advanced database setting that manually overrides the `binlog_format` for RED
 
 ## Check for Identifiers — Keywords
 
-A comma- or line-separated list of keywords used by REDCap's "Check for Identifiers" feature to detect fields that may contain personally identifiable information (PII). REDCap scans field labels and variable names against this list and flags potential identifiers. The default list includes common terms such as: `name, street, address, city, zip, postal, date, phone, fax, mail, ssn, social security, mrn, dob, medical, record, id, age`. Add institution-specific terms as needed.
+A comma- or line-separated list of keywords used by REDCap's "Check for Identifiers" feature to detect fields that may contain personally identifiable information (PII). REDCap scans field labels and variable names against this list and flags potential identifiers. The default list includes common terms such as: `name, street, address, city, county, precinct, zip, postal, date, phone, fax, mail, ssn, social security, mrn, dob, dod, medical, record, id, age`. Add institution-specific terms as needed.
 
 ---
 
@@ -421,11 +452,13 @@ When the page loads, REDCap reports:
 | Item | What it shows |
 | --- | --- |
 | Server type | Windows or Linux/Unix |
-| Last cron job ran at | Timestamp of the most recent successful cron execution |
-| Cron job status | **Good** if the cron ran recently; a warning or error if overdue |
-| Max concurrent cron jobs | The limit set on General Configuration (default: 10). Not shown on 16.0.59 LTS |
-| Active cron processes | How many cron workers are currently running |
-| Available memory | RAM available to the cron worker (cron runs with a higher memory limit than normal pages) |
+| Last cron job ran at | When the most recent cron run started |
+| Cron job status | **Good** if the cron ran within the past hour; otherwise a warning to check it |
+| Max concurrent cron jobs | The limit set on General Configuration (default: 10). Not shown on 16.0 LTS |
+| Active cron processes | How many cron workers are currently running. Not shown on 16.0 LTS |
+| Available memory | RAM available to the cron worker (cron runs with a higher memory limit than normal pages). Not shown on 16.0 LTS |
+
+On 17.x, if scheduled jobs stay blocked by runs that never finished, an **Overdue job recovery** notice offers a **Recover overdue runs** button. It frees the capacity those runs held and marks them FAILED; it does not stop work that may still be running, so check Cron History before repeating affected work. REDCap also checks for overdue runs automatically.
 
 ## Setup on Linux/Unix (CronTab)
 

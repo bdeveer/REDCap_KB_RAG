@@ -5,12 +5,14 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  Home Page, Project Templates, Default Project, Footer and Field Validation pages,
-  with the install values quoted; v17.3.18 (LTS) — changelog review only'
+verified_against: 'REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — home
+  page, template, default project and validation type behaviour checked against source
+  code; v17.5.6 (Standard) checked live on a test instance, read-only: Home Page,
+  Project Templates, Default Project, Footer and Field Validation pages, with the
+  install values quoted; v17.3.18 (LTS) — changelog review only'
 prerequisites:
 - REDCap administrator access
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-CC-02
@@ -61,15 +63,15 @@ The Home Page Settings control what users see on the REDCap landing page (before
 
 ---
 
-> **Note (15.0.0) — custom text on the Create New Project page.** Administrators can supply text displayed at the top of the Create New Project page. Useful for stating local policy at the moment someone creates a project — IRB requirements, naming conventions, or who to contact — rather than hoping they read it elsewhere.
+> **Note (15.0.0) — custom text on the Create New Project page.** Administrators can supply text displayed at the top of the Create New Project page. It is set in **General Configuration**, not on Home Page Settings. Useful for stating local policy at the moment someone creates a project — IRB requirements, naming conventions, or who to contact — rather than hoping they read it elsewhere.
 
 ---
 
 # 3. Project Templates
 
-Project Templates are pre-configured projects made available to users when they create a new project. When a user creates a project and selects a template, the template's instruments (and optionally events and user roles) are copied into the new project.
+Project Templates are pre-configured projects made available to users when they create a new project. When a user creates a project and selects a template, the template's setup is copied into the new project: instruments, events and user roles, and also most other project configuration such as reports, project dashboards, alerts, Data Quality rules, survey settings (survey queue, automated invitations) and multi-language settings. If the template was added with **Copy all records** set to Yes, its records are copied into every new project too.
 
-Administrators can manage which templates are available, add new templates from existing projects, enable/disable individual templates, and remove outdated ones. Each template can be toggled enabled or disabled without deleting it.
+Administrators can manage which templates are available, add new templates from existing projects, enable/disable individual templates, and remove outdated ones. Each template can be toggled enabled or disabled without deleting it. A disabled template cannot be used to create a project, even if someone tries to request it directly.
 
 **Default templates shipped with REDCap** (as of v16.x) include:
 
@@ -101,11 +103,13 @@ Administrators can manage which templates are available, add new templates from 
 
 These settings determine the system-wide defaults applied to all new projects when they are created.
 
+> **Note:** A project created by **copying** an existing project takes these values (language, encoding, logo display, Today/Now button and so on) from the source project, not from these defaults.
+
 **Language**
 The default language for text displayed within projects (e.g., button labels, error messages). English is the standard default.
 
 **Character Encoding for Exported Files**
-The character encoding used for CSV exports from projects. UTF-8 is the standard default and handles special characters and international characters correctly.
+The character encoding used for CSV exports (and PDFs) from projects. The options are **Default** (ANSI, or UTF-8 when REDCap detects it is needed), **Japanese (Shift JIS)**, Simplified Chinese and Traditional Chinese. A new installation uses **Default**, which handles special and international characters for most sites; choose one of the others only if your users need it.
 
 **Display Custom Logo and Institution Name**
 Controls whether the institutional logo (configured in General Configuration) and institution name appear in the project header on every page. A new 17.5.6 installation starts on **No**, so set it to Yes if you want institutional branding in new projects.
@@ -134,26 +138,28 @@ Configures links and text that appear in the footer of every REDCap project page
 Enter one link per line, as the URL followed by a comma and then the link text, for example `https://example.edu/help, Help Desk`. These links appear in the footer across all projects and are typically used for institutional resources (e.g., institutional home page, IT help desk, data governance page).
 
 **Footer Text**
-A text block displayed in the footer alongside the links. Commonly contains the institution's official name, address, and contact phone number.
+A text block displayed in the footer, beneath the footer links. Commonly contains the institution's official name, address, and contact phone number.
 
 ---
 
 # 6. Field Validation Types
 
-This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can publish or disable individual validation types, and can add custom validations developed for the institution.
+This page lists all available field validation types that form designers can assign to text fields in the Online Designer and Data Dictionary. Administrators can publish or disable individual validation types, and can add custom validations developed for the institution (adding and editing types on the page is present in 17.6; see the caveat below).
 
 > **From REDCap 17.4.0:** administrators can **add and edit custom validation types directly on this page**. Earlier versions required editing the `redcap_validation_types` database table or installing an External Module. The capability absorbs Adam Nunez's "Add Validation Types" external module — if that module is installed, review whether it is still needed before adding types both ways. In 17.4.0–17.4.2 the help tooltips for **Data Type** and **Display Name** on the add form were swapped; trust the field labels, not the tooltips (fixed 17.4.3).
+
+> **Version caveat (LTS 17.3 and 16.0):** the add/edit form is not on this page on the LTS line; you can only enable or disable the shipped and existing types, and the row button reads **Enable** rather than **Publish**. To add a custom type on LTS, use the method your instance already relies on (database or External Module), or wait for an LTS release that includes the page. On 17.6, **Edit** and **Delete** appear only for types created on this page; other rows show "-".
 
 Two consequences of custom validation types worth knowing, both independent of version:
 
 - **Copying an instrument fails if the target server lacks the validation type.** Copying an instrument whose text field uses a validation type that does not exist on that REDCap server returns a vague error. The same applies to Data Dictionary uploads and Project XML imports moved between instances. If you rely on custom validations, they must exist on every server a project travels to.
 - **Custom validations with an `email` datatype can be used for the Designated Email Field** and for survey invitation addresses (16.0.7), which makes them useful for institution-specific address formats rather than only for display validation.
 
-Each row has a **Publish** or **Disable** action. Once published, a type appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
+Each row has a **Publish** (**Enable** on LTS) or **Disable** action. Once published, a type appears in the **Validation** drop-down in the Online Designer's Add/Edit Field dialog. Disabled types are hidden from the Online Designer but remain fully functional in any project that already uses them — and can still be entered directly in a Data Dictionary CSV upload (they work as an "Easter Egg" option even when not shown in the UI).
 
 **Important:** Disabling a validation type that is already in use in a project does not break it; the validation continues to function. The disable only prevents new fields from selecting it via the Online Designer.
 
-**Standard validation types shipped with REDCap** (internal Data Dictionary names in parentheses):
+**Standard validation types shipped with REDCap** (internal Data Dictionary names in parentheses). The same 39 types ship in all supported versions, but many start disabled on a fresh install, so this is the shipped list, not necessarily what your designers see in the drop-down:
 
 | Validation label | DD name |
 | --- | --- |
@@ -200,7 +206,7 @@ Each row has a **Publish** or **Disable** action. Once published, a type appears
 > **Version caveat:** Earlier versions of this article also listed **MRN (7 digits)** (`mrn_7d`). It is not in the 17.5.6 install scripts or on a 17.5.6 test instance.
 
 **Custom Validation Types**
-REDCap administrators can develop and register custom validation types for institution-specific needs. The **Add Custom Validation Type** form on 17.5.6 asks for a **Data type**, **Display name**, **Internal name**, a server-side (PHP) regex pattern and a **JavaScript regex pattern**, plus **Case sensitive** and **Unicode** checkboxes. A new custom type starts **disabled**: publish it on this page before project designers can choose it in the validation type dropdown alongside standard types.
+REDCap administrators can develop and register custom validation types for institution-specific needs. The **Add Custom Validation Type** form on 17.5.6 asks for a **Data type**, **Display name**, **Internal name**, a regex pattern, plus **Case sensitive** and **Unicode** checkboxes. One pattern is used for both server-side and in-browser checking; only if they need to differ do you press the **Different PHP and JavaScript patterns?** button to add a separate **JavaScript regex pattern**. REDCap adds the start and end anchors (`^` and `$`) itself, so enter the pattern without them. A new custom type starts **disabled**: publish it on this page before project designers can choose it in the validation type dropdown alongside standard types. Before editing or deleting a custom type, check whether any project's fields use it.
 
 ---
 
@@ -228,7 +234,7 @@ Institution-specific templates allow you to standardize data collection across p
 
 # 8. Common Mistakes & Gotchas
 
-**Forgetting to enable newly created templates.** When you add a new template to the system, it is created in a disabled state by default. It will not appear in the template list for users creating new projects until you explicitly enable it on the Project Templates page. Administrators sometimes add a template and wonder why users cannot see it.
+**Accepting the Add Template defaults without checking them.** The Add Template dialog preselects **Enabled** and sets **Copy all records** to **Yes**. Check both choices every time: a template is usually meant to give new projects its design only, and copying the template's records into every new project is rarely wanted. If you want to review a template before users can pick it, add it as disabled and enable it later on the Project Templates page.
 
 **Changing instance defaults does not affect already-created projects.** If you modify the Default Project Settings (e.g., character encoding, display of the Today button), these changes apply only to new projects created after the change. Existing projects retain their original settings. To update existing projects, project administrators must change those settings individually in each project's Additional Customizations.
 

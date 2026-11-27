@@ -5,12 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  Users section tools and the Add Users fields; v17.3.18 (LTS) — changelog review
-  only'
+verified_against: REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — user management
+  behaviour checked against source code; Users section tools and the Add Users fields
+  checked live on v17.5.6 (Standard, test instance, read-only)
 prerequisites:
 - REDCap administrator access
-version: '1.3'
+version: '1.4'
 last_updated: 2026-11
 related:
 - id: RC-CC-03
@@ -53,7 +53,7 @@ The Users section contains the following tools:
 - **API Tokens** — view and manage API tokens across all projects and users
 - **Banned IP Addresses** — view and manage IP addresses blocked from the instance
 - **Administrator Privileges** — grant or revoke REDCap super user status
-- **Project Administrator Groups** — REDCap+ only; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md)
+- **Project Administrator Groups** — REDCap+ only; see [RC-PLUS-04 — REDCap+: Project Administrator Groups (PAGs)](RC-PLUS-04_Project-Administrator-Groups.md). Not in the menu on 16.0 LTS.
 - **Access Control Groups** — optional ceiling on grantable rights; see below
 
 ---
@@ -101,17 +101,19 @@ Selecting a user displays their full account record, including:
 From the Browse Users page, administrators can:
 
 - **Edit user info** — update any of the editable attributes above
-- **Suspend/unsuspend** an account
-- **Delete** a user from the REDCap system (not available for administrator accounts)
-- **Reset password** (for table-based authentication instances). Sending the reset email is logged (17.4.2+ Standard). The text under the button reads **"Password last reset via password reset email on X"** — X is when the user completed a reset from a reset email, whether an admin or the user triggered it (wording clarified in 17.5.1 Standard / 17.3.14 LTS).
+- **Suspend/unsuspend** an account. In 17.6 a **Suspend & Expire in All Projects** option also sets the user's expiration in every project they belong to; on 17.3 LTS and 16.0 LTS, suspend the account and expire the user in projects separately if you need both.
+- **Delete** a user from the REDCap system (not available for accounts with the **Access to all projects and data with maximum user privileges** administrator privilege)
+- **Reset password** (for table-based authentication instances). Sending the reset email is logged on Standard 17.4.2 and later; 17.3 LTS and 16.0 LTS do not log it, so keep your own note of when you sent one. The text under the button reads **"Password last reset via password reset email on X"** — X is when the user completed a reset from a reset email, whether an admin or the user triggered it (wording clarified in 17.5.1 Standard / 17.3.14 LTS; 16.0 LTS shows the older wording "Password was last reset on").
 - **Grant/revoke administrator privileges**
-- **Change Username** *(17.5.0+)* — see below
+- **Change Username** *(Standard 17.5+; not in 17.3 LTS or 16.0 LTS)* — see below
 
-> **Note:** Administrator accounts cannot be deleted through this interface. To remove administrator access, first revoke admin privileges via the Administrator Privileges page, then delete the account if needed.
+> **Note:** Accounts that have the **Access to all projects and data with maximum user privileges** privilege cannot be deleted through this interface; administrators with only other privileges can be. To delete such an account, first remove that privilege on the Administrator Privileges page, then delete the account if needed.
 
-### Changing a Username *(17.5.0+)*
+### Changing a Username *(Standard 17.5+)*
 
-When viewing an individual user, a **Change Username** button opens a dialog for entering the new username. REDCap replaces the username in every relevant database table **except the logging tables** (`redcap_log_event*` and `redcap_log_view`), which keep the old name for historical accuracy. The change itself is logged.
+> **Version caveat (17.5.0+ Standard):** Change Username is a Standard-release feature from 17.5. It is not in 17.3 LTS or 16.0 LTS; on those versions there is no supported way to rename an account from the Control Center.
+
+When viewing an individual user, a **Change username** button opens a dialog for entering the new username. Only administrators with the **Access to all projects and data with maximum user privileges** privilege see it. REDCap rejects a username that already exists, can optionally email the user about the change, and ends any other sessions the user has open, so they must log in again with the new username. REDCap replaces the username everywhere it is stored **except the project and system logging**, which keeps the old name for historical accuracy. The change itself is logged.
 
 Once a user's username has been changed, a **History** button appears on their Browse Users page showing each change with its timestamp.
 
@@ -146,7 +148,9 @@ Creates accounts for Table-based authentication. The page has two tabs.
 | Display user on 'Email Users' page? | Checkbox |
 | Allow this user to create or copy projects? | Checkbox |
 
-**Create users (bulk upload)** — upload a CSV file of new users. A checkbox sets whether all users in the file may create or copy projects.
+Some fields appear only when the related feature is on: the messaging notification fields (REDCap Messenger), the phone fields (Twilio two-factor authentication, or Twilio or Mosio text messaging, enabled), **Allow user to auto-generate API tokens?** (API token auto-generation set to selected users), Clinical Data Mart access (Data Mart enabled), and an Access Control Group selector (ACGs enabled; 17.3 LTS and later, not 16.0 LTS). If a field from the table is missing, the feature behind it is off.
+
+**Create users (bulk upload)** — upload a CSV file of new users. A checkbox sets whether all users in the file may create or copy projects. In 17.6 the tab offers a downloadable import template; on 17.3 LTS and 16.0 LTS the tab describes the required columns instead, so build the CSV header from that description.
 
 ---
 
@@ -160,7 +164,7 @@ The User Allowlist is only relevant when using an **external authentication meth
 
 **When the allowlist is enabled:** An externally authenticated user will be blocked from accessing REDCap until an administrator explicitly adds them to the allowlist. Users who attempt to log in but are not yet on the list receive a message informing them that an administrator must add them before they can access REDCap.
 
-> **Note:** REDCap Administrators are always automatically added to the allowlist when it is enabled, regardless of which option is chosen.
+> **Note:** Administrators with the **Access to all projects and data with maximum user privileges** privilege are always kept on the allowlist when it is enabled, regardless of which option is chosen, and **Delete all** does not remove them. Administrators with only other privileges are treated like any other user, so add them explicitly. On an instance that mixes Table-based and external authentication, Table-based users are not subject to the allowlist.
 
 ### Enabling the Allowlist
 
@@ -168,7 +172,7 @@ When you first enable the allowlist, REDCap presents two initialization options:
 
 | Option | Effect | When to use |
 | --- | --- |---|
-| **Option 1** — Add all existing users | All users who have previously accessed REDCap (via external auth) are automatically added to the allowlist | Use when you want to preserve access for current users while gatekeeping all new registrations |
+| **Option 1** — Add all existing users | Every existing user account that has an email address — in practice, everyone who has already logged in — is added to the allowlist | Use when you want to preserve access for current users while gatekeeping all new registrations |
 | **Option 2** — Leave allowlist empty | No existing users are added (except Administrators) | Use when you want a hard cutover — no one gets access until explicitly added, even if they used REDCap before |
 
 ### Adding Users to the Allowlist
@@ -260,6 +264,8 @@ For any existing token, administrators can:
 
 Administrators can also **create a new API token** for a user who does not yet have one for a given project.
 
+When viewing a project's tokens, the page also offers **View**, **Reassign** and **Delete all** tokens for that project — useful when a project's API user leaves and an integration must move to another account.
+
 ### Super API Tokens
 
 In addition to standard project-level tokens, REDCap supports **Super API Tokens**. These grant the holder the ability to create new REDCap projects via the API without requiring administrator approval.
@@ -278,7 +284,7 @@ Key characteristics:
 
 ### Related Token Settings
 
-- **Auto-generation of tokens:** Controlled in **User Settings** ([RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)). When disabled, users must request a token; when enabled, users can self-generate.
+- **Auto-generation of tokens:** Controlled in **User Settings** ([RC-CC-04 — Control Center: User Settings & Defaults](RC-CC-04_Control-Center-User-Settings.md)) by **Allow normal users to auto-generate API tokens for their projects?**, which has three options: administrators must approve every request (the default), only selected users may self-generate, or all users may self-generate. With "selected users", each account's record shows **Allow user to auto-generate API tokens?** to pick who.
 - **API rate limiting / IP banning:** Configured in **General Configuration** ([RC-CC-02 — Control Center: General System Configuration](RC-CC-02_Control-Center-General-Configuration.md)).
 - Tokens do not expire by default — they stay valid until they are deleted or regenerated. Users can delete or regenerate their own project tokens on the project's API page; administrators can do so for any user.
 
@@ -301,7 +307,7 @@ Automatic bans from the Rate Limiter persist until deleted by an administrator. 
 
 ### Adding IPs to the Blocklist
 
-Paste one or more IP addresses into the input field — **one per line** — and submit. Bulk entries are supported. The list shows each banned IP address and its **Time of Ban**. Individual entries can be deleted, and a **Delete All** button clears the entire blocklist at once.
+The page requires the **Manage User Accounts** administrator privilege. Paste one or more IP addresses into the input field — **one per line** — and submit. Bulk entries are supported. The **Time of Ban** field is pre-filled with the current time and can be changed, for example to record when an incident happened. The list shows each banned IP address and its **Time of Ban**. Individual entries can be deleted, and a **Delete All** button clears the entire blocklist at once.
 
 > **Note:** REDCap's IP banning operates at the application layer only. For network-level blocking or advanced threat protection, coordinate with your institutional IT security team.
 
@@ -352,36 +358,36 @@ For full documentation of ACGs — including all configurable rights categories,
 
 ## Administrator Privileges
 
-Located at `ControlCenter/superusers.php`, this page manages which user accounts have REDCap administrator privileges and controls exactly what each administrator can do. Administrator access in REDCap is **granular** — not all-or-nothing — and is composed of seven independent privilege flags that can be mixed and matched per user.
+This page manages which user accounts have REDCap administrator privileges and controls exactly what each administrator can do. Administrator access in REDCap is **granular** — not all-or-nothing — and is composed of seven independent privilege flags that can be mixed and matched per user.
 
 Any user who has been granted at least one administrator privilege gains access to the Control Center, but they will only be able to access and use the sections corresponding to their specific granted privileges.
 
 ### The Seven Administrator Privilege Types
 
-**Set Administrator Privileges (`admin_rights`)**
+**Set Administrator Privileges**
 The user can access the Administrator Privileges page and can grant or revoke admin rights for any user. This is effectively a meta-privilege — it lets a user control who else has admin access.
 
-**Access to All Projects and Data with Maximum User Privileges (`super_user`)**
+**Access to All Projects and Data with Maximum User Privileges**
 The user has full access to every REDCap project in the system with maximum user-level privileges within those projects. Within the Control Center, this unlocks project administration pages: To-Do List, Edit Project Settings, Link Lookup, and API Tokens.
 
-**Manage User Accounts (`account_manager`)**
+**Manage User Accounts**
 The user can access, modify, and (when using Table-based authentication) create REDCap user accounts. This grants access to Browse Users, Add Users, User Allowlist, and Email Users.
 
-**Modify System Configuration Pages (`access_system_config`)**
+**Modify System Configuration Pages**
 The user can modify settings on all system configuration pages in the Control Center — everything listed under "Miscellaneous Modules" and "System Configuration" in the sidebar.
 
 > **Read-only fallback:** If a user does *not* have this privilege but *does* have at least one other admin privilege, they can still access system configuration pages in **read-only mode** — they can view settings but cannot save changes.
 
-**Perform REDCap Upgrades (`access_system_upgrade`)**
+**Perform REDCap Upgrades**
 The user can access upgrade tools, including notifications about new REDCap versions and the Easy Upgrade feature (when enabled by the instance). This privilege does not apply to traditional server-side upgrades that take place outside the REDCap UI.
 
-**Install, Upgrade, and Configure External Modules (`access_external_module_install`)**
+**Install, Upgrade, and Configure External Modules**
 The user can install External Modules from the REDCap Repository and enable and configure them at the system level. This does not govern enabling or configuring a module within a specific project, which is controlled by project-level user privileges.
 
 > **Read-only fallback:** If a user does *not* have this privilege but *does* have at least one other admin privilege, they can still access the External Modules page in the Control Center in **read-only mode**.
 
-**Access to Control Center Dashboards (`access_admin_dashboards`)**
-The user can access all pages under the "Dashboards & Activity" section of the Control Center sidebar: System Statistics, FHIR Statistics, User Activity Log, User Activity Graphs, Map of Users, Top Usage Report, Database Activity Monitor, Database Query Tool, and Recent Errors.
+**Access to Control Center Dashboards**
+The user can access most pages under the "Dashboards & Activity" section of the Control Center sidebar: System Statistics, FHIR Statistics, User Activity Log, User Activity Graphs, Map of Users, Top Usage Report and Database Activity Monitor. The **Database Query Tool** and **Recent Errors** need "Access to all projects and data with maximum user privileges"; other administrators can open the Query Tool page but only see a notice.
 
 ### Assigning and Removing Privileges
 
@@ -393,7 +399,7 @@ Unchecking all privilege checkboxes for a user removes all admin access. REDCap 
 
 On instances with separate environments (development, test, production), administrator access is configured independently per environment. It is common for administrators to have broader access in lower environments and more restricted access in production.
 
-> **Best practice:** Limit the number of administrators — especially those with the `super_user` or `admin_rights` flags — to those with an active operational need. Use the granular privilege system to grant only the access each person actively requires.
+> **Best practice:** Limit the number of administrators — especially those with **Access to all projects and data with maximum user privileges** or **Set Administrator Privileges** — to those with an active operational need. Use the granular privilege system to grant only the access each person actively requires.
 
 ---
 
@@ -406,13 +412,13 @@ Once a user is deleted from the Browse Users page, they are permanently removed 
 Suspending a user (from Browse Users) immediately blocks login and marks the suspension timestamp. Suspension can be reversed at any time. Account expiration (set on the user's account record) automatically blocks login on a specified date but is less reversible — you must manually change the expiration date to reactivate them. Suspension is used for immediate action (security incident, termination); expiration is used for planned future disablement (contract end date, leave of absence).
 
 **Q: How do I prevent specific users from accessing the API?**
-Users can be granted or denied API privileges on their account record in Browse Users. Alternatively, administrators can delete or revoke API tokens from the API Tokens page, preventing that user from using the API for their projects. To prevent all users from generating tokens, modify the "Allow Normal Users to Auto-Generate API Tokens" setting in the User Settings page.
+API access is a project-level user right, not an account setting: remove the **API Export** / **API Import/Update** rights in each project's User Rights, and delete the user's tokens on the Control Center API Tokens page so existing tokens stop working. The account record in Browse Users only carries **Allow user to auto-generate API tokens?**, which appears when **Allow normal users to auto-generate API tokens for their projects?** (User Settings) is set to selected users; it controls self-service token creation, not API use. To make every token request go through an administrator, set that User Settings option to require administrator approval (the default).
 
 **Q: What happens if an administrator leaves but they are the only one with certain privileges?**
-If you have only one user with the `admin_rights` privilege and they leave, you will be unable to change administrator privileges until the owner/super-administrator manually restores access (likely via direct database intervention). Always maintain at least two users with `admin_rights` and `super_user` privileges for continuity. Document your administrator role distribution.
+If you have only one user with the **Set Administrator Privileges** privilege and they leave, you will be unable to change administrator privileges until the owner/super-administrator manually restores access (likely via direct database intervention). Always maintain at least two users with **Set Administrator Privileges** and **Access to all projects and data with maximum user privileges** for continuity. Document your administrator role distribution.
 
 **Q: Can I bulk-edit user attributes for many users at once?**
-The Browse Users interface allows one-at-a-time editing. For bulk operations (e.g., changing email domain, suspending a group of users, or assigning expiration dates), there is no built-in bulk UI — you would need to edit each user individually or contact Vanderbilt for a custom database script. Plan ahead for predictable bulk operations (e.g., suspending seasonal researchers at end of season).
+The Browse Users interface allows one-at-a-time editing. For bulk operations (e.g., changing email domain, suspending a group of users, or assigning expiration dates), there is no general bulk-edit UI — you would need to edit each user individually or contact Vanderbilt for a custom database script. Two built-in features cover common cases: **Auto-suspend users after period of inactivity** (User Settings; off by default, 180 days when turned on) suspends dormant accounts automatically, and the **Sponsor Dashboard** lets a user's sponsor send administrators one request covering several sponsored accounts (for example, extending expiration or suspending them), which an administrator then carries out. Plan ahead for predictable bulk operations (e.g., suspending seasonal researchers at end of season).
 
 ---
 
@@ -420,7 +426,7 @@ The Browse Users interface allows one-at-a-time editing. For bulk operations (e.
 
 **Deleting a user account instead of suspending it when the account might be needed again.** User deletion is permanent and cannot be undone through the UI. If there is any possibility the user will need access again (leave of absence, temporary contractor, role change), suspend them instead. Only delete users when you are certain they will never need REDCap access.
 
-**Granting the `super_user` privilege too broadly.** The `super_user` flag grants full access to every project with maximum user-level privileges. Only grant this to administrators with an active need to manage all projects. For administrators who only need to manage specific projects or features, use the granular privileges (e.g., `access_system_config`, `account_manager`) instead.
+**Granting "Access to all projects and data with maximum user privileges" too broadly.** This privilege grants full access to every project with maximum user-level privileges. Only grant it to administrators with an active need to manage all projects. For administrators who only need to manage specific features, use the granular privileges (e.g., **Modify System Configuration Pages**, **Manage User Accounts**) instead.
 
 **Not monitoring API token usage and forgetting which tokens are in use.** Active API tokens that are no longer needed or whose purpose is forgotten create unnecessary security risk. Regularly review the API Tokens page and delete tokens that are no longer actively used. Regenerate tokens if there is any concern they may be compromised.
 

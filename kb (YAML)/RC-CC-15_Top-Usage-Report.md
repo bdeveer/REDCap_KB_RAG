@@ -5,11 +5,12 @@ domain: Control Center (Admin)
 applies_to:
 - REDCap administrators
 requires: Any supported version
-verified_against: 'REDCap v17.5.6 (Standard) — checked live on a test instance, read-only:
-  filters and result columns; v17.3.7 (LTS) — changelog review only'
+verified_against: 'REDCap v17.6.5 (Standard) / v17.3.31 and v16.0.61 (LTS) — Top Usage
+  Report behaviour checked against source code; checked live on v17.5.6 (read-only):
+  filters and result columns'
 prerequisites:
 - REDCap administrator access
-version: '1.1'
+version: '1.2'
 last_updated: 2026-11
 related:
 - id: RC-CC-12
@@ -63,29 +64,39 @@ The Top Usage Report includes several important limitations and clarifications t
 
 Administrators can configure the report using the following parameters:
 
-- **Begin time** — Sets the start of the analysis window. Only data collected since this time point is available for reporting.
+- **Begin time** — Sets the start of the analysis window. It defaults to the past 1 hour. The begin time cannot be more than 7 days ago; an earlier value returns an "outside the range of available data" message, because the underlying request log is purged on a rolling 7-day basis.
 
 - **End time** — Sets the end of the analysis window.
 
-- **CPU time percentage minimum threshold** — Starts at `1` on 17.5.6. Filters out entries below a specified CPU contribution percentage. This reduces noise by excluding low-utilization items from the results, allowing focus on the most significant consumers of resources.
+- **CPU time percentage minimum threshold** — Starts at `1` on 17.5.6. Filters out entries below a specified CPU contribution percentage. This reduces noise by excluding low-utilization items from the results, allowing focus on the most significant consumers of resources. If nothing meets the threshold, the page shows "No calls were found over the minimum threshold specified."
 
-- **Include incomplete HTTP requests** — Optional toggle to include requests that did not complete normally. Incomplete requests may indicate errors or client disconnections.
+- **Include incomplete HTTP requests** — Optional toggle to include requests that are still running or that finished without a recorded time. Their time is counted from the request start until now. Running cron jobs are always included regardless of this setting.
 
 ---
 
 # 5. Report Contents
 
-The results table has these columns on 17.5.6: Type, Identifier, CPU Time (hours), Percent of Total CPU Time, Call Count, Percent of Total Calls, and Average Seconds Per Call. The report surfaces the "top" entries across multiple categories:
+The results table has these columns on 17.5.6: Type, Identifier, CPU Time (hours), Percent of Total CPU Time, Call Count, Percent of Total Calls, and Average Seconds Per Call. By default it is sorted by **Percent of Total CPU Time**, highest first, so the biggest share of server time is at the top. You can re-sort any column and use the search box to find a specific row. The report behaves the same on 16.0.x LTS and 17.x.
 
-- **Most active projects** — Ranked by request count or CPU time consumption, showing which projects are driving the most activity.
+Rows are grouped by **Type**:
 
-- **Most active users** — Identifies users generating the most requests or consuming the most CPU time.
+- **User** — Users with the largest share of time.
 
-- **Most frequently accessed pages and URLs** — Shows which pages within projects are being accessed most often, useful for understanding usage patterns.
+- **Project** — Shown as the project title followed by its project ID (PID), linked to the project.
 
-- **External Modules** — Reports which External Modules are consuming the most resources.
+- **Module Page** — Pages served by External Modules.
 
-- **Cron jobs** — Lists cron jobs with the highest execution time, helpful for identifying long-running scheduled tasks.
+- **URL** — A request address including its query string.
+
+- **Page** — A page path without the query string.
+
+- **Cron** — Cron jobs, labelled "REDCap - <cron name>" for built-in jobs or "<module> - <cron name>" for External Module jobs. Useful for spotting long-running scheduled tasks.
+
+- **API (User)** and **API (Project)** — API requests, listed separately from the other user and project rows.
+
+> **Note:** "CPU Time" is really elapsed (wall-clock) time per request, used as a stand-in for CPU time, and only the part that overlaps your chosen window is counted. A job that spends most of its time sleeping, such as a long-running scheduled job from an external module, can therefore show a large share without using much actual CPU.
+
+The page also shows a red notice that REDCap staff will not help interpret the results; post questions about reading them on REDCap Community.
 
 ---
 
@@ -111,10 +122,10 @@ No. High usage simply means the project is being actively used. Many active rese
 The report provides a CPU time percentage minimum threshold filter, which helps reduce noise by excluding low-utilization items. However, there is no explicit project or user exclusion filter. If you need to focus on a specific subset of data, consider the time window and threshold filters to narrow results.
 
 **Q: Why do percentages in the report sometimes add up to more than 100%?**
-Hours and percentages are accurate portions of tracked totals, but they may be duplicated between different categories (e.g., "Most active projects" and "Most active users"). The same request may be counted in multiple categories, so percentages across different types can exceed 100%.
+Hours and percentages are accurate portions of tracked totals, but they may be duplicated between different Types. The same request is counted once under its user and once under its project, so a user and a project can each show 70%. Percentages across different types can therefore exceed 100%.
 
 **Q: What time period does the report cover by default?**
-The report covers all data collected since the "Begin time" parameter you set. If you do not set a specific begin time, the report will include the earliest available data. Set a specific start time to limit results to a relevant window (e.g., the last 24 hours or last week).
+The past 1 hour. To look further back, change the "Begin time", but no more than 7 days: the request log is purged on a rolling 7-day basis, and an earlier begin time returns an "outside the range of available data" message. For anything older, use your web server logs.
 
 **Q: Does the Top Usage Report track all HTTP requests to REDCap?**
 No. The report tracks many HTTP requests but not all. For a complete record of all HTTP activity, consult your web server's access logs. The report is most useful for identifying trends and resource-heavy components rather than for complete request accounting.
@@ -123,7 +134,7 @@ No. The report tracks many HTTP requests but not all. For a complete record of a
 
 # 8. Common Mistakes & Gotchas
 
-**Interpreting high usage as a performance problem.** A project appearing in the "Most active projects" list does not indicate a malfunction or problem — it simply means that project is being actively used. High activity is normal and expected. Only investigate further if you are experiencing actual performance issues (slow response times, timeouts, crashes) and the report helps you pinpoint the source.
+**Interpreting high usage as a performance problem.** A project appearing near the top of the Project rows does not indicate a malfunction or problem — it simply means that project is being actively used. High activity is normal and expected. Only investigate further if you are experiencing actual performance issues (slow response times, timeouts, crashes) and the report helps you pinpoint the source.
 
 **Setting the CPU time threshold too high and missing important data.** If you set the minimum CPU time percentage threshold too aggressively, you may filter out entries that would be useful to analyze. If you are investigating a specific performance issue, use a lower threshold to see more entries, then sort or focus on the most resource-intensive ones.
 
